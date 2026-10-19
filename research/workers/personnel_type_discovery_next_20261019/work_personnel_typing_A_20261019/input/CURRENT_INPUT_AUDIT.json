@@ -1,0 +1,99 @@
+{
+  "main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "input_data_release": "v2",
+  "input_sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+  "inventory": {
+    "records": 10439,
+    "images": 261,
+    "workers": 62,
+    "buildings": 22
+  },
+  "quality": {
+    "records": 7302,
+    "images": 196,
+    "workers": 60,
+    "buildings": 22
+  },
+  "ordinary_manual": {
+    "records": 5719,
+    "images": 177,
+    "workers": 60,
+    "buildings": 22
+  },
+  "origins": {
+    "v1": 3222,
+    "new": 7217
+  },
+  "geometry": {
+    "full": 9363,
+    "uncomputable": 135,
+    "floor_only": 941
+  },
+  "ordinary_difficulty": {
+    "中等": {
+      "records": 988,
+      "images": 32,
+      "workers": 59,
+      "buildings": 16
+    },
+    "困难": {
+      "records": 980,
+      "images": 31,
+      "workers": 59,
+      "buildings": 15
+    },
+    "简单": {
+      "records": 3751,
+      "images": 114,
+      "workers": 60,
+      "buildings": 22
+    }
+  },
+  "source_time_n": 9236,
+  "target_time_n": 440,
+  "source_time_by_origin": {
+    "new": 7217,
+    "v1": 2019
+  },
+  "scope_responses": 9845,
+  "scope_gold": 93,
+  "scope_correct": 93,
+  "scope_gold_retained": 89,
+  "semi_by_origin": {
+    "new": {
+      "n": 525,
+      "semi_exact_initialization": 0,
+      "semi_confirmed_error_opportunity": 0,
+      "semi_reported_error_opportunity": 284,
+      "semi_confirmed_unchanged": 0,
+      "semi_reported_unchanged": 45,
+      "semi_edited": 331,
+      "semi_corrected_confirmed": 0,
+      "semi_attributable_gain_available": 0
+    },
+    "v1": {
+      "n": 574,
+      "semi_exact_initialization": 574,
+      "semi_confirmed_error_opportunity": 156,
+      "semi_reported_error_opportunity": 0,
+      "semi_confirmed_unchanged": 25,
+      "semi_reported_unchanged": 0,
+      "semi_edited": 427,
+      "semi_corrected_confirmed": 0,
+      "semi_attributable_gain_available": 461
+    }
+  },
+  "specific_person_error_candidates": 25,
+  "legacy_explicit_person_errors": 10,
+  "v1_fixed_1911_in_published_comparison_max_difference": {
+    "B8L2_v2_minus_v1": 4e-15,
+    "D10_v2_minus_v1": 4e-15
+  },
+  "v1_fixed_1911_in_published_comparison_unchanged_within_1e_minus_12": true,
+  "new_score_engine_replay_performed_in_this_input_check": false,
+  "full_collection_reproduced": false,
+  "Dot_complete_payload_reproduced": false,
+  "current_scientific_input_matches_archive": true,
+  "n1_applied": false,
+  "inherited_coordinate_and_reference_contract": "already processed points, mean-x, repairs, deletions and declared rings; no raw-export replacement"
+}

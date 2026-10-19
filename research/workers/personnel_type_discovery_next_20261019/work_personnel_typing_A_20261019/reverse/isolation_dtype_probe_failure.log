@@ -1,0 +1,7 @@
+/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/verify_training_isolation.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '[0 0 0 ... 1 0 1]' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  poisoned_ev.loc[mask,'stable_main']=1-poisoned_ev.loc[mask,'stable_main']
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/verify_training_isolation.py", line 39, in <module>
+    assert max_matrix==0 and mismatches==0 and max_pred==0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

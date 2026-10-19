@@ -1,0 +1,168 @@
+{
+  "post_hoc_presentation_only": true,
+  "model_or_threshold_adjustment": false,
+  "max_cases": 8,
+  "diversity_limit": "one event per image; at most two per building",
+  "all_filters_and_denominators": [
+    {
+      "case_type": "within_typical",
+      "title_zh": "同类且相近的普通例",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse within; joint main stable; average team B8 >=70; closest to all within-stable median absolute Q change",
+      "eligible_events": 29560,
+      "eligible_images": 156,
+      "eligible_buildings": 22,
+      "sorting": [
+        "distance_to_typical_stable_absQ",
+        "event_id"
+      ],
+      "ascending": [
+        true,
+        true
+      ],
+      "eligible_after_display_diversity": 29560,
+      "selected_event_id": "Aevt_b7693d420b4bd22831cb1ae5"
+    },
+    {
+      "case_type": "within_large",
+      "title_zh": "同类仍大变的反例",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse within; both complete; absolute B8 change >=10; descending absolute change",
+      "eligible_events": 1774,
+      "eligible_images": 40,
+      "eligible_buildings": 17,
+      "sorting": [
+        "abs_delta_Q",
+        "event_id"
+      ],
+      "ascending": [
+        false,
+        true
+      ],
+      "eligible_after_display_diversity": 1774,
+      "selected_event_id": "Aevt_f99b413d697b78327906e786"
+    },
+    {
+      "case_type": "within_failure",
+      "title_zh": "同类换人改变完整性的反例",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse within; exactly one complete; deterministic event ID",
+      "eligible_events": 496,
+      "eligible_images": 10,
+      "eligible_buildings": 7,
+      "sorting": [
+        "event_id"
+      ],
+      "ascending": [
+        true
+      ],
+      "eligible_after_display_diversity": 496,
+      "selected_event_id": "Aevt_00ad805fb67507539ac62dc6"
+    },
+    {
+      "case_type": "between_stable",
+      "title_zh": "跨类仍相近的反例",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse between; joint main stable; average team B8 >=70; least floor and Q change",
+      "eligible_events": 8481,
+      "eligible_images": 119,
+      "eligible_buildings": 22,
+      "sorting": [
+        "floor_change",
+        "abs_delta_Q",
+        "event_id"
+      ],
+      "ascending": [
+        true,
+        true,
+        true
+      ],
+      "eligible_after_display_diversity": 8391,
+      "selected_event_id": "Aevt_23606ae4bbfc029a603e89fe"
+    },
+    {
+      "case_type": "between_improves_against_Q",
+      "title_zh": "较低历史Q成员带来更高团队Q",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse between; both historical Q supported; signed team change opposes historical Q order; absolute team B8 change >=5",
+      "eligible_events": 415,
+      "eligible_images": 43,
+      "eligible_buildings": 15,
+      "sorting": [
+        "abs_delta_Q",
+        "event_id"
+      ],
+      "ascending": [
+        false,
+        true
+      ],
+      "eligible_after_display_diversity": 383,
+      "selected_event_id": "Aevt_8e2d868396ada8940787dfd8"
+    },
+    {
+      "case_type": "stable_low_Q",
+      "title_zh": "稳定但质量仍低",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "reverse within; joint main stable; average team B8 <=55; ascending team quality",
+      "eligible_events": 1592,
+      "eligible_images": 29,
+      "eligible_buildings": 14,
+      "sorting": [
+        "mean_team_Q",
+        "event_id"
+      ],
+      "ascending": [
+        true,
+        true
+      ],
+      "eligible_after_display_diversity": 1468,
+      "selected_event_id": "Aevt_e202c3387762f386bbb5ad7b"
+    },
+    {
+      "case_type": "floor_close_3d_different",
+      "title_zh": "底面近而平均高度棱柱不同",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "both complete; floor difference <=.02; mean-height prism pair IoU <=.85; illustrative, not exact general 3D truth",
+      "eligible_events": 0,
+      "eligible_images": 0,
+      "eligible_buildings": 0,
+      "sorting": [
+        "mean_height_prism_pair_iou",
+        "event_id"
+      ],
+      "ascending": [
+        true,
+        true
+      ],
+      "eligible_after_display_diversity": 0,
+      "selected_event_id": null
+    },
+    {
+      "case_type": "hard_rule_disagreement",
+      "title_zh": "困难图中两套历史类别解释不同",
+      "base_panel": "Pro_exact_fixed_background_v1",
+      "k": 16,
+      "eligibility": "hard image; forward and reverse relation disagree; both complete; largest absolute change",
+      "eligible_events": 3988,
+      "eligible_images": 31,
+      "eligible_buildings": 15,
+      "sorting": [
+        "abs_delta_Q",
+        "event_id"
+      ],
+      "ascending": [
+        false,
+        true
+      ],
+      "eligible_after_display_diversity": 3689,
+      "selected_event_id": "Aevt_a3abd6d9ced67642df5809ff"
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "version": "forward_multiview_A_v1_20261019",
+  "status": "frozen_before_new_outer_validation_results",
+  "data_release": "v2",
+  "github_main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "frozen_scientific_source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "primary_condition": "ordinary Manual, frozen quality eligibility",
+  "feature_learning": "Every full, outer and inner training building subset refits all historical task effects, support gates and transforms from records. Archived full/outer profiles are only old baselines, not new inner features.",
+  "fixed_splits": "../reverse/FROZEN_BUILDING_SPLITS.json",
+  "fixed_splits_sha256": "ec5a004db1c868e9802a3729af549ac959b29bd43772b53c0af18f4d32c7f9b4",
+  "seed": 20261019,
+  "candidates_K": [
+    4,
+    6,
+    8,
+    10
+  ],
+  "algorithm": "complete_linkage_equal_weight_multiview_masked_robust_distance",
+  "domains": [
+    "Q",
+    "T",
+    "difficulty",
+    "structure",
+    "semi",
+    "scope"
+  ],
+  "domain_weighting": "Q,T,difficulty,structure,scope each total 1; all Semi subdomains together total 1. Domains absent for a person-pair are masked and remaining weights normalized, not zero-valued or missing-indicator features.",
+  "within_domain_weighting": "equal total weight among retained features; absolute Q and task-relative Q share one domain, avoiding independent-evidence double counting",
+  "transformation": {
+    "center": "training-worker median",
+    "scale": "training-worker IQR, then MAD, then SD if needed",
+    "clipping": [
+      -3,
+      3
+    ],
+    "constant_or_sparse": "omit feature if fewer than 6 observed eligible workers or no variance"
+  },
+  "support_gates": {
+    "core_ordinary_manual": {
+      "distinct_tasks": 8,
+      "buildings": 3
+    },
+    "time": {
+      "valid_source_records": 6,
+      "buildings": 3
+    },
+    "each_difficulty": {
+      "distinct_tasks": 6,
+      "buildings": 3
+    },
+    "semi_error_each_evidence_tier": {
+      "opportunities": 3,
+      "buildings": 2
+    },
+    "semi_modification": {
+      "records_with_edit_state": 6,
+      "buildings": 3
+    },
+    "scope": {
+      "comparable_task_records": 10,
+      "buildings": 3,
+      "tasks_with_answer_variation": 2
+    }
+  },
+  "feature_models": {
+    "Q": "same image/condition/reference task fixed effects, equal-worker zero mean; global beta plus mean/P10/SD and residual-tail/spread descriptions",
+    "difficulty": "existing strength-20 within-person partial-pooling task model, three difficulties separate, contrasts with support gates",
+    "time": "log valid source time, same task and source stratum adjusted separately old audited/new reported; no source-time substitution for target time; source and missingness excluded as class variables",
+    "structure": "training point-pair count and geometric/structure tendency adjusted against common tasks; no target point count or target cluster",
+    "semi": "old confirmed and new reported error non-modification rates/effects separate; actual initialization only for net change descriptions, not an independent Q weight; modified/score increase not confirmed repair",
+    "scope": "same task/condition/source opportunity adjusted answer propensity, no accuracy class from all-in-scope compatible gold",
+    "direct_errors": "retain documentary candidates and audit coverage in explanations; no per-person error rate feature without representative opportunity denominator"
+  },
+  "feature_family_candidates": [
+    "full",
+    "minus_difficulty",
+    "minus_semi",
+    "minus_scope",
+    "minus_structure",
+    "QT_only"
+  ],
+  "conditional_candidate": {
+    "id": "full_base_plus_difficulty",
+    "base": "same global full partition at each K",
+    "split": "within each base class, separately for observed easy/medium/hard, split supported workers by sign(theta_d - beta) only if both sides have >=2 workers and mean contrasts differ by >=3 B8 points; otherwise retain one base class",
+    "unsupported_difficulty": "unknown in conditional candidate, not zero effect",
+    "number_of_classes": "at most 2K per observed difficulty; actual singleton/dyad and replacement support always reported",
+    "test_domain": "frozen difficulty is observable; no per-image retyping"
+  },
+  "selection": {
+    "implementation": "../reverse/selection_common.py, shared directly with reverse route",
+    "inner": "3 frozen groups of training buildings",
+    "target": "joint-main-stability Brier, image means then building means, on shared inner heldout replacement events",
+    "calibration": "k x difficulty within/between rates shrunk toward training baseline by two equivalent buildings; unknown predicted baseline",
+    "rule": "one standard error, prefer fewer base classes, then global over conditional; all candidate results retained",
+    "ablation": "all K retained, with comparison at selected main K to separate removed feature information from a changed K",
+    "training_event_panel": "Pro_exact_fixed_background_v1",
+    "additional_background_panel": "A_nested_even_v1 is held out of all type/K/feature selection and used only after type freezing",
+    "panel_amendment_status": "root frozen before new fusion outputs were available",
+    "training_panel_logical_alias": "archived_fixed_background in early draft",
+    "simplicity_tie_order": [
+      "QT_only",
+      "minus_difficulty",
+      "minus_semi",
+      "minus_scope",
+      "minus_structure",
+      "full",
+      "base_plus_difficulty"
+    ],
+    "why": "K is primary simplicity axis; fixed global feature-family order is an outcome-independent tie breaker inside one-SE. Every K and family label is retained; no outer scores consulted."
+  },
+  "explanation": {
+    "model": "decision tree",
+    "max_depth": 3,
+    "min_samples_leaf": 3,
+    "median_imputation": "training-only explanation surrogate; does not affect clustering",
+    "evaluation": "report training fidelity separately from pairwise coassignment consistency across training-building perturbations and cross-worker heldout fidelity"
+  },
+  "prohibited_inputs": [
+    "heldout-building actual worker Q",
+    "heldout-building actual point count",
+    "heldout actual clusters or votes",
+    "heldout replacement geometry/outcomes in type discovery or K selection",
+    "worker origin as a class feature",
+    "missingness or unaudited events encoded as zero error"
+  ],
+  "verification": [
+    "input order invariance",
+    "heldout-building poisoning leaves training features/classes unchanged",
+    "each fit source building list excludes its outer and inner heldout set",
+    "pairwise class stability instead of literal class ID comparison",
+    "all K and ablation coverage, within-class diameter and bad tail retained"
+  ],
+  "limitation": "Retrospective v2 leave-building-out validation after earlier v2 exploration; not a new external blind test. Masked sparse-domain distance may be non-Euclidean and is diagnosed by common-domain coverage. Class usefulness is judged on fresh common events, not intrinsic silhouette alone.",
+  "semi_separate_features": [
+    "old_confirmed_error",
+    "new_reported_error",
+    "old_new_modification_separately"
+  ],
+  "exact_feature_domains": {
+    "Q": [
+      "q_beta",
+      "q_abs_mean",
+      "q_abs_p10",
+      "q_abs_sd",
+      "q_residual_p10",
+      "q_residual_sd"
+    ],
+    "T": [
+      "t_source_origin_effect",
+      "t_log_residual_tail"
+    ],
+    "difficulty": [
+      "hard_minus_easy",
+      "hard_minus_medium"
+    ],
+    "structure": [
+      "pair_count_effect",
+      "pair_count_residual_sd",
+      "bottom_y_effect",
+      "top_y_effect",
+      "height_log_effect"
+    ],
+    "semi": [
+      "semi_old_error_nonedit_effect",
+      "semi_new_error_nonedit_effect",
+      "semi_old_edit_effect",
+      "semi_new_edit_effect"
+    ],
+    "scope": [
+      "scope_out_effect"
+    ]
+  },
+  "raw_geometry_features": "Mean upper and lower equirectangular y normalized by height, only from frozen alternating bound upper/lower points and only training images; no point order change or new scoring."
+}

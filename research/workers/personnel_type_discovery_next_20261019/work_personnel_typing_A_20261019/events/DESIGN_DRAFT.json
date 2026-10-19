@@ -1,0 +1,53 @@
+{
+  "status": "draft_waiting_input_and_root_registration",
+  "design_id": "PartA_common_events_v1",
+  "data_release": "v2",
+  "github_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "invariant": "All discovered personnel class schemes receive labels on exactly the same preselected replacement events. Labels, outcomes and target geometry do not select events.",
+  "primary_condition": "ordinary Manual quality eligible",
+  "legacy_panel": {
+    "source": "Pro archive exact single-replacement requests",
+    "expected_ordinary_events_from_previous_report": 270370,
+    "expected_is_not_yet_verified": true,
+    "replay_policy": "Reuse recovered exact requests and available frozen state caches; rerun missing states only through original native fusion function. State reuse and new executions will be counted separately.",
+    "k": [8,12,16,24],
+    "reference_policy": "inherited pool-bound frozen reference, never optimized by output score"
+  },
+  "nested_even_supplement": {
+    "design_id": "A_nested_even_v1",
+    "seed": 20261019,
+    "pools": "all ordinary Manual pools having at least k+1 eligible distinct workers",
+    "candidate_pairs_per_pool": 12,
+    "background_orders_per_pair": 2,
+    "pair_selection": "sorted unique eligible worker pairs, sample without replacement with deterministic pool-specific seed",
+    "background_selection": "for each selected unordered worker pair and replicate, deterministically permute all other eligible workers; use first k-1 workers as exact common background",
+    "same_identity_across_k": true,
+    "nested_background_across_k": true,
+    "k": [8,12,16,24],
+    "orientation": "worker_a and worker_b lexicographic order; quality signed difference is B minus A, no chosen better side",
+    "label": "four even-number nodes only; not a full consecutive growth curve, not the missing Dot panel",
+    "information_used_to_select_events": ["pool membership", "stable anonymous worker IDs", "available worker count", "fixed random seed"],
+    "information_not_used_to_select_events": ["discovered personnel classes", "Q or time", "target answer point count", "target answer cluster", "fusion score or geometry", "GT"]
+  },
+  "outcomes": [
+    "both endpoint completeness and failure reason",
+    "B8L2 and D10 signed and absolute quality differences",
+    "floor IoU/Jaccard change",
+    "upper/lower paired endpoint angular change",
+    "node count change and cyclic structure mismatch",
+    "observed-source connection change and retained original observations",
+    "floor/height/3D component changes where computable",
+    "source time sum and coverage, same-target time sum and coverage separately"
+  ],
+  "tolerance_policy": "Freeze inherited Pro strict/main/loose thresholds after reading exact native contract. Report distributions, bad tails, failures and individual components as well as joint stability. Non-significance is not evidence of equivalence.",
+  "weights": ["building equal", "image/pool equal", "event equal"],
+  "uncertainty": "resample buildings as clusters; no interpretation of team requests as independent human samples",
+  "cross_k_comparison": "common selected worker pair and nested background chain IDs only; keep incomplete k coverage explicit",
+  "fairness": "Report both each scheme's supported panel and the common supported event set. Also report classes without enough common replacement opportunity and singleton/dyad class coverage.",
+  "limitations": [
+    "v2 retrospective leave-building-out evaluation, not new external blind validation",
+    "target actual clusters, point counts, and votes are oracle/conditional mechanism labels only",
+    "no adjacent odd/even experiment is run here; that belongs to external Codex Part B",
+    "no original annotations, references, qualification, scoring, fusion, or GitHub main changes"
+  ]
+}

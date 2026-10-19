@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "training_sets": 69,
+  "train_test_exclusion_aliases": 92,
+  "heldout_poison": {
+    "training_set": "train_a609f0019b464708",
+    "excluded_buildings": [
+      "2t7WUuJeko7",
+      "7y3sRwLe3Va",
+      "VFuaQ6m2Qom",
+      "jh4fc5c5qoQ",
+      "jtcxE69GiFV",
+      "pRbA3pwrgk9",
+      "rPc6DW4iMge",
+      "yqstnuAEVhm"
+    ],
+    "value": 1000000000.0,
+    "features_exactly_unchanged": true,
+    "all_K_labels_exactly_unchanged": true
+  },
+  "archived_full_Q_parity_max_abs": 4.3165471197426086e-13,
+  "archived_joint20_parity_max_abs": 0.0,
+  "source_missing_audit_fields_not_used_as_class_features": [
+    "individual_review_records",
+    "person_origin",
+    "scope_gold_n",
+    "semi_gain_mean",
+    "source_time_median",
+    "specific_error_candidate_n",
+    "time_source_kind"
+  ],
+  "module_boundaries": {
+    "passed": true,
+    "boundaries": [
+      "input_order",
+      "unknown_gate",
+      "sparse_domain_mask",
+      "symmetric_finite_distance"
+    ]
+  },
+  "scope_accuracy_not_used": true,
+  "semi_final_Q_and_gain_not_double_weighted": true,
+  "data_points_or_references_edited": false
+}

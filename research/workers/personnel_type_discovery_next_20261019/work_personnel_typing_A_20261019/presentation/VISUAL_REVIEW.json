@@ -1,0 +1,161 @@
+{
+  "created_utc": "2026-10-19T04:48:16.365089+00:00",
+  "reviewer": "assistant /root/events_replay_a",
+  "review_kind": "Limited visual inspection of opened scientific canvases, not a human gold adjudication",
+  "original_images_acquired": 7,
+  "case_context_images_actually_opened": 5,
+  "case_events_actually_opened": [
+    "Aevt_f99b413d697b78327906e786",
+    "Aevt_00ad805fb67507539ac62dc6",
+    "Aevt_8e2d868396ada8940787dfd8",
+    "Aevt_e202c3387762f386bbb5ad7b",
+    "Aevt_a3abd6d9ced67642df5809ff"
+  ],
+  "final_canvas_files_actually_opened": 13,
+  "displayed_images_not_visually_claimed": [
+    "e9zR4mvMWw7-26",
+    "Z6MFQCViBuw-06"
+  ],
+  "missing_originals_not_reviewed": [
+    "2t7WUuJeko7-02",
+    "2t7WUuJeko7-03"
+  ],
+  "full_resolution_original_visual_review": false,
+  "no_new_gt_or_personal_error_adjudication": true,
+  "no_model_or_threshold_adjustment": true,
+  "browser_layout_screenshot_verified": false,
+  "observations_zh": [
+    {
+      "case_index": 2,
+      "image": "uNb9QFRL6hY-60",
+      "text": "uNb-60：团队 B 在左侧局部凹凸范围附近的连接与参考和团队 A 不同；整簇 BEV 也保留可见的角点／斜边差异。该观察仅解释已冻结的大变案例。"
+    },
+    {
+      "case_index": 3,
+      "image": "q9vSo1VnCiC-30",
+      "text": "q9-30：团队 A 没有完整上下布局，ERP 中紫色仅为参考；已在最终画布加入明确的失败侧底栏。团队 B 有已保存输出，恢复可计算不作为缺失质量的数值改善。"
+    },
+    {
+      "case_index": 5,
+      "image": "7y3sRwLe3Va-03",
+      "text": "7y3-03：团队 A 在图像右侧柜体／冰箱附近连接较直接，BEV 出现连接两端的斜边；团队 B 在该处保留与冻结参考更接近的转角。不能由此断言较低历史 Q 人员在其它背景也更好。"
+    },
+    {
+      "case_index": 6,
+      "image": "VFuaQ6m2Qom-04",
+      "text": "VF-04：两队 BEV 几乎重合，但都有跨过参考范围的长对角连接；ERP 也出现对应的跨场景弧线。这一例直观区分结果稳定与质量好。"
+    },
+    {
+      "case_index": 7,
+      "image": "S9hNv5qa7GM-12",
+      "text": "S9-12：团队 B 与团队 A 在浴缸附近凹凸段和连接路径上不同；整簇 3D 保留实际作答形状差异。这只是两套楼外类别解释相反的展示，不调整类别。"
+    }
+  ],
+  "opened_files": [
+    {
+      "file": "qa/case_02_a_erp.png",
+      "sha256": "ab56d59e714c4f85e21e6614a03c6f038a59850b47d46a209273cba7da9195f2",
+      "event_id": "Aevt_f99b413d697b78327906e786",
+      "image": "uNb9QFRL6hY-60",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_02_b_erp.png",
+      "sha256": "b6842a0a32640a32c6ba53dd41dc69f95248e92c6906dba5f8b73fc1011d8d31",
+      "event_id": "Aevt_f99b413d697b78327906e786",
+      "image": "uNb9QFRL6hY-60",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_02_whole_clusters_bev.png",
+      "sha256": "7fbf95c287ee1e9cc3bd7e4b597e7600d489fec947770d58a55341728174506d",
+      "event_id": "Aevt_f99b413d697b78327906e786",
+      "image": "uNb9QFRL6hY-60",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "frozen geometry canvas"
+    },
+    {
+      "file": "qa/case_03_a_erp.png",
+      "sha256": "fc0156de03bf7ac81dd8b29051bfc3397cba9be9823961361b9b7a2021bdc2f5",
+      "event_id": "Aevt_00ad805fb67507539ac62dc6",
+      "image": "q9vSo1VnCiC-30",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_03_b_erp.png",
+      "sha256": "a2c6066c8434164fb6ee2c32f3496a1d013f4c3428b37cc13f17fefe66178e07",
+      "event_id": "Aevt_00ad805fb67507539ac62dc6",
+      "image": "q9vSo1VnCiC-30",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_05_a_erp.png",
+      "sha256": "776bb1ce31350b572a460cc226a38d5a0ad7b105ccdf0b3f1283a10c96ff0d8b",
+      "event_id": "Aevt_8e2d868396ada8940787dfd8",
+      "image": "7y3sRwLe3Va-03",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_05_b_erp.png",
+      "sha256": "d8576da41a0eeced0a7746739851172603a1c020e727580fb1e3817812d281d8",
+      "event_id": "Aevt_8e2d868396ada8940787dfd8",
+      "image": "7y3sRwLe3Va-03",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_05_both_bev.png",
+      "sha256": "939203c401f51518643881a5a1e98d7804960a64cee0ed725c69e50b4fe208d2",
+      "event_id": "Aevt_8e2d868396ada8940787dfd8",
+      "image": "7y3sRwLe3Va-03",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "frozen geometry canvas"
+    },
+    {
+      "file": "qa/case_06_a_erp.png",
+      "sha256": "8deeb8dda0cc6c2efa8424e7b22914784ae64ff829d616340ce6f894f3625303",
+      "event_id": "Aevt_e202c3387762f386bbb5ad7b",
+      "image": "VFuaQ6m2Qom-04",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_06_both_bev.png",
+      "sha256": "834610f55e1a378ee2c14d7e5414eeab031ee472a4b137381a485eff2e85bef1",
+      "event_id": "Aevt_e202c3387762f386bbb5ad7b",
+      "image": "VFuaQ6m2Qom-04",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "frozen geometry canvas"
+    },
+    {
+      "file": "qa/case_07_a_erp.png",
+      "sha256": "6c431d8c59c07bb10c9c134072a6131bbcf51daa8827dd8c970f9632e6a77e38",
+      "event_id": "Aevt_a3abd6d9ced67642df5809ff",
+      "image": "S9hNv5qa7GM-12",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_07_b_erp.png",
+      "sha256": "acc45f1445cdb0d04959ed84dfca2d03611635bc169b5229d08ced9b20eefcf8",
+      "event_id": "Aevt_a3abd6d9ced67642df5809ff",
+      "image": "S9hNv5qa7GM-12",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "scaled ERP preview from verified original bytes"
+    },
+    {
+      "file": "qa/case_07_whole_clusters_3d.png",
+      "sha256": "941cd86d9a85032c43b77bc4f78329ff8062623636826a19b3cf71d56efc767d",
+      "event_id": "Aevt_a3abd6d9ced67642df5809ff",
+      "image": "S9hNv5qa7GM-12",
+      "reviewed_render": "final native canvas PNG",
+      "original_visual_context": "frozen geometry canvas"
+    }
+  ],
+  "prior_development_check": "Three geometry-only canvases were also opened before cases and new labels; they were not original-image inspection."
+}

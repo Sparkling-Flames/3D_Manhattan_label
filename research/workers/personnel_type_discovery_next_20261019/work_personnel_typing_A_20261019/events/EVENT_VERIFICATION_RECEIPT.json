@@ -1,0 +1,33 @@
+{
+  "pass_all": true,
+  "design_sha256": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf",
+  "common_events_sha256": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8",
+  "total_events": 286666,
+  "pool_count": 175,
+  "image_count": 175,
+  "building_count": 22,
+  "real_entrant_ids": 60,
+  "panels": {
+    "Pro_exact_fixed_background_v1": 270370,
+    "A_nested_even_v1": 16296
+  },
+  "nested_chains": 4200,
+  "legacy_retained_event_parity": {
+    "matched_events": 963,
+    "images": 175,
+    "buildings": 22,
+    "max_abs_difference": 5.684341886080802e-14,
+    "limit": "All ordinary events in retained case-candidate table; this is not all omitted historical states bytewise equality."
+  },
+  "assertions": [
+    "all frozen event IDs present exactly once",
+    "all pairs share exact k-1 real background",
+    "lexicographic signed orientation retained",
+    "new chains identical entrant pair and strictly nested background across available k",
+    "same reference preserved from requests",
+    "joint thresholds independently recomputed; failures remain false",
+    "separate upper/lower max equals native bound cyclic maximum",
+    "all retained legacy event component values replay within tolerance"
+  ],
+  "provenance": "Native fusion/scoring and pair-comparison source files unmodified; only derived output directory redirected."
+}

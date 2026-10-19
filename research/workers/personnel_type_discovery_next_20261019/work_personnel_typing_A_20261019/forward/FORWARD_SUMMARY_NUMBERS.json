@@ -1,0 +1,54 @@
+{
+  "features": {
+    "distinct_training_sets": 69,
+    "workers": 60,
+    "supported_core_FULL": 59,
+    "B8L2_rows": 4140,
+    "D10_rows": 4140,
+    "ordinary_quality_records": 5719,
+    "source_time_pool_records": 6250,
+    "time_relative_supported_workers": 57,
+    "scope_supported_workers": 35
+  },
+  "candidates": 28,
+  "nested_training_contexts_including_full": 23,
+  "selected_candidate_counts": {
+    "fw_QT_only_K4": 23
+  },
+  "all_candidates_within_1SE_in_every_context": true,
+  "full_inner_best_mean_candidate": "fw_full_K8",
+  "full_inner_best_mean": 0.1974974875485918,
+  "full_inner_selected_mean": 0.1977156788250227,
+  "full_inner_selected_minus_best": 0.00021819127643088465,
+  "cross_building_partition_sensitivity": {
+    "median_ARI": 0.3171524052969758,
+    "mean_ARI": 0.3207589680308096,
+    "median_same_pair_jaccard": 0.41640256201184445,
+    "range_ARI": [
+      0.0870576934507238,
+      0.9391564567792832
+    ]
+  },
+  "D10_fixed_choice_repartition": {
+    "outer_median_pair_relation_change": 0.26475745178258325,
+    "outer_range_pair_relation_change": [
+      0.0748100526008182,
+      0.4623027469316189
+    ],
+    "support_changes": 0
+  },
+  "explanation": {
+    "outer_median_cross_worker_accuracy": 0.7372881355932204,
+    "outer_median_majority_baseline": 0.5932203389830508,
+    "outer_mean_cross_worker_minus_majority": 0.15408320493066255,
+    "inner_building_perturbation_median_rule_ARI": 0.3129065512098679,
+    "inner_building_perturbation_median_rule_same_pair_jaccard": 0.45185192814294506
+  },
+  "limitations": [
+    "descriptive full classes are not target-building labels",
+    "cross-worker surrogate fidelity is not future-task predictive performance",
+    "heldout geometric stability and quality are evaluated independently by root on shared events",
+    "all 28 candidates are saved; a simpler selected family does not prove optional features are useless",
+    "D10 fixed-choice repartition differs from same-members metric sensitivity"
+  ]
+}

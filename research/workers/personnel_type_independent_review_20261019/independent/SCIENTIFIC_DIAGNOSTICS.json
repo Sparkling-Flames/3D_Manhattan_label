@@ -1,0 +1,6486 @@
+{
+  "input_sha256": {
+    "CALIBRATION_TRAINING_RECEIPT.json": "0cc3767a26ca6a1c9e2871224ebff7720ccbf919bb01a7b6b730fe98de7b071b",
+    "COMMON_EVENT_ANALYSIS_INPUT.csv.gz": "a8b2cea7ef82f6d8fa56bf347feea5f4eb9af1026b5d6864f6c60b70756ea988",
+    "LAST_SEAT_CHOICES.csv.gz": "1f4640d24205b994127a1850dccfe1c9aa9218ceb8b54da13d90b79565674fea"
+  },
+  "seed": 20261019,
+  "bootstrap_replicates": 2000,
+  "scope": "Frozen-input diagnostics; not fusion replay or model refit",
+  "calibration_direction": {
+    "reverse_selected": {
+      "cells": 264,
+      "negative_cells": 65,
+      "rows": [
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.045215962943905286
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02702528144354882
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04272259830851999
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01916351860433463
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.016498628150550976
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0035952802092775737
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02698047647408519
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.001970718407884431
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.01706198968847339
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.019442397880530593
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.041434471153686925
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03754746415220822
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.044505718933599336
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02589794303847276
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.050277865907675134
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.021759977732070945
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.017890819359926924
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.010512586352165787
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02608087022616823
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.0006619863140384652
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.01235623076309278
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01572039524548441
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.046232505469474106
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04221443388762358
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.06308245840259896
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03509434596885658
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.05372449601662893
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03253028191003693
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.017123917779449827
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.01828845773906662
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.028170305137152796
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.10338189172315793
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.05499011564378964
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02728121939629613
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.1268476105765346
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03593663221397336
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03545518979715834
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.006090055197222222
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.037177777360931086
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.021503456999348747
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.018204304392549886
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.004273156506293341
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.018761448417487725
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.025821121249628154
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.005770143573947117
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.013042486881170379
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.019771862569238463
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.028903489389742743
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.06645004003217236
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.028528810230867285
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.0643702833328128
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.05244490670013768
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.013664277193783658
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.03144123469899773
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02631927682444335
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.08737812447997717
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.039114279613324476
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.014622744697925127
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.020686898385835262
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.08984218234533903
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.09944479176804033
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.038763222877887415
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.11275469665583815
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.048547674318617284
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.013243687864531173
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.05241066230643032
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.03238683346887106
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.19247598766964186
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.09431772541875527
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.0022707771951671063
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.0003986845450771881
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.01842963775909323
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03414650903921024
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01303182968467631
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04304918293915583
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.027726019838953175
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.020473714065700255
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.004170147139962999
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.021884919327954
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.018679394394113646
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.006525521042686
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.014636689779721102
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.009621883725296265
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04831594104033621
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04205865436251255
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.025036120912549975
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.05051098580351371
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.018188976191687578
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02062846057901485
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0023775539682415747
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02645423468508279
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.0014083725707746408
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.017244457127107093
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020025096475049464
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.013655593000718502
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0485170929935731
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03784971430578965
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02702528144354882
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04272259830851999
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.020888475817120167
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.016498628150550976
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0035952802092775737
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02773604450854983
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.001970718407884431
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.01706198968847339
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.018541031704994215
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.041434471153686925
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03754746415220822
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03663289396841485
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.0003117404791726508
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.024944589152142982
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.02521218751225729
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0037668391799375867
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.01608314676629652
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.020225448252867984
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.014775089640866768
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.030025249005882104
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01276868447079349
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.014048475642168823
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.060256258276367825
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0961497021164246
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.039532959320617456
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.08957196178082122
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.05916588843705395
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.01998902113827644
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.024142873649301566
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.028847297050862974
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.1720124967945738
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.06553281877146033
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.0009029320773220606
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0267395204971681
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.03856487090295779
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04092666173569226
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.024435611739360208
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.053198481397861264
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.026000118945566975
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.005114022442414878
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.010985669397214237
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02487523189199059
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.01041566064487004
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.021808564121384544
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.024139421491883306
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.03655942133972112
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.027810114265364838
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04997497557994823
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03099996033459279
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.053510301928627046
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.005752121929842202
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.028210533816935
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.004690563434977313
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": -0.0038289486616837065
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.08825987512091571
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.010668816740008524
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.0435716969791109
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.01237718608883287
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.02772516045161355
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.06841796790574128
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03866134401948029
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04638776565508124
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.040976630635630285
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.030058169590083283
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.025179225510859382
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.03228117512977702
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.07161548967553166
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.05228237004815306
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.029898622533109043
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.08870384332856085
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03286840097298338
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.036963416273267935
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": -0.001223572554771346
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.025268740948864832
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.021970894669745222
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.016056160030537836
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.0017480869924111353
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016140353351879355
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.002336131856488566
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.006798543492708808
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02025746984078214
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.021711145714653268
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05048154904656832
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.027401998311377684
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.005947704975281576
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.049690051388116885
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.036828905804954126
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03718109546851894
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.017361773175787354
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.03160852981044515
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.023162391145860606
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.0046573734321344595
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.018861124325014744
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.04066752171582799
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.06744426014456673
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.06126900814125902
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.05577333151743463
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.0459532697559078
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.033587799594163914
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03144185074069383
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0199645483113976
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.028617538149275146
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.08740704137808297
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.05272673388009408
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02473406178804405
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.09309191876938994
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.038073454550764385
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04057879630873429
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.010717346799751615
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.0007302989740748944
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03757950774449925
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0061186857792325244
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.02320046791857988
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01812165272030386
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.0077518477712962275
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.004414699464100003
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.0004330336727108586
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.008070462937960987
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.044058534188572196
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.08944541285698349
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.07227496300261463
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.1362808098852843
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.013938730560466572
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.07159328154442063
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.08914091808775709
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.03740276673141196
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.16142457866610138
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.08170315837807529
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.001626588243675564
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.1202907738267407
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.11120951629201947
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02973319524200635
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.0003117404791726508
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01982478573481472
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.021582157231558985
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0037668391799375867
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.015943352829540403
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.015120415705282997
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.014775089640866768
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.011762953814068
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.007594482783832679
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.014048475642168823
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05414164570528812
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.06084961413365175
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": -0.01708499323572893
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.014426367158793751
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03592177269849983
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.018563619266300735
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.018079726690968134
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01790230024558148
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.04770632194963381
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.026865351213091082
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.017825928062138896
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.10341661032419713
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.043144380042160035
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04684856359551126
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.015314361533770637
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.038905771464531114
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.022633186571308417
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.013091294553551625
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.011694348910140206
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02828605574709897
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.023936448862010573
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.014138138934889799
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.021253992083429152
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.04235704055199374
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04631010404434033
+        }
+      ]
+    },
+    "reverse_selected_swap": {
+      "cells": 264,
+      "negative_cells": 12,
+      "rows": [
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02635680993820866
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.031125534353318163
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.05156073351020807
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03467375934189987
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.054092339048198435
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.023696504191440315
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.024640453230350357
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.05897404131365974
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.016200154587946214
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.012220143465914712
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.00031398813683780613
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.01058501909616083
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0404329539300452
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.039233621081429304
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02437889449225311
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01626343942450814
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04321819489246426
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.004785176121976931
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01489246690870083
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.05728370157576074
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.015656621253273606
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.0018537684536324983
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.004536640071172937
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0020236320307154276
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.033761701946138034
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03654865628291443
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.025249129160300643
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.038397999330326615
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04844798966965347
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03316181610427271
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.022583507236627276
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.010526361931631367
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0141988984800544
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02406809218473316
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.007210169600312066
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05418489868026222
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03965659031751323
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.041918786898267946
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04878676159157075
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.036623943670479386
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.05129716906442744
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.039103501598490964
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.025413463537456882
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.025029018487856824
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.03079384662979967
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.017403667167892656
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.02627417872064519
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.01489667680821638
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04560634323458923
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.035645580644605046
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.030045319776757506
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03785123497435294
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04752304692571585
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03923398487554619
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.028019673305228365
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.030469736722277374
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.003520517989294869
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01897172411095127
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.06822030741601459
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04551105423865387
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.044027910058666686
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.043734283543691466
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04330214809281491
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03681391820730118
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0373780827157324
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.034011953002346385
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.035676512996472676
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.011450993927563047
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.039591672787155585
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.018977245093252493
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.021180790105852165
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.02179906260983222
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04048033758129255
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03842549461317302
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.045561519302351194
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.036771743053303774
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0544900508643269
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.035407285503451846
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.025855816124516706
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.028308059451136236
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.034008133581679756
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.017298501825009915
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.02659501951444121
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.027920595587767938
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0344038414444674
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.023267344864339068
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.019558146519242592
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03515673713140555
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.050797082441179475
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.029839554670627266
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02889850820206996
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.039818052644947366
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.030269167610606273
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02217774471382261
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.04946408441183614
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04115546786462365
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.027343024122818527
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.028690271975262527
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.031193224862883173
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.024135091603505576
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03040982755052507
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.031011057077020454
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.018806883666529606
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.011051803426464502
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.03358650239776928
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.027582485620424424
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.057221701274628
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.015591216667144248
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02664541791169417
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03466719269625784
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.037673375739452175
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03377363913030451
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04375334675949627
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.023113864692002384
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.025569643673903242
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.009902783027670836
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.04941818845890622
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023013594829783046
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.03756399131713195
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.002618553695562631
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03854742676199163
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03388292265070747
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02844661787524988
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.030167472758238167
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04034851208426732
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03614604711352509
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.024279090423939165
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.007782800191843353
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.017635944081199506
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.021314460941289415
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.01250358740068036
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.013323104041665812
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0427991767189736
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.04072413763475968
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.03286926425613329
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.038529809183536656
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03711843989865932
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.02368954435110382
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.024306502858862045
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02414360871877841
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.010284788543429846
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.008673136019225591
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.020382131875701703
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.016664966524519653
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03911271161989183
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.034184549302439804
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04421176600886606
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03639867083571746
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04974959911471788
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.028310124212375998
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.024161601792267007
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.014331277970876077
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.028021161971931274
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.015115248374092949
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.015048718025511332
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.019076647870320373
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.033488904616162274
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.024627680035538668
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04986227400695109
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03248125366145993
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.027881691226873673
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03600302166707248
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.022742758991884493
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.0008438981298221071
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.028250893530464727
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.0240799967175076
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.02741840707593335
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.003180049383396333
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04322087796270324
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.040588971212466796
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04472922857246092
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.040631779330353
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.030303221330215457
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03580641963205833
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.035897458093650414
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.004844825693838151
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0343422705101728
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.017712980974634474
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.006365563772922078
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.02194524306480028
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.036908920984421445
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.017676484937354797
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.019225093047888664
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.031259764402843504
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.023487642160402167
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.033215898846066794
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.027226458799886832
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.006308683780600344
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.04154644618145853
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.028447618873956415
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.024750239326764012
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03395336528660786
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03379627443249045
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.040978325217615186
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.04142329271550377
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03285018869949585
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.046808766695824455
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03561168083237809
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02808069172377814
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.015185710526795126
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.03927705621760946
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01808096283849836
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.013294977624030535
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.02663893185228927
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03576500371752089
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.04302489914411051
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.057209861125062544
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03316901436493769
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.056800730509859176
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.023894585786253808
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.025141144948624516
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.03919903455834817
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.026190462216899135
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.022293522452794257
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.023447149962519842
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.013145180668601819
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.04001359842024699
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.029850123824340657
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.036823878848327773
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.029516144262677124
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0398087614976671
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.025324860876811073
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.022085456662296665
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.0005124933742705062
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.023091124099706817
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.022063769478252726
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.007235830824241285
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03241127181407921
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.03381520286232009
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.03173126804337972
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.019072507086279666
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03177565120891668
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04137826786425669
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03285772314957547
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.020223520009002738
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.03168720671632952
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0013797688711196798
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020061422942933116
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.04411021534260884
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03515255332686229
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.029899995115652
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02696385005990498
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01936260672848944
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03435586033997995
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.045821674804569834
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03727845087772652
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.02607984449145684
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.010432630650264674
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.03997061527050805
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020853779146285167
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.007489981583956196
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04947758120794732
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.038168971738017365
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.040863121717489626
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.039318636438260224
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.0395243530170023
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02704383989466691
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03863387026638987
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.03080470331138463
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.0072077699865880085
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.031494944257550395
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.022390226626409437
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.03096250160415981
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.01444691335656001
+        }
+      ]
+    },
+    "forward_selected": {
+      "cells": 264,
+      "negative_cells": 42,
+      "rows": [
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.010683824522423002
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.013575708858850177
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.016932191313235367
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.00967369153799047
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.01380943268291318
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.009476891009753685
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0037475651203131566
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.002506877890641912
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0019880012208891573
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.010249906431563094
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.02863568253370663
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.01866138673789386
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.011736995272128237
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.013161848658566844
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01773380252194995
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": -0.0020324340166901766
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02010479191086978
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.02160588107051553
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0073561877254333385
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.010908155940880515
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.021881975868513592
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.013571464159163327
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.007896264792241592
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.028892795370265345
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.005239789570839926
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.028550851591437276
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.011465917280941929
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.010220596634896828
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.023123453720437726
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.022471506983610334
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.00646309219141028
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.026109797077148666
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.018647615516575122
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.011721175100148251
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.01995599866267772
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.010234918544219873
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02836245000572235
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": -0.05241833674521462
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.033381914681924696
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.03270424892991286
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.012723706246817068
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.02571744043338542
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016560748702914907
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.036577075812774806
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.00516658426308747
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.008163119465768975
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.04480234506829084
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.07599257353164424
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02281716137528389
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.022378028585144705
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.0021657859308812366
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.014583441068951042
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03691518455142101
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.018165737039184227
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.013125998202580869
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.059316817944093214
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.020628140994694233
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020862702258232835
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.008623865299738909
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.07331242344359412
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0054043961320993095
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.025695245310122683
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.006309274998270775
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.012243540835033762
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.01307002281279196
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.016698244937982776
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0062198639135693234
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.016144158147966214
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.017153754323149584
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.010702456824574935
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.01188982159816454
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.013048785679852348
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.024028736761673608
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.017364223999033923
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.00493506941398919
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.020039472005722314
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.025475255624811677
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.036499074508772655
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01582009584839361
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.0347028056177755
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.03283747160309447
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.016954195883172374
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.002169689407331754
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.06998123499887543
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.023793122454710436
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01563571985439255
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.00491832553142818
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.019128332674160475
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02062361648816574
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03934867093052907
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.011101649730243857
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.04566470698268521
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.029483132234863874
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.016664513862935326
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.014464448445940192
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.052632125878381286
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0193560996836617
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.008697368601072841
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.008976003755006012
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.008794807004950944
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.018872564190605012
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.015412519501487698
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.007782078394715453
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.027202094751454686
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.016071545721711766
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020914449182704686
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.06804607277873576
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04836960055434425
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.024513689395530336
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.008289197959648331
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.002417673003108023
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.020207622282248483
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.0032461880923448927
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": -0.007898430966658765
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.004835974181977454
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": -0.0052918000812482435
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.0194478501108859
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.0054660040079035355
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.022498595849779646
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": -0.04144315809261789
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.014223880613262518
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.007577626673197835
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.008392888641704899
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.007707798637940466
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.008706520117402139
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.018361011038829922
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.005227775854651728
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.012114113536762339
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.014909803447229697
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.024648811138690996
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.013359957274060252
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.021562748051160097
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.012346064028227355
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": -0.001147395258337569
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.007822119138636618
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.008205931410069978
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0001147419964944163
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.018579249077647297
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.005215337954796784
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.00334660620945354
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.015390945640162745
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.012144889249322222
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.017109458997768723
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.01814924729625078
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02188983110986842
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02828108373686078
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.004402642185162786
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.02091220673119898
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.010519676106557685
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.020221229575683175
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.014915021817811569
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02429401431308814
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.01974921806543639
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.009823765499189507
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.009259284442731386
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.008125912338464714
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.018634062399035645
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.028772549033426076
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.000613550782034511
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01698897788871101
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.026140364437223562
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.01973640049123948
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.011091291356860489
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.04892678522402977
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.009166915262443842
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01623119705774101
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0050549284220816615
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.06145437041491253
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.02094091661781905
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.016803140567625163
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.015676497726296423
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.019592541136535302
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.03098339341155104
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03506234434919353
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.015617830368796604
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.04335331260654279
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.030404333990974752
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.016615404240032827
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.00013341594841098647
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05506158392543559
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.007815417602545671
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.0025506697306919013
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.009760236110963105
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.008182020915190491
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.005848924582633586
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.021733657855378397
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.011741754803711646
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.0068304971616343635
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.004350886067077897
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01484165862608633
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.024275576743886584
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.011211297599701298
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.01575732329741153
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": -0.004448082080990956
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.006649448036710526
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.00583734431179006
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.008899535623162702
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.012124342674554867
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0058258781763761425
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.03294877322485362
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.010225018585648837
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.019710355780010125
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.03256432065951853
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.014231501340675856
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.01360468916315638
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.035609194556776025
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.0007064969172961844
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01210444185602133
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.04098871599359982
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.020074619369935487
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.001486490852965927
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.020625486595227782
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.026678219031649686
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.0011180492576978729
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.0017099703503030694
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.010281093306902966
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.01553797335339091
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.028507813916203384
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.007868161602631374
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01731123049228611
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02964176630779425
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.013270366982333637
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0074124778263733315
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.015932789471231057
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.019550492423416554
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.007778353854193343
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.021565716197931017
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.03521484280633025
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0286921762693354
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02380792066236337
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.00198696208079302
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.021306794279176255
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.020498740598568488
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03336886693144514
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.014259117950972677
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.04022300168687282
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.037825193077181574
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023635701947980703
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.007449745415191278
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04301400730842808
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.009494778912879198
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.017256682834028092
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.009972819152569867
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.018023712102156364
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.02001933632184849
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.017614061611043064
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": -0.0014519702022107728
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.00021482501304243007
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.01567371650536542
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": -0.005286325001682801
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0062374511930132215
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 5.9661421372481094e-05
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.021384731044383765
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.020764957455987165
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": -0.002279317661667113
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.0190647555536122
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.026482850257824986
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.03847362081365291
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01592235297879696
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.034046963406903163
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.02986142823418081
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.016954195883172374
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.00019470500470997187
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0680306574244004
+        }
+      ]
+    },
+    "old_QT": {
+      "cells": 264,
+      "negative_cells": 28,
+      "rows": [
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0021461249680706507
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01478969485429088
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022613422438188147
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.011793049266558442
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.0005557788847240785
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.007503510657496437
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.012987603922408608
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.033086122529448425
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.00730374897305075
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02163910053542395
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": 0.018393816871137614
+        },
+        {
+          "heldout_building": "2t7WUuJeko7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.052230230121306565
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.00415056001295544
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.019568703871843007
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02194949380733946
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01807852344737937
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.0041744659516270155
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.006356558313143745
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01615279523411628
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.01823371957839398
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.018070957224536888
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023179954223684685
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0049286816785358845
+        },
+        {
+          "heldout_building": "7y3sRwLe3Va",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05218890506602303
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0011144909723217467
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.02108669277258901
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.017942284708282685
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.014536323945891771
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.007410847194956716
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.010956230794031518
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01200286253305305
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.01562608136985233
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.014423715136009374
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02125782360283701
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.007731602232599832
+        },
+        {
+          "heldout_building": "B6ByNegPMKs",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.043244105005657896
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.004862208597850248
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.021929067776156275
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.023820458451974558
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.015646301456645695
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0032547858221494974
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.010882574779329635
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.0127316833002179
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02173738210190107
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.003739296083566712
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.021927838718308057
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.00680971977073197
+        },
+        {
+          "heldout_building": "S9hNv5qa7GM",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05992352562953318
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0051012222255922834
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.018015974854338257
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.014691506570713775
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.014644287444646964
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.00024972499167019713
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.011126323770175528
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.013717402213972663
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.01091919451147888
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0050658501565696845
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.022405252881131155
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.018881867396028484
+        },
+        {
+          "heldout_building": "UwV83HsGsw3",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04990227501901123
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.004981588097136336
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.018043567987282738
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022693176139337023
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.015025545907763282
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 4.71602526949666e-05
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.010005249679487349
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016184430320144827
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.028028619478415895
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.003034159213193721
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023712939395085897
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.013288159909565223
+        },
+        {
+          "heldout_building": "VFuaQ6m2Qom",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0432613909518188
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.00490452003261066
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01689037698857332
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022485754952679682
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.015283112703896706
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0010230620581128669
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.008012962265185886
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.015715069702135098
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02478493981698121
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.00778565124827213
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023712939395085897
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015660290154831058
+        },
+        {
+          "heldout_building": "VLzqgDo317F",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05195592090913059
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0064585249492638
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.013105094822278618
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.021579252392324222
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.016720551891711732
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.0009470040767969312
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.012906924551710608
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01661461992702251
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.028124921685261095
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.006533301914464107
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023712939395085897
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.011259021659471347
+        },
+        {
+          "heldout_building": "X7HyMhZNoso",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.055203165965951206
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.00402140615478519
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01689037698857332
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022485754952679682
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01457451511258101
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0010230620581128669
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.008012962265185886
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.015762438326624828
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02478493981698121
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.00778565124827213
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023002935263531366
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015660290154831058
+        },
+        {
+          "heldout_building": "Z6MFQCViBuw",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05195592090913059
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.007497845885669818
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01689037698857332
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.0223565164229364
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.0165065244263517
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0010230620581128669
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.005420317506076078
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016614619927022733
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02478493981698121
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.020416054649330717
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023712939395085897
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015660290154831058
+        },
+        {
+          "heldout_building": "b8cTxDM8gDG",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.055203165965951206
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.004137215443593467
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.019057442963302418
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02123457472094381
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01584005698491775
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0023187243509685262
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.006960362498577122
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016236928489890334
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02428632813792292
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.005552934723677128
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02344165671076781
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.016159641928167323
+        },
+        {
+          "heldout_building": "e9zR4mvMWw7",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05146322001463932
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0010581783634930897
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01688683244470457
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02133698634446446
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.013232150426659928
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.005626773244240713
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.006662470855840041
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.012653864046006769
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.03114781616440032
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.016591511576172113
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01460830135078961
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0136388902908674
+        },
+        {
+          "heldout_building": "jh4fc5c5qoQ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0510928084749902
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.004687267466258693
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.013491506004313314
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02354257751715294
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.014367678244320281
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0013848837364337507
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.00685905404223508
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.012506222089749164
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.015276593978198194
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.011514634737895602
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020603241265579775
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.04346910613767896
+        },
+        {
+          "heldout_building": "jtcxE69GiFV",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04908995363116142
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0005502422037121368
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.016841161477153033
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01878817884777806
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.011775376659523218
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.00431069976282461
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.006049419717482074
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.012267340301481022
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.027932557610229614
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.017325526627094745
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020941004564400068
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.01220114536940875
+        },
+        {
+          "heldout_building": "pRbA3pwrgk9",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04287862453920388
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.00035407918761143353
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.016615748895110083
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.018172711062345692
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.00919309054622064
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0035864348402679935
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.00681389911047281
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.009188494868920372
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.01733652362662219
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.02040135527413789
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.020405531323563597
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.02532052061255674
+        },
+        {
+          "heldout_building": "pa4otMbVnkk",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.036598678546410746
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.009398017980158935
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01689037698857332
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022183075375387495
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01660464197172118
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0010230620581128669
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.006768672604014037
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01587610029794828
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02478493981698121
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.00870126257766557
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023136407009104798
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015660290154831058
+        },
+        {
+          "heldout_building": "q9vSo1VnCiC",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05557662840081712
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.004512298396085801
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.019217196683017856
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.022485754952679682
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.01618559309877976
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.002565372119495979
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.008012962265185886
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01686239012130597
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.036385787632755295
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.00778565124827213
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.02046375039142112
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.004139058289508002
+        },
+        {
+          "heldout_building": "rPc6DW4iMge",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.05195592090913059
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.00010632175267211164
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.013500097949387557
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.009345033781361145
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.008643476695135544
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0014649586499783651
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.00011555669695562099
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.009481985817868632
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02640921516043071
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.0072232840682388
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.015711662841819907
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.0107124801360855
+        },
+        {
+          "heldout_building": "uNb9QFRL6hY",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.047571414176442395
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.006801334776870616
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01577153160502126
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02368570443460416
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.013974475760841987
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.007027491066820268
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0006582346378483095
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.016143241740046888
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02166848896413881
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.003048556611013331
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.021806107030119204
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.024671139895210303
+        },
+        {
+          "heldout_building": "wc2JMjhGNzB",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.0544964317001605
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.007508654125056968
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01689037698857332
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01564219145835144
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.018648058297425107
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.0010230620581128669
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.005338762910632733
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.014326290407571718
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02478493981698121
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": -0.0024218754599226733
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01943593385441944
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015660290154831058
+        },
+        {
+          "heldout_building": "x8F5xyUWy9e",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.04568144766508886
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.0029461880540485597
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.01599243689296892
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.02162833262330388
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.015616262064387265
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": 0.004901976703007016
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.0028020522662027814
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.014708086168382484
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.028137806548679978
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.008359668719303381
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.01790925490241535
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.015579540179144202
+        },
+        {
+          "heldout_building": "yqstnuAEVhm",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.06605576825379533
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "easy",
+          "within_minus_between": 0.005640317383327598
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "hard",
+          "within_minus_between": 0.014750298101629311
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 8,
+          "difficulty": "medium",
+          "within_minus_between": 0.01951012171408284
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "easy",
+          "within_minus_between": 0.0157521933940028
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "hard",
+          "within_minus_between": -0.005767111106435796
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 12,
+          "difficulty": "medium",
+          "within_minus_between": 0.004767015238450578
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "easy",
+          "within_minus_between": 0.01589331863572252
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "hard",
+          "within_minus_between": 0.02491922907951738
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 16,
+          "difficulty": "medium",
+          "within_minus_between": 0.012596421715335482
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "easy",
+          "within_minus_between": 0.023550352362941784
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "hard",
+          "within_minus_between": -0.01283638550365529
+        },
+        {
+          "heldout_building": "zsNo4HB9uLZ",
+          "k": 24,
+          "difficulty": "medium",
+          "within_minus_between": 0.037032612442024826
+        }
+      ]
+    }
+  },
+  "QT_vs_Q_new_k16": {
+    "events": 4080,
+    "supported_decisions": 4062,
+    "changed_choices": 650,
+    "changed_Q_known": 636,
+    "changed_Q_losses_gt2": 62,
+    "changed_Q_gains_gt2": 75,
+    "changed_completeness_losses": 3,
+    "changed_completeness_gains": 3,
+    "all": {
+      "dq": {
+        "events": 4001,
+        "buildings": 22,
+        "building_mean": 0.0036077514767227873,
+        "building_ci": [
+          -0.10350043742368266,
+          0.10359346501917564
+        ],
+        "event_p05": -0.3492243808531299,
+        "event_min": -38.4331935544078
+      },
+      "dt": {
+        "events": 3464,
+        "buildings": 22,
+        "building_mean": -13.422818893835542,
+        "building_ci": [
+          -18.155245972173713,
+          -8.918668687711122
+        ],
+        "event_p05": -90.25139999999999,
+        "event_min": -2455.628
+      },
+      "dc": {
+        "events": 4062,
+        "buildings": 22,
+        "building_mean": 0.00021464646464646462,
+        "building_ci": [
+          -0.00045454545454545455,
+          0.0009722222222222222
+        ],
+        "event_p05": 0.0,
+        "event_min": -1.0
+      }
+    },
+    "joint_known": {
+      "dq": {
+        "events": 3410,
+        "buildings": 22,
+        "building_mean": 0.026961947750064472,
+        "building_ci": [
+          -0.0906200173746047,
+          0.1492251244702875
+        ],
+        "event_p05": -0.34848582255036503,
+        "event_min": -38.4331935544078
+      },
+      "dt": {
+        "events": 3410,
+        "buildings": 22,
+        "building_mean": -13.441975968826592,
+        "building_ci": [
+          -18.160870932555348,
+          -8.991825190878256
+        ],
+        "event_p05": -87.02379999999995,
+        "event_min": -2455.628
+      }
+    },
+    "joint_known_changed": {
+      "dq": {
+        "events": 557,
+        "buildings": 22,
+        "building_mean": 0.058302684934877336,
+        "building_ci": [
+          -0.44583912439124673,
+          0.556115008408223
+        ],
+        "event_p05": -3.1765812716115165,
+        "event_min": -38.4331935544078
+      },
+      "dt": {
+        "events": 557,
+        "buildings": 22,
+        "building_mean": -86.17424873355809,
+        "building_ci": [
+          -126.7612633045687,
+          -54.12205921662541
+        ],
+        "event_p05": -299.986,
+        "event_min": -2455.628
+      }
+    },
+    "largest_three_Q_losses": [
+      {
+        "event_id": "Aevt_83f471d12f5b752e62683bd5",
+        "image_id": "zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b",
+        "dq": -38.4331935544078,
+        "dt": -79.273
+      },
+      {
+        "event_id": "Aevt_dfed885b614bcdc95c18007e",
+        "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+        "dq": -38.262408549757254,
+        "dt": -267.093
+      },
+      {
+        "event_id": "Aevt_5c7ae9fd572dc016c6061923",
+        "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+        "dq": -29.897547263411283,
+        "dt": 72.201
+      }
+    ]
+  },
+  "script_sha256": "8524c565add9d0fca3123ddf0a597392359c8db33ae9038f641da0ccb7dab92c"
+}

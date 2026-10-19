@@ -1,0 +1,78 @@
+{
+  "registration_id": "reverse_types_A_r1_20261019",
+  "written_utc": "2026-10-19T03:44:44.977298+00:00",
+  "status": "candidate_design_before_any_new_validation_results",
+  "data_release": "v2",
+  "source_main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "main_scope": "ordinary Manual, qualified frozen geometries; no target-building answers in learned labels",
+  "outer_split": "leave one building out; full fit is descriptive only",
+  "inner_split": "three deterministic groups of training buildings; same assignment shared by all candidates in a fold",
+  "seeds": {
+    "inner_buildings": 20261019,
+    "bootstrap": 20261020
+  },
+  "worker_support": {
+    "minimum_unique_images": 6,
+    "minimum_buildings": 3
+  },
+  "pair_support": {
+    "minimum_unique_images": 3,
+    "minimum_buildings": 2,
+    "unsupported": "retain counts and unknown; shrink to training building-weighted prior for clustering only"
+  },
+  "candidate_k": [
+    4,
+    6,
+    8,
+    10
+  ],
+  "linkages": [
+    "average",
+    "complete"
+  ],
+  "candidate_relation_sources": [
+    "geometry9",
+    "geometry12",
+    "swap_joint",
+    "geometry9_swap_equal"
+  ],
+  "global_relationships": "same-image same-condition same-reference relations, first averaged within image then building; geometrical probability and observed swap risk kept separately",
+  "partial_pooling": "pair posterior with equivalent two-building training-global prior; sensitivity/no-prior relation columns retained",
+  "conditional_variant": "For each frozen base class and observed difficulty, two-way refinement is attempted only when at least four members meet difficulty support; a split is retained only if both children have at least two members. Ineligible members are unknown for the conditional variant. A retained group is not selected using test-image data.",
+  "selection_objective": "inner heldout-building mean Brier for joint_main stability, calibrated using within/between category and k/difficulty train events; unknown class receives train baseline",
+  "selection_rule": "one-standard-error preference for smaller effective class count; deterministic ties global before conditional, geometry9 before geometry12 before geometry9_swap_equal before swap_joint, average before complete",
+  "class_id_arbitrariness": "canonical displayed ID sorted by smallest worker ID; compare across folds by pair co-assignment, not numeric ID",
+  "required_diagnostics": [
+    "singleton and doubleton classes",
+    "all class-internal supported pairs, bad tails and unknown coverage",
+    "same-class pair coassignment stability across outer folds",
+    "joint stability and component/signed differences separately",
+    "raw and Q-near matched comparisons on identical events",
+    "training relation and target actual cluster information stages separated"
+  ],
+  "forbidden": [
+    "connected components as personnel classes",
+    "validation outcome-driven class count or threshold tuning",
+    "target Q/geometries in precollection labels",
+    "claims of blind external validation",
+    "unknown behavior as zero",
+    "class labels as formal worker tier"
+  ],
+  "nontransitivity_diagnostic": {
+    "close_probability": 0.8,
+    "far_probability": 0.2,
+    "definition": "supported historical geometry pair probabilities; count wedges A~B,B~C but A far C. Diagnostic only, not graph connected components."
+  },
+  "shared_selection_code": "reverse/selection_common.py; independently reviewed by forward route before outcome access",
+  "training_event_panel": "Pro_exact_fixed_background_v1",
+  "additional_evaluation_only_panel": "A_nested_even_v1",
+  "event_panel_freeze_utc": "2026-10-19T03:54:34.931607+00:00",
+  "event_panel_freeze_reason": "Root common design: inner selection and historical swap relationship use archived fixed-background events only. New nested backgrounds are evaluation-only; no candidate result had been inspected.",
+  "training_event_panel_logical_name": "archived_fixed_background",
+  "difficulty_analysis_encoding": {
+    "简单": "easy",
+    "中等": "medium",
+    "困难": "hard",
+    "global": "global"
+  }
+}

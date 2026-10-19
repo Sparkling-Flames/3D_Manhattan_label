@@ -1,0 +1,42 @@
+partitions {'forward_partitions': {'training_sets': 69, 'worker_assignments': 4140, 'mismatch_sets': []}}
+features {'train_key': 'train_7821be8cc2f2d960', 'inner_group': None, 'training_buildings': 21, 'fresh_feature_mismatches': {}, 'poison_excluded_rows': 564, 'poison_parity': True}
+features {'train_key': 'train_94f98e4071f1df62', 'inner_group': 0, 'training_buildings': 14, 'fresh_feature_mismatches': {}, 'poison_excluded_rows': 3659, 'poison_parity': True}
+{
+  "forward_partitions": {
+    "training_sets": 69,
+    "worker_assignments": 4140,
+    "mismatch_sets": []
+  },
+  "forward_fresh_features": [
+    {
+      "train_key": "train_7821be8cc2f2d960",
+      "inner_group": null,
+      "training_buildings": 21,
+      "fresh_feature_mismatches": {},
+      "poison_excluded_rows": 564,
+      "poison_parity": true
+    },
+    {
+      "train_key": "train_94f98e4071f1df62",
+      "inner_group": 0,
+      "training_buildings": 14,
+      "fresh_feature_mismatches": {},
+      "poison_excluded_rows": 3659,
+      "poison_parity": true
+    }
+  ],
+  "reverse_partitions": [
+    {
+      "fold": "FULL",
+      "label_mismatches": [],
+      "n": 60,
+      "training_buildings": 22
+    },
+    {
+      "fold": "B6ByNegPMKs",
+      "label_mismatches": [],
+      "n": 60,
+      "training_buildings": 21
+    }
+  ]
+}

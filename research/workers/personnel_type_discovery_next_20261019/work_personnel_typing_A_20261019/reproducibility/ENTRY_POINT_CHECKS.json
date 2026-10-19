@@ -1,0 +1,372 @@
+{
+  "created_utc": "2026-10-19T05:16:27.379010+00:00",
+  "scientific_steps_executed": 0,
+  "help_exits_zero": true,
+  "default_verification": {
+    "passed": true,
+    "key_sha_checks": 14,
+    "table_header_checks": 13,
+    "runtime_matches": true
+  },
+  "python_syntax_checked": [
+    "events/export_event_cases.py",
+    "events/register_events.py",
+    "events/run_events.py",
+    "events/summarize_design.py",
+    "events/verify_replay.py",
+    "reverse/analyze_partition_stability.py",
+    "reverse/discover_reverse_types.py",
+    "reverse/discover_reverse_types_fast.py",
+    "reverse/explain_reverse_types.py",
+    "reverse/make_exchange_summaries.py",
+    "reverse/repair_aggregate_exports.py",
+    "reverse/repair_prediction_exports.py",
+    "reverse/run_discovery_batch.py",
+    "reverse/safe_replay.py",
+    "reverse/selection_common.py",
+    "reverse/verify_fast_selection.py",
+    "reverse/verify_final_outputs.py",
+    "reverse/verify_training_isolation.py",
+    "assessment/additional_sensitivity.py",
+    "assessment/evaluate_common.py",
+    "assessment/final_diagnostics.py",
+    "assessment/metric_and_rule_sensitivity.py",
+    "assessment/repair_analysis_input.py",
+    "assessment/report_tables.py",
+    "assessment/select_cases.py",
+    "assessment/selection_and_classes.py",
+    "assessment/verify_common_predictions.py",
+    "forward/atomic_exports.py",
+    "forward/build_features.py",
+    "forward/check_fast_selection.py",
+    "forward/check_forward_contract.py",
+    "forward/discover_forward.py",
+    "forward/explain_and_audit.py",
+    "forward/final_profile_sensitivities.py",
+    "forward/metric_sensitivity.py",
+    "forward/multiview_partition.py",
+    "forward/selection_fast.py",
+    "forward/summarize_forward.py",
+    "forward/verify_final_exports.py",
+    "reproducibility/check_replay_entry.py",
+    "reproducibility/reproduce.py"
+  ],
+  "acquisition_dependency_scan": {
+    "top_level_scientific_scripts_scanned": 39,
+    "references_to_one_time_restore_download_paths": [],
+    "scope": "Static scan of current events/forward/reverse/assessment top-level Python; restored native siblings are copied intact."
+  },
+  "aggregate_plan_only": {
+    "steps": 8,
+    "files_ready": true,
+    "no_execution": true,
+    "late_stage_dependency_closure": [
+      {
+        "step": "event_design_opportunity_tables",
+        "input": "events/event_design.csv.gz",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/LAST_SEAT_CHOICES.csv.gz",
+        "available_from": "earlier step: class_and_last_seat_analysis"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/MATCHED_BACKGROUND_PER_IMAGE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/NESTED_FOUR_NODE_CHAINS.csv.gz",
+        "available_from": "earlier step: room_duplicate_four_node_sensitivity"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "forward/full_selected_worker_portraits.csv.gz",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "recovered/work_v2_20261019/profiles/full_profiles.csv",
+        "available_from": "copied restored native core"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "reverse/results/worker_classmate_stability.csv",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "events/native_runs/team_results.csv",
+        "available_from": "copied retained input"
+      }
+    ]
+  },
+  "refit_plan_only": {
+    "steps": 24,
+    "files_ready": true,
+    "no_execution": true,
+    "late_stage_dependency_closure": [
+      {
+        "step": "event_design_opportunity_tables",
+        "input": "events/event_design.csv.gz",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/all_candidate_classes.csv.gz",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "forward/fold_features.csv.gz",
+        "available_from": "earlier step: forward_features_B8L2"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/worker_classmate_stability.csv",
+        "available_from": "earlier step: reverse_partition_stability"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/selected_candidates.csv",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/coassignment_stability.csv.gz",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "forward/FEATURE_DOMAINS.json",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/explanations/rules.txt",
+        "available_from": "earlier step: reverse_explanations"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/LAST_SEAT_CHOICES.csv.gz",
+        "available_from": "earlier step: class_and_last_seat_analysis"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/MATCHED_BACKGROUND_PER_IMAGE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/NESTED_FOUR_NODE_CHAINS.csv.gz",
+        "available_from": "earlier step: room_duplicate_four_node_sensitivity"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "forward/full_selected_worker_portraits.csv.gz",
+        "available_from": "earlier step: forward_descriptive_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "recovered/work_v2_20261019/profiles/full_profiles.csv",
+        "available_from": "copied restored native core"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "reverse/results/worker_classmate_stability.csv",
+        "available_from": "earlier step: reverse_partition_stability"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "events/native_runs/team_results.csv",
+        "available_from": "copied retained input"
+      }
+    ]
+  },
+  "fresh_plan_only": {
+    "steps": 26,
+    "files_ready": true,
+    "no_execution": true,
+    "late_stage_dependency_closure": [
+      {
+        "step": "event_design_opportunity_tables",
+        "input": "events/event_design.csv.gz",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/all_candidate_classes.csv.gz",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "forward/fold_features.csv.gz",
+        "available_from": "earlier step: forward_features_B8L2"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/worker_classmate_stability.csv",
+        "available_from": "earlier step: reverse_partition_stability"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/selected_candidates.csv",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/results/coassignment_stability.csv.gz",
+        "available_from": "earlier step: reverse_consolidation"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "forward/FEATURE_DOMAINS.json",
+        "available_from": "copied retained input"
+      },
+      {
+        "step": "reverse_exchange_summaries",
+        "input": "reverse/explanations/rules.txt",
+        "available_from": "earlier step: reverse_explanations"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/LAST_SEAT_CHOICES.csv.gz",
+        "available_from": "earlier step: class_and_last_seat_analysis"
+      },
+      {
+        "step": "paired_policies_practical_coverage_origin_diagnostic",
+        "input": "assessment/MATCHED_BACKGROUND_PER_IMAGE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/COMMON_EVENT_ANALYSIS_INPUT.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/NESTED_FOUR_NODE_CHAINS.csv.gz",
+        "available_from": "earlier step: room_duplicate_four_node_sensitivity"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "forward/full_selected_worker_portraits.csv.gz",
+        "available_from": "earlier step: forward_descriptive_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "recovered/work_v2_20261019/profiles/full_profiles.csv",
+        "available_from": "copied restored native core"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "available_from": "earlier step: common_recalibration_and_summary"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "reverse/results/worker_classmate_stability.csv",
+        "available_from": "earlier step: reverse_partition_stability"
+      },
+      {
+        "step": "combined_portraits_four_node_and_ablation_tables",
+        "input": "events/native_runs/team_results.csv",
+        "available_from": "earlier step: exact_native_events"
+      }
+    ]
+  },
+  "existing_workspace_guard": {
+    "refused": true,
+    "preserved_all_files": true,
+    "scientific_steps_executed": 0,
+    "preserved_test_directory": "/tmp/partA-replay-entry-guard-n5j0ts0z/work_personnel_typing_A_20261019",
+    "automatic_deletion_performed": false
+  },
+  "three_expensive_replay_levels_executed_for_this_wrapper_smoke": false,
+  "final_diagnostics_source_sha256": "5cb3f758cb94ba402c5d63261e698b0d8f92fbd485709af8294669d20b32d01f",
+  "report_tables_source_sha256": "30b7d340d2dcfdfa0406047347f212682c7be5adfd1dcd1ae2e4de71cb58a7c0",
+  "entry_source_sha256": "9a96278d28a4405b981fe86f4eb26ad321ee5a7942e0a10342161de95c4c57ec",
+  "entry_contract_sha256": "649b2535f9cc67f9e7b7f401ae9e8c8d5e4c195afd2dc6c1efdb02c65591a351"
+}

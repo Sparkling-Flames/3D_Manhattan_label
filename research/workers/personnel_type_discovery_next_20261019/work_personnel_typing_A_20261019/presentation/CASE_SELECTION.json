@@ -1,0 +1,387 @@
+{
+  "cases": [
+    {
+      "event_id": "Aevt_b7693d420b4bd22831cb1ae5",
+      "case_type": "within_typical",
+      "title": "同类且相近的普通例",
+      "method_id": "reverse_selected",
+      "description": "检查这一固定背景下两队的范围、局部连接和上下几何为何相近；当图标法簇是否提供相同解释。 保存选择时的楼外关系：正向跨类；反向同类。",
+      "denominator_text": "主面板 k16 条件候选 29,560 事件／156 图／22 楼；展示多样性限制后 29,560 事件。",
+      "filter_and_selection": {
+        "case_type": "within_typical",
+        "title_zh": "同类且相近的普通例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; joint main stable; average team B8 >=70; closest to all within-stable median absolute Q change",
+        "eligible_events": 29560,
+        "eligible_images": 156,
+        "eligible_buildings": 22,
+        "sorting": [
+          "distance_to_typical_stable_absQ",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 29560,
+        "selected_event_id": "Aevt_b7693d420b4bd22831cb1ae5"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_f99b413d697b78327906e786",
+      "case_type": "within_large",
+      "title": "同类仍大变的反例",
+      "method_id": "reverse_selected",
+      "description": "查看两位换入成员所在整簇及团队多出的节点／连接，判断哪些实际结构对应这次大幅质量变化。 保存选择时的楼外关系：正向跨类；反向同类。",
+      "denominator_text": "主面板 k16 条件候选 1,774 事件／40 图／17 楼；展示多样性限制后 1,774 事件。",
+      "filter_and_selection": {
+        "case_type": "within_large",
+        "title_zh": "同类仍大变的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; both complete; absolute B8 change >=10; descending absolute change",
+        "eligible_events": 1774,
+        "eligible_images": 40,
+        "eligible_buildings": 17,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 1774,
+        "selected_event_id": "Aevt_f99b413d697b78327906e786"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_00ad805fb67507539ac62dc6",
+      "case_type": "within_failure",
+      "title": "同类换人改变完整性的反例",
+      "method_id": "reverse_selected",
+      "description": "查看团队 A 的未连接状态及保留节点支持，和团队 B 的完整输出对照；恢复可计算与提高质量是不同现象。 保存选择时的楼外关系：正向同类；反向同类。",
+      "denominator_text": "主面板 k16 条件候选 496 事件／10 图／7 楼；展示多样性限制后 496 事件。",
+      "filter_and_selection": {
+        "case_type": "within_failure",
+        "title_zh": "同类换人改变完整性的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; exactly one complete; deterministic event ID",
+        "eligible_events": 496,
+        "eligible_images": 10,
+        "eligible_buildings": 7,
+        "sorting": [
+          "event_id"
+        ],
+        "ascending": [
+          true
+        ],
+        "eligible_after_display_diversity": 496,
+        "selected_event_id": "Aevt_00ad805fb67507539ac62dc6"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_23606ae4bbfc029a603e89fe",
+      "case_type": "between_stable",
+      "title": "跨类仍相近的反例",
+      "method_id": "reverse_selected",
+      "description": "查看两位换入人员的实际标法与相同背景；了解人员跨类时为何仍产生同一融合几何。 保存选择时的楼外关系：正向跨类；反向跨类。",
+      "denominator_text": "主面板 k16 条件候选 8,481 事件／119 图／22 楼；展示多样性限制后 8,391 事件。",
+      "filter_and_selection": {
+        "case_type": "between_stable",
+        "title_zh": "跨类仍相近的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse between; joint main stable; average team B8 >=70; least floor and Q change",
+        "eligible_events": 8481,
+        "eligible_images": 119,
+        "eligible_buildings": 22,
+        "sorting": [
+          "floor_change",
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 8391,
+        "selected_event_id": "Aevt_23606ae4bbfc029a603e89fe"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_8e2d868396ada8940787dfd8",
+      "case_type": "between_improves_against_Q",
+      "title": "较低历史Q成员带来更高团队Q",
+      "method_id": "reverse_selected",
+      "description": "历史 Q 较低的一侧带来更高团队 Q；检查实际节点／连接改变，而不把全局 Q 当成每图胜负保证。 保存选择时的楼外关系：正向跨类；反向跨类。",
+      "denominator_text": "主面板 k16 条件候选 415 事件／43 图／15 楼；展示多样性限制后 383 事件。",
+      "filter_and_selection": {
+        "case_type": "between_improves_against_Q",
+        "title_zh": "较低历史Q成员带来更高团队Q",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse between; both historical Q supported; signed team change opposes historical Q order; absolute team B8 change >=5",
+        "eligible_events": 415,
+        "eligible_images": 43,
+        "eligible_buildings": 15,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 383,
+        "selected_event_id": "Aevt_8e2d868396ada8940787dfd8"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_e202c3387762f386bbb5ad7b",
+      "case_type": "stable_low_Q",
+      "title": "稳定但质量仍低",
+      "method_id": "reverse_selected",
+      "description": "两队几何相近而 B8 均约 25；检查共同错误或遗漏的位置，保留“稳定但质量低”。 保存选择时的楼外关系：正向跨类；反向同类。",
+      "denominator_text": "主面板 k16 条件候选 1,592 事件／29 图／14 楼；展示多样性限制后 1,468 事件。",
+      "filter_and_selection": {
+        "case_type": "stable_low_Q",
+        "title_zh": "稳定但质量仍低",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; joint main stable; average team B8 <=55; ascending team quality",
+        "eligible_events": 1592,
+        "eligible_images": 29,
+        "eligible_buildings": 14,
+        "sorting": [
+          "mean_team_Q",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 1468,
+        "selected_event_id": "Aevt_e202c3387762f386bbb5ad7b"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    },
+    {
+      "event_id": "Aevt_a3abd6d9ced67642df5809ff",
+      "case_type": "hard_rule_disagreement",
+      "title": "困难图中两套历史类别解释不同",
+      "method_id": "reverse_selected",
+      "description": "该困难图在正向类中属于同类、反向类中属于跨类；观察实际点数、局部簇与团队结构变化能解释什么。 保存选择时的楼外关系：正向同类；反向跨类。",
+      "denominator_text": "主面板 k16 条件候选 3,988 事件／31 图／15 楼；展示多样性限制后 3,689 事件。",
+      "filter_and_selection": {
+        "case_type": "hard_rule_disagreement",
+        "title_zh": "困难图中两套历史类别解释不同",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "hard image; forward and reverse relation disagree; both complete; largest absolute change",
+        "eligible_events": 3988,
+        "eligible_images": 31,
+        "eligible_buildings": 15,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 3689,
+        "selected_event_id": "Aevt_a3abd6d9ced67642df5809ff"
+      },
+      "post_hoc_presentation_only": true,
+      "model_or_threshold_adjustment": false
+    }
+  ],
+  "catalog": {
+    "post_hoc_presentation_only": true,
+    "model_or_threshold_adjustment": false,
+    "max_cases": 8,
+    "diversity_limit": "one event per image; at most two per building",
+    "all_filters_and_denominators": [
+      {
+        "case_type": "within_typical",
+        "title_zh": "同类且相近的普通例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; joint main stable; average team B8 >=70; closest to all within-stable median absolute Q change",
+        "eligible_events": 29560,
+        "eligible_images": 156,
+        "eligible_buildings": 22,
+        "sorting": [
+          "distance_to_typical_stable_absQ",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 29560,
+        "selected_event_id": "Aevt_b7693d420b4bd22831cb1ae5"
+      },
+      {
+        "case_type": "within_large",
+        "title_zh": "同类仍大变的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; both complete; absolute B8 change >=10; descending absolute change",
+        "eligible_events": 1774,
+        "eligible_images": 40,
+        "eligible_buildings": 17,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 1774,
+        "selected_event_id": "Aevt_f99b413d697b78327906e786"
+      },
+      {
+        "case_type": "within_failure",
+        "title_zh": "同类换人改变完整性的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; exactly one complete; deterministic event ID",
+        "eligible_events": 496,
+        "eligible_images": 10,
+        "eligible_buildings": 7,
+        "sorting": [
+          "event_id"
+        ],
+        "ascending": [
+          true
+        ],
+        "eligible_after_display_diversity": 496,
+        "selected_event_id": "Aevt_00ad805fb67507539ac62dc6"
+      },
+      {
+        "case_type": "between_stable",
+        "title_zh": "跨类仍相近的反例",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse between; joint main stable; average team B8 >=70; least floor and Q change",
+        "eligible_events": 8481,
+        "eligible_images": 119,
+        "eligible_buildings": 22,
+        "sorting": [
+          "floor_change",
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 8391,
+        "selected_event_id": "Aevt_23606ae4bbfc029a603e89fe"
+      },
+      {
+        "case_type": "between_improves_against_Q",
+        "title_zh": "较低历史Q成员带来更高团队Q",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse between; both historical Q supported; signed team change opposes historical Q order; absolute team B8 change >=5",
+        "eligible_events": 415,
+        "eligible_images": 43,
+        "eligible_buildings": 15,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 383,
+        "selected_event_id": "Aevt_8e2d868396ada8940787dfd8"
+      },
+      {
+        "case_type": "stable_low_Q",
+        "title_zh": "稳定但质量仍低",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "reverse within; joint main stable; average team B8 <=55; ascending team quality",
+        "eligible_events": 1592,
+        "eligible_images": 29,
+        "eligible_buildings": 14,
+        "sorting": [
+          "mean_team_Q",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 1468,
+        "selected_event_id": "Aevt_e202c3387762f386bbb5ad7b"
+      },
+      {
+        "case_type": "floor_close_3d_different",
+        "title_zh": "底面近而平均高度棱柱不同",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "both complete; floor difference <=.02; mean-height prism pair IoU <=.85; illustrative, not exact general 3D truth",
+        "eligible_events": 0,
+        "eligible_images": 0,
+        "eligible_buildings": 0,
+        "sorting": [
+          "mean_height_prism_pair_iou",
+          "event_id"
+        ],
+        "ascending": [
+          true,
+          true
+        ],
+        "eligible_after_display_diversity": 0,
+        "selected_event_id": null
+      },
+      {
+        "case_type": "hard_rule_disagreement",
+        "title_zh": "困难图中两套历史类别解释不同",
+        "base_panel": "Pro_exact_fixed_background_v1",
+        "k": 16,
+        "eligibility": "hard image; forward and reverse relation disagree; both complete; largest absolute change",
+        "eligible_events": 3988,
+        "eligible_images": 31,
+        "eligible_buildings": 15,
+        "sorting": [
+          "abs_delta_Q",
+          "event_id"
+        ],
+        "ascending": [
+          false,
+          true
+        ],
+        "eligible_after_display_diversity": 3689,
+        "selected_event_id": "Aevt_a3abd6d9ced67642df5809ff"
+      }
+    ]
+  },
+  "source_file": "assessment/REPRESENTATIVE_CASES.csv",
+  "source_sha256": "930f398611d27202a4152bfe062cb45db5ae042c4c609523b55c07d0459fc00a",
+  "source_catalog_file": "assessment/CASE_SELECTION_CATALOG.json",
+  "source_catalog_sha256": "03b252b22d7e753dd812c18a9d4bc0927d5513fe346c6eaefc983cfe6e01d67c",
+  "selection_performed_here": false
+}

@@ -1,0 +1,43 @@
+{
+  "design_sha256": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf",
+  "frozen_before_results": true,
+  "files": {
+    "REQUESTS.json.gz": {
+      "sha256": "79de9f2d881ef8ef32d4d2a7fdda7fc3d01fc9d457e183455abeabc63711364d",
+      "bytes": 1829952
+    },
+    "PILOT_REQUESTS_100.json.gz": {
+      "sha256": "b5396394723c43f0fb1a593f9edf53bc5414188b58c54011e7a2c1631c1950aa",
+      "bytes": 14698
+    },
+    "event_design.csv.gz": {
+      "sha256": "a2b0e603b181a0ce4b16e81ee3cd684d830f3a4860badf5209376bd1f778c608",
+      "bytes": 11441761
+    },
+    "nested_chains.csv.gz": {
+      "sha256": "317dddf3fe214296a9c37db61366a1f29d4987f4919c21c24263448b3894bd46",
+      "bytes": 344839
+    },
+    "nested_coverage.csv.gz": {
+      "sha256": "fd3960a72a969a8de6dedd3dbd7c38017f63955aa6d9ccbceaa305cd5baea9a7",
+      "bytes": 9069
+    },
+    "pool_members.csv.gz": {
+      "sha256": "2be90fce0a5cda78cc53a254fbf6942db72058ff91a4ee9d6b43b3a3e0d5c5e4",
+      "bytes": 62691
+    }
+  },
+  "n_requests": 58882,
+  "n_unique_teams": 58679,
+  "n_events": 286666,
+  "n_pilot_requests": 100,
+  "assertions": [
+    "legacy request values unchanged",
+    "event IDs unique",
+    "both teams share exact k-1 background",
+    "same replacement identities across nested k",
+    "all members real and distinct",
+    "same reference across endpoint pairs",
+    "no outcomes imported or read"
+  ]
+}

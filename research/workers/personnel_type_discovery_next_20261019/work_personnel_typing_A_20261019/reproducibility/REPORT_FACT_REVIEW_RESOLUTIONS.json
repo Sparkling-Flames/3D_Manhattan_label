@@ -1,0 +1,35 @@
+{
+  "review": "reverse/ROOT_REPORT_FINAL_FACT_REVIEW.md",
+  "resolved": [
+    {
+      "section": "1",
+      "change": "Supported image-set majority, not uncounted background majority."
+    },
+    {
+      "section": "5.3",
+      "change": "3 images/2 buildings is support diagnostic; weak/unobserved pairs use shrunk training prior, not hard deletion."
+    },
+    {
+      "section": "8.3",
+      "change": "Conditional Q tail separated from all-attempt failure/completeness."
+    },
+    {
+      "section": "6.2",
+      "change": "Full rule coverage/fallback and supported-only CI identified."
+    },
+    {
+      "section": "8.6",
+      "change": "15.0% chain rate explicitly building-weighted."
+    }
+  ],
+  "model_or_threshold_change": false,
+  "quantitative_checks_passed": [
+    "group_medians",
+    "69_B8_and_69_D10_training_sets",
+    "archived_cluster_reuse_not_new_solver_claim",
+    "fresh_native_states_and_963_retained_old_event_parity",
+    "4080_170_vs_3936_164_separate",
+    "frozen_K_ablations_and_source_conditionals"
+  ],
+  "resolved_all_required_review_findings": true
+}

@@ -1,5 +1,9 @@
 # 研究分析交付入口
 
+## 2026-10-19：人员多变量分型 Part A 与独立验收
+
+[Pro 三包完整内容归档与恢复](research/workers/personnel_type_discovery_next_20261019/README.md)、[在线中文原报告](research/workers/personnel_type_discovery_next_20261019/REPORT_ZH.md)、[七例关键图集](research/workers/personnel_type_discovery_next_20261019/FIGURE_GALLERY.md)、[独立审查及统计图](research/workers/personnel_type_independent_review_20261019/README.md)。三个原包 3,844 个成员完整保留或按哈希复用已有仓库内容；本轮候选分区不等于已验证的可互换人员类别。生产评分、正式标签保持不变。
+
 ## 2026-10-19：Pro 人员 v2 去重归档
 
 [四分包核心归档与复现入口](research/workers/pro_personnel_v2_archive_20261019/README.md)、[Pro 原报告转排](research/workers/pro_personnel_v2_archive_20261019/REPORT_ZH.md)、[独立核验与严格嵌套换人实验](research/workers/personnel_independent_curve_audit_20261019/README.md)。保留必要输入、代码与研究结果，复用已有冻结源；大体积可重建缓存的来源及去向完整列出，不要求先下载四个原包。[私有云端工作台](https://panorama-quality-review-20261016.fringnb.chatgpt.site/personnel-v2-20261018/index.html)。

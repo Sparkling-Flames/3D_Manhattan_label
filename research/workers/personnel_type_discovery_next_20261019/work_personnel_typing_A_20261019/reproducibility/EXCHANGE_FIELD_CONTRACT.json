@@ -1,0 +1,897 @@
+{
+  "schema_version": "PartA_exchange_and_replay_20261019_r1",
+  "data_release": "v2",
+  "root_directory_name": "work_personnel_typing_A_20261019",
+  "pins": {
+    "repository": "Sparkling-Flames/3D_Manhattan_label",
+    "main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+    "scientific_source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+    "main_and_scientific_source_difference": "Two entry Markdown files changed; frozen scientific input/code checks use the original source pin. No claim that a current moving main still has this snapshot."
+  },
+  "snapshot_counts": {
+    "inventory_records": 10439,
+    "inventory_worker_ids": 62,
+    "quality_records": 7302,
+    "quality_images": 196,
+    "quality_workers": 60,
+    "ordinary_manual_quality_records": 5719,
+    "ordinary_manual_quality_images": 177,
+    "ordinary_manual_buildings": 22,
+    "supported_event_images": 175,
+    "events": 286666,
+    "registered_endpoint_requests": 58882,
+    "unique_real_team_subsets": 58679,
+    "ordinary_manual_eligible_source_time_records": 6250,
+    "quality_ordinary_manual_source_time_records": 5225,
+    "source_time_inventory": 9236,
+    "target_matched_time_inventory": 440
+  },
+  "key_input_sha256": {
+    "recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "recovered/repo_main_20261019/research/statistics/v2_integrated_analysis_20261019/tables.json.gz": "1a288e826dace32daf9da91cb6abdd6cc7d9df776dd24c854889a2107872404b",
+    "recovered/repo_main_20261019/research/statistics/v2_integrated_analysis_20261019/REPRO_CONTEXT.json.gz": "114714c027b000f85e6822f9c0ac30a3a06dbd58f009202c0919a7b23e95ece2",
+    "recovered/work_v2_20261019/profiles/run_profiles.py": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc",
+    "recovered/work_v2_20261019/profiles/full_profiles.csv": "09718f0bbca5cbe4881586d8bde278552b2bc91d12aaa644e9cfc372ab6337cd",
+    "recovered/work_v2_20261019/profiles/fold_profiles.csv": "6d2781969f46b9f2595fb95fa94aa4e2f8b6583f2229bfd626355874b8ff0c24",
+    "recovered/work_v2_20261019/clusters/assignments.csv": "747dc08c24aea6cea695e4da04741f2faca7d02af962dcf375d4b19f802625be",
+    "recovered/work_v2_20261019/clusters/records_geometry.csv": "1083c8c58fb589d1b343e2117fd02ebf93adf868dd4e47d4aceb6ec15df49b38",
+    "recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "events/REQUESTS.json.gz": "79de9f2d881ef8ef32d4d2a7fdda7fc3d01fc9d457e183455abeabc63711364d",
+    "events/event_design.csv.gz": "a2b0e603b181a0ce4b16e81ee3cd684d830f3a4860badf5209376bd1f778c608",
+    "events/DESIGN.json": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf",
+    "reverse/FROZEN_BUILDING_SPLITS.json": "ec5a004db1c868e9802a3729af549ac959b29bd43772b53c0af18f4d32c7f9b4",
+    "reverse/selection_common.py": "2f92d7d92ed698d7994e9a520edde39399fc1306a11525a6936ba900261e3873"
+  },
+  "layout": {
+    "recovered_siblings": [
+      "recovered/work_v2_20261019",
+      "recovered/repo_main_20261019"
+    ],
+    "bootstrap_receipt": "recovered/BOOTSTRAP_RECEIPT.json",
+    "bootstrap_expected": {
+      "source_files_verified": 824,
+      "retained_files_verified": 519,
+      "original_full_payload_verified": false,
+      "science_executed": false
+    },
+    "all_ZIPs": "Unpack all companion ZIPs into the same parent; retain the single work_personnel_typing_A_20261019 prefix and recovered sibling layout.",
+    "minimum_runtime_layout": "reproducibility/MINIMUM_LAYOUT.json",
+    "one_time_acquisition_scripts_required_after_recovery": false
+  },
+  "manifest_and_registration_paths": [
+    "input/CURRENT_INPUT_AUDIT.json",
+    "input/FROZEN_SOURCE_RECOVERY.json",
+    "recovered/BOOTSTRAP_RECEIPT.json",
+    "events/DESIGN.json",
+    "events/REGISTRATION_RECEIPT.json",
+    "forward/REGISTRATION.json",
+    "reverse/REGISTRATION.json",
+    "reverse/FROZEN_BUILDING_SPLITS.json",
+    "assessment/REGISTRATION.json"
+  ],
+  "panels": {
+    "Pro_exact_fixed_background_v1": {
+      "events": 270370,
+      "uses": "Training relations and nested K/model selection only in that fold training buildings; outer evaluation allowed after exclusion. v1 in panel name is the request-design label; data remain v2."
+    },
+    "A_nested_even_v1": {
+      "events": 16296,
+      "uses": "Frozen-type evaluation on extra backgrounds and supported k=8/12/16/24 nodes only; no type/K selection.",
+      "chains": 4200,
+      "duplicate_actual_endpoint_pair_requests": 49,
+      "not_a_full_integer_k_curve": true
+    }
+  },
+  "verification_tables": {
+    "events/event_design.csv.gz": {
+      "required_columns": [
+        "event_id",
+        "panel_id",
+        "pool_id",
+        "building",
+        "image_id",
+        "reference_id",
+        "reference_version",
+        "k",
+        "worker_a",
+        "worker_b",
+        "background_members",
+        "request_a",
+        "request_b",
+        "chain_id"
+      ],
+      "unique_key": [
+        "event_id"
+      ],
+      "expected_rows": 286666
+    },
+    "events/common_events.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "event_id",
+        "panel_id",
+        "building",
+        "image_id",
+        "k",
+        "worker_a",
+        "worker_b",
+        "chain_id",
+        "stable_main",
+        "both_complete",
+        "B8L2_a",
+        "B8L2_b",
+        "abs_B8L2_change",
+        "floor_change"
+      ],
+      "unique_key": [
+        "event_id"
+      ],
+      "expected_rows": 286666
+    },
+    "forward/selected_classes_by_fold.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "method_id",
+        "fold_id",
+        "heldout_building",
+        "worker_id",
+        "difficulty",
+        "class_id",
+        "candidate_method"
+      ],
+      "unique_key": [
+        "method_id",
+        "fold_id",
+        "difficulty",
+        "worker_id"
+      ],
+      "expected_rows": 22080
+    },
+    "forward/selected_classes_by_fold_D10.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "method_id",
+        "fold_id",
+        "worker_id",
+        "difficulty",
+        "class_id",
+        "B8_frozen_class_id"
+      ],
+      "unique_key": [
+        "method_id",
+        "fold_id",
+        "difficulty",
+        "worker_id"
+      ],
+      "expected_rows": 22080
+    },
+    "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "heldout_building",
+        "worker_id",
+        "class_id",
+        "method_id",
+        "difficulty"
+      ],
+      "unique_key": [
+        "heldout_building",
+        "worker_id",
+        "method_id",
+        "difficulty"
+      ]
+    },
+    "assessment/EVENT_PREDICTIONS_WIDE.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "event_id",
+        "building",
+        "image_id",
+        "panel_id",
+        "k",
+        "difficulty",
+        "p__baseline_k_difficulty",
+        "p__forward_selected",
+        "p__reverse_selected"
+      ],
+      "unique_key": [
+        "event_id"
+      ],
+      "expected_rows": 286666
+    },
+    "forward/full_selected_worker_portraits.csv.gz": {
+      "optional": true,
+      "required_columns": [
+        "worker_id",
+        "q_beta",
+        "class_id",
+        "core_supported",
+        "person_origin"
+      ],
+      "unique_key": [
+        "worker_id"
+      ],
+      "expected_rows": 60,
+      "needed_for_reused_results_level": "aggregate; refit/fresh regenerates"
+    },
+    "reverse/results/worker_classmate_stability.csv": {
+      "optional": true,
+      "required_columns": [
+        "method_id",
+        "domain",
+        "worker_id",
+        "full_classmates",
+        "mean_classmate_jaccard",
+        "unknown_folds"
+      ],
+      "unique_key": [
+        "method_id",
+        "domain",
+        "worker_id"
+      ],
+      "expected_rows": 420,
+      "needed_for_reused_results_level": "aggregate; refit/fresh regenerates"
+    },
+    "events/native_runs/team_results.csv": {
+      "optional": true,
+      "required_columns": [
+        "request_id",
+        "team_id",
+        "image_id",
+        "building",
+        "k",
+        "complete_evaluable",
+        "source_time_missing_n",
+        "target_time_missing_n",
+        "geometry_reason"
+      ],
+      "unique_key": [
+        "request_id"
+      ],
+      "expected_rows": 58882,
+      "needed_for_reused_results_level": "aggregate/refit; fresh regenerates"
+    },
+    "assessment/WORKER_PORTRAITS_60.csv": {
+      "optional": true,
+      "required_columns": [
+        "worker_id",
+        "class_id",
+        "reverse_selected_FULL_class",
+        "class_labels_are_FULL_descriptive_not_validation",
+        "no_formal_personnel_tier_changed"
+      ],
+      "unique_key": [
+        "worker_id"
+      ],
+      "expected_rows": 60
+    },
+    "assessment/NESTED_COMMON_FOUR_NODE_PREDICTIONS.csv": {
+      "optional": true,
+      "required_columns": [
+        "method_id",
+        "k",
+        "metric",
+        "n",
+        "images",
+        "buildings",
+        "building_mean"
+      ],
+      "unique_key": [
+        "method_id",
+        "k",
+        "metric"
+      ],
+      "expected_rows": 64
+    },
+    "assessment/FROZEN_K_ABLATION_COMPARISONS.csv": {
+      "optional": true,
+      "required_columns": [
+        "full_method",
+        "ablated_method",
+        "panel_id",
+        "k",
+        "stratum",
+        "building_mean"
+      ],
+      "unique_key": [
+        "full_method",
+        "ablated_method",
+        "panel_id",
+        "k",
+        "stratum"
+      ],
+      "expected_rows": 200
+    },
+    "assessment/ORIGIN_CONTROL_SUMMARY.csv": {
+      "optional": true,
+      "required_columns": [
+        "method_id",
+        "comparison",
+        "panel_id",
+        "k",
+        "stratum",
+        "building_mean"
+      ],
+      "unique_key": [
+        "method_id",
+        "comparison",
+        "panel_id",
+        "k",
+        "stratum"
+      ],
+      "expected_rows": 960
+    }
+  },
+  "tables": {
+    "evidence": {
+      "path": "recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "format": "gzip JSON object; top-level records array",
+      "record_key": "object_id",
+      "contract": "recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/field_contract.json",
+      "qualification": "quality_usable, condition, quality_use, point/ring/reference and review gates inherited; non-qualified Q is missing, not zero"
+    },
+    "folds": {
+      "path": "reverse/FROZEN_BUILDING_SPLITS.json",
+      "full": "FULL means descriptive all-building fit; not test predictions",
+      "outer_key": "fold_id == heldout building",
+      "train_groups": "Each outer training building list has three frozen hash-partition inner validation groups. Refit features, transforms, relationships and type choice on each inner training subset.",
+      "no_room_closure": "Direct physical_same-support groups only; no transitive closure or shared-building surrogate for same room."
+    },
+    "person_classes": {
+      "forward": "forward/selected_classes_by_fold.csv.gz",
+      "reverse": "reverse/results/folds/<fold>/classes.csv.gz",
+      "canonical": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+      "canonical_unique_key": [
+        "heldout_building",
+        "method_id",
+        "difficulty",
+        "worker_id"
+      ],
+      "fields": {
+        "worker_id": "anonymous person identity; inventory has 62, Q profiles 60",
+        "heldout_building": "actual heldout building; null in descriptive source FULL mapped to literal FULL",
+        "fold_id": "same outer fold context; FULL descriptive only",
+        "method_id": "model alias; source_candidate_id/candidate_method gives the training-chosen candidate",
+        "difficulty": "canonical global/easy/medium/hard; source all maps to global; Chinese maps to English label only",
+        "class_id": "arbitrary within-fold label; unknown means unsupported; do not match C01 across folds",
+        "n_images/n_buildings": "historical person support; forward core_images/core_buildings map here",
+        "train_key/training_key": "history subset identity; encodings differ by route, compare actual frozen building lists",
+        "unknown_reason": "support/feature gate reason; not an error or quality judgment"
+      },
+      "cross_fold_alignment": "Use pair coassignment or ARI; numeric class IDs are not globally aligned."
+    },
+    "historical_features": {
+      "path": "forward/worker_features_by_training_set.csv.gz",
+      "outer_view": "forward/fold_features.csv.gz",
+      "key": [
+        "train_key",
+        "worker_id"
+      ],
+      "fields": {
+        "q_beta": "same-image/condition/reference adjusted B8 quality effect",
+        "theta_easy/theta_medium/theta_hard": "training-only difficulty partial-pooling effects, support gate applied",
+        "theta_*_estimate": "estimate retained even if insufficient for a difficulty type; do not erase support gate",
+        "q_abs_*": "absolute delivery distribution within the ordinary Manual Q layer",
+        "t_source_origin_effect": "same-task relative log source time separately adjusted by old/new provenance",
+        "source_time_*": "eligible Manual source-task time pool; Q qualification is separate",
+        "target_time_*": "same-target time only; never substituted by source time",
+        "semi_old_*": "old confirmed error opportunities / edit history",
+        "semi_new_*": "new reported error opportunities / edit history, not confirmed repair",
+        "scope_out_effect": "task/source-adjusted response tendency, not accuracy",
+        "scope_gold_n": "limited in-scope compatible opportunities; not general scope gold",
+        "individual_review_records/specific_error_candidate_n/legacy_explicit_person_error_n": "documentary audit/exclusion ledger, not representative per-person error rates"
+      },
+      "domains": "forward/FEATURE_DOMAINS.json",
+      "missingness": "Actual missing cells retained; support flags explicit; no zero-quality or zero-error imputation."
+    },
+    "historical_person_pairs": {
+      "forward": "forward/historical_feature_pair_relations.csv.gz",
+      "reverse": "reverse/results/folds/<fold>/pair_relations.csv.gz",
+      "forward_key": [
+        "train_key",
+        "family",
+        "worker_a",
+        "worker_b"
+      ],
+      "reverse_key": [
+        "fold_id",
+        "domain",
+        "worker_a",
+        "worker_b"
+      ],
+      "fields": {
+        "historical_dissimilarity": "forward multi-domain history distance, with common_domain_names and per-domain distances",
+        "same9_observed/same12_observed": "training-image local-cluster co-membership, then image/building aggregation",
+        "*_posterior": "training-only shrunk relation estimate, not a target-image cluster",
+        "n_images/n_buildings": "direct common-image support",
+        "swap_stability_observed/swap_stability_posterior": "training-only common-event replacement relationship",
+        "n_swap_images/n_swap_buildings": "support for replacement relationship separately from geometry support"
+      },
+      "local_cluster_ids": "Valid only within their image; not a cross-image person class."
+    },
+    "event_identity": {
+      "path": "events/event_design.csv.gz",
+      "key": [
+        "event_id"
+      ],
+      "pool_member_lookup": "events/pool_members.csv.gz",
+      "precise_requests": "events/REQUESTS.json.gz",
+      "fields": {
+        "event_id": "same immutable event identifier for all methods",
+        "pool_id": "bound image/condition/reference/version pool",
+        "worker_a/worker_b": "lexicographic entrant orientation a<b; signed outcome is B minus A",
+        "background_members": "same k-1 actual workers both sides, pipe-separated",
+        "background_order": "saved actual background order; distinct from unordered member set",
+        "request_a/request_b": "precise registered endpoint request identity",
+        "member_workers_a/member_workers_b": "complete endpoint real members",
+        "ordered_workers_a/ordered_workers_b": "saved request order; frozen fusion applies its native worker ordering",
+        "chain_id": "canonical raw-event fixed-pair nested-background identity; empty for old panel",
+        "nested_chain_id": "assessment alias copied directly from event chain_id; no hashing, inference or reconstruction from k",
+        "reference_id/reference_version": "fixed pool reference; never optimize by output score",
+        "k": "actual equal total team size at both endpoints"
+      }
+    },
+    "event_outcomes": {
+      "path": "events/common_events.csv.gz",
+      "detailed_contract": "events/FIELD_CONTRACT.json",
+      "key": [
+        "event_id"
+      ],
+      "fields": {
+        "B8L2_change/delta_Q": "B8L2_b-B8L2_a; signed, not always improvement",
+        "abs_B8L2_change/abs_delta_Q": "absolute endpoint quality change",
+        "D10_*": "fixed-members measurement sensitivity, direction scale 8 to 10 degrees only",
+        "floor_jaccard_difference/floor_change": "output-to-output floor change; separate from each output to GT IoU",
+        "structure_bound_cyclic_deg": "shared binding/cycle angular comparison; does not optimize top/bottom separately",
+        "node_count_difference": "absolute change; node_count_change is signed",
+        "edge_relation_jaccard_difference": "shared-original-observation connection relation change",
+        "upper_bound_shift_*/lower_bound_shift_*": "upper/lower diagnostics under the same native paired cyclic correspondence",
+        "both_complete": "native full geometry computable at both endpoints; not new human acceptance",
+        "stable_main": "joint_stable_main alias",
+        "source_time_*": "source-audited/reported sums and missingness per team",
+        "target_time_*": "same-target sums and missingness separately",
+        "entrant_actual_B8L2_*/entrant_point_pairs_*": "post-answer data; oracle/conditional analysis only"
+      }
+    },
+    "predictions": {
+      "forward_long": "forward/event_predictions.csv.gz",
+      "reverse_long": "reverse/results/folds/<fold>/predictions.csv.gz",
+      "independent_wide": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+      "long_key": [
+        "event_id",
+        "method_id"
+      ],
+      "long_probability": "probability; reverse predicted_stability is an alias",
+      "wide_probability": "p__<method_id>",
+      "wide_relation": "rel__<method_id> in within/between/unknown",
+      "training": "Only old main panel in all buildings except target; calibration recomputed independently by assessment from frozen class labels",
+      "calibrator": "k×difficulty, image then building equal, two equivalent-building prior; unknown gets the cell/k/global baseline",
+      "new_panel": "Never used for category count or parameter selection"
+    },
+    "last_seat_policy": {
+      "path": "assessment/LAST_SEAT_CHOICES.csv.gz",
+      "key": [
+        "event_id"
+      ],
+      "fields": "choose_a_probability__<policy> gives probability of choosing endpoint A under frozen historical policy; ties/random use expected endpoint outcome",
+      "scope": "A single contested seat with fixed k-1 background; not a full-team global optimum or extra collected human sample"
+    },
+    "sensitivity": {
+      "labels": "assessment/SENSITIVITY_CLASSES_BY_FOLD.csv.gz",
+      "probabilities": "assessment/RULE_AND_METRIC_EVENT_PREDICTIONS.csv.gz",
+      "fixed_members_metric": "Same endpoint team, score with B8 vs D10",
+      "history_repartition": "Fixed B8-selected family/K, D10 historical Q gives a new partition; no heldout-K reselection",
+      "rule": "Frozen training-feature explanation rules, with rule coverage separate from original discovered class coverage"
+    },
+    "final_diagnostics": {
+      "script": "assessment/final_diagnostics.py",
+      "outputs": [
+        "assessment/PAIRED_LAST_SEAT_POLICY_COMPARISONS.csv",
+        "assessment/PRACTICAL_MATCHED_IMAGE_COVERAGE.csv",
+        "assessment/ORIGIN_CONTROL_DESIGN.json",
+        "assessment/ORIGIN_CONTROL_PREDICTIONS.csv.gz",
+        "assessment/ORIGIN_CONTROL_SUMMARY.csv",
+        "assessment/ORIGIN_CONTROL_ORIGINAL_PARITY.json"
+      ],
+      "scope": "Post-frozen-class diagnostics; no class, K, threshold or difficulty selection.",
+      "origin_calibration": "Training primary panel only, target building held out; cell k x frozen difficulty x old-old/new-new/old-new; original-function parity <1e-12 on first fold.",
+      "probability_key": [
+        "event_id"
+      ],
+      "unit_summary": "Event, image and building summaries remain separate; positive brier_improvement means lower squared probability error under the first named method.",
+      "policy_comparison": "Same event, difference in probability of choosing entrant A times the difference in observed endpoint outcomes. Costs retain source-time missingness."
+    },
+    "combined_report_tables": {
+      "script": "assessment/report_tables.py",
+      "outputs": [
+        "assessment/FROZEN_K_ABLATION_COMPARISONS.csv",
+        "assessment/NESTED_COMMON_FOUR_NODE_PREDICTIONS.csv",
+        "assessment/NESTED_COMMON_FOUR_NODE_GEOMETRY.csv",
+        "assessment/WORKER_PORTRAITS_60.csv",
+        "assessment/TEAM_COMPLETENESS_AND_TIME_COVERAGE.csv",
+        "assessment/REPORT_TABLE_RECEIPT.json"
+      ],
+      "person_key": [
+        "worker_id"
+      ],
+      "person_class_scope": "FULL descriptive classes joined to old labels and fold-perturbation classmate stability; not OOF predictions or formal personnel tiers.",
+      "four_node_scope": {
+        "panel": "A_nested_even_v1",
+        "images": 164,
+        "chains": 3936,
+        "events": 15744,
+        "k_nodes": [
+          8,
+          12,
+          16,
+          24
+        ],
+        "chain_id": "nested_chain_id is the original events.chain_id copied without changes",
+        "sequence_claim": "Four observed k nodes with shared replacement identity and nested backgrounds; not a complete adjacent-count curve."
+      },
+      "ablation": "All on identical events and B8-selected main K; no heldout reselection; full_gain = Brier(ablated) - Brier(full).",
+      "team_input": "events/native_runs/team_results.csv",
+      "team_request_key": [
+        "request_id"
+      ],
+      "team_unique_key": [
+        "team_id"
+      ],
+      "team_denominator": {
+        "request_rows": 58882,
+        "unique_real_teams": 58679,
+        "failure_rows_retained": true,
+        "source_and_target_missingness_separate": true
+      },
+      "fresh_producer": "events/run_events.py --stage full invokes native consolidate()"
+    },
+    "design_support": {
+      "script": "events/summarize_design.py",
+      "input": "events/event_design.csv.gz",
+      "outputs": [
+        "events/design_coverage_by_k.csv",
+        "events/entrant_opportunity_coverage.csv",
+        "events/design_duplicate_actual_pairs.csv"
+      ],
+      "uses_outcomes_or_classes": false,
+      "duplicate_key": [
+        "pool_id",
+        "member_workers_a",
+        "member_workers_b"
+      ],
+      "denominator": "Keep every registered event, separately count unique actual endpoint pairs."
+    },
+    "reverse_readable_exchange": {
+      "script": "reverse/make_exchange_summaries.py",
+      "outputs": [
+        "reverse/results/FULL_PERSONNEL_TYPES.csv",
+        "reverse/results/SELECTOR_COUNTS.csv",
+        "reverse/results/FULL_CLASS_MEMBERSHIP_STABILITY.csv",
+        "reverse/explanations/RULE_FEATURE_USAGE.csv",
+        "reverse/EXCHANGE_SUMMARY_RECEIPT.json"
+      ],
+      "recreated_by": [
+        "refit",
+        "fresh"
+      ],
+      "new_fits": 0,
+      "new_selection": 0,
+      "interpretation": "FULL is descriptive; rule feature split usage is not incremental or causal evidence."
+    }
+  },
+  "joint_stability_reference": {
+    "main": {
+      "max_abs_B8_delta": 2,
+      "max_floor_jaccard_difference": 0.05,
+      "same_nodes": true,
+      "max_bound_cyclic_deg": 3,
+      "both_complete_and_scored": true
+    },
+    "strict": [
+      1,
+      0.02,
+      2
+    ],
+    "wide": [
+      5,
+      0.1,
+      5
+    ],
+    "not_exhaustive": "Keep signed/absolute quality, local/structural changes, raw connection changes and failure separately; no p-value non-significance as equivalence."
+  },
+  "missing_and_denominators": {
+    "failure": "Every attempted event remains in denominator; any failed endpoint makes joint stable False. Missing score/geometry/time component remains null, not zero.",
+    "unknown_person_class": "Preserve all-attempt predictions with baseline fallback; separately report own-supported and common-supported sets. Unknown is not a shared behavioral class.",
+    "old_QTD": "archive labels including sparse children are separate from old_QTD_supported where unknown/sparse_child are unknown.",
+    "source_vs_target_time": "No substitution, no lead time, no zero fill. Known sum and known count do not equal complete total cost.",
+    "scope": "9845 responses may describe tendency; 93 compatible gold, 89 in quality-person set, all limited in-scope correct; cannot estimate general false-accept rate.",
+    "semi": "Old confirmed156/nonmodified25; new reported284/45 separate. 60 Q-person subset old144/20; no Q profiles for W019/W026. New525 lack per-record initialization; editing or final score increase is not confirmed correction.",
+    "review": "Directed review does not estimate global error prevalence. Personal exclusion, GT issue, scene limitation and reference missingness remain separate.",
+    "replicates": "286666 registered events are not 286666 independent humans; 49 new-panel duplicated actual endpoint pairs add no independent support.",
+    "inference": "Main uncertainty at building level; image and event weights separately. Background/panel/k repetitions are dependent."
+  },
+  "boolean_csv": "Parse True/False explicitly; Python bool(\"False\") is True and must not be used.",
+  "leakage_boundary": {
+    "allowed_history": "Frozen training records and references, training-building actual clusters and events, training-only normalization/support and model selection",
+    "forbidden_for_prospective_test_person_type": "Target building actual Q, point count, local cluster, votes, final geometry or replacement outcomes",
+    "retrospective_status": "Building-excluded retrospective validation on previously explored v2, not a new external blind test"
+  },
+  "not_reproduced": [
+    "entire original data collection/log extraction/human audit process",
+    "the full omitted historical Pro archive payload byte-for-byte",
+    "complete Dot DESIGN, all integer-k curves and team states",
+    "visual review of absent original images"
+  ],
+  "raw_header_snapshots": {
+    "events/event_design.csv.gz": [
+      "event_id",
+      "panel_id",
+      "pool_id",
+      "image_id",
+      "image",
+      "building",
+      "condition",
+      "layer",
+      "difficulty",
+      "difficulty_aligned",
+      "reference_id",
+      "reference_version",
+      "k",
+      "background_id",
+      "background_members",
+      "background_order",
+      "worker_a",
+      "worker_b",
+      "request_a",
+      "request_b",
+      "member_workers_a",
+      "member_workers_b",
+      "ordered_workers_a",
+      "ordered_workers_b",
+      "chain_id",
+      "person_pair_id",
+      "background_replicate",
+      "information_stage",
+      "event_selection_uses_target_geometry",
+      "event_selection_uses_classes"
+    ],
+    "events/common_events.csv.gz": [
+      "event_id",
+      "panel_id",
+      "pool_id",
+      "image_id",
+      "image",
+      "building",
+      "condition",
+      "layer",
+      "difficulty",
+      "difficulty_aligned",
+      "reference_id",
+      "reference_version",
+      "k",
+      "background_id",
+      "background_members",
+      "background_order",
+      "worker_a",
+      "worker_b",
+      "request_a",
+      "request_b",
+      "member_workers_a",
+      "member_workers_b",
+      "ordered_workers_a",
+      "ordered_workers_b",
+      "chain_id",
+      "person_pair_id",
+      "background_replicate",
+      "information_stage",
+      "event_selection_uses_target_geometry",
+      "event_selection_uses_classes",
+      "room_id",
+      "team_id_a",
+      "team_id_b",
+      "k_a",
+      "k_b",
+      "shared_workers",
+      "same_subset",
+      "complete_a",
+      "complete_b",
+      "both_complete",
+      "score_status_a",
+      "score_status_b",
+      "B8L2_a",
+      "B8L2_b",
+      "D10_a",
+      "D10_b",
+      "B8L2_change",
+      "D10_change",
+      "IoU3D100_change",
+      "floor_iou_change",
+      "omission_change",
+      "extension_change",
+      "Hmean_change",
+      "Hcenter_change",
+      "source_time_change_seconds",
+      "target_time_change_seconds",
+      "source_time_complete_a",
+      "source_time_complete_b",
+      "target_time_complete_a",
+      "target_time_complete_b",
+      "complete_to_incomplete",
+      "incomplete_to_complete",
+      "node_count_difference",
+      "node_count_change",
+      "floor_jaccard_difference",
+      "floor_symdiff_h2",
+      "structure_bound_cyclic_deg",
+      "structure_available",
+      "structure_reason",
+      "structure_reverse_allowed_deg",
+      "structure_best_orientation",
+      "common_observations",
+      "changed_coidentity_pairs",
+      "common_pair_comparisons",
+      "edge_relation_jaccard_difference",
+      "selected_shared_observation_difference",
+      "floor_geometry_exactly_equal",
+      "full_geometry_exactly_equal",
+      "mean_height_prism_pair_iou",
+      "height_ratio_pair_abs_logdiff",
+      "structure_same_pair_count",
+      "bound_cyclic_shift",
+      "bound_cyclic_shift_margin_deg",
+      "edge_relation_symmetric_difference",
+      "edge_relation_union_n",
+      "abs_B8L2_change",
+      "abs_D10_change",
+      "quality_comparable",
+      "quality_within_1",
+      "quality_within_2",
+      "quality_within_5",
+      "joint_stable_strict",
+      "joint_stable_strict_orientation_invariant",
+      "joint_stable_main",
+      "joint_stable_main_orientation_invariant",
+      "joint_stable_wide",
+      "joint_stable_wide_orientation_invariant",
+      "joint_geometric_stable",
+      "joint_with_shared_connections",
+      "joint_with_shared_connections_and_retention",
+      "entrant_a",
+      "entrant_b",
+      "comparison_family",
+      "data_release",
+      "outcome_stage",
+      "stable_main",
+      "entrant_object_id_a",
+      "entrant_origin_a",
+      "entrant_point_pairs_a",
+      "entrant_actual_B8L2_a",
+      "entrant_actual_D10_a",
+      "source_entrant_time_a",
+      "target_entrant_time_a",
+      "entrant_time_source_kind_a",
+      "nodes_a",
+      "geometry_status_a",
+      "geometry_reason_a",
+      "order_status_a",
+      "connection_available_a",
+      "complete_floor_evaluable_a",
+      "source_time_known_n_a",
+      "source_time_missing_n_a",
+      "source_time_known_sum_seconds_a",
+      "source_time_total_seconds_a",
+      "target_time_known_n_a",
+      "target_time_missing_n_a",
+      "target_time_known_sum_seconds_a",
+      "target_time_total_seconds_a",
+      "height_mean_ratio_a",
+      "iou_2d_a",
+      "IoU3D100_a",
+      "reference_node_shortfall_a",
+      "location_unresolved_a",
+      "entrant_object_id_b",
+      "entrant_origin_b",
+      "entrant_point_pairs_b",
+      "entrant_actual_B8L2_b",
+      "entrant_actual_D10_b",
+      "source_entrant_time_b",
+      "target_entrant_time_b",
+      "entrant_time_source_kind_b",
+      "nodes_b",
+      "geometry_status_b",
+      "geometry_reason_b",
+      "order_status_b",
+      "connection_available_b",
+      "complete_floor_evaluable_b",
+      "source_time_known_n_b",
+      "source_time_missing_n_b",
+      "source_time_known_sum_seconds_b",
+      "source_time_total_seconds_b",
+      "target_time_known_n_b",
+      "target_time_missing_n_b",
+      "target_time_known_sum_seconds_b",
+      "target_time_total_seconds_b",
+      "height_mean_ratio_b",
+      "iou_2d_b",
+      "IoU3D100_b",
+      "reference_node_shortfall_b",
+      "location_unresolved_b",
+      "entrant_same_point_count",
+      "entrant_point_count_information_stage",
+      "floor_change",
+      "abs_delta_Q",
+      "delta_Q",
+      "upper_bound_shift_max_deg",
+      "lower_bound_shift_max_deg",
+      "upper_bound_shift_mean_deg",
+      "lower_bound_shift_mean_deg"
+    ],
+    "forward/selected_classes_by_fold.csv.gz": [
+      "method_id",
+      "K",
+      "worker_id",
+      "class_id",
+      "unknown_reason",
+      "family",
+      "train_key",
+      "difficulty",
+      "core_images",
+      "core_buildings",
+      "core_tasks",
+      "core_supported",
+      "candidate_method",
+      "fold_id",
+      "heldout_building",
+      "condition"
+    ],
+    "reverse/results/folds/FULL/classes.csv.gz": [
+      "data_release",
+      "method_id",
+      "fold_id",
+      "heldout_building",
+      "training_key",
+      "worker_id",
+      "condition",
+      "domain",
+      "difficulty",
+      "class_id",
+      "n_images",
+      "n_buildings",
+      "n_records",
+      "unknown_reason",
+      "information_stage",
+      "declared_base_k",
+      "relation_source",
+      "linkage",
+      "source_candidate_id"
+    ],
+    "reverse/results/folds/FULL/pair_relations.csv.gz": [
+      "worker_a",
+      "worker_b",
+      "domain",
+      "n_images",
+      "n_buildings",
+      "geometry_pair_supported",
+      "same9_observed",
+      "same9_posterior",
+      "same9_training_prior",
+      "same12_observed",
+      "same12_posterior",
+      "same12_training_prior",
+      "same_point_count_observed",
+      "same_point_count_posterior",
+      "same_point_count_training_prior",
+      "abs_point_count_difference_observed",
+      "abs_point_count_difference_posterior",
+      "abs_point_count_difference_training_prior",
+      "swap_stability_observed",
+      "swap_stability_posterior",
+      "swap_training_prior",
+      "n_swap_images",
+      "n_swap_buildings",
+      "swap_pair_supported",
+      "fold_id",
+      "training_key"
+    ]
+  }
+}

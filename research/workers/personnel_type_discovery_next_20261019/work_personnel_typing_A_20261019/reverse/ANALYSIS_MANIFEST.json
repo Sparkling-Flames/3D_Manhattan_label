@@ -1,0 +1,106 @@
+{
+  "analysis_id": "Part_A_reverse_personnel_types_20261019",
+  "data_release": "v2",
+  "github_repository": "Sparkling-Flames/3D_Manhattan_label",
+  "main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "owned_scope": "reverse historical personnel relationship construction, global/conditional partitions, inner selection, frozen outer labels/predictions, surrogate explanation",
+  "input_files": {
+    "recovered/work_v2_20261019/clusters/assignments.csv": "747dc08c24aea6cea695e4da04741f2faca7d02af962dcf375d4b19f802625be",
+    "recovered/work_v2_20261019/clusters/records_geometry.csv": "1083c8c58fb589d1b343e2117fd02ebf93adf868dd4e47d4aceb6ec15df49b38",
+    "events/common_events.csv.gz": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8",
+    "forward/fold_features.csv.gz": "a851c8ddbf7fba285af58b1c960f1d36c4ad84f35073d1cdf531adc4495e5a3e",
+    "forward/FEATURE_DOMAINS.json": "a73286fa1f698143dc7e5378fdd8d6f6e5f9bf555a3897aa73f0512e4efa1be4",
+    "reverse/FROZEN_BUILDING_SPLITS.json": "ec5a004db1c868e9802a3729af549ac959b29bd43772b53c0af18f4d32c7f9b4"
+  },
+  "scientific_code": {
+    "reverse/analyze_partition_stability.py": "a3d4391f743827d6fa466941f16b7f42fd987a184a08111ec6b92686841764c7",
+    "reverse/discover_reverse_types.py": "669dc7b2a10100e756e2bf7a54b643a2cc33598b8bb30bb0ae181b50e9a9c1d1",
+    "reverse/discover_reverse_types_fast.py": "ac27502760be16cfc85b99fe7e74c30702ca23ea5aca4bec0a0efec72c509ef1",
+    "reverse/explain_reverse_types.py": "7d7bb951bde98d848fce5074ef0d476170a7df5d1250346c96c06601deece595",
+    "reverse/make_exchange_summaries.py": "d48ca9d000232d617184c61c224f17b0e31df7753056fe853c53524277c1e490",
+    "reverse/repair_aggregate_exports.py": "cd9818f973995b1ab9efac6801af3da862529dab452cc935b80dde9e138dfe76",
+    "reverse/repair_prediction_exports.py": "7c7dcb3a8f3f7ab0c613b12905a2f21fcef814e9cd6ca4df6fc6fe57a595c93a",
+    "reverse/run_discovery_batch.py": "37a5d7e27acdd946cb42ea67eed2f247e4d5e144fff9f64b8c0f5d1b28531b70",
+    "reverse/safe_replay.py": "3e1def4b40ef2278b45324d4b67c41ddf0eeccd469e183c2e50bb6035b10214a",
+    "reverse/selection_common.py": "2f92d7d92ed698d7994e9a520edde39399fc1306a11525a6936ba900261e3873",
+    "reverse/verify_fast_selection.py": "89caa13f9fcacfee4f97509d08366a70e3c264a09bc5d5f3118b49e18555b5b2",
+    "reverse/verify_final_outputs.py": "f042a815604c85e4772689f63352a6aef5c7e2f945d7af1f9f03f519b515bf4a",
+    "reverse/verify_training_isolation.py": "acf331ca1388f4fffa177a043860ad917899a2b3828df5fa165f478b20fa8adb"
+  },
+  "registration_files": {
+    "reverse/REGISTRATION.json": "0fd00796a9ed7edbf589b109096731fd1484ae11c9aa7f451ee0a658b7cf066a",
+    "reverse/EXPLANATION_REGISTRATION.json": "45e61d30af39dab1a374d50ced426eaff9932409e802e4578e02967b97fc0813",
+    "reverse/DESIGN_FREEZE_SHA256.json": "9eaa511da01e154cc22e9157d991952cfabce83299212c4bb5bc659ce8678e68"
+  },
+  "condition": "ordinary_manual",
+  "inventory_used": {
+    "records": 5719,
+    "images": 177,
+    "buildings": 22,
+    "worker_ids": 60,
+    "full_supported_workers": 59,
+    "full_unknown_workers": [
+      "W022"
+    ],
+    "historical_geometry_pair_observations": 92438
+  },
+  "candidate_registry": {
+    "n_candidates": 64,
+    "relationship_sources": [
+      "geometry9",
+      "geometry12",
+      "geometry9_swap_equal",
+      "swap_joint"
+    ],
+    "personnel_linkages": [
+      "average",
+      "complete"
+    ],
+    "base_k": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "conditional_variants": [
+      "global",
+      "base_plus_difficulty"
+    ]
+  },
+  "validation": {
+    "outer_folds": 22,
+    "full_fit": "descriptive only",
+    "inner_groups": 3,
+    "seed": 20261019,
+    "training_panel": "Pro_exact_fixed_background_v1",
+    "evaluation_only_panel": "A_nested_even_v1",
+    "prospective_person_features": "history excludes target building; target actual clusters, target Q and target point counts not used to define personnel labels",
+    "status": "retrospective building-out validation, not new external blind test"
+  },
+  "outputs": {
+    "classes": "reverse/results/all_candidate_classes.csv.gz",
+    "person_pairs": "reverse/results/all_pair_relations.csv.gz",
+    "candidate_selection": "reverse/results/all_candidate_selection.csv.gz",
+    "selected_aliases": "reverse/results/selected_candidates.csv",
+    "predictions_manifest": "reverse/results/PREDICTION_MANIFEST.json",
+    "event_join": "event_id + method_id; source outcomes and true teams in events/common_events.csv.gz",
+    "rule_classes": "reverse/explanations/rule_classes.csv.gz",
+    "readable_person_profiles": "reverse/results/FULL_PERSONNEL_TYPES.csv",
+    "final_integrity": "reverse/FINAL_OUTPUT_INTEGRITY.json"
+  },
+  "caches": {
+    "old_local_geometric_partitions": "restored historical measurements, SHA matched",
+    "personnel_fits": "newly computed",
+    "native_fusions": "computed by common events module, not this module",
+    "large_candidate_predictions": "per-fold; if omitted from compact copy, use safe_replay.py discover --force and exact registered events, or a new output directory"
+  },
+  "not_claimed": [
+    "independent repeat of historical acquisition and manual preprocessing",
+    "complete Dot reproduction",
+    "new blind external validation",
+    "formal new worker grades",
+    "N1 integration",
+    "new fusion algorithm",
+    "visual inspection of absent originals"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "scope": "outer",
+      "train_buildings": [
+        "2t7WUuJeko7",
+        "7y3sRwLe3Va",
+        "S9hNv5qa7GM",
+        "UwV83HsGsw3",
+        "VFuaQ6m2Qom",
+        "VLzqgDo317F",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ",
+        "jtcxE69GiFV",
+        "pRbA3pwrgk9",
+        "pa4otMbVnkk",
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "yqstnuAEVhm",
+        "zsNo4HB9uLZ"
+      ],
+      "geometric_test_rows_poisoned": 5494,
+      "event_outcomes_poisoned": 32416,
+      "max_pair_matrix_difference": 0.0,
+      "candidate_partitions_compared": 64,
+      "calibrated_prediction_methods_compared": 2,
+      "partition_mismatches": 0,
+      "max_prediction_difference": 0
+    },
+    {
+      "scope": "outer_plus_inner0",
+      "train_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "UwV83HsGsw3",
+        "VLzqgDo317F",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "e9zR4mvMWw7",
+        "pa4otMbVnkk",
+        "q9vSo1VnCiC",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "geometric_test_rows_poisoned": 37309,
+      "event_outcomes_poisoned": 124526,
+      "max_pair_matrix_difference": 0.0,
+      "candidate_partitions_compared": 64,
+      "calibrated_prediction_methods_compared": 2,
+      "partition_mismatches": 0,
+      "max_prediction_difference": 0
+    }
+  ],
+  "test_quality_poison_value": 1000000000.0,
+  "event_poison": "flip all excluded-building and evaluation-only new-background stable outcomes",
+  "geometric_poison": "flip excluded-building local co-cluster/point-count flags; offset point-count discrepancy",
+  "native_fusion_calls": 0,
+  "does_not_claim": "independent external validation or reconstructed collection pipeline"
+}

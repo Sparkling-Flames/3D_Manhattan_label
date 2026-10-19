@@ -1,0 +1,13 @@
+{
+  "version": "reverse_explanation_r1",
+  "frozen_before_selected_class_or_new_validation_results": true,
+  "target": "selected reverse global and difficulty partitions, as learned without heldout building",
+  "features": "exact forward/FEATURE_DOMAINS.json supported numeric features; no worker ID, cohort ID, counts of missing domains, target-building outcomes or target geometries",
+  "model": "DecisionTreeClassifier max_depth=3, min_samples_leaf=4, random_state=20261019",
+  "feature_availability": "at least 10 known training workers and nonzero variance; training-worker median for numerical fitting only; no missingness indicator",
+  "missing_interpretation": "a displayed rule or predicted rule-class is unknown for a worker if any split feature on that worker's decision path is unknown; do not pretend a median-imputed path is an observed behavioral rule",
+  "training_fit_evaluation": "agreement and coverage on supported workers; per-class counts and rules",
+  "worker_generalization": "leave-one-worker-out refit of feature support, imputation and tree, preserving exact discovered labels as targets; unseen singleton classes naturally cannot be learned",
+  "building_generalization": "rule labels exported per heldout-building fit and evaluated on the same heldout replacement events; class discovery vs rule explanation kept separate",
+  "scope": "diagnostic surrogate of discovered partition, never used to tune original partition or fusion"
+}

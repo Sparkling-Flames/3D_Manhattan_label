@@ -1,0 +1,1271 @@
+{
+  "all_checks_passed": true,
+  "checked_gzip_exports": 176,
+  "excluded": "input_schema_probe copies separately SHA-checked by PROBE_BOOTSTRAP_PARITY",
+  "class_rows": 186300,
+  "class_unique_key": "method_id,fold_id,domain,worker_id",
+  "workers_per_method_fold_domain": 60,
+  "person_pair_rows": 162840,
+  "person_pair_unique_key": "fold_id,domain,worker_a,worker_b",
+  "rule_rows": 9660,
+  "prediction_folds": 22,
+  "prediction_rows": 19779954,
+  "explanation_input_hashes_still_match": true,
+  "seconds": 7.763786554336548,
+  "checks": [
+    {
+      "path": "explanations/class_feature_profiles.csv.gz",
+      "sha256": "e01f319224f95223c6a49578d9ee1deb59bb1f75ee0e8dfa6d818830e6b9b45a",
+      "bytes": 73208,
+      "csv_lines_without_header": 701,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "explanations/leave_one_worker_out_rule_predictions.csv.gz",
+      "sha256": "d366999648b438787aa1f73f3f6fee515f4643247e5dde2336bcb239f45512fe",
+      "bytes": 32288,
+      "csv_lines_without_header": 9353,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "explanations/rule_classes.csv.gz",
+      "sha256": "0b450d3e2942d58ae7b3c8da8d79d8eab5018244019880d720f27f7834a436fa",
+      "bytes": 57706,
+      "csv_lines_without_header": 9660,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_calibration.csv.gz",
+      "sha256": "f6db21e4b0fe9e062ee2865891fb02c8581c3124b98ca0807a39ded0202c2abd",
+      "bytes": 538395,
+      "csv_lines_without_header": 52992,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_candidate_classes.csv.gz",
+      "sha256": "1bc5b205adb2fb13b77d66b5c298a32a6de9075498a85971ced0bb16789ffab5",
+      "bytes": 1367586,
+      "csv_lines_without_header": 186300,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_candidate_selection.csv.gz",
+      "sha256": "6e4c6cb96920a5759c2b8619bab5333150df6eef3e96f3de93c4f1f7fd0c9940",
+      "bytes": 49611,
+      "csv_lines_without_header": 1472,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_class_diagnostics.csv.gz",
+      "sha256": "21942353f1ea52f433cc9152cbedc63b70bd766560c9590e54fec6f682ff55de",
+      "bytes": 658811,
+      "csv_lines_without_header": 29434,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_inner_building_scores.csv.gz",
+      "sha256": "0c7286104662b758a997657686d39975c5d2b279cfe5a6ec95c065189204d919",
+      "bytes": 376197,
+      "csv_lines_without_header": 30976,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/all_pair_relations.csv.gz",
+      "sha256": "fd97d09bfe8fc775187be05725c7a2c78bd5387178ed2aefff042f28082f3baf",
+      "bytes": 7906275,
+      "csv_lines_without_header": 162840,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/coassignment_stability.csv.gz",
+      "sha256": "5c4a67e2b04457e1e546444cdc6131742711b035c68d713a81ecd0f2c615e35f",
+      "bytes": 945060,
+      "csv_lines_without_header": 238950,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/calibration.csv.gz",
+      "sha256": "7f918d9ca9178326a0ad5f7a6f0a1039856ca75665155928793f0cf50017c9ff",
+      "bytes": 23956,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/class_diagnostics.csv.gz",
+      "sha256": "eeead61b5c643edc917192667e84d1c52c23c5323860f091af54c78da40209af",
+      "bytes": 29190,
+      "csv_lines_without_header": 1273,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/classes.csv.gz",
+      "sha256": "00b16385469dd7cd158bf9752d7100c21d263296d57489ef63c0ef0e7a9351ee",
+      "bytes": 60436,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/inner_building_scores.csv.gz",
+      "sha256": "a9012f1ae5cca4b528fa007dfaca9763a7dee3f023b4561036ec9fcb3352fbb2",
+      "bytes": 17141,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/inner_classes.csv.gz",
+      "sha256": "e671fd7ae3fb653b0777b9fe0a35bac0dc2460919393c669342e3090f4e80411",
+      "bytes": 172896,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/pair_relations.csv.gz",
+      "sha256": "36091ef5811ce8178dbb5a4cbe1339b4fd876922992213a1d82929d91cd579f3",
+      "bytes": 352635,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/2t7WUuJeko7/predictions.csv.gz",
+      "sha256": "6a5eaccaba52dd832751b65be42ed7e1683c312fc1d4dc5ca8f588a68327a140",
+      "bytes": 6520311,
+      "csv_lines_without_header": 396612,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 396612
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/calibration.csv.gz",
+      "sha256": "279dd31c81621d37c9c546857a289b11fad76b588d2178c0832171d8a03e5cc7",
+      "bytes": 23883,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/class_diagnostics.csv.gz",
+      "sha256": "12741443d7c65b0a2ddd9ae31b3a9d644023985e6f919dcf33d9613356bb8617",
+      "bytes": 29500,
+      "csv_lines_without_header": 1265,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/classes.csv.gz",
+      "sha256": "24c1864f523ea159107c5b7765b73dd94d4c4aa640feceda39e2bb679af772e7",
+      "bytes": 60054,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/inner_building_scores.csv.gz",
+      "sha256": "bf4ecd8e8902a12956a6156af19fdfb77cc1f26172d33a2d667e888199e568a0",
+      "bytes": 17193,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/inner_classes.csv.gz",
+      "sha256": "390738242758142cb1c45100487c142f39fcfaa6e7f5b124de0844bc9408e4b8",
+      "bytes": 174622,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/pair_relations.csv.gz",
+      "sha256": "d7922182dda84f8635bd33f4338b28353158e717b33b731277ad01d7f886640c",
+      "bytes": 351134,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/7y3sRwLe3Va/predictions.csv.gz",
+      "sha256": "efca842e1709620bb59ee6fabe7e450a00edd7ac4530d8435eb76bf0fb44fba5",
+      "bytes": 14952021,
+      "csv_lines_without_header": 906384,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 906384
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/calibration.csv.gz",
+      "sha256": "3e072d9c50bc7276abb2d36119e27c0efa91f31073cdb84e86f9fcbbc9ba8f55",
+      "bytes": 23596,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/class_diagnostics.csv.gz",
+      "sha256": "457c8456cef8430b85e9e63d66c2322d8e9264244f63da2374df59fe786b2d2e",
+      "bytes": 29890,
+      "csv_lines_without_header": 1293,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/classes.csv.gz",
+      "sha256": "ec566e1d83884d08b3a83befcc417550569ed2ae40caa486137a94ce9a30791d",
+      "bytes": 59186,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/inner_building_scores.csv.gz",
+      "sha256": "3c4303d3ed6e470808a77816edb26584fdba929115d23e0a01de852b6215fd04",
+      "bytes": 17181,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/inner_classes.csv.gz",
+      "sha256": "883fc1054981d18a38bbdc172355da30b0713e391188bada4c22498e61d1f977",
+      "bytes": 172008,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/pair_relations.csv.gz",
+      "sha256": "b58b71e98c655c76531c3065693eb2faf8c38aef1dca021c58510b31e7db27dd",
+      "bytes": 348249,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/B6ByNegPMKs/predictions.csv.gz",
+      "sha256": "9e1921a1138e765b87e05ce58e09c65f9b485ce1a44211ecd517e50b6a8bda0e",
+      "bytes": 19384073,
+      "csv_lines_without_header": 1178520,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1178520
+    },
+    {
+      "path": "results/folds/FULL/calibration.csv.gz",
+      "sha256": "4da626558b03eb4d68628777d1ec2e1056ee7b6c708629459812d9c5da80a08e",
+      "bytes": 23621,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/FULL/class_diagnostics.csv.gz",
+      "sha256": "08766b8ab8d11e0b4820a86680fe4b098950a47455e4c78b646771e3b4b751cb",
+      "bytes": 29847,
+      "csv_lines_without_header": 1279,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/FULL/classes.csv.gz",
+      "sha256": "3ee9adb952b444e1d3afdd6fa9f48f33e78a9048b468b9981c63f7a0bf5bee60",
+      "bytes": 58277,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/FULL/inner_building_scores.csv.gz",
+      "sha256": "2465a8ed938482134a9a2fffd0497e3b7dff3b25359d2499bbf420633d9a4a1f",
+      "bytes": 17927,
+      "csv_lines_without_header": 1408,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/FULL/inner_classes.csv.gz",
+      "sha256": "577d3e5a7c3ce3f806d95eb9a8362e38a7f530677b2b166e165a6ac4b875a43c",
+      "bytes": 170811,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/FULL/pair_relations.csv.gz",
+      "sha256": "862cb90b73316e42e0f2017484383daaf059fe5c14ea2efc98e3495374fc8e7c",
+      "bytes": 351600,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/calibration.csv.gz",
+      "sha256": "70785e53d237bbea457110efd94b86885327ce9f2b2baaedeab9dc455837dc04",
+      "bytes": 23809,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/class_diagnostics.csv.gz",
+      "sha256": "59ab69f8ec2319740e0175ccb489a2752d1af3e4fbde3d72d2ec9faac0c9b758",
+      "bytes": 28369,
+      "csv_lines_without_header": 1291,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/classes.csv.gz",
+      "sha256": "b46e481a41115206e4325a569c9865dd58f12c98071dbf28b1805d4cbd7c6f42",
+      "bytes": 59030,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/inner_building_scores.csv.gz",
+      "sha256": "8575a5f9bc913342cf4c793559a6690f6297a1c28206997f3e21e00d4eb8ea35",
+      "bytes": 17153,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/inner_classes.csv.gz",
+      "sha256": "01bf83d1663f42deae1ca689bdd20439016eefb6d8b5db9217d8de14898ab7e2",
+      "bytes": 171092,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/pair_relations.csv.gz",
+      "sha256": "b5ddefe752355c09ef0e78b196b9a6f8cebfbb3575da4fd5d1ff82cdba6ce1be",
+      "bytes": 347112,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/S9hNv5qa7GM/predictions.csv.gz",
+      "sha256": "7a6cd031d44371f0ffd78d6e44aa8fe09b0254bdc745ebefe919496a673f9313",
+      "bytes": 21077250,
+      "csv_lines_without_header": 1278432,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1278432
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/calibration.csv.gz",
+      "sha256": "46bcc765eeb76e96dcd6d121aecba1ed9b3f816f7bed3b3cdf00f4d6133d3724",
+      "bytes": 23890,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/class_diagnostics.csv.gz",
+      "sha256": "ae606a96c8a21eed3d01bbaf258b902f61c7a2fee90d8eaff81d608104814c98",
+      "bytes": 27682,
+      "csv_lines_without_header": 1274,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/classes.csv.gz",
+      "sha256": "4fc4dc810927c2015c40f4373f44f2d01865a0fee09db0ee6289d7da0f027c33",
+      "bytes": 59762,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/inner_building_scores.csv.gz",
+      "sha256": "919bc9c5a06c5e45eb3f1a2f03632e18ac269ee7eb652f46a8be1d70ff97ab70",
+      "bytes": 17146,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/inner_classes.csv.gz",
+      "sha256": "e9d4113e518b55dbc799c468b3c39abd1312613e29d3c3a8ff1df8b267e1d3a9",
+      "bytes": 173706,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/pair_relations.csv.gz",
+      "sha256": "e22084c63d07b6a77d5d04649bff0bf82d954fdfc7a2d630a7e12a5dc8bb1e86",
+      "bytes": 347258,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/UwV83HsGsw3/predictions.csv.gz",
+      "sha256": "21560832ecbf53e0c814e8cb1065210ec7ef71b973b6d048cdb1f5a4be99961e",
+      "bytes": 6479447,
+      "csv_lines_without_header": 391920,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 391920
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/calibration.csv.gz",
+      "sha256": "910d1a5e50d773ceba26ff2cede5789854a9c6964c1e38ea71f367ed23e05a2d",
+      "bytes": 23825,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/class_diagnostics.csv.gz",
+      "sha256": "c0b90fa298e97b9fe242b43e6578b64a2f211786db22b45ab7483ae15f250d8e",
+      "bytes": 30477,
+      "csv_lines_without_header": 1320,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/classes.csv.gz",
+      "sha256": "dc5eaebc6d377c6aceb3470eaa3903b3ca099fc1abe72f756d88df513a6d706d",
+      "bytes": 60219,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/inner_building_scores.csv.gz",
+      "sha256": "8224eba5dee857d229ccbc813fb0e6cc0289ab1b386bfe8c38555a2957869504",
+      "bytes": 17164,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/inner_classes.csv.gz",
+      "sha256": "264e31282cec4e640ff58329f14c68a163c94b8b1a757a2afae51c0819a7fdd7",
+      "bytes": 172545,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/pair_relations.csv.gz",
+      "sha256": "4c4d3e28f8c27376da6c0d01ae600e3b21505ba9d32293bb5b67ae86d4a5d8e8",
+      "bytes": 347805,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VFuaQ6m2Qom/predictions.csv.gz",
+      "sha256": "38a4d745f1154b6786e56aac41543f9faecec25a7dd2c5b1235e229f4032033f",
+      "bytes": 9988406,
+      "csv_lines_without_header": 606924,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 606924
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/calibration.csv.gz",
+      "sha256": "c4ad2521bd40dc82f89dff876b256ec2fa466d2cc5b95c907c1674b478a995e3",
+      "bytes": 23753,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/class_diagnostics.csv.gz",
+      "sha256": "2b983ffe3b00e576fbb5f85f8b69acb364c9f8e9ccabf919489ee45e18b900b1",
+      "bytes": 30181,
+      "csv_lines_without_header": 1252,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/classes.csv.gz",
+      "sha256": "7dfd9ea1d0cb9b641aa1bf7314eaa23fefcefc3b4bdbf6e8edb21efeaabcf5e4",
+      "bytes": 59967,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/inner_building_scores.csv.gz",
+      "sha256": "7832b58040ab72d9ec0c8a991a4e3b7a9b5429f23b062cfdbc202c14c55efe49",
+      "bytes": 17216,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/inner_classes.csv.gz",
+      "sha256": "d50f5aec42411274586dad5b348c4f1e05efbb8e4ab1d52b9f3cd8d3aa3c0750",
+      "bytes": 172124,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/pair_relations.csv.gz",
+      "sha256": "a964f0cd0fbc3e53c86873b8e7f3952a2b13a0da06b2b9ae5966b1b649c6ce3f",
+      "bytes": 352067,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/VLzqgDo317F/predictions.csv.gz",
+      "sha256": "966c439a9a86773443dc5f3ca14e363da485f250401567e4d5f44b08c429af2b",
+      "bytes": 2177988,
+      "csv_lines_without_header": 132204,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 132204
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/calibration.csv.gz",
+      "sha256": "2862019e2d1c3123dfdc824062433dc7eb0a2a41a47fdd88af95a1903840773d",
+      "bytes": 23822,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/class_diagnostics.csv.gz",
+      "sha256": "82287962b5b6ff935449b128edf5d4f1a159783244d027bdebf07974545be562",
+      "bytes": 27933,
+      "csv_lines_without_header": 1279,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/classes.csv.gz",
+      "sha256": "513818ce3b1e4d28a3c6225a2450ab350e2d40ed410d6a698fa6b2e401f88079",
+      "bytes": 60112,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/inner_building_scores.csv.gz",
+      "sha256": "086142c71ba886e553cbc33779c97bb4a0447ffd073513b286dcb80d2ef08786",
+      "bytes": 17172,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/inner_classes.csv.gz",
+      "sha256": "eac5ef4311dc57e1c2e25744a673455d622d6a4abcb288590fc8285e7569f603",
+      "bytes": 173369,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/pair_relations.csv.gz",
+      "sha256": "28b0e30a507a932048e775402ecce0925270e79472beb00e038060714e08cc3f",
+      "bytes": 349655,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/X7HyMhZNoso/predictions.csv.gz",
+      "sha256": "c698bf21d787694046ff58d379269c444b4e2983266423ead109d80c76737060",
+      "bytes": 8182760,
+      "csv_lines_without_header": 496248,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 496248
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/calibration.csv.gz",
+      "sha256": "b34d94e63d59a3e25d3a3f5f8c16a34adee6621d857913e1603e3b367ff6b67a",
+      "bytes": 23919,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/class_diagnostics.csv.gz",
+      "sha256": "8d4a1c43d34e1c246a41544cf8794b193312467c4cac8de736281d1a2021ca40",
+      "bytes": 30398,
+      "csv_lines_without_header": 1307,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/classes.csv.gz",
+      "sha256": "7223edfa6efaf213b6b08917a332356f45cf5b88a5e61d39ce2dff09c098dc0c",
+      "bytes": 60101,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/inner_building_scores.csv.gz",
+      "sha256": "9c2360c1be325cae54989ce2fa63ac8bbebc2d4b261f578eedbc92739321ad11",
+      "bytes": 17178,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/inner_classes.csv.gz",
+      "sha256": "9d02203684ac3fc7f5d57678074f340dd32e6e548e855e3746f519ef2a8eb42f",
+      "bytes": 173830,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/pair_relations.csv.gz",
+      "sha256": "15ea7d34f57ba5fc2e47bd41500aad73e320b161536ff4f1f06ded4362b503fc",
+      "bytes": 350827,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/Z6MFQCViBuw/predictions.csv.gz",
+      "sha256": "9c3f1d7a0b7eb387e752dacee123d1f1819f97eff2450614e36ccc712bfc83cd",
+      "bytes": 10867256,
+      "csv_lines_without_header": 661020,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 661020
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/calibration.csv.gz",
+      "sha256": "90556ea731a8a7e26154c4487ab09f835dc7d47e95e9b512014503e214c04a59",
+      "bytes": 23707,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/class_diagnostics.csv.gz",
+      "sha256": "7433c78bdef6f820c62cdd92d44c0771af516b66366d53290d7164fd1005fdd4",
+      "bytes": 30744,
+      "csv_lines_without_header": 1263,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/classes.csv.gz",
+      "sha256": "4f721f9dac2155df6e0d205d63bcbf41a5e307592cdb289a7d6bef70cbbf477c",
+      "bytes": 60139,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/inner_building_scores.csv.gz",
+      "sha256": "b4e71aa6d303c9ddbc4f4d99f98c7c13248e4f43f653b97c87fbe12883b5a697",
+      "bytes": 17080,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/inner_classes.csv.gz",
+      "sha256": "e047affff4456c87fd4e484585f6cbe947a79a96ac2dd0511a2cc15378802d0f",
+      "bytes": 172490,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/pair_relations.csv.gz",
+      "sha256": "ef2bc2007e4dbbdfb55786ece7676e12f47ba5dad12a1ad335d2366fe2963ecd",
+      "bytes": 352844,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/b8cTxDM8gDG/predictions.csv.gz",
+      "sha256": "03fc523227ddb43c216dde1c7221b362462c84efcea160f5e781f16f16ea8028",
+      "bytes": 3547430,
+      "csv_lines_without_header": 214728,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 214728
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/calibration.csv.gz",
+      "sha256": "4ff0a2fd0f2cac491cd0cee4052846a14fb76a8bfad069e7ff1fa7b24dbba0f5",
+      "bytes": 23919,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/class_diagnostics.csv.gz",
+      "sha256": "12507ce31be82cb13abcab9634958c56c15a23718d8640142a9d777636c322bb",
+      "bytes": 30840,
+      "csv_lines_without_header": 1283,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/classes.csv.gz",
+      "sha256": "848e221e722cbee59c1af5d03409083b95a2f3a02d9861f57728f6dfae2ceb2e",
+      "bytes": 60084,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/inner_building_scores.csv.gz",
+      "sha256": "e449fc746f8d3c93faaff3e60ea51c8815e7abdceb3b335f1459e1e8ed11275d",
+      "bytes": 17149,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/inner_classes.csv.gz",
+      "sha256": "11740bab2a7e6765d38c7ded939af422431e575b8d10a3aa20b06733ee55678b",
+      "bytes": 173468,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/pair_relations.csv.gz",
+      "sha256": "89dee13027817a28be403ad5b6a5f3e139d5d37568c92891dde2fe31a6ea0028",
+      "bytes": 348460,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/e9zR4mvMWw7/predictions.csv.gz",
+      "sha256": "2f054bb6e109c0081705d6383b8ac8b253f385e353f2829d32beb9249e5715c9",
+      "bytes": 18852627,
+      "csv_lines_without_header": 1146228,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1146228
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/calibration.csv.gz",
+      "sha256": "db48c931e34ea26206020992354fd06252f382d87eeb9524284b0bc184d76473",
+      "bytes": 23650,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/class_diagnostics.csv.gz",
+      "sha256": "20d897ce0b0d9ebc092f531c80f82d3fb172f21077b5a0eeaf3cfc8c8f4e7913",
+      "bytes": 28890,
+      "csv_lines_without_header": 1267,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/classes.csv.gz",
+      "sha256": "de8b952821fe8000e1b16fdc9f206cb2b711a533c01a3d84724440835d591dd0",
+      "bytes": 59814,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/inner_building_scores.csv.gz",
+      "sha256": "22abe54a60e6c62a0b6606d73caf3c5cfe87a2d4c523724565a2424429734baa",
+      "bytes": 17198,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/inner_classes.csv.gz",
+      "sha256": "9b63a54d7273ce33f2b2095abe545cea405129903ccc0e903d3cffb5f89d933a",
+      "bytes": 172090,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/pair_relations.csv.gz",
+      "sha256": "530b869b7820ef5a64aedcd7ed0da69c7c733ac21fc2df7a04e89bf923e83f2a",
+      "bytes": 349658,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jh4fc5c5qoQ/predictions.csv.gz",
+      "sha256": "49d190bde5157158e9b2f4ec88d2f4870790b83c0991c670c5d8fae77c924346",
+      "bytes": 9642093,
+      "csv_lines_without_header": 585396,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 585396
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/calibration.csv.gz",
+      "sha256": "696565fe792ce7341628fef4caa0b5d825cd9e8cf62a980ed7b5bf7c8e61ad9f",
+      "bytes": 23778,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/class_diagnostics.csv.gz",
+      "sha256": "037abf28f7e6d722f84ffa19fb11e0e0ce8ab1b5a563903f1dd303ee0196475d",
+      "bytes": 29680,
+      "csv_lines_without_header": 1276,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/classes.csv.gz",
+      "sha256": "cbb795690ce3078661a92500d993e7557ec66be7a019f2fbf8f25706b5575dac",
+      "bytes": 59975,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/inner_building_scores.csv.gz",
+      "sha256": "398a018ab3e00afb0c1dfcb03cc16c5d9f67578b47639125048a2ebf10ac2c14",
+      "bytes": 17041,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/inner_classes.csv.gz",
+      "sha256": "59cff818a3a464d020465c0350fb8bc6073d2ae05bab7abd17b23c20d6c23491",
+      "bytes": 173964,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/pair_relations.csv.gz",
+      "sha256": "68e533f7297a5e6d070df7b8532245cc49a0545696cd336328d26b81615a59c6",
+      "bytes": 350538,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/jtcxE69GiFV/predictions.csv.gz",
+      "sha256": "4324342f5ef15200edd9c549d5a649766e9629d43c8605c90df706caff211218",
+      "bytes": 20430025,
+      "csv_lines_without_header": 1240344,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1240344
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/calibration.csv.gz",
+      "sha256": "2cb15a39808cadb6b9b3455301bc50f467a9efda3fc2c4dc6b48e35e1d148a28",
+      "bytes": 23643,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/class_diagnostics.csv.gz",
+      "sha256": "8a8e7114e735ec0c703f30131584e25d4fcbf67f5cff1d13fc2bd09be9da93d0",
+      "bytes": 29932,
+      "csv_lines_without_header": 1283,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/classes.csv.gz",
+      "sha256": "d7377fb9f51aa35ef19fe9e6a8fb585791c7e90b9d494d096b15365d77c5e4ce",
+      "bytes": 60172,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/inner_building_scores.csv.gz",
+      "sha256": "1afacb60a73a8582e2d96956cdc795f94b755e14bdfcbfb4786bb083768638ea",
+      "bytes": 17165,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/inner_classes.csv.gz",
+      "sha256": "9369bb5d077cd51beec9631599f418d50aef365626fa00e0312b19ab262c0a3d",
+      "bytes": 172184,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/pair_relations.csv.gz",
+      "sha256": "4dcb83e92ff7464e40a5dd7a22f9fc5e87b2e44ff54250ccde68e4e0f59f0856",
+      "bytes": 352191,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pRbA3pwrgk9/predictions.csv.gz",
+      "sha256": "abd95cdf4dfe3e4a50e1ec4c68bddba7cf1d0aaf92c10d63927aefb7149c64e2",
+      "bytes": 12678249,
+      "csv_lines_without_header": 771144,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 771144
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/calibration.csv.gz",
+      "sha256": "07401113cbc7b67a7305be9d1013025f7750db1c9d1031aa7a246f09ae260abb",
+      "bytes": 23570,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/class_diagnostics.csv.gz",
+      "sha256": "c44cd2631ca41739af6d34bf6ceb600fd202b3023ed49bc4193d1c88dcfbdff3",
+      "bytes": 28748,
+      "csv_lines_without_header": 1266,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/classes.csv.gz",
+      "sha256": "4e95ce4039868c4cfbcfeca52f29b706fe35a38361196edf0bd22af791db229d",
+      "bytes": 59479,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/inner_building_scores.csv.gz",
+      "sha256": "8a47b665ce973ad4c1d982365a8bdf99ef286726b95b71767db1d5724f50e18e",
+      "bytes": 17074,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/inner_classes.csv.gz",
+      "sha256": "e02a4fbfb29a6e546bf1bbb70bae39ad0a8db67bdd107854501f7a01be5e9660",
+      "bytes": 171386,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/pair_relations.csv.gz",
+      "sha256": "6f01533144979ffe8423760b12b744bb124096be1502a9175a4210329cfba446",
+      "bytes": 351074,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/pa4otMbVnkk/predictions.csv.gz",
+      "sha256": "340bae6ceaffbc05b5177bee18035765eb5ea3d5bbdd8d5fdb368b341f9c671f",
+      "bytes": 20546474,
+      "csv_lines_without_header": 1248072,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1248072
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/calibration.csv.gz",
+      "sha256": "7bbd2e99a46c4b15c7e360931393cd6c6d2dd91631d8f4153a3870e43b8d8596",
+      "bytes": 23994,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/class_diagnostics.csv.gz",
+      "sha256": "838716b733d736085b62b097d4257ba05a13ee0fd8f0e9a106af7b9a4e604dcb",
+      "bytes": 27744,
+      "csv_lines_without_header": 1271,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/classes.csv.gz",
+      "sha256": "5298088c9c543ebe1062d46bcdc0fcfa3d72e0291423bbfe386b508807d83b97",
+      "bytes": 59370,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/inner_building_scores.csv.gz",
+      "sha256": "d04fa6cbf2f7b393e19eae40ac8b619ae9766bb0898f3bf1270d68ecd0bbd547",
+      "bytes": 17085,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/inner_classes.csv.gz",
+      "sha256": "3e155a10a37c51c0d20946b106556b0d9fcd347357705b075b8d930a0ccad0d4",
+      "bytes": 170627,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/pair_relations.csv.gz",
+      "sha256": "5a8352cd436f346dd466d6a6194e8e316cfcc26f082750ceb3f3b0e31fb8b8b4",
+      "bytes": 349409,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/q9vSo1VnCiC/predictions.csv.gz",
+      "sha256": "8b25fd265e1f8c574ce3cbc218b6a0a1f958c493fb6c8abddc18a40c1c3fa2db",
+      "bytes": 11579056,
+      "csv_lines_without_header": 702282,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 702282
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/calibration.csv.gz",
+      "sha256": "34ad11117ddc8a9d9c2b0c31b8e691cebcebdd5d20bfb2e0ed528c4eec6f66ee",
+      "bytes": 24169,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/class_diagnostics.csv.gz",
+      "sha256": "145001348f832c9d1285a4ed1f91943c1bf230aa307f61ef5dbe96c87eb2d0e8",
+      "bytes": 30589,
+      "csv_lines_without_header": 1292,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/classes.csv.gz",
+      "sha256": "f313a2ef8775cf485c0fb2a52d4f06f26f696a1bdaa3b72ae6f8ddf506799e25",
+      "bytes": 59455,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/inner_building_scores.csv.gz",
+      "sha256": "e37850dbe886dda04b4ea15cd273d6bde44c3facd2beff2e22464266313f32ff",
+      "bytes": 17085,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/inner_classes.csv.gz",
+      "sha256": "10287c5a04ede796769a5b7ed5761f5db10801a4f20de5bccf9d527b28fec713",
+      "bytes": 174854,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/pair_relations.csv.gz",
+      "sha256": "fe9ac8ecdae5ca27232653413858d8beb7d0e506c4f263e00d5a1bb323717d88",
+      "bytes": 347106,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/rPc6DW4iMge/predictions.csv.gz",
+      "sha256": "d6d9e5fe28c6d0c0d1d248fca360fcfc6d72b3ba417b4b6f5a6aad0d1440ab56",
+      "bytes": 14037643,
+      "csv_lines_without_header": 850356,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 850356
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/calibration.csv.gz",
+      "sha256": "1e2284e0eeb05921925e61fae6d2f2b6bc940eab3e713d35cd266faa319f1ffa",
+      "bytes": 23564,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/class_diagnostics.csv.gz",
+      "sha256": "067faf84b8b7bef5a0fd21443030b51e91e8a9a6c030502c67b577c3332c151c",
+      "bytes": 28990,
+      "csv_lines_without_header": 1273,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/classes.csv.gz",
+      "sha256": "2e69a56037c7bcbc699d1b0731186e494edbcaac1a5ee1e11e47a1a70ed1aee7",
+      "bytes": 60065,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/inner_building_scores.csv.gz",
+      "sha256": "10cbb1f0eb8962575d3e04c043ecf72c2fc47f42217c9fad87776f94773e19e8",
+      "bytes": 17072,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/inner_classes.csv.gz",
+      "sha256": "8390af4dc5bd9c147e25f9ef795a3f6b2671ccd35d36d73aac36204e778aa21d",
+      "bytes": 171801,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/pair_relations.csv.gz",
+      "sha256": "92266b459b009adca38beb931a9f1b0ef314da943cc439385611f7c85457e0d9",
+      "bytes": 303215,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/uNb9QFRL6hY/predictions.csv.gz",
+      "sha256": "e6479c7ab58f113f5914b3539029ea70f35e5845e067fdebe5547313b933e413",
+      "bytes": 46942653,
+      "csv_lines_without_header": 2851632,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 2851632
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/calibration.csv.gz",
+      "sha256": "d75e1fc8c3160735a1666b4bfc1acfc4a861fbb79110a0e10c7e743e18853142",
+      "bytes": 23566,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/class_diagnostics.csv.gz",
+      "sha256": "8de801177002548c5ca860b8337f29146bd7b5f791e3d23906917d0283e29fda",
+      "bytes": 29598,
+      "csv_lines_without_header": 1269,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/classes.csv.gz",
+      "sha256": "4f84a6f448f5b9c05f436ab5a8f07e3befac9769d67760496db289d249e6e9d3",
+      "bytes": 59511,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/inner_building_scores.csv.gz",
+      "sha256": "0fc980506810a7f8aed0d0c36f4262ab737e8c7a88005783d983041ca36d1c0c",
+      "bytes": 17071,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/inner_classes.csv.gz",
+      "sha256": "7ccad5e58bc6095b76a63e9439401f780e6dc5a214ca2b49b724c5aee5a8a034",
+      "bytes": 170892,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/pair_relations.csv.gz",
+      "sha256": "95560cc8314db9235a294fbaac84f590f9ce513836c8c42cae461d4eb15ef106",
+      "bytes": 341071,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/wc2JMjhGNzB/predictions.csv.gz",
+      "sha256": "86204a858b531db430dfa1ba7816a350864299f9ae7e9dfb67d2eb819a75e121",
+      "bytes": 25889072,
+      "csv_lines_without_header": 1570026,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1570026
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/calibration.csv.gz",
+      "sha256": "364de6bae975e24b83680597c2391e937bb8d2740769341521ce623607821367",
+      "bytes": 23780,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/class_diagnostics.csv.gz",
+      "sha256": "a30998b468851281074d371690d439fa0a95981e3395c82d77b5e01386e41599",
+      "bytes": 28476,
+      "csv_lines_without_header": 1279,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/classes.csv.gz",
+      "sha256": "0fe3ce11e17b529bbd9da1728cfd2312785cb7fa011092477bcd4ff547e7f668",
+      "bytes": 59659,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/inner_building_scores.csv.gz",
+      "sha256": "ecc2a3059aaa07f4b32727a43dd6d8705f02218c9db0d332ba77b0bcb8f853b8",
+      "bytes": 17183,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/inner_classes.csv.gz",
+      "sha256": "6c6aa24863dec3c6c115fee3431d35fb9210578361a72b90731279c1ebb93d98",
+      "bytes": 173108,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/pair_relations.csv.gz",
+      "sha256": "e599e6a89ae04f0676d37b176bd86b5a88c2d301fa2a23beba17a2a9328d65bc",
+      "bytes": 349027,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/x8F5xyUWy9e/predictions.csv.gz",
+      "sha256": "4f9b63843b2d8be4a6adb3a9edf028dc11b89753c0fd7f0bb5e11d281886652f",
+      "bytes": 4364676,
+      "csv_lines_without_header": 264408,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 264408
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/calibration.csv.gz",
+      "sha256": "963747734ffb2842fec6ff07b34558e1d629013bad6f73abba927f30fe6d0d34",
+      "bytes": 23770,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/class_diagnostics.csv.gz",
+      "sha256": "6454db46eb3c8361ed5135ffc0058aa0bd7d04f1f84d4fd737bf80e789c8f4e7",
+      "bytes": 28537,
+      "csv_lines_without_header": 1272,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/classes.csv.gz",
+      "sha256": "67b81a14e6cf7677e1f275eb6b896dc5defcd42b9e5e257242fecb81991815fa",
+      "bytes": 60653,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/inner_building_scores.csv.gz",
+      "sha256": "d3b7a20c5f93e306dd66a78d76510e25e5eae89c496ca7bef7344f9efd12e05d",
+      "bytes": 17214,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/inner_classes.csv.gz",
+      "sha256": "eab137dd64ba909d5823118fa1765b4f453cfc2ce2352ff052b32c2a95f5460c",
+      "bytes": 173742,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/pair_relations.csv.gz",
+      "sha256": "b1cf9939e0212b36f8ba0c67b33aed42b6477fb1c14cdf9305fc45705c61696f",
+      "bytes": 336477,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/yqstnuAEVhm/predictions.csv.gz",
+      "sha256": "41d3218d0202692a495524dc9eeaad46b5e83c952ed678973ccc0d3c02c3a7c9",
+      "bytes": 29533767,
+      "csv_lines_without_header": 1790826,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 1790826
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/calibration.csv.gz",
+      "sha256": "127bb93295a086fd92a38da88c3ba0ae4a3826470edd2f2bd18f1d86482b5399",
+      "bytes": 24009,
+      "csv_lines_without_header": 2304,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/class_diagnostics.csv.gz",
+      "sha256": "2d288b3274cb9a7019b3f627a55688cc4df797158c3bb7c347a1d3c7a5218a9f",
+      "bytes": 31357,
+      "csv_lines_without_header": 1307,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/classes.csv.gz",
+      "sha256": "fe4b25314ddb1febeea84e41bcd7a9f880c95c0e97fe3d5fd94f0e0228525b25",
+      "bytes": 60729,
+      "csv_lines_without_header": 8100,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/inner_building_scores.csv.gz",
+      "sha256": "e989baad5f3649b400ffedcc019b62f4280e8c3082ef9469afa2ff936e65c012",
+      "bytes": 17117,
+      "csv_lines_without_header": 1344,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/inner_classes.csv.gz",
+      "sha256": "e5d36db0a8740c2143748b97bff70342ff2b23bc630529c8aa1011efd26d8eb8",
+      "bytes": 172431,
+      "csv_lines_without_header": 23040,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/pair_relations.csv.gz",
+      "sha256": "510f7fbbb0287a305a4ec0cf160300a0603a6fa75d14360a471580e82e4e69db",
+      "bytes": 351531,
+      "csv_lines_without_header": 7080,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/folds/zsNo4HB9uLZ/predictions.csv.gz",
+      "sha256": "4c74fb0b2ddb840cd1a987e1e695c6c3adf519591894a663d5bdd9981abc16f7",
+      "bytes": 8169946,
+      "csv_lines_without_header": 496248,
+      "gzip_crc_pass": true,
+      "expected_prediction_rows": 496248
+    },
+    {
+      "path": "results/geometry_candidate_class_diagnostics.csv.gz",
+      "sha256": "a56839b6df4e2798f8b514786862655b72683d4ab72cad6c09a010065154da92",
+      "bytes": 204255,
+      "csv_lines_without_header": 14273,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/geometry_candidate_classes.csv.gz",
+      "sha256": "2a3b5ce7b5b6aba3cc117caa3d95caf7bfec862960e913e60442fb0d57f9e6c4",
+      "bytes": 632137,
+      "csv_lines_without_header": 88320,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/geometry_person_pair_relations.csv.gz",
+      "sha256": "dbf19ea5b36e03726e3cb69e2669129a4cfee2bfcb095b2afb1c8ab4cb3a6f6b",
+      "bytes": 5598440,
+      "csv_lines_without_header": 162840,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/historical_geometry_pair_observations.csv.gz",
+      "sha256": "cd576bc27c5d1250b406e645043c87d4d2757003c19a83ba1c01f834d3022d9a",
+      "bytes": 299953,
+      "csv_lines_without_header": 92438,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/ordinary_records.csv.gz",
+      "sha256": "187bc468845550df147effca73ad6b543934a05f395ac996e7f44de4cb15a6f8",
+      "bytes": 568947,
+      "csv_lines_without_header": 5719,
+      "gzip_crc_pass": true
+    },
+    {
+      "path": "results/selected_class_worst_training_pairs.csv.gz",
+      "sha256": "d01899e387e3f78ce6974fff32b07fdb52f709a773c459e081d316e8c188f436",
+      "bytes": 40618,
+      "csv_lines_without_header": 3862,
+      "gzip_crc_pass": true
+    }
+  ]
+}

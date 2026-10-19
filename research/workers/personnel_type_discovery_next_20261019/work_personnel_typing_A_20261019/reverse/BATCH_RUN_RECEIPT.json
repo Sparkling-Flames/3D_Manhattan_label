@@ -1,0 +1,81 @@
+{
+  "seconds": 1118.653468132019,
+  "jobs": 3,
+  "disjoint_fold_groups": [
+    [
+      "FULL",
+      "B6ByNegPMKs",
+      "VFuaQ6m2Qom",
+      "Z6MFQCViBuw",
+      "jh4fc5c5qoQ",
+      "pa4otMbVnkk",
+      "uNb9QFRL6hY",
+      "yqstnuAEVhm"
+    ],
+    [
+      "2t7WUuJeko7",
+      "S9hNv5qa7GM",
+      "VLzqgDo317F",
+      "b8cTxDM8gDG",
+      "jtcxE69GiFV",
+      "q9vSo1VnCiC",
+      "wc2JMjhGNzB",
+      "zsNo4HB9uLZ"
+    ],
+    [
+      "7y3sRwLe3Va",
+      "UwV83HsGsw3",
+      "X7HyMhZNoso",
+      "e9zR4mvMWw7",
+      "pRbA3pwrgk9",
+      "rPc6DW4iMge",
+      "x8F5xyUWy9e"
+    ]
+  ],
+  "results": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/discover_reverse_types.py",
+        "--stage",
+        "discover",
+        "--events",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/events/common_events.csv.gz",
+        "--folds",
+        "FULL,B6ByNegPMKs,VFuaQ6m2Qom,Z6MFQCViBuw,jh4fc5c5qoQ,pa4otMbVnkk,uNb9QFRL6hY,yqstnuAEVhm"
+      ],
+      "exit_code": 0,
+      "log": "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/logs/discovery_batch_0.log"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/discover_reverse_types.py",
+        "--stage",
+        "discover",
+        "--events",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/events/common_events.csv.gz",
+        "--folds",
+        "2t7WUuJeko7,S9hNv5qa7GM,VLzqgDo317F,b8cTxDM8gDG,jtcxE69GiFV,q9vSo1VnCiC,wc2JMjhGNzB,zsNo4HB9uLZ"
+      ],
+      "exit_code": 0,
+      "log": "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/logs/discovery_batch_1.log"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/discover_reverse_types.py",
+        "--stage",
+        "discover",
+        "--events",
+        "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/events/common_events.csv.gz",
+        "--folds",
+        "7y3sRwLe3Va,UwV83HsGsw3,X7HyMhZNoso,e9zR4mvMWw7,pRbA3pwrgk9,rPc6DW4iMge,x8F5xyUWy9e"
+      ],
+      "exit_code": 0,
+      "log": "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reverse/logs/discovery_batch_2.log"
+    }
+  ],
+  "script_sha256": "669dc7b2a10100e756e2bf7a54b643a2cc33598b8bb30bb0ae181b50e9a9c1d1",
+  "event_sha256": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8"
+}

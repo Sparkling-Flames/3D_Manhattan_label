@@ -1,0 +1,124 @@
+hashes done
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:22: RuntimeWarning: Mean of empty slice.
+  im=g.groupby(['building','image_id'])[col].mean();a=im.groupby(level=0).mean().to_numpy();boot=np.random.default_rng(20261019).choice(a,(2000,len(a))).mean(1)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:136: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:23: RuntimeWarning: Mean of empty slice.
+  return dict(n=len(g),images=g.image_id.nunique(),buildings=len(a),event_mean=float(g[col].mean()),image_mean=float(im.mean()),building_mean=float(a.mean()),ci=np.quantile(boot,[.025,.975]).tolist())
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:144: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:22: RuntimeWarning: Mean of empty slice.
+  im=g.groupby(['building','image_id'])[col].mean();a=im.groupby(level=0).mean().to_numpy();boot=np.random.default_rng(20261019).choice(a,(2000,len(a))).mean(1)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:136: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:23: RuntimeWarning: Mean of empty slice.
+  return dict(n=len(g),images=g.image_id.nunique(),buildings=len(a),event_mean=float(g[col].mean()),image_mean=float(im.mean()),building_mean=float(a.mean()),ci=np.quantile(boot,[.025,.975]).tolist())
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:144: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:22: RuntimeWarning: Mean of empty slice.
+  im=g.groupby(['building','image_id'])[col].mean();a=im.groupby(level=0).mean().to_numpy();boot=np.random.default_rng(20261019).choice(a,(2000,len(a))).mean(1)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:136: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:23: RuntimeWarning: Mean of empty slice.
+  return dict(n=len(g),images=g.image_id.nunique(),buildings=len(a),event_mean=float(g[col].mean()),image_mean=float(im.mean()),building_mean=float(a.mean()),ci=np.quantile(boot,[.025,.975]).tolist())
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py:144: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+stats done
+/workspace/shared/personnel_partA_audit_20261019/independent/recompute_metrics.py:39: DtypeWarning: Columns (11,12,16,17) have mixed types. Specify dtype option on import or set low_memory=False.
+  lab=pd.read_csv(R/'assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz').fillna({'heldout_building':'FULL'})
+calibrator old_QT 3.3306690738754696e-16
+calibrator forward_selected 3.3306690738754696e-16
+calibrator reverse_selected 4.440892098500626e-16
+calibrator reverse_selected_swap 3.3306690738754696e-16
+[
+  {
+    "method": "forward_selected",
+    "reference": "old_QT",
+    "stratum": "all",
+    "n": 4080,
+    "images": 170,
+    "buildings": 22,
+    "event_mean": 1.1893349737772042e-05,
+    "image_mean": 1.1893349737772049e-05,
+    "building_mean": -0.0001501787014039068,
+    "ci": [
+      -0.0007336830734634421,
+      0.00039375587332015174
+    ]
+  },
+  {
+    "method": "forward_selected",
+    "reference": "old_QT",
+    "stratum": "common",
+    "n": 3990,
+    "images": 170,
+    "buildings": 22,
+    "event_mean": 2.2371946668450583e-05,
+    "image_mean": 3.430703756023471e-05,
+    "building_mean": -0.00011800859722523738,
+    "ci": [
+      -0.0006771687836131218,
+      0.0004071005951073414
+    ]
+  },
+  {
+    "method": "forward_selected",
+    "reference": "old_QT",
+    "stratum": "Q_near",
+    "n": 1290,
+    "images": 169,
+    "buildings": 22,
+    "event_mean": 0.0003974936436117946,
+    "image_mean": 0.000273637636169688,
+    "building_mean": 0.0002331476354958616,
+    "ci": [
+      -0.0006548865815337717,
+      0.0010914217943034609
+    ]
+  },
+  {
+    "method": "forward_selected",
+    "reference": "Q3",
+    "stratum": "all",
+    "n": 4080,
+    "images": 170,
+    "buildings": 22,
+    "event_mean": 9.233719095708105e-05,
+    "image_mean": 9.23371909570811e-05,
+    "building_mean": -2.2905376934776897e-05,
+    "ci": [
+      -0.0005523392199684917,
+      0.0004855713312073554
+    ]
+  },
+  {
+    "method": "forward_selected",
+    "reference": "Q3",
+    "stratum": "common",
+    "n": 4076,
+    "images": 170,
+    "buildings": 22,
+    "event_mean": 9.24278064536042e-05,
+    "image_mean": 9.232309782248212e-05,
+    "building_mean": -2.2916267084239736e-05,
+    "ci": [
+      -0.0005523394922222281,
+      0.0004855713312073554
+    ]
+  },
+  {
+    "method": "forward_selected",
+    "reference": "Q3",
+    "stratum": "Q_near",
+    "n": 1304,
+    "images": 169,
+    "buildings": 22,
+    "event_mean": 0.0005655863124728079,
+    "image_mean": 0.0008270711378550143,
+    "building_mean": 0.00045619616690741987,
+    "ci": [
+      -0.0006924209740614334,
+      0.0017776425233907165
+    ]
+  }
+]

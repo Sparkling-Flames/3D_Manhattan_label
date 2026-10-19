@@ -1,0 +1,93 @@
+{
+  "schema": "PartA_common_replacement_event_v1",
+  "event_design": "event_design.csv.gz",
+  "event_outcomes": "common_events.csv.gz",
+  "per_pool_stream": "comparisons/<pool_id>/events.csv.gz",
+  "precise_requests": "REQUESTS.json.gz",
+  "team_states": "native_runs/pools/<pool_id>/states.json.gz",
+  "team_rows": "native_runs/pools/<pool_id>/request_results.json.gz",
+  "frozen_metadata": ["DESIGN.json", "REGISTRATION_RECEIPT.json"],
+  "panels": {
+    "Pro_exact_fixed_background_v1": "270370 exact old ordinary Manual replacement events; pool/background/request values inherited unchanged; suitable for fold-training relations and validation only after excluding target building",
+    "A_nested_even_v1": "16296 new independently registered events, 4200 actual pair-background chains, 8/12/16/24 supported nodes; suggested extra-background external-fold evaluation only, never local class-number selection"
+  },
+  "identity_fields": {
+    "event_id": "stable SHA256-derived unique event identity, same row for every class scheme",
+    "pool_id": "same image, condition, frozen reference ID and version",
+    "image_id": "canonical image identifier",
+    "image": "human-readable image code",
+    "building": "direct original building, used for outer fold exclusion",
+    "condition": "manual in this primary panel",
+    "difficulty": "frozen Chinese manual difficulty, independent of new output",
+    "reference_id": "pool-bound GT reference; never optimized by output",
+    "reference_version": "frozen reference version",
+    "worker_a/worker_b": "anonymous entrant IDs in lexicographic orientation a<b; signed changes mean B-A",
+    "background_id": "exact same k-1 background for both endpoint teams",
+    "background_members": "sorted pipe-separated real anonymous workers",
+    "background_order": "actual saved input/background order",
+    "chain_id": "new nested panel identity; old panel empty, must not be falsely treated as cross-k nesting",
+    "person_pair_id": "fixed unordered pair within new pool",
+    "request_a/request_b": "exact endpoint request IDs",
+    "team_id_a/team_id_b": "native IDs computed from pool+sorted actual object IDs",
+    "member_workers_a/member_workers_b": "complete sorted endpoint member lists",
+    "ordered_workers_a/ordered_workers_b": "actual request order, original fusion sorts selected workers natively",
+    "k": "same real team size for both endpoints"
+  },
+  "quality": {
+    "B8L2_a/B8L2_b": "unchanged main scores; unavailable remains empty/null",
+    "D10_a/D10_b": "fixed member measurement sensitivity, 8 to10 degree direction scale only",
+    "B8L2_change/delta_Q": "B8L2_b-B8L2_a if both scores available",
+    "abs_B8L2_change/abs_delta_Q": "absolute score difference, not improvement",
+    "D10_change/abs_D10_change": "same for D10",
+    "quality_comparable": "both main scores known",
+    "floor_iou_change": "difference of each team's GT floor IoU, distinct from output-output change",
+    "omission_change/extension_change": "native GT-relative geometry components, not new human error gold",
+    "IoU3D100_change": "native mean-height-prism diagnostic sensitivity only",
+    "Hmean_change/Hcenter_change": "native height diagnostic changes"
+  },
+  "output_geometry_change": {
+    "floor_jaccard_difference/floor_change": "1-IoU between the two valid complete output floor polygons",
+    "floor_symdiff_h2": "output floor symmetric difference area in native normalized units",
+    "node_count_difference/node_count_change": "absolute/signed output node-count change",
+    "structure_bound_cyclic_deg": "native max bound upper/lower endpoint angular discrepancy after best shared cyclic shift; main does not allow ring reverse",
+    "structure_reverse_allowed_deg": "separately named reverse-orientation sensitivity",
+    "upper_bound_shift_max_deg/lower_bound_shift_max_deg": "upper/lower max discrepancy using that same native bound cyclic shift, not separately optimized matches",
+    "upper_bound_shift_mean_deg/lower_bound_shift_mean_deg": "mean upper/lower discrepancy using that native shift",
+    "edge_relation_jaccard_difference": "native shared-original-observation connection relation Jaccard change, not just edge-count difference",
+    "changed_coidentity_pairs": "shared-original-observation identity correspondence changes",
+    "selected_shared_observation_difference": "fraction of shared original observations changing selected status",
+    "mean_height_prism_pair_iou": "two output mean-height prisms' IoU; approximate shape diagnostic",
+    "height_ratio_pair_abs_logdiff": "absolute log ratio of native mean output heights",
+    "floor_geometry_exactly_equal/full_geometry_exactly_equal": "native exact canonical output equality flags"
+  },
+  "completeness": {
+    "complete_a/complete_b/both_complete": "native computable complete geometry, not new manual acceptance",
+    "geometry_status_a/geometry_status_b": "native final output status",
+    "geometry_reason_a/geometry_reason_b": "native non-evaluable reason",
+    "score_status_a/score_status_b": "native measurement status",
+    "complete_to_incomplete/incomplete_to_complete": "orientation-sensitive state change",
+    "policy": "Failures remain all-attempt denominator; their quality/geometry component values are not filled with zero. Joint stability explicitly False for any endpoint failure."
+  },
+  "stability": {
+    "joint_stable_main/stable_main": "both complete, both scored, absolute B8 difference<=2, output floor Jaccard difference<=0.05, same nodes, native bound cyclic discrepancy<=3 degrees",
+    "joint_stable_strict": "same requirements, (Q,floor,angle)=(1,0.02,2)",
+    "joint_stable_wide": "same requirements, (5,0.10,5)",
+    "joint_stable_*_orientation_invariant": "same tolerance but reverse-orientation allowed diagnostic",
+    "joint_with_shared_connections": "main AND edge_relation_jaccard_difference==0",
+    "joint_with_shared_connections_and_retention": "previous AND selected_shared_observation_difference==0",
+    "CSV_boolean_encoding": "True/False from native Python bool; parse as boolean, do not use bool('False')"
+  },
+  "timing": {
+    "source_time_*_a/b": "source reported/audited time coverage and sums, missing count explicit",
+    "target_time_*_a/b": "same-target time separately; never substituted by source time",
+    "source_time_change_seconds/target_time_change_seconds": "B-A total only when both endpoints complete for that source",
+    "source_entrant_time_a/b/target_entrant_time_a/b": "actual entering/exiting worker task cost with missing explicit",
+    "entrant_origin_a/b": "old v1/new source cohort, not a discovered personnel class",
+    "entrant_time_source_kind_a/b": "provenance of actual source time, not an equivalence assertion"
+  },
+  "post_answer_fields": [
+    "entrant_point_pairs_a/b", "entrant_same_point_count", "entrant_actual_B8L2_a/b", "entrant_actual_D10_a/b",
+    "all fused output statuses, votes and geometry"
+  ],
+  "leakage_warning": "Do not include these post-answer fields in prospective target-person class discovery/selection. Target point-count matching is an explicitly named conditional sensitivity. All historical features, imputations, transformations, class-number selection and rules must exclude heldout building."
+}

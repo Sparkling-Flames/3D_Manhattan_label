@@ -1,0 +1,300 @@
+{
+  "analysis_id": "personnel_multivariable_typing_Part_A_20261019",
+  "data_release": "v2",
+  "created_utc": "2026-10-19T05:29:51.330001+00:00",
+  "status": "completed_retrospective_building_out_candidate_discovery_and_common_event_evaluation",
+  "pins": {
+    "github_main": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+    "scientific_archive_source": "82c6164b0d4630de5316199c92aa405930973168"
+  },
+  "source_audit": {
+    "main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+    "input_data_release": "v2",
+    "input_sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "inventory": {
+      "records": 10439,
+      "images": 261,
+      "workers": 62,
+      "buildings": 22
+    },
+    "quality": {
+      "records": 7302,
+      "images": 196,
+      "workers": 60,
+      "buildings": 22
+    },
+    "ordinary_manual": {
+      "records": 5719,
+      "images": 177,
+      "workers": 60,
+      "buildings": 22
+    },
+    "origins": {
+      "v1": 3222,
+      "new": 7217
+    },
+    "geometry": {
+      "full": 9363,
+      "uncomputable": 135,
+      "floor_only": 941
+    },
+    "ordinary_difficulty": {
+      "中等": {
+        "records": 988,
+        "images": 32,
+        "workers": 59,
+        "buildings": 16
+      },
+      "困难": {
+        "records": 980,
+        "images": 31,
+        "workers": 59,
+        "buildings": 15
+      },
+      "简单": {
+        "records": 3751,
+        "images": 114,
+        "workers": 60,
+        "buildings": 22
+      }
+    },
+    "source_time_n": 9236,
+    "target_time_n": 440,
+    "source_time_by_origin": {
+      "new": 7217,
+      "v1": 2019
+    },
+    "scope_responses": 9845,
+    "scope_gold": 93,
+    "scope_correct": 93,
+    "scope_gold_retained": 89,
+    "semi_by_origin": {
+      "new": {
+        "n": 525,
+        "semi_exact_initialization": 0,
+        "semi_confirmed_error_opportunity": 0,
+        "semi_reported_error_opportunity": 284,
+        "semi_confirmed_unchanged": 0,
+        "semi_reported_unchanged": 45,
+        "semi_edited": 331,
+        "semi_corrected_confirmed": 0,
+        "semi_attributable_gain_available": 0
+      },
+      "v1": {
+        "n": 574,
+        "semi_exact_initialization": 574,
+        "semi_confirmed_error_opportunity": 156,
+        "semi_reported_error_opportunity": 0,
+        "semi_confirmed_unchanged": 25,
+        "semi_reported_unchanged": 0,
+        "semi_edited": 427,
+        "semi_corrected_confirmed": 0,
+        "semi_attributable_gain_available": 461
+      }
+    },
+    "specific_person_error_candidates": 25,
+    "legacy_explicit_person_errors": 10,
+    "v1_fixed_1911_in_published_comparison_max_difference": {
+      "B8L2_v2_minus_v1": 4e-15,
+      "D10_v2_minus_v1": 4e-15
+    },
+    "v1_fixed_1911_in_published_comparison_unchanged_within_1e_minus_12": true,
+    "new_score_engine_replay_performed_in_this_input_check": false,
+    "full_collection_reproduced": false,
+    "Dot_complete_payload_reproduced": false,
+    "current_scientific_input_matches_archive": true,
+    "n1_applied": false,
+    "inherited_coordinate_and_reference_contract": "already processed points, mean-x, repairs, deletions and declared rings; no raw-export replacement"
+  },
+  "input_recovery": {
+    "source_files": 824,
+    "core_files": 519,
+    "all_sha_match": true,
+    "fresh_original_collection_audit": false
+  },
+  "method": {
+    "outer_buildings": 22,
+    "inner_training_groups": 3,
+    "unique_training_subsets": 69,
+    "history_quality_metrics": [
+      "B8L2",
+      "D10"
+    ],
+    "main_quality": "B8L2",
+    "N1": false,
+    "forward_candidates": 28,
+    "reverse_candidates": 64,
+    "candidate_K": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "within_train_selection": "building-equal Brier; one-SE simplest rule; all candidates in 1SE in every context",
+    "new_nested_panel_used_for_learning": false,
+    "inference": "image mean within building then equal building; bootstrap 2000 seed 20261019; exploratory intervals"
+  },
+  "events": {
+    "requests": 58882,
+    "unique_teams": 58679,
+    "events": 286666,
+    "images": 175,
+    "buildings": 22,
+    "old_exact_events": 270370,
+    "new_nested_events": 16296,
+    "four_node_complete_chains": 3936,
+    "common_four_node_images": 164,
+    "common_four_node_events": 15744,
+    "unique_incomplete_teams": 904,
+    "unique_complete_teams": 57775,
+    "new_native_states_this_turn": 58679,
+    "historical_cached_states_reused": 0,
+    "within_this_turn_pilot_states_reused_in_full_run": 100,
+    "execution_exceptions": 0
+  },
+  "full_descriptive_classes": {
+    "forward_selected": {
+      "method": "fw_QT_only_K4",
+      "sizes": [
+        15,
+        38,
+        3,
+        3
+      ],
+      "unknown": [
+        "W022"
+      ]
+    },
+    "reverse_selected": {
+      "method": "reverse_geometry9_average_K4_global",
+      "sizes": [
+        1,
+        39,
+        18,
+        1
+      ],
+      "unknown": [
+        "W022"
+      ],
+      "people_in_multi_person_classes": 57
+    },
+    "reverse_selected_swap": {
+      "method": "reverse_swap_joint_average_K4_global",
+      "sizes": [
+        30,
+        6,
+        17,
+        6
+      ],
+      "unknown": [
+        "W022"
+      ]
+    }
+  },
+  "interpretation": "Candidate partitions and weak historical geometry risk information exist; jointly stable interpretable interchangeable personnel types are not established. No formal personnel levels changed.",
+  "deliverable_entrypoints": {
+    "report": "REPORT_ZH.html",
+    "viewer": "presentation/personnel_types_part_a.html",
+    "personnel": "assessment/WORKER_PORTRAITS_60.csv",
+    "exchange": "reproducibility/EXCHANGE_FIELD_CONTRACT.json",
+    "replay": "reproducibility/reproduce.py",
+    "replay_readme": "reproducibility/README_REPLAY_ZH.md",
+    "frozen_output_facts": "RUN_EVIDENCE_ZH.md",
+    "data_packages": "reproducibility/PACKAGING_DATA_MANIFEST.json",
+    "code_files": "reproducibility/CODE_FILES_SHA256.json",
+    "omitted_derived": "reproducibility/OMITTED_DERIVED_CACHES.json"
+  },
+  "all_new_geometries_and_failures_preserved": true,
+  "key_file_sha256": {
+    "input/CURRENT_INPUT_AUDIT.json": "c9bb7ae7d6a5c4118f9e3188c15b9cec8975c124378bc7a5029ed7ac488a5923",
+    "recovered/BOOTSTRAP_RECEIPT.json": "e8d5ef9ed4f16808dc5720399fea60a25bf242a9add7189f0ba514518dc5c4f7",
+    "events/DESIGN.json": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf",
+    "events/REQUESTS.json.gz": "79de9f2d881ef8ef32d4d2a7fdda7fc3d01fc9d457e183455abeabc63711364d",
+    "events/common_events.csv.gz": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8",
+    "events/EVENT_VERIFICATION_RECEIPT.json": "4be8815e07b4786f60de9f53b41e7cf3a02311c79c8cbfe1634d667010a72c78",
+    "forward/REGISTRATION.json": "79f9b1b57f8f7b3f67e7fdab5e34f51064c328a47e394085ab6ca0766bfb45c1",
+    "reverse/REGISTRATION.json": "0fd00796a9ed7edbf589b109096731fd1484ae11c9aa7f451ee0a658b7cf066a",
+    "reverse/FROZEN_BUILDING_SPLITS.json": "ec5a004db1c868e9802a3729af549ac959b29bd43772b53c0af18f4d32c7f9b4",
+    "assessment/REGISTRATION.json": "982bc779fda2fb2e2c607a3abfa18ca7d6f3cf79a88524e6ec01f70c4fb12fbb",
+    "assessment/EVENT_PREDICTIONS_WIDE.csv.gz": "e523b2bf7d69c1084445bc9681f2bf6192461a835425e58b508802f9aebbf567",
+    "assessment/WORKER_PORTRAITS_60.csv": "99d0a8bb75973f9c33dd2ad615a436e1aabaf31ba8d71e48c0541536e6a4112e",
+    "presentation/personnel_types_part_a.html": "eff8a57af4558f178f8a98bba3aa75c32fc2b833f6b3560f64941c614c522ea7",
+    "REPORT_ZH.md": "4016e444e4b2affba6e2d07beba931ef0bb1e20ac92e6a0d970252cc42ab75c7",
+    "REPORT_ZH.html": "c53b721f6e35de8170016853a9484994f2b74012a9355ec533d3f55b233a5e35",
+    "RUN_EVIDENCE_ZH.md": "46802f96f2904dc3e07226c0a7b910a6ce1c7bf32a0af2f4d4cace49a01d6990"
+  },
+  "independent_numerical_checks": {
+    "event_verify": {
+      "pass_all": true,
+      "design_sha256": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf",
+      "common_events_sha256": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8",
+      "total_events": 286666,
+      "pool_count": 175,
+      "image_count": 175,
+      "building_count": 22,
+      "real_entrant_ids": 60,
+      "panels": {
+        "Pro_exact_fixed_background_v1": 270370,
+        "A_nested_even_v1": 16296
+      },
+      "nested_chains": 4200,
+      "legacy_retained_event_parity": {
+        "matched_events": 963,
+        "images": 175,
+        "buildings": 22,
+        "max_abs_difference": 5.684341886080802e-14,
+        "limit": "All ordinary events in retained case-candidate table; this is not all omitted historical states bytewise equality."
+      },
+      "assertions": [
+        "all frozen event IDs present exactly once",
+        "all pairs share exact k-1 real background",
+        "lexicographic signed orientation retained",
+        "new chains identical entrant pair and strictly nested background across available k",
+        "same reference preserved from requests",
+        "joint thresholds independently recomputed; failures remain false",
+        "separate upper/lower max equals native bound cyclic maximum",
+        "all retained legacy event component values replay within tolerance"
+      ],
+      "provenance": "Native fusion/scoring and pair-comparison source files unmodified; only derived output directory redirected."
+    },
+    "feature_refit": {
+      "heldout_building": "yqstnuAEVhm",
+      "independently_refit_numeric_feature_columns": 116,
+      "workers": 60,
+      "max_abs_difference": 1.1368683772161603e-13,
+      "train_buildings": [
+        "2t7WUuJeko7",
+        "7y3sRwLe3Va",
+        "B6ByNegPMKs",
+        "S9hNv5qa7GM",
+        "UwV83HsGsw3",
+        "VFuaQ6m2Qom",
+        "VLzqgDo317F",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ",
+        "jtcxE69GiFV",
+        "pRbA3pwrgk9",
+        "pa4otMbVnkk",
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "target_building_excluded": true,
+      "feature_code_sha256": "4b54ac047cf4853fcb4e26d6073437d42b0e37c1ad9c8316bafc9de207f1c6f7",
+      "not_a_full_collection_replay": true
+    },
+    "probability_parity_path": "assessment/INDEPENDENT_ALIAS_PREDICTION_PARITY.json"
+  },
+  "full_collection_reproduced": false,
+  "Dot_complete_payload_reproduced": false,
+  "GitHub_mutated": false,
+  "original_annotations_modified": false,
+  "references_modified": false,
+  "formal_personnel_levels_modified": false
+}

@@ -1,0 +1,62 @@
+{"selected_fold": 1, "fold_id": "FULL", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 2, "fold_id": "2t7WUuJeko7", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 3, "fold_id": "7y3sRwLe3Va", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 4, "fold_id": "B6ByNegPMKs", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 5, "fold_id": "S9hNv5qa7GM", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 6, "fold_id": "UwV83HsGsw3", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 7, "fold_id": "VFuaQ6m2Qom", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 8, "fold_id": "VLzqgDo317F", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 9, "fold_id": "X7HyMhZNoso", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 10, "fold_id": "Z6MFQCViBuw", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 11, "fold_id": "b8cTxDM8gDG", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 12, "fold_id": "e9zR4mvMWw7", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 13, "fold_id": "jh4fc5c5qoQ", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 14, "fold_id": "jtcxE69GiFV", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 15, "fold_id": "pRbA3pwrgk9", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 16, "fold_id": "pa4otMbVnkk", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 17, "fold_id": "q9vSo1VnCiC", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 18, "fold_id": "rPc6DW4iMge", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 19, "fold_id": "uNb9QFRL6hY", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 20, "fold_id": "wc2JMjhGNzB", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 21, "fold_id": "x8F5xyUWy9e", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 22, "fold_id": "yqstnuAEVhm", "candidate": "fw_QT_only_K4"}
+{"selected_fold": 23, "fold_id": "zsNo4HB9uLZ", "candidate": "fw_QT_only_K4"}
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/forward/discover_forward.py", line 236, in <module>
+    if __name__=="__main__":main()
+                            ^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/forward/discover_forward.py", line 233, in main
+    else:select_and_predict(Path(args.events),args.implementation)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/forward/discover_forward.py", line 207, in select_and_predict
+    readback_rows=sum(len(chunk) for chunk in pd.read_csv(pred_tmp,compression="gzip",chunksize=100000))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/forward/discover_forward.py", line 207, in <genexpr>
+    readback_rows=sum(len(chunk) for chunk in pd.read_csv(pred_tmp,compression="gzip",chunksize=100000))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1843, in __next__
+    return self.get_chunk()
+           ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1985, in get_chunk
+    return self.read(nrows=size)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1923, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 850, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 905, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2053, in pandas._libs.parsers.raise_parser_error
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/gzip.py", line 351, in read1
+    return self._buffer.read1(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/_compression.py", line 68, in readinto
+    data = self.read(len(byte_view))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/gzip.py", line 564, in read
+    raise EOFError("Compressed file ended before the "
+EOFError: Compressed file ended before the end-of-stream marker was reached

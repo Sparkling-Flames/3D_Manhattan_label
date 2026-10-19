@@ -1,0 +1,121 @@
+{
+  "design_id": "PartA_common_events_v1",
+  "status": "frozen_before_new_fusion_and_class_results",
+  "data_release": "v2",
+  "github_main_commit": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+  "native_source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "seed": 20261019,
+  "seed_derivation": "SHA256 canonical JSON [20261019,family,pool,...] first16hex to numpy.default_rng",
+  "primary_scope": "ordinary Manual quality-eligible independent real answers",
+  "k": [
+    8,
+    12,
+    16,
+    24
+  ],
+  "legacy_panel": "Pro exact saved fixed backgrounds, all remaining-entrant pairs, no change to old request values",
+  "nested_panel": "12 unordered worker pairs sampled uniformly without replacement per supported pool; 2 independent full background permutations per pair; prefixes k-1; no class or Q/geometry-based event selection",
+  "paired_orientation": "lexicographic worker_a -> worker_b, signed outcome B-A",
+  "fusion": {
+    "entry": "consensus_delivery_20261008.fuse",
+    "core": "ring_correspondence_20261007.build",
+    "gap_per_skip_degree": 7.5,
+    "correspondence": "mean top/bottom angular distance, cyclic and reverse cuts with skip DP, one person per identity group",
+    "group_rule": "complete linkage of allowed pairwise node matches (NOT whole-answer 9/12 degree clustering)",
+    "votes": "MV50 inclusive: 2*support>=N",
+    "coordinates": "all identity members, equal-person medians, periodic medoid anchor",
+    "connection": "most-supported complete projected source ring; ties lexical flagged; no x-sort fallback or human partitions",
+    "N2": "node evidence retained, source-ring sorting deferred",
+    "N1": false,
+    "source_points": "frozen records final points, no extra prepare_record"
+  },
+  "tolerances": {
+    "main": {
+      "abs_B8L2_difference": 2,
+      "floor_jaccard_difference": 0.05,
+      "structure_bound_cyclic_degree": 3,
+      "required": "both complete, same output node count, comparable bound cyclic ring; tolerances are an engineering diagnostic, not semantic equivalence certification"
+    },
+    "sensitivity": {
+      "abs_B8L2_difference": [
+        1,
+        2,
+        5
+      ],
+      "floor_jaccard_difference": [
+        0.02,
+        0.05,
+        0.1
+      ],
+      "structure_bound_cyclic_degree": [
+        2,
+        3,
+        5
+      ]
+    }
+  },
+  "strict": {
+    "q": 1,
+    "floor": 0.02,
+    "angle": 2
+  },
+  "main": {
+    "q": 2,
+    "floor": 0.05,
+    "angle": 3
+  },
+  "wide": {
+    "q": 5,
+    "floor": 0.1,
+    "angle": 5
+  },
+  "failures": "retain all attempts; no missing-value zero fill; joint stability false for failure, component outcomes remain unavailable",
+  "inference": "retrospective building-heldout classes; building equal main; pool/image equal and event equal also shown",
+  "after_answer_conditionals": [
+    "target point count",
+    "target actual clusters",
+    "votes and connection state"
+  ],
+  "no_Dot_complete_reproduction": true,
+  "no_odd_even_extension": true,
+  "no_GitHub_mutation": true,
+  "n_requests": 58882,
+  "n_unique_teams": 58679,
+  "n_events": 286666,
+  "n_nested_chains": 4200,
+  "panel_events": {
+    "Pro_exact_fixed_background_v1": 270370,
+    "A_nested_even_v1": 16296
+  },
+  "request_families": {
+    "fixed_background": 26290,
+    "A_nested_even": 32592
+  },
+  "n_pools_with_events": 175,
+  "n_buildings_with_events": 22,
+  "support_nested_by_k": {
+    "8": 175,
+    "12": 170,
+    "16": 170,
+    "24": 164
+  },
+  "inputs": {
+    "INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "REQUESTS_INITIAL.json.gz": "d56f61f60d50c65d798e4241b1cc4ea6f7cd0c399180baa20dbbb0b985feec9e",
+    "DESIGN.json": "18773f10235e5e520f5dd2ababb303a23c6aef1913f5e9c90130b77244a75d95"
+  },
+  "method_hashes": {
+    "tools/thesis_main/analysis/consensus_delivery_20261008.py": "fb2b7c3b5c95a24151101e44b96b30b1bbdc09b2bb8d637293ceacd8a503de75",
+    "tools/thesis_main/analysis/ring_correspondence_20261007.py": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe",
+    "tools/thesis_main/analysis/wall_consensus_population_20261014.py": "5ba3a69eea550c4c3892a5e987d4bfb25312ff43ad3459e7ff36a8e3ea90bc72",
+    "tools/thesis_main/analysis/wall_consensus_quality_20261015.py": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25",
+    "tools/thesis_main/analysis/wall_consensus_v1_process_20261017.py": "db12244af4ed5a271aa20d4b5da124c53f3abc2669b70450d81a920dc0fd9397",
+    "tools/thesis_main/analysis/quality_b8l2_d10_20261017.py": "027f78f4bb6d1ca6914ddabd86d4f5521350ea45e48fe82825e4f319b09ea818",
+    "tools/thesis_main/analysis/scope_quality_scoring_20261016.py": "e0f76cd02ec07417109f55c9f2e4b2fd2cc81cce54ff0a9994455f1f36efc775",
+    "tools/thesis_main/analysis/research_round_20260929.py": "48aa00175d43f1070e3320f899a553fff709e3fdb666c526c0194aab8df9ee23",
+    "tools/thesis_main/analysis/paired_split_research/study.py": "182d8bfb46f7e4531dce237c40e14697f159092e7492b82b8ca4e9a4edfd8b09",
+    "research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a",
+    "research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165"
+  },
+  "registration_script_sha256": "f8f8a6118a80a0b524b97ad3c1c361ad7777a072ecca9cf552d93080212af1b3"
+}

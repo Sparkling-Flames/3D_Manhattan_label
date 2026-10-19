@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reproducibility/package_data_zips.py", line 245, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reproducibility/package_data_zips.py", line 194, in main
+    images=images_check(work);requirements=required_event_check(included[3]);archives=[];attempts=[]
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reproducibility/package_data_zips.py", line 180, in images_check
+    assert 'Site Unavailable' in (work/'events/chromium_install.log').read_text(errors='replace') or 'end of central directory' in (work/'events/chromium_install.log').read_text(errors='replace')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

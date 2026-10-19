@@ -1,0 +1,45 @@
+{
+  "version": "Part_A_common_assessment_v1_20261019",
+  "status": "frozen_before_new_outer_type_results",
+  "data_release": "v2",
+  "main_event_panel": "Pro_exact_fixed_background_v1",
+  "main_panel_name_note": "v1 in the panel name is the old request-design version, not the data release",
+  "additional_background_panel": "A_nested_even_v1",
+  "additional_panel_use": "evaluation only; never type discovery, feature fitting, hyperparameter selection or calibrator fitting",
+  "evaluation_units": {
+    "primary": "event mean within image, then image mean within building, then buildings equally weighted",
+    "additional": ["image equal", "event equal", "existing direct room-group weighting only where available"],
+    "interval": "2000 building bootstrap replicates, fixed seed 20261019; multiple events are not independent observations"
+  },
+  "common_events": "Attach every method to the same event_id. Preserve full method coverage and intersection coverage. Primary methods compared by paired building Brier changes on identical events, including unknown-label baseline fallback.",
+  "strata": ["k=8,12,16,24", "easy,medium,hard", "old-old,new-new,old-new", "all pairs", "historical absolute beta difference <=3 points", "same target point count diagnostic only"],
+  "interchangeability": {
+    "main_tolerance": "both complete; absolute B8L2 change<=2; floor Jaccard difference<=0.05; equal node count; bound cyclic endpoint maximum<=3 degrees",
+    "strict": "both complete; absolute B8<=1; floor difference<=0.02; equal nodes; endpoint maximum<=2 degrees",
+    "loose": "both complete; absolute B8<=5; floor difference<=0.10; equal nodes; endpoint maximum<=5 degrees",
+    "not_independent_criteria": "Joint threshold is only a shared summary. Signed and absolute Q changes, floor, nodes, shared edge relationships, upper/lower changes and failures are separately reported.",
+    "tails": ["median", "p90", "p95", "maximum", "fraction within practical tolerances"],
+    "claim_limit": "Non-significant differences do not establish equivalence. Same category does not guarantee interchangeable members or correct output. No post hoc threshold chosen to create a positive class result."
+  },
+  "last_seat_selection": {
+    "scope": "Choose the last member of an already fixed k-1 background, between the two registered candidates. Not a search for the globally best full team.",
+    "random": "expected outcome of equal probability a/b",
+    "Q": "choose larger historical building-out beta; exact ties use random expectation",
+    "QD": "choose larger supported target-difficulty historical theta; unknown excluded from that policy's support",
+    "QT": "if absolute historical beta difference>3 choose larger beta; otherwise choose smaller source-adjusted historical log-time; missing time policy remains unknown",
+    "QTD": "same 3 point candidate band using supported target-difficulty theta; then smaller source-adjusted historical log-time",
+    "discovered_class": "choose higher training-class mean historical beta, computed only from that training set; within-class ties use random expectation",
+    "cost": "full team source time only when all members known. Incremental a/b entrant time can be compared when both entrant times known because fixed background cancels; this does not fill missing full team time. Target-specific time kept separate.",
+    "failures": "completion probability retains all supported choices; conditional Q on two scored endpoints is separate; optional zero-utility failure sensitivity applies to team decisions only, never personal Q or eligibility"
+  },
+  "class_diagnostics": [
+    "number and exact members of all/singleton/dyad classes",
+    "within-class pair support and worst supported pair; no connected-component equivalence assumption",
+    "coassignment stability across folds, invariant to class numbering",
+    "origin mixing and event-stratified effect",
+    "unknown and coverage loss by worker/image/building",
+    "training explanation fit vs cross-worker and cross-building perturbation fidelity separately"
+  ],
+  "case_selection": "After summary freeze, choose at most 8 cases using within-class stable, within-class large change/failure, between-class stable, between-class change with improvement, stable-low-Q categories. Preserve eligible counts and deterministic severity/tie ordering; cases never feed model selection.",
+  "out_of_scope": ["new formal worker tiers", "main push", "new parity mechanism experiments", "new reference or difficulty labels", "claim of independent full Dot replay", "claim of external blind validation"]
+}

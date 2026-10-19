@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reproducibility/package_report_code.py", line 109, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/reproducibility/package_report_code.py", line 67, in main
+    if p.is_symlink():raise RuntimeError('Unexpected symlink '+str(p))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Unexpected symlink /workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/presentation/qa_runtime/node_modules/.bin/specificity

@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "source": "/workspace/shared/personnel_partA_audit_20261019/extracted/work_personnel_typing_A_20261019",
+    "output": "/tmp/part_a_portable_audit_diagnostics",
+    "stage": "diagnostics",
+    "execute": true,
+    "scripts": [
+      "independent/recompute_scientific_diagnostics.py"
+    ],
+    "archive_crc_rechecked": false,
+    "scope": "Preserved bounded audit, not full Pro reproduction. Original ZIP verification receipts are historical; unpacked repository restoration cannot independently redo ZIP CRC."
+  },
+  "runs": [
+    {
+      "script": "independent/recompute_scientific_diagnostics.py",
+      "original_sha256": "8524c565add9d0fca3123ddf0a597392359c8db33ae9038f641da0ccb7dab92c",
+      "adapted_sha256": "8524c565add9d0fca3123ddf0a597392359c8db33ae9038f641da0ccb7dab92c",
+      "returncode": 0
+    }
+  ]
+}

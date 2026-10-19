@@ -1,0 +1,20 @@
+The WOFF2 encoder requires the Brotli Python extension, available at: https://github.com/google/brotli
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/presentation/build_part_a_viewer.py", line 184, in <module>
+    args=ap.parse_args();build(args.cases,args.allow_pending_labels)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/presentation/build_part_a_viewer.py", line 159, in build
+    font,fontmeta=subset_font(template+renderer+raw.decode())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019/presentation/build_part_a_viewer.py", line 105, in subset_font
+    font.flavor='woff2';font.save(out)
+                        ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 365, in save
+    writer_reordersTables = self._save(tmp)
+                            ^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/fontTools/ttLib/ttFont.py", line 414, in _save
+    writer = SFNTWriter(
+             ^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/fontTools/ttLib/woff2.py", line 194, in __init__
+    raise ImportError("No module named brotli")
+ImportError: No module named brotli

@@ -1,0 +1,13 @@
+{
+  "inputs": {
+    "independent/independent_metrics.json": "8bf4d788f1b7a8c926ab6406185d979aebbe50770c49a0275140a7848bee3e9e",
+    "independent/independent_origin_contrast.json": "24254a806e899d59c15b05dffbfdb58ee1c030831709159295c24a33153bb01a",
+    "independent/SCIENTIFIC_DIAGNOSTICS.json": "bcae249f3f928c250ae7ae135bcba4dab3685b256ce99340732fe436d5ec23fd"
+  },
+  "builder": "build_figures.py",
+  "figures": [
+    "independent_brier_controls",
+    "independent_calibration_direction"
+  ],
+  "note": "Generated from independently recomputed saved receipts; no newly fitted model."
+}

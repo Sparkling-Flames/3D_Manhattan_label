@@ -1,0 +1,459 @@
+{
+  "status": "training_descriptive_candidates_not_formal_ratings",
+  "method": "fw_QT_only_K4",
+  "names_are_FULL_only": true,
+  "classes": [
+    {
+      "class_id": "C01",
+      "name": "偏快、交付均值偏低的候选组",
+      "members": [
+        "W001",
+        "W006",
+        "W010",
+        "W012",
+        "W013",
+        "W017",
+        "W021",
+        "W030",
+        "W103",
+        "W113",
+        "W117",
+        "W124",
+        "W128",
+        "W132",
+        "W134"
+      ],
+      "n_workers": 15,
+      "core_images_min": 19,
+      "core_images_max": 139,
+      "core_buildings_min": 10,
+      "core_buildings_max": 22,
+      "time_supported_workers": 15,
+      "source_time_observed_workers": 15,
+      "origin_counts": {
+        "v1": 8,
+        "new": 7
+      },
+      "q_beta": {
+        "observed": 15,
+        "median": -4.255740235014609,
+        "min": -12.557238251457214,
+        "max": 3.1663004174316574
+      },
+      "q_abs_mean": {
+        "observed": 15,
+        "median": 64.9643501553311,
+        "min": 56.35617521155315,
+        "max": 71.3190670519725
+      },
+      "q_abs_p10": {
+        "observed": 15,
+        "median": 40.69687169393992,
+        "min": 35.1760295341572,
+        "max": 49.37868873519489
+      },
+      "q_abs_sd": {
+        "observed": 15,
+        "median": 19.73647131173862,
+        "min": 15.74365734299007,
+        "max": 23.04658638870568
+      },
+      "source_time_median": {
+        "observed": 15,
+        "median": 59.0,
+        "min": 28.5,
+        "max": 108.047
+      },
+      "t_source_origin_effect": {
+        "observed": 15,
+        "median": -0.5502009933117358,
+        "min": -1.4497010477616907,
+        "max": -0.0018165097852895
+      },
+      "t_log_residual_tail": {
+        "observed": 15,
+        "median": 0.4522702350066216,
+        "min": 0.3503719526375968,
+        "max": 1.5256985158763947
+      },
+      "hard_minus_easy": {
+        "observed": 15,
+        "median": 0.0645623622054492,
+        "min": -4.347317790277448,
+        "max": 7.0547971467564645
+      },
+      "hard_minus_medium": {
+        "observed": 14,
+        "median": -0.1581241556442632,
+        "min": -7.129934922926438,
+        "max": 5.726615163662724
+      },
+      "coobserved_support": {
+        "n_workers": 15,
+        "potential_within_pairs": 105,
+        "pairs_with_3_images_2_buildings": 103,
+        "workers_with_a_supported_same_class_partner": 15,
+        "min_common_images": 0,
+        "min_common_buildings": 0,
+        "singleton": false,
+        "doubleton": false
+      }
+    },
+    {
+      "class_id": "C02",
+      "name": "中部大组，质量跨度较宽",
+      "members": [
+        "W002",
+        "W008",
+        "W011",
+        "W015",
+        "W028",
+        "W029",
+        "W031",
+        "W032",
+        "W033",
+        "W035",
+        "W100",
+        "W101",
+        "W102",
+        "W104",
+        "W105",
+        "W106",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W111",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W119",
+        "W120",
+        "W121",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W129",
+        "W130",
+        "W131",
+        "W133"
+      ],
+      "n_workers": 38,
+      "core_images_min": 41,
+      "core_images_max": 139,
+      "core_buildings_min": 14,
+      "core_buildings_max": 22,
+      "time_supported_workers": 38,
+      "source_time_observed_workers": 38,
+      "origin_counts": {
+        "new": 28,
+        "v1": 10
+      },
+      "q_beta": {
+        "observed": 38,
+        "median": -0.05492487803622581,
+        "min": -7.836706430515526,
+        "max": 16.38347071440004
+      },
+      "q_abs_mean": {
+        "observed": 38,
+        "median": 70.09064704293058,
+        "min": 61.57756248971459,
+        "max": 86.33956963963031
+      },
+      "q_abs_p10": {
+        "observed": 38,
+        "median": 43.701275026865744,
+        "min": 38.356486441740856,
+        "max": 60.84112344592297
+      },
+      "q_abs_sd": {
+        "observed": 38,
+        "median": 19.643789547717226,
+        "min": 15.118268950030876,
+        "max": 23.34371534104673
+      },
+      "source_time_median": {
+        "observed": 38,
+        "median": 133.65275,
+        "min": 47.708,
+        "max": 351.854
+      },
+      "t_source_origin_effect": {
+        "observed": 38,
+        "median": 0.1495976984952042,
+        "min": -0.8952564448721607,
+        "max": 1.1511897496444896
+      },
+      "t_log_residual_tail": {
+        "observed": 38,
+        "median": 0.4118339729894023,
+        "min": 0.2956375872896837,
+        "max": 0.825471586425032
+      },
+      "hard_minus_easy": {
+        "observed": 38,
+        "median": -0.5950851499955978,
+        "min": -7.85757906961776,
+        "max": 17.94796605031566
+      },
+      "hard_minus_medium": {
+        "observed": 37,
+        "median": -0.2058708571488434,
+        "min": -7.746593626190673,
+        "max": 9.992982827433504
+      },
+      "coobserved_support": {
+        "n_workers": 38,
+        "potential_within_pairs": 703,
+        "pairs_with_3_images_2_buildings": 703,
+        "workers_with_a_supported_same_class_partner": 38,
+        "min_common_images": 10,
+        "min_common_buildings": 7,
+        "singleton": false,
+        "doubleton": false
+      }
+    },
+    {
+      "class_id": "C03",
+      "name": "低尾较低的小组",
+      "members": [
+        "W014",
+        "W034",
+        "W037"
+      ],
+      "n_workers": 3,
+      "core_images_min": 32,
+      "core_images_max": 63,
+      "core_buildings_min": 10,
+      "core_buildings_max": 16,
+      "time_supported_workers": 2,
+      "source_time_observed_workers": 2,
+      "origin_counts": {
+        "v1": 3
+      },
+      "q_beta": {
+        "observed": 3,
+        "median": -6.869475874202163,
+        "min": -11.164279889150562,
+        "max": -3.1178269994025314
+      },
+      "q_abs_mean": {
+        "observed": 3,
+        "median": 62.0787639308937,
+        "min": 58.49213657031199,
+        "max": 62.12769704644983
+      },
+      "q_abs_p10": {
+        "observed": 3,
+        "median": 31.650092523361803,
+        "min": 31.198672250866217,
+        "max": 35.17968186376672
+      },
+      "q_abs_sd": {
+        "observed": 3,
+        "median": 22.842615684704448,
+        "min": 22.71105457851117,
+        "max": 23.53290974598483
+      },
+      "source_time_median": {
+        "observed": 2,
+        "median": 205.75,
+        "min": 198.0,
+        "max": 213.5
+      },
+      "t_source_origin_effect": {
+        "observed": 2,
+        "median": 0.4301195350377228,
+        "min": 0.2382351713155883,
+        "max": 0.6220038987598573
+      },
+      "t_log_residual_tail": {
+        "observed": 2,
+        "median": 0.9721283804483664,
+        "min": 0.8411484525294031,
+        "max": 1.1031083083673296
+      },
+      "hard_minus_easy": {
+        "observed": 3,
+        "median": -0.8859126850820829,
+        "min": -2.017450531934865,
+        "max": 0.4276197733216769
+      },
+      "hard_minus_medium": {
+        "observed": 2,
+        "median": 1.0969771536562458,
+        "min": -2.927789066373549,
+        "max": 5.121743373686041
+      },
+      "coobserved_support": {
+        "n_workers": 3,
+        "potential_within_pairs": 3,
+        "pairs_with_3_images_2_buildings": 3,
+        "workers_with_a_supported_same_class_partner": 3,
+        "min_common_images": 22,
+        "min_common_buildings": 10,
+        "singleton": false,
+        "doubleton": false
+      }
+    },
+    {
+      "class_id": "C04",
+      "name": "调整Q较高的小组",
+      "members": [
+        "W018",
+        "W027",
+        "W036"
+      ],
+      "n_workers": 3,
+      "core_images_min": 31,
+      "core_images_max": 58,
+      "core_buildings_min": 10,
+      "core_buildings_max": 15,
+      "time_supported_workers": 2,
+      "source_time_observed_workers": 3,
+      "origin_counts": {
+        "v1": 3
+      },
+      "q_beta": {
+        "observed": 3,
+        "median": 8.953305759027241,
+        "min": 4.38812096379932,
+        "max": 14.95437138508291
+      },
+      "q_abs_mean": {
+        "observed": 3,
+        "median": 74.4516645991119,
+        "min": 74.41560837934176,
+        "max": 81.16671437646616
+      },
+      "q_abs_p10": {
+        "observed": 3,
+        "median": 43.68326018869677,
+        "min": 29.218592145733275,
+        "max": 45.26214030511029
+      },
+      "q_abs_sd": {
+        "observed": 3,
+        "median": 22.660225763936875,
+        "min": 22.27045682152201,
+        "max": 26.716692785376967
+      },
+      "source_time_median": {
+        "observed": 3,
+        "median": 360.0,
+        "min": 95.0,
+        "max": 689.0
+      },
+      "t_source_origin_effect": {
+        "observed": 2,
+        "median": 1.5092146497969807,
+        "min": 1.141784877301831,
+        "max": 1.8766444222921304
+      },
+      "t_log_residual_tail": {
+        "observed": 2,
+        "median": 0.974085426961032,
+        "min": 0.9633321291926418,
+        "max": 0.984838724729422
+      },
+      "hard_minus_easy": {
+        "observed": 3,
+        "median": 4.165058602661411,
+        "min": -2.220961644618229,
+        "max": 7.072793647517319
+      },
+      "hard_minus_medium": {
+        "observed": 1,
+        "median": -1.1827890103812615,
+        "min": -1.1827890103812615,
+        "max": -1.1827890103812615
+      },
+      "coobserved_support": {
+        "n_workers": 3,
+        "potential_within_pairs": 3,
+        "pairs_with_3_images_2_buildings": 3,
+        "workers_with_a_supported_same_class_partner": 3,
+        "min_common_images": 27,
+        "min_common_buildings": 10,
+        "singleton": false,
+        "doubleton": false
+      }
+    },
+    {
+      "class_id": "unknown",
+      "name": "历史质量支持不足",
+      "members": [
+        "W022"
+      ],
+      "n_workers": 1,
+      "core_images_min": 2,
+      "core_images_max": 2,
+      "core_buildings_min": 1,
+      "core_buildings_max": 1,
+      "time_supported_workers": 0,
+      "source_time_observed_workers": 0,
+      "origin_counts": {
+        "v1": 1
+      },
+      "q_beta": {
+        "observed": 1,
+        "median": -4.4543942874337805,
+        "min": -4.4543942874337805,
+        "max": -4.4543942874337805
+      },
+      "q_abs_mean": {
+        "observed": 1,
+        "median": 74.49570050103537,
+        "min": 74.49570050103537,
+        "max": 74.49570050103537
+      },
+      "q_abs_p10": {
+        "observed": 1,
+        "median": 71.18556155679585,
+        "min": 71.18556155679585,
+        "max": 71.18556155679585
+      },
+      "q_abs_sd": {
+        "observed": 1,
+        "median": 5.851554235353619,
+        "min": 5.851554235353619,
+        "max": 5.851554235353619
+      },
+      "source_time_median": {
+        "observed": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "t_source_origin_effect": {
+        "observed": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "t_log_residual_tail": {
+        "observed": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "hard_minus_easy": {
+        "observed": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "hard_minus_medium": {
+        "observed": 0,
+        "median": null,
+        "min": null,
+        "max": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+{
+  "verification": {
+    "operation": "read_only_verify",
+    "created_utc": "2026-10-19T05:17:10.475064+00:00",
+    "source_root": "/workspace/scratch/fd332d1af8c2/work_personnel_typing_A_20261019",
+    "main_pin": "dafa73ac7d8ada9a7f5c0e483d695adcbd916550",
+    "scientific_source_pin": "82c6164b0d4630de5316199c92aa405930973168",
+    "key_inputs": [
+      {
+        "path": "recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz",
+        "status": "match",
+        "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251"
+      },
+      {
+        "path": "recovered/repo_main_20261019/research/statistics/v2_integrated_analysis_20261019/tables.json.gz",
+        "status": "match",
+        "sha256": "1a288e826dace32daf9da91cb6abdd6cc7d9df776dd24c854889a2107872404b"
+      },
+      {
+        "path": "recovered/repo_main_20261019/research/statistics/v2_integrated_analysis_20261019/REPRO_CONTEXT.json.gz",
+        "status": "match",
+        "sha256": "114714c027b000f85e6822f9c0ac30a3a06dbd58f009202c0919a7b23e95ece2"
+      },
+      {
+        "path": "recovered/work_v2_20261019/profiles/run_profiles.py",
+        "status": "match",
+        "sha256": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc"
+      },
+      {
+        "path": "recovered/work_v2_20261019/profiles/full_profiles.csv",
+        "status": "match",
+        "sha256": "09718f0bbca5cbe4881586d8bde278552b2bc91d12aaa644e9cfc372ab6337cd"
+      },
+      {
+        "path": "recovered/work_v2_20261019/profiles/fold_profiles.csv",
+        "status": "match",
+        "sha256": "6d2781969f46b9f2595fb95fa94aa4e2f8b6583f2229bfd626355874b8ff0c24"
+      },
+      {
+        "path": "recovered/work_v2_20261019/clusters/assignments.csv",
+        "status": "match",
+        "sha256": "747dc08c24aea6cea695e4da04741f2faca7d02af962dcf375d4b19f802625be"
+      },
+      {
+        "path": "recovered/work_v2_20261019/clusters/records_geometry.csv",
+        "status": "match",
+        "sha256": "1083c8c58fb589d1b343e2117fd02ebf93adf868dd4e47d4aceb6ec15df49b38"
+      },
+      {
+        "path": "recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "status": "match",
+        "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+      },
+      {
+        "path": "events/REQUESTS.json.gz",
+        "status": "match",
+        "sha256": "79de9f2d881ef8ef32d4d2a7fdda7fc3d01fc9d457e183455abeabc63711364d"
+      },
+      {
+        "path": "events/event_design.csv.gz",
+        "status": "match",
+        "sha256": "a2b0e603b181a0ce4b16e81ee3cd684d830f3a4860badf5209376bd1f778c608"
+      },
+      {
+        "path": "events/DESIGN.json",
+        "status": "match",
+        "sha256": "bf0f4cf3b679b67b5fc6ad237097a7d03ba52b0c8f4f45e1a976c49e62bc45cf"
+      },
+      {
+        "path": "reverse/FROZEN_BUILDING_SPLITS.json",
+        "status": "match",
+        "sha256": "ec5a004db1c868e9802a3729af549ac959b29bd43772b53c0af18f4d32c7f9b4"
+      },
+      {
+        "path": "reverse/selection_common.py",
+        "status": "match",
+        "sha256": "2f92d7d92ed698d7994e9a520edde39399fc1306a11525a6936ba900261e3873"
+      }
+    ],
+    "schemas": [
+      {
+        "path": "events/event_design.csv.gz",
+        "header_columns": 30,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "events/common_events.csv.gz",
+        "header_columns": 169,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "forward/selected_classes_by_fold.csv.gz",
+        "header_columns": 16,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "forward/selected_classes_by_fold_D10.csv.gz",
+        "header_columns": 18,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+        "header_columns": 27,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/EVENT_PREDICTIONS_WIDE.csv.gz",
+        "header_columns": 58,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "forward/full_selected_worker_portraits.csv.gz",
+        "header_columns": 135,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "reverse/results/worker_classmate_stability.csv",
+        "header_columns": 10,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "events/native_runs/team_results.csv",
+        "header_columns": 113,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/WORKER_PORTRAITS_60.csv",
+        "header_columns": 152,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/NESTED_COMMON_FOUR_NODE_PREDICTIONS.csv",
+        "header_columns": 15,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/FROZEN_K_ABLATION_COMPARISONS.csv",
+        "header_columns": 17,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      },
+      {
+        "path": "assessment/ORIGIN_CONTROL_SUMMARY.csv",
+        "header_columns": 17,
+        "missing_required_columns": [],
+        "status": "schema_ok"
+      }
+    ],
+    "bootstrap_receipt": {
+      "source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+      "source_files_verified": 824,
+      "retained_files_verified": 519,
+      "original_archives_required": false,
+      "original_full_payload_verified": false,
+      "science_executed": false,
+      "portable_manifest_sha256": "654f5dbca650166255db3843201b0673fe27f301acbc9324b9cc1b366b22c03c"
+    },
+    "runtime": {
+      "python": "3.12.14",
+      "platform": "linux",
+      "fcntl_available": true,
+      "packages": [
+        {
+          "package": "numpy",
+          "expected": "2.3.5",
+          "observed": "2.3.5",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "pandas",
+          "expected": "2.2.3",
+          "observed": "2.2.3",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "scipy",
+          "expected": "1.17.0",
+          "observed": "1.17.0",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "scikit-learn",
+          "expected": "1.8.0",
+          "observed": "1.8.0",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "shapely",
+          "expected": "2.1.2",
+          "observed": "2.1.2",
+          "source": "workspace/deps",
+          "matches": true
+        },
+        {
+          "package": "threadpoolctl",
+          "expected": "3.6.0",
+          "observed": "3.6.0",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "matplotlib",
+          "expected": "3.10.8",
+          "observed": "3.10.8",
+          "source": "active_python",
+          "matches": true
+        },
+        {
+          "package": "Pillow",
+          "expected": "12.3.0",
+          "observed": "12.3.0",
+          "source": "active_python",
+          "matches": true
+        }
+      ],
+      "all_pins_match": true,
+      "tested_python_minor": "3.12"
+    },
+    "depth": "key source SHA + CSV headers; completed-run receipts are provenance, not a new complete replay",
+    "errors": [],
+    "passed": true,
+    "full_collection_reproduced": false,
+    "Dot_complete_payload_reproduced": false
+  },
+  "selected_level": "verify",
+  "will_execute": false,
+  "planned_workspace": "/NEW_PARENT/work_personnel_typing_A_20261019",
+  "commands": [],
+  "level_readiness": {
+    "aggregate": {
+      "required_file_count": 59,
+      "missing": [],
+      "files_ready": true,
+      "note": "Input availability only; run pinned-runtime check before numerical execution."
+    },
+    "refit": {
+      "required_file_count": 41,
+      "missing": [],
+      "files_ready": true,
+      "note": "Input availability only; run pinned-runtime check before numerical execution."
+    },
+    "fresh": {
+      "required_file_count": 41,
+      "missing": [],
+      "files_ready": true,
+      "note": "Input availability only; run pinned-runtime check before numerical execution."
+    }
+  },
+  "no_existing_cache_is_deleted": true,
+  "default_action_is_read_only": true
+}

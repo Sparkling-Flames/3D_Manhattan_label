@@ -1,0 +1,249 @@
+{
+  "status": "COMPLETE",
+  "output_writer_status": "both original and fast runs have exited; no active selector writes",
+  "published_predictions_origin": "successful original shared-selection implementation; fast run failed CRC on its unique temporary .writing path before publish",
+  "failed_fast_publish": false,
+  "temporary_gzip_failure_cause": "not established; preserved without claiming a scientific discrepancy",
+  "original_full_prediction_receipt": {
+    "main_training_events": 270370,
+    "all_evaluation_events": 286666,
+    "buildings": 22,
+    "candidate_methods": 28,
+    "folds_including_full": 23,
+    "probability_file": "event_predictions.csv.gz",
+    "prediction_rows": 4013324,
+    "prediction_readback_passed": true,
+    "event_source_sha256": "d3061011998619e5736d36577fb468d685b06e54b877c13acc2c8cd812c0afe8",
+    "selection_code_sha256": "2f92d7d92ed698d7994e9a520edde39399fc1306a11525a6936ba900261e3873",
+    "class_discovery_code_sha256": "9e615ebdbfaafa0f9aa6d89336fcf67d510f6ea3240b19ce8be2a2c63778cd43",
+    "seconds": 835.1757681369781,
+    "outer_results_used_for_selection": false,
+    "new_panel_used_for_selection": false
+  },
+  "calibrations_reconciled_to_published_predictions": true,
+  "counts_and_hashes": {
+    "candidate_classes_by_fold.csv.gz": {
+      "rows": 49680,
+      "sha256": "9d097079bcc8b60db17ff09f440c7533170a964f1511b19da5187e193d6a29ab",
+      "complete_crc_readback": true
+    },
+    "candidate_classes_by_fold_D10.csv.gz": {
+      "rows": 49680,
+      "sha256": "84aafe2aa05e2953ed6bf96a3fec7017e5bb434b612b9967a86e50d045cd695e",
+      "complete_crc_readback": true
+    },
+    "candidate_labels_by_training_set.csv.gz": {
+      "rows": 149040,
+      "sha256": "1b55e4fb056f9c9617d02a14c1350c26245375d32e928b56919034d3c093a622",
+      "complete_crc_readback": true
+    },
+    "candidate_labels_by_training_set_D10.csv.gz": {
+      "rows": 149040,
+      "sha256": "b9b6f8c83199e1ea74eed0ca052e9a2a5759c9cdf5ccdb0e99b7aea274646af7",
+      "complete_crc_readback": true
+    },
+    "worker_features_by_training_set.csv.gz": {
+      "rows": 4140,
+      "sha256": "d6ce1230a74cb9953eeba99bdce0bbd71ea52e38948d13eabcd1f50bb8f37239",
+      "complete_crc_readback": true
+    },
+    "worker_features_by_training_set_D10.csv.gz": {
+      "rows": 4140,
+      "sha256": "2d57b593acb6b2c76b7d4b0287044c0ec770e5e9fec3a763bf3d725cb7b1acb3",
+      "complete_crc_readback": true
+    },
+    "fold_features.csv.gz": {
+      "rows": 1380,
+      "sha256": "a851c8ddbf7fba285af58b1c960f1d36c4ad84f35073d1cdf531adc4495e5a3e",
+      "complete_crc_readback": true
+    },
+    "fold_features_D10.csv.gz": {
+      "rows": 1380,
+      "sha256": "7e8a7be603911df562ee0fdf6920450d80c670323a2c65396f523fa149c0cb20",
+      "complete_crc_readback": true
+    },
+    "historical_feature_pair_relations.csv.gz": {
+      "rows": 705240,
+      "sha256": "97b0fbd35304e4f82f433b2f6f8af5e8eded961b7d71bf7f938550430977a324",
+      "complete_crc_readback": true
+    },
+    "historical_feature_pair_relations_D10.csv.gz": {
+      "rows": 705240,
+      "sha256": "76a5b3b47ef5df2f6f1596d670e8da5fce74748effb29b9a1031f045b54c9c8f",
+      "complete_crc_readback": true
+    },
+    "selected_classes_by_fold.csv.gz": {
+      "rows": 22080,
+      "sha256": "65c69c196442fc1f316a8234ad782c01d08bf726dfcfe23f68583d893a3313c2",
+      "candidate_lookup_exact": true
+    },
+    "event_predictions.csv.gz": {
+      "rows": 4013324,
+      "sha256": "8b2e2b24829c69ce1c39f0eeb6d793a96895b504cd629a21b48eb5a2a9540f09",
+      "complete_crc_readback": true,
+      "unique_event_method_grid": true,
+      "calibrator_probability_max_abs_diff": 1.1102230246251565e-16
+    },
+    "selected_methods.csv": {
+      "rows": 23,
+      "sha256": "abb92b8e8f92ac9344415800929a87b89c404566ba1863b14db3b7890595577a",
+      "complete_readback": true
+    },
+    "candidate_selection_process.csv": {
+      "rows": 644,
+      "sha256": "8401d31b0c8adc8a63d6be8204f44891b011c1ec989d7c77d0fd5c22ecf82641",
+      "complete_readback": true
+    },
+    "frozen_training_calibration.csv": {
+      "rows": 7728,
+      "sha256": "19b9efb9c43682e426a8411757eeefe299c4d7c9fd864f43c05638d344935f34",
+      "complete_readback": true
+    },
+    "inner_validation_building_scores.csv.gz": {
+      "rows": 13552,
+      "sha256": "3ddf62928cff07848fb00490d35b9f647ed30b7e1d16a00dbf3f20d7d27eba81",
+      "complete_readback": true
+    }
+  },
+  "inner_cache_checks": [
+    {
+      "fold_id": "2t7WUuJeko7",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "7y3sRwLe3Va",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "B6ByNegPMKs",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "FULL",
+      "rows": 616,
+      "training_buildings": 22,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "S9hNv5qa7GM",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "UwV83HsGsw3",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "VFuaQ6m2Qom",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "VLzqgDo317F",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "X7HyMhZNoso",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "Z6MFQCViBuw",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "b8cTxDM8gDG",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "e9zR4mvMWw7",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "jh4fc5c5qoQ",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "jtcxE69GiFV",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "pRbA3pwrgk9",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "pa4otMbVnkk",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "q9vSo1VnCiC",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "rPc6DW4iMge",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "uNb9QFRL6hY",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "wc2JMjhGNzB",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "x8F5xyUWy9e",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "yqstnuAEVhm",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    },
+    {
+      "fold_id": "zsNo4HB9uLZ",
+      "rows": 588,
+      "training_buildings": 21,
+      "full_candidate_building_grid": true
+    }
+  ],
+  "seconds": 33.41603231430054
+}
