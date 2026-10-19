@@ -1,0 +1,22 @@
+{
+  "status": "exploratory_followup_after_reviewed_case_before_new_controls",
+  "date": "2026-10-19",
+  "selection": "registered separate layer, first hash per building*difficulty; n>=27",
+  "case": "not applied in extension",
+  "panel": {
+    "metrics": [
+      "identity_repartition",
+      "node_count_change",
+      "selected_shared_membership_change",
+      "identity_repartition_and_node_change",
+      "direction_score_gap_amplification"
+    ],
+    "weights": "within pool/context/k same-class versus cross-class edges; image then building equal, each k separate",
+    "classes": "existing heldout-building Q/QT/QTD only",
+    "amplification": "abs observed B8 gap minus abs gap with direction loss set to zero; signed continuous diagnostic, no new event threshold",
+    "missing": "unavailable stays missing; retain full request denominator",
+    "inference": "exploratory intervals, no new class discovery or causal attribution from associations"
+  },
+  "layer": "ordinary_semi",
+  "classes": "all unknown; descriptive mechanism extension only"
+}

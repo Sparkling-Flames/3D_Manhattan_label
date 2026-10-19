@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-19",
+  "status": "registered_before_attaching_Part_A_labels_to_B_results",
+  "scope": "有限B3接入验收；A报告与B既有结果已经看过，不是外部盲测或新类别发现",
+  "source": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019",
+  "labels": "ALL_SELECTED_AND_BASELINE_LABELS.csv.gz；按heldout_building/worker_id及global或难度连接；禁止FULL标签用于验证",
+  "methods": ["Q2", "old_QT", "old_QTD_supported", "forward_selected", "forward_full", "forward_base_plus_difficulty", "reverse_selected", "reverse_selected_swap", "reverse_selected_difficulty"],
+  "B_panel": "原51图/22栋/3672事件，3随机候选、2背景、12个人数；不重选图、人、背景、类别或阈值",
+  "metrics": ["stable_main", "stable_strict", "stable_wide", "abs_B8L2_change", "both_complete"],
+  "contrasts": "同图/背景/人数内同时有类内和类间机会才比较；先背景再图再建筑等权；delta为跨类减同类；10000建筑bootstrap，探索性未校正区间；少于2栋不报告区间，极少建筑的区间不能作为稳健总体证据",
+  "supports": "各方法已知标签及九方法共同已知事件分别报告；即使事件相同，不同分区有两种边的背景仍可能不同，不直接排序方法",
+  "chains": "固定人员/背景12节点通过比例及全过分别报告，非跨图成功率；失败保留，连续缺失组不补零也不只挑已知边",
+  "A_checks": "286666事件主稳定标记；新k16主反向相对旧QT的冻结预测Brier；旧k16直接匹配背景类内/类间；重复人员对覆盖",
+  "no_new_run": ["class refit", "fusion", "calibrator fit", "Semi/doorway label transfer", "random partition null", "new pair/background panel"],
+  "followup_after_first_summary": "看到主反向类在B面板12图的方向性结果后，追加九方法统一的12节点平均通过比例敏感性：共同已知事件、B既有历史Q差<=3、两人同来源；仍需同背景同时有类内/类间机会。属于事后支持/混杂诊断，不冒称初始登记主检验。来源读取Pro人员画像person_origin；Q差使用B原q_a/q_b。",
+  "output_contract": {
+    "B_EVENT_LABELS": "event_id×method_id唯一，事件几何来自父目录SWAPS；class_a/class_b/relation=within|between|unknown/common_known",
+    "B_MATCHED_SUMMARY": "support/method/k/metric；near同类、far跨类、delta=far-near；images/buildings/paired_rows为两组指标都有的真实支持",
+    "B_COVERAGE": "按标签关系的全部事件、已评分、绝对分差>5、至少一端不完整计数；>5仅沿用原宽松分差作尾部诊断",
+    "B_PRACTICAL_IMAGES": "两种边的背景内配对后，逐图类内优/相同/劣、各自稳定率超过半数；不是对新标签重新选择的成功门",
+    "B_CHAINS": "method/building/pool/context/两人员/relation；12节点通过比例、全过和任一失败",
+    "CHECKS": "本次独立实算数值与边界，区别于Pro/Dot历史收据"
+  }
+}

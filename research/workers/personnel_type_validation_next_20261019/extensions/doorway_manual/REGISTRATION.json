@@ -1,0 +1,61 @@
+{
+  "status": "registered_before_new_panel_outputs",
+  "data_release": "v2",
+  "seed": "codex-common-swaps-20261019-v1",
+  "k": [
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    23,
+    24,
+    25
+  ],
+  "panel": "first deterministic hash pool per building*difficulty; doorway_manual, aligned, n>=27",
+  "layer": "doorway_manual",
+  "class_label_policy": "unknown: no condition-specific fitted classes; do not transfer ordinary Manual labels",
+  "members": "3 uniformly sampled candidate identities, same across 2 independent background permutations and all k",
+  "selection_uses_target_geometry": false,
+  "selection_uses_class_labels": false,
+  "history": "assignment-derived exact pair co-membership; heldout building excluded; >=6 images/3 buildings; shrinkage5",
+  "metrics": "B8L2 signed/absolute, D10, floor Jaccard, equal-count bound cyclic angle, node/identity/connection, failures",
+  "thresholds": {
+    "strict": [
+      1,
+      0.02,
+      2
+    ],
+    "main": [
+      2,
+      0.05,
+      3
+    ],
+    "wide": [
+      5,
+      0.1,
+      5
+    ]
+  },
+  "inference": "context then image then building equal; paired bootstrap buildings10000; alternative weights shown",
+  "scientific_status": "retrospective_exploratory_not_new_blind_data",
+  "implementation": "unmodified frozen fusion_engine.run_pool; independent portable comparator, no fcntl shim",
+  "special_layers": "separate condition-specific descriptive mechanism extension",
+  "N1_applied": false,
+  "input_files": {
+    "fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "profiles/fold_profiles.csv": "6d2781969f46b9f2595fb95fa94aa4e2f8b6583f2229bfd626355874b8ff0c24",
+    "clusters/assignments.csv": "747dc08c24aea6cea695e4da04741f2faca7d02af962dcf375d4b19f802625be"
+  },
+  "sources": "Pro curated bootstrap; missing Dot full payload not used",
+  "expected": {
+    "pools": 9,
+    "buildings": 9,
+    "requests": 648,
+    "events": 648
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "events": 286666,
+  "stable_flags_all_match": true,
+  "same_event_ids": true,
+  "nested_k16": {
+    "events": 4080,
+    "images": 170,
+    "buildings": 22,
+    "brier_improvement": 0.000724812616799722,
+    "low": 0.0003340522650604682,
+    "high": 0.001156585689908431
+  },
+  "old_k16_direct": {
+    "images": 139,
+    "within_better": 56,
+    "equal": 40,
+    "within_worse": 43,
+    "buildings": 22,
+    "paired_rows": 253,
+    "near": 0.7829772088995803,
+    "far": 0.7724030946413815,
+    "delta": -0.010574114258198887,
+    "low": -0.04061726370775195,
+    "high": 0.0169424747065892,
+    "image_delta": -0.031063018362592457,
+    "experiment_delta": -0.03217795066848825
+  },
+  "repeated_pair_support": {
+    "distinct_pairs": 1753,
+    "at_least_3_images": 1699,
+    "at_least_3_buildings": 1694
+  },
+  "limits": "Recomputed flags and aggregates from frozen predictions; no refit, recalibration or fresh fusion.",
+  "B": {
+    "events": 3672,
+    "methods": [
+      "Q2",
+      "old_QT",
+      "old_QTD_supported",
+      "forward_selected",
+      "forward_full",
+      "forward_base_plus_difficulty",
+      "reverse_selected",
+      "reverse_selected_swap",
+      "reverse_selected_difficulty"
+    ],
+    "label_rows": 33048,
+    "all_methods_known_events": 3288,
+    "new_fusions": 0,
+    "classes_refit": false,
+    "conditional_layers_used": false,
+    "new_external_blind_test": false
+  }
+}

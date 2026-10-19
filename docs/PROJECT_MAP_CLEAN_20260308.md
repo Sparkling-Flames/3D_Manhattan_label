@@ -260,4 +260,16 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 - [v2完整研究台、数据与Pro推进](thesis_main/v2数据研究台与Pro推进_20261019.md)：统计/逐份证据在 research/statistics/v2_*_20261019；[Pro提示词](thesis_main/Pro_v2人员细类与反向分簇研究提示词_20261019.md)保留难度细类与反向分簇两线。
 
-- 2026-10-19 Pro/Dot返回后：[人员多变量反向分型双线任务与验收](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)；[下一轮Pro提示词](thesis_main/Pro下一轮_多变量反向人员分型提示词_20261019.md)。Pro负责发现/解释类别，Codex负责独立评价与机制；[Pro归档](../research/workers/pro_personnel_v2_archive_20261019/README.md)和[Dot补充](../research/workers/personnel_independent_curve_audit_20261019/README.md)纳入研究目录。两线新实验待执行。
+- 2026-10-19 Pro/Dot返回后：[人员多变量反向分型双线任务与验收](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)；[下一轮Pro提示词](thesis_main/Pro下一轮_多变量反向人员分型提示词_20261019.md)。Pro负责发现/解释类别，Codex负责独立评价与机制；[Pro归档](../research/workers/pro_personnel_v2_archive_20261019/README.md)和[Dot补充](../research/workers/personnel_independent_curve_audit_20261019/README.md)纳入研究目录。B1/B2及门洞/Semi机制扩展已实算；A已返回，B3九套冻结类别首轮接入验收已完成，匹配背景的跨建筑支持仍需补足。
+
+- 2026-10-19 B线首轮实算：[人员替换与人数变化独立核查](../research/workers/personnel_type_validation_next_20261019/README.md)及[离线叠图](../research/workers/personnel_type_validation_next_20261019/index.html)。工具：`tools/thesis_main/analysis/personnel_type_validation_20261019.py`与`build_personnel_validation_view_20261019.py`；关键边界测试：`tests/test_personnel_type_validation_20261019.py`。
+
+- 2026-10-19 团队大分差核查：见[首轮独立核查的局部拐角与方向项分析](../research/workers/personnel_type_validation_next_20261019/README.md#团队大分差核查)；复现工具 `tools/thesis_main/analysis/personnel_case_score_audit_20261019.py`。
+
+- 2026-10-19 B线续报：上述人员替换包追加50条局部控制和门洞Manual/Semi各9图机制面板；沿用原工具与入口，三点编号已人工确认，特殊层类别仍未知。
+
+- 2026-10-19 A返回与B3接入：[Part A归档](../research/workers/personnel_type_discovery_next_20261019/README.md)、[Dot独立审查](../research/workers/personnel_type_independent_review_20261019/README.md)、[B3首轮验收](../research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md)。新增工具 `tools/thesis_main/analysis/personnel_part_a_acceptance_20261019.py` 与对应关键测试；不重拟合类别。
+
+- 2026-10-19 同房v2预测：[首轮报告](../research/same_room/same_room_v2_prediction_20261019/README.md)及[研究台同房模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=same_room&tab=0)。123对质量描述与固定面板人数预测分开；OOS排除、门洞单列、人员类型暂缓。工具 `tools/thesis_main/analysis/same_room_v2_prediction_20261019.py`，5项边界测试及既有研究台构建器接入。
+
+- 2026-10-19 新Pro类别组合研究：[前置数据与支持核查](../research/workers/personnel_composition_handoff_20261019/README.md)、[提示词](thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md)。整理工具 `tools/thesis_main/analysis/prepare_personnel_composition_handoff_20261019.py`，关键测试 `tests/test_personnel_composition_handoff_20261019.py`；未运行新分类/组合实验。

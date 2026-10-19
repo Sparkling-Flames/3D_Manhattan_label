@@ -1,0 +1,80 @@
+{
+  "schema": "personnel_composition_handoff_v1",
+  "data_release": "v2",
+  "sources": {
+    "current_public_input": "research/statistics/v2_evidence_audit_20261019/INPUTS.json",
+    "record_evidence": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+    "evidence_contract": "research/statistics/v2_evidence_audit_20261019/field_contract.json",
+    "statistics": "research/statistics/v2_integrated_analysis_20261019/CONSUMER_INTERFACE.json",
+    "quality": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+    "image_reference_context": "research/workers/pro_personnel_v2_20261019/analysis_context.json.gz",
+    "image_release_index": "research/workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv",
+    "frozen_pools": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+    "frozen_fusion": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/fusion_engine.py",
+    "previous_restore": "research/workers/pro_personnel_v2_archive_20261019/bootstrap.py",
+    "part_a_restore": "research/workers/personnel_type_discovery_next_20261019/bootstrap.py",
+    "part_a_requirements": "research/workers/personnel_type_discovery_next_20261019/requirements.txt",
+    "portraits_FULL_description_only": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/assessment/WORKER_PORTRAITS_60.csv",
+    "selected_and_baseline_labels": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+    "all_forward_fold_candidates": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/candidate_classes_by_fold.csv.gz",
+    "all_forward_fold_candidates_D10": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/candidate_classes_by_fold_D10.csv.gz",
+    "fold_features": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/fold_features.csv.gz",
+    "training_features": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/worker_features_by_training_set.csv.gz",
+    "feature_domains": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/FEATURE_DOMAINS.json",
+    "feature_refit_code": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/build_features.py",
+    "reverse_design": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/reverse/REGISTRATION.json",
+    "reverse_code": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/reverse/discover_reverse_types_fast.py",
+    "part_a_report": "research/workers/personnel_type_discovery_next_20261019/REPORT_ZH.md",
+    "part_a_independent_review": "research/workers/personnel_type_independent_review_20261019/REVIEW_ZH.md",
+    "part_b_acceptance": "research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md",
+    "part_b_design": "research/workers/personnel_type_validation_next_20261019/DESIGN.json.gz",
+    "part_b_code": "tools/thesis_main/analysis/personnel_type_validation_20261019.py",
+    "local_cluster_composition": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/fusion_analysis/composition_summary.csv",
+    "local_cluster_report": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/REPORT_ZH.md",
+    "same_room_separate_context": "research/same_room/same_room_v2_prediction_20261019/CONSUMER_INTERFACE.json"
+  },
+  "unknown": "unknown labels have no class meaning; missing features retain opportunity/support counts",
+  "support_scope": "POOL_CLASS_SUPPORT is ordinary_manual only; conditional domain labels follow pool difficulty; other layers require own supported labels",
+  "field_contract": {
+    "POOL_INVENTORY.csv": [
+      "pool_id",
+      "image_id",
+      "image",
+      "building",
+      "layer",
+      "condition",
+      "difficulty",
+      "pool_n",
+      "reference_id"
+    ],
+    "POOL_MEMBERS.csv.gz": [
+      "pool_id",
+      "object_id",
+      "worker_id",
+      "origin",
+      "image_id",
+      "building",
+      "layer",
+      "reference_id"
+    ],
+    "POOL_CLASS_SUPPORT.csv.gz": [
+      "family",
+      "method_id",
+      "domain",
+      "heldout_building",
+      "pool_id",
+      "class_id",
+      "is_known",
+      "n_workers",
+      "worker_ids"
+    ],
+    "FEATURE_COVERAGE.csv": [
+      "domain",
+      "feature",
+      "origin",
+      "people",
+      "nonmissing",
+      "missing"
+    ]
+  }
+}

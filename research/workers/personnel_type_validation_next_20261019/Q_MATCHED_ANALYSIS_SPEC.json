@@ -1,0 +1,10 @@
+{
+  "status": "planned_Q_matched_sensitivity_on_existing_random_panel",
+  "design_unchanged": true,
+  "q_calibration": "heldout-building historical Q",
+  "contrast": "same outgoing anchor; one same-class and one cross-class entrant",
+  "constraint": "abs(Q_same_entrant-Q_cross_entrant)<=3",
+  "target_point_count_matching": false,
+  "weights": "same paired image/building aggregation",
+  "interpretation": "incremental descriptive comparison, not causal proof or selection gain"
+}

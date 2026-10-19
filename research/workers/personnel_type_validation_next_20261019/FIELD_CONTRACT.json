@@ -1,0 +1,77 @@
+{
+  "schema_version": "personnel_common_swap_panel_v1",
+  "data_release": "v2",
+  "primary_metric": "B8L2",
+  "sensitivity_metric": "D10",
+  "N1_applied": false,
+  "design": {
+    "identity": "request_id identifies an exact pool/reference and ordered background plus entrant; event_id identifies a single-worker swap",
+    "k": "7,8,9,11,12,13,15,16,17,23,24,25; only consecutive values form GROWTH rows",
+    "selection": "random candidates and backgrounds independent of class labels, target geometry and outputs",
+    "condition": "ordinary_manual with aligned difficulty and pool_n>=27; one pool per building*difficulty"
+  },
+  "SWAPS": {
+    "unique_key": "event_id",
+    "request_a_request_b": "exact members and reference are joined from DESIGN and TEAM_RESULTS",
+    "B8L2_change": "B minus A, null unless both scored",
+    "abs_B8L2_change": "absolute B minus A, no imputation",
+    "floor_jaccard_difference": "1-IoU of two complete fusion footprints, camera-height-normalized coordinates",
+    "structure_bound_cyclic_deg": "frozen bound cyclic top/bottom maximum angular distance; null for unequal pair counts or missing connected geometry",
+    "changed_coidentity_pairs": "number of changed co-group relations among observations shared by both teams",
+    "shared_group_vote_flips": "selection flips of restricted shared-observation groups; null if the shared partition changes",
+    "selected_shared_change": "fraction of shared observations whose selected membership changes",
+    "edge_change": "Jaccard difference of connected shared-observation adjacency relations",
+    "one_swap_can_flip": "baseline A has a group at ceil(k/2)-1 or ceil(k/2) support; observed-team diagnostic, not historical predictor",
+    "stable_main": "both complete, absQ<=2, floor difference<=.05, equal nodes, bound angle<=3 degrees; failure or missing required metric is false",
+    "stable_strict": "same conditions with 1/.02/2",
+    "stable_wide": "same conditions with 5/.10/5",
+    "Q_QT_QTD_same": "old heldout-building labels equal; unknown labels remain null",
+    "history_9_history_12": "co-membership rate learned from other buildings at the same difficulty, shrinkage5 to building-equal prior; >=6 historical pools and >=3 buildings",
+    "target_same_pair_count": "post-answer diagnostic only; not used to select members"
+  },
+  "aggregation": {
+    "primary": "paired available class edges within pool/context/k; context average then image average then building equal",
+    "continuous_missing": "class edge group mean only if every edge metric is present; near/far summary uses jointly observed groups",
+    "chains": "all 12 declared nodes, not every intermediate integer; failure included as not stable",
+    "interval": "10000 building bootstrap resamples, seed20261019, exploratory unadjusted percentile interval",
+    "alternatives": "image and experiment weighted deltas retained",
+    "vote_gate": "paired states at fixed pool/context/k; only cells with both near and clear states contribute",
+    "growth": "odd-to-even versus even-to-odd within the same nested candidate/background chain; descriptive, entrant and k also change",
+    "Q_matched": "same outgoing worker; same/cross entrants with heldout historical Q difference<=3; no target point-count gate; all feasible anchors retained, then image/building averaging"
+  },
+  "not_computed": [
+    "new personnel classes",
+    "Pro Part A acceptance",
+    "Semi initialization/net improvement and blind-trust causal analysis"
+  ],
+  "local_regenerable": [
+    "runtime/",
+    "view-data.js"
+  ],
+  "frozen_inputs": "REGISTRATION input_files; source scripts restored unchanged by curated bootstrap",
+  "MECHANISM_EVENTS": {
+    "identity_repartition": "shared-observation co-membership changes; unavailable remains null",
+    "node_count_change": "node count differs; not a full structural-equivalence test",
+    "selected_membership_change": "any shared observation changes selected membership",
+    "identity_and_node_change": "both predicates true; either unavailable -> null",
+    "direction_zero_gap": "absolute B8 difference with only direction loss zeroed, diagnostic not new score version",
+    "direction_gap_amplification": "abs observed score gap minus direction_zero_gap; negative possible, unavailable stays null"
+  },
+  "CASE_POINT_CONTROLS": {
+    "scope": "50 synthetic coordinate interventions, 6 pairs x 4 components x 2 directions plus 2 endpoints; not real teams",
+    "component": "pair / x(shared top and bottom) / top_y / bottom_y / all_pairs",
+    "identity": "original workers retained; only declared coordinates replaced by other worker; no GT coordinates used",
+    "number_binding": "USER_REVIEW.json; human numbers1/2/3 -> source pair_index5/4/3"
+  },
+  "extensions": {
+    "layers": [
+      "doorway_manual",
+      "ordinary_semi"
+    ],
+    "design": "each separate registration, first pool per building*difficulty, n>=27; 9 pools per layer",
+    "labels": "all Q/QT/QTD/history labels unknown; no ordinary-Manual transfer",
+    "semi": "final-output geometry only, not correction gain or blindness inference",
+    "counts": "648 requests and645 unique teams per layer; k25 backgrounds repeat for one n27 pool",
+    "inherit": "SWAPS/GROWTH/BACKGROUNDS/TEAM_RESULTS and compare semantics same as main; subset DESIGN and REGISTRATION live in extension folder"
+  }
+}

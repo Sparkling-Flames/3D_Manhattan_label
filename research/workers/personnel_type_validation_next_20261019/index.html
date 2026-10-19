@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人员替换与人数变化 首轮独立核查</title>
+<link rel="stylesheet" href="../../statistics/research_explorer_v1_r2_20261017/workbench.css">
+<style>main{margin:auto;max-width:1500px;padding:24px}.toolbar{display:flex;flex-wrap:wrap;gap:14px}.toolbar label{display:grid;gap:4px}select{max-width:440px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{min-width:0}#members{overflow-wrap:anywhere;font-size:13px}.geom-photo{aspect-ratio:2}.tablewrap{overflow:auto}#chart{width:100%;height:210px}#chart text{font-size:12px;fill:#475569}@media(max-width:850px){.grid{grid-template-columns:1fr}main{padding:12px}}</style>
+<script src="../../statistics/research_explorer_v1_r2_20261017/workbench-core.js" defer></script>
+<script src="../../statistics/research_explorer_v1_r2_20261017/geometry-view.js" defer></script>
+<script src="view-data.js" defer></script><script src="view.js" defer></script></head><body><main>
+<a href="../../statistics/research_explorer_v1_r2_20261017/index.html">返回完整研究台</a>
+<h1>同一对人员，换背景、增人数后还相近吗？</h1>
+<p>真实v2 · 普通Manual · 51图／22栋 · 3672个团队。候选人按固定随机规则选出，未按类别或融合结果挑选。</p>
+<div class="info">此页保留旧Q、QT、QTD基线与三层几何叠图；门洞Manual、普通Semi类别未知。Pro新类别已返回，<a href="part_a_acceptance/README.md">B3九方案接入验收</a>已有结果。尚未采用为正式人员等级；下方相近判据沿用旧研究，不能替代人工判断。</div>
+<section class="panel"><h2>跨12个人数节点的旧分类基线</h2><p>同类、跨类都可比较的图内配对，再建筑等权。相近要求完整、|质量差|≤2、底面差≤0.05、节点数相同且对应角差≤3°，12个节点均满足。三个方法覆盖不同，不能直接按稳定率排名。</p><div id="summary" class="tablewrap"></div></section>
+<section class="panel"><h2>在同一张图上叠加比较</h2><p><button id="reviewCase">已核查：wc2JMjhGNzB-46，25人，局部缺角触发方向重罚</button></p><p><a href="case_score_floor.png" target="_blank">查看团队A/B与GT的局部拐角放大图</a> · <a href="README.md#团队大分差核查">核查说明</a> · <a href="case_original_numbered.png" target="_blank">个人原答三点编号核对</a>。50.99/98.54是团队分数；下方人员原答是另一层比较。</p><div class="toolbar"><label>场景／条件<select id="layer"><option value="ordinary_manual">普通Manual</option><option value="doorway_manual">门洞Manual</option><option value="ordinary_semi">普通Semi</option></select></label>
+<label>图片<select id="image"></select></label><label>背景<select id="context"><option value="0">背景0</option><option value="1">背景1</option></select></label>
+<label>替换人员<select id="pair"></select></label><label>人数<select id="k"></select></label></div>
+<p id="metrics"></p><p id="members"></p><svg id="chart" viewBox="0 0 1000 210" role="img" aria-label="两团队在固定人数节点的B8L2质量"></svg>
+<p>图中青色／橙色为两团队质量；只绘已计算节点，不表示跳过人数也已计算。</p>
+<div class="grid"><section><h3>整队融合A与B叠加</h3><div id="fusion"></div></section><section><h3>两名替换者的原作答叠加</h3><div id="answers"></div></section></div>
+<p>两份几何在同一视图内叠加；可切换BEV／3D。紫色为绑定参考，青色为A，橙色为B。自动连接仅表示算法已输出候选环，不是新增人工确认。原图沿用本地资产；缺图时仍能查看几何。</p>
+<details><summary>全部人数节点和证据</summary><div id="rows" class="tablewrap"></div><p id="reference"></p></details></section>
+<footer><a href="README.md">结果与限制</a> · <a href="REGISTRATION.json">事前设计</a> · <a href="FIELD_CONTRACT.json">字段说明</a><p>可直接离线打开。参考、评分、原始点位及融合参数保持冻结版本。</p></footer></main></body></html>

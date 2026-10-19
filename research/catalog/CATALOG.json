@@ -10,7 +10,15 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
-          "text": "当前：多变量人员类型发现与独立评价两线任务；新实验尚未启动",
+          "text": "新Pro类别组合替换：前置数据、逐池支持及精简交付任务已准备，方法/人数开放，未运行新实验",
+          "path": "research/workers/personnel_composition_handoff_20261019/README.md"
+        },
+        {
+          "text": "B线首轮已算：51图换人、相邻人数与背景机制；新人员类别待返回",
+          "path": "research/workers/personnel_type_validation_next_20261019/README.md"
+        },
+        {
+          "text": "当前：A已返回，B3九方案首轮验收已算；可靠类别与匹配背景跨建筑验证待收尾",
           "path": "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md"
         },
         {
@@ -302,6 +310,14 @@
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
         {
+          "text": "新Pro类别组合替换：前置数据、逐池支持及精简交付任务已准备，方法/人数开放，未运行新实验",
+          "path": "research/workers/personnel_composition_handoff_20261019/README.md"
+        },
+        {
+          "text": "B线首轮已算：51图换人、相邻人数与背景机制；新人员类别待返回",
+          "path": "research/workers/personnel_type_validation_next_20261019/README.md"
+        },
+        {
           "text": "当前多变量反向分型任务、两线分工及验收",
           "path": "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md"
         },
@@ -445,6 +461,10 @@
       "page_path": "docs/thesis_main/topics/same_room/README.md",
       "current_basis": [
         {
+          "text": "v2首轮条件预测与人数曲线：123对质量描述；OOS排除、门洞单列、类别暂缓，已接研究台。",
+          "path": "research/same_room/same_room_v2_prediction_20261019/README.md"
+        },
+        {
           "text": "按已有分类完成当前接续：83对质量可比、78对共同人员至少4人，15对其它范围单列。",
           "path": "research/same_room/same_room_update_20261017/README.md"
         },
@@ -479,7 +499,7 @@
           "path": "research/same_room/same_room_b8l2_v6_20261016/usage_v2/README.md"
         },
         {
-          "text": "当前为小样本、单建筑的Q/T证据；不外推为稳定普遍效应"
+          "text": "旧阶段为小样本、单建筑的Q/T证据；不外推为稳定普遍效应"
         }
       ],
       "source_evidence": [
@@ -10472,7 +10492,7 @@
       "source_path": "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md",
       "current_path": "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md",
       "source": "用户最新研究目标及Pro/Dot归档的独立核对",
-      "adoption_status": "探索任务安排；A/B新实验尚未启动",
+      "adoption_status": "A已返回；B1/B2已算，B3九方案首轮接入完成，后续匹配支持与类别比例待补",
       "verification_status": "已核对既有结果与支持边界；本轮文档/目录检查",
       "availability": "仓库文档与已筛选公开研究载荷；大缓存及私有证据边界见各README",
       "relationships": [
@@ -10529,6 +10549,112 @@
       "relationships": [
         "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md",
         "docs/thesis_main/Pro下一轮_多变量反向人员分型提示词_20261019.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-type-validation-next-20261019",
+      "title": "人员替换与人数变化首轮独立核查",
+      "theme": "workers",
+      "type": "独立实算与离线叠图",
+      "date": "20261019",
+      "source_path": "research/workers/personnel_type_validation_next_20261019",
+      "current_path": "research/workers/personnel_type_validation_next_20261019",
+      "source": "冻结v2输入与未修改融合评分入口；新随机共同面板",
+      "adoption_status": "B1/B2及条件扩展已算；B3冻结九方案首轮接入完成；主反向局部支持，未采用为可靠类型",
+      "verification_status": "主面板1224比较对；扩展各216对；50条局部坐标控制；三点编号经用户确认；6项关键测试与三层展示检查；自查4968请求成员与旧类别重聚合通过，主层142对中132对仅测1图；本次286666事件标记重核、九方法33048标签及9项测试",
+      "availability": "紧凑结果/精确设计/代码/页面框架在仓库；缓存及大型显示数据本地可重建",
+      "relationships": [
+        "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md",
+        "tools/thesis_main/analysis/personnel_type_validation_20261019.py",
+        "tools/thesis_main/analysis/personnel_case_score_audit_20261019.py",
+        "research/workers/personnel_type_validation_next_20261019/CASE_SCORE_AUDIT.json",
+        "research/workers/personnel_type_validation_next_20261019/USER_REVIEW.json",
+        "research/workers/personnel_type_validation_next_20261019/extensions/doorway_manual",
+        "research/workers/personnel_type_validation_next_20261019/extensions/ordinary_semi",
+        "research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md",
+        "tools/thesis_main/analysis/personnel_part_a_acceptance_20261019.py"
+      ]
+    },
+    {
+      "id": "MAT-personnel-type-discovery-next-20261019",
+      "title": "Pro Part A多变量正向与反向人员分型归档",
+      "theme": "workers",
+      "type": "研究交付与审查",
+      "date": "20261019",
+      "source_path": "research/workers/personnel_type_discovery_next_20261019",
+      "current_path": "research/workers/personnel_type_discovery_next_20261019",
+      "source": "Pro三个原包；去重及分片归档",
+      "adoption_status": "作为候选类别与审查证据；不直接采用为可靠互换类别",
+      "verification_status": "原研究和Dot回执与本次B3实算分别记录；见各README",
+      "availability": "仓库保留报告、代码、表及恢复入口",
+      "relationships": [
+        "research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-type-independent-review-20261019",
+      "title": "Dot对Part A的独立审查",
+      "theme": "workers",
+      "type": "研究交付与审查",
+      "date": "20261019",
+      "source_path": "research/workers/personnel_type_independent_review_20261019",
+      "current_path": "research/workers/personnel_type_independent_review_20261019",
+      "source": "Dot独立审查、有限重算及原始回执",
+      "adoption_status": "作为候选类别与审查证据；不直接采用为可靠互换类别",
+      "verification_status": "原研究和Dot回执与本次B3实算分别记录；见各README",
+      "availability": "仓库保留报告、代码、表及恢复入口",
+      "relationships": [
+        "research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_v2_prediction_20261019",
+      "title": "v2同房Q/T条件预测与源视角人数实验",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261019",
+      "source_path": "research/same_room/same_room_v2_prediction_20261019",
+      "current_path": "research/same_room/same_room_v2_prediction_20261019",
+      "source": "同房线程首轮实算及统筹展示接入",
+      "adoption_status": "探索结果；OOS排除、门洞单列、人员类别暂缓；未改评分与融合",
+      "verification_status": "原线程5项测试；统筹字段/覆盖/汇总重聚合和离线展示核查，非全模型独立重跑",
+      "availability": "仓库工作区；未代用户提交",
+      "relationships": [
+        "research/statistics/v2_integrated_analysis_20261019",
+        "research/statistics/research_explorer_v1_r2_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--personnel_composition_handoff_20261019",
+      "title": "新Pro类别组合替换前置数据与实际支持",
+      "theme": "workers",
+      "type": "研究交接与数据核查",
+      "date": "20261019",
+      "source_path": "research/workers/personnel_composition_handoff_20261019",
+      "current_path": "research/workers/personnel_composition_handoff_20261019",
+      "source": "用户类别组合研究要求及当前v2冻结证据",
+      "adoption_status": "前置整理完成；研究方法、类别数及人数开放；未产生新实验结论",
+      "verification_status": "7302成员几何/参考/评分一致；逐折池支持与缺失检查、2项测试、公开路径可移植检查",
+      "availability": "工作区准备完成；用户自行提交main",
+      "relationships": [
+        "research/workers/personnel_type_discovery_next_20261019",
+        "research/statistics/v2_evidence_audit_20261019"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--Pro-composition-prompt-20261019",
+      "title": "新Pro人员类别组合替换提示词",
+      "theme": "workers",
+      "type": "研究任务提示词",
+      "date": "20261019",
+      "source_path": "docs/thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md",
+      "current_path": "docs/thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md",
+      "source": "用户最新研究意图",
+      "adoption_status": "新对话任务；前轮提示词保留历史",
+      "verification_status": "与冻结数据及用户人数/方法开放要求核对",
+      "availability": "工作区文档",
+      "relationships": [
+        "research/workers/personnel_composition_handoff_20261019"
       ]
     }
   ]

@@ -1,0 +1,33 @@
+{
+  "status": "exploratory_followup_after_reviewed_case_before_new_controls",
+  "date": "2026-10-19",
+  "selection": "same registered 51-image panel; no reselection",
+  "case": {
+    "image": "wc2JMjhGNzB-46",
+    "context": 1,
+    "k": 25,
+    "donors": [
+      "W131",
+      "W132"
+    ],
+    "common_background": 24,
+    "controls": "both directions: each of six same-ring-index pairs; replace whole pair, shared x, top y, or bottom y; plus all-pairs endpoint checks",
+    "reference_use": "only score and label plots; no GT coordinates inserted",
+    "user_point_binding": "screenshot numbering not yet human confirmed against pair_index",
+    "interpretation": "synthetic coordinate interventions only, not additional humans or training evidence"
+  },
+  "panel": {
+    "metrics": [
+      "identity_repartition",
+      "node_count_change",
+      "selected_shared_membership_change",
+      "identity_repartition_and_node_change",
+      "direction_score_gap_amplification"
+    ],
+    "weights": "within pool/context/k same-class versus cross-class edges; image then building equal, each k separate",
+    "classes": "existing heldout-building Q/QT/QTD only",
+    "amplification": "abs observed B8 gap minus abs gap with direction loss set to zero; signed continuous diagnostic, no new event threshold",
+    "missing": "unavailable stays missing; retain full request denominator",
+    "inference": "exploratory intervals, no new class discovery or causal attribution from associations"
+  }
+}
