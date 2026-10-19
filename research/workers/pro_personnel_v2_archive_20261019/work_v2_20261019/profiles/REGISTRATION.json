@@ -1,0 +1,55 @@
+{
+  "schema": "independent_v2_forward_profiles_registration_20261019_v1",
+  "frozen_before_new_v2_fusion_outcomes": true,
+  "source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "seed": 20261019,
+  "main_panel": "quality_usable and condition=manual and quality_use=ordinary_primary; frozen current-reference difficulty only",
+  "measurement": {"primary":"B8L2", "sensitivity":"D10", "geometry_reference_eligibility_changed":false},
+  "q_support": {"unique_tasks":6,"buildings":3},
+  "difficulty_support": {"unique_tasks_per_level":6,"buildings_per_level":3,"levels":["easy","medium","hard"]},
+  "t_support": {"unique_tasks":6,"buildings":3},
+  "task_identity": ["image_id","condition","reference_id","reference_version"],
+  "relative_quality": ["same-task average-rank percentile, ties averaged", "leave-one-person-out same-task mean difference", "same-task centered least-squares worker fixed effect with equal-worker-zero anchor", "global ridge=5 task-equivalent observations", "joint three-difficulty partial pooling lambda=20, with lambda=5 and 80 fixed sensitivities", "three independent difficulty effects lambda=0 diagnostic"],
+  "missing": "No quality, target time, source time, unsupported worker or unsupported class is filled with zero. Numerical fitted effects for thin cells remain estimates marked unsupported.",
+  "time": {
+    "outcome":"log(seconds), positive audited/reported source only",
+    "source_training":"pool_analysis_eligible, manual, ordinary_difficulty_eligible, known current difficulty, positive source time; quality is a separate gate",
+    "target_training":"same conditions with actual positive target_matched_time_seconds; never filled by source",
+    "main_relative":"pooled same source-task (image,condition) adjusted worker effect; observational old/new provenance remains confounded with worker cohort",
+    "origin_sensitivity":"separate origin/source-kind effects, each independently centered; not a cross-source calibration",
+    "fixed_thresholds_seconds":[[60,180],[90,240]],
+    "relative_three_classes":"fast below -log(1.25), slow at or above log(1.25), otherwise middle",
+    "relative_two_classes":"fast if effect <=0; slow if >0"
+  },
+  "coarse_labels": {
+    "Q2":"above-peer if beta >=0, below-peer otherwise; supported only",
+    "Q3":"above-peer if beta >=3; below-peer if beta <=-3; near-peer otherwise",
+    "QT":"Q2 x relative T2; no permanent natural-group claim",
+    "difficulty_type":"all three levels require support. across_strong: theta_e,theta_m,theta_h >=3; hard_specialist: theta_h>=3 and theta_h-theta_e>=3 and theta_h-theta_m>=3; hard_relative_lift_only: theta_h<3 with both contrasts>=3; hard_drop: both contrasts<=-3; otherwise mixed_or_near. Contrasts and support for easy and medium are also reported separately.",
+    "hard_adaptation":"up if hard-easy >=3 and hard-medium >=3; down if both <=-3; otherwise mixed_or_near; all three levels require support"
+  },
+  "fine_labels": {
+    "candidate":"QT x hard_adaptation",
+    "merge_rule":"within each exact QT parent, split into supported adaptation children only when at least two non-unknown children have >=3 workers; retain child labels only for children with >=3 workers, else retain parent with sparse_child suffix. Unknown adaptation retains parent with difficulty_unknown suffix.",
+    "purpose":"finite interpretable candidate types, no retuning after fusion outcomes; report candidate and merged labels and true member lists"
+  },
+  "selection": {
+    "Qfirst":"largest heldout-building Q effect; known supported workers only",
+    "QDfirst":"largest heldout-building theta for known target difficulty, with difficulty support",
+    "QT":"quality candidate pool beta >= kth supported beta -3; select k lowest known T_source_effect only if >=k T-known candidates, else unavailable; matched Q baseline restricted to same T-known candidates",
+    "QTD":"same QT rule using theta at target difficulty; separate QDfirst isolates difficulty without time",
+    "origin_time_sensitivity":"repeat time-order with independently origin-centered T; no claim source comparability is resolved",
+    "metric_sensitivity":"fixed-member B8/D10 scoring and reselecting under D10 profiles remain separate analyses",
+    "tie_break":"worker_id ascending, never heldout actual quality"
+  },
+  "validation": {
+    "split":"leave one building out; all profile fits, rank calibration, class centroids and selection trained outside heldout building",
+    "primary_target":"heldout same-task leave-other-person-out quality contrast, evaluated among common history-supported workers; heldout scores define outcomes only, never selection",
+    "secondary_target":"absolute heldout score with training task-balanced difficulty intercept plus historical worker effect; explicitly distinct from peer-referenced validation",
+    "category_prediction":"training worker-effect or difficulty-effect centroid of class, not class fitted on target answers",
+    "weighting":"image equal then building equal primary; record equal and image equal sensitivity; existing declared original room groups sensitivity, overlapping group membership not independent physical rooms",
+    "uncertainty":"paired building bootstrap 2000 draws for model differences; leave-building-out label stability and jackknife coefficient uncertainty; no claim interchangeability from nonsignificant p-value",
+    "v1_replay":"fixed1911 scores; fixed1258 manual and1048 development membership; original historical fixed effects verified separately"
+  },
+  "interpretation":"All numerical class and shortlist cutoffs are frozen research candidates and engineering tolerances for this run, not user-approved production rules. No composite score combines Q with T, Semi, scope or personal exclusions."
+}

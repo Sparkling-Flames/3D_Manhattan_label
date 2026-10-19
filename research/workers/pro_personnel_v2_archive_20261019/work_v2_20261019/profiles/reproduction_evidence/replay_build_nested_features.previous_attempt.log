@@ -1,0 +1,27 @@
+pairs 1 of 231
+pairs 26 of 231
+pairs 51 of 231
+pairs 76 of 231
+pairs 101 of 231
+pairs 126 of 231
+pairs 151 of 231
+pairs 176 of 231
+pairs 201 of 231
+pairs 226 of 231
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/build_nested_features.py", line 58, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/build_nested_features.py", line 56, in main
+    js(out/'NESTED_FEATURE_RECEIPT.json',{'rows':len(rows),'outer_folds':len(buildings),'double_excluded_sets':len(buildings)*(len(buildings)-1)//2,'elapsed_seconds':time.time()-t0,'source_profiles_code_sha256':digest(out/'run_profiles.py'),'code_sha256':digest(Path(__file__)),'training_rule':'exclude both outer validation building and training sample building','test_rule':'single outer-building exclusion from fold_profiles.csv','no_target_geometry_labels_used_in_person_features':True})
+                                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/run_profiles.py", line 31, in digest
+    def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                                           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay/run_profiles.py'

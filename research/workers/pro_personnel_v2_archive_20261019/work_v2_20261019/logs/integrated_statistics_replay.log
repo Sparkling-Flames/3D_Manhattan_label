@@ -1,0 +1,10 @@
+loading frozen minimal source context
+computing base
+base done 15.1 seconds
+computing direct_room
+direct_room done 66.9 seconds
+computing raw_floor_disagreement
+raw_floor_disagreement done 15.3 seconds
+computing inherited_personnel_and_history
+BLOCK UNAVAILABLE inherited_personnel_and_history [Errno 2] No such file or directory: '/workspace/scratch/fd332d1af8c2/repo_main_20261019/research/workers/personnel_v2_20261019/profiles.csv'
+{"source_commit": "82c6164b0d4630de5316199c92aa405930973168", "generator_sha256": "8aa7acf61900f1af8f04e3be746f5b737fa4a194fac0a83bcc457ce7635a9fc4", "repro_context_sha256": "114714c027b000f85e6822f9c0ac30a3a06dbd58f009202c0919a7b23e95ece2", "expected_tables": 51, "tables_checked": 44, "all_checked_pass": true, "unavailable_tables": ["statistics__historical_source_index", "statistics__historical_supplement_plan", "statistics__personnel_difficulty_preferences", "statistics__personnel_groups", "statistics__personnel_profiles", "statistics__personnel_reliability", "statistics__v1_v2_common_membership"], "seconds": 109.25035514000047, "scope": "Statistical replay of frozen audited minimal-source columns using unchanged published computational functions; not independent collection/preprocessing/runtime audit. Published personnel/history inputs remain inherited reads; separate profiles module independently refits personnel effects."}

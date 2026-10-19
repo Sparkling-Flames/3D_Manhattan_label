@@ -1,0 +1,40 @@
+{
+  "corrupt_compressed_comparison_files": [
+    {
+      "path": "work_v2_20261019/fusion/comparisons_initial/wc2JMjhGNzB-56__semi__55ecaa1ae3/replacements.csv.gz",
+      "error": "Compressed file ended before the end-of-stream marker was reached",
+      "bytes": 235188
+    },
+    {
+      "path": "work_v2_20261019/fusion/comparisons_initial/e9zR4mvMWw7-39__semi__9326cbf6d2/replacements.csv.gz",
+      "error": "Compressed file ended before the end-of-stream marker was reached",
+      "bytes": 439681
+    }
+  ],
+  "fusion_geometry_affected": false,
+  "action": "recompute affected comparison pools from unchanged saved states; no parameters or requests changed",
+  "recovery_completed": true,
+  "recovered_files": [
+    {
+      "path": "work_v2_20261019/fusion/comparisons_initial/wc2JMjhGNzB-56__semi__55ecaa1ae3/replacements.csv.gz",
+      "rows": 3860,
+      "bytes": 624144,
+      "sha256": "19d455b56b81a5995168b788176a81f104561676e4d42fc06d8f8c264797b9ff",
+      "gzip_crc_valid": true
+    },
+    {
+      "path": "work_v2_20261019/fusion/comparisons_initial/e9zR4mvMWw7-39__semi__9326cbf6d2/replacements.csv.gz",
+      "rows": 4108,
+      "bytes": 638517,
+      "sha256": "ebbbef6f0bfdd605e7b07c030e6c7643bbfed4a05d8c19a59a107233e690a274",
+      "gzip_crc_valid": true
+    }
+  ],
+  "merged_totals": {
+    "replacements": 370490,
+    "prefix_transitions": 28292,
+    "random_same_k": 181089,
+    "composition_comparisons": 0,
+    "policy_comparisons": 0
+  }
+}

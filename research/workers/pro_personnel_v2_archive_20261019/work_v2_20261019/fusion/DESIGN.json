@@ -1,0 +1,107 @@
+{
+  "schema": "v2_fusion_registered_design_v1",
+  "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "seed": 2026101901,
+  "input_snapshot_sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+  "seed_derivation": "sha256(canonicalJSON([seed, family, pool, k/draw])) first16 hex → numpy.default_rng",
+  "pool_scope": "All 229 same-image/condition/reference/version pools with 7302 quality-eligible independent real answers. Ordinary Manual 177 pools is primary. Doorway/Semi/special separate.",
+  "k_random": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32
+  ],
+  "k_replacement": [
+    8,
+    12,
+    16,
+    24
+  ],
+  "uniform_full_permutations": 4,
+  "random_teams_per_k": 12,
+  "fixed_backgrounds_per_k": 2,
+  "entrants": "all remaining real workers for each fixed k-1 background",
+  "small_pool_sampling": "enumerate all subsets when number <= requested count; otherwise sample unique uniform subsets without replacement",
+  "n_requests": 77942,
+  "n_unique_teams": 77039,
+  "families": {
+    "uniform_prefix": 29208,
+    "independent_random_team": 14764,
+    "fixed_background": 33970
+  },
+  "n_paths": 916,
+  "n_backgrounds": 1686,
+  "n_all_entrant_pairs": 370490,
+  "pilot_pool_ids": [
+    "yqstnuAEVhm-02__manual__a65088884b",
+    "uNb9QFRL6hY-78__manual__dfd88df676",
+    "7y3sRwLe3Va-04__manual__d7b320ab08",
+    "jtcxE69GiFV-13__manual__8809c22f6e",
+    "VFuaQ6m2Qom-01__manual__5b146df96f",
+    "X7HyMhZNoso-19__manual__4177d22d41",
+    "S9hNv5qa7GM-12__manual__eec3a285d1",
+    "UwV83HsGsw3-22__manual__f3e5ed92db",
+    "zsNo4HB9uLZ-16__manual__7e980a16d1",
+    "uNb9QFRL6hY-83__manual__5eaa83ee48",
+    "jtcxE69GiFV-12__manual__66b8e58011",
+    "e9zR4mvMWw7-39__semi__9326cbf6d2",
+    "wc2JMjhGNzB-54__semi__f450a46f5c"
+  ],
+  "pilot_selection": "3 distinct-building ordinary pools per difficulty, keyed hash order, then 2 doorway and 2 Semi; all chosen before outcomes",
+  "expansion": "Run this frozen design on pilot, then remaining pools if input and runtime checks pass. Outcomes cannot change seeds, categories, parameters or sample counts.",
+  "frozen_fusion": {
+    "entry": "consensus_delivery_20261008.fuse",
+    "core": "ring_correspondence_20261007.build",
+    "gap_per_skip_degree": 7.5,
+    "correspondence": "mean top/bottom angular distance, cyclic and reverse cuts with skip DP, one person per identity group",
+    "group_rule": "complete linkage of allowed pairwise node matches (NOT whole-answer 9/12 degree clustering)",
+    "votes": "MV50 inclusive: 2*support>=N",
+    "coordinates": "all identity members, equal-person medians, periodic medoid anchor",
+    "connection": "most-supported complete projected source ring; ties lexical flagged; no x-sort fallback or human partitions",
+    "N2": "node evidence retained, source-ring sorting deferred",
+    "N1": false,
+    "source_points": "frozen records final points, no extra prepare_record"
+  },
+  "practical_tolerances": {
+    "main": {
+      "abs_B8L2_difference": 2,
+      "floor_jaccard_difference": 0.05,
+      "structure_bound_cyclic_degree": 3,
+      "required": "both complete, same output node count, comparable bound cyclic ring; tolerances are an engineering diagnostic, not semantic equivalence certification"
+    },
+    "sensitivity": {
+      "abs_B8L2_difference": [
+        1,
+        2,
+        5
+      ],
+      "floor_jaccard_difference": [
+        0.02,
+        0.05,
+        0.1
+      ],
+      "structure_bound_cyclic_degree": [
+        2,
+        3,
+        5
+      ]
+    }
+  },
+  "failure_policy": "Every requested team remains in denominator. Preserve separate failures and conditional score means; no zero-filled ability score. A separate bounded delivery utility may assign failure=0 solely for team decision sensitivity.",
+  "inference": "image and building support; building-equal primary uncertainty. Repeated permutations/variants are not independent people; no newly blind historical holdout claim.",
+  "functions_and_input_hashes": {
+    "tools/thesis_main/analysis/consensus_delivery_20261008.py": "fb2b7c3b5c95a24151101e44b96b30b1bbdc09b2bb8d637293ceacd8a503de75",
+    "tools/thesis_main/analysis/ring_correspondence_20261007.py": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe",
+    "tools/thesis_main/analysis/wall_consensus_population_20261014.py": "5ba3a69eea550c4c3892a5e987d4bfb25312ff43ad3459e7ff36a8e3ea90bc72",
+    "tools/thesis_main/analysis/wall_consensus_quality_20261015.py": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25",
+    "tools/thesis_main/analysis/wall_consensus_v1_process_20261017.py": "db12244af4ed5a271aa20d4b5da124c53f3abc2669b70450d81a920dc0fd9397",
+    "tools/thesis_main/analysis/quality_b8l2_d10_20261017.py": "027f78f4bb6d1ca6914ddabd86d4f5521350ea45e48fe82825e4f319b09ea818",
+    "tools/thesis_main/analysis/scope_quality_scoring_20261016.py": "e0f76cd02ec07417109f55c9f2e4b2fd2cc81cce54ff0a9994455f1f36efc775",
+    "tools/thesis_main/analysis/research_round_20260929.py": "48aa00175d43f1070e3320f899a553fff709e3fdb666c526c0194aab8df9ee23",
+    "tools/thesis_main/analysis/paired_split_research/study.py": "182d8bfb46f7e4531dce237c40e14697f159092e7492b82b8ca4e9a4edfd8b09",
+    "research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a",
+    "research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165"
+  }
+}

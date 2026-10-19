@@ -1,0 +1,22 @@
+{
+  "schema": "semi_statistical_replay_v2_20261019",
+  "source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "source_records_sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+  "panels": {
+    "all_adopted_paired_diagnostic": 519,
+    "quality_qualified_paired": 465,
+    "worker_attributable_paired": 461,
+    "qualified_native_ring_only": 461,
+    "worker_attributable_native_ring_only": 457,
+    "worker_attributable_confirmed_error_opportunities": 138,
+    "worker_attributable_other_initializations": 323,
+    "worker_attributable_confirmed_opportunity_edited": 118,
+    "worker_attributable_confirmed_opportunity_unchanged": 20
+  },
+  "redundancy_max_effect_difference": 2.6645352591003757e-14,
+  "rank_caveat": "Within each identical task/reference/initialization, final and gain carry the same worker contrast. Absolute gain remains a useful descriptive process measure, not a second independent Q vote.",
+  "score_deficit_caveat": "100-final is score deficit, not an adjudicated count of residual initial errors.",
+  "all_paired_diagnostic_caveat": "The 519-record panel uses diagnostic final geometry scores, including 54 quality-ineligible records. Qualified personnel summaries use only the explicitly qualified or attributable panels; quality eligibility is never changed.",
+  "correction_caveat": "No changed record is declared corrected by these calculations. Source screen-view and acquisition audit are inherited, not independently replayed.",
+  "class_or_selector_modified": false
+}

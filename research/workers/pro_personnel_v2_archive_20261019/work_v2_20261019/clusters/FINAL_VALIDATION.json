@@ -1,0 +1,2436 @@
+{
+  "status": "PASS",
+  "fresh_process_check": true,
+  "gzip_file_count": 14,
+  "gzip_checks": [
+    {
+      "path": "CLUSTER_API.json.gz",
+      "bytes": 2114576,
+      "sha256": "84543e058d456105d5597d88f802922a6aa5903c5c65524c4cec770125370b9e",
+      "gzip_crc_full_stream": true,
+      "top_level_sizes": {
+        "pools": 229
+      }
+    },
+    {
+      "path": "ORACLE_REQUESTS.json.gz",
+      "bytes": 1608086,
+      "sha256": "b48309b6c97d3e23491e63d0c84c3cb689094e70566e1008986c020a8a8ef052",
+      "gzip_crc_full_stream": true,
+      "top_level_sizes": {
+        "requests": 37932,
+        "paths": 708
+      }
+    },
+    {
+      "path": "bottom_y_perturbations.csv.gz",
+      "bytes": 4490804,
+      "sha256": "9d3620b019c46c1bfc3f8985db38fb3d14fda64a2e1918dd3b1e1e8d63af0ad0",
+      "gzip_crc_full_stream": true,
+      "rows": 143436,
+      "columns": 20
+    },
+    {
+      "path": "bound_pair_projection_base.csv.gz",
+      "bytes": 1175308,
+      "sha256": "10e999ef1c41a8eb7dba3cae851bb6d759b98190a4d19110c3a68e9ecb8ad30e",
+      "gzip_crc_full_stream": true,
+      "rows": 35859,
+      "columns": 14
+    },
+    {
+      "path": "forward_swaps/labeled_events.csv.gz",
+      "bytes": 11545934,
+      "sha256": "ac6cf51f2b3ec8299843dad6a76a83c7d7296878daf0ad1b707b0cf9ebf921a2",
+      "gzip_crc_full_stream": true,
+      "rows": 270370,
+      "columns": 40
+    },
+    {
+      "path": "fusion_analysis/composition_cluster_details.csv.gz",
+      "bytes": 15600373,
+      "sha256": "96da4753638836ce7879acfd7c231da8b6c788c8e2faef4197ee55e69aae5450",
+      "gzip_crc_full_stream": true,
+      "rows": 72027,
+      "columns": 111
+    },
+    {
+      "path": "fusion_analysis/replacement_cluster_details.csv.gz",
+      "bytes": 117710151,
+      "sha256": "b742e06b369e7f0e1c71ee4322844ed9c7d3efcbacce82de8a1b398a1dfee9cb",
+      "gzip_crc_full_stream": true,
+      "rows": 540740,
+      "columns": 125
+    },
+    {
+      "path": "pair_distances.csv.gz",
+      "bytes": 11912190,
+      "sha256": "59e62b94f418ae2a3f4433b4587cfefaf59dea610eb4a624b622d77a49fa90f9",
+      "gzip_crc_full_stream": true,
+      "rows": 121515,
+      "columns": 40
+    },
+    {
+      "path": "pair_history_diagnostic/heldout_predictions.csv.gz",
+      "bytes": 13796599,
+      "sha256": "1d7c401eff4f74617e515d738b3e591521d60184cabbc2512dcd146d01c053a9",
+      "gzip_crc_full_stream": true,
+      "rows": 554628,
+      "columns": 18
+    },
+    {
+      "path": "prefix_analysis/actual_prefix_steps_with_clusters.csv.gz",
+      "bytes": 16360388,
+      "sha256": "5e43e513bff4587273df545ea6779b8e3ac3bc36e93974dac03e14ddc4dad6cf",
+      "gzip_crc_full_stream": true,
+      "rows": 66504,
+      "columns": 110
+    },
+    {
+      "path": "prefix_analysis/oracle_prefix_endpoints.csv.gz",
+      "bytes": 2002133,
+      "sha256": "cdcace72027263da63134e2a1bf025e95ed7ea21b4a28bfcd941bb3ab9367c89",
+      "gzip_crc_full_stream": true,
+      "rows": 22876,
+      "columns": 25
+    },
+    {
+      "path": "swap_transfer/heldout_predictions_wide.csv.gz",
+      "bytes": 47819621,
+      "sha256": "3e2c25abad9184c6caafef6494288c9b5f1b6eecd37b36ee4ee967911a8d4589",
+      "gzip_crc_full_stream": true,
+      "rows": 270370,
+      "columns": 37
+    },
+    {
+      "path": "transfer/largest_heldout_predictions.csv.gz",
+      "bytes": 1784424,
+      "sha256": "b9d1e70529404865365906a0aa2551f1a312e4bf48079c6aa2994385d076a2e1",
+      "gzip_crc_full_stream": true,
+      "rows": 77959,
+      "columns": 16
+    },
+    {
+      "path": "transfer/pair_heldout_predictions.csv.gz",
+      "bytes": 48624064,
+      "sha256": "cb6a47cd0dce5f7f00b9bd4487cd1adaa977f60d7d4b0ad2beed084de9cdeb56",
+      "gzip_crc_full_stream": true,
+      "rows": 1479008,
+      "columns": 19
+    }
+  ],
+  "prediction_rows": 270370,
+  "prediction_key_unique": true,
+  "prediction_model_error_rows_checked": 16296,
+  "prediction_error_max_differences": {
+    "squared_error": 5.551115123125783e-17,
+    "absolute_error": 5.551115123125783e-17,
+    "n": 0.0
+  },
+  "exact_long_to_wide_float64_checks": 6370576,
+  "repaired_fold_summary_check": {
+    "repaired_folds": [
+      "2t7WUuJeko7",
+      "VLzqgDo317F",
+      "b8cTxDM8gDG"
+    ],
+    "prediction_files": [
+      "2t7WUuJeko7_predictions.csv.gz",
+      "VLzqgDo317F_predictions.csv.gz",
+      "b8cTxDM8gDG_predictions.csv.gz"
+    ],
+    "all_predictions_recomputed_same_registered_models": true,
+    "summary_image_k_rows_checked": 576,
+    "max_absolute_difference_from_initial_in_memory_scores": {
+      "squared_error": 3.552713678800501e-15,
+      "absolute_error": 4.440892098500626e-16,
+      "n": 0.0
+    },
+    "atomic_gzip_readback": true
+  },
+  "support_exclusion_checks": [
+    {
+      "profile": "outer",
+      "worker": "W006",
+      "excluded": [
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 61,
+      "buildings": 17
+    },
+    {
+      "profile": "outer",
+      "worker": "W011",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 37,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W130",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 129,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W017",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 58,
+      "buildings": 17
+    },
+    {
+      "profile": "outer",
+      "worker": "W110",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 118,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W107",
+      "excluded": [
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 109,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W010",
+      "excluded": [
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 44,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W107",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 118,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W126",
+      "excluded": [
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 123,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W123",
+      "excluded": [
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W006",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 59,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W108",
+      "excluded": [
+        "jtcxE69GiFV"
+      ],
+      "tasks": 112,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W033",
+      "excluded": [
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 59,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W030",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 59,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W105",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W111",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W012",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 57,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W031",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 68,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W104",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 119,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W011",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 41,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W008",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 56,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W028",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 55,
+      "buildings": 13
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 62,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W037",
+      "excluded": [
+        "yqstnuAEVhm"
+      ],
+      "tasks": 47,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 46,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W105",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W123",
+      "excluded": [
+        "jtcxE69GiFV"
+      ],
+      "tasks": 118,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W021",
+      "excluded": [
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 17,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W001",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 61,
+      "buildings": 17
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 28,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W101",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W017",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 60,
+      "buildings": 17
+    },
+    {
+      "profile": "outer",
+      "worker": "W127",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 127,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W102",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W119",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 125,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 32,
+      "buildings": 10
+    },
+    {
+      "profile": "outer",
+      "worker": "W116",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 123,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W117",
+      "excluded": [
+        "2t7WUuJeko7"
+      ],
+      "tasks": 120,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W103",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 112,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W106",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 119,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W132",
+      "excluded": [
+        "2t7WUuJeko7"
+      ],
+      "tasks": 136,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W034",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 61,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W008",
+      "excluded": [
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 62,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W102",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 119,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W017",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 64,
+      "buildings": 18
+    },
+    {
+      "profile": "outer",
+      "worker": "W100",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 120,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W134",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 130,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W104",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 112,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W104",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 118,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 60,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W037",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 49,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W118",
+      "excluded": [
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 107,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "2t7WUuJeko7"
+      ],
+      "tasks": 32,
+      "buildings": 10
+    },
+    {
+      "profile": "outer",
+      "worker": "W031",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 69,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W117",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W018",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 30,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W037",
+      "excluded": [
+        "X7HyMhZNoso"
+      ],
+      "tasks": 51,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W030",
+      "excluded": [
+        "jtcxE69GiFV"
+      ],
+      "tasks": 61,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W103",
+      "excluded": [
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 111,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 63,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W115",
+      "excluded": [
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 121,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W008",
+      "excluded": [
+        "jtcxE69GiFV"
+      ],
+      "tasks": 62,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W120",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 121,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W030",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 58,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W014",
+      "excluded": [
+        "B6ByNegPMKs"
+      ],
+      "tasks": 28,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W122",
+      "excluded": [
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W134",
+      "excluded": [
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 132,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "yqstnuAEVhm"
+      ],
+      "tasks": 27,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W106",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W006",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 61,
+      "buildings": 17
+    },
+    {
+      "profile": "outer",
+      "worker": "W121",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 113,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W013",
+      "excluded": [
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 49,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W132",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 136,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W107",
+      "excluded": [
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 116,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W106",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 116,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W123",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 118,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W103",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 114,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W036",
+      "excluded": [
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 53,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 62,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W033",
+      "excluded": [
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 63,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W132",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 138,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 30,
+      "buildings": 9
+    },
+    {
+      "profile": "outer",
+      "worker": "W100",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 118,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W100",
+      "excluded": [
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 114,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W114",
+      "excluded": [
+        "yqstnuAEVhm"
+      ],
+      "tasks": 114,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W127",
+      "excluded": [
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 127,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W115",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W033",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 64,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W030",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 60,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W125",
+      "excluded": [
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W028",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 58,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W113",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 117,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W010",
+      "excluded": [
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 52,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W037",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 53,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W127",
+      "excluded": [
+        "yqstnuAEVhm"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W122",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 124,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W115",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 122,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W006",
+      "excluded": [
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 57,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W108",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W105",
+      "excluded": [
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 117,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W124",
+      "excluded": [
+        "yqstnuAEVhm"
+      ],
+      "tasks": 120,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W032",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 63,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W031",
+      "excluded": [
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 67,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W012",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 57,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W111",
+      "excluded": [
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 114,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W010",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 57,
+      "buildings": 15
+    },
+    {
+      "profile": "outer",
+      "worker": "W132",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 137,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W027",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 32,
+      "buildings": 10
+    },
+    {
+      "profile": "outer",
+      "worker": "W006",
+      "excluded": [
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 55,
+      "buildings": 16
+    },
+    {
+      "profile": "outer",
+      "worker": "W105",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 120,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W120",
+      "excluded": [
+        "VLzqgDo317F"
+      ],
+      "tasks": 124,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W127",
+      "excluded": [
+        "UwV83HsGsw3"
+      ],
+      "tasks": 129,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W033",
+      "excluded": [
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 61,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W029",
+      "excluded": [
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 57,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W114",
+      "excluded": [
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 124,
+      "buildings": 21
+    },
+    {
+      "profile": "outer",
+      "worker": "W120",
+      "excluded": [
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 121,
+      "buildings": 20
+    },
+    {
+      "profile": "outer",
+      "worker": "W028",
+      "excluded": [
+        "pa4otMbVnkk"
+      ],
+      "tasks": 57,
+      "buildings": 13
+    },
+    {
+      "profile": "outer",
+      "worker": "W033",
+      "excluded": [
+        "rPc6DW4iMge"
+      ],
+      "tasks": 59,
+      "buildings": 14
+    },
+    {
+      "profile": "outer",
+      "worker": "W021",
+      "excluded": [
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 19,
+      "buildings": 10
+    },
+    {
+      "profile": "outer",
+      "worker": "W114",
+      "excluded": [
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 121,
+      "buildings": 21
+    },
+    {
+      "profile": "nested",
+      "worker": "W117",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 111,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W109",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 114,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W133",
+      "excluded": [
+        "2t7WUuJeko7",
+        "pa4otMbVnkk"
+      ],
+      "tasks": 126,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W027",
+      "excluded": [
+        "B6ByNegPMKs",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 23,
+      "buildings": 8
+    },
+    {
+      "profile": "nested",
+      "worker": "W127",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 116,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W128",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "X7HyMhZNoso"
+      ],
+      "tasks": 122,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W125",
+      "excluded": [
+        "2t7WUuJeko7",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 113,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "B6ByNegPMKs",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 120,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W127",
+      "excluded": [
+        "X7HyMhZNoso",
+        "pa4otMbVnkk"
+      ],
+      "tasks": 120,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W102",
+      "excluded": [
+        "X7HyMhZNoso",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "2t7WUuJeko7",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 110,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W029",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "UwV83HsGsw3"
+      ],
+      "tasks": 54,
+      "buildings": 12
+    },
+    {
+      "profile": "nested",
+      "worker": "W034",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 57,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W126",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 121,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W118",
+      "excluded": [
+        "X7HyMhZNoso",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 119,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W011",
+      "excluded": [
+        "VLzqgDo317F",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 41,
+      "buildings": 16
+    },
+    {
+      "profile": "nested",
+      "worker": "W129",
+      "excluded": [
+        "rPc6DW4iMge",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 120,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W029",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 53,
+      "buildings": 12
+    },
+    {
+      "profile": "nested",
+      "worker": "W118",
+      "excluded": [
+        "2t7WUuJeko7",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 116,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W037",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 45,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W010",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "UwV83HsGsw3"
+      ],
+      "tasks": 50,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "b8cTxDM8gDG",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 111,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W037",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 51,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W125",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 118,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W104",
+      "excluded": [
+        "pa4otMbVnkk",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 106,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W013",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 40,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "pa4otMbVnkk",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 104,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W128",
+      "excluded": [
+        "VLzqgDo317F",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 122,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W115",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 108,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W126",
+      "excluded": [
+        "X7HyMhZNoso",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W012",
+      "excluded": [
+        "yqstnuAEVhm",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 49,
+      "buildings": 15
+    },
+    {
+      "profile": "nested",
+      "worker": "W008",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 62,
+      "buildings": 16
+    },
+    {
+      "profile": "nested",
+      "worker": "W111",
+      "excluded": [
+        "uNb9QFRL6hY",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 106,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W018",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 31,
+      "buildings": 10
+    },
+    {
+      "profile": "nested",
+      "worker": "W124",
+      "excluded": [
+        "jtcxE69GiFV",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 113,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W122",
+      "excluded": [
+        "b8cTxDM8gDG",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 119,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W118",
+      "excluded": [
+        "UwV83HsGsw3",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 114,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W103",
+      "excluded": [
+        "B6ByNegPMKs",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 108,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W119",
+      "excluded": [
+        "UwV83HsGsw3",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W111",
+      "excluded": [
+        "B6ByNegPMKs",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 113,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W117",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W037",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 50,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W126",
+      "excluded": [
+        "q9vSo1VnCiC",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 114,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W129",
+      "excluded": [
+        "UwV83HsGsw3",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 131,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W100",
+      "excluded": [
+        "q9vSo1VnCiC",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 112,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W101",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 106,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W112",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W018",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 26,
+      "buildings": 8
+    },
+    {
+      "profile": "nested",
+      "worker": "W032",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 58,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W021",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 17,
+      "buildings": 8
+    },
+    {
+      "profile": "nested",
+      "worker": "W102",
+      "excluded": [
+        "VLzqgDo317F",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 110,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W027",
+      "excluded": [
+        "2t7WUuJeko7",
+        "VLzqgDo317F"
+      ],
+      "tasks": 32,
+      "buildings": 10
+    },
+    {
+      "profile": "nested",
+      "worker": "W121",
+      "excluded": [
+        "rPc6DW4iMge",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 110,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W122",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 112,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W006",
+      "excluded": [
+        "b8cTxDM8gDG",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 60,
+      "buildings": 16
+    },
+    {
+      "profile": "nested",
+      "worker": "W121",
+      "excluded": [
+        "VLzqgDo317F",
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 117,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W011",
+      "excluded": [
+        "VLzqgDo317F",
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 40,
+      "buildings": 15
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "UwV83HsGsw3",
+        "VLzqgDo317F"
+      ],
+      "tasks": 121,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W018",
+      "excluded": [
+        "2t7WUuJeko7",
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 30,
+      "buildings": 9
+    },
+    {
+      "profile": "nested",
+      "worker": "W029",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 55,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W037",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 46,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "X7HyMhZNoso",
+        "pa4otMbVnkk"
+      ],
+      "tasks": 112,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W034",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "jtcxE69GiFV"
+      ],
+      "tasks": 60,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W129",
+      "excluded": [
+        "B6ByNegPMKs",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 125,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W119",
+      "excluded": [
+        "VLzqgDo317F",
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 116,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W017",
+      "excluded": [
+        "B6ByNegPMKs",
+        "VLzqgDo317F"
+      ],
+      "tasks": 60,
+      "buildings": 17
+    },
+    {
+      "profile": "nested",
+      "worker": "W116",
+      "excluded": [
+        "pRbA3pwrgk9",
+        "q9vSo1VnCiC"
+      ],
+      "tasks": 117,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W103",
+      "excluded": [
+        "B6ByNegPMKs",
+        "Z6MFQCViBuw"
+      ],
+      "tasks": 108,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W129",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 129,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W109",
+      "excluded": [
+        "jtcxE69GiFV",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 109,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W126",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 121,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W029",
+      "excluded": [
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 49,
+      "buildings": 12
+    },
+    {
+      "profile": "nested",
+      "worker": "W021",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 18,
+      "buildings": 9
+    },
+    {
+      "profile": "nested",
+      "worker": "W100",
+      "excluded": [
+        "jh4fc5c5qoQ",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 113,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W001",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 52,
+      "buildings": 15
+    },
+    {
+      "profile": "nested",
+      "worker": "W012",
+      "excluded": [
+        "2t7WUuJeko7",
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 54,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W124",
+      "excluded": [
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "UwV83HsGsw3",
+        "X7HyMhZNoso"
+      ],
+      "tasks": 119,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W014",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 31,
+      "buildings": 9
+    },
+    {
+      "profile": "nested",
+      "worker": "W117",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 109,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W109",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 111,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W031",
+      "excluded": [
+        "B6ByNegPMKs",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 66,
+      "buildings": 15
+    },
+    {
+      "profile": "nested",
+      "worker": "W121",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 105,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W102",
+      "excluded": [
+        "pRbA3pwrgk9",
+        "pa4otMbVnkk"
+      ],
+      "tasks": 105,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W133",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 130,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W129",
+      "excluded": [
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 127,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W107",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "e9zR4mvMWw7"
+      ],
+      "tasks": 106,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W113",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 116,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W033",
+      "excluded": [
+        "wc2JMjhGNzB",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 59,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W124",
+      "excluded": [
+        "2t7WUuJeko7",
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 119,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W132",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 114,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W036",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 41,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W132",
+      "excluded": [
+        "pRbA3pwrgk9",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 120,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "UwV83HsGsw3",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 128,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W126",
+      "excluded": [
+        "jtcxE69GiFV",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W027",
+      "excluded": [
+        "VLzqgDo317F",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 28,
+      "buildings": 9
+    },
+    {
+      "profile": "nested",
+      "worker": "W022",
+      "excluded": [
+        "X7HyMhZNoso",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 2,
+      "buildings": 1
+    },
+    {
+      "profile": "nested",
+      "worker": "W114",
+      "excluded": [
+        "B6ByNegPMKs",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 103,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W002",
+      "excluded": [
+        "pRbA3pwrgk9",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 44,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W102",
+      "excluded": [
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 102,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W029",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ"
+      ],
+      "tasks": 55,
+      "buildings": 13
+    },
+    {
+      "profile": "nested",
+      "worker": "W034",
+      "excluded": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM"
+      ],
+      "tasks": 58,
+      "buildings": 14
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "UwV83HsGsw3",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 130,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W118",
+      "excluded": [
+        "S9hNv5qa7GM",
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 115,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "B6ByNegPMKs",
+        "pRbA3pwrgk9"
+      ],
+      "tasks": 123,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W107",
+      "excluded": [
+        "B6ByNegPMKs",
+        "rPc6DW4iMge"
+      ],
+      "tasks": 109,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W109",
+      "excluded": [
+        "B6ByNegPMKs",
+        "b8cTxDM8gDG"
+      ],
+      "tasks": 116,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W013",
+      "excluded": [
+        "X7HyMhZNoso",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 49,
+      "buildings": 15
+    },
+    {
+      "profile": "nested",
+      "worker": "W017",
+      "excluded": [
+        "2t7WUuJeko7",
+        "7y3sRwLe3Va"
+      ],
+      "tasks": 62,
+      "buildings": 16
+    },
+    {
+      "profile": "nested",
+      "worker": "W113",
+      "excluded": [
+        "Z6MFQCViBuw",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 113,
+      "buildings": 19
+    },
+    {
+      "profile": "nested",
+      "worker": "W127",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "pa4otMbVnkk"
+      ],
+      "tasks": 116,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W132",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "VFuaQ6m2Qom"
+      ],
+      "tasks": 129,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W120",
+      "excluded": [
+        "UwV83HsGsw3",
+        "x8F5xyUWy9e"
+      ],
+      "tasks": 122,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W131",
+      "excluded": [
+        "VFuaQ6m2Qom",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 120,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W106",
+      "excluded": [
+        "e9zR4mvMWw7",
+        "yqstnuAEVhm"
+      ],
+      "tasks": 106,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W022",
+      "excluded": [
+        "jtcxE69GiFV",
+        "zsNo4HB9uLZ"
+      ],
+      "tasks": 2,
+      "buildings": 1
+    },
+    {
+      "profile": "nested",
+      "worker": "W035",
+      "excluded": [
+        "2t7WUuJeko7",
+        "UwV83HsGsw3"
+      ],
+      "tasks": 62,
+      "buildings": 16
+    },
+    {
+      "profile": "nested",
+      "worker": "W114",
+      "excluded": [
+        "7y3sRwLe3Va",
+        "wc2JMjhGNzB"
+      ],
+      "tasks": 112,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W109",
+      "excluded": [
+        "pa4otMbVnkk",
+        "uNb9QFRL6hY"
+      ],
+      "tasks": 95,
+      "buildings": 20
+    },
+    {
+      "profile": "nested",
+      "worker": "W011",
+      "excluded": [
+        "UwV83HsGsw3",
+        "VLzqgDo317F"
+      ],
+      "tasks": 39,
+      "buildings": 15
+    }
+  ],
+  "classes_distances_fusion_or_model_parameters_changed_for_repair": false,
+  "current_summary_results_unchanged_up_to_float64_roundoff": true,
+  "inference_unit": "building; rows/combinations/paths are not independent people"
+}

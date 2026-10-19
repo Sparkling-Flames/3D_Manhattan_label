@@ -1,0 +1,17 @@
+metric  baseline                         model difficulty    n  images  buildings  baseline_mse  model_mse  improvement_percent    ci_low   ci_high  improved_buildings
+  B8L2 class_QT3              class_fine_dtype        all 5333     177         22    216.313653 216.355119            -0.019169 -0.986827  0.910693                  10
+  B8L2 class_QT3              class_fine_dtype       hard  899      31         15    247.419393 243.392034             1.627746 -1.537262  4.219703                   9
+  B8L2 class_QT3       class_fine_dtype_merged        all 5333     177         22    216.313653 218.189928            -0.867386 -2.098985  0.190299                  10
+  B8L2 class_QT3       class_fine_dtype_merged       hard  899      31         15    247.419393 245.891550             0.617511 -2.384585  3.114927                   9
+  B8L2        FE FE_plus_difficulty_type_delta        all 5335     177         22    211.812560 210.966859             0.399268  0.042226  0.780549                  14
+  B8L2        FE FE_plus_difficulty_type_delta       hard  899      31         15    248.128374 247.119440             0.406618 -1.330823  1.858616                  10
+  B8L2   joint20 FE_plus_difficulty_type_delta        all 5335     177         22    209.094571 210.966859            -0.895427 -1.654237 -0.226855                   8
+  B8L2   joint20 FE_plus_difficulty_type_delta       hard  899      31         15    242.893399 247.119440            -1.739875 -3.648645  0.365260                   4
+  B8L2        FE      FE_plus_fine_dtype_delta        all 5333     177         22    211.761063 210.172295             0.750264  0.196906  1.350965                  14
+  B8L2        FE      FE_plus_fine_dtype_delta       hard  899      31         15    248.128374 246.434077             0.682831 -1.032106  2.027990                  10
+  B8L2   joint20      FE_plus_fine_dtype_delta        all 5333     177         22    209.039659 210.172295            -0.541828 -1.213366  0.059396                  10
+  B8L2   joint20      FE_plus_fine_dtype_delta       hard  899      31         15    242.893399 246.434077            -1.457709 -3.593708  0.540933                   5
+  B8L2        FE FE_plus_hard_adaptation_delta        all 5335     177         22    211.812560 211.239348             0.270622 -0.168393  0.695985                  14
+  B8L2        FE FE_plus_hard_adaptation_delta       hard  899      31         15    248.128374 246.286085             0.742474 -0.823390  2.238052                  10
+  B8L2   joint20 FE_plus_hard_adaptation_delta        all 5335     177         22    209.094571 211.239348            -1.025745 -1.968841 -0.285338                   7
+  B8L2   joint20 FE_plus_hard_adaptation_delta       hard  899      31         15    242.893399 246.286085            -1.396780 -3.825086  0.898341                   4

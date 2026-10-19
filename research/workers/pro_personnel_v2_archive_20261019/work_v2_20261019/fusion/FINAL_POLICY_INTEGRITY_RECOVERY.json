@@ -1,0 +1,15 @@
+{
+  "before": {
+    "crc_valid": false,
+    "bytes": 59035111,
+    "error": "Compressed file ended before the end-of-stream marker was reached"
+  },
+  "after": {
+    "rows": 383307,
+    "bytes": 59691326,
+    "gzip_sha256": "fa1821f09b731ce9e0baa26f70630209d15386844cd112ffdd35623cd920ef89",
+    "csv_sha256": "3d6a41eabe3405935c25624425401bab567af24fd8a6f2afd17c2fc9e617fc59",
+    "crc_valid": true
+  },
+  "action": "reassemble unchanged saved per-pool comparison rows; materialize the complete compressed bytes before publishing; no outcome/source/method changes"
+}

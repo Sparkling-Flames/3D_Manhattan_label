@@ -1,0 +1,502 @@
+{
+  "source": "work_v2_20261019/delivery/research_report_v2_zh.html",
+  "source_sha256": "1d376049d9a7d04a6666c0b36d2a2be9673c2b7d218dae186ae00f345c52661a",
+  "conversion": "HTML text and tables to Markdown; no scientific edits",
+  "table_count": 15,
+  "embedded_figures": [
+    {
+      "sha256": "042e8483cda33ed7b538bb2daffe53df1ae302a10f80701bce413613054a9cf2",
+      "stored": "work_v2_20261019/presentation/figures/personnel_difficulty.png"
+    },
+    {
+      "sha256": "e0e5d3766b620c799fcfe7a1871881a960e47ea12366671a336a36a1edad1d32",
+      "stored": "work_v2_20261019/presentation/figures/policy_tradeoffs.png"
+    },
+    {
+      "sha256": "930c81a73a62aa7f8f1b9290c35250a813253af440c065a76fc02cf68691722b",
+      "stored": "work_v2_20261019/presentation/figures/team_size_and_swaps.png"
+    }
+  ],
+  "links": [
+    {
+      "original": "../fusion/EXTENSION_RECEIPT.json",
+      "logical": "work_v2_20261019/fusion/EXTENSION_RECEIPT.json",
+      "stored": "work_v2_20261019/fusion/EXTENSION_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/paired_model_comparison.csv",
+      "logical": "work_v2_20261019/profiles/paired_model_comparison.csv",
+      "stored": "work_v2_20261019/profiles/paired_model_comparison.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_POLICY_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../audit/EVIDENCE_AUDIT_CHECKS.json",
+      "logical": "work_v2_20261019/audit/EVIDENCE_AUDIT_CHECKS.json",
+      "stored": "work_v2_20261019/audit/EVIDENCE_AUDIT_CHECKS.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/GEOMETRY_REPLAY_CHECKS.json",
+      "logical": "work_v2_20261019/audit/GEOMETRY_REPLAY_CHECKS.json",
+      "stored": "work_v2_20261019/audit/GEOMETRY_REPLAY_CHECKS.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "logical": "work_v2_20261019/audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "stored": "work_v2_20261019/audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/INPUT_COVERAGE.json",
+      "logical": "work_v2_20261019/profiles/INPUT_COVERAGE.json",
+      "stored": "work_v2_20261019/profiles/INPUT_COVERAGE.json",
+      "parts": null
+    },
+    {
+      "original": "../original_images/ORIGINAL_IMAGE_AUDIT.json",
+      "logical": "work_v2_20261019/original_images/ORIGINAL_IMAGE_AUDIT.json",
+      "stored": "work_v2_20261019/original_images/ORIGINAL_IMAGE_AUDIT.json.gz",
+      "parts": null
+    },
+    {
+      "original": "../audit/SEMI_ANALYSIS_RECEIPT.json",
+      "logical": "work_v2_20261019/audit/SEMI_ANALYSIS_RECEIPT.json",
+      "stored": "work_v2_20261019/audit/SEMI_ANALYSIS_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/EXCLUSION_TEXT_REVIEW_RECEIPT.json",
+      "logical": "work_v2_20261019/audit/EXCLUSION_TEXT_REVIEW_RECEIPT.json",
+      "stored": "work_v2_20261019/audit/EXCLUSION_TEXT_REVIEW_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/DESIGN.json",
+      "logical": "work_v2_20261019/fusion/DESIGN.json",
+      "stored": "work_v2_20261019/fusion/DESIGN.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/REGISTRATION.json",
+      "logical": "work_v2_20261019/profiles/REGISTRATION.json",
+      "stored": "work_v2_20261019/profiles/REGISTRATION.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/paired_model_comparison.csv",
+      "logical": "work_v2_20261019/profiles/paired_model_comparison.csv",
+      "stored": "work_v2_20261019/profiles/paired_model_comparison.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../profiles/fine_information_controls.csv",
+      "logical": "work_v2_20261019/profiles/fine_information_controls.csv",
+      "stored": "work_v2_20261019/profiles/fine_information_controls.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/AUDIT_CHECKS.json",
+      "logical": "work_v2_20261019/profiles/AUDIT_CHECKS.json",
+      "stored": "work_v2_20261019/profiles/AUDIT_CHECKS.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/END_TO_END_REPRODUCTION.json",
+      "logical": "work_v2_20261019/profiles/END_TO_END_REPRODUCTION.json",
+      "stored": "work_v2_20261019/profiles/END_TO_END_REPRODUCTION.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/人员画像与候选细类60人.csv",
+      "logical": "work_v2_20261019/profiles/人员画像与候选细类60人.csv",
+      "stored": "work_v2_20261019/delivery/personnel_profiles_v2_60.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/profile_stability_uncertainty.csv",
+      "logical": "work_v2_20261019/profiles/profile_stability_uncertainty.csv",
+      "stored": "work_v2_20261019/profiles/profile_stability_uncertainty.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../profiles/fine_dtype_stability.csv",
+      "logical": "work_v2_20261019/profiles/fine_dtype_stability.csv",
+      "stored": "work_v2_20261019/profiles/fine_dtype_stability.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/fine_dtype_membership.csv",
+      "logical": "work_v2_20261019/profiles/fine_dtype_membership.csv",
+      "stored": "work_v2_20261019/profiles/fine_dtype_membership.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/version_anchor_comparison.csv",
+      "logical": "work_v2_20261019/profiles/version_anchor_comparison.csv",
+      "stored": "work_v2_20261019/profiles/version_anchor_comparison.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/published_v2_classification_comparison.csv",
+      "logical": "work_v2_20261019/profiles/published_v2_classification_comparison.csv",
+      "stored": "work_v2_20261019/profiles/published_v2_classification_comparison.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/worker_metric_class_sensitivity.csv",
+      "logical": "work_v2_20261019/profiles/worker_metric_class_sensitivity.csv",
+      "stored": "work_v2_20261019/profiles/worker_metric_class_sensitivity.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FIXED_TEAM_METRIC_SENSITIVITY_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FIXED_TEAM_METRIC_SENSITIVITY_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FIXED_TEAM_METRIC_SENSITIVITY_SUMMARY.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/METRIC_RESELECTION_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/METRIC_RESELECTION_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/METRIC_RESELECTION_SUMMARY.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/version_cluster_summary.csv",
+      "logical": "work_v2_20261019/clusters/version_cluster_summary.csv",
+      "stored": "work_v2_20261019/clusters/version_cluster_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/TIME_DIAGNOSTIC_SUMMARY.json",
+      "logical": "work_v2_20261019/profiles/TIME_DIAGNOSTIC_SUMMARY.json",
+      "stored": "work_v2_20261019/profiles/TIME_DIAGNOSTIC_SUMMARY.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/time_threshold_stability.csv",
+      "logical": "work_v2_20261019/profiles/time_threshold_stability.csv",
+      "stored": "work_v2_20261019/profiles/time_threshold_stability.csv",
+      "parts": null
+    },
+    {
+      "original": "../profiles/efficiency_within_person_diagnostics.csv",
+      "logical": "work_v2_20261019/profiles/efficiency_within_person_diagnostics.csv",
+      "stored": "work_v2_20261019/profiles/efficiency_within_person_diagnostics.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/TEAM_TIME_SOURCE_COVERAGE.csv",
+      "logical": "work_v2_20261019/fusion/TEAM_TIME_SOURCE_COVERAGE.csv",
+      "stored": "work_v2_20261019/fusion/TEAM_TIME_SOURCE_COVERAGE.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_POLICY_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_POLICY_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_POLICY_PER_IMAGE.csv.gz",
+      "logical": "work_v2_20261019/fusion/FORWARD_POLICY_PER_IMAGE.csv.gz",
+      "stored": "work_v2_20261019/fusion/FORWARD_POLICY_PER_IMAGE.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_CASES.json",
+      "logical": "work_v2_20261019/fusion/FORWARD_CASES.json",
+      "stored": "work_v2_20261019/fusion/FORWARD_CASES.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_REGISTRATION.json",
+      "logical": "work_v2_20261019/fusion/FORWARD_REGISTRATION.json",
+      "stored": "work_v2_20261019/fusion/FORWARD_REGISTRATION.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/ALGORITHM_AUDIT.json",
+      "logical": "work_v2_20261019/clusters/ALGORITHM_AUDIT.json",
+      "stored": "work_v2_20261019/clusters/ALGORITHM_AUDIT.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/partition_population_summary.csv",
+      "logical": "work_v2_20261019/clusters/partition_population_summary.csv",
+      "stored": "work_v2_20261019/clusters/partition_population_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/partition_sensitivity_summary.csv",
+      "logical": "work_v2_20261019/clusters/partition_sensitivity_summary.csv",
+      "stored": "work_v2_20261019/clusters/partition_sensitivity_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/bottom_y_sensitivity_summary.csv",
+      "logical": "work_v2_20261019/clusters/bottom_y_sensitivity_summary.csv",
+      "stored": "work_v2_20261019/clusters/bottom_y_sensitivity_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/REVERSE_RING_RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/REVERSE_RING_RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/REVERSE_RING_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/CASE_CATALOG.json",
+      "logical": "work_v2_20261019/clusters/CASE_CATALOG.json",
+      "stored": "work_v2_20261019/clusters/CASE_CATALOG.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/fusion_analysis/replacement_summary.csv",
+      "logical": "work_v2_20261019/clusters/fusion_analysis/replacement_summary.csv",
+      "stored": "work_v2_20261019/clusters/fusion_analysis/replacement_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FIXED_COMPOSITION_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FIXED_COMPOSITION_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FIXED_COMPOSITION_SUMMARY.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../fusion/COMPOSITION_MATCHED_VARIATION_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/COMPOSITION_MATCHED_VARIATION_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/COMPOSITION_MATCHED_VARIATION_SUMMARY.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/conditional_dtype/summary.csv",
+      "logical": "work_v2_20261019/clusters/conditional_dtype/summary.csv",
+      "stored": "work_v2_20261019/clusters/conditional_dtype/summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/fusion_analysis/composition_summary.csv",
+      "logical": "work_v2_20261019/clusters/fusion_analysis/composition_summary.csv",
+      "stored": "work_v2_20261019/clusters/fusion_analysis/composition_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/room_sensitivity/RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/room_sensitivity/RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/room_sensitivity/RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/OUTPUT_STATUS_AUDIT.json",
+      "logical": "work_v2_20261019/fusion/OUTPUT_STATUS_AUDIT.json",
+      "stored": "work_v2_20261019/fusion/OUTPUT_STATUS_AUDIT.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/RANDOM_COMMON_8_12_16_24_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/RANDOM_COMMON_8_12_16_24_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/RANDOM_COMMON_8_12_16_24_SUMMARY.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/SAME_K_VARIATION_COMMON_8_12_16_24.csv",
+      "logical": "work_v2_20261019/fusion/SAME_K_VARIATION_COMMON_8_12_16_24.csv",
+      "stored": "work_v2_20261019/fusion/SAME_K_VARIATION_COMMON_8_12_16_24.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/GROWTH_COMMON_PANEL_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/GROWTH_COMMON_PANEL_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/GROWTH_COMMON_PANEL_SUMMARY.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/prefix_analysis/RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/prefix_analysis/RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/prefix_analysis/RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/ORDER_INDEPENDENCE_CHECKS.csv",
+      "logical": "work_v2_20261019/fusion/ORDER_INDEPENDENCE_CHECKS.csv",
+      "stored": "work_v2_20261019/fusion/ORDER_INDEPENDENCE_CHECKS.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/TEAM_COVERAGE_BY_LAYER_K.csv",
+      "logical": "work_v2_20261019/fusion/TEAM_COVERAGE_BY_LAYER_K.csv",
+      "stored": "work_v2_20261019/fusion/TEAM_COVERAGE_BY_LAYER_K.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/transfer/pair_transfer_summary.csv",
+      "logical": "work_v2_20261019/clusters/transfer/pair_transfer_summary.csv",
+      "stored": "work_v2_20261019/clusters/transfer/pair_transfer_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/transfer/pair_paired_comparisons.csv",
+      "logical": "work_v2_20261019/clusters/transfer/pair_paired_comparisons.csv",
+      "stored": "work_v2_20261019/clusters/transfer/pair_paired_comparisons.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/transfer/TRANSFER_RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/transfer/TRANSFER_RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/transfer/TRANSFER_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/swap_transfer/summary.csv",
+      "logical": "work_v2_20261019/clusters/swap_transfer/summary.csv",
+      "stored": "work_v2_20261019/clusters/swap_transfer/summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../clusters/swap_transfer/RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/swap_transfer/RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/swap_transfer/RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/pair_history_diagnostic/RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/pair_history_diagnostic/RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/pair_history_diagnostic/RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/semi_paired_summary.csv",
+      "logical": "work_v2_20261019/audit/semi_paired_summary.csv",
+      "stored": "work_v2_20261019/audit/semi_paired_summary.csv",
+      "parts": null
+    },
+    {
+      "original": "../audit/semi_person_paired_metrics.csv",
+      "logical": "work_v2_20261019/audit/semi_person_paired_metrics.csv",
+      "stored": "work_v2_20261019/audit/semi_person_paired_metrics.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../audit/semi_person_opportunity_evidence.csv",
+      "logical": "work_v2_20261019/audit/semi_person_opportunity_evidence.csv",
+      "stored": "work_v2_20261019/audit/semi_person_opportunity_evidence.csv",
+      "parts": null
+    },
+    {
+      "original": "../audit/GEOMETRY_REPLAY_NATIVE_PAYLOAD_CHECKS.json",
+      "logical": "work_v2_20261019/audit/GEOMETRY_REPLAY_NATIVE_PAYLOAD_CHECKS.json",
+      "stored": "work_v2_20261019/audit/GEOMETRY_REPLAY_NATIVE_PAYLOAD_CHECKS.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/SEMI_ANALYSIS_RECEIPT.json",
+      "logical": "work_v2_20261019/audit/SEMI_ANALYSIS_RECEIPT.json",
+      "stored": "work_v2_20261019/audit/SEMI_ANALYSIS_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../audit/exclusion_text_review_25.csv",
+      "logical": "work_v2_20261019/audit/exclusion_text_review_25.csv",
+      "stored": "work_v2_20261019/audit/exclusion_text_review_25.csv",
+      "parts": null
+    },
+    {
+      "original": "../audit/unique_adverse_events.csv",
+      "logical": "work_v2_20261019/audit/unique_adverse_events.csv",
+      "stored": "work_v2_20261019/audit/unique_adverse_events.csv",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_POLICY_SUMMARY.csv",
+      "logical": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv",
+      "stored": "work_v2_20261019/fusion/FORWARD_POLICY_SUMMARY.csv.gz",
+      "parts": null
+    },
+    {
+      "original": "../clusters/CASE_CATALOG.json",
+      "logical": "work_v2_20261019/clusters/CASE_CATALOG.json",
+      "stored": "work_v2_20261019/clusters/CASE_CATALOG.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/FORWARD_CASES.json",
+      "logical": "work_v2_20261019/fusion/FORWARD_CASES.json",
+      "stored": "work_v2_20261019/fusion/FORWARD_CASES.json",
+      "parts": null
+    },
+    {
+      "original": "../presentation/viewer_cases.json",
+      "logical": "work_v2_20261019/presentation/viewer_cases.json",
+      "stored": "work_v2_20261019/presentation/viewer_cases.json",
+      "parts": null
+    },
+    {
+      "original": "../presentation/qa/VISUAL_REVIEW_RECEIPT.json",
+      "logical": "work_v2_20261019/presentation/qa/VISUAL_REVIEW_RECEIPT.json",
+      "stored": "work_v2_20261019/presentation/qa/VISUAL_REVIEW_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../delivery/coverage_missing_ledger.csv",
+      "logical": "work_v2_20261019/delivery/coverage_missing_ledger.csv",
+      "stored": "work_v2_20261019/delivery/coverage_missing_ledger.csv",
+      "parts": null
+    },
+    {
+      "original": "../audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "logical": "work_v2_20261019/audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "stored": "work_v2_20261019/audit/INTEGRATED_STATISTICS_REPLAY.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/room_sensitivity/RECEIPT.json",
+      "logical": "work_v2_20261019/clusters/room_sensitivity/RECEIPT.json",
+      "stored": "work_v2_20261019/clusters/room_sensitivity/RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../profiles/END_TO_END_REPRODUCTION.json",
+      "logical": "work_v2_20261019/profiles/END_TO_END_REPRODUCTION.json",
+      "stored": "work_v2_20261019/profiles/END_TO_END_REPRODUCTION.json",
+      "parts": null
+    },
+    {
+      "original": "../fusion/COMPARISON_INTEGRITY_CHECK_2.json",
+      "logical": "work_v2_20261019/fusion/COMPARISON_INTEGRITY_CHECK_2.json",
+      "stored": "work_v2_20261019/fusion/COMPARISON_INTEGRITY_CHECK_2.json",
+      "parts": null
+    },
+    {
+      "original": "../clusters/REPLAY_RECOVERY.json",
+      "logical": "work_v2_20261019/clusters/REPLAY_RECOVERY.json",
+      "stored": "work_v2_20261019/clusters/REPLAY_RECOVERY.json",
+      "parts": null
+    },
+    {
+      "original": "../presentation/VIEWER_BUILD_RECEIPT.json",
+      "logical": "work_v2_20261019/presentation/VIEWER_BUILD_RECEIPT.json",
+      "stored": "work_v2_20261019/presentation/VIEWER_BUILD_RECEIPT.json",
+      "parts": null
+    },
+    {
+      "original": "../delivery/README_REPRO_ZH.txt",
+      "logical": "work_v2_20261019/delivery/README_REPRO_ZH.txt",
+      "stored": "work_v2_20261019/delivery/README_REPRO_ZH.txt",
+      "parts": null
+    }
+  ]
+}

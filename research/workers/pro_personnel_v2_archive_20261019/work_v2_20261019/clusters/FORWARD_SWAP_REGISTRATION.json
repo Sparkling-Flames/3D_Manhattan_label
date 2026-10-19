@@ -1,0 +1,17 @@
+{
+  "schema": "v2_forward_nested_labels_actual_swaps_20261019_r1",
+  "registration_scope": "Defined after the fusion comparisons became available, before fitting this label analysis. The labels themselves were frozen by the independent profile route without fusion outcomes.",
+  "population": "Ordinary Manual, exact fixed background, same pool/reference, same k, different entrant workers with equal bound-pair count. Deduplicate unordered actual team pairs.",
+  "comparisons": [
+    "Same versus different Q2, with supported Q",
+    "Within a concrete Q2 label, same versus different QT, with supported Q and source T",
+    "Within a concrete QT label, same versus different difficulty_type, with supported easy/medium/hard traits",
+    "Within a concrete QT label, same versus different fine_dtype_merged, retaining known not_split/sparse_child labels"
+  ],
+  "labels": "Heldout-building fold profiles only. No target building's worker answer Q enters the prediction label. Unknown label substrings are excluded as unclassified and counted, never treated as a low class.",
+  "panels": ["dimension_available", "common_Q_T_all_three_difficulties"],
+  "sensitivity": "B8-derived labels and D10-derived labels are separately joined to the same fixed actual teams; output B8 and D10 differences both retained. This is reclassification of fixed teams, not score tuning or a rerun of fusion.",
+  "aggregation": "For each exact pool/k/background/entrant-pair-count/concrete parent class, calculate mean metric in same and different child relation. Subtract same from different only in matched strata. Average strata to image then building; 3000 building bootstrap. Repeated actual teams are not independent people.",
+  "outcomes": ["abs_B8L2_change", "abs_D10_change", "floor_jaccard_difference", "joint_geometric_stable", "node_changed", "any_failure", "joint_with_shared_connections", "joint_with_shared_connections_and_retention"],
+  "limitations": "Descriptive conditional contrasts, not causal effects of changing a worker's label. Equal-count restriction is a complexity control using actual target annotations and is separate from prospective label learning. Any actual cluster effects remain oracle. Unknown outputs remain in attempts/failure denominators. Missing scores are not imputed."
+}

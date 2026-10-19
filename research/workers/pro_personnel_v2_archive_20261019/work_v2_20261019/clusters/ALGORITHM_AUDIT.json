@@ -1,0 +1,25 @@
+{
+  "main_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "sampled_input_subpools": 24,
+  "objective_comparisons": 48,
+  "all_feasible_partition_counts": 41609,
+  "max_ours_vs_brute": 3.552713678800501e-15,
+  "max_main_vs_brute": 3.552713678800501e-15,
+  "exact_distance_comparisons": 530,
+  "max_cyclic_invariance_error": 0.0,
+  "historical_archive_sha256": "d48d82cf7dc3efb1763a6b79c629840fe0d731ac0b39087c7002fe07f5dcf88a",
+  "historical_functions_sha256": {
+    "code/core.py": "8c056c5280bfe4e0e7d1d5169b230ff4f696b383c47075185c60f7d81e8734a8",
+    "code/02_partition.py": "2c16335aad9c0636f485e4e4b0237fd90a59bc0daf0b0c356f486ddb65d9dd36",
+    "code/01_measurement.py": "989f170b0b24b93edc3b59c046402b60617601fe56c2f93e6b9bab013e4a2c53"
+  },
+  "functions_sha256": {
+    "tools/thesis_main/analysis/paired_split_research/study.py": "182d8bfb46f7e4531dce237c40e14697f159092e7492b82b8ca4e9a4edfd8b09",
+    "tools/thesis_main/analysis/worker_annotation_similarity_20261018.py": "599ce6aab2a856d702f88adbd2c28bd4cd44aed69b285f15ab85c74c96685c8a",
+    "tools/thesis_main/analysis/build_cluster_review_20261018.py": "d04ece789746f314dbb999592ca9d1c8c6baf735aeb9e21b053e85ee89c9e3f3",
+    "tools/thesis_main/analysis/research_round_20260929.py": "48aa00175d43f1070e3320f899a553fff709e3fdb666c526c0194aab8df9ee23"
+  },
+  "historical_difference": "September 25.6 is max wrapped ERP Euclidean pixel distance in declared pair order (cyclic only a separate sensitivity), rounded to 8 decimals; current primary uses bound common cyclic spherical endpoint degrees. Same quadratic affinity/transitivity objective does not transfer historical semantic/validation results.",
+  "audit_execution": "Main source default-thread solver and fixed-one-thread study solver run in separate processes. An initial mixed-thread same-process audit encountered HiGHS scheduler Status 0 Not Set; no study pool was affected and no clustering objective changed.",
+  "uniqueness_limit": "Alternative optimum probes use 1e-7 objective tolerance and only nonclique components N<=12; larger components unprobed, deterministic solver output is not proof of unique partition."
+}

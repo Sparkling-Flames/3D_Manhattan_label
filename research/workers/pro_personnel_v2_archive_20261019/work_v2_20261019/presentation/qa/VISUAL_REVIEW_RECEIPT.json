@@ -1,0 +1,205 @@
+{
+  "schema": "explicit_assistant_visual_inspection_v2_r1",
+  "reviewer": "assistant; no new human expert adjudication",
+  "basis": "Actual view_image inspection of native-canvas scientific overlays derived from verified Release originals and frozen annotation/team geometry.",
+  "scope": "12 preselected representative/counterexample displays only; not all current originals, annotations, clusters or team outputs.",
+  "new_reference_or_difficulty_or_quality_eligibility_changes": false,
+  "new_personal_error_gold": false,
+  "cases": [
+    {
+      "case_id": "geometry_angle_near_floor_far",
+      "image_code": "B6ByNegPMKs-18",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/geometry_angle_near_floor_far_erp.png",
+          "sha256": "7128964295318f6fcd646af0d1e98a008f6160015ce39dd8dd1dd9120fe3c246"
+        },
+        {
+          "path": "presentation/qa/geometry_angle_near_floor_far_bev.png",
+          "sha256": "7e22caebd7f3354b52ae549da3a55935f740bd7d8192495b6361ee16d98cb1f7"
+        },
+        {
+          "path": "presentation/qa/geometry_angle_near_floor_far_3d.png",
+          "sha256": "7a1f63c6fcf1517477d916027113c230a97c1c60be01474d2c1579d2c3f01588"
+        }
+      ],
+      "observation_zh": "整簇球面投影接近，但靠近地平线的底点投影产生明显长距离BEV分离。未判定真实边界或遮挡金标。"
+    },
+    {
+      "case_id": "geometry_floor_near_height_far",
+      "image_code": "uNb9QFRL6hY-65",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/geometry_floor_near_height_far_erp.png",
+          "sha256": "974b60f56ab6104258cdc42805b9dd2d6654b0860eb9f739b0f561dabb9bbbf4"
+        },
+        {
+          "path": "presentation/qa/geometry_floor_near_height_far_3d.png",
+          "sha256": "3cb308cfb88fb542dc259df511a13aa84457ad23f1e864234f7de7ef5c093d48"
+        }
+      ],
+      "observation_zh": "查看原图叠加和3D；相近底面下，顶部及高度分离仍可见。未将角距13.79°误称9°内近邻。"
+    },
+    {
+      "case_id": "declared_direction_equivalence",
+      "image_code": "yqstnuAEVhm-05",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/declared_direction_equivalence_erp.png",
+          "sha256": "e1f0f7261906223a254854b3523a3fc5f661fbbe5c33e744efa03a4b7d2b1aa4"
+        }
+      ],
+      "observation_zh": "整簇空间覆盖接近；坐标反向声明问题由保留的环序证据检验，ERP视觉本身不能证明索引方向。"
+    },
+    {
+      "case_id": "high_Q_shared_node_count_gap",
+      "image_code": "UwV83HsGsw3-22",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/high_Q_shared_node_count_gap_erp.png",
+          "sha256": "bbca5dcf27fd7ed0d564570fcbf657e945962582b039e9c14ed89328a8b6c522"
+        },
+        {
+          "path": "presentation/qa/high_Q_shared_node_count_gap_bev.png",
+          "sha256": "1d9fbc5b2e1f388f76569448641baac41c177e5375aeaedbc5fd65b649885002"
+        }
+      ],
+      "observation_zh": "检查9°下四名成员整簇及参考：4点对与参考6点对差异可见，成员坐标亦有差异。没有认定四人均高Q，也没有新增共同遗漏金标。"
+    },
+    {
+      "case_id": "fusion_within_cluster_large_geometry",
+      "image_code": "yqstnuAEVhm-31",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_within_cluster_large_geometry_erp_a.png",
+          "sha256": "37b235ad3f04661f48094acd192919403200294669242f5078b6c15beae93816"
+        },
+        {
+          "path": "presentation/qa/fusion_within_cluster_large_geometry_erp_b.png",
+          "sha256": "cda6545fdf143018296cb3da1de4734eb71f2606413a9c17ad6c6ea78f7b2ff8"
+        }
+      ],
+      "observation_zh": "A/B叠加在左侧区域出现较大的端点和范围变化；同簇替换不保证小变。"
+    },
+    {
+      "case_id": "fusion_within_cluster_stable",
+      "image_code": "7y3sRwLe3Va-03",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_within_cluster_stable_erp_a.png",
+          "sha256": "a795c2b2a1306ea756a1a04931993e606654e38c1a43331736a5f69ab6a70db6"
+        },
+        {
+          "path": "presentation/qa/fusion_within_cluster_stable_erp_b.png",
+          "sha256": "6740e5802c32722c544f60ef82a9d19a6097a8ad0af0163a85a040127b53cfa1"
+        }
+      ],
+      "observation_zh": "A/B可见几何高度重合；稳定指标与图示相容，不外推全部同簇替换。"
+    },
+    {
+      "case_id": "fusion_cross_cluster_large_geometry",
+      "image_code": "UwV83HsGsw3-09",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_cross_cluster_large_geometry_erp_a.png",
+          "sha256": "ad50a87aad9f25b37760b7d47da0155496ceb05273fa664e674d53efe9a54d0d"
+        },
+        {
+          "path": "presentation/qa/fusion_cross_cluster_large_geometry_erp_b.png",
+          "sha256": "d9780eb130e36473ecf09faa5288f329ed57fa8eec6b378c7bc5acf1ad8956ac"
+        }
+      ],
+      "observation_zh": "A/B在中央及右侧结构出现大变化；仅解释这一实际团队对。"
+    },
+    {
+      "case_id": "fusion_cross_cluster_small_geometry",
+      "image_code": "x8F5xyUWy9e-03",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_cross_cluster_small_geometry_erp_a.png",
+          "sha256": "b46971c12ac7f431a2e506bf6efeff3f7c94249c162e61e3eaa327be65d2e4d9"
+        },
+        {
+          "path": "presentation/qa/fusion_cross_cluster_small_geometry_erp_b.png",
+          "sha256": "a4fa8df77ec7552a567f5f0197c6272ce9a20ce88e636b5cc1c41a7923e9bc5f"
+        }
+      ],
+      "observation_zh": "跨簇替换的A/B轮廓近乎重合，是跨簇也可稳定的实际反例。"
+    },
+    {
+      "case_id": "fusion_stable_low_quality",
+      "image_code": "yqstnuAEVhm-31",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_stable_low_quality_erp_a.png",
+          "sha256": "9671b02decd310ddc9e7c61d77a96f43e0df5a6504730df6f184a150dbad4820"
+        },
+        {
+          "path": "presentation/qa/fusion_stable_low_quality_erp_b.png",
+          "sha256": "cda6545fdf143018296cb3da1de4734eb71f2606413a9c17ad6c6ea78f7b2ff8"
+        }
+      ],
+      "observation_zh": "A/B轮廓接近，而局部轮廓与参考明显不同；稳定不代替参考质量。"
+    },
+    {
+      "case_id": "fusion_within_cluster_failure",
+      "image_code": "7y3sRwLe3Va-03",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/fusion_within_cluster_failure_erp_a.png",
+          "sha256": "154ddcb7aff1d1b0a675ad05a77c766452c2a97e83a980348f0973b8adbc78b4"
+        },
+        {
+          "path": "presentation/qa/fusion_within_cluster_failure_erp_b.png",
+          "sha256": "c83ef1732f4b1b6959cf92d929ca49be01bd5640a82ae8604836f520636cf80e"
+        }
+      ],
+      "observation_zh": "A有完整输出叠加，B没有可评分完整环；失败状态来自原生记录，未以空白图替代失败原因。"
+    },
+    {
+      "case_id": "QD_hard_k16_most_negative",
+      "image_code": "yqstnuAEVhm-29",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/QD_hard_k16_most_negative_erp_a.png",
+          "sha256": "0451503cfaaf2622fece7f7fa5f4d5d381e4235ff1214c8831dfc64404202bba"
+        },
+        {
+          "path": "presentation/qa/QD_hard_k16_most_negative_erp_b.png",
+          "sha256": "bd6f72d8a8bc9b5228b9e53a7eeb766940a300bb9b3112495125420f7ffca337"
+        }
+      ],
+      "observation_zh": "Q与QD底面多数区域接近，节点14→13及局部连接变化需与参考分项一同解释；不据此修改难度或选人规则。"
+    },
+    {
+      "case_id": "QD_hard_k16_most_positive",
+      "image_code": "yqstnuAEVhm-25",
+      "image_status": "original_release_bytes_verified",
+      "viewed_rendered_files": [
+        {
+          "path": "presentation/qa/QD_hard_k16_most_positive_erp_a.png",
+          "sha256": "c094eec062c0f011df9c3501788211e69f448cb7ca94d5d804fb57c817595214"
+        },
+        {
+          "path": "presentation/qa/QD_hard_k16_most_positive_erp_b.png",
+          "sha256": "c9b748410801e1fd9558559a510bdfe81e85a708a7ad7d9a3c5e5e2d6db47474"
+        }
+      ],
+      "observation_zh": "正例A/B保留5→6节点及局部变化；仅一名成员替换，不能据此证明其困难专长普遍改善融合。"
+    }
+  ],
+  "browser_layout_verified": false,
+  "visual_selection_was_post_outcome_for_explanation_only": true,
+  "inspection_record_republished_by_builder": true
+}

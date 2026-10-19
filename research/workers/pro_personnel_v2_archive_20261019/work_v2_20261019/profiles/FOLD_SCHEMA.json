@@ -1,0 +1,53 @@
+{
+  "schema": "forward_profiles_v2_fold_interface_20261019",
+  "source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "files": {
+    "full_profiles.csv": "60 quality-profile people, descriptive FULL history only; never use these labels for heldout-building selection",
+    "fold_profiles.csv": "1320 rows = 22 heldout buildings x 60 people; unique key heldout_building,worker_id",
+    "nested_fold_features.csv": "27720 rows = 22 x 21 ordered outer/inner excluded buildings x 60 people; for reverse-route model training, both target and sample building excluded"
+  },
+  "identities": {
+    "worker_id": "frozen anonymized W ID; inventory has 62, quality population 60, Q-supported 59",
+    "heldout_building": "excluded validation building; test answers never fit Q, time, labels or selection",
+    "outer_heldout_building": "outer validation building in nested file",
+    "inner_heldout_building": "building containing a training sample; additionally excluded when learning its personnel features"
+  },
+  "quality": {
+    "Q_effect_B8L2": "task-adjusted global worker beta in score points, equal-worker zero anchor; use only when Q_supported",
+    "Q_effect_D10": "same model and records, direction scale 10 sensitivity",
+    "theta_easy_B8L2": "three-difficulty partial-pooling lambda20 historical effect for easy",
+    "theta_medium_B8L2": "same for medium",
+    "theta_hard_B8L2": "same for hard",
+    "hard_minus_easy_B8L2": "theta_hard minus theta_easy, historical self-contrast, not absolute hard quality",
+    "hard_minus_medium_B8L2": "theta_hard minus theta_medium; not combined with easy",
+    "absolute_B8L2_mean": "ordinary Manual historical score mean; tasks unadjusted, not a prospective test score",
+    "percentile_B8L2": "mean same-task percentile, average ties; depends on historical peer pool",
+    "Q_n,Q_images,Q_buildings,Q_tasks": "historical coverage excluding heldout building",
+    "difficulty_supported_easy,difficulty_supported_medium,difficulty_supported_hard": "each needs >=6 unique tasks and >=3 buildings; thin finite theta estimates stay visible without becoming specialty evidence"
+  },
+  "time": {
+    "T_source_effect": "main pooled same source-task adjusted log(seconds) effect; negative faster; old/new provenance remains confounded with cohort",
+    "T_source_origin_effect": "same model fitted separately within each origin/source-kind, independently centered; sensitivity, NOT calibration between sources",
+    "T_source_supported": ">=6 distinct source tasks and >=3 buildings; false must not be treated as slow or zero",
+    "T_target_effect": "actual target-matched log-time model only; never substitute T_source_effect",
+    "T_target_supported": "same coverage gate for target-only time; most workers not supported",
+    "T_source_origin,T_source_kinds": "audited v1 inherited vs new processed reported provenance for sensitivity restrictions"
+  },
+  "classes": {
+    "Q2_B8L2": "Q+ if beta>=0, Q- otherwise, unknown if unsupported",
+    "Q3_B8L2": "above_peer beta>=3; below_peer beta<=-3; near_peer otherwise",
+    "QT_B8L2": "Q2 x T_relative_2; unknown if either axis unsupported",
+    "difficulty_type_B8L2": "requires all three difficulty support gates; across_strong, hard_specialist, hard_relative_lift_only, hard_drop, mixed_or_near, or unknown; exact definitions REGISTRATION.json",
+    "fine_dtype_B8L2": "unmerged QT x difficulty_type; retain sparse real members, but exclude any string containing unknown from semantic type predictions or composition",
+    "fine_dtype_merged_B8L2": "split QT only with >=2 supported children each >=3 members; not_split means known child coverage but insufficient multi-child membership to split, NOT unknown. sparse_child means other known rare children. difficulty_unknown explicitly denotes missing support."
+  },
+  "strategy_interface_amendment": {
+    "reason": "Keep Q vs difficulty selection on the same historical personnel pool, while separately identifying thin target-difficulty estimates. This amendment was agreed before reading new fusion outcomes and does not alter classes or thresholds.",
+    "QD_allhistory": "Q_supported and finite theta at target difficulty; same candidate pool as Q, partial-pooled estimates allowed even if specific difficulty_supported=false; report selected thin-support count, never call them proven specialists",
+    "QD_supported": "target difficulty_supported subset; compare Q and QD on exactly that same subset",
+    "QT_and_QTD": "source-T known candidate pool only; <=3 score-point shortlist margin as predeclared; insufficient known T gives not_available, no zero fill",
+    "fine_composition": "intersection of Q_supported, T_source_supported, all three difficulty support gates; compare Q2, QT and fine_dtype on same workers to separate type detail from eligibility changes"
+  },
+  "validation_target": "primary peer-relative Q among exactly matched same-task evaluation workers; absolute prediction separately uses training-only difficulty intercept. No test Q used for profiles or selection.",
+  "all_class_cutoffs_are_exploratory_candidates_not_formal_production_rules": true
+}

@@ -1,0 +1,18 @@
+{
+  "encoding": "one actual swap per row; actual__outcome and prediction__outcome__model columns",
+  "outcomes": [
+    "abs_B8L2_change",
+    "floor_jaccard_difference",
+    "joint_geometric_stable"
+  ],
+  "wide_rows": 270370,
+  "long_prediction_rows": 6370576,
+  "exact_float64_readback_comparisons": 6370576,
+  "numerical_roundtrip_difference": 0.0,
+  "missing_kept_as_empty_not_zero": true,
+  "target": "heldout_predictions_wide.csv.gz",
+  "sha256": "3e2c25abad9184c6caafef6494288c9b5f1b6eecd37b36ee4ee967911a8d4589",
+  "long_files_optional_for_packaging": true,
+  "reconstruct_errors": "squared_error=(prediction-actual)^2;absolute_error=abs(prediction-actual)",
+  "train_test_information": "Q/QT/QTD/known_task are historical prospective; actual_cluster_* and raw_pair_geometry are target-annotation oracle"
+}

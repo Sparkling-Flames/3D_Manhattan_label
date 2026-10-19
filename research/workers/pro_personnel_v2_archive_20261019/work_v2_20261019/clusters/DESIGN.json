@@ -1,0 +1,64 @@
+{
+  "schema": "v2_local_cluster_registered_design_20261019_r1",
+  "registered_before_v2_fusion_outputs": true,
+  "main_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "primary_population": "quality_usable & independent_vote_eligible & condition=manual & quality_use=ordinary_primary; 5719 answers, 177 images, 22 buildings",
+  "secondary_population": "all other formally quality-eligible records; condition, quality-use and bound reference remain separate",
+  "pool_key": ["image_id", "condition", "reference_id", "reference_version"],
+  "pool_id": "image_code + '__' + condition + '__' + sha256(compact UTF-8 JSON [reference_id,reference_version])[:10]",
+  "thresholds_degrees": [9, 12],
+  "distance": {
+    "primary": "bound_cyclic_max_endpoint_degrees",
+    "functions": "tools.thesis_main.analysis.paired_split_research.study.angular and cyclic, as called by worker_annotation_similarity_20261018.analyze_images",
+    "pairing": "only inherited alternating top,bottom pairs in frozen declared ring",
+    "cyclic": "a common cyclic index shift of complete bound pairs",
+    "reversal": "not permitted in primary; diagnostic reversal sensitivity retains bound top/bottom endpoints and does not modify source",
+    "pixel_convention": "+0.5 vertical pixel center inherited exactly; 1024x512 coordinates",
+    "different_pair_counts": "no whole-layout distance, separate clustering subpools; never numeric imputation"
+  },
+  "partition": {
+    "primary": "maximize sum(max(0,1-d/tau)^2) over within-cluster pairs subject to all within-cluster d<=tau and binary transitivity",
+    "source": "build_cluster_review_20261018.affinity_partition",
+    "implementation": "same binary pair/transitivity MILP; exact decomposition by allowed-edge connected components; complete components attain sum-of-all-weights upper bound",
+    "solver_limit_seconds_per_component": 60,
+    "solver_threads": 1,
+    "mip_rel_gap": 0,
+    "nonoptimal_status": "retain feasible result, incumbent objective, bound, gap and timeout; no claim of certified optimality",
+    "comparison": "complete linkage using the identical distance and thresholds",
+    "stability": "report threshold coassignment changes, complete-link input-order reversal, affinity vs complete coassignment, and zero/near-zero threshold margins; deterministic small non-clique components have a no-good-constraint alternative-optimum check at 1e-7 objective tolerance",
+    "no_tuning": "no image-specific threshold, no Q, time, reference score or fusion output in cluster definition"
+  },
+  "team_oracle_rules": {
+    "k": [8, 12, 16, 24],
+    "seed": 2026101909,
+    "largest_cluster_first": "rank local clusters by descending size then sorted object IDs; select from first cluster then subsequent clusters as required, uniform random order within each cluster",
+    "cluster_balanced": "round-robin across clusters sorted descending size then sorted object IDs, uniform random within each cluster",
+    "composition_variants": "same fixed cluster-count vector, independent uniform member identities within each cluster, 4 draws at every feasible k for largest-first and balanced vectors",
+    "pure_major_cluster": "k random distinct members of the largest cluster only where its size>=k; 4 draws",
+    "path_orders": "largest-first block order and balanced round-robin, using actual local clusters; explanatory/oracle only, not prospective personnel selection",
+    "comparisons": "same image,k,background,reference,fusion settings; within-vs-cross local cluster swaps at same point count separately from different-point-count swaps; exact cluster-count composition and member turnover held fixed for replacement-of-identities comparisons"
+  },
+  "practical_tolerances": {
+    "quality_near": "both complete and |delta B8L2|<=2 points; D10 reported on same teams",
+    "range_near": "both measurable and floor intersection-over-union>=0.95",
+    "structure_unchanged": "same output node count and same available frozen ring/connection identity diagnostic; missing correspondence remains unknown",
+    "geometry_near": "range_near plus available bound-cyclic output endpoint distance<=3 degrees; different pair counts fail geometry-near",
+    "joint_near": "quality_near & geometry_near & structure_unchanged, with failures/unknowns retained in attempted denominator",
+    "interpretation": "exploratory practical screens fixed before outputs, not user-approved production thresholds; no null-effect claim from a nonsignificant p-value"
+  },
+  "reverse_to_forward_validation": {
+    "unit": "ordinary-Manual local-cluster coassignment and largest-cluster membership, labels meaningful only per image",
+    "primary_validation": "leave one building out; both worker predictors and response-type outcome models learned excluding target building",
+    "predictors": "training-only worker Q, source-T, joint difficulty effects from profile agent; target difficulty is observable, target worker Q/point count/cluster label not used as prospective predictors",
+    "baselines": "training difficulty-stratified prevalence and smoothed historical worker-pair coassignment; no cross-image cluster-ID matching",
+    "models": "fixed L2 logistic models with train-standardized continuous Q/T/difficulty features; no outcome-guided feature or class tuning",
+    "sensitivity": "same-point-count pair subset is explicitly retrospective diagnostic; practical swap-impact features use same outer-building split",
+    "uncertainty": "building-equal summaries and building bootstrap; image-level and existing direct room-group-equal weighting sensitivities; repeated pairs/orders do not create independent humans"
+  },
+  "geometry_diagnostics": {
+    "raw_3d": "reuse research_round_20260929.reconstruct with continuous coordinates; camera height is a scale unit, not measured depth",
+    "report": "bound endpoint angle, floor 1-IoU, mean-height-prism IoU difference, relative mean height and matched radius change; bottom-y near-horizon sensitivity",
+    "perturbation": "diagnostic +/-1 and +/-5 vertical pixels for bottom endpoints, inherits published ray projection; never changes source or weights",
+    "visual_review": "case selection from complete distributions: strongest 2D-near/3D-far, largest within-cluster swap, small cross-cluster swap, high-Q structural omission candidate; select whole clusters/teams, never ask user to review every pair"
+  }
+}

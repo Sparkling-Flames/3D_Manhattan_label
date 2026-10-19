@@ -1,0 +1,17 @@
+{
+  "schema": "v2_nested_LOBO_actual_swap_impact_20261019_r1",
+  "registered_before_fitting_actual_fusion_impacts": true,
+  "population": "all distinct ordinary-Manual fixed-background single-person replacement team pairs at registered k=8,12,16,24; all failed attempts retained",
+  "outcomes": ["abs_B8L2_change", "floor_jaccard_difference", "joint_geometric_stable"],
+  "known_task_baseline": "frozen difficulty and team size k; no target worker answer quality",
+  "prospective_models": ["Q", "QT", "QTD"],
+  "features": "symmetric entrant mean/absolute contrast and background mean/SD of training-only task-adjusted Q, source log-time effect, and target-difficulty effect minus general Q; missing support explicit",
+  "double_exclusion": "training-example worker features exclude both outer target building and training-example building; heldout features exclude target building",
+  "oracle_models": ["actual_cluster_9", "actual_cluster_12", "QTD_actual_cluster_9", "raw_pair_geometry"],
+  "oracle_features": "actual target local same-cluster relation and background shares for entrant clusters; raw geometry uses actual pair endpoint distance/count mismatch/floor 1-IoU. These are explanatory/oracle, never prospective personnel success.",
+  "model": "fixed Ridge alpha=1, train-weighted standardized predictors, train-only median encoding plus missing indicators, prediction clipped to physical outcome range; the binary stable target uses a diagnostic linear probability model",
+  "weighting": "equal buildings, equal images per building, equal available k per image, equal background draws per image/k, equal entrant pairs per background; weights sum to training image count",
+  "evaluation": "leave-building-out MSE and MAE; aggregate pairs->background->image/k->building. Building bootstrap3000 seed2026101941. Report quality/floor valid denominators and joint-stability all-attempt denominator separately.",
+  "interpretation": "This assesses predicting swap impact, independently from predicting a worker Q or local coassignment. Fixed finite model family, no outcome-based class/threshold retuning. Additional oracle information may explain but cannot prove a prospective team policy.",
+  "pilot_use": "Pilot is interface verification only; adopted conclusions require current full comparison coverage. No historical holdout is renamed blind data."
+}

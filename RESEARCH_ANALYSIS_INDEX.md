@@ -1,5 +1,10 @@
 # 研究分析交付入口
 
+## 2026-10-19：Pro 人员 v2 去重归档
+
+[四分包核心归档与复现入口](research/workers/pro_personnel_v2_archive_20261019/README.md)、[Pro 原报告转排](research/workers/pro_personnel_v2_archive_20261019/REPORT_ZH.md)、[独立核验与严格嵌套换人实验](research/workers/personnel_independent_curve_audit_20261019/README.md)。保留必要输入、代码与研究结果，复用已有冻结源；大体积可重建缓存的来源及去向完整列出，不要求先下载四个原包。[私有云端工作台](https://panorama-quality-review-20261016.fringnb.chatgpt.site/personnel-v2-20261018/index.html)。
+
+
 2026-10-08：[36 份整答质量评分工作台与研究归档](research/quality_review36_20261008/README.md)，含暂定 1–5 分规则、冻结选样、来源与复现说明、初始空白结果，以及既有六对比较的匿名更正摘要；尚无最终质量公式或校准权重。
 
 最新：[共同人员画像与固定4人构成](analysis_results/worker_profiles_20261003/REPORT.md)、[Chat Pro深度研究交接](research/worker_consensus_handoff_20261003/README.md)。已完成基础分析，正式人员分类及两线联系仍待研究。

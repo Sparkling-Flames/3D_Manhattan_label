@@ -1,0 +1,15 @@
+/workspace/scratch/fd332d1af8c2/work_v2_20261019/clusters/forward_swap_labels.py:16: DtypeWarning: Columns (53,61,62,73,74,75) have mixed types. Specify dtype option on import or set low_memory=False.
+  d=pd.read_csv(a.input);d=d[d.layer.eq('ordinary_manual')].copy();attempt_n=len(d)
+{
+  "ordinary_images": 175,
+  "buildings": 22,
+  "original_attempts": 270370,
+  "distinct_events": 270370,
+  "equal_count_events": 209896,
+  "same_frozen_teams_two_label_metrics": true,
+  "unknown_never_classified_low": true,
+  "source": "/workspace/scratch/fd332d1af8c2/work_v2_20261019/fusion/INITIAL_replacements.csv.gz",
+  "source_sha256": "2384d365745fd2a78a8b893d2f04bf7b96459f5db7eaf2e0db0d9b16bdf2fbb1",
+  "registration_sha256": "69c64fa99d494dd3b6e19f226c2bc53f258c08fbe45300f572223314344d9e94",
+  "labels_sha256": "6d2781969f46b9f2595fb95fa94aa4e2f8b6583f2229bfd626355874b8ff0c24"
+}

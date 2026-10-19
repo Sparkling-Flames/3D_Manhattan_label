@@ -1,0 +1,50 @@
+{
+  "fold_rows": 1320,
+  "quality_population_60_but_supported_59": {
+    "workers": 60,
+    "Q_supported": 59,
+    "Q_unknown": [
+      "W022"
+    ]
+  },
+  "all_22_fold_Q_theta_max_abs_error": 3.934630399271555e-13,
+  "heldout_score_poison_max_feature_change": 0.0,
+  "nested_double_exclusion_max_abs_error": 3.339550858072471e-13,
+  "original_difficulty_scheme_summary_max_error": {
+    "n": 0.0,
+    "images": 0.0,
+    "buildings": 0.0,
+    "baseline_sqerr": 2.842170943040401e-14,
+    "general_sqerr": 5.684341886080802e-14,
+    "specialized_sqerr": 3.126388037344441e-13,
+    "specialized_gain_over_general": 1.3461454173580023e-15,
+    "buildings_improved": 0.0
+  },
+  "old_hard_claim_confirmed": {
+    "metric": "B8L2",
+    "difficulty": "hard",
+    "n": 219,
+    "images": 18,
+    "buildings": 9,
+    "baseline_sqerr": 342.78284452910634,
+    "general_sqerr": 267.9881801686498,
+    "specialized_sqerr": 254.90180765540794,
+    "specialized_gain_over_general": 0.048831901858531146,
+    "buildings_improved": 3
+  },
+  "target_definition": {
+    "primary": "heldout y_i-mean(y_other supported evaluation workers in exact same task); prediction beta_i-mean(beta_other); paired comparisons first intersect exact workers",
+    "absolute": "training-only task-balanced difficulty intercept plus historical worker effect",
+    "test_y_used_for_profile_or_classification": false,
+    "test_task_mean_used_as_absolute_prediction_intercept": false
+  },
+  "source_time_is_not_target_time": {
+    "inventory_source": 9236,
+    "inventory_target": 440,
+    "main_source": 5225,
+    "main_target": 418
+  },
+  "runtime_seconds": 3.6065311431884766,
+  "code_sha256": "10f28a8fc305f06b177ca13f453c04f35693eec44b60fdee79f92071329d9a2d",
+  "all_passed": true
+}

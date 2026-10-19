@@ -1,0 +1,29 @@
+{
+  "schema": "v2_forward_composition_registration_v1",
+  "seed": 2026101903,
+  "k": [
+    8,
+    12,
+    16,
+    24
+  ],
+  "fold_profiles_sha256": "d7c68af0a107d0c2b167f5a48e6aaf58e029aa6b3f75e4db53568fa2ac7f2d17",
+  "dtype_extension_sha256": "590ebcb20f3c10b3550b654ae2862ba007a087db20c757a4bfd1d1f9f9c8b0fb",
+  "outcome_use": "No corresponding forward fusion outcomes inspected to define selection/categories/sampling; pilot was runtime/input verification only.",
+  "amendment": "QD_allhistory uses finite partial-pooling theta on the same Q-supported workers as Qfirst. QD_supported and same-pool Qfirst_difficulty_supported retain the local evidence gate. This isolates candidate-pool changes without treating weak local support as proven specialization.",
+  "Q_rule": "Q_supported >=6 tasks and >=3 training buildings, all training excludes target building.",
+  "QT_rule": "score >= kth highest score minus 3 B8 or D10 points, then supported finite source-time effect ascending; ties quality then worker ID. Fewer than k time-known candidates -> unavailable, no imputation.",
+  "matched_baselines": "QT_quality_only_matched/QTD_allhistory_quality_only_matched choose quality from exactly the same known-T band; eligible_random uses identical Q-history-supported candidate pool.",
+  "T_sources": "pooled source-relative T primary, origin-centered T sensitivity; source-old/new team restrictions separately labeled; target time never replaced by source time.",
+  "difficulty": "Frozen observed target difficulty; QD partial pooling can shrink weak local estimates, while specialization labels and known dtype composition retain separate support gates.",
+  "composition": "Q2,QT,QTD_dtype all on the same known-Q/T/dtype people per image; 3 finite count vectors (balanced, training-profile-priority, reverse priority), 4 uniform real member draws per vector. Class ordering by median LOBO beta, or target-difficulty theta for dtype; no target response Q or fusion quality.",
+  "metric_sensitivity": "B8 vs D10 selection reruns separately; all selected real teams then scored under BOTH metrics. Fixed-team measurement and reselection distinguished.",
+  "counts": {
+    "requests": 50291,
+    "unique_teams": 31184,
+    "families": {
+      "profile_policy": 26063,
+      "profile_composition": 24228
+    }
+  }
+}

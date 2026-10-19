@@ -1,0 +1,137 @@
+{
+  "receipt_kind": "Aggregate of completed pilot, initial remainder and extension execution; not a new experiment.",
+  "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "coverage": {
+    "request_rows": 167581,
+    "unique_teams": 144253,
+    "pools": 229,
+    "images": 196,
+    "buildings": 22,
+    "quality_available": 162825,
+    "N2_policy_deferred": 1624,
+    "other_quality_missing": 3132,
+    "families": {
+      "uniform_prefix": 29208,
+      "independent_random_team": 14764,
+      "cluster_oracle_prefix": 22876,
+      "fixed_background": 33970,
+      "cluster_oracle": 15056,
+      "profile_policy": 26063,
+      "profile_composition": 24228,
+      "behavior_policy": 1416
+    }
+  },
+  "execution_runs": [
+    {
+      "receipt_file": "PILOT_RUN_d56f61f60d50.json",
+      "receipt_sha256": "f9c248622fe672eea99ce6bca55dd0479c19c28f1ff2e9eca9bdb4da58484bda",
+      "request_file": "REQUESTS_INITIAL.json.gz",
+      "request_file_sha256": "d56f61f60d50c65d798e4241b1cc4ea6f7cd0c399180baa20dbbb0b985feec9e",
+      "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+      "jobs": 3,
+      "pilot": true,
+      "pools": 13,
+      "actual_new_fusions": 4443,
+      "actual_new_scores": 4443,
+      "actual_new_request_rows": 4500,
+      "exceptions": 0,
+      "all_members_verified": true,
+      "no_GT_in_fusion": true,
+      "no_additional_point_preprocessing": true,
+      "N1_applied": false,
+      "elapsed_seconds": 59.83236733599915
+    },
+    {
+      "receipt_file": "RUN_d56f61f60d50.json",
+      "receipt_sha256": "21e4324c16052314637233702b412aeabf14c41f02f9582d0334e0ffcbba3585",
+      "request_file": "REQUESTS_INITIAL.json.gz",
+      "request_file_sha256": "d56f61f60d50c65d798e4241b1cc4ea6f7cd0c399180baa20dbbb0b985feec9e",
+      "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+      "jobs": 3,
+      "pilot": false,
+      "pools": 229,
+      "actual_new_fusions": 72596,
+      "actual_new_scores": 72596,
+      "actual_new_request_rows": 73442,
+      "exceptions": 0,
+      "all_members_verified": true,
+      "no_GT_in_fusion": true,
+      "no_additional_point_preprocessing": true,
+      "N1_applied": false,
+      "elapsed_seconds": 935.2099327250035
+    },
+    {
+      "receipt_file": "RUN_d602fb93f53e.json",
+      "receipt_sha256": "06e8a2ca0307652e9f88eb4a35e7343aa08b8c08a75c587528f1ed5806ed628a",
+      "request_file": "work_v2_20261019/fusion/REQUESTS_EXTENSION.json.gz",
+      "request_file_sha256": "d602fb93f53eaddb527664ad923610aa6e6c9ec0529fa928ae24e02c2449dc14",
+      "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+      "jobs": 3,
+      "pilot": false,
+      "pools": 177,
+      "actual_new_fusions": 67214,
+      "actual_new_scores": 67214,
+      "actual_new_request_rows": 89639,
+      "exceptions": 0,
+      "all_members_verified": true,
+      "no_GT_in_fusion": true,
+      "no_additional_point_preprocessing": true,
+      "N1_applied": false,
+      "elapsed_seconds": 1043.5006870049983
+    }
+  ],
+  "execution_exceptions": 0,
+  "final_comparison_counts": {
+    "replacements": 370490,
+    "prefix_transitions": 50460,
+    "random_same_k": 181089,
+    "composition_comparisons": 176285,
+    "policy_comparisons": 383307
+  },
+  "output_status": {
+    "unique_teams": 144253,
+    "requests": 167581,
+    "complete_geometry_evaluable": 139730,
+    "complete_but_not_human_confirmed": 139730,
+    "human_confirmed_output_rings": 0,
+    "statuses": {
+      "geometry_review": 140602,
+      "deferred": 1597,
+      "unavailable": 2054
+    },
+    "interpretation": "Complete means computable automatic geometry only. geometry_review/source_suggestion retains unresolved human identity/order judgement; no claimed delivery acceptance or human certification."
+  },
+  "engine_verification": {
+    "independent_order_trials": 108,
+    "same_members_unique_sets": 36,
+    "order_exact_state_agreement": 108,
+    "v1_frozen_team_parity_trials": 12,
+    "v1_local_history_available": true,
+    "all_checks_passed": true,
+    "tolerance": 1e-06,
+    "seconds": 11.485369665002509,
+    "limits": "Limited keyed cross-building numerical checks, not semantic certification of source rings or visual annotation quality. Legacy cache result claims independently tested only for saved selected teams."
+  },
+  "integrity_evidence": [
+    {
+      "file": "COMPARISON_INTEGRITY_CHECK_1.json",
+      "sha256": "60a8574d4489e32403c7de1ba891a7acff16f72985b8fe97ea280f9e7193e110"
+    },
+    {
+      "file": "COMPARISON_INTEGRITY_CHECK_2.json",
+      "sha256": "e6d29fe2fabc1ec23abb67a971877ebd57188cfce0de1c8d9662bfe510905bb1"
+    },
+    {
+      "file": "FINAL_POLICY_INTEGRITY_RECOVERY.json",
+      "sha256": "a1e0f7ea88883bd70c3d96a5008eb9082d097014eae2cec8a302a53ae66312fa"
+    },
+    {
+      "file": "INITIAL_COMPARISON_INTEGRITY_RECOVERY.json",
+      "sha256": "ef4a348fa3b5546d8bcdf1c0a7a2bde6659be8fe541b738c720af8394ca4406b"
+    }
+  ],
+  "all_five_comparison_files_verified_in_two_separate_processes": true,
+  "score_cache_redundancy_audit": "SCORE_CACHE_REDUNDANCY_AUDIT.json",
+  "source_boundary": "Exact processed input, frozen real teams and orders, and archived 12-team v1 comparison fixture. Not a reconstruction of original collection, raw exports, or image acquisition.",
+  "more_team_experiments_planned": false
+}

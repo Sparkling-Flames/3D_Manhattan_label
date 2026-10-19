@@ -1,0 +1,169 @@
+{
+  "source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "inputs_sha256": {
+    "research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "research/statistics/v2_integrated_analysis_20261019/tables.json.gz": "1a288e826dace32daf9da91cb6abdd6cc7d9df776dd24c854889a2107872404b",
+    "research/workers/pro_personnel_v2_20261019/analysis_context.json.gz": "95455b81cc0de947d704ee2e0935ee795f9c8e0e9de33bd9d1b93e554a6742a2"
+  },
+  "independent_evidence_sha256": "4563d59766ef7d43ce06bff34f841be3edf36e2f3919ac63cea34c6e989c5b38",
+  "exclusion_text_review_sha256": "0097b9da0329358e5054b3ab3f1d921acab620fd785c67697501b484ea892f02",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0"
+  },
+  "steps": [
+    {
+      "script": "run_profiles.py",
+      "code_sha256": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc",
+      "arguments": [
+        "--repo",
+        "/workspace/scratch/fd332d1af8c2/repo_main_20261019",
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 144.63562846183777,
+      "log": "replay_run_profiles.log"
+    },
+    {
+      "script": "augment_type_fines.py",
+      "code_sha256": "87a718cd2dd5ffa5ca0f2daed59bfa72bd4db8fc9428564c518242a746aa67d4",
+      "arguments": [
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 14.639024496078491,
+      "log": "replay_augment_type_fines.log"
+    },
+    {
+      "script": "build_nested_features.py",
+      "code_sha256": "a1fcc27eef0f5f077df703d4732dd353d18e8efb9c805dfd4416194e0a736cd6",
+      "arguments": [
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 12.712465047836304,
+      "log": "replay_build_nested_features.log"
+    },
+    {
+      "script": "audit_profiles.py",
+      "code_sha256": "10f28a8fc305f06b177ca13f453c04f35693eec44b60fdee79f92071329d9a2d",
+      "arguments": [
+        "--repo",
+        "/workspace/scratch/fd332d1af8c2/repo_main_20261019",
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 3.878612995147705,
+      "log": "replay_audit_profiles.log"
+    },
+    {
+      "script": "diagnostics_and_tables.py",
+      "code_sha256": "5a963bc6a657fb6809c61bbbe2f331320f3634ecab1cb0eda7ba0192855fc180",
+      "arguments": [
+        "--repo",
+        "/workspace/scratch/fd332d1af8c2/repo_main_20261019",
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay",
+        "--evidence",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/audit/person_evidence_62.csv"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 6.678959846496582,
+      "log": "replay_diagnostics_and_tables.log"
+    },
+    {
+      "script": "diagnose_class_information.py",
+      "code_sha256": "837386e7ddee900b937c53a068c77731ec3501f4ed786f4dd00c34a8982adf17",
+      "arguments": [
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 5.3354785442352295,
+      "log": "replay_diagnose_class_information.log"
+    },
+    {
+      "script": "efficiency_within_person.py",
+      "code_sha256": "7f31a0a0afc65c862dce2710aca593cbc89cef859fa412af071d4629c7e0e582",
+      "arguments": [
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 2.550956964492798,
+      "log": "replay_efficiency_within_person.log"
+    },
+    {
+      "script": "room_weighting.py",
+      "code_sha256": "bacda40807524e378a64820864395a202d6c93aad27406940dd8a26855e01e4c",
+      "arguments": [
+        "--repo",
+        "/workspace/scratch/fd332d1af8c2/repo_main_20261019",
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 4.824328422546387,
+      "log": "replay_room_weighting.log"
+    },
+    {
+      "script": "build_forward_report.py",
+      "code_sha256": "ccc2254d1ee4010ccf57782ac065d0c57ff8ab251df85e83ee8df2e9676620a2",
+      "arguments": [
+        "--out",
+        "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 0.29192066192626953,
+      "log": "replay_build_forward_report.log"
+    }
+  ],
+  "collection_pipeline_independently_rebuilt": false,
+  "previous_incomplete_attempts": [
+    [
+      {
+        "script": "run_profiles.py",
+        "code_sha256": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc",
+        "arguments": [
+          "--repo",
+          "/workspace/scratch/fd332d1af8c2/repo_main_20261019",
+          "--out",
+          "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+        ],
+        "exit_code": 0,
+        "runtime_seconds": 144.63562846183777,
+        "log": "replay_run_profiles.log"
+      },
+      {
+        "script": "augment_type_fines.py",
+        "code_sha256": "87a718cd2dd5ffa5ca0f2daed59bfa72bd4db8fc9428564c518242a746aa67d4",
+        "arguments": [
+          "--out",
+          "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+        ],
+        "exit_code": 0,
+        "runtime_seconds": 14.639024496078491,
+        "log": "replay_augment_type_fines.log"
+      },
+      {
+        "script": "build_nested_features.py",
+        "code_sha256": "5dee6ec38b6a08c487bb566d303d7c6c8fab7ac87990d823ab156e1fbbe39f95",
+        "arguments": [
+          "--out",
+          "/workspace/scratch/fd332d1af8c2/work_v2_20261019/profiles/verification_replay"
+        ],
+        "exit_code": 1,
+        "runtime_seconds": 12.845763921737671,
+        "log": "replay_build_nested_features.log"
+      }
+    ]
+  ],
+  "resumed_successful_prefix_steps": 2,
+  "completed": true
+}

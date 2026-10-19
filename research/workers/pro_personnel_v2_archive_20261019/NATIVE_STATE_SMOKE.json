@@ -1,0 +1,107 @@
+{
+  "test": "fresh native state recomputation against original archive state in three layers",
+  "cases": [
+    {
+      "pool_id": "2t7WUuJeko7-06__manual__9b197d01a2",
+      "layer": "ordinary_manual",
+      "k": 4,
+      "subset": "17be19782ab6f1fa54ca|b7ad646fe3dc3b0d378e|v2:new:100013|v2:new:100031",
+      "seconds": 0.16430455500085372,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 247
+    },
+    {
+      "pool_id": "2t7WUuJeko7-06__manual__9b197d01a2",
+      "layer": "ordinary_manual",
+      "k": 8,
+      "subset": "17be19782ab6f1fa54ca|3651a92290f6ddca5577|v2:new:100011|v2:new:100013|v2:new:100019|v2:new:100020|v2:new:100023|v2:new:100030",
+      "seconds": 0.027474502996483352,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 391
+    },
+    {
+      "pool_id": "2t7WUuJeko7-06__manual__9b197d01a2",
+      "layer": "ordinary_manual",
+      "k": 16,
+      "subset": "17be19782ab6f1fa54ca|3651a92290f6ddca5577|b7ad646fe3dc3b0d378e|v2:new:100000|v2:new:100003|v2:new:100005|v2:new:100007|v2:new:100008|v2:new:100009|v2:new:100011|v2:new:100013|v2:new:100014|v2:new:100024|v2:new:100027|v2:new:100030|v2:new:100031",
+      "seconds": 0.08881242299685255,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 679
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__eaac8256e9",
+      "layer": "doorway_manual",
+      "k": 4,
+      "subset": "new_95_3649_6975_W031|new_95_3649_7231_W036|v2:new:100034|v2:new:100043",
+      "seconds": 0.010069204996398184,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 266
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__eaac8256e9",
+      "layer": "doorway_manual",
+      "k": 8,
+      "subset": "new_95_3649_6975_W031|new_95_3649_6976_W035|v2:new:100040|v2:new:100044|v2:new:100045|v2:new:100051|v2:new:100053|v2:new:100054",
+      "seconds": 0.02743074099998921,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 405
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__eaac8256e9",
+      "layer": "doorway_manual",
+      "k": 16,
+      "subset": "new_95_3649_6975_W031|new_95_3649_6976_W035|new_95_3649_7069_W037|new_95_3649_7172_W034|new_95_3649_7428_W028|new_95_3649_7449_W032|new_95_3649_7457_W030|v2:new:100034|v2:new:100036|v2:new:100040|v2:new:100044|v2:new:100045|v2:new:100049|v2:new:100050|v2:new:100052|v2:new:100057",
+      "seconds": 0.1495732469993527,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 759
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-13__semi__5b6c87b5f3",
+      "layer": "ordinary_semi",
+      "k": 4,
+      "subset": "1106d9b3309125ae|ed7c1f77254fbb2a|v2:new:106692|v2:new:106705",
+      "seconds": 0.017344333995424677,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 287
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-13__semi__5b6c87b5f3",
+      "layer": "ordinary_semi",
+      "k": 8,
+      "subset": "1106d9b3309125ae|4d2388c60747a53d|618e8cec7d276f9c|c98ff21fd3ac34dc|e2305061fc73b67a|v2:new:106700|v2:new:106706|v2:new:106712",
+      "seconds": 0.02829600600671256,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 393
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-13__semi__5b6c87b5f3",
+      "layer": "ordinary_semi",
+      "k": 16,
+      "subset": "1106d9b3309125ae|243708573fc746f4|38972f7a8ac6e59e|3d27ec416166fb40|4d2388c60747a53d|618e8cec7d276f9c|e13f31dcfeca786f|e2305061fc73b67a|v2:new:106694|v2:new:106696|v2:new:106697|v2:new:106701|v2:new:106707|v2:new:106708|v2:new:106710|v2:new:106712",
+      "seconds": 0.11876982000103453,
+      "exact_equal": true,
+      "structure_mismatches": 0,
+      "numeric_max_abs_difference": 0.0,
+      "numeric_leaves": 753
+    }
+  ],
+  "all_passed": true,
+  "all_exact_equal": true,
+  "full_144253_team_replay": false
+}

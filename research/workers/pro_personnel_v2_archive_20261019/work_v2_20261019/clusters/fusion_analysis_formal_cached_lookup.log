@@ -1,0 +1,22 @@
+/workspace/scratch/fd332d1af8c2/work_v2_20261019/clusters/analyze_fusion_clusters.py:95: DtypeWarning: Columns (53,61,62,73,74,75) have mixed types. Specify dtype option on import or set low_memory=False.
+  source_replacements=pd.read_csv(args.replacement_input)
+{
+  "stage": "current_completed_fusion_comparisons",
+  "ordinary_images": 175,
+  "buildings": 22,
+  "replacement_attempts": 270370,
+  "unique_replacement_team_pairs": 270370,
+  "threshold_labeled_replacement_rows": 540740,
+  "composition_rows": 0,
+  "failures_retained": true,
+  "reference_and_fusion_unchanged": true,
+  "same_count_and_background_matched": true,
+  "composition_comparison_turnover_and_point_count_hist_matched": true,
+  "target_local_clusters_are_oracle": true,
+  "random_draws_are_not_independent_people": true,
+  "source_files": [
+    "/workspace/scratch/fd332d1af8c2/work_v2_20261019/fusion/INITIAL_replacements.csv.gz"
+  ],
+  "source_replacements_sha256": "2384d365745fd2a78a8b893d2f04bf7b96459f5db7eaf2e0db0d9b16bdf2fbb1",
+  "code_sha256": "01659d229bcef8ddb778c1a853a8545dce765e45ae362f7f64b8271205a44b06"
+}

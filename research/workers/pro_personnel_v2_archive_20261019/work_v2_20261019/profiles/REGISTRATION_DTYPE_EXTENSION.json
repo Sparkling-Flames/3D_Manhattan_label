@@ -1,0 +1,12 @@
+{
+  "schema": "v2_fine_type_extension_20261019_v1",
+  "stage": "after descriptive profile coverage inspection, before receiving or examining new v2 fusion results",
+  "reason": "The strict hard-up versus both easy and medium rule generated sparse subtypes; no QT parent had two children of at least three people in the full descriptive fit. Retain these rare types and also evaluate the already defined multi-level difficulty phenotype, rather than infer that all difficulty information is absent.",
+  "base_registration_unchanged": true,
+  "cutoffs_changed": false,
+  "fine_dtype_candidate": "exact Q2 x T_relative_2 parent crossed with the existing difficulty_type: across_strong, hard_specialist, hard_relative_lift_only, hard_drop, mixed_or_near; no post-fusion definition changes",
+  "fine_dtype_merged": "same predeclared >=3 members in at least two children split rule, preserving sparse child and unknown flags",
+  "hard_peer_tag": "independent hard-theta status: >=3 above_peer, <=-3 below_peer, otherwise near_peer, with hard support >=6 images and 3 buildings; records hard relative to peers separately from hard relative to own easy/medium effects",
+  "validation": "labels and class centroids recomputed with target building excluded; prospective fine-type composition uses these heldout-building labels; source timing limitations remain. Dtype class-prediction is compared against exact QT theta-centroid parent, and descriptive cross-class geometry experiments remain separate from individual Q prediction.",
+  "interpretation": "This is a coverage-informed exploratory extension, not a new blind hypothesis. Rare specialists remain inspectable without relaxing thresholds to create significant fusion contrasts."
+}

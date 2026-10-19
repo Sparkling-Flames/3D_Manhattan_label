@@ -1,0 +1,23 @@
+{
+  "schema": "v2_reverse_to_forward_nested_LOBO_20261019_r1",
+  "registered_before_fitting": true,
+  "population": "ordinary Manual 177 images / 22 buildings, local 9 and 12 degree affinity partitions",
+  "primary_outcome": "pair belongs to the same local cluster; same point count is NOT a prospective predictor",
+  "auxiliary_outcome": "worker belongs to the unique largest local cluster; ties are an explicitly unknown auxiliary target",
+  "outer_split": "leave target building out of all worker profile estimation and response-type model training",
+  "inner_features": "each training example uses worker profiles excluding BOTH outer target building and the example's own building, provided by nested_fold_features.csv; no own-answer Q leakage",
+  "models": ["difficulty_prevalence", "Q_absolute", "Q_relative", "QT", "QTD", "QTD_origin_time", "QTD_behavior", "worker_pair_history"],
+  "Q_absolute": "mean absolute B8L2 from ordinary Manual history excluding outer and inner buildings; task-mix-sensitive baseline",
+  "Q_relative": "task-adjusted worker B8L2 effect; pair symmetric mean and absolute difference",
+  "QT": "Q_relative plus same-task source log-time effect; target-specific time remains separate and is not imputed from source time",
+  "QTD": "QT plus target-difficulty worker-effect minus general worker-effect, supported difficulty only; observable frozen difficulty enters baseline",
+  "QTD_origin_time": "QTD with source-origin-adjusted relative time replacing pooled relative time; held-out predictions also stratified old/old, new/new and mixed workers",
+  "QTD_behavior": "QTD plus separately smoothed old-strong and new-reported Semi unchanged-error opportunity fractions, and historical scope out-answer propensity. These remain behavior predictors, not Q; no scope ability or error-free claim. No merged evidence denominator.",
+  "worker_pair_history": "training same-pair coassignment counts, additive strength 5 toward training difficulty prevalence; actual historical joint behavior benchmark, not a portable worker class",
+  "classifier": "fixed logistic L2 C=1, lbfgs, max_iter=500; train-only median encoding and missing indicators, train-weighted centering/scaling; original missing values remain null in source/results",
+  "training_weights": "equal buildings, equal images inside building, equal pairs or workers inside image; weights sum to training image count so repeated pairs do not determine regularization strength",
+  "evaluation": "held-out Brier and log loss aggregated pairs/workers -> image -> building; building bootstrap 3000 draws seed 2026101921; calibration/AUC diagnostic",
+  "sensitivity": "report actual same-point-count subset retrospectively, source cohort panels, and existing room-group weights without synthesizing relationships",
+  "selection_rule": "no tuning against local-cluster prediction scores or fusion outcome; all registered models reported, null and worse results retained",
+  "interpretation": "predicting local style choice/coassignment differs from predicting quality; neither establishes permanent natural classes nor exchangeability by itself"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "v2_independent_behavior_candidate_before_fusion_results_1",
+  "frozen_input_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "outcome_access_at_registration": "Only inventory and prior evidence counts inspected; no new team quality outcomes inspected by root",
+  "scope": "Independent additional descriptors; not a Q component or general worker total score",
+  "opportunity_source_levels": ["confirmed_frozen_initialization", "user_reported_flags"],
+  "lobo_support": {"minimum_opportunities": 3, "minimum_buildings": 2},
+  "behavior_types": {
+    "repeated_retention_observed": "supported, at least two observed known-initial-error unchanged events",
+    "one_retention_observed": "supported, exactly one event",
+    "no_retention_reported_on_observed_opportunities_correction_unknown": "supported, zero reported events; edited-outcome success remains unknown",
+    "insufficient_opportunity": "support gate fails or no opportunities; do not encode as zero risk"
+  },
+  "team_comparison": {
+    "baseline_and_candidate_same_audited_source_pool": true,
+    "training_excludes_target_building": true,
+    "reference_condition_and_fusion_fixed": true,
+    "baseline": "QTD selection on workers with supported evidence, within ONE evidence source level",
+    "candidate": "Use the same theta >= kth theta - 3 quality candidate set; prioritize lower observed retention fraction, then relative source time and theta as frozen tie breakers",
+    "minimum_team_sizes": [8, 12, 16, 24],
+    "interpretation": "Exploratory behavioral tie-breaker on audited subsets. Targeted audits and task assignment are not eliminated; no population severe-error or correction success claim."
+  },
+  "excluded_as_selectors": {
+    "scope_correctness": "All 93 compatible opportunities are in-scope and correct; no discriminating evidence or out-of-scope false acceptance evidence",
+    "severe_error_rate": "No independently adjudicated severity gold or random audit denominator",
+    "initialization_editing_amount": "Behavior diagnostic, not confirmed correction"
+  }
+}

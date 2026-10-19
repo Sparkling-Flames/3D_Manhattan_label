@@ -1,0 +1,10 @@
+{
+  "schema":"v2_validation_implementation_correction_v1",
+  "correction":"For every paired model comparison, reconstruct the heldout peer-relative target and both predictions after intersecting the exact available worker records. Matching error rows alone is insufficient when models have different missingness and thus different evaluation peers.",
+  "primary_joint20_vs_FE_affected":false,
+  "why_primary_unaffected":"FE and joint20 have identical nonmissing evaluation sets. All pooled continuous comparisons share this support.",
+  "fine_dtype_vs_QT_theta_affected":false,
+  "randomness_revision":"Bootstrap seeds are keyed by fixed model-pair and difficulty identity, preventing added candidate models from changing Monte Carlo draws for an existing contrast.",
+  "classification_thresholds_or_fusion_rules_changed":false,
+  "researcher_note":"This is an implementation correctness fix, not post-outcome model selection. Individual prediction rows retain model-specific observable support; infer model differences from the paired common-peer table."
+}

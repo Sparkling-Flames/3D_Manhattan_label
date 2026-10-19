@@ -1,0 +1,423 @@
+{
+  "verified_counts": {
+    "inventory": 10439,
+    "people": 62,
+    "images": 261,
+    "buildings": 22,
+    "origins": {
+      "v1": 3222,
+      "new": 7217
+    },
+    "calculation": {
+      "full": 9363,
+      "uncomputable": 135,
+      "floor_only": 941
+    },
+    "quality_rows": 7302,
+    "quality_workers": 60,
+    "quality_images": 196,
+    "source_time_available": 9236,
+    "target_matched_time_available": 440,
+    "semi_inventory": 1099,
+    "semi_exact_initialization_bound": 574,
+    "semi_confirmed_error_opportunities": 156,
+    "semi_reported_error_opportunities": 284,
+    "semi_current_paired_scores": 519,
+    "semi_current_qualified_gains": 465,
+    "semi_qualified_worker_attributable_gains": 461,
+    "scope_responses": 9845,
+    "scope_compatible_judgement_opportunities": 93,
+    "scope_correct": 93,
+    "specific_person_error_candidates": 25,
+    "legacy_explicit_person_error_records": 10
+  },
+  "ordinary_manual": {
+    "n": 5719,
+    "images": 177,
+    "buildings": 22,
+    "workers": 60
+  },
+  "ordinary_difficulty": {
+    "简单": 3751,
+    "中等": 988,
+    "困难": 980
+  },
+  "quality_strata": {
+    "manual|doorway_quality": {
+      "n": 571,
+      "images": 17,
+      "buildings": 9,
+      "workers": 57
+    },
+    "manual|ordinary_primary": {
+      "n": 5719,
+      "images": 177,
+      "buildings": 22,
+      "workers": 60
+    },
+    "manual|special_conditional_only": {
+      "n": 66,
+      "images": 2,
+      "buildings": 2,
+      "workers": 35
+    },
+    "semi|ordinary_primary": {
+      "n": 901,
+      "images": 32,
+      "buildings": 12,
+      "workers": 59
+    },
+    "semi|special_conditional_only": {
+      "n": 45,
+      "images": 1,
+      "buildings": 1,
+      "workers": 45
+    }
+  },
+  "review_verdicts_by_origin": {
+    "v1": {
+      "not_individually_reviewed": 1612,
+      "retained_scope_variation": 197,
+      "historical_retained_with_latest_image_context": 345,
+      "usable": 802,
+      "invalid": 85,
+      "historical_retained_scene_unrecorded": 91,
+      "undetermined": 3,
+      "representation_pending": 8,
+      "repair_needed": 9,
+      "new_batch_user_keep": 70
+    },
+    "new": {
+      "user_retained": 7203,
+      "user_excluded": 14
+    }
+  },
+  "target_source_overlap": 440,
+  "target_source_value_disagreements": 0,
+  "scope_retained_opportunities": 89,
+  "scope_unknown_judgement": 10346,
+  "old_unchanged_all": 147,
+  "old_bad_unchanged": 25,
+  "new_unchanged_all": 194,
+  "new_reported_bad_unchanged": 45,
+  "corrected_true": 0,
+  "corrected_false": 25,
+  "adverse_unique_records": 95,
+  "adverse_label_occurrences": 105,
+  "specific_person_candidate_includes_legacy": true,
+  "severe_error_gold_performed": false,
+  "provenance_review_methods": {
+    "None": 2,
+    "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照": 259
+  },
+  "table_row_count_checks": {
+    "statistics__condition_summary": {
+      "expected": 3,
+      "observed": 3,
+      "pass_": true
+    },
+    "statistics__cohort_condition_summary": {
+      "expected": 5,
+      "observed": 5,
+      "pass_": true
+    },
+    "statistics__image_inventory": {
+      "expected": 313,
+      "observed": 313,
+      "pass_": true
+    },
+    "statistics__worker_inventory": {
+      "expected": 149,
+      "observed": 149,
+      "pass_": true
+    },
+    "statistics__difficulty_scene_condition": {
+      "expected": 20,
+      "observed": 20,
+      "pass_": true
+    },
+    "statistics__worker_difficulty": {
+      "expected": 595,
+      "observed": 595,
+      "pass_": true
+    },
+    "statistics__worker_scene": {
+      "expected": 329,
+      "observed": 329,
+      "pass_": true
+    },
+    "statistics__image_target": {
+      "expected": 354,
+      "observed": 354,
+      "pass_": true
+    },
+    "statistics__worker_calculation": {
+      "expected": 255,
+      "observed": 255,
+      "pass_": true
+    },
+    "statistics__scene_calculation": {
+      "expected": 13,
+      "observed": 13,
+      "pass_": true
+    },
+    "statistics__worker_quality_use": {
+      "expected": 398,
+      "observed": 398,
+      "pass_": true
+    },
+    "quality__shared_records": {
+      "expected": 10439,
+      "observed": 10439,
+      "pass_": true
+    },
+    "statistics__image_worker_matrix": {
+      "expected": 10439,
+      "observed": 10439,
+      "pass_": true
+    },
+    "statistics__point_structure_distribution": {
+      "expected": 1069,
+      "observed": 1069,
+      "pass_": true
+    },
+    "statistics__scope_choice_distribution": {
+      "expected": 275,
+      "observed": 275,
+      "pass_": true
+    },
+    "statistics__binding_distribution": {
+      "expected": 364,
+      "observed": 364,
+      "pass_": true
+    },
+    "statistics__calculation_coverage": {
+      "expected": 21,
+      "observed": 21,
+      "pass_": true
+    },
+    "statistics__independent_pool_inventory": {
+      "expected": 313,
+      "observed": 313,
+      "pass_": true
+    },
+    "statistics__target_pool_inventory": {
+      "expected": 336,
+      "observed": 336,
+      "pass_": true
+    },
+    "statistics__image_reference_registry": {
+      "expected": 334,
+      "observed": 334,
+      "pass_": true
+    },
+    "statistics__image_context_registry": {
+      "expected": 261,
+      "observed": 261,
+      "pass_": true
+    },
+    "statistics__exclusion_reason_hits": {
+      "expected": 14113,
+      "observed": 14113,
+      "pass_": true
+    },
+    "statistics__exclusion_reason_summary": {
+      "expected": 155,
+      "observed": 155,
+      "pass_": true
+    },
+    "statistics__exclusion_reason_intersections": {
+      "expected": 789,
+      "observed": 789,
+      "pass_": true
+    },
+    "statistics__cleaning_diagnostics": {
+      "expected": 11,
+      "observed": 11,
+      "pass_": true
+    },
+    "statistics__fixed_record_metric_sensitivity": {
+      "expected": 10,
+      "observed": 10,
+      "pass_": true
+    },
+    "statistics__worker_relative_quality": {
+      "expected": 398,
+      "observed": 398,
+      "pass_": true
+    },
+    "statistics__quality_component_associations": {
+      "expected": 50,
+      "observed": 50,
+      "pass_": true
+    },
+    "statistics__worker_scope_semi_evidence": {
+      "expected": 149,
+      "observed": 149,
+      "pass_": true
+    },
+    "statistics__time_provenance_coverage": {
+      "expected": 26,
+      "observed": 26,
+      "pass_": true
+    },
+    "statistics__room_registry": {
+      "expected": 519,
+      "observed": 519,
+      "pass_": true
+    },
+    "statistics__room_memberships": {
+      "expected": 1355,
+      "observed": 1355,
+      "pass_": true
+    },
+    "statistics__room_group_summary": {
+      "expected": 425,
+      "observed": 425,
+      "pass_": true
+    },
+    "statistics__room_worker_summary": {
+      "expected": 15798,
+      "observed": 15798,
+      "pass_": true
+    },
+    "statistics__room_view_summary": {
+      "expected": 671,
+      "observed": 671,
+      "pass_": true
+    },
+    "statistics__direct_relation_registry": {
+      "expected": 777,
+      "observed": 777,
+      "pass_": true
+    },
+    "statistics__room_view_worker_matrix": {
+      "expected": 22553,
+      "observed": 22553,
+      "pass_": true
+    },
+    "statistics__direct_pair_summary": {
+      "expected": 23310,
+      "observed": 23310,
+      "pass_": true
+    },
+    "statistics__direct_pair_people": {
+      "expected": 28901,
+      "observed": 28901,
+      "pass_": true
+    },
+    "statistics__room_weighting_sensitivity": {
+      "expected": 24,
+      "observed": 24,
+      "pass_": true
+    },
+    "statistics__room_unlinked_images": {
+      "expected": 22,
+      "observed": 22,
+      "pass_": true
+    },
+    "statistics__raw_floor_record_status": {
+      "expected": 9776,
+      "observed": 9776,
+      "pass_": true
+    },
+    "statistics__raw_answer_pairs": {
+      "expected": 164614,
+      "observed": 164614,
+      "pass_": true
+    },
+    "statistics__raw_disagreement_summary": {
+      "expected": 334,
+      "observed": 334,
+      "pass_": true
+    },
+    "statistics__personnel_profiles": {
+      "expected": 712,
+      "observed": 712,
+      "pass_": true
+    },
+    "statistics__personnel_difficulty_preferences": {
+      "expected": 60,
+      "observed": 60,
+      "pass_": true
+    },
+    "statistics__personnel_groups": {
+      "expected": 31,
+      "observed": 31,
+      "pass_": true
+    },
+    "statistics__personnel_reliability": {
+      "expected": 62,
+      "observed": 62,
+      "pass_": true
+    },
+    "statistics__historical_supplement_plan": {
+      "expected": 1,
+      "observed": 1,
+      "pass_": true
+    },
+    "statistics__historical_source_index": {
+      "expected": 7,
+      "observed": 7,
+      "pass_": true
+    },
+    "statistics__v1_v2_common_membership": {
+      "expected": 3222,
+      "observed": 3222,
+      "pass_": true
+    }
+  },
+  "manifest_text_size_differences": [
+    {
+      "path": "research/statistics/v2_evidence_audit_20261019/COVERAGE.json",
+      "declared_bytes": 2241,
+      "git_bytes": 2177,
+      "match": false,
+      "explained_by_crlf_to_lf": true,
+      "sha256": "8bb7005563ed03e138870841de3ceddf50c7594c0c6a8f0d3f9d40ad9351db6f"
+    },
+    {
+      "path": "research/statistics/v2_evidence_audit_20261019/field_contract.json",
+      "declared_bytes": 3624,
+      "git_bytes": 3526,
+      "match": false,
+      "explained_by_crlf_to_lf": true,
+      "sha256": "5b03a4237aabe5c2c457acd9a003cba8047972a978829c638f0f21b3d2608138"
+    },
+    {
+      "path": "research/statistics/v2_integrated_analysis_20261019/COVERAGE.json",
+      "declared_bytes": 100185,
+      "git_bytes": 97542,
+      "match": false,
+      "explained_by_crlf_to_lf": true,
+      "sha256": "8f70d71ad1aa9cc4513754f4f6f94bfb212b66481307ac3ed4b6c8d50fc51d54"
+    },
+    {
+      "path": "research/statistics/v2_integrated_analysis_20261019/CONSUMER_INTERFACE.json",
+      "declared_bytes": 97273,
+      "git_bytes": 94170,
+      "match": false,
+      "explained_by_crlf_to_lf": true,
+      "sha256": "7ffeadeb494866ef0633e7246d6f7874548a13a901eadb97c214f54b8c471561"
+    },
+    {
+      "path": "research/workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv",
+      "declared_bytes": 68825,
+      "git_bytes": 68563,
+      "match": false,
+      "explained_by_crlf_to_lf": true,
+      "sha256": "7b5df7e0560541a1490130c03386a89ec556488176069eee67cfeb0e98de751e"
+    }
+  ],
+  "qualification_rebuilt": false,
+  "acquisition_replayed": false,
+  "statistical_source_columns_read": true,
+  "notes": [
+    "25 existing specific-person candidates include 10 historical explicit flags; no new severity adjudication.",
+    "scope response, compatible judgment, actual spatial choice are separate; 93 gold opportunities are all in-scope.",
+    "Old and new Semi evidence tiers never pooled into one success rate. Editing does not confirm error correction.",
+    "Adverse events are deduplicated by object_id; legacy and candidate flags are nested, not two punishments.",
+    "Whole-inventory errors or exclusion rates are NOT estimates from a random audit sample.",
+    "Preserved 777 direct image relations and overlapping named groups without graph transitive closure."
+  ]
+}

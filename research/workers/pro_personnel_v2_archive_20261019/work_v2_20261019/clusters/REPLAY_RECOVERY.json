@@ -1,0 +1,51 @@
+{
+  "status": "all_output_repairs_and_fresh_process_validation_complete",
+  "affected_artifact": "fusion_analysis/replacement_cluster_details.csv.gz",
+  "cause": "Two successive summary jobs overlapped when writing the same derived gzip path. A full-stream gzip read detected corruption before delivery.",
+  "unaffected_inputs": [
+    "fusion/INITIAL_replacements.csv.gz",
+    "fusion/INPUT_SNAPSHOT.json.gz",
+    "frozen source evidence",
+    "all geometry and cluster partitions",
+    "LOBO predictions"
+  ],
+  "remedy": "Both previous jobs ended; rerun the same frozen analysis sequentially, cache immutable profile lookups, use vectorized equivalent group reductions, validate the entire temporary gzip stream, then atomically replace the delivered ledger.",
+  "class_or_distance_or_fusion_changes": false,
+  "outcome_selection_changes": false,
+  "logs_retained": [
+    "fusion_analysis_formal_replacements.log",
+    "fusion_analysis_formal_cached_lookup.log",
+    "contrast_sensitivities_run.log",
+    "fusion_analysis_formal_atomic_replay.log"
+  ],
+  "other_logged_repairs": [
+    "Initial actual-swap pilot read a fusion gzip while the producer was merging. Rerun used the producer's safely published INITIAL snapshot.",
+    "Boolean prefix output-completeness was explicitly converted to numeric before subtraction; no fusion or scores changed.",
+    "Original all-k prediction summary averaged image-k rows directly. It now first averages k within image, then images within building. Saved model fits/predictions unchanged.",
+    "The source optimization audit now isolates default-thread and fixed-single-thread HiGHS contexts in separate processes. Exact objective and distance audit then passed."
+  ],
+  "replacement_rows_crc_checked": 540740,
+  "replacement_sha256": "b742e06b369e7f0e1c71ee4322844ed9c7d3efcbacce82de8a1b398a1dfee9cb",
+  "additional_prediction_output_check": {
+    "status": "three folds repaired and 576 image-k/model/outcome rows matched original summaries within float64 roundoff",
+    "folds": [
+      "2t7WUuJeko7",
+      "VLzqgDo317F",
+      "b8cTxDM8gDG"
+    ],
+    "original_summary_from_in_memory_predictions_unchanged": true,
+    "full22fold_crc_table": "swap_transfer/PREDICTION_GZIP_CHECK_INITIAL.json",
+    "max_MSE_difference": 3.552713678800501e-15,
+    "root_cause": "unknown; truncated streaming gzip outputs were observed after the fit. Do not attribute these three folds to the known overlapping replacement-summary writes."
+  },
+  "wide_prediction_output_check": {
+    "status": "complete gzip bytes materialized before write; full CRC and exact numerical roundtrip passed",
+    "rows": 270370,
+    "long_prediction_values_checked": 6370576,
+    "float64_difference": 0.0,
+    "failed_streaming_attempt_log": "compact_swap_predictions_atomic_run.log",
+    "root_cause_of_failed_streaming_trailer": "unknown"
+  },
+  "final_validation": "FINAL_VALIDATION.json",
+  "known_and_unknown_causes_reported_separately": true
+}

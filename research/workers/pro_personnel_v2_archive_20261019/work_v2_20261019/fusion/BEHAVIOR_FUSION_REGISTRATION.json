@@ -1,0 +1,25 @@
+{
+  "schema": "v2_behavior_composition_registration_v1",
+  "k": [
+    8,
+    12,
+    16,
+    24
+  ],
+  "behavior_source_sha256": "331a2316c39e2ccfa17c2a559ac99a97826b500a8b8d4a8339d8516acd9c685f",
+  "audit_registration_sha256": "7a20af17aa8f664868e193a08b0c11d7c4fa2daf88f80b3b780af6d699859339",
+  "quality_profiles_snapshot_sha256": "716618ba48b7a8ea2939c60136a32c16748727f1c922726eb7961c9624b17f41",
+  "rule": "One evidence level only, supported opportunities and Q/T history supported; no unknown=0. Same candidate people and theta >= kth theta-3. Baseline T ascending, added behavior retention fraction ascending then T, theta descending, worker ID.",
+  "interpretation": "Confirmed-old and reported-new error opportunities remain distinct. Lower observed retention on targeted opportunities is not general correction success or severe-error risk. No scope/serious exclusion composite.",
+  "classification_and_selection_frozen_before_behavior_fusion_outcomes": true,
+  "request_count": 1416,
+  "evidence_levels": [
+    "confirmed_frozen_initialization",
+    "unknown",
+    "user_reported_flags"
+  ],
+  "families": {
+    "user_reported_flags": 1144,
+    "confirmed_frozen_initialization": 272
+  }
+}

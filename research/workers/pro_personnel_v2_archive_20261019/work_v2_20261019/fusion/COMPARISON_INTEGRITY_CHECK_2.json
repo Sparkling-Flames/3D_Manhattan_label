@@ -1,0 +1,64 @@
+{
+  "checked_utc": "2026-10-18T18:50:32.219992+00:00",
+  "files": [
+    {
+      "family": "replacements",
+      "file": "replacements.csv.gz",
+      "rows": 370490,
+      "fields": 99,
+      "bytes": 69496056,
+      "compressed_sha256": "5e35fcf7d0e47995878966f2cbea6ffa4c16d0a7e4cf8dcb643f80e492204196",
+      "decompressed_csv_sha256": "f9e1a1e8095e715b4c3e3415dedf706b65d940d71e2eb0adf3c4211ec33c5c16",
+      "gzip_crc_valid": true,
+      "same_as_previous_process": true
+    },
+    {
+      "family": "prefix_transitions",
+      "file": "prefix_transitions.csv.gz",
+      "rows": 50460,
+      "fields": 97,
+      "bytes": 11989806,
+      "compressed_sha256": "11f432b13b7677b81d92e9190852dfa885b025c670e6cc9b9c5f4eb5357ea3ef",
+      "decompressed_csv_sha256": "52177b4ce39fe9cc3a8158d2143a0fa08b5892183f01bce0afc6b5ab4a88a127",
+      "gzip_crc_valid": true,
+      "same_as_previous_process": true
+    },
+    {
+      "family": "random_same_k",
+      "file": "random_same_k.csv.gz",
+      "rows": 181089,
+      "fields": 88,
+      "bytes": 34935368,
+      "compressed_sha256": "a8e40c48dad05b9745d115d53f0d02dac8a9901e1bb59aac11bba63d2d6206e0",
+      "decompressed_csv_sha256": "947b39f11eb308de0ba10de95904d586da461c3a7b5559c799185a98abda4448",
+      "gzip_crc_valid": true,
+      "same_as_previous_process": true
+    },
+    {
+      "family": "composition_comparisons",
+      "file": "composition_comparisons.csv.gz",
+      "rows": 176285,
+      "fields": 96,
+      "bytes": 37285373,
+      "compressed_sha256": "1a6d7481d18218e55b3cb801429c83498c62ad3a295b5122dbb2036175ec1441",
+      "decompressed_csv_sha256": "b07b02fa440fe35accc40e123dbf5b181fe6903cbd37b28af3c9e3ffb14bf3a8",
+      "gzip_crc_valid": true,
+      "same_as_previous_process": true
+    },
+    {
+      "family": "policy_comparisons",
+      "file": "policy_comparisons.csv.gz",
+      "rows": 383307,
+      "fields": 90,
+      "bytes": 59691326,
+      "compressed_sha256": "fa1821f09b731ce9e0baa26f70630209d15386844cd112ffdd35623cd920ef89",
+      "decompressed_csv_sha256": "3d6a41eabe3405935c25624425401bab567af24fd8a6f2afd17c2fc9e617fc59",
+      "gzip_crc_valid": true,
+      "same_as_previous_process": true
+    }
+  ],
+  "elapsed_seconds": 19.438644401998317,
+  "compared_to": "COMPARISON_INTEGRITY_CHECK_1.json",
+  "method": "Independent invocation; stream entire gzip to EOF/CRC, parse every CSV row/width, SHA256 compressed and decompressed bytes, verify stat unchanged while reading.",
+  "all_passed": true
+}

@@ -1,0 +1,45 @@
+comparison_pools 10 229 elapsed 12.1
+comparison_pools 20 229 elapsed 26.3
+comparison_pools 30 229 elapsed 37.5
+comparison_pools 40 229 elapsed 48.5
+comparison_pools 50 229 elapsed 59.3
+comparison_pools 60 229 elapsed 77.2
+comparison_pools 70 229 elapsed 87.2
+comparison_pools 80 229 elapsed 104.5
+comparison_pools 90 229 elapsed 121.1
+comparison_pools 100 229 elapsed 135.3
+comparison_pools 110 229 elapsed 147.9
+comparison_pools 120 229 elapsed 159.7
+comparison_pools 130 229 elapsed 170.5
+comparison_pools 140 229 elapsed 181.9
+comparison_pools 150 229 elapsed 191.2
+comparison_pools 160 229 elapsed 200.5
+comparison_pools 170 229 elapsed 213.4
+comparison_pools 180 229 elapsed 225.5
+comparison_pools 190 229 elapsed 238.8
+comparison_pools 200 229 elapsed 251.9
+comparison_pools 210 229 elapsed 262.0
+comparison_pools 220 229 elapsed 271.8
+comparison_pools 229 229 elapsed 284.3
+Traceback (most recent call last):
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/fusion/compare_fusions.py", line 231, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/fusion/compare_fusions.py", line 229, in main
+    totals={family:merge_files(family,args.initial_only) for family in families};save(OUT/(('INITIAL_' if args.initial_only else '')+'COMPARISON_COVERAGE.json'),totals);print(totals,flush=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fd332d1af8c2/work_v2_20261019/fusion/compare_fusions.py", line 211, in merge_files
+    for row in csv_module.DictReader(rf):writer.writerow(row);n+=1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/csv.py", line 116, in __next__
+    row = next(self.reader)
+          ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/gzip.py", line 351, in read1
+    return self._buffer.read1(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/_compression.py", line 68, in readinto
+    data = self.read(len(byte_view))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/gzip.py", line 564, in read
+    raise EOFError("Compressed file ended before the "
+EOFError: Compressed file ended before the end-of-stream marker was reached
