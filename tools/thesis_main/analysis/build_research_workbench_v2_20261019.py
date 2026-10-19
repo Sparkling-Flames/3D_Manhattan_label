@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+import pandas as pd
 
 from .build_research_workbench_20261017 import write
 
@@ -14,11 +15,28 @@ EVIDENCE = ROOT / 'research/statistics/v2_evidence_audit_20261019'
 QUALITY = ROOT / 'research/quality/quality_workers_v2_20261019'
 INPUT = ROOT / 'research/data/releases/v2/analysis_input'
 SNAPSHOT = 'v2_integrated_analysis_20261019'
+SAME_ROOM = ROOT / 'research/same_room/same_room_v2_prediction_20261019'
 
 
 def read(path):
     raw = gzip.decompress(path.read_bytes()) if path.suffix == '.gz' else path.read_bytes()
     return json.loads(raw.decode('utf-8-sig'))
+
+
+def load_same_room_prediction(source):
+    tables = {}
+    for filename, columns in read(source / 'FIELD_CONTRACT.json')['tables'].items():
+        frame = pd.read_csv(source / filename)
+        if list(frame.columns) != columns:
+            raise ValueError('same-room display schema drift: ' + filename)
+        rows = frame.astype(object).where(frame.notna(), None).to_dict('records')
+        for row in rows:
+            if 'source_image' in row:
+                row.update(image_a=row['source_image'], image_b=row['target_image'])
+            if 'image_a' in row:
+                row['condition'] = 'manual'
+        tables['same_room_prediction__' + Path(filename).stem] = rows
+    return tables
 
 
 def validate_objects(objects, scores):
@@ -150,11 +168,14 @@ def build():
             entry.update({f'worker_attributable_gain_{k}':v for k,v in (s.get('current_worker_attributable_gain') or {}).items()})
             semi.append(entry)
     tables.update(workers__scope_opportunities=scope,workers__semi_initialization_scores=semi,workers__exclusion_evidence=exclusions)
+    tables.update(load_same_room_prediction(SAME_ROOM))
     metadata = [display_table(PAGE/'v2-data', name, rows, f'{STATS.relative_to(ROOT).as_posix()}/tables.json#{name}')
                 for name, rows in tables.items()]
     next(t for t in metadata if t['id']=='quality__shared_records')['path'] = EVIDENCE.relative_to(ROOT).as_posix()+'/records.json.gz'
     for item in metadata:
-        if item['id'].startswith('statistics__'):
+        if item['id'].startswith('same_room_prediction__'):
+            item['path'] = f'{SAME_ROOM.relative_to(ROOT).as_posix()}/{item["id"].split("__")[1]}.csv'
+        elif item['id'].startswith('statistics__'):
             item['path'] = f'{STATS.relative_to(ROOT).as_posix()}/tables.json.gz#{item["id"]}'
         elif item['id'].startswith('workers__'):
             source = {'person_profiles_and_evidence':'profiles', 'reliability':'reliability',
@@ -171,7 +192,12 @@ def build():
                    ('逐人×难度','statistics__worker_difficulty'),('逐人×场景','statistics__worker_scene'),('独立行为证据','workers__reliability')],
         'quality':[('作答与几何分项','quality__shared_records'),('固定记录指标敏感性','statistics__fixed_record_metric_sensitivity')],
         'fusion':[('待实验人员池支持','statistics__independent_pool_inventory'),('当前原答分歧','statistics__raw_disagreement_summary')],
-        'same_room':[('直接图对','statistics__direct_pair_summary'),('共同人员双侧明细','statistics__direct_pair_people'),
+        'same_room':[(title, 'same_room_prediction__' + name) for title, name in [
+                     ('v2预测与人数曲线','prediction_summary'),('逐建筑预测增益','prediction_gains'),
+                     ('逐图对描述与资格','pair_descriptive'),('逐人逐次预测','predictions'),
+                     ('门洞单列','doorway_separate'),('模型折与不支持原因','fold_models'),
+                     ('预测覆盖','prediction_coverage'),('关系准入审计','relation_coverage')]] +
+                    [('直接图对','statistics__direct_pair_summary'),('共同人员双侧明细','statistics__direct_pair_people'),
                      ('关系登记','statistics__room_registry'),('关系组成员','statistics__room_memberships'),('加权敏感性','statistics__room_weighting_sensitivity')],
         'time':[('Semi初始化与增益证据','workers__semi_initialization_scores'),('来源与同目标时间','quality__shared_records'),
                 ('时间来源覆盖','statistics__time_provenance_coverage'),('scope裁定机会','workers__scope_opportunities')],
@@ -182,6 +208,7 @@ def build():
     modules={key:[tab for tab in tabs if tab[1] in tables] for key,tabs in modules.items()}
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
           documents=[dict(path='research/statistics/v2_integrated_analysis_20261019/COVERAGE.json',content=coverage),
+                     dict(path=SAME_ROOM.relative_to(ROOT).as_posix()+'/CONSUMER_INTERFACE.json',content=read(SAME_ROOM/'CONSUMER_INTERFACE.json')),
                      dict(path='research/statistics/v2_evidence_audit_20261019/COVERAGE.json',content=read(EVIDENCE/'COVERAGE.json'))]))
     summary = pack_resources(light,evidence)
     by_object = {r['object_id']:r for r in evidence}
@@ -197,11 +224,15 @@ def build():
                support='逐作答ID合并；诊断、正式质量、来源时间与同目标时间分别保留。',counterexample='人数增加不代表所有图均有35份正式质量。',
                tables=[dict(id='quality__shared_records',label='全部作答与证据')]),
                dict(title='两条人员研究方向',finding='Q×T×难度细类，以及从标法簇反向解释人员差异。',
-               support='当前是数据和描述统计准备，分类与融合的因果或可迁移规律尚待研究。',
+               support='A人员分型及B独立替换验收已有结果；类别组合ABCD与ABCE的比较方案正在讨论，人数与配额尚未固定。',
                counterexample='不能在同一图上发现好组合、反调分类，再将同图结果称为验证。',tables=[]),
                dict(title='v1 与 v2 分开',finding='v1 已有的融合过程、9°/12°分簇与替换实验保留在 v1 入口。',
-               support='v2 全量分簇、组合及替换尚未运行；覆盖台账区分缺源与未运行。',
-               counterexample='旧路径记录数量不是 v2 独立样本数，也不是 v2 实测融合结果。',tables=[])]
+               support='v2分簇、组合与替换已有独立研究包；本页过程几何仍按各入口的实际接入状态解释。',
+               counterexample='旧路径记录数量不是 v2 独立样本数，也不是 v2 实测融合结果。',tables=[]),
+               dict(title='v2同房条件预测',finding='首轮Q/T预测与源视角人数实验已接入同房模块。',
+               support='OOS排除、门洞单列；已知源视角评价下留建筑预测，人员分类暂不接入。',
+               counterexample='尚无确认异房匹配对照；不同预测面板不能直接比较优劣。',
+               tables=[dict(id='same_room_prediction__prediction_summary',label='预测汇总与人数曲线')])]
     write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 

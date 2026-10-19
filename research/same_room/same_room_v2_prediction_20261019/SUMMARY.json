@@ -1,0 +1,43 @@
+{
+  "version": "same_room_v2_prediction_20261019_r1",
+  "data_release": "v2",
+  "coverage": [
+    {
+      "metric": "B8L2",
+      "pairs": 123,
+      "images": 64,
+      "buildings": 12,
+      "median_common": 23.0,
+      "paired_occurrences": 2581
+    },
+    {
+      "metric": "D10",
+      "pairs": 123,
+      "images": 64,
+      "buildings": 12,
+      "median_common": 23.0,
+      "paired_occurrences": 2581
+    },
+    {
+      "metric": "source_active_time_seconds",
+      "pairs": 133,
+      "images": 72,
+      "buildings": 14,
+      "median_common": 14.0,
+      "paired_occurrences": 2060
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "pairs": 3,
+      "images": 5,
+      "buildings": 2,
+      "median_common": 4.0,
+      "paired_occurrences": 14
+    }
+  ],
+  "new_fusion": false,
+  "new_personnel_classification": false,
+  "score_values_verified_against_current_quality": true,
+  "source": "research/statistics/v2_integrated_analysis_20261019",
+  "note": "prediction is conditional on observed source evaluations; no claim of same-room specificity vs confirmed different rooms"
+}

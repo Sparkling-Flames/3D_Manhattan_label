@@ -24,8 +24,10 @@ const modules={
  sources:['来源与历史','数据、分析、评分、画像及融合版本分别登记；上游状态仅在构建时核对。',[]]
 };
 const labels={object_id:'作答ID',image_id:'图片ID',image_code:'图片',image:'图片',worker_id:'人员',condition:'采集条件',building_id:'建筑',reference_id:'评分参考',rescore_target_id:'评分目标',current_target_id:'当前目标',target_id:'目标',B8L2:'B8L2',D10:'D10',IoU3D100:'同参考3D IoU ×100',iou_2d:'底面IoU（0–1）',S_bottom_deg:'S_bottom_deg（°）',dir:'dir（方向残差°）',Hmean:'Hmean（冻结引擎高度误差）',Hcenter:'Hcenter（冻结引擎局部高度误差）',quality_usable:'主质量可用',calculation_status:'计算状态',diagnostic_B8L2:'B8L2诊断',diagnostic_D10:'D10诊断',quality_exclusion_reasons:'质量用途限制',Q_effect:'相对Q效应',Q_group:'既有Q二分',QT_group:'既有Q×T四格',T_group:'既有T分组',T_source_effect:'来源T效应',T_target_effect:'同目标T效应',Q_contexts:'Q支持任务数',Q_buildings:'Q支持建筑数',member_workers:'成员',path_id:'路径',path_kind:'路径类型',subset:'成员子集',pool_id:'人员池',k:'人数k',policy:'策略',selection_metric:'选人指标',metric:'画像指标',source_active_seconds:'累计来源活动时间（秒）',source_active_time_seconds:'来源活动时间（秒）',target_matched_time_seconds:'同目标时间（秒）',main_comparison_allowed:'主比较允许',score_status:'测量状态',R_union_normalized:'R 原答两两差异',floor_jaccard_difference:'V 同k换组差异',complete_evaluable:'完整可评价',request_id:'请求ID',reference_version:'参考版本',reasons:'测量原因',geometry_reason:'几何原因',submissions:'规范提交数',historical_gold:'有历史gold记录数',historical_eligible:'排除hold后的历史诊断机会数',current_clear_compatible:'历史gold与当前场景相容机会数',current_task_unknown:'当前任务裁定未知数',historical_outcome:'历史裁定结局',historical_gold_current_clear_compatible:'历史gold与当前明确普通场景相容'};
-const fmt=v=>C.empty(v)?'—':C.numeric(v)?v.toLocaleString('zh-CN',{maximumFractionDigits:3}):typeof v==='boolean'?(v?'是':'否'):typeof v==='object'?JSON.stringify(v):String(v);
+const displayValues={new:'新增人员',individual:'本人源视角',other_source_people:'源视角其他人员',calibrated_history:'校准历史基线',copy_source:'复制本人源视角',history_plus_source:'历史＋源视角',worker_history:'原历史基线'};
+const fmt=v=>C.empty(v)?'—':C.numeric(v)?v.toLocaleString('zh-CN',{maximumFractionDigits:3}):typeof v==='boolean'?(v?'是':'否'):typeof v==='object'?JSON.stringify(v):(displayValues[v]||String(v));
 const label=k=>labels[k]||k;
+Object.assign(labels,{origin:'人员来源',mode:'预测模式',method:'预测方法',building:'建筑',building_equal_mae:'建筑等权MAE',buildings:'建筑数',directions:'有向图对数',prediction_rows:'预测记录数',actual:'实际值',predicted:'预测值',absolute_error:'绝对误差',error_unit:'误差单位',warm_start:'有历史支持',relation_eligible:'关系可比准入',n_paired:'共同有效人数',supported:'模型折可支持',gain_vs_calibrated_history:'较校准历史基线改善（正为好）'});
 const placeholder=(title,reason)=>`<div class="placeholder"><strong>${esc(title)}</strong>${esc(reason)}</div>`;
 const panel=(title,html)=>`<section class="panel"><h2>${esc(title)}</h2>${html}</section>`;
 const fieldList=row=>`<dl class="fields">${Object.entries(row).map(([k,v])=>`<dt>${esc(label(k))}<small> · ${esc(k)}</small></dt><dd>${esc(fmt(v))}</dd>`).join('')}</dl>`;
@@ -54,7 +56,7 @@ function readRoute(){const p=new URLSearchParams(location.hash.slice(1)),aliases
  state.module=aliases[p.get('module')]||p.get('module')||'data';if(!modules[state.module])state.module='data';
  state.tab=Number(p.get('tab')||0);state.table=p.get('table')||'';state.filters={};for(const [k,v] of p)if(k.startsWith('f_'))state.filters[k.slice(2)]=v;
  state.where=JSON.parse(p.get('where')||'[]');state.focusImage=p.get('image')||state.focusImage;state.focusObject=p.get('object')||'';state.focusWorker=p.get('worker')||'';state.metric=p.get('metric')||'B8L2';state.page=0;state.selected.clear();
- const allowed=state.module==='same_room'?['B8L2','D10','IoU3D100','source_time_seconds','target_matched_time_seconds']:['B8L2','D10'];
+ const allowed=state.module==='same_room'?['B8L2','D10','IoU3D100','source_time_seconds','source_active_time_seconds','target_matched_time_seconds']:['B8L2','D10'];
  state.metricNotice=allowed.includes(state.metric)?'':`当前模块没有 ${state.metric} 画像／终点评价，改用B8L2；原比较可在同房模块查看。`;
  if(state.metricNotice)state.metric='B8L2';
  if(previous!==[state.module,state.tab,state.table].join('|')){state.chartField='';state.currentRecord=null;}
@@ -75,7 +77,7 @@ function facetDefaults(rows){
  const f={};if(state.module==='fusion'&&state.meta?.id!=='fusion__trajectory_scores'&&rows.some(r=>r.selection_metric==='B8L2'))f.selection_metric='B8L2';
  return Object.fromEntries(Object.entries(f).filter(([k])=>!state.where.some(w=>w.field===k)));
 }
-function facetControls(rows){const keys=state.module==='fusion'&&state.meta?.id!=='fusion__trajectory_scores'?['selection_metric','label_basis','policy','replacement_kind','k','layer','both_main_quality']:state.module==='workers'?['Q_group','QT_group','fold']:state.module==='same_room'?['request_id','k','both_quality']:[];
+function facetControls(rows){const keys=state.module==='fusion'&&state.meta?.id!=='fusion__trajectory_scores'?['selection_metric','label_basis','policy','replacement_kind','k','layer','both_main_quality']:state.module==='workers'?['Q_group','QT_group','fold']:state.module==='same_room'?['origin','mode','method','k','layer','relation_eligible','supported','warm_start','request_id','both_quality']:[];
  const defaults=facetDefaults(rows);return keys.filter(k=>rows.some(r=>!C.empty(r[k]))).map(k=>{
   const vals=[...new Set(rows.map(r=>r[k]).filter(v=>!C.empty(v)))];if(vals.length>80)return '';
   const chosen=state.where.find(w=>w.field===k&&w.facet)?.val??defaults[k]??'';
@@ -91,7 +93,7 @@ function applyRows(rows){let result;
  if(rows.some(r=>r.metric)&&['workers','same_room'].includes(state.module))out=out.filter(r=>!r.metric||r.metric===state.metric);
  state.rows=out;return result.unsupported;
 }
-function defaultColumns(rows){const cols=Object.keys(rows[0]||{}),prior=['image_code','image','image_id','object_id','worker_id','pool_id','path_id','k','request_id','rescore_target_id','reference_id','condition','selection_metric','policy','Q_effect','Q_group','T_source_effect','QT_group','Q_contexts','Q_buildings','B8L2','D10','IoU3D100','quality_usable','calculation_status','score_status','member_workers'];return [...prior.filter(k=>cols.includes(k)),...cols.filter(k=>!prior.includes(k))].slice(0,14);}
+function defaultColumns(rows){const cols=Object.keys(rows[0]||{});if(state.meta?.id.startsWith('same_room_prediction__')){const preferred=['metric','origin','mode','k','method','building','building_equal_mae','buildings','worker_id','actual','predicted','absolute_error','error_unit','warm_start','relation_eligible','n_paired','absolute_mean_gap','mean_absolute_person_delta','worker_spearman','gain_vs_calibrated_history','image_a','image_b'];return [...preferred.filter(k=>cols.includes(k)),...cols.filter(k=>!preferred.includes(k))].slice(0,14);}const prior=['image_code','image','image_id','object_id','worker_id','pool_id','path_id','k','request_id','rescore_target_id','reference_id','condition','selection_metric','policy','Q_effect','Q_group','T_source_effect','QT_group','Q_contexts','Q_buildings','B8L2','D10','IoU3D100','quality_usable','calculation_status','score_status','member_workers'];return [...prior.filter(k=>cols.includes(k)),...cols.filter(k=>!prior.includes(k))].slice(0,14);}
 function drawTable(){const host=$('tableArea');if(!host)return;const rows=[...state.rows];if(state.sort){const {key,asc}=state.sort;rows.sort((a,b)=>{const x=a[key],y=b[key];if(C.empty(x))return 1;if(C.empty(y))return -1;return (C.numeric(x)&&C.numeric(y)?x-y:String(x).localeCompare(String(y)))*(asc?1:-1);});}
  state.viewRows=rows;const columns=defaultColumns(rows),pages=Math.max(1,Math.ceil(rows.length/state.pageSize));state.page=Math.min(state.page,pages-1);
  const start=state.page*state.pageSize;
@@ -132,6 +134,14 @@ function lineChart(rows,yKey,title){
 function chosenMetric(rows){const cols=Object.keys(rows[0]||{});return (C.fields[state.metric]||[]).find(k=>cols.includes(k)&&rows.some(r=>C.numeric(r[k])))||cols.find(k=>k.startsWith(state.metric)&&rows.some(r=>C.numeric(r[k])));}
 function genericChart(rows){const presets={'fusion__same_k_stability':'floor_jaccard_difference','same_room__endpoint_pairs':'mean_absolute_person_delta','workers__absolute_Q_training_profiles':'mean','workers__semi_initialization_scores':'worker_attributable_gain_'+state.metric};const preset=presets[state.meta?.id];const k=state.chartField&&rows.some(r=>C.numeric(r[state.chartField]))?state.chartField:preset||chosenMetric(rows);
  return k?svgChart(rows,k,'histogram'):placeholder('专题图表待配置','明细已接通；该表尚未绑定默认数值图，不用其它字段冒充质量结果。');}
+function sameRoomPredictionPanel(id){
+ if(!id.startsWith('same_room_prediction__'))return '';
+ const base='../../same_room/same_room_v2_prediction_20261019/';
+ const note=`<div class="info">v2同房条件预测：OOS已排除，门洞单列，人员分类未接入。源视角Q已有评价参考，尚无确认异房匹配对照。MAE越低越好；耗时误差在log(1+秒数)上计算，不能读作秒数。配对描述及审计表保留未准入关系；主分析需普通场景、关系可比、共同有效人员≥4。<a href="${base}README.md">完整报告</a> · <a href="${base}CONSUMER_INTERFACE.json">数据接口</a></div>`;
+ if(id!=='same_room_prediction__prediction_summary')return note;
+ const coverage=index.documents.find(d=>d.content.schema==='same_room_v2_prediction_20261019_r1').content.coverage.find(r=>r.metric==='B8L2');
+ return note+`<section class="panel"><h2>首轮固定研究面板</h2><p>以下覆盖与原报告图不随下方明细筛选或指标切换重算。质量描述、本人源视角预测及其他人员人数实验各有自己的支持集合。</p>${metricCards([['质量直接同房关系',coverage.pairs,'不是独立房间数'],['图片 / 建筑',`${coverage.images} / ${coverage.buildings}`,'质量描述面板'],['共同有效人员中位数',coverage.median_common,'每对关系']])}<div class="split equal"><figure><img style="width:100%;height:auto" src="${base}prediction_by_building.png" alt="本人源视角预测的逐建筑增益，旧新增人员分列"><figcaption>本人源视角预测：人员来源分开，正增益表示误差下降。</figcaption></figure><figure><img style="width:100%;height:auto" src="${base}source_people_learning.png" alt="固定评价面板中源视角其他人员从4增加到16人的预测误差"><figcaption>人数实验固定30对关系、39图、10栋、35名新增人员；k是源视角其他人员数，不是融合团队人数。</figcaption></figure></div></section>`;
+}
 async function render(){
  const token=++state.loadToken,mod=modules[state.module];supportSets.clear();chartCounter=0;
  $('title').textContent=mod[0];$('description').textContent=mod[1];$('crumb').textContent=`数据 ${dataset.release} / ${dataset.analysisLabel} / ${mod[0]}`;activeContext();
@@ -153,7 +163,7 @@ async function render(){
   const options=state.module==='data'?index.tables.map(t=>[t.id,t.id+(t.status==='superseded'?' · 被替代接口':'')]):tabs.filter(t=>t[1]).map(t=>[t[1],t[0]+' · '+t[1]]);
   const numericCols=state.meta.columns.filter(k=>rows.some(r=>C.numeric(r[k])));
   if(state.module==='time'&&!state.chartField&&(state.tab===1||state.tab===2))state.chartField=state.tab===1?'source_active_time_seconds':'target_matched_time_seconds';
-  const metricOptions=[['B8L2','B8L2 主线'],['D10','D10 敏感性']];if(state.module==='same_room'&&rows.some(r=>r.metric))metricOptions.push(['IoU3D100','同参考3D IoU×100'],['source_time_seconds','来源活动时间（秒）'],['target_matched_time_seconds','同目标时间（秒）']);
+  const metricOptions=[['B8L2','B8L2 主线'],['D10','D10 敏感性']];if(state.module==='same_room'&&rows.some(r=>r.metric))metricOptions.push(['IoU3D100','同参考3D IoU×100'],['source_time_seconds','历史来源活动时间'],['source_active_time_seconds','v2来源报告耗时（预测误差为log1p）'],['target_matched_time_seconds','同目标时间（预测误差为log1p）']);
   const toolbar=`<section class="panel"><div class="toolbar">${select('tableSelect',options,id,'当前表／对象粒度')}${select('metricSelect',metricOptions,state.metric,state.module==='workers'?'画像指标':'终点评价指标')}${facetControls(rows)}${select('chartField',[['','使用专题默认字段'],...numericCols.map(k=>[k,label(k)])],state.chartField||'','图表字段')}<span class="muted">来源：${esc(state.meta.path)}<br>字段原样保留；用途与缺失继承源表。</span></div></section>`;
   const title=support(state.rows);
   if(state.module==='quality'){
@@ -163,7 +173,7 @@ async function render(){
    $('content').innerHTML=toolbar+title+`<div class="split"><div>${tablePanel()}${genericChart(state.rows)}</div><section class="panel" id="focusPanel"></section></div>`;
    const row=state.rows.find(r=>r.worker_id===state.focusWorker)||state.rows[0];if(row)profile(row);
   }else if(state.module==='same_room'){
-   $('content').innerHTML=toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
+   $('content').innerHTML=sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
   }else if(state.module==='fusion'&&id==='fusion__trajectory_scores'){
    $('content').innerHTML=toolbar+`<div id="processFocus"></div>`+tablePanel();await processFocus(token);
   }else if(state.module==='fusion'){
@@ -218,8 +228,8 @@ async function pairFocus(row,token){const host=$('focusPanel');if(!host)return;c
  if(!a||!b){host.innerHTML=placeholder('当前表为关系／汇总粒度','选择原答图对或同成员过程记录，可进入双视角几何。');return;}
  if(!imageMap.has(a)||!imageMap.has(b)){host.innerHTML=placeholder('该关系至少一侧不在当前作答图片库存','直接关系保留；缺少当前作答的一侧不生成双侧几何或配对分数。请选择有共同人员支持的记录。')+panel('关系记录与实际支持',fieldList(row));return;}
  const [ia,ib]=await Promise.all([imageDetail(a),imageDetail(b)]);if(token!==state.loadToken)return;
- const specified=C.tokens(row.paired_workers||row.worker_ids_a||row.member_workers_a);
- const common=(specified.length?specified:[...new Set(ia.annotations.map(x=>x.worker_id))]).filter(w=>ia.annotations.some(x=>x.worker_id===w)&&ib.annotations.some(x=>x.worker_id===w));const worker=common.includes(state.pairWorker)?state.pairWorker:common[0];
+ const specified=C.tokens(row.worker_id||row.paired_workers||row.worker_ids_a||row.member_workers_a);
+ const common=(specified.length?specified:[...new Set(ia.annotations.map(x=>x.worker_id))]).filter(w=>ia.annotations.some(x=>x.worker_id===w)&&ib.annotations.some(x=>x.worker_id===w));const worker=row.worker_id&&common.includes(row.worker_id)?row.worker_id:common.includes(state.pairWorker)?state.pairWorker:common[0];
  const choose=(image,side)=>{const ids=C.tokens(row['object_ids_'+side]||row['member_object_ids_'+side]);if(ids.length)return image.annotations.find(x=>x.worker_id===worker&&ids.includes(x.object_id));
   const condition=row['condition_'+side]||row.condition,target=row['current_target_'+side]||row['reference_id_'+side];
   return image.annotations.find(x=>x.worker_id===worker&&x.retained&&(!condition||x.condition===condition)&&(!target||x.target_id===target));};

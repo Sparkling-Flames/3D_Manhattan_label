@@ -1,0 +1,14 @@
+{
+  "version": "same_room_v2_prediction_20261019_r1",
+  "data_release": "v2",
+  "primary": "B8L2",
+  "sensitivity": "D10",
+  "exclusions": "OOS excluded including doorway x OOS; doorway kept separate; manual only; current image target; source pool gates preserved",
+  "description": "all direct physical relations retained in audit; primary requires scope comparable and no substantive conflict; >=4 common valid workers separately by cohort and metric",
+  "prediction": "leave one building out; worker means exclude outer building; calibration training features also exclude their own building; historical admission barriers and holdouts excluded from all training; source Q known at prediction time",
+  "calibration": "weighted linear residual transfer with intercept; compare also intercept-only calibrated history to isolate source increment; equal building then directed image pair weights; >=3 training buildings; no model tuning",
+  "evaluation": "identical warm-start test rows across methods, equal directed pairs within building then equal buildings; time error in log1p seconds",
+  "learning": "ordinary Q only, other source people exclude target person; fixed max-k-support panel within cohort/fold, k 4/8 for v1 and 4/8/12/16 for new; 3 nested seeded draws",
+  "classes": "deferred until classification accepted",
+  "new_fusion": false
+}

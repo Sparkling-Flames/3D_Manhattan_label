@@ -1,0 +1,61 @@
+{
+  "schema": "same_room_v2_prediction_20261019_r1",
+  "data_release": "v2",
+  "status": "exploratory_completed",
+  "source_manifest": "research/data/releases/v2/analysis_input/manifest.json",
+  "score_source": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+  "statistics_source": "research/statistics/v2_integrated_analysis_20261019/CONSUMER_INTERFACE.json",
+  "historical_training_gate": "research/workers/worker_b8l2_d10_20261017/admission_snapshot.json",
+  "files": {
+    "description": "pair_descriptive.csv",
+    "predictions": "predictions.csv",
+    "folds": "fold_models.csv",
+    "summary": "prediction_summary.csv",
+    "building_gains": "prediction_gains.csv",
+    "doorway": "doorway_separate.csv",
+    "plan": "PLAN.json"
+  },
+  "coverage": [
+    {
+      "metric": "B8L2",
+      "pairs": 123,
+      "images": 64,
+      "buildings": 12,
+      "median_common": 23.0,
+      "paired_occurrences": 2581
+    },
+    {
+      "metric": "D10",
+      "pairs": 123,
+      "images": 64,
+      "buildings": 12,
+      "median_common": 23.0,
+      "paired_occurrences": 2581
+    },
+    {
+      "metric": "source_active_time_seconds",
+      "pairs": 133,
+      "images": 72,
+      "buildings": 14,
+      "median_common": 14.0,
+      "paired_occurrences": 2060
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "pairs": 3,
+      "images": 5,
+      "buildings": 2,
+      "median_common": 4.0,
+      "paired_occurrences": 14
+    }
+  ],
+  "no_oos": true,
+  "doorway_in_primary": false,
+  "classes_deferred": true,
+  "new_fusion": false,
+  "checks": {
+    "learning_target_panel_equal_across_k": true,
+    "B8L2_D10_target_members_equal": true
+  },
+  "human_decisions_required": []
+}

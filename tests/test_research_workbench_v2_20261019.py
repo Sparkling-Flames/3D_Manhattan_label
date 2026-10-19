@@ -1,4 +1,21 @@
 import pytest
+import json
+from tools.thesis_main.analysis.build_research_workbench_v2_20261019 import load_same_room_prediction
+
+
+def test_prediction_display_preserves_missing_values_and_source_target(tmp_path):
+    columns = ['source_image', 'target_image', 'worker_id', 'actual', 'predicted', 'warm_start']
+    (tmp_path / 'FIELD_CONTRACT.json').write_text(json.dumps({'tables': {'predictions.csv': columns}}))
+    source = tmp_path / 'predictions.csv'
+    source.write_text(','.join(columns) + '\ns,t,W100,12.5,,False\n')
+    row = load_same_room_prediction(tmp_path)['same_room_prediction__predictions'][0]
+    assert row['image_a'] == 's' and row['image_b'] == 't'
+    assert row['condition'] == 'manual' and row['worker_id'] == 'W100'
+    assert row['actual'] == 12.5 and row['predicted'] is None
+    assert row['warm_start'] is False
+    source.write_text('source_image,target_image\ns,t\n')
+    with pytest.raises(ValueError, match='predictions.csv'):
+        load_same_room_prediction(tmp_path)
 
 from tools.thesis_main.analysis.build_research_workbench_v2_20261019 import pack_annotation, validate_objects
 
