@@ -1,6 +1,8 @@
 # 全景标注不确定性研究：术语
 
-**2026-10-20最新接续：** [类别块额外背景核查](../../research/workers/personnel_composition_followup_20261019/README.md)已完成451对照／1353队、66图／12栋；两个方向均保留局部类内优势。[四例叠图](../../research/workers/personnel_composition_followup_20261019/index.html)等待人工核对；[新Pro任务](Pro接续_直接可互换人员分型与条件细类_20261020.md)已备好，尚未发送。以下带日期状态按历史阶段读取。
+**2026-10-20角点距离扩展：** [451对照／393共同候选](../../research/workers/personnel_composition_followup_20261019/PANEL_CORNER_REPORT.md)已实算；新背景G／R跨类角点均距为同类1.49／2.27倍。Pro任务已由用户发送，不改其任务书；当前继续独立几何核查。
+
+**2026-10-20最新接续：** [类别块额外背景核查](../../research/workers/personnel_composition_followup_20261019/README.md)已完成451对照／1353队、66图／12栋；两个方向均保留局部类内优势。[四例叠图](../../research/workers/personnel_composition_followup_20261019/index.html)已收到人工反馈，计算判据与视觉差异分开解释；[新Pro任务](Pro接续_直接可互换人员分型与条件细类_20261020.md)已备好，尚未发送。以下带日期状态按历史阶段读取。
 
 **类别组合返回后（2026-10-19最新）：** [过程审查、变量覆盖与并行安排](人员多变量反向分型_双线任务与验收_20261019.md)已更新。Pro本轮组合研究已返回并在本地核查；T/scope进入候选不等于完成直接换类验证，Semi自身条件已有构成实验，新错误非编辑有实验、旧确认盲信机会不足。接续直接以可互换性学习/选择类别，Pro发现与Codex独立验收可并行，尚未发起新轮。原[前置输入](../../research/workers/personnel_composition_handoff_20261019/README.md)和[提示词](Pro新轮_人员类别组合替换提示词_20261019.md)保留交接历史；本轮返回包尚未登记为main归档或研究台已接入。
 

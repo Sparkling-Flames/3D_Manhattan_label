@@ -1,6 +1,6 @@
 # HOHONET 文档入口
 
-- 2026-10-19：[同房预测独立计划：多视角历史与人员重放](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)。统一历史图片严格超过50%；平均质量、真实曲线和个人Q并列，新多图实验尚未运行。
+- 2026-10-19—20：[同房预测独立计划](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)及[多视角真实重放结果](../research/same_room/same_room_multiview_20261020/README.md)。质量迁移、个人Q预测和真实融合曲线重放已完成；不把未知同建筑关系当异房。
 
 当前数据入口：[v2公开版本清单与研究状态](../research/data/releases/v2/README.md)。匿名原始最小记录、预处理坐标和研究证据已纳入仓库；含身份映射或自由文本的完整分析输入仍为本机资料。
 
@@ -241,6 +241,8 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 - 2026-10-19 同房v2预测：[首轮报告](../research/same_room/same_room_v2_prediction_20261019/README.md)及[研究台同房模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=same_room&tab=0)。123对质量描述与固定面板人数预测分开；OOS排除、门洞单列、人员类型暂缓。工具 `tools/thesis_main/analysis/same_room_v2_prediction_20261019.py`，5项边界测试及既有研究台构建器接入。
 
+- 2026-10-20 同房多视角复算：[研究结果](../research/same_room/same_room_multiview_20261020/README.md)。9个直接关系组、44图的质量迁移；6个全组和14个覆盖子组真实重放，124,924个前缀；OOS排除、门洞单列、人员类型暂缓。工具`tools/thesis_main/analysis/same_room_multiview_20261020.py`，含冻结输入与重放核验。
+
 - 2026-10-19 新Pro类别组合研究：[前置数据与支持核查](../research/workers/personnel_composition_handoff_20261019/README.md)、[提示词](thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md)。整理工具 `tools/thesis_main/analysis/prepare_personnel_composition_handoff_20261019.py`，关键测试 `tests/test_personnel_composition_handoff_20261019.py`；此项为前置整理历史，后续组合研究已返回，最新状态见人员任务书。
 
 - 2026-10-19 类别组合返回后：[过程审查、变量覆盖与并行安排](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)。T/scope候选与直接替换验证分开；Semi及新非编辑已有条件实验。Pro拟负责直接互换性分型，Codex负责独立验收；新轮未发起，返回包未自动归档或接研究台。
@@ -248,3 +250,11 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - 2026-10-20：[直接可互换人员分型Pro接续](thesis_main/Pro接续_直接可互换人员分型与条件细类_20261020.md)；[451对照独立核查与四例叠图](../research/workers/personnel_composition_followup_20261019/README.md)。前轮精简包归档`research/workers/personnel_composition_study_20261019/`；本轮工具`tools/thesis_main/analysis/personnel_composition_followup_20261019.py`。
 
 - 2026-10-19：人员组合研究与Dot独立审查分别归档：[Pro研究包](../research/workers/personnel_composition_study_20261019/README_ZH.md)、[Dot复算说明](../research/workers/personnel_composition_dot_audit_20261019/README_复算说明.md)。匿名`worker_id`级证据；不代表正式类别已冻结。
+
+- 2026-10-20：[四例对应角点视觉与数值复审](../research/workers/personnel_composition_followup_20261019/CORNER_REVIEW.md)，工具`tools/thesis_main/analysis/personnel_corner_review_20261020.py`；保留原评分及类别合同。
+
+- 2026-10-20：[451事件角点距离扩展](../research/workers/personnel_composition_followup_20261019/PANEL_CORNER_REPORT.md)，工具`tools/thesis_main/analysis/personnel_corner_panel_20261020.py`；Pro任务已发送，本轮只接续Codex评价线。
+
+- 2026-10-20：[类别替换结构与失败补查](../research/workers/personnel_composition_followup_20261019/STRUCTURE_REPORT.md)，工具`tools/thesis_main/analysis/personnel_structure_tail_20261020.py`；451事件全分母及58个非共同角点候选。
+
+- 2026-10-20：[类别替换节点投票追踪](../research/workers/personnel_composition_followup_20261019/VOTE_REPORT.md)，工具`tools/thesis_main/analysis/personnel_vote_trace_20261020.py`；174队重放与组关系追踪。
