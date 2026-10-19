@@ -1,0 +1,38 @@
+{
+  "schema": "same_room_multiview_20261020_v1",
+  "data_release": "v2",
+  "status": "exploratory_completed",
+  "inputs": {
+    "manifest": "research/data/releases/v2/analysis_input/manifest.json",
+    "statistics": "research/statistics/v2_integrated_analysis_20261019",
+    "score": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+    "relations": "research/same_room/relation_adoption_20261016/CROSS_MODULE_RELATIONS.json",
+    "fusion_snapshot": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz"
+  },
+  "coverage": {
+    "quality_groups": 9,
+    "quality_images": 44,
+    "buildings": 7,
+    "majority_quality_splits": 1122,
+    "replay_whole_groups": 6,
+    "replay_coverage_subsets": 14,
+    "replay_images": 43,
+    "replay_paths": 2766,
+    "replay_prefixes": 124924
+  },
+  "files": {
+    "report": "README.md",
+    "mean": "mean_summary.csv",
+    "person": "individual_fitted_summary.csv",
+    "curves": "curve_summary.csv",
+    "groups": "group_coverage.csv",
+    "curve_coverage": "curve_coverage.csv",
+    "nodes": "replay_nodes.csv.gz",
+    "controls": "background_controls.csv",
+    "validation": "VALIDATION.json"
+  },
+  "no_oos": true,
+  "doorway_separate": true,
+  "personnel_classes_deferred": true,
+  "human_decisions_required": []
+}
