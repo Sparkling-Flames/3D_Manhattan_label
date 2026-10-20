@@ -1,5 +1,30 @@
 # 当前证据恢复与分批发布状态
 
+## 2026-10-20 派生表补齐核验结果
+
+10份已知缺失派生表均已按冻结输入补齐并通过核验，共5,104,246行、130,220,945字节。3,844份恢复输入共1,552,498,895字节逐文件SHA-256复核通过；69,164个冻结端点队伍完整覆盖，失败、不完整及异数结果保留。与可用历史证据逐表核对通过（29份保留表、63,467行）；未重拟合标签、未重选模型或阈值，原科学结论和采用边界不变。
+
+完整CDF含4,752,992行、96条序列；单调、范围及末端为1核验通过。混合历史逐建筑配对表含2,520行，6套候选、5折；保存的逐折标签、工作标签、方法清单和QT特征hash保持不变。
+
+补齐表属于冻结重建产物，当前压缩文件SHA-256与历史缺失记录不同；不能将现有核验冒称已与不可用的原始完整表做逐字节或全单元格比较。旧孤立图corner_continuous_004.png仍未恢复，历史最终暂存计数的19项差额仍无逐路径依据。未伪造旧图、未知路径或旧CDF打包NPZ；完整CDF仍是65,615,526字节的CSV.gz。受本轮传输请求大小限制，CDF及历史块端点表以各自专属.parts目录内的8MiB二进制分片归档，自动合并脚本逐片及整文件核对SHA-256后还原原目标路径，不降精度、不删行。
+
+“本地已补齐并核验”与“GitHub main提交已确认”分开记录。此说明随补齐文件进入提交后才表示可在该提交下载；blob上传成功本身不代表提交完成。
+
+- [10表完整恢复回执及当前hash](recovery/derived_tables/DERIVED_TABLE_RECOVERY_RECEIPT.json)
+- [冻结输入、69,164队覆盖及失败状态](recovery/derived_tables/NATIVE_REPLAY_INTEGRITY.json)
+- [混合配对表保留汇总核验](recovery/derived_tables/MIXED_PAIRED_RECOVERY_RECEIPT.json)
+- [CDF完整性核验](recovery/derived_tables/verification/cdf_integrity.json)
+- [大表分片清单](recovery/derived_tables/LARGE_TABLES.json)及[自动合并校验脚本](recovery/derived_tables/restore_large_tables.py)
+- [当前未恢复项与历史清单](recovery/UNAVAILABLE_FILES.json)
+
+下载仓库后运行：`python3 research/workers/personnel_interchangeability_followup_20261020/recovery/derived_tables/restore_large_tables.py`。脚本从自身路径识别仓库根目录，也可显式传入`--repo-root`；只在当前目标文件缺失时恢复，已有文件hash不同会停止，不覆盖现有数据。恢复后原复算脚本可以继续使用原CSV.gz路径。
+
+## 历史恢复快照：2026-10-20 02:10 UTC
+
+以下原文完整保留。其“当前”“缺10份”“未重做原生融合”等表述仅描述02:10时点；后续补齐状态以上方新核验结果为准。
+
+# 当前证据恢复与分批发布状态
+
 截至2026-10-20 02:10 UTC。本说明区分“研究曾实际执行并留下回执”“证据文件目前已恢复”和“已经进入GitHub提交”三件事。文件存在或blob上传成功均不等于main提交完成；分批发布进度应以实际提交核验为准。
 
 ## 当前可交付内容

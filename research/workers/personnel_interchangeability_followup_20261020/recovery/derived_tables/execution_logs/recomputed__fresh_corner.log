@@ -1,0 +1,3 @@
+/workspace/scratch/81fa50cc64f5/recovery/native_rebuild/audit_corner/evaluate_corner_extension.py:65: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  check=dict(events=len(ev),pairs=len(df),joint_events=int(ev.both_available.sum()),reversed_pairs=int(df.ring_reversed.fillna(False).sum()),point_rows=len(details),source='native final replay' if args.native else 'embedded case final rows')
+{"events": 2552, "pairs": 5104, "joint_events": 2141, "reversed_pairs": 28, "point_rows": 20801, "source": "native final replay"}

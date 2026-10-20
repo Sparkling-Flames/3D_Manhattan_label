@@ -1,0 +1,28 @@
+{
+  "encoding": "ordered_lossless_binary_parts_of_original_gzip",
+  "target_path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz",
+  "target_bytes": 22437248,
+  "target_sha256": "14898200251903991f7066ba30995698691a1ec595f2170ac1ec2ac6e6f76914",
+  "historical_expected_sha256": "2e5a8ef95927e2812967aea2e582baa86309e9484bd2ad314f99eda1b5dbd3b8",
+  "parts": [
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz.parts/part-0001.bin",
+      "bytes": 8388608,
+      "sha256": "198e95c76b8f5be09b9f5b1ed1000de77adc16cee5841a9f4496c3d6eeae7dc6",
+      "git_blob_sha": "e569e9d382895e881dc6b08a6f29c5b98ce90f2b"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz.parts/part-0002.bin",
+      "bytes": 8388608,
+      "sha256": "fcfd111c897e10fe0d59cb077179c03fc4189fc639ceaff64fa5f8a3586aeba7",
+      "git_blob_sha": "341b97e19de5fcf960c1e12267d4a2b4395abce6"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz.parts/part-0003.bin",
+      "bytes": 5660032,
+      "sha256": "202a354a884f6de411b6d2c05fedc5865353b8310f3ac15eb5529189826417c5",
+      "git_blob_sha": "2dc7e4676150aa83c95a271a19e21c9199ac98f4"
+    }
+  ],
+  "restore_command": "python3 research/workers/personnel_interchangeability_followup_20261020/recovery/derived_tables/restore_large_tables.py"
+}

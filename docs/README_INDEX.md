@@ -258,3 +258,9 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - 2026-10-20：[类别替换结构与失败补查](../research/workers/personnel_composition_followup_20261019/STRUCTURE_REPORT.md)，工具`tools/thesis_main/analysis/personnel_structure_tail_20261020.py`；451事件全分母及58个非共同角点候选。
 
 - 2026-10-20：[类别替换节点投票追踪](../research/workers/personnel_composition_followup_20261019/VOTE_REPORT.md)，工具`tools/thesis_main/analysis/personnel_vote_trace_20261020.py`；174队重放与组关系追踪。
+
+## 2026-10-20 独立角点补充与分类接续
+
+见[本轮独立结论与交付入口](thesis_main/人员角点距离补充与分型独立结论_20261020.md)。Pro新包、独立复算、连续角点与真实块学习分别留档；保留Rnew2/F01条件用途，新细分类未胜过有效基线，不升级生产人员标签。既有历史状态以上述接续为补充，不删除历史证据。
+
+本轮10份派生表已按冻结输入补齐并通过保留证据核验，完整CDF保留；未重拟合模型或重选阈值。旧孤立图与19项未能逐路径确认的历史计数差继续明确保留。详见[最新恢复状态与回执](../research/workers/personnel_interchangeability_followup_20261020/RECOVERY_STATUS.md)，实际归档进度以main提交核验为准。

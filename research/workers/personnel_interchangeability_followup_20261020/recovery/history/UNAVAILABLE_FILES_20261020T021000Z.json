@@ -1,0 +1,85 @@
+{
+  "as_of_utc": "2026-10-20T02:10:00Z",
+  "current_state": "pending_reconstruction_not_present",
+  "files": [
+    {
+      "path": "research/statistics/personnel_interchangeability_audit_20261020/statistics/block_fit/tolerance/EMPIRICAL_CDF.csv.gz",
+      "bytes": 65615526,
+      "sha256": "4139ada14a29464fce59842435d8785bffc9582aa5df58fb9c48485382b9df12",
+      "dependency_category": "derived_from_unavailable_history_library",
+      "recovery_requirements": "Retained block_tolerance_cdf.py requires missing history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz and retained saved fold labels. No model refit needed."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/cases/figures/corner_continuous_004.png",
+      "bytes": 175200,
+      "sha256": "3ed42cc1c4f3ac7f6c93c66c06a1736c51e831108ba632f7b896c2e43926f467",
+      "dependency_category": "stale_unindexed_figure",
+      "recovery_requirements": "Absent from retained cases FIGURE_INDEX.json and not emitted by the retained original renderer. Current case tables cannot establish its original content."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/common_library/COMMON_ENDPOINT_PAIRS.csv.gz",
+      "bytes": 10333230,
+      "sha256": "a239b82e9ff2ddeaed91a12f952a30f9e48d945aefd770cf89f386e42b2700a2",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen fresh_block_requests.json.gz and original fusion_runner.py exist; external hash-verified Part A restored inputs and native endpoint fusion are required before evaluate_common_library.py."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/core/CORNER_EVENTS.csv.gz",
+      "bytes": 2367059,
+      "sha256": "0d8d6cfce366fe24f1c4fd9269a8349261781ce757ebbfae3edcfdd036968d2d",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen original core requests and fusion runner exist; external hash-verified restored inputs and native core fusion are required before evaluate_corner_extension.py. Retained CORNER_POINTS rows alone omit failed and unequal-count outcomes."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/core/CORNER_PAIRS.csv.gz",
+      "bytes": 2390923,
+      "sha256": "0ad8445bdbe5e6470e9ff72c1edf2e0dbdea1bfadd58b8776e04922471914c0d",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen original core requests and fusion runner exist; external hash-verified restored inputs and native core fusion are required before evaluate_corner_extension.py. Retained CORNER_POINTS rows alone omit failed and unequal-count outcomes."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/direct_block_assessment/B_direct_m2_composition_K2/COMMON_ENDPOINT_PAIRS.csv.gz",
+      "bytes": 9809467,
+      "sha256": "64a8cb5132b03109f001101839e6267b4a5f324c1f23d7baac471731eca317ab",
+      "dependency_category": "derived_from_unavailable_common_library",
+      "recovery_requirements": "Retained evaluate_direct_block_family.py recategorizes missing common_library/COMMON_ENDPOINT_PAIRS.csv.gz with saved K2/K3 labels. No model refit needed."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/direct_block_assessment/B_direct_m2_composition_K3/COMMON_ENDPOINT_PAIRS.csv.gz",
+      "bytes": 9842244,
+      "sha256": "17e0bc5f4ca33ed4a8f0bb488599119fbb614ce0302fbeb66cc5c378f7d1cdb8",
+      "dependency_category": "derived_from_unavailable_common_library",
+      "recovery_requirements": "Retained evaluate_direct_block_family.py recategorizes missing common_library/COMMON_ENDPOINT_PAIRS.csv.gz with saved K2/K3 labels. No model refit needed."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/fresh_blocks/CORNER_EVENTS.csv.gz",
+      "bytes": 2853119,
+      "sha256": "02932f66dcfd4625a552e3ab607c060290ea486a558b8a49152663ed3e13f21a",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen fresh_block_requests.json.gz and original fusion_runner.py exist; rebuild native fresh-block endpoints then run evaluate_corner_extension.py. Retained CORNER_POINTS rows alone omit failed and unequal-count outcomes."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/fresh_blocks/CORNER_PAIRS.csv.gz",
+      "bytes": 2877583,
+      "sha256": "ba77cc5c74a951074b6b44adcc1601ee71e631689b7ff1d2665c00c5d0f2c4f1",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen fresh_block_requests.json.gz and original fusion_runner.py exist; rebuild native fresh-block endpoints then run evaluate_corner_extension.py. Retained CORNER_POINTS rows alone omit failed and unequal-count outcomes."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz",
+      "bytes": 22437248,
+      "sha256": "2e5a8ef95927e2812967aea2e582baa86309e9484bd2ad314f99eda1b5dbd3b8",
+      "dependency_category": "requires_native_endpoint_reconstruction",
+      "recovery_requirements": "Frozen history_block_requests.json.gz and original fusion_runner.py exist; external hash-verified Part A restored inputs and native endpoint fusion are required before evaluate_common_library.py --pairs-only."
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_followup_20261020/audit_learning/corner_fit_mixed/paired_random_building.csv.gz",
+      "bytes": 1694546,
+      "sha256": "7868dd665c590355225cf31165f408047d23df1e4d0f6f7596892440a26c094b",
+      "dependency_category": "requires_excluded_endpoint_pair_caches",
+      "recovery_requirements": "Saved evaluate_saved_corner_fit.py --tier mixed uses frozen fold labels, retained QT features and excluded corner_history/corner_h20 pair caches. Rebuild original history endpoint comparisons and H20 native outcomes first; the saved evaluator does not refit labels."
+    }
+  ],
+  "unknown_final_stage_difference": 19,
+  "unknown_final_stage_paths": "not established; not invented"
+}

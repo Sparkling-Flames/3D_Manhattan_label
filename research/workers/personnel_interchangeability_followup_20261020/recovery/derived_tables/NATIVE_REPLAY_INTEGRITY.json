@@ -1,0 +1,94 @@
+{
+  "restored_files_reverified": 3844,
+  "restored_bytes_reverified": 1552498895,
+  "archive_manifest_sha256": "0dcec685f67050a8d72f6aa71d5fe96b8fb7baffd5bb4fd8e9aa1d4fd0a99d5d",
+  "all_restored_file_hashes_match": true,
+  "frozen_scripts_labels_and_requests_unchanged": true,
+  "cdf_change_is_input_path_only": true,
+  "endpoint_replays": [
+    {
+      "mode": "core",
+      "request_sha256": "85e9a1ec1181da6ada3570f64087892606512abed179e282c7719e6932c3a89f",
+      "frozen_request_rows": 17726,
+      "unique_endpoint_teams": 17726,
+      "coverage_exact": true,
+      "score_status_counts": {
+        "complete_conditional": 17514,
+        "no_connection": 167,
+        "invalid_floor": 13,
+        "below_four": 32
+      },
+      "failed_outcomes_retained": true
+    },
+    {
+      "mode": "fresh",
+      "request_sha256": "2324bf001fbc0b5387632758b817645fe5cd6965e391850a6ccc4e0c89167600",
+      "frozen_request_rows": 12229,
+      "unique_endpoint_teams": 12229,
+      "coverage_exact": true,
+      "score_status_counts": {
+        "complete_conditional": 11977,
+        "below_four": 184,
+        "no_connection": 68
+      },
+      "failed_outcomes_retained": true
+    },
+    {
+      "mode": "history",
+      "request_sha256": "9fa849e711bbe71d2b052096aeadb9722cb2b1f22f08b90a7940a61e900e9e00",
+      "frozen_request_rows": 7670,
+      "unique_endpoint_teams": 7670,
+      "coverage_exact": true,
+      "score_status_counts": {
+        "complete_conditional": 7502,
+        "below_four": 77,
+        "no_connection": 91
+      },
+      "failed_outcomes_retained": true
+    },
+    {
+      "mode": "h20",
+      "request_sha256": "f5c4cce84b6a62aa63dccac9b87ffcf25a23441e5f403cc1a5b22efcf6cf76d2",
+      "frozen_request_rows": 31539,
+      "unique_endpoint_teams": 31539,
+      "coverage_exact": true,
+      "score_status_counts": {
+        "complete_conditional": 30744,
+        "no_connection": 585,
+        "below_four": 206,
+        "invalid_floor": 4
+      },
+      "failed_outcomes_retained": true
+    }
+  ],
+  "total_frozen_endpoint_teams": 69164,
+  "no_refit": true,
+  "no_reselection": true,
+  "python": "3.12.14",
+  "packages": {
+    "pypdf": "6.10.0",
+    "scipy": "1.17.0",
+    "fonttools": "4.61.1",
+    "tzdata": "2026.5",
+    "threadpoolctl": "3.6.0",
+    "cycler": "0.12.1",
+    "reportlab": "4.4.9",
+    "kiwisolver": "1.5.1",
+    "pip": "25.0.1",
+    "six": "1.17.0",
+    "shapely": "2.1.2",
+    "python-dateutil": "2.9.0.post0",
+    "packaging": "26.3",
+    "cloudpickle": "3.1.2",
+    "contourpy": "1.4.0",
+    "pyparsing": "3.3.3",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "charset-normalizer": "3.5.2",
+    "matplotlib": "3.10.8",
+    "scikit-learn": "1.8.0",
+    "joblib": "1.6.0",
+    "pytz": "2026.5",
+    "pillow": "12.3.0"
+  }
+}
