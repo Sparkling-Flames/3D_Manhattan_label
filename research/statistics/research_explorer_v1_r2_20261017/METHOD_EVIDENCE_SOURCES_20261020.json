@@ -1,0 +1,126 @@
+{
+  "schema": "research_workbench_method_sources_v1",
+  "data_release": "v2",
+  "snapshot_id": "v2_integrated_analysis_20261019",
+  "source_commit": "1048c38b9cde986af14557d7af8fe5ea2c2f040a",
+  "display_revision": "method_evidence_20261020_r1",
+  "purpose": "Read-only frozen source packing; not a new research contract or scoring version",
+  "sources": [
+    {
+      "label": "FINDINGS.json",
+      "path": "research/quality/v2_structure_quality_interpretation_20261020/FINDINGS.json",
+      "sha256": "0f31eb4d18e0517577aba239f0dc2eefb5dfbda0360024fd3fa1ebc306740881",
+      "bytes": 7421
+    },
+    {
+      "label": "STRUCTURE_CASES.json",
+      "path": "research/workers/personnel_composition_followup_20261019/STRUCTURE_CASES.json",
+      "sha256": "5dbc11753f2da13dfba723a7db663b9bed5bd32cb379ce71b360bdc6884a2ffd",
+      "bytes": 14867
+    },
+    {
+      "label": "TEAMS.json.gz",
+      "path": "research/workers/personnel_composition_followup_20261019/TEAMS.json.gz",
+      "sha256": "478b9a0d1c004fa914b2b9c2bfa9e2ec8b4c2c7497453f266c36d459fd7cdbaf",
+      "bytes": 650317
+    },
+    {
+      "label": "STATES.json.gz",
+      "path": "research/fusion/fusion_change_mechanisms_20261020/STATES.json.gz",
+      "sha256": "3150817debfbc317c6a058aea10faf90ce6d3c9fa61f43fb7b2b3afa7c6282ac",
+      "bytes": 2731144
+    },
+    {
+      "label": "TEAMS.json.gz",
+      "path": "research/fusion/fusion_change_mechanisms_20261020/TEAMS.json.gz",
+      "sha256": "00180dc12a65e57d1db83e42944bf3a41a19ad5aee2e2184b1f5153fdaef6100",
+      "bytes": 734894
+    },
+    {
+      "label": "DESIGN.json",
+      "path": "research/fusion/fusion_change_mechanisms_20261020/DESIGN.json",
+      "sha256": "fd0b8c11f5736854aadacf2e084c38b89e4abe8e114b7876ed44823158df385d",
+      "bytes": 607346
+    },
+    {
+      "label": "NESTED_STEPS.csv",
+      "path": "research/fusion/fusion_change_mechanisms_20261020/NESTED_STEPS.csv",
+      "sha256": "70ee83d8c70e20b02c9a59235918d938f33f5d7b6c7ea6b648fc106a7442f9d2",
+      "bytes": 46719
+    },
+    {
+      "label": "FROZEN_IDENTITY_CONTROL.json",
+      "path": "research/fusion/fusion_change_mechanisms_20261020/FROZEN_IDENTITY_CONTROL.json",
+      "sha256": "078c55be9f6c48986103439b50c4348b6fa8278966bc09a04f2e685f9bd9a762",
+      "bytes": 2176
+    },
+    {
+      "label": "case_states.json",
+      "path": "research/same_room/same_room_multiview_20261020/structure_transfer/case_states.json",
+      "sha256": "beef32fff5bf130155259be51a3c214cd0bbc558f34e6e08503092db0775fd8a",
+      "bytes": 3577859
+    },
+    {
+      "label": "focus_process.csv",
+      "path": "research/same_room/same_room_multiview_20261020/structure_transfer/focus_process.csv",
+      "sha256": "6f1be4ce0e95705fbefe60434f1e334de4ee014d4f2531e652b3510cf4a4ec71",
+      "bytes": 46757
+    },
+    {
+      "label": "group_coverage.csv",
+      "path": "research/same_room/same_room_multiview_20261020/group_coverage.csv",
+      "sha256": "1a5a1db29cf36ee068b946fb02408eae457d395adc686fc629286c44011c6198",
+      "bytes": 19981
+    },
+    {
+      "label": "records.json.gz",
+      "path": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+      "bytes": 14751756
+    },
+    {
+      "label": "analysis_context.json.gz",
+      "path": "research/workers/pro_personnel_v2_20261019/analysis_context.json.gz",
+      "sha256": "95455b81cc0de947d704ee2e0935ee795f9c8e0e9de33bd9d1b93e554a6742a2",
+      "bytes": 839683
+    }
+  ],
+  "selection": {
+    "quality_cases": [
+      "S1",
+      "S2",
+      "S3",
+      "YQ24"
+    ],
+    "fusion_path": {
+      "image": "q9vSo1VnCiC-30",
+      "arm": "B",
+      "integer_k": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "source_selection": "Existing saved representative path; not selected by the workbench using outcome scores"
+    },
+    "multiview_groups": [
+      "MV0001",
+      "MV0003"
+    ],
+    "doorway": "Existing doorway flags only; strict optical-center position remains unverified"
+  },
+  "output": "v2-resources/research_evidence.json with a matching .js offline companion",
+  "generated_outputs_committed": false
+}
