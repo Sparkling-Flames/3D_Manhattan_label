@@ -1,0 +1,20 @@
+{
+  "raw_pairs": 144140,
+  "methods": [
+    "B_direct_m2_composition_K2",
+    "B_direct_m2_composition_K3"
+  ],
+  "rows": 4752992,
+  "folds": "Hash-recomputed held-out buildings; no full-fit labels used.",
+  "support": "Four-cell conditional common anchors; all-observed arm coverage separately. Same endpoints, not same within pair populations. No optimized tolerance.",
+  "inputs_sha256": {
+    "audit_corner/history_block_metrics/COMMON_ENDPOINT_PAIRS.csv.gz": "2e5a8ef95927e2812967aea2e582baa86309e9484bd2ad314f99eda1b5dbd3b8",
+    "audit_learning/block_fit/fold_labels.csv": "4d4cfeb9c17c164fd85553f31880a3a581e47fe70cdb8640c147b06efb37939e",
+    "audit_learning/original_Rnew2_inner_fold_labels.csv": "e6c6da09f76e64b0efef434e36ebc21320d3c5e82d316caaf57be164918f73b1"
+  },
+  "cdf_validation": {
+    "rows": 4752992,
+    "series": 96,
+    "monotone_bounded_terminal_one": true
+  }
+}

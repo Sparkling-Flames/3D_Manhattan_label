@@ -1,0 +1,16 @@
+{
+  "inner_rows": 20,
+  "paired_rows": 840,
+  "inner_max_error": 2.220446049250313e-16,
+  "paired_max_error": 2.220446049250313e-16,
+  "all_paired_arithmetic": true,
+  "finite_objective_starts": 24,
+  "all_traces_strictly_decreasing": true,
+  "inputs": {
+    "inner_cv_building.csv": "b9b8e27c9e64cb287c1c9fb724afe7173a893cdc062cb9426d1261743b6beadf",
+    "paired_building.csv.gz": "33a079c25eb505cfe5c607c8ad6233c2d8a754a46bfe53dc246900c9ee38185c",
+    "FIT_LEDGER.json": "4a3f64eafd74f22b8403620dd3e8ff41546b7d9d5f56be6e7c16ef10718fa5a1",
+    "RUN_RECEIPT.json": "5512ebfde9eb49c85e14d05d206508a4ef8f199eea6c383d5d7115e4f7587cc8"
+  },
+  "caveat": "Aggregation and ledger audit; does not independently refit. Building bootstrap descriptive, correlated folds and training selection remain."
+}
