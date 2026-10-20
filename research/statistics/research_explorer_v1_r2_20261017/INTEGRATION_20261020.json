@@ -1,0 +1,72 @@
+{
+  "schema": "research_workbench_integration_receipt_v1",
+  "integration_revision": "coordinator_extension_20261020_r1",
+  "snapshot_id": "v2_integrated_analysis_20261019",
+  "built_from_main": "9f192655",
+  "display_only": true,
+  "tables_added": 17,
+  "tables_total_after": 87,
+  "new_table_ids": [
+    "same_room_multiview__mean_summary",
+    "same_room_multiview__mean_groups",
+    "same_room_multiview__individual_summary",
+    "same_room_multiview__curve_summary",
+    "same_room_multiview__replay_behavior",
+    "same_room_multiview__group_coverage",
+    "same_room_multiview__background_buildings",
+    "workers__working_labels_60",
+    "workers__high_q_features",
+    "fusion__composition_panel_building",
+    "fusion__composition_panel_image",
+    "fusion__composition_corner_distances",
+    "fusion__composition_corner_summary",
+    "fusion__composition_corner_panel",
+    "fusion__audit_bootstrap",
+    "fusion__audit_failure_denominators",
+    "fusion__audit_f01_time"
+  ],
+  "source_packages": [
+    "research/workers/personnel_interchangeability_followup_20261020",
+    "research/statistics/personnel_interchangeability_audit_20261020",
+    "research/workers/personnel_composition_followup_20261019",
+    "research/same_room/same_room_multiview_20261020"
+  ],
+  "report_only_packages": [
+    "research/workers/personnel_interchangeability_20261020"
+  ],
+  "tests": {
+    "pytest": "6 passed in 0.37s",
+    "node_core": "PASS",
+    "row_count_checks": "17/17",
+    "structure": "STRUCTURE OK: tables=87, new=17, tabs=workers7/fusion10/same_room20, sections=8",
+    "payload_checks": "17/17 exact CSV records; JSON/JS wrappers; 4 report links; historical link last; N1 false",
+    "javascript_syntax": "PASS: workbench.js and dataset-config.js"
+  },
+  "browser_check": "manual_pending",
+  "generated_data_local_only": [
+    "v2-data/",
+    "v2-resources/"
+  ],
+  "not_changed": [
+    "scores",
+    "eligibility",
+    "labels",
+    "references",
+    "n1_applied",
+    "snapshot_id",
+    "research_packages"
+  ],
+  "browser_check_detail": "Headless Edge --dump-dom exited with code -6; no DOM output. User double-click file:// verification pending.",
+  "baseline": {
+    "commit": "9f1926553ec1b7c0ebc4e9fedccbfa29e26bde87",
+    "pytest": "3 passed in 0.27s",
+    "tables": 70
+  },
+  "build_output": {
+    "raw_records": 10439,
+    "images": 261,
+    "quality_records": 7302,
+    "retained_people": 60,
+    "tables": 87
+  }
+}

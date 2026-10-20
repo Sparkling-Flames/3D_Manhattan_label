@@ -16,6 +16,31 @@ QUALITY = ROOT / 'research/quality/quality_workers_v2_20261019'
 INPUT = ROOT / 'research/data/releases/v2/analysis_input'
 SNAPSHOT = 'v2_integrated_analysis_20261019'
 SAME_ROOM = ROOT / 'research/same_room/same_room_v2_prediction_20261019'
+EXPLORER = PAGE
+EXTRA = EXPLORER / 'DISPLAY_TABLES_20261020.json'
+MULTIVIEW = ROOT / 'research/same_room/same_room_multiview_20261020'
+MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
+                    'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
+                    'background_buildings.csv']
+EXTRA_MODULE_TABS = {
+    'same_room': [('多视角预测汇总', 'same_room_multiview__mean_summary'),
+                  ('多视角逐组', 'same_room_multiview__mean_groups'),
+                  ('个人Q预测汇总', 'same_room_multiview__individual_summary'),
+                  ('真实融合曲线汇总', 'same_room_multiview__curve_summary'),
+                  ('人数曲线行为', 'same_room_multiview__replay_behavior'),
+                  ('覆盖与共同人员', 'same_room_multiview__group_coverage'),
+                  ('背景对照', 'same_room_multiview__background_buildings')],
+    'workers': [('人员工作标签（Rnew2/F01，仅研究参照）', 'workers__working_labels_60'),
+                ('高Q23效率与行为特征', 'workers__high_q_features')],
+    'fusion': [('类别块逐建筑', 'fusion__composition_panel_building'),
+               ('类别块逐图', 'fusion__composition_panel_image'),
+               ('对应角点距离', 'fusion__composition_corner_distances'),
+               ('对应角点汇总', 'fusion__composition_corner_summary'),
+               ('角点面板汇总', 'fusion__composition_corner_panel'),
+               ('独立重抽样区间', 'fusion__audit_bootstrap'),
+               ('失败与分母', 'fusion__audit_failure_denominators'),
+               ('F01效率重聚合', 'fusion__audit_f01_time')],
+}
 
 
 def read(path):
@@ -37,6 +62,35 @@ def load_same_room_prediction(source):
                 row['condition'] = 'manual'
         tables['same_room_prediction__' + Path(filename).stem] = rows
     return tables
+
+
+def load_contract_tables(source, prefix, include):
+    contract = read(source / 'FIELD_CONTRACT.json')['tables']
+    tables = {}
+    for filename in include:
+        if filename not in contract:
+            raise ValueError('display table not in FIELD_CONTRACT: ' + filename)
+        frame = pd.read_csv(source / filename, encoding='utf-8-sig')
+        if list(frame.columns) != contract[filename]:
+            raise ValueError('display schema drift: ' + filename)
+        tables[prefix + Path(filename).stem] = (
+            frame.astype(object).where(frame.notna(), None).to_dict('records'))
+    return tables
+
+
+def load_declared_tables(manifest):
+    tables, provenance = {}, {}
+    for spec in manifest['tables']:
+        path = ROOT / spec['source']
+        if not path.is_file():
+            raise FileNotFoundError('display source missing: ' + spec['id'] + ' -> ' + spec['source'])
+        frame = pd.read_csv(path, encoding='utf-8-sig')
+        if list(frame.columns) != spec['columns']:
+            raise ValueError('display schema drift: ' + spec['id'] + ' (' + spec['source'] + ')')
+        tables[spec['id']] = (
+            frame.astype(object).where(frame.notna(), None).to_dict('records'))
+        provenance[spec['id']] = spec['source']
+    return tables, provenance
 
 
 def validate_objects(objects, scores):
@@ -169,7 +223,16 @@ def build():
             semi.append(entry)
     tables.update(workers__scope_opportunities=scope,workers__semi_initialization_scores=semi,workers__exclusion_evidence=exclusions)
     tables.update(load_same_room_prediction(SAME_ROOM))
-    metadata = [display_table(PAGE/'v2-data', name, rows, f'{STATS.relative_to(ROOT).as_posix()}/tables.json#{name}')
+    extra_manifest = read(EXTRA)
+    extra, extra_provenance = load_declared_tables(extra_manifest)
+    multiview = load_contract_tables(MULTIVIEW, 'same_room_multiview__', MULTIVIEW_TABLES)
+    tables.update(multiview)
+    tables.update(extra)
+    source_map = dict(extra_provenance)
+    source_map.update({f'same_room_multiview__{Path(f).stem}':
+                       f'{MULTIVIEW.relative_to(ROOT).as_posix()}/{f}' for f in MULTIVIEW_TABLES})
+    metadata = [display_table(PAGE/'v2-data', name, rows,
+                              source_map.get(name, f'{STATS.relative_to(ROOT).as_posix()}/tables.json#{name}'))
                 for name, rows in tables.items()]
     next(t for t in metadata if t['id']=='quality__shared_records')['path'] = EVIDENCE.relative_to(ROOT).as_posix()+'/records.json.gz'
     for item in metadata:
@@ -182,6 +245,9 @@ def build():
                       'difficulty_preferences':'difficulty_preferences'}.get(item['id'].split('__')[1])
             item['path'] = (f'{STATS.relative_to(ROOT).as_posix()}/tables.json.gz#statistics__personnel_{source}'
                             if source else EVIDENCE.relative_to(ROOT).as_posix()+'/records.json.gz')
+    for item in metadata:
+        if item['id'] in source_map:
+            item['path'] = source_map[item['id']]
     coverage = read(STATS/'COVERAGE.json')
     tables['statistics__requirements_coverage']=coverage['requirements']
     metadata.append(display_table(PAGE/'v2-data','statistics__requirements_coverage',coverage['requirements'],
@@ -205,7 +271,12 @@ def build():
                     ('逐人库存','statistics__worker_inventory'),('排除归因','workers__exclusion_evidence'),
                     ('重叠限制原因','statistics__exclusion_reason_hits'),('逐项需求覆盖','statistics__requirements_coverage')]
     }
+    for module, tabs in EXTRA_MODULE_TABS.items():
+        modules[module].extend(tabs)
     modules={key:[tab for tab in tabs if tab[1] in tables] for key,tabs in modules.items()}
+    missing = [tid for tabs in EXTRA_MODULE_TABS.values() for _, tid in tabs if tid not in tables]
+    if missing:
+        raise ValueError('missing display tables: ' + ', '.join(missing))
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
           documents=[dict(path='research/statistics/v2_integrated_analysis_20261019/COVERAGE.json',content=coverage),
                      dict(path=SAME_ROOM.relative_to(ROOT).as_posix()+'/CONSUMER_INTERFACE.json',content=read(SAME_ROOM/'CONSUMER_INTERFACE.json')),
@@ -233,6 +304,35 @@ def build():
                support='OOS排除、门洞单列；已知源视角评价下留建筑预测，人员分类暂不接入。',
                counterexample='尚无确认异房匹配对照；不同预测面板不能直接比较优劣。',
                tables=[dict(id='same_room_prediction__prediction_summary',label='预测汇总与人数曲线')])]
+    sections.extend([
+        dict(title='人员类别接续（Rnew2 / F01）',
+             finding='Rnew2 21/14 两类的换 5 人方向平均 +6.652 B8L2（24/29 图、6/6 建筑同向，bootstrap CI [2.32, 11.86]）；F01 快 12/慢 11 的净 Q ≈ 0（−0.029），来源时间几何比 0.375。',
+             support='冻结 29 图/6 栋、35 名新批人员；17,726 队原生重融合与 1,819 事件独立复算通过。',
+             counterexample='同构成/跨构成主相近率 47.74%/44.76%，差 2.98 个百分点且 CI 跨 0；固定类型各方法最多 1/21 建筑达标；不能称同类任意换人曲线不变。',
+             tables=[dict(id='workers__working_labels_60', label='人员工作标签'),
+                     dict(id='fusion__audit_bootstrap', label='独立重抽样区间'),
+                     dict(id='fusion__audit_f01_time', label='F01效率重聚合')]),
+        dict(title='类别块构成与角点证据',
+             finding='跨类/同类 BEV 角点均距：G 1.49 倍、R 2.27 倍。',
+             support='451 对照 / 1,353 队 / 66 图 / 12 栋；只读展示冻结类别块与对应角点证据。',
+             counterexample='均值差受尾部事件驱动、并非多数事件都明显分开。',
+             tables=[dict(id='fusion__composition_panel_building', label='类别块逐建筑'),
+                     dict(id='fusion__composition_corner_distances', label='对应角点距离'),
+                     dict(id='fusion__composition_corner_summary', label='对应角点汇总'),
+                     dict(id='fusion__composition_corner_panel', label='角点面板汇总')]),
+        dict(title='同房多视角重放',
+             finding='同房历史 MAE 4.80 vs 其他建筑 10.15；全组融合曲线 MAE 7.71 vs 随机单源 8.87。',
+             support='9 个关系组 / 44 图 / 7 栋；质量迁移与真实融合曲线使用各冻结面板。',
+             counterexample='G057 两视角掉点、G046/G178 低平台；未知同建筑关系不等于异房；人员类型尚未接入该面板。',
+             tables=[dict(id='same_room_multiview__mean_summary', label='多视角预测汇总'),
+                     dict(id='same_room_multiview__curve_summary', label='真实融合曲线汇总'),
+                     dict(id='same_room_multiview__replay_behavior', label='人数曲线行为')]),
+        dict(title='独立审查边界',
+             finding='17,726 核心队原生重融合一致。',
+             support='独立审查确认 32 字段与几何指纹一致；本次仅接入既有结果。',
+             counterexample='57 万任务未全部重跑、1,808 反向候选未全部重训、10 张重建表压缩 SHA 与历史记录不同。',
+             tables=[dict(id='fusion__audit_failure_denominators', label='失败与分母')]),
+    ])
     write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 

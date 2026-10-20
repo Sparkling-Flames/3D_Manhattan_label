@@ -381,7 +381,7 @@ async function init(){
   $('release').innerHTML=window.RESEARCH_DATASETS.map(d=>`<option value="${d.release}" ${d.release===dataset.release?'selected':''} ${!d.available?'disabled':''}>${esc(d.label)}</option>`).join('');
   [index,assets,overview]=await Promise.all([read(dataset.tablesIndex),read(dataset.resourcesIndex),read(dataset.overview)]);
   if(index.snapshot_id!==SNAPSHOT||assets.snapshot_id!==SNAPSHOT||overview.metadata?.snapshot_id!==SNAPSHOT||index.data_release!==dataset.release||assets.data_release!==dataset.release)throw Error('数据版本、消费索引、资源与概要快照不一致，停止混合加载。');
-  if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对Q、同任务相对Q、时间与难度表现是探索性画像；Semi和scope各自保留机会分母。';modules.fusion[1]='v2组合人数支持与待运行任务；实际融合和替换结果仍属v1历史。';}
+  if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对Q、同任务相对Q、时间与难度表现是探索性画像；Semi和scope各自保留机会分母。10-20人员工作标签仅为研究参照，不是生产分类。';modules.fusion[1]='v2组合人数支持、10-20类别块替换与角点证据；历史融合过程仍属v1入口。';}
   for(const image of assets.images){imageMap.set(image.image_id,image);imageMap.set(image.image_code,image);}
   const scores=await table('quality__shared_records');scoreMap=new Map(scores.map(r=>[r.object_id,r]));
   try{state.notes=JSON.parse(localStorage.getItem('research-workbench:'+SNAPSHOT)||'{}');}catch{state.notes={};}

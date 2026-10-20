@@ -2,6 +2,16 @@
 
 2026-10-19：默认v2，已接10439作答、7302正式质量及完整综合统计/证据接口。当前方法与限制见[总说明](../../../docs/thesis_main/v2数据研究台与Pro推进_20261019.md)。切换版本不会混合分母；v1已有融合及簇实验仍为历史。
 
+## 2026-10-20 接续接入
+
+本次只读接入 17 张新表：7 张同房多视角、2 张人员、8 张融合与独立审计；v2 共 87 张表。人员画像、融合过程、同房比较新增对应页签，研究概览补充 4 条含支持范围和反例的接续结论。评分、资格、参考、正式人员标签、N1 及快照保持不变，接入不重算研究数值。
+
+来源包：[角点补充与人员工作标签](../../workers/personnel_interchangeability_followup_20261020/README.md)、[类别块与角点](../../workers/personnel_composition_followup_20261019/README.md)、[独立审查与复算](../personnel_interchangeability_audit_20261020/README.md)、[同房多视角重放](../../same_room/same_room_multiview_20261020/README.md)；[人员可互换性 Pro 包](../../workers/personnel_interchangeability_20261020/README_ZH.md)仅增加报告入口。表格来源可由索引中的 `tables[].path` 追溯。
+
+工作标签仅作 Rnew2/F01 研究参照，不能称同类任意换人曲线不变；类别块均值差受尾部事件驱动。同房面板覆盖 9 个关系组、44 图、7 栋，G057 两视角掉点、G046/G178 低平台，未知同建筑关系不等于异房，人员类型尚未接入该面板。独立审计仍保留未全量重跑、未全部重训与压缩 SHA 差异的边界。
+
+逐次明细及大表 `replay_nodes.csv.gz`、`mean_predictions.csv.gz`、`individual_*_predictions.csv.gz`、`splits.csv.gz` 留在源包。仓库根运行 `python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019` 重建离线页面，生成的 `v2-data/`、`v2-resources/` 仅留本地。显示清单见 [DISPLAY_TABLES_20261020.json](DISPLAY_TABLES_20261020.json)，验收回执见 [INTEGRATION_20261020.json](INTEGRATION_20261020.json)。
+
 ## v2离线构建
 
 main中的匿名审计 `records.json.gz`、综合 `tables.json.gz` 和 `pro_personnel_v2_20261019/analysis_context.json.gz` 已足够生成v2研究台。仓库根运行：

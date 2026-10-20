@@ -1,5 +1,13 @@
 # 研究分析交付入口
 
+## 2026-10-20：人员类别、类别块与同房多视角接续
+
+- [人员可互换性 Pro 包归档](research/workers/personnel_interchangeability_20261020/README_ZH.md)：保留冻结研究及适用范围，不将候选类别视为任意互换保证。
+- [独立审查与补算](research/statistics/personnel_interchangeability_audit_20261020/README.md)：核心队复算与失败分母可查，未覆盖全部任务重跑和候选重训。
+- [角点补充与工作标签](research/workers/personnel_interchangeability_followup_20261020/README.md)：Rnew2/F01 仅为研究参照；[类别块与角点证据](research/workers/personnel_composition_followup_20261019/README.md)保留尾部事件边界。
+- [同房多视角重放](research/same_room/same_room_multiview_20261020/README.md)：9 组、44 图、7 栋；未知同建筑关系不等于异房，人员类型尚未接入该面板。
+- [研究台接续入口](research/statistics/research_explorer_v1_r2_20261017/index.html)及[离线构建说明](research/statistics/research_explorer_v1_r2_20261017/README.md)：只读新增 17 张表，总数 87；大表明细留源包，生成数据仅本地。
+
 ## 2026-10-19：人员多变量分型 Part A 与独立验收
 
 [Pro 三包完整内容归档与恢复](research/workers/personnel_type_discovery_next_20261019/README.md)、[在线中文原报告](research/workers/personnel_type_discovery_next_20261019/REPORT_ZH.md)、[七例关键图集](research/workers/personnel_type_discovery_next_20261019/FIGURE_GALLERY.md)、[独立审查及统计图](research/workers/personnel_type_independent_review_20261019/README.md)。三个原包 3,844 个成员完整保留或按哈希复用已有仓库内容；本轮候选分区不等于已验证的可互换人员类别。生产评分、正式标签保持不变。
