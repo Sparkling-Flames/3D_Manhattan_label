@@ -132,6 +132,27 @@ def display_table(out, name, rows, source):
     return dict(id=name, row_count=len(rows), columns=columns, parts=parts, path=source)
 
 
+def find_photo(root, record):
+    """Resolve the original panorama from a possibly Windows-style path, then repo assets."""
+    value = (record.get('photo') or '').strip()
+    if value:
+        text = value.replace('\\', '/')
+        if text.startswith('./'):
+            text = text[2:]
+        candidate = root / text
+        if candidate.is_file():
+            return candidate
+    image_id = record.get('image_id', '')
+    for rel in (f'data/mp3d_layout/valid/img/{image_id}.png',
+                f'data/mp3d_layout/test/img/{image_id}.png',
+                f'data/mp3d_layout/img_v/{image_id}.jpg',
+                f'research/workers/pro_personnel_v2_20261019/previews/{image_id}.jpg'):
+        candidate = root / rel
+        if candidate.is_file():
+            return candidate
+    return None
+
+
 def pack_resources(scores, evidence):
     context=read(ROOT/'research/workers/pro_personnel_v2_20261019/analysis_context.json.gz')
     frozen_objects=[dict(object_id=r['object_id'],object_kind='annotation',image_id=r['image_id'],
@@ -153,10 +174,7 @@ def pack_resources(scores, evidence):
         references = [dict(target_id=r['target_id'], label=f"{i+1} · {r['reference_version']}" + (' · 当前' if r['current_target'] else ''),
                            points=r['points_1024x512'], floor=r['floor_xz_h'], current=r['current_target'],
                            reference_full_available=r['full_reference_available']) for i,r in enumerate(refs[image_id])]
-        photo_candidates = [(ROOT / d['photo']).resolve()] if d.get('photo') else []
-        photo_candidates += [ROOT/f'data/mp3d_layout/img_v/{image_id}.jpg',
-                             ROOT/f'research/workers/pro_personnel_v2_20261019/previews/{image_id}.jpg']
-        photo = next((p for p in photo_candidates if p.is_file()), None)
+        photo = find_photo(ROOT, d)
         retained = [a for a in answers if a['retained']]
         flags = dict(gt_uncertain=d.get('reference_status')=='uncertain',current_pending=bool(d.get('difficulty_analysis_exclusion')))
         flags.update(oos=any(score_map[a['object_id']].get('is_oos') is True for a in answers),

@@ -20,7 +20,7 @@ main中的匿名审计 `records.json.gz`、综合 `tables.json.gz` 和 `pro_pers
 python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019
 ```
 
-双击 `index.html` 即可，JSON/JS分片支持file协议。生成的 `v2-data/`、`v2-resources/` 留本地，不重复提交大体积展开载荷。需要原图时，按[图片清单](../../workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv)将Release图片恢复至source_path；2张未列入旧Release的图片有仓库预览。浏览器验收临时HTTP不属于运行依赖。
+双击 `index.html` 即可，JSON/JS分片支持file协议。生成的 `v2-data/`、`v2-resources/` 留本地，不重复提交大体积展开载荷。原图直接读取仓库内 `data/mp3d_layout/{valid,test}/img/*.png`（648 张，按[图片清单](../../workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv)映射）；解析兼容分析上下文中的 Windows 风格 `source_path`（`.\data\...`），2 张未列入旧 Release 清单的图片使用仓库预览。搬迁或仅发布 HTML 时需保留 `data/` 目录与相邻前端目录。浏览器验收临时HTTP不属于运行依赖。
 
 当前作答页支持原始点/本轮处理前散点、冻结终稿、实际参考、ERP/BEV/3D及有绑定证据的旧Semi初始图层。未确认环序不冒称已人工确认；新Semi缺初始坐标不画假初始化。scope只计语义相容裁定机会，图级OOS不作个人gold。
 

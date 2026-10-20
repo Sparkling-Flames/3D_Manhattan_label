@@ -104,3 +104,14 @@ def test_real_integration_manifest_matches_sources():
     tabs = [tid for group in builder.EXTRA_MODULE_TABS.values() for _, tid in group]
     assert len(tabs) == len(set(tabs)) == 17
     assert set(tabs) == set(declared_ids) | multiview_ids
+
+
+def test_find_photo_normalizes_windows_relative_path(tmp_path):
+    image = tmp_path / 'data' / 'mp3d_layout' / 'valid' / 'img' / 'W100.png'
+    image.parent.mkdir(parents=True)
+    image.write_bytes(b'png')
+    record = dict(image_id='W100', photo='.\\data\\mp3d_layout\\valid\\img\\W100.png')
+    assert builder.find_photo(tmp_path, record) == image
+    assert builder.find_photo(tmp_path, dict(image_id='W100', photo=None)) == image
+    assert builder.find_photo(tmp_path, dict(image_id='W100', photo='.\\missing\\W100.png')) == image
+    assert builder.find_photo(tmp_path, dict(image_id='W999', photo='')) is None

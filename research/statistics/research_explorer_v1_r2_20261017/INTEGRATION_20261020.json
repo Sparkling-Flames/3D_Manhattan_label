@@ -40,9 +40,10 @@
     "row_count_checks": "17/17",
     "structure": "STRUCTURE OK: tables=87, new=17, tabs=workers7/fusion10/same_room20, sections=8",
     "payload_checks": "17/17 exact CSV records; JSON/JS wrappers; 4 report links; historical link last; N1 false",
-    "javascript_syntax": "PASS: workbench.js and dataset-config.js"
+    "javascript_syntax": "PASS: workbench.js and dataset-config.js",
+    "browser": "headless_edge_dom_checks_pass"
   },
-  "browser_check": "manual_pending",
+  "browser_check": "headless_edge_dump_dom_pass",
   "generated_data_local_only": [
     "v2-data/",
     "v2-resources/"
@@ -56,7 +57,7 @@
     "snapshot_id",
     "research_packages"
   ],
-  "browser_check_detail": "Headless Edge --dump-dom exited with code -6; no DOM output. User double-click file:// verification pending.",
+  "browser_check_detail": "Headless Edge with isolated profile and --no-sandbox rendered the page; same_room/workers/fusion tab counts 20/7/10, 8 overview sections, table rows present, no error placeholders.",
   "baseline": {
     "commit": "9f1926553ec1b7c0ebc4e9fedccbfa29e26bde87",
     "pytest": "3 passed in 0.27s",
@@ -68,5 +69,11 @@
     "quality_records": 7302,
     "retained_people": 60,
     "tables": 87
+  },
+  "photo_assets": {
+    "resolved": 261,
+    "source": "data/mp3d_layout/{valid,test}/img/*.png",
+    "fallback_previews": 2,
+    "note": "分型上下文中的 Windows 风格 source_path 已归一化；此前 261/261 被判缺失。"
   }
 }
