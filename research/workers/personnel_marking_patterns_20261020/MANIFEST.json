@@ -1,0 +1,28 @@
+{
+  "data_release": "v2",
+  "input": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "inventory_n": 10439,
+  "non_oos_n": 9217,
+  "non_oos_images": 233,
+  "ordinary_n": 8614,
+  "doorway_n": 603,
+  "feature_valid_n": 9113,
+  "feature_missing_n": 104,
+  "personal_comparison_n": 9068,
+  "repeat_submission_secondary_n": 28,
+  "coordinate_repair_evidence_n": 31,
+  "non_oos_quality_usable": 7302,
+  "cases": 9,
+  "case_records": 320,
+  "class_sources": [
+    "research/workers/personnel_composition_study_20261019/analysis/reverse/class_roles.csv",
+    "research/workers/personnel_interchangeability_20261020/interchangeability_20261020/reverse/mixed_fit/worker_labels.csv.gz"
+  ],
+  "rnew2_method": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+  "new_classification_fit": false,
+  "new_fusion": false,
+  "new_quality_score": false,
+  "point_repair": false,
+  "comparisons": "descriptive_existing_labels_not_independent_validation",
+  "geometry_helper": "research/workers/personnel_interchangeability_20261020/analysis/composition/case_visuals.py"
+}

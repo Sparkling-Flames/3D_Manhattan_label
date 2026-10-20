@@ -2,3 +2,9 @@
 @media(min-width:1700px){main{padding:32px 44px}.geom-canvas{height:420px}.chart svg{max-height:330px}}@media(max-width:1250px){main{padding:22px 18px}.split{grid-template-columns:1fr}.versions{gap:10px}.brand small{display:none}.pagehead{flex-wrap:wrap}.filtergrid{grid-template-columns:1fr 1fr}.imagework{grid-template-columns:190px minmax(0,1fr)}}@media(max-width:760px){.sidebar{position:static;width:auto;margin-top:64px;padding:4px}.sidebar nav{display:flex;overflow:auto}.sidebar a{white-space:nowrap}.sidefoot{display:none}.appbar{padding:0 12px}.brand{font-size:14px}.brandmark{display:none}.versions{font-size:11px;gap:6px}.versions .local{display:none}main{margin:0;padding:18px 12px}.contextbar{flex-wrap:wrap}.cards,.split.equal,.geopair{grid-template-columns:1fr}.imagework{grid-template-columns:1fr}.imagelist{max-height:210px}.filtergrid{grid-template-columns:1fr}.geometry{padding:8px}.geom-canvas{height:300px}.toolbar select{max-width:100%}.pagehead h1{font-size:21px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
 .tabs:empty{display:none}.legend label{display:inline-flex;align-items:center;white-space:nowrap}.legend input[type=checkbox]{min-height:0;width:auto;padding:0;margin:0 6px 0 0}.geom-controls input[type=range]{height:18px;min-height:0;padding:0;width:90px}.pagehead{margin-bottom:12px}.geometry .legend{margin:7px 0 12px}
+
+/* Keep multi-member legends from pushing local structures below the comparison. */
+.geometry .legend{max-height:150px;overflow:auto}
+
+/* Long reference links must not shrink the primary navigation to zero. */
+.sidebar{overflow-y:auto}.sidebar nav,.sidefoot{flex-shrink:0}

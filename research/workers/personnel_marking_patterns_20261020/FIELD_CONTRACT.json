@@ -1,0 +1,22 @@
+{
+  "record_expression": "one row per non-OOS object, exclusions retained; comparison uses unique primary expression without repair evidence, peer median within image+condition+layer+reference, at least 3 computable personal observations",
+  "primary_expression": "sole observation or, among repeated submissions, the one existing independent-vote-eligible object; no quality-score selection. Sole historical exclusions retained for behavior, not requalified",
+  "person_condition_expression": "one worker+condition+layer; opportunities and building directions retained, not stable trait certification",
+  "matched_image_class_contrasts": "at least 2 records each side within same image+condition+reference; R5/H2 versus rest, Rnew2 C01 versus C02 only",
+  "class_condition_distribution": "within-image target panels averaged, then image equal; building mean averages target panels within building",
+  "case_records": "one displayed original annotation per case; no quality selection",
+  "same_person_manual_semi": "same worker+image+reference+layer, both computable floors; observational comparison, no randomized condition-effect claim",
+  "local_feature_observations": "visual-anchor angular windows, declared top-x and pair indices; seam step needs >=2 local pairs, other anchors >=3; not correctness or full feature matching",
+  "thresholds": {
+    "short_edge_perimeter_fraction": 0.04,
+    "short_edge_endpoint_turn_min_deg": 15,
+    "near_straight_deg": [
+      3,
+      5,
+      10
+    ]
+  },
+  "semantics": "short edges and collinearity are descriptors, not truth labels; log area/height are dimensionless and not automatic scope/height errors",
+  "raw": "original_points available only for inherited batch; new batch received_processed_points never called original export",
+  "unknown": "missing metrics remain empty, no zero substitution"
+}

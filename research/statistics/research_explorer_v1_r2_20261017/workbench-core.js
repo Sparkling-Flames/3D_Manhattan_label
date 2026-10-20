@@ -92,6 +92,7 @@ function geometry(points){
   bottom.push([x,-1,z]);top.push([x,h,z]);
  }return {bottom,top};
 }
-const api={empty,truth,numeric,tokens,matches,fields,field,value,stats,imageFlags,matchesImage,filterRows,metricRows,csv,wrapSegment,projectFloor,geometry};
+function selectAnnotation(annotations,focus){return annotations.find(a=>a.object_id===focus)||annotations.find(a=>a.retained)||annotations[0];}
+const api={selectAnnotation,empty,truth,numeric,tokens,matches,fields,field,value,stats,imageFlags,matchesImage,filterRows,metricRows,csv,wrapSegment,projectFloor,geometry};
 root.WorkbenchCore=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

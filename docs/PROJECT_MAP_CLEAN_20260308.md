@@ -1,5 +1,7 @@
 # HOHONET 项目地图
 
+- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究，Pro新任务尚待返回。
+
 - 2026-10-20当前统筹：[人员标法分类与换类研究总览](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。新增进度文档与最新人员研究包已登记资料目录，无工具或数据路径迁移。
 
 - 同房预测入口：[多视角历史与人员重放计划](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)及[2026-10-20实算结果](../research/same_room/same_room_multiview_20261020/README.md)。平均质量、个人Q和真实融合曲线均已执行；未知同建筑关系不当作异房。

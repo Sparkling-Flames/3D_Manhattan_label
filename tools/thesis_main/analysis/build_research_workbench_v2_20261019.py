@@ -206,6 +206,66 @@ def pack_resources(scores, evidence):
     return summary
 
 
+def pack_comparisons(evidence, resources):
+    """仅搬运已有案例和保存状态；不在打包时重新融合或评分。"""
+    labels = pd.read_csv(ROOT/'research/workers/personnel_interchangeability_followup_20261020/audit_learning/RESEARCH_WORKING_LABELS_60.csv').fillna('').to_dict('records')
+    cases = []
+    source = ROOT/'research/workers/personnel_interchangeability_20261020/interchangeability_20261020/cases'
+    for path in sorted(source.glob('S*.json')):
+        case = read(path)
+        cases.append(dict(case_id=case['case_id'], title=case['title'], explanation=case['selection_reason'],
+            image_id=case['embedded_pool']['meta']['image_id'], condition='manual',
+            reference=dict(points=case['reference']['points_1024x512'],floor=case['reference']['floor_xz_h'],target_id=case['reference']['target_id']),
+            worker_classes=case['worker_classes'], source=path.relative_to(ROOT).as_posix(),
+            teams=[dict(label=t['label'],workers=t['member_workers'],points=t['geometry']['points'],
+                footprint=t['geometry']['footprint'],B8L2=t['B8L2'],D10=t['D10'],
+                nodes=t['nodes'],team_key=t['team_key']) for t in case['teams']]))
+    marking = ROOT/'research/workers/personnel_marking_patterns_20261020/cases.json'
+    if marking.exists():
+        for case in read(marking):
+            cases.append(dict(case_id=case['case_id'], title=case['title'],
+                explanation='已有标法研究局部案例；保留GT问题与非质量作答，不新增墙面语义裁决。',
+                image_id=case['image_id'],condition=case['condition'],zoom=case['zoom'],
+                source=marking.relative_to(ROOT).as_posix(),worker_classes={},teams=[],
+                reference=dict(points=case['reference']['points_1024x512'],floor=case['reference']['floor_xz_h'],target_id=case['reference']['target_id'])))
+    single_source = ROOT/'research/workers/personnel_type_validation_next_20261019/view-data.js'
+    single = json.loads(single_source.read_text(encoding='utf-8').split('=',1)[1].strip().rstrip(';'))
+    swap = next(r for r in single['swaps'] if single['images'][r['pool_id']]['image_code']=='wc2JMjhGNzB-46'
+                and r['context']==1 and r['k']==25 and r['worker_a']=='W131' and r['worker_b']=='W132')
+    image = single['images'][swap['pool_id']]
+    cases.append(dict(case_id='B01_bottom_y', title='局部缺角与bottom-y／3D敏感性',
+        explanation='既有25人真实团队对照：局部缺角触发方向重罚；可观察底点y与3D变化。这不是bottom-y单因素因果实验。',
+        image_id=next(r['image_id'] for r in evidence if r['image_code']=='wc2JMjhGNzB-46'),
+        condition='manual',source=single_source.relative_to(ROOT).as_posix(),
+        reference=dict(image['reference'],target_id=image['reference_id']),worker_classes={},
+        teams=[dict(label=label,workers=single['teams'][swap[key]]['members'].split('|'),
+            points=single['teams'][swap[key]]['points'],footprint=single['teams'][swap[key]]['floor'],
+            B8L2=single['teams'][swap[key]]['Q'],D10=single['teams'][swap[key]].get('D10'),
+            nodes=len(single['teams'][swap[key]]['points'])//2 if single['teams'][swap[key]]['points'] else None,
+            team_key=swap[key]) for label,key in [('A','request_a'),('B','request_b')]]))
+    states = read(MULTIVIEW/'structure_transfer/case_states.json')
+    groups = defaultdict(list)
+    for state in states:
+        before = [r['worker'] for r in state['before']['assignments']]
+        after = [r['worker'] for r in state['after']['assignments']]
+        groups[state['group_id']].append(dict(image_id=state['image_id'],image_code=state['image'],
+            k=state['k'], before=dict(workers=before,geometry=state['before']['candidate'],B8L2=state['quality_before']),
+            after=dict(workers=after,geometry=state['after']['candidate'],B8L2=state['quality_after']),
+            reference=dict(points=state['reference']['points_1024x512'],floor=state['reference']['floor_xz_h'],target_id=state['reference']['target_id'])))
+    for views in groups.values():
+        assert all(v['before']['workers']==views[0]['before']['workers'] and v['after']['workers']==views[0]['after']['workers'] for v in views), 'multiview members differ'
+    image_ids = {r['image_id'] for r in evidence}
+    assert all(c['image_id'] in image_ids for c in cases)
+    payload=dict(schema='research_workbench_saved_comparisons_v1',display_revision='interactive_20261020',
+        labels=labels,cases=cases,groups=dict(groups),
+        group_source='research/same_room/same_room_multiview_20261020/structure_transfer/case_states.json',
+        caveat='Saved illustrative cases, not full v2 fusion coverage; reference and eligibility remain unchanged.')
+    write(PAGE/'v2-resources/comparisons.json',payload)
+    resources.update(display_revision='interactive_20261020',comparisons='comparisons.json',
+        fusion_revision='saved_v2_cases_and_multiview_states_only; full_v2_paths_not_packed')
+    write(PAGE/'v2-resources/index.json',resources)
+
+
 def build():
     source_tables = read(STATS / 'tables.json.gz')['tables']
     tables = {k:v for k,v in source_tables.items() if k!='quality__shared_records'}
@@ -309,6 +369,7 @@ def build():
             row = by_object[annotation['object_id']]
             annotation['evidence'] = {k:row[k] for k in detail_fields}
         write(path,image)
+    pack_comparisons(evidence, resources)
     sections = [dict(title='v2 实际覆盖',finding=f"{summary['raw_records']}份库存，{summary['quality_records']}份主质量可用。",
                support='逐作答ID合并；诊断、正式质量、来源时间与同目标时间分别保留。',counterexample='人数增加不代表所有图均有35份正式质量。',
                tables=[dict(id='quality__shared_records',label='全部作答与证据')]),
@@ -325,7 +386,7 @@ def build():
     sections.extend([
         dict(title='人员类别接续（Rnew2 / F01）',
              finding='Rnew2 21/14 两类的换 5 人方向平均 +6.652 B8L2（24/29 图、6/6 建筑同向，bootstrap CI [2.32, 11.86]）；F01 快 12/慢 11 的净 Q ≈ 0（−0.029），来源时间几何比 0.375。',
-             support='冻结 29 图/6 栋、35 名新批人员；17,726 队原生重融合与 1,819 事件独立复算通过。',
+             support='Rnew2：29图/6栋、35名新人；F01：高Q23人（8旧/15新），各自评估面板分开。17,726队原生重融合与1,819事件独立复算通过。',
              counterexample='同构成/跨构成主相近率 47.74%/44.76%，差 2.98 个百分点且 CI 跨 0；固定类型各方法最多 1/21 建筑达标；不能称同类任意换人曲线不变。',
              tables=[dict(id='workers__working_labels_60', label='人员工作标签'),
                      dict(id='fusion__audit_bootstrap', label='独立重抽样区间'),

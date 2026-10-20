@@ -1,5 +1,7 @@
 # HOHONET 文档入口
 
+- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究，Pro新任务尚待返回。
+
 - 2026-10-20当前总览：[人员标法分类、换人换类与整体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。两条人员主线并行；质量、难度、融合、同房及展示进度集中说明。下方旧阶段的“待返回/暂停”不代表当前状态。 研究台接续见[十模块离线入口](../research/statistics/research_explorer_v1_r2_20261017/index.html)，只读新增17张表，明细与限制保留在源包。
 
 - 2026-10-20：[人员可互换性独立审查与复算](../research/statistics/personnel_interchangeability_audit_20261020/README.md)，保留失败分母、未全量重跑与重训等审查边界。

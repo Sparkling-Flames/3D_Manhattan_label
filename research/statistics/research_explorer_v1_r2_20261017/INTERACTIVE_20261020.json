@@ -1,0 +1,34 @@
+{
+  "schema": "research_workbench_interactive_receipt_v1",
+  "display_revision": "interactive_20261020",
+  "research_scores_changed": false,
+  "references_or_eligibility_changed": false,
+  "new_fusion_executed": false,
+  "tables": 87,
+  "overview_sections": 8,
+  "cases": 20,
+  "saved_team_cases": 11,
+  "multiview_groups": 5,
+  "multiview_states": 21,
+  "comparison_schema": {
+    "labels": "60-worker research labels; unknown stays unknown",
+    "cases": "saved S/M/B cases with source path, exact saved team geometry, members, and scores; no score imputation",
+    "groups": "saved before/after state per view; member arrays must match within each group"
+  },
+  "checks": {
+    "pytest": "7 passed",
+    "node_member_and_class_checks": "passed",
+    "existing_node_core": "passed",
+    "javascript_syntax": "passed",
+    "browser_http": "class selection, W100 highlight, ERP viewBox zoom, 3D visibility, W100 filtered answer, same-person three-view scores and B01 saved teams checked",
+    "offline_companion_paths": "606 JSON entries with matching JS wrappers; no missing",
+    "file_protocol_browser_test": "browser URL policy prohibits file; no attempt to bypass",
+    "sidebar_layout": "Passed browser checks at 1280x700, 1280x500 and 420x850: 12 primary links, desktop nav height >532px, sidebar scrolls, mobile layout preserved; CSS cache revision applied."
+  },
+  "limits": [
+    "Local display payload still requires rebuilding after source-only Git pull.",
+    "Only saved 20 illustrative cases and 21 multiview states are wired, not all v2 team paths.",
+    "B01 D10 is unavailable in the consumed saved display source and stays missing."
+  ],
+  "global_index_sync": "Existing topic entry retained; global indexes owned by coordination thread."
+}

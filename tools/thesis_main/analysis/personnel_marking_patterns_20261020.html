@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>人员具体怎样标 · v2 实例</title>
+<style>
+body{font:16px system-ui;margin:24px;background:#f5f7fa;color:#182b3e;max-width:1400px}h1{font-size:26px}
+select,button{padding:8px;margin:4px}canvas{width:100%;background:#15202a;border-radius:6px}
+.panel{background:white;padding:16px;margin:16px 0;border-radius:10px}#members{display:flex;flex-wrap:wrap;gap:8px}
+.member{font-size:13px;padding:5px;border:1px solid #ddd;border-radius:5px}p{line-height:1.65}#detail{white-space:pre-wrap;font-size:14px}
+</style>
+<h1>人员具体怎样标：同图叠加与局部观察</h1>
+<p>全部显示线均来自 v2 逐份接口的处理后原作答，未运行融合。黄色为当前绑定参考；参考有问题也保留显示，不能直接作为真值。蓝色为当前候选组，粉色为其余人员。可以只选一两人，查看同一结构。案例属目的性选例，不代表全库比例。</p>
+<div class="panel"><select id="case"></select><select id="partition"><option value="r5">R5 / 其余</option><option value="h2">H2 / 其余</option><option value="rnew2">Rnew2 C01 / C02 / 未分型</option></select>
+<button id="all">全部</button><button id="none">清空</button><button id="positive">仅蓝色组</button>
+<label><input id="ref" type="checkbox" checked>显示参考</label>
+<label><input id="raw" type="checkbox">原始导出点（仅已具备者，白色）</label>
+<label><input id="received" type="checkbox">收到的处理点（橙色）</label>
+<label><input id="initial" type="checkbox">已绑定 Semi 初始化（绿色）</label>
+<div id="members"></div></div>
+<div class="panel"><canvas id="full" width="1536" height="768"></canvas>
+<p>下图为案例预设的局部放大；完整视图保留全景接缝。</p><canvas id="zoom" width="1200" height="600"></canvas><p id="comment"></p><div id="detail"></div></div>
+<p>新批次没有原始导出坐标，只有收到的处理点。原始点仅按实际坐标显示散点，不猜测其原始连接顺序。初始化缺失时不补造。正式质量资格不限制此处标法观察；门洞单列。每条对象 ID 可回查 cases.json 与 case_records.csv。</p>
+<script>
+const data=__DATA__;
+const $=id=>document.getElementById(id);let current,photo,chosen=new Set();
+data.forEach((c,i)=>{let o=document.createElement('option');o.value=i;o.textContent=`${c.id} ${c.code} ${c.condition} · ${c.title}`;$('case').append(o)});
+function group(r){let p=$('partition').value;return p==='rnew2'?(r[p]==='C01'?1:r[p]==='C02'?0:2):(r[p]?1:0)}
+function color(r){return ['#ff67b5','#00d9ff','#c4c4c4'][group(r)]}
+function members(){let el=$('members');el.replaceChildren();current.records.forEach(r=>{let l=document.createElement('label');l.className='member';l.style.borderColor=color(r);let c=document.createElement('input');c.type='checkbox';c.checked=chosen.has(r.id);c.onchange=()=>{c.checked?chosen.add(r.id):chosen.delete(r.id);draw()};l.append(c,`${r.worker} (${r.points.length/2})`);el.append(l)})}
+function lines(ctx,cs,col,alpha,b,w,h){ctx.strokeStyle=col;ctx.globalAlpha=alpha;ctx.lineWidth=1.6;for(let curve of cs){for(let offset of [-1024,0,1024]){ctx.beginPath();let previous=null,unwrapped=0;curve.forEach((p,i)=>{let x=p[0];if(previous!==null){if(x-previous>512)unwrapped-=1024;if(x-previous< -512)unwrapped+=1024}let px=(x+unwrapped+offset-b[0])*w/(b[1]-b[0]),py=(p[1]-b[2])*h/(b[3]-b[2]);i?ctx.lineTo(px,py):ctx.moveTo(px,py);previous=x});ctx.stroke()}}ctx.globalAlpha=1}
+function dots(ctx,pts,col,b,w,h){ctx.fillStyle=col;for(let p of pts||[]){ctx.beginPath();ctx.arc((p[0]-b[0])*w/(b[1]-b[0]),(p[1]-b[2])*h/(b[3]-b[2]),3,0,7);ctx.fill()}}
+function render(id,b){let cv=$(id),ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.drawImage(photo,b[0]/1024*photo.width,b[2]/512*photo.height,(b[1]-b[0])/1024*photo.width,(b[3]-b[2])/512*photo.height,0,0,w,h);
+let rr=current.records.filter(r=>chosen.has(r.id));if($('ref').checked)lines(ctx,current.ref,'#ffe476',1,b,w,h);
+rr.forEach(r=>{lines(ctx,r.curves,color(r),rr.length>8?.28:.9,b,w,h);if($('initial').checked)lines(ctx,r.initial,'#5aff56',.8,b,w,h);if($('raw').checked)dots(ctx,r.raw,'white',b,w,h);if($('received').checked)dots(ctx,r.received,'#ff9a35',b,w,h)})}
+function draw(){if(!photo?.complete)return;render('full',[0,1024,0,512]);let b=current.zoom;$('zoom').height=Math.round(1200*(b[3]-b[2])/(b[1]-b[0]));render('zoom',b);$('detail').textContent=current.records.filter(r=>chosen.has(r.id)).map(r=>`${r.worker} | ${r.id} | Rnew2 ${r.rnew2} | 正式质量 ${r.quality?'可用':'暂停/不适用'} | 原始导出 ${r.raw_available?'有':'无'}`).join('\n')}
+function load(){current=data[+$('case').value];chosen=new Set(current.records.map(r=>r.id));members();$('comment').textContent='已有图级评论：'+(current.comment.join('；')||'无');photo=new Image();photo.onload=draw;photo.src=current.photo}
+$('case').onchange=load;$('partition').onchange=()=>{members();draw()};['ref','raw','received','initial'].forEach(id=>$(id).onchange=draw);
+$('all').onclick=()=>{chosen=new Set(current.records.map(r=>r.id));members();draw()};
+$('none').onclick=()=>{chosen.clear();members();draw()};$('positive').onclick=()=>{chosen=new Set(current.records.filter(r=>group(r)===1).map(r=>r.id));members();draw()};load();
+</script></html>

@@ -1,0 +1,67 @@
+{
+  "schema": "difficulty_mechanisms_v2_20261020_r1",
+  "data_release": "v2",
+  "primary_key": "object_id",
+  "primary_input": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "scope": "is_oos == false; doorway is a separate layer; unknown is not converted to ordinary",
+  "geometry": "Existing processed floor xz in camera-height units and points_1024x512; original point order, reference and score remain unchanged",
+  "missingness": "Unavailable geometry or unmatched joins remain missing; no fabricated points or reference correspondence",
+  "samples": {
+    "personal_sample": "Inherited personal_comparison AND independent_vote_eligible AND peer_n >= 3; formal quality is not required",
+    "reference_sample": "personal_sample AND inherited quality_usable AND reference_id == current difficulty target_version AND ref_turn5 available",
+    "reference_condition_main": "reference_sample AND condition == manual AND layer == ordinary",
+    "fixed6": "reference_condition_main AND ref_turn5 == 6; 33 images / 1023 answers",
+    "same_image_R5": "fixed6 with at least 2 R5 and 2 non-R5 persons on each image",
+    "area_sample": "Inherited personal_comparison AND independent_vote_eligible AND manual; one row per worker/image; at least 3 observed people on image; reference validity not required",
+    "person_pair_support": "At least 2 observed distinct images in each compared condition; no missing-condition zero fill",
+    "known_GT_issue_expression_records": "Source gt_substantive_error OR gt_detail_omission flags among personal_sample; not an independent GT audit"
+  },
+  "definitions": {
+    "ref_turn3/ref_turn5/ref_turn10": "Reference polygon direction changes strictly greater than 3/5/10 degrees; near-collinear insertions excluded",
+    "annotation_turn5": "pair_n - near_straight_nodes_5deg; analogous 3/10-degree count only in sensitivity table",
+    "reduced": "annotation_turn5 < ref_turn5; geometric simplification relative to declared reference, not semantic truth of all omitted details",
+    "ref_H": "Reused floor_features H under solid opaque polygon assumption; structural self-occlusion proxy, not furniture/RGB visibility or proof of inference difficulty",
+    "ref_short_edges": "Reference edge length / perimeter < 0.04 AND both endpoint turns >= 15 degrees",
+    "ref_short_min_horizontal_deg": "Minimum shortest cyclic horizontal ray span in degrees among reference short edges; missing if no short edge",
+    "ref_radius_p90_h": "90th percentile reference vertex radius in camera-height units, not metres",
+    "mechanism": {
+      "geometric_self_occlusion": "ref_H > 0",
+      "short_edge_H0": "ref_H == 0 AND ref_short_edges > 0",
+      "plain_H0": "ref_H == 0 AND ref_short_edges == 0",
+      "geometry_unknown": "ref_H missing"
+    },
+    "reduction_rate_image_equal": "Mean across images of each image's mean reduced indicator",
+    "reduction_rate_building_equal": "Within each building average image reduction rates, then average buildings",
+    "rate_delta": "Same person's right-condition reduced proportion minus left-condition proportion; answer-weighted within person's condition",
+    "log_area_iqr": "75th - 25th percentile of natural-log camera-height-normalized floor area across observed people on image",
+    "area_peer_absolute_log_deviation": "abs(log_area - same-image median log_area); extent/scale spread, not correctness or confirmed scope disagreement",
+    "doorway_delta": "Same person's mean area_peer_absolute_log_deviation in doorway minus ordinary",
+    "unmatched_ref_9/unmatched_ref_12": "Reused 9/12 degree one-to-one bottom-ray angular assignment diagnostics; not physical semantic correspondence",
+    "R5/H2/Rnew2": "Reused frozen exploratory worker classes; R5 subset of H2; Rnew2 derived from replacement study rather than original-answer-only clustering"
+  },
+  "outputs": {
+    "record_conditions.csv.gz": "Non-OOS rows, inherited expression and correspondence plus reference traits and sample gates; object_id unique",
+    "reference_conditions.csv": "One row per available reference_id",
+    "image_mechanisms.csv": "reference_condition_main by image/reference, with count, condition and observed expression diagnostics",
+    "fixed_complexity_summary.csv": "Image and building equal reduction summaries by reference effective turn count and mechanism",
+    "person_fixed6_conditions.csv": "Observed within-person fixed6 condition contrasts; two contrasts overlap in participants",
+    "same_image_fixed6_R5.csv": "Same-image R5/non-R5 reduction comparison, no new class fit",
+    "turn_threshold_sensitivity.csv": "3/5/10 degree count definitions applied to the same fixed6-at-5-degree image cohort",
+    "same_people_clear_curtain.csv": "One row per person actually observed on both selected images",
+    "case_person_rows.csv": "Observed personal_sample Manual rows on three focus images; not all inventory answers",
+    "doorway_area_image_spread.csv": "Area-sample image-level dispersion, doorway separated",
+    "person_doorway_area_spread.csv": "Observed same-person layer contrasts with at least 2 images each",
+    "area_peer_records.csv.gz": "Area-sample object-level deviation and provenance keys",
+    "hard_expression_records.csv": "Reference-condition-main rows with inherited coarse hard label and turn-count relation",
+    "hard_expression_images.csv": "Hard rows grouped by image/mechanism/count relation; aggregates do not assert semantic errors",
+    "overlay_evidence.json": "Exact object_id/reference_id, source photo, preserved-coordinate zoom and short-edge index",
+    "feature_associations.json": "Small-panel exploratory Spearman association; no causal or predictive validation"
+  },
+  "frozen_boundaries": [
+    "No coarse difficulty relabeling or new official difficulty score",
+    "No changes to processed/original points, reference, eligibility, personnel labels, fusion baseline or quality scores",
+    "GT-problem rows retained for GT-free expression; formal reference comparison inherits quality gates",
+    "No new fusion rerun; same-room fusion findings explicitly reused",
+    "N1 not applied; no implied admission/schema/protocol or operational change"
+  ]
+}
