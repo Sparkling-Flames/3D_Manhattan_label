@@ -92,7 +92,57 @@
       "valid_paths",
       "error",
       "absolute_error",
+      "shape_error",
       "shape_absolute_error"
+    ],
+    "curve_shape_buildings.csv": [
+      "metric",
+      "origin",
+      "panel",
+      "building",
+      "method",
+      "mae",
+      "bias",
+      "images",
+      "stage"
+    ],
+    "curve_shape_groups.csv": [
+      "metric",
+      "origin",
+      "panel",
+      "group_id",
+      "building",
+      "m",
+      "N",
+      "method",
+      "mae",
+      "bias",
+      "targets"
+    ],
+    "curve_shape_summary.csv": [
+      "metric",
+      "origin",
+      "panel",
+      "stage",
+      "method",
+      "mae",
+      "bias",
+      "buildings",
+      "images"
+    ],
+    "curve_shape_targets.csv": [
+      "metric",
+      "origin",
+      "panel",
+      "group_id",
+      "building",
+      "target_image",
+      "m",
+      "N",
+      "method",
+      "mae",
+      "bias",
+      "observations"
     ],
     "curve_summary.csv": [
       "metric",

@@ -1,5 +1,7 @@
 # HOHONET 项目地图
 
+- 2026-10-20当前统筹：[人员标法分类与换类研究总览](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。新增进度文档与最新人员研究包已登记资料目录，无工具或数据路径迁移。
+
 - 同房预测入口：[多视角历史与人员重放计划](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)及[2026-10-20实算结果](../research/same_room/same_room_multiview_20261020/README.md)。平均质量、个人Q和真实融合曲线均已执行；未知同建筑关系不当作异房。
 
 v2公开数据：`research/data/intake_W100_W134_20261019/`与`research/data/releases/v2/`；接入工具`tools/thesis_main/data_prep/admit_workers_v2_20261019.py`。公开层包含匿名最小记录、预处理坐标与核验台账；含自由文本和来源身份字段的完整分析输入仅留本机。
