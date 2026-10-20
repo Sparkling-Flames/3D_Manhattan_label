@@ -1,0 +1,187 @@
+{
+  "schema": "new_corner_block_probe_freeze_v1",
+  "frozen_utc": "2026-10-19T18:02:38Z",
+  "selection_evidence": "History-only frozen fits plus category-independent legacy m1 discovery endpoint evaluation; parent requested primary probe freeze. No assessment outcome selected this candidate.",
+  "primary_method": "C_corner_mean_K3__new__legacy",
+  "risk_tradeoff_comparison": "C_corner_mean_plus_tail_K4__new__legacy",
+  "methods": {
+    "C_corner_mean_K3__new__legacy": {
+      "classes": {
+        "C01": [
+          "W100",
+          "W103",
+          "W105",
+          "W107",
+          "W111",
+          "W113",
+          "W124",
+          "W128",
+          "W133"
+        ],
+        "C02": [
+          "W101",
+          "W106",
+          "W117",
+          "W118",
+          "W119",
+          "W120",
+          "W121",
+          "W129",
+          "W134"
+        ],
+        "C03": [
+          "W102",
+          "W104",
+          "W108",
+          "W109",
+          "W110",
+          "W112",
+          "W114",
+          "W115",
+          "W116",
+          "W122",
+          "W123",
+          "W125",
+          "W126",
+          "W127",
+          "W130",
+          "W131",
+          "W132"
+        ]
+      },
+      "unknown": {
+        "W001": "outside_new_source_domain",
+        "W002": "outside_new_source_domain",
+        "W006": "outside_new_source_domain",
+        "W008": "outside_new_source_domain",
+        "W010": "outside_new_source_domain",
+        "W011": "outside_new_source_domain",
+        "W012": "outside_new_source_domain",
+        "W013": "outside_new_source_domain",
+        "W014": "outside_new_source_domain",
+        "W015": "outside_new_source_domain",
+        "W017": "outside_new_source_domain",
+        "W018": "outside_new_source_domain",
+        "W021": "outside_new_source_domain",
+        "W022": "outside_new_source_domain",
+        "W027": "outside_new_source_domain",
+        "W028": "outside_new_source_domain",
+        "W029": "outside_new_source_domain",
+        "W030": "outside_new_source_domain",
+        "W031": "outside_new_source_domain",
+        "W032": "outside_new_source_domain",
+        "W033": "outside_new_source_domain",
+        "W034": "outside_new_source_domain",
+        "W035": "outside_new_source_domain",
+        "W036": "outside_new_source_domain",
+        "W037": "outside_new_source_domain"
+      },
+      "membership_sha256": "e4b30d4243018b3bb9d3092ff2bba92955f75dc87eaadf02526b32a17f16a475",
+      "hash_contract": "SHA256 UTF8 JSON sorted(worker_id,class_id) pairs, compact separators, ensure_ascii=False"
+    },
+    "C_corner_mean_plus_tail_K4__new__legacy": {
+      "classes": {
+        "C01": [
+          "W100",
+          "W106",
+          "W117",
+          "W119",
+          "W121",
+          "W129",
+          "W134"
+        ],
+        "C02": [
+          "W101",
+          "W103",
+          "W105",
+          "W111",
+          "W113",
+          "W124",
+          "W128",
+          "W133"
+        ],
+        "C03": [
+          "W102",
+          "W107",
+          "W108",
+          "W110",
+          "W114",
+          "W116",
+          "W125",
+          "W127",
+          "W132"
+        ],
+        "C04": [
+          "W104",
+          "W109",
+          "W112",
+          "W115",
+          "W118",
+          "W120",
+          "W122",
+          "W123",
+          "W126",
+          "W130",
+          "W131"
+        ]
+      },
+      "unknown": {
+        "W001": "outside_new_source_domain",
+        "W002": "outside_new_source_domain",
+        "W006": "outside_new_source_domain",
+        "W008": "outside_new_source_domain",
+        "W010": "outside_new_source_domain",
+        "W011": "outside_new_source_domain",
+        "W012": "outside_new_source_domain",
+        "W013": "outside_new_source_domain",
+        "W014": "outside_new_source_domain",
+        "W015": "outside_new_source_domain",
+        "W017": "outside_new_source_domain",
+        "W018": "outside_new_source_domain",
+        "W021": "outside_new_source_domain",
+        "W022": "outside_new_source_domain",
+        "W027": "outside_new_source_domain",
+        "W028": "outside_new_source_domain",
+        "W029": "outside_new_source_domain",
+        "W030": "outside_new_source_domain",
+        "W031": "outside_new_source_domain",
+        "W032": "outside_new_source_domain",
+        "W033": "outside_new_source_domain",
+        "W034": "outside_new_source_domain",
+        "W035": "outside_new_source_domain",
+        "W036": "outside_new_source_domain",
+        "W037": "outside_new_source_domain"
+      },
+      "membership_sha256": "47d3f34c1fa7f843779803212d3ca7b52ddbcb414867294bed06278ca9b75f5e",
+      "hash_contract": "SHA256 UTF8 JSON sorted(worker_id,class_id) pairs, compact separators, ensure_ascii=False"
+    }
+  },
+  "evaluation_plan": {
+    "n": [
+      5,
+      9,
+      13,
+      17
+    ],
+    "m": [
+      2,
+      5
+    ],
+    "backgrounds": 2,
+    "feasibility": "All eligible existing assessment buildings; exact metadata-feasible A/B/A/C blocks, m5 only where capacity permits; nested background prefixes; record all capacity exclusions.",
+    "controls": [
+      "original frozen R_new2",
+      "same-capacity Q",
+      "same-capacity random"
+    ],
+    "comparison_support": "Same feasible setting and source composition/common core wherever possible; expose unavailable settings rather than zero or outcome substitution."
+  },
+  "status": "Discovery-nominated research probe, not universal or validated classifier",
+  "mixed_history_extension": "Any different nominee from subsequently completed preregistered mixed-history extension is separate exploratory extension; it cannot replace this primary to rescue an unfavorable assessment.",
+  "stopping": "No label,threshold,method or member tuning after assessment; retain negative or trade-off outcome.",
+  "discovery_files_sha256": {
+    "DISCOVERY_SUMMARY.csv": "5c13c4287298af9cadefefce210792e998dc38e0ff8304951a0200fa5a3ecd88",
+    "PAIRED_BASELINE_SUMMARY.csv": "cc465c35f8b189e9e64dfb8ff11252107b97c432703d4d51875c14d872c234f4",
+    "RUN_RECEIPT.json": "57a0babad6511dd86507f9744220b2584712b909180a4f360f66dc684ce019e7"
+  }
+}

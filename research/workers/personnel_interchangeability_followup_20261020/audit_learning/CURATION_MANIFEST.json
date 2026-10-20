@@ -1,0 +1,2436 @@
+{
+  "schema": "essential_learning_delivery_v1",
+  "relative_root": "audit_learning",
+  "include_files": [
+    {
+      "path": "AUDIT_RECEIPT.json",
+      "bytes": 3430,
+      "sha256": "85da26cc1d6d7d4d8fce5ef5047bc3f840216b9d0f1669fa2771589d4f2e8981"
+    },
+    {
+      "path": "BLOCK_LEARNING_REGISTRATION.json",
+      "bytes": 3307,
+      "sha256": "afc31c00b6a45ad6785c01626ab722d6c5ddbc2e72492ea1f657acb05febddab"
+    },
+    {
+      "path": "BLOCK_OBJECTIVE_SYNTHETIC_RECEIPT.json",
+      "bytes": 210,
+      "sha256": "cea8e963d137fbda24f2ca3c5c897ed801e95377be76dc1dc16fced27ff82fc6"
+    },
+    {
+      "path": "BLOCK_PROBE_FREEZE.json",
+      "bytes": 6146,
+      "sha256": "c14e87b96e5d56179d6364fec733da8a5f484e62e47b00328715f0a3d9bd7afb"
+    },
+    {
+      "path": "CLASS_LEARNING_AUDIT.md",
+      "bytes": 11285,
+      "sha256": "8a51fb7e997a3668de38d9b1dafe55b1fbc3e81415abd3992792cf67ece54adb"
+    },
+    {
+      "path": "CORNER_LEARNING_EXPERIMENTS.md",
+      "bytes": 4254,
+      "sha256": "5c80bfe0be8ddd90b59cf5c8f282b3ffcf3442e582e736fc184b045e64fee9ae"
+    },
+    {
+      "path": "CORNER_LEARNING_REGISTRATION.json",
+      "bytes": 4600,
+      "sha256": "92db0356726f894b5ce46bad27cc203e820066c45aaa86164f502ad21d39049d"
+    },
+    {
+      "path": "EXISTING_H20_M2_CAPACITY.csv",
+      "bytes": 74407,
+      "sha256": "293b69117735af9578a966f8370e4b358936e6060c3b45c800ba3458519ee795"
+    },
+    {
+      "path": "EXISTING_H20_M2_CAPACITY_RECEIPT.json",
+      "bytes": 1728,
+      "sha256": "2a4c51a676cc8733bed63d89041697c423636e7f78abfea249f454e388c01e1e"
+    },
+    {
+      "path": "FINAL_CLASS_LEARNING_ZH.md",
+      "bytes": 3545,
+      "sha256": "109389e34bfacc4086eb841c8a5aa9b2b0a3eeb3d80ab1c15f14ec003021f0fc"
+    },
+    {
+      "path": "FOLD_QT_REBUILD_RECEIPT.json",
+      "bytes": 140,
+      "sha256": "7eb618196de48749fe849ca98a22068d11f9c30dc6d0fa73bf64743ba089e2b1"
+    },
+    {
+      "path": "H20_EXTRACTION_RECEIPT.json",
+      "bytes": 155,
+      "sha256": "d0c5a79d95ef5bc9c66b4ba9d3daf73ad180d39110ba936d3e30c25db0db6391"
+    },
+    {
+      "path": "M1_EXPERIMENT_SUMMARY.csv",
+      "bytes": 11989,
+      "sha256": "e15d392b4812803263ec183a0fd3cd53331e8ae6246f2775a2f58454a15b88d6"
+    },
+    {
+      "path": "M1_LEGACY_MIXED_LABEL_CHANGE.csv",
+      "bytes": 619,
+      "sha256": "f6e86f60e1ef2847241782363d52b25776dce0b2c769b54b2a0dd66926c8918d"
+    },
+    {
+      "path": "MIXED_HISTORY_EXTENSION_REGISTRATION.json",
+      "bytes": 1807,
+      "sha256": "9fc2877e8f870ebbb4cef2328866b2f2a6c9ddfb234e8dc4422a5f0eadb16bd1"
+    },
+    {
+      "path": "ORIGINAL_RNEW2_FULL_REFIT_RECEIPT.json",
+      "bytes": 239,
+      "sha256": "08c83c857a416910b9e7e41bcb78511e37f860ade980a3abb4313305d237528a"
+    },
+    {
+      "path": "PORTABLE_DIFFERENT_ROOT_RECEIPT.json",
+      "bytes": 493,
+      "sha256": "0ec3bacfd4ff6409909093b277c4c4778595b04a5c1f7c037a75730ab72e9a37"
+    },
+    {
+      "path": "REPRODUCE_LEARNING.md",
+      "bytes": 3794,
+      "sha256": "cce43c8fff531c50107a7a2d2f01ad1cfc92899a8061f46d939fcad92074ba2b"
+    },
+    {
+      "path": "RESEARCH_WORKING_LABELS_60.csv",
+      "bytes": 28256,
+      "sha256": "7b57a26a11e1f4aba7abb64b0f8d5f4757c00fc0a005a651bcd3e005357554e1"
+    },
+    {
+      "path": "RESEARCH_WORKING_LABELS_SCHEMA.json",
+      "bytes": 2390,
+      "sha256": "4061aefb4e286f2116a494d692eb28451c25b97f02d301d353a56402a00aa30f"
+    },
+    {
+      "path": "audit_existing_m2_capacity.py",
+      "bytes": 2675,
+      "sha256": "db19f43ce4f0594c2ff3cc10cee3c68a90e18d18665f3da6409a5a83d1de3beb"
+    },
+    {
+      "path": "audit_learning.py",
+      "bytes": 4505,
+      "sha256": "41aeedebf23f54fecc9d7519ada3899f8c215d63bcccafe28f1d468900059ad5"
+    },
+    {
+      "path": "block_fit/BLOCK_LEARNING_REPORT.md",
+      "bytes": 3504,
+      "sha256": "74552151f281b53524ad180964abffb0ab0e1c1e0cb4f9daad1730395abc1fdf"
+    },
+    {
+      "path": "block_fit/FIT_LEDGER.json",
+      "bytes": 46191,
+      "sha256": "4a3f64eafd74f22b8403620dd3e8ff41546b7d9d5f56be6e7c16ef10718fa5a1"
+    },
+    {
+      "path": "block_fit/FROZEN_NEGATIVE_SELECTION.json",
+      "bytes": 5557,
+      "sha256": "9aeb9fe63f3c992a2a026ee389e67032cbbf1f633489787e6948aeb378708cdb"
+    },
+    {
+      "path": "block_fit/METHOD_MANIFEST.json",
+      "bytes": 4948,
+      "sha256": "a4477ba6b6765ccbba82937dee36159efe9939a29f8150fd42201c1718ba6342"
+    },
+    {
+      "path": "block_fit/RUN_RECEIPT.json",
+      "bytes": 405,
+      "sha256": "5512ebfde9eb49c85e14d05d206508a4ef8f199eea6c383d5d7115e4f7587cc8"
+    },
+    {
+      "path": "block_fit/class_profiles.csv",
+      "bytes": 1185,
+      "sha256": "1f9a8aa050dfa6d118b357e0344dc58b671b0b6d325274a7d7581cdb8b52094d"
+    },
+    {
+      "path": "block_fit/class_vector_support_descriptive.csv",
+      "bytes": 1807,
+      "sha256": "95188e93caec373ca13c4fbec6a09bf8b671a52e8baca76f24762f20175e1c8c"
+    },
+    {
+      "path": "block_fit/fold_labels.csv",
+      "bytes": 12634,
+      "sha256": "4d4cfeb9c17c164fd85553f31880a3a581e47fe70cdb8640c147b06efb37939e"
+    },
+    {
+      "path": "block_fit/inner_cv_building.csv",
+      "bytes": 18395,
+      "sha256": "b9b8e27c9e64cb287c1c9fb724afe7173a893cdc062cb9426d1261743b6beadf"
+    },
+    {
+      "path": "block_fit/inner_cv_summary.csv",
+      "bytes": 3406,
+      "sha256": "028e5a825afb4ad085144464f31585d68dbbad2f51aebb4d7eb204cca60ab696"
+    },
+    {
+      "path": "block_fit/label_sensitivity.csv",
+      "bytes": 563,
+      "sha256": "332c281f1b64cdc7ab1abd6726f23fe406877d86c0fd4e4a40db0473fec8ba23"
+    },
+    {
+      "path": "block_fit/label_sensitivity_summary.csv",
+      "bytes": 200,
+      "sha256": "6f0580d97c0165b19a949d0581d14bdef6f3727148ac4e4a76c38f93e0abfbba"
+    },
+    {
+      "path": "block_fit/paired_building.csv.gz",
+      "bytes": 396149,
+      "sha256": "33a079c25eb505cfe5c607c8ad6233c2d8a754a46bfe53dc246900c9ee38185c"
+    },
+    {
+      "path": "block_fit/paired_summary.csv",
+      "bytes": 23882,
+      "sha256": "4d489126e2bec816f8042e487a78a861a02db683364649405034a7d9aa367803"
+    },
+    {
+      "path": "block_fit/worker_labels.csv",
+      "bytes": 5205,
+      "sha256": "4823e9010d5acb4c969657da8f10695e44988e5b6c5e4c5fc5fcdcc96cd1dab0"
+    },
+    {
+      "path": "compare_original_new2.py",
+      "bytes": 1868,
+      "sha256": "8243d95d07c5bf0e79cc841493c26ed62693d31eb5c9d80be882b1f40bcac3f3"
+    },
+    {
+      "path": "corner_fit_legacy/EVALUATION_CORRECTION_RECEIPT.json",
+      "bytes": 573,
+      "sha256": "098d1450322ab7fec049c27af0cb59b660a7b1c677eb1523980eafe3bf98a9b2"
+    },
+    {
+      "path": "corner_fit_legacy/INPUT_RECEIPT.json",
+      "bytes": 528,
+      "sha256": "33f5470f19867780b861cf28931306bb7f0e716b16089445a137d4820f27b97a"
+    },
+    {
+      "path": "corner_fit_legacy/METHOD_MANIFEST.json",
+      "bytes": 11750,
+      "sha256": "80a96cee5a41bdccad4c0167c252e5261a3534854d093fe7b0ab3a60e6034a29"
+    },
+    {
+      "path": "corner_fit_legacy/RNEW2_CONTROL_RECEIPT.json",
+      "bytes": 436,
+      "sha256": "dbc519b6f0a95a7d4750236e748555741abdb8bc32a310fdb9c74d1803b2921b"
+    },
+    {
+      "path": "corner_fit_legacy/RUN_RECEIPT.json",
+      "bytes": 215,
+      "sha256": "4f69c3272b6f66f4832677378cabe64b69a024c14c811dd5176b1e991918ebff"
+    },
+    {
+      "path": "corner_fit_legacy/class_profiles.csv",
+      "bytes": 5838,
+      "sha256": "040d08d5cd14c71e6f4d743a750c0cd225db9635ed8e3f5351bf7f72d3d5daa9"
+    },
+    {
+      "path": "corner_fit_legacy/evaluation_support.csv",
+      "bytes": 1463,
+      "sha256": "f0f075ce7dc17156b86c4bb1e40ab40717d46b1ff183436b795ab134fb653597"
+    },
+    {
+      "path": "corner_fit_legacy/fold_labels.csv",
+      "bytes": 46234,
+      "sha256": "2ef8c5aa2fdae3045b1fe7eb35163d4046a2cece3f652f6876f20381015b37b4"
+    },
+    {
+      "path": "corner_fit_legacy/fold_ledger.csv",
+      "bytes": 1955,
+      "sha256": "0826c47b5096ada3377f8deb634c308b4caaf8f87113039eab39ee36f0412548"
+    },
+    {
+      "path": "corner_fit_legacy/inner_cv_building.csv",
+      "bytes": 47452,
+      "sha256": "0f4da1f9b8c52037dee5324f4fb6b024b3b5af503cb73de9034a62adfb777958"
+    },
+    {
+      "path": "corner_fit_legacy/inner_cv_summary.csv",
+      "bytes": 6479,
+      "sha256": "803b240c0e3b7fe7dc2a962088c98b3f4730803807d101a2f5bf8e20d67a0de9"
+    },
+    {
+      "path": "corner_fit_legacy/inner_fit_label_sensitivity.csv",
+      "bytes": 2458,
+      "sha256": "9dc7c80b7abf6e26a1d5913eeaea0927d03aab18a7c140333843b48c52ee00ec"
+    },
+    {
+      "path": "corner_fit_legacy/inner_fit_label_sensitivity_summary.csv",
+      "bytes": 630,
+      "sha256": "8703cb7fd5f627d1730dc0aa043819e7544892e519ee4de4f378bf181e4a024a"
+    },
+    {
+      "path": "corner_fit_legacy/original_Rnew2_paired_buildings.csv",
+      "bytes": 141918,
+      "sha256": "626462558ce78e70123ace5f41669ad58a3ea71263967c01f309276222193406"
+    },
+    {
+      "path": "corner_fit_legacy/original_Rnew2_paired_summary.csv",
+      "bytes": 20233,
+      "sha256": "d59041e0812df43be4ad26ff7f5ef80174e16d84e7924809fdfdc1ba32907e94"
+    },
+    {
+      "path": "corner_fit_legacy/paired_random_building.csv.gz",
+      "bytes": 1116414,
+      "sha256": "3e013030633c48be93dba19f39ce2a468508f18f888377bf073ddabf6b4bf842"
+    },
+    {
+      "path": "corner_fit_legacy/paired_random_draws.csv",
+      "bytes": 665291,
+      "sha256": "1e2eaec67bba6be9322c0e63e2f36218cd29352b02fadb9d811a4fbc673bc998"
+    },
+    {
+      "path": "corner_fit_legacy/paired_random_summary.csv",
+      "bytes": 153683,
+      "sha256": "100a3ee44d70ab0ab8516cf0edfe508ef5334d69c5037b4a83e4bc94cb396c90"
+    },
+    {
+      "path": "corner_fit_legacy/worker_labels.csv",
+      "bytes": 28632,
+      "sha256": "0a89ceacc8735be4e8a40cee9becca98746df278b08ccb218a42f5375e1e8f6f"
+    },
+    {
+      "path": "corner_fit_mixed/INPUT_RECEIPT.json",
+      "bytes": 533,
+      "sha256": "94e12ff5b9b952bc89ab71d886f729eb22502f9469ae079c42f54cbde5a1e090"
+    },
+    {
+      "path": "corner_fit_mixed/METHOD_MANIFEST.json",
+      "bytes": 11738,
+      "sha256": "bf9701c4ec38873b5c8c350a69aa98b8c60531420bf2bbb26ae43c59c128c921"
+    },
+    {
+      "path": "corner_fit_mixed/RNEW2_CONTROL_RECEIPT.json",
+      "bytes": 435,
+      "sha256": "9fd31badc276cc6c80ce3f81f43fb49f5561b6d4b47645229be3511467a07596"
+    },
+    {
+      "path": "corner_fit_mixed/RUN_RECEIPT.json",
+      "bytes": 216,
+      "sha256": "e092436367cecf4ccad150854bef8f4c239c852942e6da8e7177930896b8228a"
+    },
+    {
+      "path": "corner_fit_mixed/class_profiles.csv",
+      "bytes": 5833,
+      "sha256": "3c23730f5620354c7d692321cf190306932853fbfcec09fae2407c4a958ec94f"
+    },
+    {
+      "path": "corner_fit_mixed/fold_labels.csv",
+      "bytes": 45184,
+      "sha256": "3f8887626d68531650cfa9e02dd7fd8eb4f40a74a4a748ae7a858e655c8a6cec"
+    },
+    {
+      "path": "corner_fit_mixed/fold_ledger.csv",
+      "bytes": 1913,
+      "sha256": "fd0cfccbda3cc4d9c7c7c46b2ca45e5eff8e8b7fa216ed6317650fa454629900"
+    },
+    {
+      "path": "corner_fit_mixed/inner_cv_building.csv",
+      "bytes": 49252,
+      "sha256": "3fb87494ef42cd5850b412a707c4882cf5169b01ee0b5c4e7000fc767a60c35f"
+    },
+    {
+      "path": "corner_fit_mixed/inner_cv_summary.csv",
+      "bytes": 6484,
+      "sha256": "5ecfc7fe8ee7b726896e2fc6c08e54a931e711ee127e2db0b82039f60d1f3d6d"
+    },
+    {
+      "path": "corner_fit_mixed/inner_fit_label_sensitivity.csv",
+      "bytes": 2329,
+      "sha256": "5a67b8f52e3a3f3b43f13df1d6c829dd5d09cd24a1a852c48b60dae3e1dc6e44"
+    },
+    {
+      "path": "corner_fit_mixed/inner_fit_label_sensitivity_summary.csv",
+      "bytes": 621,
+      "sha256": "256129538cf51093c05086a539bf42723308a6ba42afd9ec59f9128580609d48"
+    },
+    {
+      "path": "corner_fit_mixed/original_Rnew2_paired_buildings.csv",
+      "bytes": 147502,
+      "sha256": "454916395d2adffa01662c6f5f07fee3794cb57c9e42f84deb83c51fde4bb81a"
+    },
+    {
+      "path": "corner_fit_mixed/original_Rnew2_paired_summary.csv",
+      "bytes": 20277,
+      "sha256": "4d3d7e307714c60ebce85b490b04afebb4c5699a1583cf706d666913a1352df2"
+    },
+    {
+      "path": "corner_fit_mixed/paired_random_building.csv.gz",
+      "bytes": 1694546,
+      "sha256": "7868dd665c590355225cf31165f408047d23df1e4d0f6f7596892440a26c094b"
+    },
+    {
+      "path": "corner_fit_mixed/paired_random_draws.csv",
+      "bytes": 662837,
+      "sha256": "dfd1de57897dbc9b747f1287da24602772f9b6037306d3c18563c7fb91eaa20a"
+    },
+    {
+      "path": "corner_fit_mixed/paired_random_summary.csv",
+      "bytes": 153224,
+      "sha256": "016426ac18d7920d2c7b530f6198b5960d3267272183f38040d7380a465626c8"
+    },
+    {
+      "path": "corner_fit_mixed/worker_labels.csv",
+      "bytes": 28272,
+      "sha256": "b1ec3898ec05bb1406500b30faf3a124dd057125679440b2e4378b6872bef9b7"
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-02__manual__80761d0f32.receipt.json",
+      "bytes": 388,
+      "sha256": "bfc1292a2156b8749530d0b6b0190adb60d9f414b7310cc893b21c0961508a11"
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-03__manual__5ca7b0b788.receipt.json",
+      "bytes": 388,
+      "sha256": "cb8c04481078edbca867efae17eb8a4696f85ea7b6cfe8e571d160608a388c3e"
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-06__manual__9b197d01a2.receipt.json",
+      "bytes": 388,
+      "sha256": "24309e2c509770ca8a3f5cb34eae1e592096a4eb0a901f763886d9b73c7b2289"
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-09__manual__ffdf364fb7.receipt.json",
+      "bytes": 389,
+      "sha256": "9e47c18532d73e7902fe8f03ab16c0c4d5c09bd95db7d4b323bee8e405ca90df"
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-13__manual__ec0d05ae55.receipt.json",
+      "bytes": 389,
+      "sha256": "a5cbbc5c39335483744e764552c153f56ada80a7cc56186c57f8782621bc89e9"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-04__manual__c93fe8a825.receipt.json",
+      "bytes": 388,
+      "sha256": "551821e646170e50c425dc2a6b8c81a2f6651d33e07f032e3bcd8ab5bbd34ac4"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-05__manual__3078185fd7.receipt.json",
+      "bytes": 388,
+      "sha256": "61b052f10c11c9f180c961b72ae919fd9803bfe19d3d6425ff26a403256ffcd0"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-06__manual__b53e2c2f71.receipt.json",
+      "bytes": 389,
+      "sha256": "6bd15068a4921d402d4b0e694917b5020e77af789e095631a43c7699312bcadc"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-10__manual__38e19faf10.receipt.json",
+      "bytes": 389,
+      "sha256": "95271d33acad7d9d98af96c5ab78f6be5bdf4ff4038bce67364f54ca1cac6b3a"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-12__manual__eec3a285d1.receipt.json",
+      "bytes": 388,
+      "sha256": "12989e4a0460c237129201e3e9d7c17e3ceb00e3222b22ef5eddae13dae20dd5"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-15__manual__3c51a634b9.receipt.json",
+      "bytes": 388,
+      "sha256": "25967e37bea92002e0dae98644e0430eb846c4fe0b149ead9f2df771e05aa84b"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-17__manual__e525b4e1d7.receipt.json",
+      "bytes": 388,
+      "sha256": "5d7bd62b575e31d38cb0593e0d772b98a5f6cb36e8460d52f01314103a676513"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-18__manual__7d3da846c6.receipt.json",
+      "bytes": 388,
+      "sha256": "9fdd495ac3ae30650ed8bdb353ebe3dff7f9a792627cfa2dcd8abb0649d7a10b"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-19__manual__c6b86cae13.receipt.json",
+      "bytes": 388,
+      "sha256": "3a274e1df1d51cc043ef34cc32af1439d5731a335d4747289a3abb786877a6d6"
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-21__manual__605071dbd5.receipt.json",
+      "bytes": 389,
+      "sha256": "4eeba954e0d4d11ef4c6fa35a6ea15209e8cf3be80e8499b273e83ab0ea5c6da"
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-01__manual__5b146df96f.receipt.json",
+      "bytes": 389,
+      "sha256": "397cddf0d1b5205680435a2644e0c6fbc20f89ed19f459951c2d17bf3597e7bd"
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-03__manual__02147a8f0c.receipt.json",
+      "bytes": 389,
+      "sha256": "a281cbaa46dea8b0a8374f334c7c7af44632f9041c6b07921aaed8af5c8d7cd5"
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-04__manual__fbe40a551f.receipt.json",
+      "bytes": 388,
+      "sha256": "28c6870ac42b509f9ee3e867260051b5f4333bc9aae162ba791c9359a2f4cb86"
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-07__manual__3362ee2227.receipt.json",
+      "bytes": 388,
+      "sha256": "fa5b2f2847a450dbf88ea68483f5d620386b3ae82ddd7f9b88d5690c6bfd1dc3"
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-10__manual__52845fa120.receipt.json",
+      "bytes": 387,
+      "sha256": "505ca90ebbd53074785c5292ec6ea7031ac4e78db0f31b6a855091fed09cb6bc"
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-02__manual__1402a46fe0.receipt.json",
+      "bytes": 388,
+      "sha256": "1586ff7385a7861079f595998bca17ac8d164072d91f8f54a887a0250e407628"
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-03__manual__9f0ad84f43.receipt.json",
+      "bytes": 388,
+      "sha256": "ace4e86534a9debd7fb77978d0d6e77f5f81de7a0f578326562e9294ab2e5f54"
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-06__manual__0151bd7edf.receipt.json",
+      "bytes": 389,
+      "sha256": "e98b5e2f4175a6828a608877d803ecff8be0863de9da2d12d21b4e7ab4e9a2ab"
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-08__manual__046839c2de.receipt.json",
+      "bytes": 388,
+      "sha256": "0247870c51464012e5dec2229200143aa0dbb40654558dbb98868d0f1263e0d6"
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-10__manual__6b973e35d3.receipt.json",
+      "bytes": 388,
+      "sha256": "e280470b62d11de069755d2ff99884c805d38490307451725881d2c4da7e2144"
+    },
+    {
+      "path": "corner_h20/b8cTxDM8gDG-07__manual__3eefa592b6.receipt.json",
+      "bytes": 388,
+      "sha256": "61c4e1d073fda122d03b547fb00eb808f6996162299169495bf1e87043cc1c4c"
+    },
+    {
+      "path": "corner_h20/b8cTxDM8gDG-17__manual__64a912ca10.receipt.json",
+      "bytes": 388,
+      "sha256": "bf1cbc17940e0d6dbb606cbfc9ce5dd37fb3a3f914d7b80ec3e8f8d0db11f154"
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-02__manual__8c0c47789e.receipt.json",
+      "bytes": 387,
+      "sha256": "63eb4e390f345f4ae70bed76ab2a6375ec4526cd42559fa52750f7eabc99bf9a"
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-04__manual__928d5032f2.receipt.json",
+      "bytes": 388,
+      "sha256": "e0c06da06c020dae04c6c6a7eb896cb270f1b81102f1e906e9f3edf021338efb"
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-10__manual__069105f01a.receipt.json",
+      "bytes": 388,
+      "sha256": "11997366503f4e4fa3fe3ce800c15729ea3a7461d7dc4ddc1889415bc9898f1d"
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-12__manual__c7ac014dc3.receipt.json",
+      "bytes": 388,
+      "sha256": "d7300135f2cd89a5281173e084e26e93ecfc10a51a9365e7b51436d39ae2e7cd"
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-13__manual__274d69d1f7.receipt.json",
+      "bytes": 389,
+      "sha256": "629798fcb59eee279f31ce6d9a8d87752ac130b277203a49d7c7fa26120148c5"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-01__manual__a8c2a2a06a.receipt.json",
+      "bytes": 389,
+      "sha256": "b901f62c9256725f13e9d6f428fe31a6119029718dfa46af0828a01597d8724f"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-03__manual__273b3289c1.receipt.json",
+      "bytes": 388,
+      "sha256": "fa75653d2d612d7de91c948ffaa5e979a7a93787d2f44275d4e825ca1415e5f0"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-04__manual__1a0a2ad3cd.receipt.json",
+      "bytes": 388,
+      "sha256": "4977397bf01cec5efff1649231705e270dbeb507fa4cd656a50f88de7bdf7503"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-06__manual__97fff2cf49.receipt.json",
+      "bytes": 389,
+      "sha256": "8a47a97180a33f62074f25cab991a4215a4a2737df4a89212be100c6473c742a"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-07__manual__52a0da301c.receipt.json",
+      "bytes": 388,
+      "sha256": "f4bd6ee5cc5aefe8f24a4a64ba7a0e4be86de2bd4a2af82bcc4f2e98fb3ca45b"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-08__manual__06e274dc0a.receipt.json",
+      "bytes": 388,
+      "sha256": "f70af1e02229e107d68db2d229a786ead520acf91f42e620984b8dfa4519036b"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-09__manual__16e55b5482.receipt.json",
+      "bytes": 388,
+      "sha256": "5e4b9b2df84d3edfc1014ac8308e37f0cbca21f4ebcae78504ae4835c273d2bc"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-12__manual__15a1012a90.receipt.json",
+      "bytes": 388,
+      "sha256": "7ef8406db82b43fa1fba850b373defaf3e54d1a7fce9bedd1b625d8bbf9ce69c"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-14__manual__a49483b09b.receipt.json",
+      "bytes": 389,
+      "sha256": "db2dbcc0ff0d0e80cc1d5f4e4f98333e2e4509df6d5992d4ca1b6bd521871b05"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-19__manual__2a971cbaff.receipt.json",
+      "bytes": 387,
+      "sha256": "20f39508b7f0bf7bf2b7620c3959f516aec2fb9616b336087a62028fd6bb3624"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-20__manual__4564c265d6.receipt.json",
+      "bytes": 388,
+      "sha256": "79279be9f65035df82ca7edbd95b252339d0825edcb887a472429e737b219b95"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-29__manual__bccd00a58a.receipt.json",
+      "bytes": 388,
+      "sha256": "b97f6690b15a8517bfada57269d2f75b27d0ca962381af7ed573ab4866cc39cf"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-40__manual__dbb73fc912.receipt.json",
+      "bytes": 389,
+      "sha256": "c0f41100b0bd6130debfb41bd97be2ac3e7c611c9994661ebc8f4bb6249555e6"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-43__manual__4646114ccd.receipt.json",
+      "bytes": 388,
+      "sha256": "ecce9132291bf93aabc756321e684f5880b6659a688f7d68bf24526546595aac"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-45__manual__5dc82190fe.receipt.json",
+      "bytes": 388,
+      "sha256": "1f2ef36a793db34d0cb616d968939813b3451c4886f28b9c6cc4b5a9324d4197"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-48__manual__5a1d61d7e4.receipt.json",
+      "bytes": 388,
+      "sha256": "08049a5fd4fa858e3266cdf24c10afd2caa3da046f883edee937bec5bee4aec2"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-50__manual__8871891ae6.receipt.json",
+      "bytes": 388,
+      "sha256": "ea802f8f697fb6d7c64f18370bc051a2cdb1d4781a73ad8dedd14cb538cc4c3d"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-53__manual__db68acead6.receipt.json",
+      "bytes": 388,
+      "sha256": "f96a549f00b10353823d8abe8624a16fa407f1495436cae36cefc3e2b577d6c1"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-56__manual__f53b4c68f3.receipt.json",
+      "bytes": 388,
+      "sha256": "7cf06ed0418060600fc2314cc36f9d1fc0068ad89a013c170256805191048fd5"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-58__manual__e314581953.receipt.json",
+      "bytes": 388,
+      "sha256": "a499393dca7ec6daf013d730be3e8bea7181fcaa4d3242d832adbf0a3c02ab35"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-60__manual__21954e0443.receipt.json",
+      "bytes": 388,
+      "sha256": "914911462286b3e3fdffee60386582ec7c8aa91150360551866b398115d72546"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-65__manual__9acb3cd5d4.receipt.json",
+      "bytes": 388,
+      "sha256": "0e194e53e3892b8f78f5c04075f3e6f413a8994a54b8f8c964f68c69e275a796"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-70__manual__92e05f16ae.receipt.json",
+      "bytes": 388,
+      "sha256": "25eeb21be4a0472fe9b1e998ece4c92452c0f5da15f44e7c0006de7cdbb03bed"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-72__manual__6049ded157.receipt.json",
+      "bytes": 388,
+      "sha256": "d2a3de7744be4dd341e82e88691c90b88caf807db1116cc78c26b7e3aba0bf7b"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-78__manual__dfd88df676.receipt.json",
+      "bytes": 388,
+      "sha256": "10838939fe69350d347200153ca76a013d77182e50b24e854e289ec2e9ada6c8"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-79__manual__c6b8ad6031.receipt.json",
+      "bytes": 388,
+      "sha256": "905d3bdd4eefeeb5321d4d7ed2a3db1ee94b0d531256d81071a59b55f6248d73"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-82__manual__8e7ae21c8d.receipt.json",
+      "bytes": 388,
+      "sha256": "d8e93ec18e079258482597a7dd1c38aa715bf2206c9e1446a58fce54e99a3703"
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-87__manual__6519a307c9.receipt.json",
+      "bytes": 389,
+      "sha256": "91517ef427776aa7faea1c061325296ff2a8869b8e43fa7ecc218738197c80e5"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-03__manual__004c4aa3e8.receipt.json",
+      "bytes": 389,
+      "sha256": "91d0555d55559a463195524ebf4a2cc6e8496cb3a68ca2638781ca7e6eeeceae"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-15__manual__717700d501.receipt.json",
+      "bytes": 388,
+      "sha256": "1d4f7c6713f792769ae8499f92206f89b7317e11e0f56e354fc51ec9c5c82786"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-18__manual__d4949d0b37.receipt.json",
+      "bytes": 387,
+      "sha256": "40d356a24d7784fff00f62d3512f305a7731f0a398896e219fc3fded1d0e7ef0"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-20__manual__fbde0b8a63.receipt.json",
+      "bytes": 388,
+      "sha256": "fd5eca1868e7abd8be84673e9196acb2841af54c566b556b19e5a28682e691ff"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-26__manual__a5ad9a2ba2.receipt.json",
+      "bytes": 388,
+      "sha256": "9a56bf014d917aa7f8d91b69b14d98052ef7edacecaf763cf7a44cd2c2220eb0"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-30__manual__a9dacebdfb.receipt.json",
+      "bytes": 388,
+      "sha256": "29914804871993d5745b98242ad2d951b866fddccc55e47797fba60f30ab98ea"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-40__manual__573680f8c8.receipt.json",
+      "bytes": 388,
+      "sha256": "f66e136c1e9402881b3f70c5838aca6441c072ded86593ceef5d460c8eb093b1"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-46__manual__ddafdd7484.receipt.json",
+      "bytes": 385,
+      "sha256": "b86810a703533e1587783bc4aa0e953c7bc5f393d63fc42fa717c32923d9ceda"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-53__manual__c22e59afe7.receipt.json",
+      "bytes": 388,
+      "sha256": "2d9e3ddcdf6d367719a6c1bfb210891ca84f1fdf194ce851255a669677b1b6c3"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-54__manual__f450a46f5c.receipt.json",
+      "bytes": 388,
+      "sha256": "a65063c045a880e7d784171e0b909c623f1347ecbedcc3cdc863b2da01696dda"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-56__manual__55ecaa1ae3.receipt.json",
+      "bytes": 388,
+      "sha256": "b35bed0ea11e626124e465126deb10f8734f954f6df00734fa928aa6100c9fff"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-59__manual__76ce9865d1.receipt.json",
+      "bytes": 388,
+      "sha256": "4dd4a72b9b469299ce2b2829d232e280cf102db4f11dbb37cce49c21f8efc99a"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-60__manual__b962d8eaa6.receipt.json",
+      "bytes": 389,
+      "sha256": "c97c90917ef4c69d65910f24e5dfaf4375865bcc6f736dddb5bff260308686f9"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-61__manual__045f83744e.receipt.json",
+      "bytes": 388,
+      "sha256": "06c8221e6009139513bd3dc58ab6caaa7e3a306322e13113aa00b366d0786540"
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-67__manual__cd09bc8ccc.receipt.json",
+      "bytes": 388,
+      "sha256": "043fecd43d7d5686a14db97441d7cebd4595c5eebf2679c85977450f943aff6c"
+    },
+    {
+      "path": "corner_h20/x8F5xyUWy9e-03__manual__ec015dc331.receipt.json",
+      "bytes": 388,
+      "sha256": "9065cf17df214cbbcd1e41a6f0bb45903f24fd67ada188f0bdf79945da3c7bb2"
+    },
+    {
+      "path": "corner_h20/x8F5xyUWy9e-08__manual__0b13997fd3.receipt.json",
+      "bytes": 388,
+      "sha256": "02064ef485cda6f0ad267b6392fb5975843d1d4dd4166e0e9b1829508ae65872"
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-02__manual__d9ae55b158.receipt.json",
+      "bytes": 388,
+      "sha256": "5b7f106cbe6d93fc23d4afd5ef1443325457dc94129d8d1e12dd62c309677566"
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-09__manual__2b1196fa29.receipt.json",
+      "bytes": 389,
+      "sha256": "4aa474b8e4c6c962346970e05a6c5970102fa92bd9f3ee7c380f4f1960e2471b"
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-11__manual__3876207f58.receipt.json",
+      "bytes": 388,
+      "sha256": "a2ad9129700bb0a31fa0654a8c82343adaaab4eee32cd0b5192e25e709dd36bb"
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-16__manual__7e980a16d1.receipt.json",
+      "bytes": 386,
+      "sha256": "3973b27c7d165e0b4f507ad8555769b74f752898ca83b496e347641da65681a9"
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-06__manual__9b197d01a2.receipt.json",
+      "bytes": 376,
+      "sha256": "61fa466e45e493b4abc0d8d6ff27124ed47ae85d3750d25e44a24c471654a073"
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-09__manual__ffdf364fb7.receipt.json",
+      "bytes": 375,
+      "sha256": "2f3fa71de75b683efb4b56caf708f2c6a62d90e42bce924cafb6c511608f7323"
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-13__manual__ec0d05ae55.receipt.json",
+      "bytes": 375,
+      "sha256": "e84dff1c762e35bafebce6a54f77329b296a9045662f27e416525423233377f0"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-04__manual__c93fe8a825.receipt.json",
+      "bytes": 376,
+      "sha256": "3b0945299883a0b618ba5c4cf8107ebc244166c1eae84c180d9c70b1dec6dc57"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-05__manual__3078185fd7.receipt.json",
+      "bytes": 376,
+      "sha256": "109a9bcdc4ff8ccbae71d6dfb6b213b142d65752b5909951c1235e6151abab3c"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-06__manual__b53e2c2f71.receipt.json",
+      "bytes": 375,
+      "sha256": "c538d74fa9716c7f674d32636caf9db5fb358f4cee274e2ded579f1aacf8d30c"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-10__manual__38e19faf10.receipt.json",
+      "bytes": 375,
+      "sha256": "789b43ba2f86bc89adb4cc08a038df45d10a322ac5d8418d7055bdd2d4c394bc"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-12__manual__eec3a285d1.receipt.json",
+      "bytes": 376,
+      "sha256": "01692cf3d244e910122ee67e97b3e82c946c529ac70c0784dc76c658dc42fd80"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-15__manual__3c51a634b9.receipt.json",
+      "bytes": 376,
+      "sha256": "3f63ff61920d8311184e57564cc15b8d77fe3de37fc7bc06254d4736a1a9cf92"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-17__manual__e525b4e1d7.receipt.json",
+      "bytes": 376,
+      "sha256": "d23e1677675315447ad1c1ea57d4a516631ad4927ff9ff5fa4f9cb48573e6a4e"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-18__manual__7d3da846c6.receipt.json",
+      "bytes": 374,
+      "sha256": "12e800fd10c4cd69f9d1149eca27ecfe50573cfd468e3f10d7423bd70be13a4d"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-19__manual__c6b86cae13.receipt.json",
+      "bytes": 376,
+      "sha256": "1adeb7fbd43aa077ef2c49d5b25815e129b54b6ac179c9d409f96615d8202a10"
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-21__manual__605071dbd5.receipt.json",
+      "bytes": 375,
+      "sha256": "05df713d78a1e1f7adbd6653fe3a9259fb9f4c461db9c91f9658e70f382f0b7b"
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-01__manual__5b146df96f.receipt.json",
+      "bytes": 376,
+      "sha256": "a7e5b1559d491bbb41f7ad42aeb398f9a0f8718bbc286f073f9f65b5622f237f"
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-03__manual__02147a8f0c.receipt.json",
+      "bytes": 376,
+      "sha256": "02d90b885939e0d57b232c2fc6be2acb00adebd599f81d6e2b5418d4ae656906"
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-04__manual__fbe40a551f.receipt.json",
+      "bytes": 375,
+      "sha256": "41fdc5e33d3512e5f520051b7911908803a6a2707f1b39e7378e755ee3f1c4d4"
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-07__manual__3362ee2227.receipt.json",
+      "bytes": 375,
+      "sha256": "8e2ec2410af595581e9050bfae9ae883ae513bb603ca940ac6302d389048efde"
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-10__manual__52845fa120.receipt.json",
+      "bytes": 376,
+      "sha256": "0c79d6a5ebf02fb9f265bc0d92e85966677f517a357c255c480c3a55ffe57b55"
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-02__manual__1402a46fe0.receipt.json",
+      "bytes": 376,
+      "sha256": "17d5c7579612bafec6163e3f48241a50f1330cf9196a18a19522862dd98db02b"
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-03__manual__9f0ad84f43.receipt.json",
+      "bytes": 374,
+      "sha256": "1770c439e40f98b75161d6c952e4c0a15b6985423eba1b9d199a943d24360bb6"
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-06__manual__0151bd7edf.receipt.json",
+      "bytes": 375,
+      "sha256": "7c10f0f638028e3dafa557bc6b9006182597091f99988c54af98348bda441cfd"
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-08__manual__046839c2de.receipt.json",
+      "bytes": 374,
+      "sha256": "7bf635ace0e90d320a4e9400cef5529e78a7f5753a17e0573dd3059f9d1da671"
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-10__manual__6b973e35d3.receipt.json",
+      "bytes": 376,
+      "sha256": "15b088fbd6b8ebd7c8445160fa40799878c210ffc5415fbccf826f03f4fbf77b"
+    },
+    {
+      "path": "corner_history/b8cTxDM8gDG-07__manual__3eefa592b6.receipt.json",
+      "bytes": 376,
+      "sha256": "8ea53eb2c3cd8ad6ace835af5a7ddffae86b7a10285870f6c329649de85b47ea"
+    },
+    {
+      "path": "corner_history/b8cTxDM8gDG-17__manual__64a912ca10.receipt.json",
+      "bytes": 376,
+      "sha256": "62e59211cdad04162132b12f9aeea9643a77384c7705b17933b799bf3a4fa5fd"
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-02__manual__8c0c47789e.receipt.json",
+      "bytes": 375,
+      "sha256": "53f31aa8918884f368cbaf5ef85b04d71caf39a90efd53286d83ad1f1d491d2f"
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-04__manual__928d5032f2.receipt.json",
+      "bytes": 374,
+      "sha256": "598ca2aaf3f0ba92a0377a293ac2552b86bab3084ac485f5ebb7469cd10e6f89"
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-10__manual__069105f01a.receipt.json",
+      "bytes": 376,
+      "sha256": "909a9c3b82889f8ffb0084dc0246288529faf1e493b6504fcae03d51abebbd94"
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-12__manual__c7ac014dc3.receipt.json",
+      "bytes": 376,
+      "sha256": "764c44c42ca6b7a6c251b940d721b3d7b9822354b31265bf98544b6474fc6d40"
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-13__manual__274d69d1f7.receipt.json",
+      "bytes": 376,
+      "sha256": "2b284488a9d94fb97aa398748c5d861c7d0514d3100f49df57b3a6828a75a12d"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-01__manual__a8c2a2a06a.receipt.json",
+      "bytes": 375,
+      "sha256": "273d94308443c38458f69b77b3433f06aac7cc6e04c1f4a44daf54142f463851"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-03__manual__273b3289c1.receipt.json",
+      "bytes": 374,
+      "sha256": "a4e53a745a62af609080f2562ce89c7e9a3678c135f094fb40ec4f36d401bfd1"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-04__manual__1a0a2ad3cd.receipt.json",
+      "bytes": 375,
+      "sha256": "f6dcf9e09e19b505fd34655d86dc4d1f98dfe046b8bc237112a77d7ef27cdb76"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-06__manual__97fff2cf49.receipt.json",
+      "bytes": 375,
+      "sha256": "b410331d6634954e4c5bbd48a1abe1d990c7dda01d1e6b419d4d2181cc8983d5"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-07__manual__52a0da301c.receipt.json",
+      "bytes": 376,
+      "sha256": "75b34c864895f4e1bac0f5aea2a885b47c219876cb1f772353947c8832e78474"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-08__manual__06e274dc0a.receipt.json",
+      "bytes": 375,
+      "sha256": "f0298d50957e79d4dd59fdd6dde240caaba6717c38cbf95d8bd241ce2242dc3d"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-09__manual__16e55b5482.receipt.json",
+      "bytes": 375,
+      "sha256": "36410cfd88cd4ec620a9f5cb1b760fd9a14225f54d9303295a645676477dd8e5"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-12__manual__15a1012a90.receipt.json",
+      "bytes": 375,
+      "sha256": "409e4c3db0b13439c762af7027e4ce0d540664bac833a0d0832f0e1cf7406233"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-14__manual__a49483b09b.receipt.json",
+      "bytes": 376,
+      "sha256": "6c706f6674e20a67e5c8cfd126db15a28ad71bd1f67986ae3211053585138f2b"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-19__manual__2a971cbaff.receipt.json",
+      "bytes": 375,
+      "sha256": "b5a58c4dc1e3f157978d60b0fee277817f4c0a38dccd6629e000d830c1b8bcaf"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-20__manual__4564c265d6.receipt.json",
+      "bytes": 375,
+      "sha256": "0fc7ed74d3880d000c9a8044c31ed62d2ce83a76792b485a4ebf81d385c30758"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-29__manual__bccd00a58a.receipt.json",
+      "bytes": 375,
+      "sha256": "955b461e25de3f33a13d416082bc5a23b05bd5c714fb8195556f109acb6a06c9"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-40__manual__dbb73fc912.receipt.json",
+      "bytes": 376,
+      "sha256": "1ccf7ca4b42f779d7fac66441bda46d7a612ceb6848baa83b2e7da56fc3f864f"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-43__manual__4646114ccd.receipt.json",
+      "bytes": 375,
+      "sha256": "be76eeb8420ac407802b6d358d8e85da04a87faeb730bfc35bc4d9f712e3d592"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-45__manual__5dc82190fe.receipt.json",
+      "bytes": 376,
+      "sha256": "236031b878990d2622569b322b825dff53c7d4ea28832c66eb2300c7303c65da"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-48__manual__5a1d61d7e4.receipt.json",
+      "bytes": 376,
+      "sha256": "93fb0777e9f01bfb29c4109da0e4c1489099a36d7f391df160c920c07ee518c0"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-50__manual__8871891ae6.receipt.json",
+      "bytes": 376,
+      "sha256": "783cf1590b8579f401a8a0e371b9cd03aba58546e7dfa489295047bb120dd012"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-53__manual__db68acead6.receipt.json",
+      "bytes": 375,
+      "sha256": "8cfb56f897d9e939710d6cb29bbcd4d801083b3ea2fd64534d950ab1a9455fe5"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-56__manual__f53b4c68f3.receipt.json",
+      "bytes": 376,
+      "sha256": "40c0390305354ce0dbf4a7c3c67ba72a3b1c87aa50c04efe8889407191433cae"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-58__manual__e314581953.receipt.json",
+      "bytes": 376,
+      "sha256": "6ca0ba0a35fcfc00ba620884902cf8e499e3d5268aa6f89a2ebaa1cf705d899e"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-60__manual__21954e0443.receipt.json",
+      "bytes": 375,
+      "sha256": "dbb56437f0920ffbf21ea097fc6fb9b006aa1945182bdeb3e4564104cd26b7ea"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-65__manual__9acb3cd5d4.receipt.json",
+      "bytes": 376,
+      "sha256": "fa5db0ca7909ad8eeaff4d87243388842b0c919f1df1970289da2d71f8183af5"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-70__manual__92e05f16ae.receipt.json",
+      "bytes": 375,
+      "sha256": "384c10e12c2a674c786e0a67b458fd885da638918a0365b9383a808c720388c2"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-72__manual__6049ded157.receipt.json",
+      "bytes": 375,
+      "sha256": "86ddfd13abfecf51ff0533624ec5b315bc08f5b0a84c88ebb294147faa5ae446"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-78__manual__dfd88df676.receipt.json",
+      "bytes": 376,
+      "sha256": "1cc32950b364072faf073b1cdf0fb0373d4ccfa5e1985808474722c6330ced18"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-79__manual__c6b8ad6031.receipt.json",
+      "bytes": 375,
+      "sha256": "64613e982be8d5cee72cb8ebb19deabc35a36ee4ae00838c15ac96517f5aeaa2"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-82__manual__8e7ae21c8d.receipt.json",
+      "bytes": 376,
+      "sha256": "da0631682345c2b8b7d7d0fe21dac81e0c999ee4e299eeed5e6f857579d311cd"
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-87__manual__6519a307c9.receipt.json",
+      "bytes": 376,
+      "sha256": "a1464d5b073026f821826456fab1908e54c70ac18cba895c2904f8459a5d8a5c"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-03__manual__004c4aa3e8.receipt.json",
+      "bytes": 376,
+      "sha256": "c66d06a9a3580177a731353fc732cbe35ff9806c327d3c946660e90a3887d2e3"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-15__manual__717700d501.receipt.json",
+      "bytes": 376,
+      "sha256": "0a8e65489a93c47ee41524e23df1340147803cb2d322eb7543365286ceabefcd"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-18__manual__d4949d0b37.receipt.json",
+      "bytes": 375,
+      "sha256": "14209e14d51e574a75e700b4d640548e6bd443f483cae87bd551f2fbdb9e7786"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-20__manual__fbde0b8a63.receipt.json",
+      "bytes": 375,
+      "sha256": "1941717ce842ccf19427bf97c1be5ed234914f3ad5c608fbde7f4063a18c1f2f"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-26__manual__a5ad9a2ba2.receipt.json",
+      "bytes": 374,
+      "sha256": "1869a544462da7fcda418883b02583c47cca526dd398a8cf153b68d2d818c7d7"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-30__manual__a9dacebdfb.receipt.json",
+      "bytes": 375,
+      "sha256": "a2184fbd4d049fa91337363fde2af0325494a4303911b90ef5b2bec225d04f3b"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-40__manual__573680f8c8.receipt.json",
+      "bytes": 376,
+      "sha256": "595fe62974f0d3df374e10ca4c880cc9864d953f5d7b9305f34c7c32ff5c50a5"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-46__manual__ddafdd7484.receipt.json",
+      "bytes": 375,
+      "sha256": "34043b9deb5f971ecc1eb2ac683f0341b0c26b0fec3d27fbb1a7e6967009ce10"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-53__manual__c22e59afe7.receipt.json",
+      "bytes": 376,
+      "sha256": "eace5f39774d7daea60aedc13a46e469983aa37c7b6873a771a6099f84a5a353"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-54__manual__f450a46f5c.receipt.json",
+      "bytes": 375,
+      "sha256": "fefb6c0f56c3a3f2eb20cd4a780536913a228d561d8963f3606e7a793eaf558e"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-56__manual__55ecaa1ae3.receipt.json",
+      "bytes": 376,
+      "sha256": "8931ded30ca07acdcb578e50fad7d2b297a13681b60873ac9727b79cd0a812d4"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-59__manual__76ce9865d1.receipt.json",
+      "bytes": 376,
+      "sha256": "1bdaca4947259b03305ebe2953a03fff4188f1a67f0070c972bf2c1fd3ed25a4"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-60__manual__b962d8eaa6.receipt.json",
+      "bytes": 376,
+      "sha256": "a95dd9e135e30c327c46a3ce08a9614bd51d92b1cc4e707fad1be648d824ebf6"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-61__manual__045f83744e.receipt.json",
+      "bytes": 376,
+      "sha256": "fe921fba3ea26b39c242edf1eabb5074c2d7ba674914d67047161fb5ce776429"
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-67__manual__cd09bc8ccc.receipt.json",
+      "bytes": 376,
+      "sha256": "8254efd31b42712b7c6d00ac02ffa0264371406155ca07ce8b5aa06ec10693a4"
+    },
+    {
+      "path": "corner_history/x8F5xyUWy9e-03__manual__ec015dc331.receipt.json",
+      "bytes": 376,
+      "sha256": "cb903bb4aa93bca1f7a6397e326dc5c85d620ec509c68353ea963b0918140e23"
+    },
+    {
+      "path": "corner_history/x8F5xyUWy9e-08__manual__0b13997fd3.receipt.json",
+      "bytes": 376,
+      "sha256": "025bfd9c5fdf2eb3afe52b14679ec2b96fd7fba1855f7a1b9d53b55cf73a1f31"
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-02__manual__d9ae55b158.receipt.json",
+      "bytes": 375,
+      "sha256": "7a01604f7aefebae2ffb3cb69678a324d75bf5d73d0122f25c014e043b115f45"
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-09__manual__2b1196fa29.receipt.json",
+      "bytes": 375,
+      "sha256": "42025cdd8aa94341351e99af172f7e475bf92bd10b4994dcc8dd036d1ba5639b"
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-11__manual__3876207f58.receipt.json",
+      "bytes": 376,
+      "sha256": "bc8a982e1fa555ee5d7b6c7a0bb1ac04aef9607b973e7684d6f1b90ee9e0c7eb"
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-16__manual__7e980a16d1.receipt.json",
+      "bytes": 375,
+      "sha256": "682a349a21b2f4bc3d6057b156e61ad955e2871ef42aa252da547109df304dba"
+    },
+    {
+      "path": "curate_learning_delivery.py",
+      "bytes": 2227,
+      "sha256": "70a5c4c799d98df6460375365dbf880d22050e388d05cfe1e997d4b8097cdf62"
+    },
+    {
+      "path": "design_fresh_blocks.py",
+      "bytes": 8743,
+      "sha256": "0aa6e12cc9f14900eaef13cac9bb49035e4b25d74e97817d02f781da56901f90"
+    },
+    {
+      "path": "design_history_blocks.py",
+      "bytes": 3715,
+      "sha256": "7df9fb13728d9df4c8ea47e7d96467613c392dad8157cf2a5b1c5e43674e1282"
+    },
+    {
+      "path": "eight_building_QT_features.csv",
+      "bytes": 17430,
+      "sha256": "cc3d1e6895bd3c709481dd2fcd6912d647bdb37d5b3f28cd81c85910facb93e4"
+    },
+    {
+      "path": "evaluate_saved_corner_fit.py",
+      "bytes": 3992,
+      "sha256": "1e87a3533c52eeeb96f984de30dc628c8e77d437b3821ce29f82c119adb6185e"
+    },
+    {
+      "path": "existing_h20_m2_metadata.json.gz",
+      "bytes": 30109,
+      "sha256": "c33e84ee530bfcf827f178b6401a59ae7e9cd77275a6646e763bbab8d1816225"
+    },
+    {
+      "path": "extract_corner_h20.py",
+      "bytes": 4827,
+      "sha256": "c68da3fba65ba8e727e98b05b5ef3b3f3edded366f9ee0a1aff99b50cecf4b53"
+    },
+    {
+      "path": "extract_corner_history.py",
+      "bytes": 3296,
+      "sha256": "e0bfec8c609daed3d8f52ae471f1f4c2606c2fcf4500f44cc4098d706bfa0ae8"
+    },
+    {
+      "path": "finish_mixed_pipeline.py",
+      "bytes": 1489,
+      "sha256": "940ca6d8bc4cdb80c795fa4b99b208f1a6f54e7c78e4bc2e4c0dbdddbb6e2fbd"
+    },
+    {
+      "path": "forward_lobo_recomputed.csv",
+      "bytes": 31579,
+      "sha256": "1b1a550944e470ffa459a5d17b842fe2aa14308dc6434947c2f58893d33e3db3"
+    },
+    {
+      "path": "fresh_blocks/DESIGN_RECEIPT.json",
+      "bytes": 647,
+      "sha256": "ab2fd4b619bd3f1d49f5acc6549b3b86f1956532d9626cb547015abf0159955e"
+    },
+    {
+      "path": "fresh_blocks/IMAGE_SELECTION.json",
+      "bytes": 2888,
+      "sha256": "d50c5e378e83351c6e6d7f4df98953850700cbc536d68247f880c0f9ff88c902"
+    },
+    {
+      "path": "fresh_blocks/fresh_block_requests.json.gz",
+      "bytes": 669783,
+      "sha256": "2324bf001fbc0b5387632758b817645fe5cd6965e391850a6ccc4e0c89167600"
+    },
+    {
+      "path": "full_forward_rebuild/FORWARD_FULL_REBUILD_RECEIPT.json",
+      "bytes": 38477,
+      "sha256": "abe5ecc58d3768a87116c5ff62f926062799596a99ba5d05f252a13bdb86260f"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/BUILD_RECEIPT.json",
+      "bytes": 701,
+      "sha256": "f105258cbc1b4b86eedcc532e293eda9f4ec8b7b569e5f06120a0ccb798bf6f8"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/FEATURE_AUDIT.json",
+      "bytes": 15577,
+      "sha256": "6a4a38578140979df93f194afeab83b962fdb3a122f558cdfde45a2e624089e6"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/SHORTLIST.json",
+      "bytes": 34134,
+      "sha256": "3fc53d4e0b33a061f6854ada79fbc283847ee48c32fe9f1198a1a9775d400ca8"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/candidate_ledger.csv",
+      "bytes": 41311,
+      "sha256": "cd3654a60e467e2bb18823de78dd378787ea88c07b00d78456e52906e1024047"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/capacity_directed_cells.csv.gz",
+      "bytes": 3319620,
+      "sha256": "99e0cc8f771d3ac52dd8492667876a41fefd559eddf4b44d91ef0aeaac77925c"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/capacity_summary.csv",
+      "bytes": 257565,
+      "sha256": "38f2a2f46ec07ee183c9dd5ca3e62c5251fd81c44ed6c43eaba8154bb8f8629a"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/class_profiles.csv.gz",
+      "bytes": 82068,
+      "sha256": "39690b7b5f3a2a56db4dc552f141d42527aa8c92d9f44c9d2b198ec40ccd8040"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/condition_opportunities.csv",
+      "bytes": 16660,
+      "sha256": "444eea4d9e8215cdf59408ff58e5a71549ec1214fa4a23060ed2b714886054f7"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/features_train.csv.gz",
+      "bytes": 56861,
+      "sha256": "826f7f3c3bf31b3c848c5e203bb26bfc6a1c803631b5d07f479a233801f796c0"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/method_manifest.json",
+      "bytes": 1931822,
+      "sha256": "6777c6c8032bc4b7dedddef6e94a5ab3199091aad2ccaa32e51b70f33dd96dbd"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/prior_feature_parity.csv",
+      "bytes": 5420,
+      "sha256": "c14293e30cb35011e1b1bd5e67a2b2091a8a337edd2eeba4731beb6040210fac"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/time_condition_ranges.csv",
+      "bytes": 1569,
+      "sha256": "33688eef4997291cffaa76cb94772576b61e645c88e5091c20b5707f293cbcaf"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/time_history_per_worker.csv",
+      "bytes": 6670,
+      "sha256": "aa220c5d428ae72f4509967ab229cf84d261c6b4f6f09633597701f6762ca795"
+    },
+    {
+      "path": "full_forward_rebuild/reconstructed/worker_labels.csv.gz",
+      "bytes": 38388,
+      "sha256": "04637eadea9055789e3cbd78f1f23b144ac277717d2c313c13704b38542fd509"
+    },
+    {
+      "path": "history_blocks/DESIGN_RECEIPT.json",
+      "bytes": 226,
+      "sha256": "d4cdf5890bee429b3c84871b3e529c5ebdf337d34ce25ace9fa298a5645f0535"
+    },
+    {
+      "path": "history_blocks/IMAGE_SELECTION.json",
+      "bytes": 4374,
+      "sha256": "5be15a9304f928500cf8cf6e12793570ee9f55eb63877d13f47fd606c7116c66"
+    },
+    {
+      "path": "history_blocks/history_block_requests.json.gz",
+      "bytes": 330050,
+      "sha256": "9fa849e711bbe71d2b052096aeadb9722cb2b1f22f08b90a7940a61e900e9e00"
+    },
+    {
+      "path": "learn_block_types.py",
+      "bytes": 9830,
+      "sha256": "d4a726a8de10b6640c75178f2d7832977781454ae7572281572bfa5f652721c3"
+    },
+    {
+      "path": "learn_corner_types.py",
+      "bytes": 14230,
+      "sha256": "e77731a54cc57461f3527fe42db447fc529f9155bbb05ba52f1daed5125ecee9"
+    },
+    {
+      "path": "make_working_labels.py",
+      "bytes": 6735,
+      "sha256": "f2e43daf496aa9d47a15fe6199839ef0935f38e835b9a7f1221b27cc924061b4"
+    },
+    {
+      "path": "original_Rnew2_inner_fold_labels.csv",
+      "bytes": 1599,
+      "sha256": "e6c6da09f76e64b0efef434e36ebc21320d3c5e82d316caaf57be164918f73b1"
+    },
+    {
+      "path": "original_Rnew2_lobo_refit.csv",
+      "bytes": 296,
+      "sha256": "7c7d8030affa0bd2aaadaaa9487b4be281d5320d2707abae05eb9cff148ddcbd"
+    },
+    {
+      "path": "rebuild_fold_qt.py",
+      "bytes": 1875,
+      "sha256": "d7d39430978302f4870759842dd05f91cc3b2bcbc1659039c7615342a1e0fe1e"
+    },
+    {
+      "path": "refit_original_new2.py",
+      "bytes": 2841,
+      "sha256": "6d979716ea1966beae43abe7e91d9ceb45fbfcce3c85c1e2ac3934d9b081d706"
+    },
+    {
+      "path": "reproduce_learning.py",
+      "bytes": 4192,
+      "sha256": "4bc94566e0b2c209914c390c11eba112fd8f7403b430b12b73f70079f9bfa98f"
+    },
+    {
+      "path": "reverse_new2_lobo_source.csv",
+      "bytes": 1425,
+      "sha256": "18133146e9c2865cf2b4841558238c8047e6b8899588c845d67b37bdec2feb8b"
+    },
+    {
+      "path": "summarize_block_fit.py",
+      "bytes": 6120,
+      "sha256": "87ed24491600d0b568137583df57a8626fba0569a2f36ba317e48f6f09518247"
+    },
+    {
+      "path": "summarize_corner_labels.py",
+      "bytes": 1310,
+      "sha256": "0cb293fe0e474134608068f6b47a502e9ab207fa638c528a57905e31c863c936"
+    },
+    {
+      "path": "summarize_learning_experiments.py",
+      "bytes": 4586,
+      "sha256": "1fd4c36dc26db9deda46bf03613033eb9cd8e5a1b3677b38eec6edde66838808"
+    },
+    {
+      "path": "test_block_objective.py",
+      "bytes": 1904,
+      "sha256": "dd88f7f377e6119e4d55e49b99d953c89a4a46e01145b7e8db0540b777ef3157"
+    }
+  ],
+  "include_bytes": 12859508,
+  "reproducible_exclusions": [
+    {
+      "path": "__pycache__/design_fresh_blocks.cpython-312.pyc",
+      "bytes": 18652,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "__pycache__/extract_corner_history.cpython-312.pyc",
+      "bytes": 7258,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "__pycache__/learn_block_types.cpython-312.pyc",
+      "bytes": 29017,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "__pycache__/learn_corner_types.cpython-312.pyc",
+      "bytes": 33618,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "__pycache__/reproduce_learning.cpython-312.pyc",
+      "bytes": 7519,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "block_fit.log",
+      "bytes": 1497,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_extraction.log",
+      "bytes": 16384,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_extraction_resume.log",
+      "bytes": 18231,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_fit.log",
+      "bytes": 723,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_fit_corrected.log",
+      "bytes": 576,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_fit_resume.log",
+      "bytes": 0,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-02__manual__80761d0f32.csv.gz",
+      "bytes": 11116,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-03__manual__5ca7b0b788.csv.gz",
+      "bytes": 4740,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-06__manual__9b197d01a2.csv.gz",
+      "bytes": 1061966,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-09__manual__ffdf364fb7.csv.gz",
+      "bytes": 1086762,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/2t7WUuJeko7-13__manual__ec0d05ae55.csv.gz",
+      "bytes": 1113416,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-04__manual__c93fe8a825.csv.gz",
+      "bytes": 944313,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-05__manual__3078185fd7.csv.gz",
+      "bytes": 2052849,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-06__manual__b53e2c2f71.csv.gz",
+      "bytes": 1084816,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-10__manual__38e19faf10.csv.gz",
+      "bytes": 971999,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-12__manual__eec3a285d1.csv.gz",
+      "bytes": 1316313,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-15__manual__3c51a634b9.csv.gz",
+      "bytes": 1067339,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-17__manual__e525b4e1d7.csv.gz",
+      "bytes": 1086099,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-18__manual__7d3da846c6.csv.gz",
+      "bytes": 2166625,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-19__manual__c6b86cae13.csv.gz",
+      "bytes": 1090133,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/S9hNv5qa7GM-21__manual__605071dbd5.csv.gz",
+      "bytes": 2143678,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-01__manual__5b146df96f.csv.gz",
+      "bytes": 1265858,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-03__manual__02147a8f0c.csv.gz",
+      "bytes": 1093017,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-04__manual__fbe40a551f.csv.gz",
+      "bytes": 1279953,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-07__manual__3362ee2227.csv.gz",
+      "bytes": 1096434,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/VFuaQ6m2Qom-10__manual__52845fa120.csv.gz",
+      "bytes": 1153099,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-02__manual__1402a46fe0.csv.gz",
+      "bytes": 1070942,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-03__manual__9f0ad84f43.csv.gz",
+      "bytes": 1095395,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-06__manual__0151bd7edf.csv.gz",
+      "bytes": 1078855,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-08__manual__046839c2de.csv.gz",
+      "bytes": 1076205,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/Z6MFQCViBuw-10__manual__6b973e35d3.csv.gz",
+      "bytes": 1118184,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/b8cTxDM8gDG-07__manual__3eefa592b6.csv.gz",
+      "bytes": 1107910,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/b8cTxDM8gDG-17__manual__64a912ca10.csv.gz",
+      "bytes": 1290845,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-02__manual__8c0c47789e.csv.gz",
+      "bytes": 1082464,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-04__manual__928d5032f2.csv.gz",
+      "bytes": 1342264,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-10__manual__069105f01a.csv.gz",
+      "bytes": 1287950,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-12__manual__c7ac014dc3.csv.gz",
+      "bytes": 1340681,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/jh4fc5c5qoQ-13__manual__274d69d1f7.csv.gz",
+      "bytes": 1849137,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-01__manual__a8c2a2a06a.csv.gz",
+      "bytes": 1769742,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-03__manual__273b3289c1.csv.gz",
+      "bytes": 213501,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-04__manual__1a0a2ad3cd.csv.gz",
+      "bytes": 991611,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-06__manual__97fff2cf49.csv.gz",
+      "bytes": 32731,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-07__manual__52a0da301c.csv.gz",
+      "bytes": 843706,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-08__manual__06e274dc0a.csv.gz",
+      "bytes": 45330,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-09__manual__16e55b5482.csv.gz",
+      "bytes": 950131,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-12__manual__15a1012a90.csv.gz",
+      "bytes": 942289,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-14__manual__a49483b09b.csv.gz",
+      "bytes": 1855643,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-19__manual__2a971cbaff.csv.gz",
+      "bytes": 217601,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-20__manual__4564c265d6.csv.gz",
+      "bytes": 914829,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-29__manual__bccd00a58a.csv.gz",
+      "bytes": 1078496,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-40__manual__dbb73fc912.csv.gz",
+      "bytes": 1819139,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-43__manual__4646114ccd.csv.gz",
+      "bytes": 1034723,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-45__manual__5dc82190fe.csv.gz",
+      "bytes": 1003350,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-48__manual__5a1d61d7e4.csv.gz",
+      "bytes": 992554,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-50__manual__8871891ae6.csv.gz",
+      "bytes": 1620336,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-53__manual__db68acead6.csv.gz",
+      "bytes": 937436,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-56__manual__f53b4c68f3.csv.gz",
+      "bytes": 1106579,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-58__manual__e314581953.csv.gz",
+      "bytes": 217696,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-60__manual__21954e0443.csv.gz",
+      "bytes": 1226459,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-65__manual__9acb3cd5d4.csv.gz",
+      "bytes": 653881,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-70__manual__92e05f16ae.csv.gz",
+      "bytes": 17348,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-72__manual__6049ded157.csv.gz",
+      "bytes": 1083979,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-78__manual__dfd88df676.csv.gz",
+      "bytes": 1012531,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-79__manual__c6b8ad6031.csv.gz",
+      "bytes": 997463,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-82__manual__8e7ae21c8d.csv.gz",
+      "bytes": 1058918,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/uNb9QFRL6hY-87__manual__6519a307c9.csv.gz",
+      "bytes": 1075549,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-03__manual__004c4aa3e8.csv.gz",
+      "bytes": 589505,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-15__manual__717700d501.csv.gz",
+      "bytes": 843412,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-18__manual__d4949d0b37.csv.gz",
+      "bytes": 1106663,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-20__manual__fbde0b8a63.csv.gz",
+      "bytes": 1102572,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-26__manual__a5ad9a2ba2.csv.gz",
+      "bytes": 341363,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-30__manual__a9dacebdfb.csv.gz",
+      "bytes": 625480,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-40__manual__573680f8c8.csv.gz",
+      "bytes": 1094313,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-46__manual__ddafdd7484.csv.gz",
+      "bytes": 1076269,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz",
+      "bytes": 1288702,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-54__manual__f450a46f5c.csv.gz",
+      "bytes": 835369,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-56__manual__55ecaa1ae3.csv.gz",
+      "bytes": 1085052,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-59__manual__76ce9865d1.csv.gz",
+      "bytes": 799643,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-60__manual__b962d8eaa6.csv.gz",
+      "bytes": 1953866,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-61__manual__045f83744e.csv.gz",
+      "bytes": 800320,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/wc2JMjhGNzB-67__manual__cd09bc8ccc.csv.gz",
+      "bytes": 892521,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/x8F5xyUWy9e-03__manual__ec015dc331.csv.gz",
+      "bytes": 1837362,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/x8F5xyUWy9e-08__manual__0b13997fd3.csv.gz",
+      "bytes": 824060,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-02__manual__d9ae55b158.csv.gz",
+      "bytes": 1107740,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-09__manual__2b1196fa29.csv.gz",
+      "bytes": 1993789,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-11__manual__3876207f58.csv.gz",
+      "bytes": 1095598,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_h20/zsNo4HB9uLZ-16__manual__7e980a16d1.csv.gz",
+      "bytes": 1546098,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-06__manual__9b197d01a2.csv.gz",
+      "bytes": 332551,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-09__manual__ffdf364fb7.csv.gz",
+      "bytes": 330438,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/2t7WUuJeko7-13__manual__ec0d05ae55.csv.gz",
+      "bytes": 336045,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-04__manual__c93fe8a825.csv.gz",
+      "bytes": 147440,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-05__manual__3078185fd7.csv.gz",
+      "bytes": 292898,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-06__manual__b53e2c2f71.csv.gz",
+      "bytes": 314882,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-10__manual__38e19faf10.csv.gz",
+      "bytes": 294516,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-12__manual__eec3a285d1.csv.gz",
+      "bytes": 202961,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-15__manual__3c51a634b9.csv.gz",
+      "bytes": 315647,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-17__manual__e525b4e1d7.csv.gz",
+      "bytes": 330718,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-18__manual__7d3da846c6.csv.gz",
+      "bytes": 343160,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-19__manual__c6b86cae13.csv.gz",
+      "bytes": 330005,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/S9hNv5qa7GM-21__manual__605071dbd5.csv.gz",
+      "bytes": 328139,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-01__manual__5b146df96f.csv.gz",
+      "bytes": 197123,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-03__manual__02147a8f0c.csv.gz",
+      "bytes": 345961,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-04__manual__fbe40a551f.csv.gz",
+      "bytes": 87198,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-07__manual__3362ee2227.csv.gz",
+      "bytes": 201145,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/VFuaQ6m2Qom-10__manual__52845fa120.csv.gz",
+      "bytes": 169217,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-02__manual__1402a46fe0.csv.gz",
+      "bytes": 333081,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-03__manual__9f0ad84f43.csv.gz",
+      "bytes": 330395,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-06__manual__0151bd7edf.csv.gz",
+      "bytes": 311566,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-08__manual__046839c2de.csv.gz",
+      "bytes": 332144,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/Z6MFQCViBuw-10__manual__6b973e35d3.csv.gz",
+      "bytes": 339599,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/b8cTxDM8gDG-07__manual__3eefa592b6.csv.gz",
+      "bytes": 331135,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/b8cTxDM8gDG-17__manual__64a912ca10.csv.gz",
+      "bytes": 192609,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-02__manual__8c0c47789e.csv.gz",
+      "bytes": 326308,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-04__manual__928d5032f2.csv.gz",
+      "bytes": 196879,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-10__manual__069105f01a.csv.gz",
+      "bytes": 147840,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-12__manual__c7ac014dc3.csv.gz",
+      "bytes": 205990,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/jh4fc5c5qoQ-13__manual__274d69d1f7.csv.gz",
+      "bytes": 304972,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-01__manual__a8c2a2a06a.csv.gz",
+      "bytes": 260991,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-03__manual__273b3289c1.csv.gz",
+      "bytes": 49191,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-04__manual__1a0a2ad3cd.csv.gz",
+      "bytes": 319467,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-06__manual__97fff2cf49.csv.gz",
+      "bytes": 1016,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-07__manual__52a0da301c.csv.gz",
+      "bytes": 267450,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-08__manual__06e274dc0a.csv.gz",
+      "bytes": 5066,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-09__manual__16e55b5482.csv.gz",
+      "bytes": 316064,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-12__manual__15a1012a90.csv.gz",
+      "bytes": 284962,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-14__manual__a49483b09b.csv.gz",
+      "bytes": 270361,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-19__manual__2a971cbaff.csv.gz",
+      "bytes": 49875,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-20__manual__4564c265d6.csv.gz",
+      "bytes": 290592,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-29__manual__bccd00a58a.csv.gz",
+      "bytes": 335610,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-40__manual__dbb73fc912.csv.gz",
+      "bytes": 289270,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-43__manual__4646114ccd.csv.gz",
+      "bytes": 317118,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-45__manual__5dc82190fe.csv.gz",
+      "bytes": 261234,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-48__manual__5a1d61d7e4.csv.gz",
+      "bytes": 294650,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-50__manual__8871891ae6.csv.gz",
+      "bytes": 186637,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-53__manual__db68acead6.csv.gz",
+      "bytes": 276514,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-56__manual__f53b4c68f3.csv.gz",
+      "bytes": 325592,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-58__manual__e314581953.csv.gz",
+      "bytes": 49704,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-60__manual__21954e0443.csv.gz",
+      "bytes": 213617,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-65__manual__9acb3cd5d4.csv.gz",
+      "bytes": 186330,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-70__manual__92e05f16ae.csv.gz",
+      "bytes": 1028,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-72__manual__6049ded157.csv.gz",
+      "bytes": 330120,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-78__manual__dfd88df676.csv.gz",
+      "bytes": 301652,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-79__manual__c6b8ad6031.csv.gz",
+      "bytes": 291544,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-82__manual__8e7ae21c8d.csv.gz",
+      "bytes": 321327,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/uNb9QFRL6hY-87__manual__6519a307c9.csv.gz",
+      "bytes": 319811,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-03__manual__004c4aa3e8.csv.gz",
+      "bytes": 176234,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-15__manual__717700d501.csv.gz",
+      "bytes": 254770,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-18__manual__d4949d0b37.csv.gz",
+      "bytes": 339942,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-20__manual__fbde0b8a63.csv.gz",
+      "bytes": 333721,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-26__manual__a5ad9a2ba2.csv.gz",
+      "bytes": 60655,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-30__manual__a9dacebdfb.csv.gz",
+      "bytes": 180505,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-40__manual__573680f8c8.csv.gz",
+      "bytes": 333187,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-46__manual__ddafdd7484.csv.gz",
+      "bytes": 150347,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz",
+      "bytes": 251506,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-54__manual__f450a46f5c.csv.gz",
+      "bytes": 244609,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-56__manual__55ecaa1ae3.csv.gz",
+      "bytes": 339865,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-59__manual__76ce9865d1.csv.gz",
+      "bytes": 236717,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-60__manual__b962d8eaa6.csv.gz",
+      "bytes": 265192,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-61__manual__045f83744e.csv.gz",
+      "bytes": 250643,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/wc2JMjhGNzB-67__manual__cd09bc8ccc.csv.gz",
+      "bytes": 271433,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/x8F5xyUWy9e-03__manual__ec015dc331.csv.gz",
+      "bytes": 247590,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/x8F5xyUWy9e-08__manual__0b13997fd3.csv.gz",
+      "bytes": 223105,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-02__manual__d9ae55b158.csv.gz",
+      "bytes": 340375,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-09__manual__2b1196fa29.csv.gz",
+      "bytes": 301716,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-11__manual__3876207f58.csv.gz",
+      "bytes": 337533,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corner_history/zsNo4HB9uLZ-16__manual__7e980a16d1.csv.gz",
+      "bytes": 267280,
+      "reason": "Derived endpoint pair cache; recreate with extract_corner_history.py / extract_corner_h20.py. Retain per-pool hash receipts."
+    },
+    {
+      "path": "corrected_evaluation.log",
+      "bytes": 58,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "fold_qt.log",
+      "bytes": 35,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "full_feature_run.log",
+      "bytes": 201,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "full_forward_rebuild/candidate_rebuild.log",
+      "bytes": 5663,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "full_forward_rebuild/feature_rebuild.log",
+      "bytes": 1247,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/analysis/composition/SPLIT.json",
+      "bytes": 2035,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/analysis/forward/__pycache__/build_forward.cpython-312.pyc",
+      "bytes": 44809,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/analysis/forward/build_forward.py",
+      "bytes": 25601,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/analysis/forward/results/features_train.csv.gz",
+      "bytes": 30973,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/analysis/forward/results/worker_labels.csv.gz",
+      "bytes": 31890,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/forward/audit_and_features.py",
+      "bytes": 18079,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/forward/build_candidates.py",
+      "bytes": 35312,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/forward/features_train.csv.gz",
+      "bytes": 56861,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/forward/method_manifest.json",
+      "bytes": 1931822,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/forward/worker_labels.csv.gz",
+      "bytes": 38388,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/reproduction/feature_support/HIGH_Q_FEATURES.csv",
+      "bytes": 3542,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/interchangeability_20261020/reproduction/feature_support/SUBDIVISION_SUPPORT.csv",
+      "bytes": 312,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "bytes": 14751756,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/workers/personnel_composition_handoff_20261019/POOL_INVENTORY.csv",
+      "bytes": 58984,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/workers/personnel_composition_handoff_20261019/POOL_MEMBERS.csv.gz",
+      "bytes": 69759,
+      "reason": "Copied original reconstruction inputs; supply hash-verified restored archive and run forward stage."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/build_features.py",
+      "bytes": 19955,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/profiles/__pycache__/run_profiles.cpython-312.pyc",
+      "bytes": 72970,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "full_forward_rebuild/portable_input/repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/profiles/run_profiles.py",
+      "bytes": 34042,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    },
+    {
+      "path": "h20_extract_finish.log",
+      "bytes": 40617,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "h20_extract_pass1.log",
+      "bytes": 6428,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "h20_extract_pass2.log",
+      "bytes": 6651,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "m2_capacity.log",
+      "bytes": 1729,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "mixed_Rnew2_control.log",
+      "bytes": 0,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "mixed_corner_fit.log",
+      "bytes": 574,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "mixed_label_sensitivity.log",
+      "bytes": 736,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "mixed_pipeline.log",
+      "bytes": 426,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "native_history_events_rebuilt.csv.gz",
+      "bytes": 37071908,
+      "reason": "Derived supplemental original-metric cache; recreate with extract_corner_h20.py from compact original history requests and frozen fusion."
+    },
+    {
+      "path": "original_new2_refit.log",
+      "bytes": 1054,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "portable_different_root.log",
+      "bytes": 3699,
+      "reason": "Transient console logs; final receipts, candidate/failure ledgers and reports retained."
+    },
+    {
+      "path": "reverse_input_root/analysis/composition/SPLIT.json",
+      "bytes": 2035,
+      "reason": "Transient import/cache or links to separately supplied original inputs; recreate via portable entrypoint."
+    }
+  ],
+  "external_prerequisites": [
+    "Original Pro bundle unpacked including analysis and interchangeability_20261020",
+    "Hash-verified restored A archive",
+    "Sibling audit_corner Python sources and metric receipts",
+    "Native endpoint caches regenerated by original frozen analysis/composition/fusion_runner.py using retained requests"
+  ],
+  "important": "No unfavorable labels/results/candidate failures are excluded. Derived bulky caches can be regenerated; all frozen requests, registrations, full/fold memberships, paired common-support results and failure/optimizer ledgers are retained."
+}
