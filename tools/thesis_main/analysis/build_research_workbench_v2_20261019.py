@@ -228,21 +228,24 @@ def pack_comparisons(evidence, resources):
                 image_id=case['image_id'],condition=case['condition'],zoom=case['zoom'],
                 source=marking.relative_to(ROOT).as_posix(),worker_classes={},teams=[],
                 reference=dict(points=case['reference']['points_1024x512'],floor=case['reference']['floor_xz_h'],target_id=case['reference']['target_id'])))
-    single_source = ROOT/'research/workers/personnel_type_validation_next_20261019/view-data.js'
-    single = json.loads(single_source.read_text(encoding='utf-8').split('=',1)[1].strip().rstrip(';'))
-    swap = next(r for r in single['swaps'] if single['images'][r['pool_id']]['image_code']=='wc2JMjhGNzB-46'
-                and r['context']==1 and r['k']==25 and r['worker_a']=='W131' and r['worker_b']=='W132')
-    image = single['images'][swap['pool_id']]
+    # Use the committed frozen audit, rather than an ignored, previously generated view-data.js.
+    single_source = ROOT/'research/workers/personnel_type_validation_next_20261019/CASE_SCORE_AUDIT.json'
+    single = read(single_source)
+    members = set().union(*(set(t['members']) for t in single['teams'].values()))
+    bound = [r for r in evidence if r['image_code'] == 'wc2JMjhGNzB-46'
+             and r['condition'] == 'manual' and r['worker_id'] in members]
+    target_ids = {r['reference_id'] for r in bound}
+    if len(target_ids) != 1 or {r['worker_id'] for r in bound} != members:
+        raise ValueError('B01 saved-team reference or membership binding mismatch')
+    ref = bound[0]['reference_evidence']
     cases.append(dict(case_id='B01_bottom_y', title='局部缺角与bottom-y／3D敏感性',
         explanation='既有25人真实团队对照：局部缺角触发方向重罚；可观察底点y与3D变化。这不是bottom-y单因素因果实验。',
-        image_id=next(r['image_id'] for r in evidence if r['image_code']=='wc2JMjhGNzB-46'),
-        condition='manual',source=single_source.relative_to(ROOT).as_posix(),
-        reference=dict(image['reference'],target_id=image['reference_id']),worker_classes={},
-        teams=[dict(label=label,workers=single['teams'][swap[key]]['members'].split('|'),
-            points=single['teams'][swap[key]]['points'],footprint=single['teams'][swap[key]]['floor'],
-            B8L2=single['teams'][swap[key]]['Q'],D10=single['teams'][swap[key]].get('D10'),
-            nodes=len(single['teams'][swap[key]]['points'])//2 if single['teams'][swap[key]]['points'] else None,
-            team_key=swap[key]) for label,key in [('A','request_a'),('B','request_b')]]))
+        image_id=bound[0]['image_id'], condition='manual', source=single_source.relative_to(ROOT).as_posix(),
+        reference=dict(points=ref['points_1024x512'], floor=ref['floor_xz_h'], target_id=ref['target_id']),
+        worker_classes={}, teams=[dict(label=label, workers=t['members'], points=t['points'],
+            footprint=[[p[0],p[2]] for p in t['geometry']['bottom3d']],
+            B8L2=t['score']['B8L2'], D10=t['score'].get('D10'),
+            nodes=len(t['points'])//2, team_key=t['request_id']) for label,t in single['teams'].items()]))
     states = read(MULTIVIEW/'structure_transfer/case_states.json')
     groups = defaultdict(list)
     for state in states:
@@ -264,6 +267,279 @@ def pack_comparisons(evidence, resources):
     resources.update(display_revision='interactive_20261020',comparisons='comparisons.json',
         fusion_revision='saved_v2_cases_and_multiview_states_only; full_v2_paths_not_packed')
     write(PAGE/'v2-resources/index.json',resources)
+
+
+def source_entry(path, label=None):
+    """Fingerprint saved inputs; these are read-only display dependencies, not new results."""
+    import hashlib
+    path = Path(path)
+    raw = path.read_bytes()
+    return dict(label=label or path.name, path=path.relative_to(ROOT).as_posix(),
+                sha256=hashlib.sha256(raw).hexdigest(), bytes=len(raw))
+
+
+def frame_records(path):
+    frame = pd.read_csv(path, encoding='utf-8-sig')
+    return frame.astype(object).where(frame.notna(), None).to_dict('records')
+
+
+def reference_display(reference):
+    return dict(target_id=reference['target_id'],
+                points=reference['points_1024x512'], floor=reference.get('floor_xz_h'),
+                reference_version=reference.get('reference_version'))
+
+
+def pack_saved_state(state, image_id, reference_id, by_object, score=None, team_key=None):
+    """Keep exact saved coordinates and ledgers, checking every observed vote's binding."""
+    score = score or {}
+    assignments = state.get('assignments', [])
+    for assignment in assignments:
+        row = by_object[assignment['id']]
+        if (row['image_id'], row['condition'], row['reference_id']) != (image_id, 'manual', reference_id):
+            raise ValueError('saved-state input binding mismatch: ' + assignment['id'])
+        if row['worker_id'] != assignment['worker']:
+            raise ValueError('saved-state worker binding mismatch: ' + assignment['id'])
+    assignment_ids = {a['id'] for a in assignments}
+    for group in state.get('identity_groups', []):
+        for member in group.get('members', []):
+            row = by_object[member['id']]
+            pair = member['pair_index']
+            if (member['id'] not in assignment_ids or member['worker'] != row['worker_id']
+                    or member['points'] != row['points_1024x512'][2*pair:2*pair+2]):
+                raise ValueError('saved-state source geometry mismatch: ' + member['id'])
+    candidate = state.get('candidate') or {}
+    return dict(k=state['n'], team_key=team_key,
+                workers=[a['worker'] for a in assignments], object_ids=[a['id'] for a in assignments],
+                points=candidate.get('points'), footprint=candidate.get('footprint'),
+                connected=bool(candidate.get('feature_ids') and candidate.get('points')),
+                B8L2=score.get('B8L2'), D10=score.get('D10'), IoU3D100=score.get('IoU3D100'),
+                components={k:score.get(k) for k in ('iou_2d','S_bottom_deg','dir','Hmean','Hcenter')},
+                minimum_support=state['minimum_support'], identity_groups=state['identity_groups'],
+                assignments=assignments, node_consensus=state.get('node_consensus'),
+                ring_diagnostics=state.get('ring_diagnostics'), geometry_status=candidate.get('geometry_status'),
+                candidate_status=candidate.get('status'), geometry_reason=candidate.get('reason'),
+                ring_confirmed=candidate.get('ring_confirmed'), order_status=candidate.get('order_status'),
+                score_status=score.get('score_status'), condition='manual', reference_id=reference_id,
+                image_id=image_id, snapshot_id=SNAPSHOT)
+
+
+def support_counts(rows):
+    """Inventory counts are distinct identities, never sums of overlapping display rows."""
+    return dict(records=len(rows), images=len({r['image_id'] for r in rows}),
+                workers=len({r['worker_id'] for r in rows}),
+                buildings=len({r['building_id'] for r in rows}),
+                reference_bindings=len({(r['image_id'],r['reference_id']) for r in rows}),
+                quality_records=sum(bool(r['quality_usable']) for r in rows),
+                independent_vote_records=sum(bool(r['independent_vote_eligible']) for r in rows))
+
+
+def build_support_payload(evidence):
+    matrix = []
+    grouped = defaultdict(list)
+    for row in evidence:
+        grouped[row['image_id'],row['condition'],row['reference_id']].append(row)
+    for (image_id, condition, reference_id), rows in sorted(grouped.items()):
+        voters = sorted({r['worker_id'] for r in rows if r['independent_vote_eligible']})
+        matrix.append(dict(image_id=image_id, image_code=rows[0]['image_code'],
+            building_id=rows[0]['building_id'], condition=condition, reference_id=reference_id,
+            reference_version=rows[0]['reference_version'], records=len(rows),
+            worker_count=len({r['worker_id'] for r in rows}), workers=sorted({r['worker_id'] for r in rows}),
+            retained_records=sum(r['cleaning_disposition']=='retained' for r in rows),
+            quality_records=sum(bool(r['quality_usable']) for r in rows),
+            quality_workers=len({r['worker_id'] for r in rows if r['quality_usable']}),
+            independent_vote_workers=len(voters), independent_vote_worker_ids=voters,
+            is_doorway=any(r['is_doorway'] for r in rows), is_oos=any(r['is_oos'] for r in rows),
+            quality_uses=sorted({r['quality_use'] for r in rows}),
+            missing_reasons=sorted({reason for r in rows for reason in r['quality_exclusion_reasons']})))
+    conditions = [dict(condition=c,**support_counts([r for r in evidence if r['condition']==c]))
+                  for c in sorted({r['condition'] for r in evidence})]
+    cohorts = []
+    for condition in ('manual','semi'):
+        for k in (2,4,8,12,16,20,24,30,35):
+            rows = [r for r in matrix if r['condition']==condition and not r['is_oos']
+                    and not r['is_doorway'] and r['independent_vote_workers']>=k]
+            cohorts.append(dict(condition=condition, minimum_people=k,
+                images=len({r['image_id'] for r in rows}), buildings=len({r['building_id'] for r in rows}),
+                image_reference_bindings=len(rows),
+                image_ids=sorted({r['image_id'] for r in rows}),
+                description='固定支持图集的库存准入；不重新生成任何人数曲线，也不声称每图拥有同一批人员。'))
+    return dict(totals=support_counts(evidence),
+        retained=support_counts([r for r in evidence if r['cleaning_disposition']=='retained']),
+        non_oos=support_counts([r for r in evidence if not r['is_oos']]),
+        by_condition=conditions, matrix=matrix, constant_support_cohorts=cohorts,
+        source='research/statistics/v2_evidence_audit_20261019/records.json.gz',
+        unit='image × condition × bound reference; repeated answer and team views are not independent samples',
+        limitations=['Manual与Semi分开统计；跨条件有同人同图不等于同一研究条件。',
+            '同一图可有多个参考绑定；绑定数不是独立房间数。',
+            '固定人数曲线须使用固定图集；此处仅给冻结库存支持范围，不补算融合或预测。'])
+
+
+def pack_research_evidence(evidence, resources):
+    """Expose frozen method evidence and selected real saved paths, without recomputation."""
+    by_object = {r['object_id']:r for r in evidence}
+    quality_dir = ROOT/'research/quality/v2_structure_quality_interpretation_20261020'
+    composition = ROOT/'research/workers/personnel_composition_followup_20261019'
+    mechanism = ROOT/'research/fusion/fusion_change_mechanisms_20261020'
+    structure = MULTIVIEW/'structure_transfer'
+    findings = read(quality_dir/'FINDINGS.json')
+    structure_cases = read(composition/'STRUCTURE_CASES.json')
+    composition_teams = read(composition/'TEAMS.json.gz')
+    quality_cases = []
+    titles = {'S1':'删去参考凹口：结构损失', 'S2':'补回参考凹口：局部收益有限',
+              'S3':'去掉参考外深凹槽：节点减少但质量改善'}
+    for case in structure_cases['cases']:
+        answers = []
+        first = composition_teams[case['teams']['A']['key']]
+        matching = [r for r in evidence if r['image_id']==first['image_id']
+                    and r['condition']==first['condition'] and r['reference_id']==case['reference_id']]
+        if not matching:
+            raise ValueError('structure quality case reference is missing: ' + case['case'])
+        for arm, saved in case['teams'].items():
+            team = composition_teams[saved['key']]
+            if (team['image_id'],team['condition'],team['reference_id']) != (
+                    first['image_id'],first['condition'],case['reference_id']):
+                raise ValueError('structure quality team binding mismatch')
+            for oid in team['member_object_ids']:
+                r = by_object[oid]
+                if (r['image_id'],r['condition'],r['reference_id']) != (
+                        team['image_id'],team['condition'],team['reference_id']):
+                    raise ValueError('structure quality member binding mismatch: ' + oid)
+            answers.append(dict(label=arm,team_key=saved['key'],workers=team['member_workers'],
+                object_ids=team['member_object_ids'], points=team['geometry']['points'],
+                footprint=team['geometry']['footprint'], connected=team.get('connection_available',False),
+                ring_confirmed=team['geometry'].get('ring_confirmed',False),
+                geometry_status=team['geometry'].get('geometry_status'),
+                geometry_reason=team['geometry'].get('reason'),
+                **{k:team.get(k) for k in ('B8L2','D10','IoU3D100','nodes','score_status',
+                                         'ref_node_recall_9','ref_edge_recall_9','order_status')},
+                components={k:team.get(k) for k in ('iou_2d','S_bottom_deg','dir','Hmean','Hcenter')}))
+        quality_cases.append(dict(id=case['case'], title=titles[case['case']],
+            summary=titles[case['case']], image_id=first['image_id'], image_code=first['image'],
+            condition=first['condition'], reference_id=case['reference_id'], snapshot_id=SNAPSHOT,
+            reference=reference_display(matching[0]['reference_evidence']), answers=answers,
+            event=case['event'], source=(composition/'STRUCTURE_CASES.json').relative_to(ROOT).as_posix(),
+            score_source=(composition/'TEAMS.json.gz').relative_to(ROOT).as_posix(),
+            limitations=['保存团队的多因素对照；不是只改变结构的单因素实验。',
+                         'S1与S2是同一张图；单向参考覆盖率不识别所有额外错误结构。']))
+    spotlight = [by_object[oid] for oid in findings['spotlight']]
+    if len({(r['image_id'],r['condition'],r['reference_id']) for r in spotlight}) != 1:
+        raise ValueError('quality spotlight binding mismatch')
+    first = spotlight[0]
+    quality_cases.append(dict(id='YQ24',title='同图相近3D代理，方向分项明显不同',
+        summary='两份六角Manual，同图同参考；3D代理接近不限定B8L2接近。',
+        image_id=first['image_id'],image_code=first['image_code'],condition=first['condition'],
+        reference_id=first['reference_id'],snapshot_id=SNAPSHOT,
+        reference=reference_display(first['reference_evidence']),
+        answers=[dict(object_id=r['object_id'],worker_id=r['worker_id'],label=r['worker_id'],
+            workers=[r['worker_id']],points=r['points_1024x512'],nodes=r['point_count']//2,
+            connected=bool(r['points_1024x512']),ring_confirmed=r['ring_confirmed'],
+            order_status=r['order_status'],geometry_status=r['geometry_status'],
+            quality_usable=r['quality_usable'],B8L2=r['B8L2'],D10=r['D10'],IoU3D100=r['IoU3D100'],
+            components={k:r['measurements']['same_reference_measurements'].get(k)
+                        for k in ('iou_2d','S_bottom_deg','dir','Hmean','Hcenter')},
+            saved_direction_zero_B8L2=findings['spotlight'][r['object_id']]['B8L2_direction_zero'])
+            for r in spotlight],source=(quality_dir/'FINDINGS.json').relative_to(ROOT).as_posix(),
+        limitations=['方向置零值是已经保存的归因控制，不是新评分。',
+                     '局部墙面语义尚未裁定；不能据此自动认定过罚或修改权重。']))
+
+    states, teams = read(mechanism/'STATES.json.gz'), read(mechanism/'TEAMS.json.gz')
+    design = read(mechanism/'DESIGN.json')
+    q9_events = sorted([e for e in design['path_events'] if e['image']=='q9vSo1VnCiC-30'],key=lambda e:e['n'])
+    if not q9_events or len({e['n'] for e in q9_events}) != len(q9_events):
+        raise ValueError('q9 path missing or ambiguous')
+    first = q9_events[0]
+    nodes = [pack_saved_state(states[e['B_team_key']],e['image_id'],e['reference_id'],by_object,
+                             teams[e['B_team_key']],e['B_team_key']) for e in q9_events]
+    if [n['k'] for n in nodes] != list(range(nodes[0]['k'],nodes[-1]['k']+1)):
+        raise ValueError('q9 integer path has a gap')
+    fusion_cases = [dict(id='Q9_REGROUP',title='q9-30：增人重组、失选与连接变化',
+        image_id=first['image_id'],image_code=first['image'],condition='manual',
+        reference_id=first['reference_id'],snapshot_id=SNAPSHOT,
+        reference=reference_display(teams[first['B_team_key']]['reference']),
+        summary='固定B臂真实整数路径；16→17人时旧观察重新分组，不能只用门槛升高解释。',
+        nodes=nodes,before=next(n for n in nodes if n['k']==16),after=next(n for n in nodes if n['k']==17),
+        transitions=[r for r in frame_records(mechanism/'NESTED_STEPS.csv')
+                     if r['image']=='q9vSo1VnCiC-30' and r['arm']=='B'],
+        saved_identity_control=read(mechanism/'FROZEN_IDENTITY_CONTROL.json'),
+        source=(mechanism/'STATES.json.gz').relative_to(ROOT).as_posix(),
+        score_source=(mechanism/'TEAMS.json.gz').relative_to(ROOT).as_posix(),
+        limitations=['仅一条既有选择路径，不能当总体平均或最优进入顺序。',
+                     '身份组是算法对应结果；不是全部已确认的实体墙角。',
+                     '保留原保存候选与未确认环序；不生成正式标签。'])]
+    group_rows = frame_records(MULTIVIEW/'group_coverage.csv')
+    group_names = {r['group_id']:r['source_codes'] for r in group_rows}
+    focus = frame_records(structure/'focus_process.csv')
+    for saved in read(structure/'case_states.json'):
+        if saved['group_id'] not in ('MV0001','MV0003'):
+            continue
+        ref_id = saved['reference']['target_id']
+        packed = [pack_saved_state(saved[key],saved['image_id'],ref_id,by_object,
+                  dict(B8L2=saved['quality_'+key]), team_key=None) for key in ('before','after')]
+        label = 'G046' if saved['group_id']=='MV0001' else 'G057'
+        fusion_cases.append(dict(id=label+'_'+saved['image'],title=label+' · '+saved['image'],
+            image_id=saved['image_id'],image_code=saved['image'],group_id=saved['group_id'],
+            group_source_codes=group_names.get(saved['group_id']),condition='manual',reference_id=ref_id,
+            snapshot_id=SNAPSHOT,reference=reference_display(saved['reference']),
+            summary=('必要转折的少数支持与低平台' if label=='G046' else '固定共同人员的8→9人门槛与结构变化'),
+            nodes=packed,before=packed[0],after=packed[1],
+            aggregate_curve=[r for r in focus if r['group_id']==saved['group_id'] and r['image']==saved['image']],
+            source=(structure/'case_states.json').relative_to(ROOT).as_posix(),
+            limitations=['几何是第一条已存顺序的最后一步；曲线是全部保存路径平均，二者不可互换。',
+                         '图间节点编号没有实体对应；本轮不推导跨视角墙角身份。']))
+    for case in fusion_cases:
+        case['stages'] = [dict(key=key,label=label,description=description,available=True)
+            for key,label,description in (
+                ('assignments','原答与对应','逐作答ID、人员及来源点对到身份组的保存映射'),
+                ('identity_groups','身份组与支持','组内完整观察、票数、位置与选中状态'),
+                ('node_consensus','全队门槛','沿用保存的minimum_support；不现场重投票'),
+                ('ring_diagnostics','连接账本','直接边与投影边支持、候选环及未确认状态'),
+                ('candidate','保存几何与分数','输出候选和冻结参考评分；失败与缺失原样保留'))]
+
+    context = read(ROOT/'research/workers/pro_personnel_v2_20261019/analysis_context.json.gz')
+    difficulty = {r['image_id']:r for r in context['difficulty_records']}
+    doorway_cases = []
+    for image_id in sorted({r['image_id'] for r in evidence if r['is_doorway']}):
+        rows = [r for r in evidence if r['image_id']==image_id]
+        d = difficulty[image_id]
+        doorway_cases.append(dict(image_id=image_id,image_code=d['image'],title=d['image'],
+            conditions=sorted({r['condition'] for r in rows}),
+            condition='manual' if any(r['condition']=='manual' for r in rows) else rows[0]['condition'],
+            is_oos=any(r['is_oos'] for r in rows),
+            reference_ids=sorted({r['reference_id'] for r in rows}),
+            observation_status='unknown',optical_center_position_status='unverified',
+            reason='现有门洞标签不包含光心相对封闭截面的严格位置证据；不自动判断单室表示不兼容。',
+            evidence=dict(doorway_status=d['doorway_status'],scene=d['scene'],oos_subtype=d['oos_subtype'],
+                existing_notes=[d.get('old_visual_evidence'),d.get('applicability_note')],
+                existing_target_geometry=(d.get('selected') or {}).get('features',{}).get('geometry_status')),
+            counts=support_counts(rows),source='research/workers/pro_personnel_v2_20261019/analysis_context.json.gz',
+            review_scope='研究观察状态；不修改原门洞/OOS、质量资格或目标参考。'))
+    inputs = [quality_dir/'FINDINGS.json',composition/'STRUCTURE_CASES.json',composition/'TEAMS.json.gz',
+              mechanism/'STATES.json.gz',mechanism/'TEAMS.json.gz',mechanism/'DESIGN.json',
+              mechanism/'NESTED_STEPS.csv',mechanism/'FROZEN_IDENTITY_CONTROL.json',
+              structure/'case_states.json',structure/'focus_process.csv',MULTIVIEW/'group_coverage.csv',
+              EVIDENCE/'records.json.gz',ROOT/'research/workers/pro_personnel_v2_20261019/analysis_context.json.gz']
+    payload = dict(schema='research_workbench_method_evidence_v1',snapshot_id=SNAPSHOT,data_release='v2',
+        display_revision='method_evidence_20261020_r1',sources=[source_entry(p) for p in inputs],
+        quality=dict(cases=quality_cases,saved_sensitivity_controls=findings['control'],
+            pair_support={k:v for k,v in findings.items() if k not in ('spotlight','control','fusion','source')},
+            component_notes=['五分项沿用冻结数值和单位；B8L2不是五个可相加扣分条。',
+                             'D10是平行敏感性口径；分数增加不意味着几何改善。',
+                             'IoU3D100是平均高度棱柱代理；不是实测连续实体体积IoU。']),
+        fusion=dict(cases=fusion_cases,packed_integer_nodes=len(nodes),
+            limitations=['仅打包可追溯精选状态，不声称全部124924前缀已接入。']),
+        doorway=dict(cases=doorway_cases,total_images=len(doorway_cases),
+            non_oos_images=sum(not c['is_oos'] for c in doorway_cases),limitations=[
+            'Manhattan方向、单室范围、光心严格内部性、星形性及单层高度表示分别判断。',
+            '仅见两侧房间或门框居中不足以证明光心在边界；须位姿、平面图或3D证据。']),
+        support=build_support_payload(evidence),
+        method_boundaries=dict(no_rescoring=True,no_refitting=True,no_fusion=True,no_new_human_judgment=True,
+            manual_semi_separate=True,N1_applied=False,
+            geometric_scope='Frozen single-room paired top/bottom panorama layout; scene/target/representation uncertainty remains separate.',
+            fusion_policy='Saved gap=7.5, full-team MV50 including even half-votes, equal-person coordinate medians and projected source-ring policy; no GT-guided fusion.'))
+    write(PAGE/'v2-resources/research_evidence.json',payload)
+    resources.update(research_evidence='research_evidence.json',display_revision='method_evidence_20261020_r1')
+    write(PAGE/'v2-resources/index.json',resources)
+    return payload
 
 
 def build():
@@ -370,6 +646,7 @@ def build():
             annotation['evidence'] = {k:row[k] for k in detail_fields}
         write(path,image)
     pack_comparisons(evidence, resources)
+    pack_research_evidence(evidence, resources)
     sections = [dict(title='v2 实际覆盖',finding=f"{summary['raw_records']}份库存，{summary['quality_records']}份主质量可用。",
                support='逐作答ID合并；诊断、正式质量、来源时间与同目标时间分别保留。',counterexample='人数增加不代表所有图均有35份正式质量。',
                tables=[dict(id='quality__shared_records',label='全部作答与证据')]),
