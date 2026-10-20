@@ -1,0 +1,148 @@
+{
+  "schema": "personnel_relation_classification_A_v1",
+  "seed": 2026102101,
+  "k_candidates": [
+    2,
+    3,
+    4
+  ],
+  "methods": [
+    "A1_coassignment",
+    "A2_samecount_source_residual"
+  ],
+  "support": {
+    "min_images": 6,
+    "min_buildings": 3
+  },
+  "selection_rule": "Development-only drop-one-building ARI; require minimum class size>=3; select maximal median ARI, tie smaller K. Held-out geometric or fusion effects are not used to choose.",
+  "similarity": "A1 mean frozen 9/12 degree coassignment; A2 exp(-bound_cyclic_deg/12) among equal pair counts minus within-training-image origin-pair mean.",
+  "centering": "Each geometry residual is centered only within its own image and origin-pair stratum. Matrix construction sees training images only.",
+  "shrinkage": "Each worker-pair building mean gets two-building prior: training-global coassignment for A1; zero residual for A2.",
+  "partitions": "Normalized adjacency spectral embedding, abs-degree normalization for signed A2; KMeans n_init=40.",
+  "splits": {
+    "manual": {
+      "development_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "UwV83HsGsw3",
+        "VFuaQ6m2Qom",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "jtcxE69GiFV",
+        "pa4otMbVnkk",
+        "x8F5xyUWy9e"
+      ],
+      "check_buildings": [
+        "7y3sRwLe3Va",
+        "B6ByNegPMKs",
+        "VLzqgDo317F",
+        "e9zR4mvMWw7",
+        "pRbA3pwrgk9",
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "yqstnuAEVhm",
+        "zsNo4HB9uLZ"
+      ]
+    },
+    "semi": {
+      "development_buildings": [
+        "7y3sRwLe3Va",
+        "UwV83HsGsw3",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "q9vSo1VnCiC",
+        "uNb9QFRL6hY",
+        "yqstnuAEVhm"
+      ],
+      "check_buildings": [
+        "B6ByNegPMKs",
+        "e9zR4mvMWw7",
+        "rPc6DW4iMge",
+        "wc2JMjhGNzB"
+      ]
+    }
+  },
+  "pair_coverage": [
+    {
+      "layer": "doorway_manual",
+      "n_pairs": 9336,
+      "n_images": 17,
+      "n_buildings": 9
+    },
+    {
+      "layer": "ordinary_manual",
+      "n_pairs": 92438,
+      "n_images": 177,
+      "n_buildings": 22
+    },
+    {
+      "layer": "ordinary_semi",
+      "n_pairs": 17691,
+      "n_images": 32,
+      "n_buildings": 12
+    },
+    {
+      "layer": "special_manual",
+      "n_pairs": 1060,
+      "n_images": 2,
+      "n_buildings": 2
+    },
+    {
+      "layer": "special_semi",
+      "n_pairs": 990,
+      "n_images": 1,
+      "n_buildings": 1
+    }
+  ],
+  "selected": {
+    "manual|A1_coassignment": {
+      "condition": "manual",
+      "method": "A1_coassignment",
+      "k": 3,
+      "n_workers": 55,
+      "class_sizes": "19|15|21",
+      "minimum_class": 15,
+      "development_dropbuilding_ARI_median": 0.8375501560410165,
+      "development_dropbuilding_ARI_min": 0.7503272342440193,
+      "source_NMI": 0.5231871702085118
+    },
+    "manual|A2_samecount_source_residual": {
+      "condition": "manual",
+      "method": "A2_samecount_source_residual",
+      "k": 3,
+      "n_workers": 55,
+      "class_sizes": "20|21|14",
+      "minimum_class": 14,
+      "development_dropbuilding_ARI_median": 0.838069549545101,
+      "development_dropbuilding_ARI_min": 0.14332956322732857,
+      "source_NMI": 0.18538628397255233
+    },
+    "semi|A1_coassignment": {
+      "condition": "semi",
+      "method": "A1_coassignment",
+      "k": 2,
+      "n_workers": 48,
+      "class_sizes": "29|19",
+      "minimum_class": 19,
+      "development_dropbuilding_ARI_median": 0.685578954203239,
+      "development_dropbuilding_ARI_min": 0.31260735142562696,
+      "source_NMI": 0.1059204018318747
+    },
+    "semi|A2_samecount_source_residual": {
+      "condition": "semi",
+      "method": "A2_samecount_source_residual",
+      "k": 3,
+      "n_workers": 48,
+      "class_sizes": "22|15|11",
+      "minimum_class": 11,
+      "development_dropbuilding_ARI_median": 0.5299061616015496,
+      "development_dropbuilding_ARI_min": 0.3674665104263762,
+      "source_NMI": 0.06991509003579777
+    }
+  }
+}

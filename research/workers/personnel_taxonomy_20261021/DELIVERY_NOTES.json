@@ -1,0 +1,72 @@
+{
+  "research_version": "20261021_v1",
+  "input_commit": "6503e2f54966a74352a6ec526f211fc3871c1427",
+  "status": "completed_for_reported_scope",
+  "primary_classification": {
+    "manual": "M0/M1 with M00/M01/M10/M11",
+    "semi": "SP_LOW/SP_OTHER with SP_L/SP_A/SP_T; SP_A restricted support, SP_T comparison group"
+  },
+  "parallel_partition": "A2 same-count source-adjusted geometric relationship partition; K=3 independently for Manual and Semi",
+  "per_condition_inventory_people": 62,
+  "per_condition_assigned_people": 59,
+  "missing_people": [
+    "W019",
+    "W022",
+    "W026"
+  ],
+  "lobo_label_rows": 2108,
+  "non_oos_behavior_records": 9217,
+  "non_oos_images": 233,
+  "new_distinct_team_results": 5810,
+  "reused_old_endpoint_pairs": 63476,
+  "selected_release_originals_verified": 16,
+  "final_report_figures": 16,
+  "final_pdf_pages": 27,
+  "unchanged_contracts": [
+    "preprocessing",
+    "reference binding",
+    "ring order",
+    "quality and voter eligibility",
+    "native fusion",
+    "B8L2 primary score",
+    "D10 sensitivity score"
+  ],
+  "preserved_boundaries": [
+    "All-data labels describe final membership; target checks use labels trained outside the entire target building.",
+    "A development and check buildings are separated; B and Semi scale findings are exploratory with subsequent internal leave-building-out checks.",
+    "Manual and Semi classes are fitted separately; doorway behavior and fusion are reported as a separate condition.",
+    "Held-reference and historical excluded records can support behavior only under their original restrictions.",
+    "New-source Semi has no exact initialization reconstruction; no edit trajectories were invented."
+  ],
+  "not_completed_or_not_adopted": [
+    "No formal difficult-Semi exchange experiment met the registered three-block capacity requirements.",
+    "SP_A has no independent class-block fusion effect estimate; its new-source member W131 is marked unsupported for the fine class.",
+    "A general new-source Semi short-turn class was not adopted after its conditional checks failed.",
+    "The additional HOHONET_personnel_research_20261020 profile/composition package was not available.",
+    "Ambiguous local semantics are retained as expression proxies; no mass retrospective manual correctness certification was fabricated."
+  ],
+  "compact_package_policy": "Keep essential code, frozen labels, aggregate evidence, exact teams and necessary case geometry. Do not include original image archive, environment, run caches, pair caches, duplicated repository inputs or temporary PDF QA renders.",
+  "review_receipt": "evidence/FINAL_VALIDATION.json",
+  "files": [
+    {
+      "file": "HOHONET_personnel_classification_20261021.html",
+      "bytes": 13470921,
+      "sha256": "3bf18f6a43bb66293f658531d0d0b848ed3bd82f6ee07008a038b70e654a0659"
+    },
+    {
+      "file": "HOHONET_personnel_classification_20261021.pdf",
+      "bytes": 13278542,
+      "sha256": "ab5ea3423f03d8ea05b84d6e5d131aa5938541d9451ceab19d0aac5ae48d09cf"
+    },
+    {
+      "file": "HOHONET_manual_labels_20261021.csv",
+      "bytes": 48744,
+      "sha256": "21ab2cd28ea524dfe74b02b5819c727a69c7b56747cd4222d832e228503c52f4"
+    },
+    {
+      "file": "HOHONET_semi_labels_20261021.csv",
+      "bytes": 51528,
+      "sha256": "7f1088320740a6a4d96a485ca9f851e69d9871818c78a229eb254461a6d2106d"
+    }
+  ]
+}

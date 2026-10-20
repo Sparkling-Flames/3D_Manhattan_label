@@ -1,0 +1,76 @@
+{
+  "repo_commit": "6503e2f54966a74352a6ec526f211fc3871c1427",
+  "python": "3.12.14",
+  "dependencies": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "shapely": "2.2.0",
+    "matplotlib": "3.10.8"
+  },
+  "repository_files": [
+    {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "bytes": 1464097,
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+    },
+    {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/fusion_engine.py",
+      "bytes": 16075,
+      "sha256": "56c2b45704ca61d1b88d8f185cdcc55e5fe2d0451892ca27dbb9ffa435a168ee"
+    },
+    {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/pool_io.py",
+      "bytes": 9054,
+      "sha256": "5e0d865ea04074a8361705b99663b1c3b782a59b7a9f6f82b39f4f9a358e5989"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_20261020/analysis/composition/fusion_runner.py",
+      "bytes": 8302,
+      "sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_20261020/analysis/composition/geometry_diagnostics.py",
+      "bytes": 12714,
+      "sha256": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_20261020/analysis/composition/SPLIT.json",
+      "bytes": 2035,
+      "sha256": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e"
+    },
+    {
+      "path": "research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip",
+      "bytes": 42773,
+      "sha256": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a"
+    },
+    {
+      "path": "research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py",
+      "bytes": 4505,
+      "sha256": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165"
+    },
+    {
+      "path": "research/workers/personnel_interchangeability_20261020/interchangeability_20261020/core_replay/EXPECTED_FINAL_FIELDS.json.gz",
+      "bytes": 3075200,
+      "sha256": "c97c3e2c3c220dca73815f00a965b8c4979aabd2a0bf593f31c91269d13a7b7d"
+    },
+    {
+      "path": "research/workers/personnel_composition_followup_20261019/TEAMS.json.gz",
+      "bytes": 650317,
+      "sha256": "478b9a0d1c004fa914b2b9c2bfa9e2ec8b4c2c7497453f266c36d459fd7cdbaf"
+    },
+    {
+      "path": "tools/thesis_main/analysis/personnel_corner_panel_20261020.py",
+      "bytes": 8955,
+      "sha256": "6aaa6bb5f01806cf293730229b8975bf65d2dce2dc232f63b61f5573ef4f676c"
+    }
+  ],
+  "external_features": [
+    {
+      "path_in_combined_work": "profiles/lobo_features.csv",
+      "bytes": 1525914,
+      "sha256": "8c1a95eb3ad720e1a806162444eae5fbe447b276c160423f172af237e704154b"
+    }
+  ],
+  "split_interpretation": "Only building IDs reused. New worker features are leave-target-building-out over all other available buildings, not old fixed-history-training rule."
+}

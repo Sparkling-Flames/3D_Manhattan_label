@@ -8,11 +8,15 @@ const modules={
  overview:['研究概览','从研究问题、方法证据与反例进入；各结果保留自己的支持集合。',[]],
  evidence:['方法与证据','任务适配、质量测量与结构共识：从概念到真实保存案例；不在浏览时重新评分或融合。',[['任务与门洞',null],['质量度量',null],['融合机制',null],['研究支持',null]]],
  images:['图片与空间','查看图片、目标空间、原图标注及参考；高级条件收在筛选面板。',[]],
- workers:['人员画像','原尺度Q与任务调整Q并列；Scope区分拒绝倾向、历史裁定结局与当前相容机会，不是全量正确率。',[
+ profiles:['人员画像 · 本轮','Q水平、低尾、时间与难度表现；Manual／Semi分开，审核机会独立解释。',[]],
+ taxonomy:['人员标法分类','Manual结构粗类主用；细类用于条件解释。Semi尺度组与A2原答关系分区独立展示；团队替换保留实际成员、来源和分母。',[]],
+ mechanisms:['条件与局部机制 · 10/21','同图、同参考、精确成员和保存节点分别追溯；难度、质量、融合、同房结果各自保留支持与资格。',[]],
+ workers:['画像明细与历史','原尺度Q与任务调整Q并列；Scope区分拒绝倾向、历史裁定结局与当前相容机会，不是全量正确率。',[
   ['连续画像与分组','workers__person_profiles_and_evidence'],['原尺度Q与低尾','workers__absolute_Q_training_profiles'],['楼外画像','workers__fold_person_profiles'],['难度与场景','difficulty__worker_strata'],['Scope裁定覆盖','workers__scope_worker_opportunities'],['历史Scope结局','workers__scope_outcome_counts'],['可靠性与排除','workers__record_evidence'],['门洞专项','workers__doorway_specialist_profiles']]],
  quality:['个体质量','原图与BEV/3D优先；评分、计算状态和质量用途分别展示。',[
   ['作答几何与分项','quality__shared_records'],['诊断与用途原因','difficulty__record_ledger']]],
  patterns:['类别原答与融合','选择研究类别或本图标法，叠加原答并查看对应保存团队；GT问题与门洞单列解释。',[]],
+ benefits:['人员组合效益','高低Q配比、快慢配比、固定核心增人及实际投票案例；不新增正式人员类型。',[['配比与收益',null],['原答／投票／融合案例',null]]],
  fusion:['融合过程','先看人员组合，再下钻同图、真实路径、成员与已保存几何。',[
   ['人员组合策略','workers__strategy_vs_random'],['纯类同k逐图对照','workers__pure_group_direct_by_image'],['固定构成换人','statistics__replacement_group_summary'],['换指标与重新选人','workers__metric_reselection_contrasts'],['真实人数过程','fusion__trajectory_scores'],['同k换组稳定性V','fusion__same_k_stability'],['完整率与失败','fusion__completion'],['构成汇总','statistics__team_composition_summary'],['团队成员与几何','workers__team_results']]],
  same_room:['同房比较','基于已有关系与可比范围，比较同成员跨视角表现；未知不当作异房。',[
@@ -154,6 +158,7 @@ async function render(){
  $('content').dataset.ready='';$('content').innerHTML='<div class="placeholder" role="status">正在按需读取本地数据…</div>';
  $('notice').innerHTML='';state.rows=[];state.meta=null;
  try{
+  if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
   if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
   if(['patterns','multiview'].includes(state.module)){if(dataset.release!=='v2'){ $('content').textContent='该交互使用v2保存结果，请切换到v2。';return; }await ResearchComparison.render($('content'),{mode:state.module,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,snapshot:SNAPSHOT,release:dataset.release,deepLink:new URLSearchParams(location.hash.slice(1)),onNavigate:patch=>route(patch),onContext:context=>{if(context.blind)$('activeFilters').textContent='盲审模式 · 人员身份、类别与分数隐藏；实际上下文随反馈导出。';else activeContext();}});return;}
   if(state.module==='overview'){renderOverview();return;}
@@ -191,6 +196,8 @@ async function render(){
   }else{
    let note='';if(state.module==='fusion')note='<div class="info">当前为同图同k的既有组合／换人／重选成员证据。成员选择指标与终点评价分开；打开记录可追到真实路径和来源。单条路径位于“真实人数过程”。</div>';
    if(state.module==='coverage')note='<div class="info">计算状态、主质量用途与诊断状态分别读取；多重原因可重叠，原因行数不能直接相加作为作答总数。</div>';
+   if(state.module==='taxonomy')note='<div class="info">M0/M1是Manual结构表达工作分类；SP_LOW是Semi条件性尺度组，A2是独立几何关系分区。楼外表先在图内合并参考面板，再按图、楼等权；A2严格匹配加入共同点数层，n_pairs为匹配前对数，n_pairs_contributing为实际贡献对数。换入M1的历史Q较高，当前没有标法独立净收益结论。<a href="../../workers/personnel_taxonomy_20261021/REPORT_ZH.md">方法与解释</a> · <a href="#module=patterns" data-module="patterns">查看此前保存原答/融合</a></div><details class="panel"><summary>新分类原答与团队正反例图</summary><p>图例对应的逐对象成员在“图例与逐对象成员”页签；C13/C14为保存团队，页面筛选不会重新融合。</p><div class="actions"><a href="../../workers/personnel_taxonomy_20261021/figures/C01_manual_classes.png">C01 Manual短转折</a><a href="../../workers/personnel_taxonomy_20261021/figures/C02_manual_classes.png">C02 GT遗漏与标法分开</a><a href="../../workers/personnel_taxonomy_20261021/figures/C08_A2_positive.png">C08 A2正例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C09_A2_counterexample.png">C09 A2反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C10_Semi_height.png">C10 Semi尺度</a><a href="../../workers/personnel_taxonomy_20261021/figures/C11_Semi_height_counterexample.png">C11 Semi反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C13_jtc26_third_vote.png">C13 同类关键第三票</a><a href="../../workers/personnel_taxonomy_20261021/figures/C14_Uw22_threshold.png">C14 必要结构失选与恢复</a></div></details>';
+   if(state.module==='mechanisms')note='<div class="info">16张接续表按源模块保留原粒度。共同77图的快慢差异、近分异形、同配比不同成员/对应、G046/G057局部同房观测可经图或对象关联回原研究台；无关联字段的汇总在全局筛选下明确停显。G046 A/B同角已确认；G057局部预测未胜恒定0.5基线。<a href="../review_progress_20261021/index.html">六站原图与机制图</a> · <a href="#module=images" data-module="images">逐图原答/参考</a></div>';
    if(state.module==='time'){
     note='<div class="info">来源活动时间和同目标审计时间各自按真实非空支持统计。未改动不自动判失败，编辑后未知不判成功。</div>';
    }

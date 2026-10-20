@@ -1,0 +1,61 @@
+{
+  "schema_version": "personnel_taxonomy_20261021_v1",
+  "join_keys": {
+    "final": [
+      "worker_id",
+      "condition"
+    ],
+    "target_validation": [
+      "worker_id",
+      "condition",
+      "heldout_building"
+    ]
+  },
+  "primary_hierarchy": {
+    "manual": "M0->{M00,M01}; M1->{M10,M11}",
+    "semi": "SP_LOW->{SP_L}; SP_OTHER->{SP_A,SP_T}; deterministic aggregation of frozen position Ward3 labels"
+  },
+  "independent_axes": "A2 geometry_relation_class and B structure classes are not a fitted cross-product taxonomy.",
+  "final_labels_use": "membership description and research workstation display only; do not use for target-building estimates",
+  "lobo_labels_use": "training inputs, scaling and clustering exclude the entire heldout_building; no target Q/fusion selection",
+  "semi_fine_status": "SP_A supported mainly in v1; W131 new-source finer label is not supported. SP_T is a comparison group.",
+  "structure_semi_status": "S00/S01/S10 and S0/S1 retained as frozen exploratory candidate for reproducibility; not adopted as universal Semi classes",
+  "training_support": "at least 12 comparable ordinary images and 4 buildings for B; A uses at least 6 images and 3 buildings",
+  "geometry_distance": "same-count bound top-bottom maximum spherical angle under existing ring and cyclic shift, degrees; differs from fusion wall correspondence 7.5 degrees",
+  "missing_reasons": {
+    "no_comparable_ordinary_history_in_this_condition": "该条件无可比较普通历史",
+    "fewer_than_12_comparable_images_or_4_buildings": "普通历史少于12图或4楼"
+  },
+  "qualification": "These labels never alter is_oos, quality_usable, independent_vote_eligible, reference version, cleaning disposition or team eligibility.",
+  "n_quality_usable": "quality-usable records inside this label training input, not all inventory records; see inventory_usage_by_worker for all-inventory counts",
+  "n_independent_vote_eligible": "voter flag within this label training input; formal fusion still requires the complete old pool contract",
+  "geometric_height": "dimensionless height inferred at camera height=1; never physical measured metres",
+  "fusion_event": [
+    "event_id",
+    "pool_id",
+    "condition",
+    "building",
+    "n",
+    "m",
+    "core_workers",
+    "A_workers",
+    "B_workers",
+    "C_workers",
+    "net_B8L2",
+    "net_D10"
+  ],
+  "fusion_contrasts": {
+    "within": "B versus A, same class counts and same source counts, actual m replacements",
+    "cross": "C versus A, changed class block, same source counts and background, actual m replacements",
+    "net_quality": "Q(C)-Q(B), equal n/background/m/source counts; not Q(C)-Q(A)"
+  },
+  "fusion_frozen_label_binding": {
+    "B_main_and_paths": "Use route_b/lobo_labels.csv by condition + heldout_building + worker_id, including exploratory Semi S classes. Later adopted display labels do not redefine the original experiment.",
+    "A2_specific_and_relabels": "Use route_a/worker_labels_lobo.csv method=A2_samecount_source_residual, stage=leave_building_out and raw fold class_id. aligned_class_id is display-only. Preserve the original B or historical design when relabelling.",
+    "Semi_position": "Use route_b/semi_new_candidate/lobo_labels.csv candidate=semi_position_scale. Exchanges compare SP_L versus SP_T only; SP_A may occur in the common background. SP_OTHER=SP_A+SP_T was not the exchanged block."
+  },
+  "fusion_aggregation_and_denominators": "Event mean within image -> image mean within building -> equal building mean. Paired BEV/top distances use events valid in both arms; joint_stable_main includes all registered events, incomplete/different-count pairs false. Missing Q is not zero.",
+  "fusion_joint_stable_main": "Both endpoints complete_evaluable; abs(delta B8L2)<=2; identical node count; BEV Jaccard difference<=0.05; cyclic structural angular bound<=3 degrees. Different from original-answer 9/12 degree clustering and fusion 7.5 degree correspondence.",
+  "methods_and_limits": "A has development-selected fixed building checks; B/SP are exploratory working classes with building-out internal checks, not untouched external validation.",
+  "input_commit": "6503e2f54966a74352a6ec526f211fc3871c1427"
+}

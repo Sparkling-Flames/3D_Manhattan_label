@@ -1,0 +1,78 @@
+{
+  "version": "personnel_taxonomy_20261021_fusion_v1",
+  "primary_keys": {
+    "request": "event_id",
+    "team": "pool_id + exact sorted member_workers -> team_key",
+    "pool": "pool_id binds image, condition, reference_id and reference_version",
+    "worker_label_B": "condition + heldout_building + worker_id",
+    "worker_label_A2": "method=A2_samecount_source_residual + stage=leave_building_out + condition + target_building + worker_id",
+    "worker_label_SP": "candidate=semi_position_scale + heldout_building + worker_id",
+    "path": "path_id + n -> event_id"
+  },
+  "requests": {
+    "n": "各臂团队人数",
+    "m": "实际换出/换入人数；不是成员对称差2m",
+    "core_workers": "A/B/C完全相同的共同背景，大小n-m",
+    "A_block": "原类别第一块m人",
+    "B_block": "原类别另一块m人，检验保持类别构成换人",
+    "C_block": "目标类别m人，检验换类",
+    "block_origin_counts": "A/B/C替换块相同的new/v1人数；不按目标Q匹配",
+    "outgoing_class": "A与B两块的类别",
+    "incoming_class": "C块类别",
+    "design_tier": "主B实验为coarse或fine；fine仅在同一粗类内部比较；A2/SP为单层类型借用coarse字段",
+    "reason": "容量不足原因；可行事件为空",
+    "repeat": "冻结抽样重复编号，不是新增独立图片"
+  },
+  "teams": {
+    "member_workers": "精确成员数组",
+    "member_object_ids": "与成员对应的实际作答对象数组；必要行为/资格桥接键",
+    "type_counts": "楼外标签的类别人数向量；主B含coarse/fine；A2/SP两别名相同",
+    "reference_id": "继承现有参考绑定，不随比较臂更改",
+    "geometry": "沿既有环序与资格得到的终点ERP点对、BEV footprint、feature_ids",
+    "B8L2": "主质量评分，缺失为null",
+    "D10": "同一几何的方向尺度敏感性评分",
+    "height_mean_ratio": "连续高度矩均值/同一参考连续高度矩均值",
+    "complete_evaluable": "继承原生完整条件评价资格，不等于新人工确证环序",
+    "score_status": "保留原生评分状态",
+    "nodes": "融合入选节点数；不足四点不隐去",
+    "minimum_support": "原生MV50最低票数",
+    "source_time_total_seconds": "已知时间完整时的来源记录时间之和；缺失不补造"
+  },
+  "events": {
+    "A_team_key/B_team_key/C_team_key": "连接TEAMS的精确端点",
+    "within_*": "A与B的实际同类换人比较",
+    "cross_*": "A与C的实际换类比较",
+    "net_B8L2": "C_B8L2 - B_B8L2 = (C-A)-(B-A)",
+    "net_D10": "C_D10 - B_D10",
+    "net_nodes": "C_nodes - B_nodes",
+    "bev_mean_h/top_mean_h": "同点数且唯一循环对应的平均BEV/顶部位移，以相机高度h为单位",
+    "*_common": "仅在within与cross都有效的相同事件上比较，避免不同缺失子集",
+    "different_count": "结果点数不同，不计算一一对应位移",
+    "unavailable_geometry": "非有效距离且非异点数的其他几何不适用状态",
+    "joint_stable_main": "双方complete；|ΔB8L2|<=2；点数相同；BEV Jaccard差<=0.05；循环结构角距离<=3度",
+    "joint_stable_wide": "双方complete；|ΔB8L2|<=5；点数相同；BEV Jaccard差<=0.10；循环结构角距离<=5度",
+    "ref_node_recall_5": "相对当前绑定参考的5度节点诊断，不是原图语义真实性标签",
+    "retained_partition_changed": "共同旧观察之间的分组关系改变；布尔队伍比较计数",
+    "threshold_only_losses": "未变分组因门槛提高失选的组数",
+    "new_vote_gains": "新观察补票导致入选的组数；可与其他机制并存"
+  },
+  "aggregate": {
+    "default": "事件在图内均值 -> 建筑内图片等权 -> 建筑等权",
+    "B_main": "按condition/layer/design_tier/方向/n/m分别聚合",
+    "A2_secondary": "必须有同类和跨类两个臂的共同背景，按指标分别确定分母；保留原B或旧K3/Rnew2抽样条件",
+    "A2_specific_pooled": "全部折内类方向图内平均，再建筑等权；原始方向表另存",
+    "net_B8L2_building_boot_lo/hi": "2000次楼级自助区间，仅>=3可评分楼；内部跟进检验",
+    "events/images/buildings": "原设计支持；scored_events与common_distance_events为对应指标实际可用支持",
+    "exact_ratios": "固定设计的实际类人数重新分层；不同配比格图片/背景不同，不作最优配比排名",
+    "height_relative_change_pct": "100*(exp(mean(log(H_C/H_B)))-1)，楼级聚合后指数化；共同参考抵消",
+    "nested": "固定成员顺序的描述性路径，不作随机总体人数曲线"
+  },
+  "qualification": {
+    "formal_fusion": "仅已有质量可用且独立投票资格的同图/条件/参考池",
+    "behavior_inventory": "由上游库存桥覆盖；不得用本目录质量池当全非OOS行为库存",
+    "Manual_Semi": "独立楼外标签及独立实验",
+    "doorway": "普通Manual历史标签的外推条件单列",
+    "missing_label": "排除；不以全数据标签补值，不恢复被筛除人员资格",
+    "ordinary_hard_Semi": "无满足本次ABC容量的困难Semi池，未完成该条件的融合验证"
+  }
+}

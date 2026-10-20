@@ -19,6 +19,8 @@ SAME_ROOM = ROOT / 'research/same_room/same_room_v2_prediction_20261019'
 EXPLORER = PAGE
 EXTRA = EXPLORER / 'DISPLAY_TABLES_20261020.json'
 MULTIVIEW = ROOT / 'research/same_room/same_room_multiview_20261020'
+TAXONOMY = ROOT / 'research/workers/personnel_taxonomy_20261021'
+MECHANISMS = PAGE / 'MECHANISM_INTERFACE_20261021.json'
 MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
                     'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
                     'background_buildings.csv']
@@ -542,6 +544,63 @@ def pack_research_evidence(evidence, resources):
     return payload
 
 
+def pack_personnel_results(evidence, resources):
+    """消费已归档画像/组合接口；不读取下载目录，也不运行研究引擎。"""
+    source = ROOT/'research/workers/personnel_profiles_composition_20261020'
+    manifest_path = source/'INTEGRATION.json'
+    if not manifest_path.is_file():
+        raise FileNotFoundError('personnel profiles/composition integration is not archived')
+    manifest = read(manifest_path)
+    if (manifest['schema'] != 'personnel_profiles_composition_integration_v1'
+            or manifest['kind'] != 'profiles_and_composition_not_personnel_classification'):
+        raise ValueError('personnel research interface drift')
+    declared = {}
+    for spec in manifest['tables']:
+        frame = pd.read_csv(source/spec['path'], encoding='utf-8-sig')
+        if list(frame.columns) != spec['columns'] or len(frame) != spec['rows']:
+            raise ValueError('personnel display table drift: ' + spec['id'])
+        declared[spec['id']] = frame
+    # Original research tables retain separate difficulty, time and review denominators.
+    table_sources = dict(profiles='profiles/worker_profiles.csv',
+        quality='quality/composition_effects.csv', quality_labor='quality/new_only_n7_labor_summary.csv', growth='quality/growth_common_plot_data.csv',
+        speed='speed/main_summary.csv', common_domains='speed/speed_n5_common_target_domains.csv')
+    tables = {key: frame_records(source/manifest['source_tables']/path)
+              for key, path in table_sources.items()}
+    keys = manifest['profile_key']
+    expected = {tuple(r[k] for k in keys) for r in declared['profiles'].to_dict('records')}
+    actual = [tuple(r[k] for k in keys) for r in tables['profiles']]
+    if len(actual) != len(set(actual)) or set(actual) != expected:
+        raise ValueError('personnel profile source keys differ from curated interface')
+    by_object = {r['object_id']: r for r in evidence}
+    cases = [read(source/path) for path in manifest['cases']]
+    for case in cases:
+        records = {r['object_id']: r for r in case['records']}
+        for oid, record in records.items():
+            current = by_object.get(oid)
+            if (not current or current['image_id'] != case['meta']['image_id']
+                    or current['condition'] != case['meta']['condition']
+                    or current['worker_id'] != record['worker_id']
+                    or current['reference_id'] != case['reference']['target_id']
+                    or current['points_1024x512'] != record['points']):
+                raise ValueError('personnel case binding mismatch: ' + oid)
+        for panel in case['panels']:
+            if set(panel['object_ids']) != set(panel['score']['member_object_ids']):
+                raise ValueError('personnel case team membership mismatch')
+            if (not set(panel['object_ids']) <= records.keys()
+                    or len(panel['object_ids']) != panel['state']['n']):
+                raise ValueError('personnel case missing team records')
+    payload = dict(schema='personnel_results_display_v1', snapshot_id=SNAPSHOT,
+        classification_status=manifest['classification_status'],
+        source=(source/'FIELD_CONTRACT.md').relative_to(ROOT).as_posix(),
+        integration=manifest_path.relative_to(ROOT).as_posix(),
+        tables_provenance={k:(source/manifest['source_tables']/v).relative_to(ROOT).as_posix()
+                           for k,v in table_sources.items()}, cases=cases, **tables)
+    write(PAGE/'v2-resources/personnel_results.json', payload)
+    resources.update(personnel_results='personnel_results.json')
+    write(PAGE/'v2-resources/index.json', resources)
+    return payload
+
+
 def build():
     source_tables = read(STATS / 'tables.json.gz')['tables']
     tables = {k:v for k,v in source_tables.items() if k!='quality__shared_records'}
@@ -582,7 +641,27 @@ def build():
     multiview = load_contract_tables(MULTIVIEW, 'same_room_multiview__', MULTIVIEW_TABLES)
     tables.update(multiview)
     tables.update(extra)
+    taxonomy_interface = read(TAXONOMY/'DISPLAY_INTERFACE.json')
+    if (taxonomy_interface['schema'] != 'personnel_taxonomy_display_v1'
+            or taxonomy_interface['data_release'] != 'v2'
+            or taxonomy_interface['classification_status'] != 'working_classification_adopted'):
+        raise ValueError('personnel taxonomy display interface drift')
+    taxonomy, taxonomy_provenance = load_declared_tables(taxonomy_interface)
+    for spec in taxonomy_interface['tables']:
+        if len(taxonomy[spec['id']]) != spec['rows']:
+            raise ValueError('personnel taxonomy row count drift: ' + spec['id'])
+    tables.update(taxonomy)
+    mechanism_interface = read(MECHANISMS)
+    if mechanism_interface['schema'] != 'research_mechanism_display_v1' or mechanism_interface['data_release'] != 'v2':
+        raise ValueError('research mechanism display interface drift')
+    mechanisms, mechanism_provenance = load_declared_tables(mechanism_interface)
+    for spec in mechanism_interface['tables']:
+        if len(mechanisms[spec['id']]) != spec['rows']:
+            raise ValueError('research mechanism row count drift: ' + spec['id'])
+    tables.update(mechanisms)
     source_map = dict(extra_provenance)
+    source_map.update(taxonomy_provenance)
+    source_map.update(mechanism_provenance)
     source_map.update({f'same_room_multiview__{Path(f).stem}':
                        f'{MULTIVIEW.relative_to(ROOT).as_posix()}/{f}' for f in MULTIVIEW_TABLES})
     metadata = [display_table(PAGE/'v2-data', name, rows,
@@ -610,6 +689,17 @@ def build():
         'data':[('作答明细','quality__shared_records'),('图片库存','statistics__image_inventory'),('人员库存','statistics__worker_inventory')],
         'workers':[('探索性Q/T/难度画像','workers__person_profiles_and_evidence'),('难度适应候选','workers__difficulty_preferences'),
                    ('逐人×难度','statistics__worker_difficulty'),('逐人×场景','statistics__worker_scene'),('独立行为证据','workers__reliability')],
+        'taxonomy':[('正式工作分类成员','taxonomy__recommended_labels'),('逐人画像与审核机会','taxonomy__person_class_explanations'),
+                    ('按来源Q/T','taxonomy__class_qt_auxiliary_by_source'),('楼外结构表达','taxonomy__lobo_expression_summary'),
+                    ('楼外难度分层','taxonomy__lobo_expression_by_difficulty'),('Semi尺度补充','taxonomy__semi_adopted_lobo_summary'),
+                    ('A2严格匹配','taxonomy__a_q_source_matched_validation'),('B类原答反例','taxonomy__b_raw_answer_validation'),
+                    ('A2正反例','taxonomy__a2_case_candidates'),('B类正反例','taxonomy__b_geometry_case_candidates'),
+                    ('换类与同类换人','taxonomy__summary'),('配比与成本','taxonomy__exact_ratio_effects'),
+                    ('人数路径汇总','taxonomy__nested_path_summary'),('完整人数路径','taxonomy__nested_composition_paths'),
+                    ('换类难度分层','taxonomy__manual_difficulty_effects'),('局部机会','taxonomy__local_opportunities_by_class'),
+                    ('机制票账','taxonomy__mechanism_panels'),('图例与逐对象成员','taxonomy__figure_members')],
+        'mechanisms':[(spec['group'] + ' · ' + spec['id'].split('__')[-1], spec['id'])
+                      for spec in mechanism_interface['tables']],
         'quality':[('作答与几何分项','quality__shared_records'),('固定记录指标敏感性','statistics__fixed_record_metric_sensitivity')],
         'fusion':[('待实验人员池支持','statistics__independent_pool_inventory'),('当前原答分歧','statistics__raw_disagreement_summary')],
         'same_room':[(title, 'same_room_prediction__' + name) for title, name in [
@@ -647,12 +737,14 @@ def build():
         write(path,image)
     pack_comparisons(evidence, resources)
     pack_research_evidence(evidence, resources)
+    pack_personnel_results(evidence, resources)
     sections = [dict(title='v2 实际覆盖',finding=f"{summary['raw_records']}份库存，{summary['quality_records']}份主质量可用。",
                support='逐作答ID合并；诊断、正式质量、来源时间与同目标时间分别保留。',counterexample='人数增加不代表所有图均有35份正式质量。',
                tables=[dict(id='quality__shared_records',label='全部作答与证据')]),
-               dict(title='两条人员研究方向',finding='Q×T×难度细类，以及从标法簇反向解释人员差异。',
-               support='A人员分型及B独立替换验收已有结果；类别组合ABCD与ABCE的比较方案正在讨论，人数与配额尚未固定。',
-               counterexample='不能在同一图上发现好组合、反调分类，再将同图结果称为验证。',tables=[]),
+               dict(title='人员分类、画像与组合效益',finding='Manual M0/M1作为结构表达工作分类；Semi SP_LOW为条件性尺度组，A2为独立原答关系分区。',
+               support='分类页可查成员、楼外表达、Q/T、局部机会和精确换人团队；画像与组合效益继续按各自条件和来源查看。',
+               counterexample='Manual M0→M1换入成员历史Q更高，尚未证明标法的独立净收益；同类人员并非普遍可互换。',
+               tables=[dict(id='taxonomy__recommended_labels',label='分类成员'),dict(id='taxonomy__summary',label='换类与同类换人')]),
                dict(title='v1 与 v2 分开',finding='v1 已有的融合过程、9°/12°分簇与替换实验保留在 v1 入口。',
                support='v2分簇、组合与替换已有独立研究包；本页过程几何仍按各入口的实际接入状态解释。',
                counterexample='旧路径记录数量不是 v2 独立样本数，也不是 v2 实测融合结果。',tables=[]),

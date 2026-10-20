@@ -1,0 +1,30 @@
+{
+  "schema": "personnel_taxonomy_correction_receipt_v1",
+  "date": "2026-10-21",
+  "source_package": "user_supplied_personnel_taxonomy_20261021_preserved_outside_repository",
+  "research_copy_revision": "taxonomy_corrected_20261021_r1",
+  "labels_refitted": false,
+  "teams_rerun": false,
+  "corrections": {
+    "reference_panel_weight": {
+      "method": "mean reference panels within image, then mean images within building, then mean buildings",
+      "numerically_changed_outputs": ["route_b/lobo_expression_summary.csv", "route_b/lobo_expression_by_difficulty.csv"],
+      "rechecked_unchanged_outputs": ["route_b/lobo_fixed6_mechanisms.csv", "route_b/semi_adopted_lobo_summary.csv"],
+      "manual_ordinary_all": {"panels": 229, "images": 216, "buildings": 22, "turn_difference": 0.6070677156454228, "short_turn_difference": 0.3359067750828301}
+    },
+    "pair_match_shared_count": {
+      "method": "stratify by image, origin pair, shared corner-pair count, target mean-Q decile and target Q-difference five-point bin",
+      "affected_outputs": ["route_a/A_Q_source_matched_validation.csv", "route_a/B_raw_answer_validation.csv", "route_a/selected_method_validation.csv"],
+      "manual_A2_bound_deg": {"pairs_before": 71311, "pairs_contributing": 59595, "pairs_unmatched": 11716, "images": 176, "buildings": 22, "within_minus_between_deg": -0.4961142550680902},
+      "semi_A2_bound_deg": {"pairs_before": 13356, "pairs_contributing": 11967, "pairs_unmatched": 1389, "images": 27, "buildings": 12, "within_minus_between_deg": -0.24338941437291495}
+    }
+  },
+  "adoption": {
+    "manual_coarse": "structural_expression_working_classification",
+    "manual_fine": "conditional_explanatory_subtypes",
+    "semi_position": "conditional_scale_group",
+    "A2": "independent_raw_answer_relation_axis",
+    "historical_Q_confounded_team_gain": true
+  },
+  "original_html_pdf_and_package_manifest": "original_delivery_identity_preserved; corrected Markdown and CSV supersede their two affected statistics"
+}

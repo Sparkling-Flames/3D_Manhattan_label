@@ -1,0 +1,81 @@
+{
+  "schema": "personnel_taxonomy_route_b_integration_v2",
+  "primary_labels": {
+    "final": "recommended_labels.csv",
+    "validation": "recommended_lobo_labels.csv",
+    "validation_key": ["worker_id", "condition", "heldout_building"],
+    "coarse_field": "coarse_class",
+    "fine_field": "fine_class",
+    "unassigned": "unassigned",
+    "adoption": {
+      "manual_coarse": "recommended_current_structural_working_classes",
+      "manual_fine": "conditional_member_sensitive_subtypes",
+      "semi_coarse": "SP_LOW lower inferred height; SP_OTHER relative scale comparison parent",
+      "semi_fine": "SP_L conditional height type; SP_A old-origin supported scale subtype; SP_T relative comparison group"
+    }
+  },
+  "adopted_semi_labels": {
+    "final": "semi_adopted_labels.csv",
+    "validation": "semi_adopted_lobo_labels.csv",
+    "members": "semi_adopted_members.csv",
+    "validation_summary": "semi_adopted_lobo_summary.csv",
+    "validation_panels": "semi_adopted_lobo_panels.csv",
+    "person_explanations": "semi_adopted_person_explanations.csv",
+    "qt_auxiliary_summary": "semi_adopted_qt_auxiliary_by_source.csv",
+    "contract": "SEMI_ADOPTED_CONTRACT.json",
+    "mapping": {"SP_L": "SP_LOW", "SP_A": "SP_OTHER", "SP_T": "SP_OTHER"},
+    "model_refit_for_coarse_layer": false,
+    "fine_adoption_status": "SP_A new-origin rows retain frozen labels but explicitly record failure of repeatable new-origin support",
+    "lobo_inventory": "62 workers in each of the 12 buildings with actual Semi observations; insufficient history is explicitly unassigned"
+  },
+  "frozen_structural_exploration": {
+    "final": "final_labels.csv",
+    "validation": "lobo_labels.csv",
+    "manual": "still adopted and copied without relabeling into recommended files",
+    "semi_old_origin": "interpretable final structure with initialization evidence; exploratory auxiliary labels",
+    "semi_new_origin": "not supported as repeatable cross-building structure types",
+    "fusion": "original frozen labels preserved; failed candidates were not rewritten after outcomes"
+  },
+  "secondary_semi_labels": {
+    "final": "semi_new_candidate/final_labels.csv",
+    "validation": "semi_new_candidate/lobo_labels.csv",
+    "validation_key": ["candidate", "worker_id", "heldout_building"],
+    "class_field": "class_id",
+    "condition": "semi",
+    "adoption": {
+      "semi_new_structure": "tested_not_adopted",
+      "semi_position_scale:SP_L": "repeatable_lower_inferred_height_working_type",
+      "semi_position_scale:SP_A": "old_origin_supported_scale_auxiliary_type",
+      "semi_position_scale:SP_T": "relative_scale_comparison_group"
+    },
+    "missing_worker_row": "insufficient_target_building_excluded_history; do not fill from all-data labels"
+  },
+  "scope": {
+    "training": "ordinary non-OOS personal_comparison and peer_n>=3; each condition fitted separately",
+    "support": "at least12 comparable images in at least4 buildings",
+    "doorway": "separate external condition using ordinary-history labels excluding entire target building",
+    "historical_exclusions": "behavioural evidence only; labels do not restore formal vote or quality eligibility"
+  },
+  "metrics": {
+    "turn_n": "pair_n minus <=5deg near-straight nodes; descriptor, no point deletion",
+    "short_turn_edges": "existing <4 percent perimeter and both endpoint turns>=15deg descriptor",
+    "log_area": "natural log camera-height-normalized floor area; not automatically scope choice",
+    "log_height": "natural log mean paired-ray total height with camera height1; not automatically top-boundary error",
+    "Q": "existing qualified B8L2 and D10 only",
+    "T_primary": "source_active_time_seconds, adjusted within task and origin; new origin reported processed time",
+    "T_target": "target_matched_time_seconds retained separately, may be missing",
+    "summary_support": "each metric's image_n/building_n/panel_n must be used, not generic panel total",
+    "same_count_height": "SP_L minus SP_T, same pair count, bottom-ray angular assignment<=9/12deg, no geometry replacement"
+  },
+  "status_fields": {
+    "label_status": "assignment/support status",
+    "missing_reason": "why no class was formed",
+    "fine_status": "original Manual structural label agreement>=0.8 or member_sensitive, not prediction accuracy",
+    "coarse_adoption_status": "recommended conditional type or comparison parent, distinct from label assignment support",
+    "fine_adoption_status": "fine subtype's supported domain, e.g. old origin only for SP_A; unsupported rows are retained transparently",
+    "target_condition_observed": "prevents nonexistent condition-building folds inflating stability"
+  },
+  "qualification_contracts_changed": false,
+  "all_data_labels_for_validation_allowed": false,
+  "psychological_motives_inferred": false
+}

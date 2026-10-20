@@ -1,0 +1,39 @@
+{
+  "schema": "personnel_taxonomy_route_a_fields_v1",
+  "recommended_relation_method": "A2_samecount_source_residual",
+  "selected_k": {"manual": 3, "semi": 3},
+  "recommended_role": "Independent whole-answer geometry relation partition, supplementary to interpretable structural classes; do not create an unvalidated A2 x B cross-product taxonomy.",
+  "label_files": {
+    "worker_labels.csv": {
+      "key": ["condition", "method", "k", "stage", "worker_id"],
+      "development_selector": "stage=development_frozen; K choice is recorded separately in candidate_selection.csv",
+      "final_selector": "stage=all_data_descriptive & method=A2_samecount_source_residual & k=3",
+      "class_id": "A01/A02/A03 are condition-specific all-data relation names. unknown marks insufficient ordinary formal history (at least 6 images and 3 buildings are required).",
+      "absence": "Only workers represented in each condition's formal original-answer inventory occur here. W019/W026 have no such formal classification records; full non-OOS personnel inventory must be joined externally, not inferred from this table."
+    },
+    "worker_labels_lobo.csv": {
+      "key": ["condition", "method", "k", "target_building", "worker_id"],
+      "stage": "leave_building_out",
+      "class_id": "Actual target-building-excluded fitted partition ID; use this grouping for target-building raw-answer and fusion evaluation.",
+      "aligned_class_id": "Same fold partition renamed by overlap with descriptive full-data names only for display. Renaming does not change co-membership or target validation.",
+      "n_train_images_and_buildings": "Actual per-person support after excluding the entire target building; unknown reasons are retained."
+    }
+  },
+  "validation_files": {
+    "selected_method_validation.csv": "Only independently selected K for A1 and A2, with development stability and independent-check/LOBO/Q-source-matched outcomes. within_minus_between is negative for a smaller distance and positive for a larger coassignment or overlap.",
+    "A2_class_pair_geometry.csv": "Class-specific LOBO pair distances; availability differs by class pair, so these raw averages are not a matched class-specific causal contrast.",
+    "A_Q_source_matched_validation.csv": "Within-image same-count comparisons jointly stratified by the shared pair count, origin pair, target pair mean-Q bin and target pair Q-difference bin. n_pairs is before matching; n_pairs_contributing counts both sides of matched strata; n_pairs_unmatched is their difference. Q is used for validation sensitivity only, never fitting.",
+    "B_raw_answer_validation.csv": "Independent raw-answer check of route-B target-building-excluded structural coarse/fine labels. Matched rows also stratify by shared pair count and expose before/contributing/unmatched pair counts. Structural similarity does not automatically imply whole-answer geometry similarity.",
+    "A2_doorway_validation.csv": "Ordinary-trained A2 labels applied to doorway images, with target whole building excluded; this is a separate extrapolation check."
+  },
+  "geometry_metrics": {
+    "same_count": "Equal bound corner-pair count, not equal total points after dropping invalid positions; declared valid frozen points are kept unchanged.",
+    "bound_deg": "Frozen cyclic bottleneck maximum of top/bottom spherical angular distances under one shared cyclic shift; no independent top/bottom reassignment or arbitrary point permutation.",
+    "bottom_deg_top_deg": "Bottom/top maximum angular distance using the same shift chosen by bound_deg.",
+    "floor_iou": "Continuous original camera-height-normalized footprints, valid polygons only; not a new Q score or a repaired ring.",
+    "same9_same12": "Existing affinity partition co-membership at whole-answer 9/12 degree thresholds, never cross-image cluster-number equality."
+  },
+  "coverage_entry": "../evidence/INVENTORY_RECEIPT.json and inventory_usage_by_image.csv / inventory_usage_by_worker.csv distinguish 9217 non-OOS behavior records, classification training observations, 7302 original-answer formal records and actual fusion membership.",
+  "unchanged_contracts": ["preprocessing", "bound reference", "ring order", "B8L2 primary scoring", "D10 sensitivity", "formal eligibility", "fusion correspondence and voting"],
+  "case_geometry_receipt": "A2_7y21_geometry_receipt.json records individual simple floor validity and exact equality to the available frozen processed inputs; no new original export is claimed."
+}

@@ -1,0 +1,10 @@
+{
+  "candidate": "semi_position_scale:SP_L",
+  "comparison": "SP_L minus SP_T; frozen LOBO labels",
+  "geometry": "camera-height-normalized mean paired-ray height, exactly the existing continuous-coordinate viewer formula",
+  "same_count": true,
+  "bottom_matching": "one-to-one angular assignment, all matched rays within9/12 degrees",
+  "decomposition": "symmetric two-order contribution decomposition on log mean height; solely an explanation, never new annotations",
+  "interpretation": "positive top y means lower image top; positive bottom y means lower image floor ray and shorter normalized floor range; angular matching is not verified semantic wall identity",
+  "quality": "existing B8L2 only where quality_usable; no new reference or score"
+}

@@ -1,0 +1,569 @@
+{
+  "schema": "personnel_taxonomy_inventory_usage_v1",
+  "input_files": {
+    "audit_records": {
+      "path": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251"
+    },
+    "behavior_expression": {
+      "path": "research/workers/personnel_marking_patterns_20261020/record_expression.csv",
+      "sha256": "9947054c0713c6679fa6dd0951fe0e6b6736e4b0252a0f4b569e0bc806e31221"
+    },
+    "A_formal_records": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/records_geometry.csv.gz",
+      "sha256": "0e42db7e55f9acded7d1dc94d4347c1278ac3835071235527b7e5fa1dcfae0bf"
+    },
+    "A_labels": {
+      "path": "research/workers/personnel_taxonomy_20261021/route_a/worker_labels.csv",
+      "sha256": "ad28744ad5676082700680a7e5118c51f0495737bb822e7f0f665f940e6698ca"
+    },
+    "B_labels": {
+      "path": "research/workers/personnel_taxonomy_20261021/route_b/final_labels.csv",
+      "sha256": "b30932a6a54212d043b75be3a5ab2544e871be855c1275b12dc0df474a09d838"
+    },
+    "B_main_selected_pools": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/SELECTED_POOLS.csv",
+      "sha256": "f738de54875a7d785198280deb8156a16f160c7cae6f062c062656aa199740d6"
+    },
+    "B_main_teams": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/TEAMS.json.gz",
+      "sha256": "c2d32a82fd193de4ad8623b74161baef4a0dd8ef13959d727b05a00c61d73318"
+    },
+    "B_main_requests": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/REQUESTS.json.gz",
+      "sha256": "b433fa9dba6874e684c6ca3c64b1123c98eec2769f90031160f111b5f9a26554"
+    },
+    "B_nested_teams": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/NESTED_TEAMS.json.gz",
+      "sha256": "0a0a27942b05723fa6340fbe2ab2e47b094bad47a9bebf93ee98211fa19492f2"
+    },
+    "A2_specific_teams": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/a2_specific/TEAMS.json.gz",
+      "sha256": "f06f5b8a2b28d0d6f4e4dbbb0767afce9306285cfaa4d9fd99901778d54dcfdc"
+    },
+    "semi_position_teams": {
+      "path": "research/workers/personnel_taxonomy_20261021/fusion/semi_position/TEAMS.json.gz",
+      "sha256": "02f2b86e27c357cd7654ee82ee179bdf3cd700c94ef7d776bb8d7dced463b022"
+    }
+  },
+  "all_audited_records": 10439,
+  "excluded_oos_records": 1222,
+  "non_oos_inventory": {
+    "n_records": 9217,
+    "n_workers": 62,
+    "n_images": 233,
+    "n_buildings": 22
+  },
+  "by_image_rows": 274,
+  "by_worker_rows": 182,
+  "totals": {
+    "n_non_oos_behavior": 9217,
+    "n_personal_comparison": 9068,
+    "n_B_candidate_observations": 8473,
+    "n_B_fit_observations": 8471,
+    "n_A_formal_original_answers": 7302,
+    "n_A_ordinary_candidate_observations": 6620,
+    "n_A_fit_observations": 6618,
+    "n_quality_usable": 7302,
+    "n_independent_vote_eligible": 9007,
+    "n_pool_analysis_eligible": 8725,
+    "n_quality_and_vote_eligible": 7302,
+    "n_doorway": 603,
+    "n_gt_error_quality_blocked": 210,
+    "n_reference_quality_hold": 175,
+    "n_reference_not_full": 938,
+    "n_cleaning_historical_not_accepted": 108,
+    "n_cleaning_excluded_by_review": 89,
+    "n_cleaning_retained_pending": 11,
+    "n_historical_worker_exclusion": 89,
+    "origin_keys": "new|v1",
+    "quality_use_keys": "doorway_quality|not_qualified|ordinary_primary|special_conditional_only",
+    "A_formal_layer_keys": "doorway_manual|ordinary_manual|ordinary_semi|special_manual|special_semi",
+    "n_B_main_selected_pools": 105,
+    "n_B_main_selected_pool_available_records": 3315,
+    "n_B_main_actual_pool_available_records": 3273,
+    "n_B_main_swap_events": 1276,
+    "n_B_main_actual_pools": 94,
+    "n_B_main_actual_used_records": 3125,
+    "n_B_main_actual_teams": 3828,
+    "n_B_nested_actual_pools": 7,
+    "n_B_nested_actual_used_records": 224,
+    "n_B_nested_actual_teams": 1008,
+    "n_A2_specific_actual_pools": 24,
+    "n_A2_specific_actual_used_records": 874,
+    "n_A2_specific_actual_teams": 858,
+    "n_semi_position_actual_pools": 11,
+    "n_semi_position_actual_used_records": 247,
+    "n_semi_position_actual_teams": 114
+  },
+  "by_condition_behavior_layer": [
+    {
+      "condition": "manual",
+      "layer": "doorway",
+      "n_records": 603,
+      "n_workers": 59,
+      "n_images": 17,
+      "n_buildings": 9,
+      "n_non_oos_behavior": 603,
+      "n_personal_comparison": 585,
+      "n_B_candidate_observations": 0,
+      "n_B_fit_observations": 0,
+      "n_A_formal_original_answers": 571,
+      "n_A_ordinary_candidate_observations": 0,
+      "n_A_fit_observations": 0,
+      "n_quality_usable": 571,
+      "n_independent_vote_eligible": 584,
+      "n_pool_analysis_eligible": 584,
+      "n_quality_and_vote_eligible": 571,
+      "n_doorway": 603,
+      "n_gt_error_quality_blocked": 0,
+      "n_reference_quality_hold": 0,
+      "n_reference_not_full": 0,
+      "n_cleaning_historical_not_accepted": 15,
+      "n_cleaning_excluded_by_review": 3,
+      "n_cleaning_retained_pending": 1,
+      "n_historical_worker_exclusion": 5,
+      "origin_keys": "new|v1",
+      "quality_use_keys": "doorway_quality|not_qualified",
+      "A_formal_layer_keys": "doorway_manual",
+      "n_B_main_selected_pools": 17,
+      "n_B_main_selected_pool_available_records": 571,
+      "n_B_main_actual_pool_available_records": 571,
+      "n_B_main_swap_events": 232,
+      "n_B_main_actual_pools": 17,
+      "n_B_main_actual_used_records": 563,
+      "n_B_main_actual_teams": 696,
+      "n_B_nested_actual_pools": 1,
+      "n_B_nested_actual_used_records": 35,
+      "n_B_nested_actual_teams": 162,
+      "n_A2_specific_actual_pools": 0,
+      "n_A2_specific_actual_used_records": 0,
+      "n_A2_specific_actual_teams": 0,
+      "n_semi_position_actual_pools": 0,
+      "n_semi_position_actual_used_records": 0,
+      "n_semi_position_actual_teams": 0
+    },
+    {
+      "condition": "manual",
+      "layer": "ordinary",
+      "n_records": 7523,
+      "n_workers": 62,
+      "n_images": 216,
+      "n_buildings": 22,
+      "n_non_oos_behavior": 7523,
+      "n_personal_comparison": 7434,
+      "n_B_candidate_observations": 7432,
+      "n_B_fit_observations": 7430,
+      "n_A_formal_original_answers": 5785,
+      "n_A_ordinary_candidate_observations": 5719,
+      "n_A_fit_observations": 5717,
+      "n_quality_usable": 5785,
+      "n_independent_vote_eligible": 7388,
+      "n_pool_analysis_eligible": 7110,
+      "n_quality_and_vote_eligible": 5785,
+      "n_doorway": 0,
+      "n_gt_error_quality_blocked": 210,
+      "n_reference_quality_hold": 175,
+      "n_reference_not_full": 875,
+      "n_cleaning_historical_not_accepted": 57,
+      "n_cleaning_excluded_by_review": 69,
+      "n_cleaning_retained_pending": 7,
+      "n_historical_worker_exclusion": 48,
+      "origin_keys": "new|v1",
+      "quality_use_keys": "not_qualified|ordinary_primary|special_conditional_only",
+      "A_formal_layer_keys": "ordinary_manual|special_manual",
+      "n_B_main_selected_pools": 55,
+      "n_B_main_selected_pool_available_records": 1798,
+      "n_B_main_actual_pool_available_records": 1792,
+      "n_B_main_swap_events": 705,
+      "n_B_main_actual_pools": 54,
+      "n_B_main_actual_used_records": 1755,
+      "n_B_main_actual_teams": 2115,
+      "n_B_nested_actual_pools": 4,
+      "n_B_nested_actual_used_records": 131,
+      "n_B_nested_actual_teams": 594,
+      "n_A2_specific_actual_pools": 12,
+      "n_A2_specific_actual_used_records": 413,
+      "n_A2_specific_actual_teams": 432,
+      "n_semi_position_actual_pools": 0,
+      "n_semi_position_actual_used_records": 0,
+      "n_semi_position_actual_teams": 0
+    },
+    {
+      "condition": "semi",
+      "layer": "ordinary",
+      "n_records": 1091,
+      "n_workers": 61,
+      "n_images": 41,
+      "n_buildings": 12,
+      "n_non_oos_behavior": 1091,
+      "n_personal_comparison": 1049,
+      "n_B_candidate_observations": 1041,
+      "n_B_fit_observations": 1041,
+      "n_A_formal_original_answers": 946,
+      "n_A_ordinary_candidate_observations": 901,
+      "n_A_fit_observations": 901,
+      "n_quality_usable": 946,
+      "n_independent_vote_eligible": 1035,
+      "n_pool_analysis_eligible": 1031,
+      "n_quality_and_vote_eligible": 946,
+      "n_doorway": 0,
+      "n_gt_error_quality_blocked": 0,
+      "n_reference_quality_hold": 0,
+      "n_reference_not_full": 63,
+      "n_cleaning_historical_not_accepted": 36,
+      "n_cleaning_excluded_by_review": 17,
+      "n_cleaning_retained_pending": 3,
+      "n_historical_worker_exclusion": 36,
+      "origin_keys": "new|v1",
+      "quality_use_keys": "not_qualified|ordinary_primary|special_conditional_only",
+      "A_formal_layer_keys": "ordinary_semi|special_semi",
+      "n_B_main_selected_pools": 33,
+      "n_B_main_selected_pool_available_records": 946,
+      "n_B_main_actual_pool_available_records": 910,
+      "n_B_main_swap_events": 339,
+      "n_B_main_actual_pools": 23,
+      "n_B_main_actual_used_records": 807,
+      "n_B_main_actual_teams": 1017,
+      "n_B_nested_actual_pools": 2,
+      "n_B_nested_actual_used_records": 58,
+      "n_B_nested_actual_teams": 252,
+      "n_A2_specific_actual_pools": 12,
+      "n_A2_specific_actual_used_records": 461,
+      "n_A2_specific_actual_teams": 426,
+      "n_semi_position_actual_pools": 11,
+      "n_semi_position_actual_used_records": 247,
+      "n_semi_position_actual_teams": 114
+    }
+  ],
+  "A_formal_original_layers": [
+    {
+      "formal_layer": "doorway_manual",
+      "n_records": 571,
+      "n_workers": 57,
+      "n_images": 17,
+      "n_buildings": 9,
+      "n_pools": 17
+    },
+    {
+      "formal_layer": "ordinary_manual",
+      "n_records": 5719,
+      "n_workers": 60,
+      "n_images": 177,
+      "n_buildings": 22,
+      "n_pools": 177
+    },
+    {
+      "formal_layer": "ordinary_semi",
+      "n_records": 901,
+      "n_workers": 59,
+      "n_images": 32,
+      "n_buildings": 12,
+      "n_pools": 32
+    },
+    {
+      "formal_layer": "special_manual",
+      "n_records": 66,
+      "n_workers": 35,
+      "n_images": 2,
+      "n_buildings": 2,
+      "n_pools": 2
+    },
+    {
+      "formal_layer": "special_semi",
+      "n_records": 45,
+      "n_workers": 45,
+      "n_images": 1,
+      "n_buildings": 1,
+      "n_pools": 1
+    }
+  ],
+  "all_data_training_inventory": [
+    {
+      "condition": "manual",
+      "domain": "n_B_candidate_observations",
+      "n_records": 7432,
+      "n_workers": 60,
+      "n_images": 216,
+      "n_buildings": 22
+    },
+    {
+      "condition": "manual",
+      "domain": "n_B_fit_observations",
+      "n_records": 7430,
+      "n_workers": 59,
+      "n_images": 216,
+      "n_buildings": 22
+    },
+    {
+      "condition": "manual",
+      "domain": "n_A_ordinary_candidate_observations",
+      "n_records": 5719,
+      "n_workers": 60,
+      "n_images": 177,
+      "n_buildings": 22
+    },
+    {
+      "condition": "manual",
+      "domain": "n_A_fit_observations",
+      "n_records": 5717,
+      "n_workers": 59,
+      "n_images": 177,
+      "n_buildings": 22
+    },
+    {
+      "condition": "semi",
+      "domain": "n_B_candidate_observations",
+      "n_records": 1041,
+      "n_workers": 59,
+      "n_images": 40,
+      "n_buildings": 12
+    },
+    {
+      "condition": "semi",
+      "domain": "n_B_fit_observations",
+      "n_records": 1041,
+      "n_workers": 59,
+      "n_images": 40,
+      "n_buildings": 12
+    },
+    {
+      "condition": "semi",
+      "domain": "n_A_ordinary_candidate_observations",
+      "n_records": 901,
+      "n_workers": 59,
+      "n_images": 32,
+      "n_buildings": 12
+    },
+    {
+      "condition": "semi",
+      "domain": "n_A_fit_observations",
+      "n_records": 901,
+      "n_workers": 59,
+      "n_images": 32,
+      "n_buildings": 12
+    }
+  ],
+  "fusion_experiments_separate": {
+    "B_main": {
+      "n_teams": 3828,
+      "n_actual_pools": 94,
+      "n_images": 88,
+      "n_buildings": 22,
+      "n_workers": 59,
+      "n_unique_used_records": 3125,
+      "team_size_counts": {
+        "5": 2274,
+        "9": 840,
+        "13": 714
+      },
+      "by_formal_layer": [
+        {
+          "layer": "doorway_manual",
+          "n_teams": 696,
+          "n_pools": 17,
+          "n_images": 17,
+          "n_buildings": 9,
+          "n_workers": 57
+        },
+        {
+          "layer": "ordinary_manual",
+          "n_teams": 2046,
+          "n_pools": 52,
+          "n_images": 52,
+          "n_buildings": 22,
+          "n_workers": 59
+        },
+        {
+          "layer": "ordinary_semi",
+          "n_teams": 969,
+          "n_pools": 22,
+          "n_images": 22,
+          "n_buildings": 12,
+          "n_workers": 59
+        },
+        {
+          "layer": "special_manual",
+          "n_teams": 69,
+          "n_pools": 2,
+          "n_images": 2,
+          "n_buildings": 2,
+          "n_workers": 34
+        },
+        {
+          "layer": "special_semi",
+          "n_teams": 48,
+          "n_pools": 1,
+          "n_images": 1,
+          "n_buildings": 1,
+          "n_workers": 35
+        }
+      ],
+      "n_selected_pools": 105,
+      "n_swap_events": 1276,
+      "n_selected_but_no_realized_team_pools": 11
+    },
+    "B_nested": {
+      "n_teams": 1008,
+      "n_actual_pools": 7,
+      "n_images": 7,
+      "n_buildings": 6,
+      "n_workers": 59,
+      "n_unique_used_records": 224,
+      "team_size_counts": {
+        "5": 42,
+        "6": 42,
+        "7": 42,
+        "8": 42,
+        "9": 42,
+        "10": 42,
+        "11": 42,
+        "12": 42,
+        "13": 42,
+        "14": 42,
+        "15": 42,
+        "16": 42,
+        "17": 42,
+        "18": 42,
+        "19": 36,
+        "20": 36,
+        "21": 36,
+        "22": 36,
+        "23": 36,
+        "24": 36,
+        "25": 36,
+        "26": 36,
+        "27": 30,
+        "28": 24,
+        "29": 24,
+        "30": 24,
+        "31": 24,
+        "32": 6
+      },
+      "by_formal_layer": [
+        {
+          "layer": "doorway_manual",
+          "n_teams": 162,
+          "n_pools": 1,
+          "n_images": 1,
+          "n_buildings": 1,
+          "n_workers": 35
+        },
+        {
+          "layer": "ordinary_manual",
+          "n_teams": 594,
+          "n_pools": 4,
+          "n_images": 4,
+          "n_buildings": 4,
+          "n_workers": 40
+        },
+        {
+          "layer": "ordinary_semi",
+          "n_teams": 252,
+          "n_pools": 2,
+          "n_images": 2,
+          "n_buildings": 2,
+          "n_workers": 49
+        }
+      ]
+    },
+    "A2_specific": {
+      "n_teams": 858,
+      "n_actual_pools": 24,
+      "n_images": 22,
+      "n_buildings": 18,
+      "n_workers": 59,
+      "n_unique_used_records": 874,
+      "team_size_counts": {
+        "5": 432,
+        "9": 426
+      },
+      "by_formal_layer": [
+        {
+          "layer": "ordinary_manual",
+          "n_teams": 432,
+          "n_pools": 12,
+          "n_images": 12,
+          "n_buildings": 12,
+          "n_workers": 56
+        },
+        {
+          "layer": "ordinary_semi",
+          "n_teams": 426,
+          "n_pools": 12,
+          "n_images": 12,
+          "n_buildings": 12,
+          "n_workers": 59
+        }
+      ]
+    },
+    "semi_position": {
+      "n_teams": 114,
+      "n_actual_pools": 11,
+      "n_images": 11,
+      "n_buildings": 11,
+      "n_workers": 57,
+      "n_unique_used_records": 247,
+      "team_size_counts": {
+        "5": 66,
+        "9": 48
+      },
+      "by_formal_layer": [
+        {
+          "layer": "ordinary_semi",
+          "n_teams": 114,
+          "n_pools": 11,
+          "n_images": 11,
+          "n_buildings": 11,
+          "n_workers": 57
+        }
+      ]
+    }
+  },
+  "field_definitions": {
+    "row_keys": {
+      "by_image": "image_id × condition × behavioral layer; image_code/building_id are identifiers",
+      "by_worker": "worker_id × condition × behavioral layer"
+    },
+    "layer": "record_expression behavioral inventory layer ordinary/doorway. Existing fusion special_* pools belong to ordinary behavior and remain identifiable in A_formal_layer_keys and by_formal_layer receipt.",
+    "n_non_oos_behavior": "All audited records with is_oos=false, exactly joined to record_expression by object_id; no new eligibility filtering.",
+    "n_personal_comparison": "Existing record_expression.personal_comparison=true; includes ordinary and doorway behavior.",
+    "n_B_candidate_observations": "personal_comparison & peer_n>=3 & layer=ordinary, separately by condition; candidate worker features before support threshold.",
+    "n_B_fit_observations": "B candidate observations whose condition-specific person has an assigned final descriptive label (>=12 images and >=4 buildings). These are all-data fit counts; each LOBO training count varies after excluding the target building.",
+    "n_A_formal_original_answers": "Object IDs actually present in frozen records_geometry/CLUSTER_API, all formal layers. This is not the full behavior inventory.",
+    "n_A_ordinary_candidate_observations": "Frozen original answers in ordinary_manual/ordinary_semi, before person support threshold.",
+    "n_A_fit_observations": "A ordinary observations of persons with assigned all-data A2 labels (>=6 images and >=3 buildings); LOBO training excludes the target building.",
+    "n_quality_usable": "Audited quality_usable flag, including explicit doorway and special-conditional qualification; never restored by behavior analysis.",
+    "n_independent_vote_eligible": "Audited independent_vote_eligible flag alone; it is not sufficient for formal quality/fusion admission.",
+    "n_pool_analysis_eligible": "Audited pool_analysis_eligible flag alone; existing additional reference/quality conditions remain applicable.",
+    "n_quality_and_vote_eligible": "Both audited quality_usable and independent_vote_eligible.",
+    "n_doorway": "Audited is_doorway=true, kept separate from ordinary behavior.",
+    "n_gt_error_quality_blocked": "quality_usable=false with an explicit existing_gt_error, historical_gt_substantive_error or current_gt_error exclusion reason; genuine detail omission alone does not trigger this count.",
+    "n_reference_quality_hold": "Any existing quality_exclusion_reason contains hold_reference_quality; potentially overlaps GT-error counts and is not a synonym for explicit GT error.",
+    "n_reference_not_full": "Audited reference_full_available=false.",
+    "n_cleaning_historical_not_accepted": "cleaning_disposition=historical_not_accepted; record-level inherited nonacceptance, not automatically person-level exclusion.",
+    "n_cleaning_excluded_by_review": "cleaning_disposition=excluded_by_review.",
+    "n_cleaning_retained_pending": "cleaning_disposition=retained_pending.",
+    "n_historical_worker_exclusion": "Existing exclusion_attribution.historical_worker_exclusion=true, never a newly inferred worker status.",
+    "n_B_main_selected_pools": "Distinct selected formal pool IDs represented among the row group's formally available records; by-worker count is opportunity availability, before realized team membership.",
+    "n_B_main_selected_pool_available_records": "Original formal records in the 105 selected pools, whether or not the person is used in a feasible team.",
+    "n_B_main_actual_pool_available_records": "Original formal records in the 94 realized main pools, including available persons not selected into any team.",
+    "n_B_main_swap_events": "Distinct realized ABC event IDs containing at least one original record in this row group; by-worker count is event participation.",
+    "n_*_actual_pools": "Distinct pools in which at least one record in the row group actually appears in that named experiment's saved teams.",
+    "n_*_actual_used_records": "Unique object IDs from this row group actually appearing in that named experiment's saved teams.",
+    "n_*_actual_teams": "Distinct saved team IDs containing at least one record in this row group. Image rows sum to experiment total; worker rows sum to memberships, not teams.",
+    "extension_prefixes": "B_main=3828-team main experiment; B_nested, A2_specific, semi_position are independent completed files, never added to the B_main totals."
+  },
+  "coverage_notes_zh": [
+    "全部非OOS行为库存与质量可用原答库存分开，未把7302份冻结分簇当作9217份行为全库存。",
+    "B候选观察与实际拟合观察并列：Manual的W022有2条可比观察但不满足人员支持门槛；W019/W026无可比历史。",
+    "GT暂停、未获正式评分资格及历史筛除记录可以保留行为观察，但不会因此恢复正式组队资格。",
+    "ordinary行为层包含既有special_conditional_only评分层；门洞行为单列，A/B普通类别拟合均不使用门洞。",
+    "正式投票资格、池分析资格与质量资格是独立原字段。只持有独立投票标志不等于已经可以进入正式融合池。",
+    "GT错误暂停、reference quality hold与筛除计数可以重叠，不可相加当作互斥缺失原因。",
+    "selected池成员是正式可用机会库存，actual_used_records是实际使用；二者不混计。",
+    "B主交换及三项扩展各按当前保存的精确团队分别计数，不以总和掩盖实验复用或成员重叠。"
+  ],
+  "reproduction": "python research/workers/personnel_taxonomy_20261021/code/build_inventory_usage.py",
+  "geometry_scores_eligibility_modified": false
+}

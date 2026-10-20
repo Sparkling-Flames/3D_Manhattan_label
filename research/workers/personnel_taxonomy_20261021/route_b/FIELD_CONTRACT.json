@@ -1,0 +1,36 @@
+{
+  "schema": "personnel_taxonomy_route_b_v1",
+  "source": "research/workers/personnel_marking_patterns_20261020/record_expression.csv",
+  "fit_domain": "ordinary non-OOS personal_comparison observations, peer_n>=3, independently per condition",
+  "description_inventory": "all non-OOS records retained in source, doorway external condition; historical exclusions describe behaviour only",
+  "fit_support": {
+    "minimum_comparable_images": 12,
+    "minimum_buildings": 4
+  },
+  "feature_definition": {
+    "turn_n": "pair_n minus near_straight_nodes_5deg; count descriptor, no point deletion",
+    "short_turn_edges": "existing perimeter fraction<0.04 and both endpoint turns>=15deg"
+  },
+  "normalization": "same image+condition+layer+reference peer median, worker-building mean then buildings equally averaged; z-score fitted over training worker histories",
+  "classifier": "Ward Euclidean hierarchy on turn_n_peer_delta and short_turn_edges_peer_delta; coarse 2 independently for each condition; manual split both parents; semi split the lower-turn parent only",
+  "names": {
+    "M0": "常规或简化表达",
+    "M1": "较多短转折表达",
+    "M00": "较少转折",
+    "M01": "常规转折",
+    "M10": "条件性较多转折",
+    "M11": "较强短转折表达",
+    "S0": "常规或较少短转折终稿",
+    "S1": "较多短转折终稿",
+    "S00": "较少短转折终稿",
+    "S01": "常规短转折终稿",
+    "S10": "较多短转折终稿",
+    "unassigned": "证据不足"
+  },
+  "model_selection": "descriptive exploration of 2-5 class structures and geometry/collinearity variants; selected meaningful multi-member hierarchy before fusion; subsequent LOBO checks are not a prospectively untouched discovery set",
+  "validation": "lobo_labels only. The entire target building is excluded before worker features, scaling and clustering. ALL_DATA labels are descriptive only.",
+  "non_oos_inventory_n": 9217,
+  "all_worker_inventory_n": 62,
+  "coarse_fine_semantics": "conditional working marking types, no correctness or psychological motivation implied",
+  "ring_reference_quality_fusion_changed": false
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "personnel_results_display_v1",
+  "date": "2026-10-21",
+  "source_interface": "research/workers/personnel_profiles_composition_20261020/INTEGRATION.json",
+  "consumer_snapshot": "v2_integrated_analysis_20261019",
+  "payload": "v2-resources/personnel_results.json",
+  "offline_twin": "v2-resources/personnel_results.js",
+  "entrypoints": {
+    "profiles": "index.html#module=profiles",
+    "benefits": "index.html#module=benefits",
+    "cases": "index.html#module=benefits&tab=1"
+  },
+  "classification_status": "new_classification_not_delivered",
+  "profile_key": [
+    "worker_id",
+    "condition",
+    "origin",
+    "panel"
+  ],
+  "counts": {
+    "profile_cells": 182,
+    "quality_effect_rows": 3280,
+    "new_only_labor_rows": 256,
+    "speed_summary_rows": 1600,
+    "fixed_core_common_image_rows": 84,
+    "cases": 4,
+    "saved_teams": 12
+  },
+  "display_contract": {
+    "profiles": "Archived worker_profiles.csv; each Q/time/review field retains its own support and missingness. Q_peer uses leave-one-peer residual; relative_time uses ln(T) within origin/time-source context.",
+    "quality": "composition_effects.csv by layer/phase/source_policy/n/H/L/baseline; image and building equal weights inherited, not recomputed.",
+    "speed": "main_summary.csv by layer/origin/domain/n/n_fast/contrast; full-Q and high-Q domains remain separate.",
+    "growth": "growth_common_plot_data.csv; same saved high-Q core, common image set, quality changes vs original core; no low-tail field supplied.",
+    "cases": "Original archived JSON preserved. Bind current object/image/condition/worker/reference/points; show saved candidate ring and identity support without new adjudication.",
+    "labor": "new_only_n7_labor_summary uses arithmetic pair ratios; speed uses exp(image/building mean log ratios).",
+    "global_filters": "Independent panel selectors; global filters never refit summaries or crop saved teams.",
+    "missing": "null/absent remains unavailable, never numeric zero. Zero observed opportunities remain counts, not a zero correctness rate."
+  },
+  "unchanged": [
+    "individual_scores",
+    "eligibility",
+    "references",
+    "processed_points",
+    "frozen_class_labels",
+    "fusion_algorithm",
+    "N1_status",
+    "87_table_snapshot"
+  ],
+  "checks": {
+    "python": "19 passed (new personnel payload and existing workbench/evidence tests)",
+    "node": "new personnel, existing comparison and evidence checks passed",
+    "browser": "Desktop real HTTP browser: Manual/Semi/doorway, separate supports, quality/speed domains, growth, arithmetic labor supplement, four case geometries, jtc vote 2 to 3, highlight, ERP zoom, BEV, 3D. No browser warn/error at end.",
+    "offline": "JSON/JS companion equality checked; native file browser not retested.",
+    "not_run": [
+      "mobile_compatibility",
+      "native_download",
+      "all_team_replay",
+      "full_dataset_visual_review"
+    ]
+  },
+  "catalog_and_map": "Existing workbench subassets; global catalog/map synchronization owned by coordinator."
+}

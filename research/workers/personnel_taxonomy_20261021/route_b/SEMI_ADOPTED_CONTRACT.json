@@ -1,0 +1,29 @@
+{
+  "schema": "semi_adopted_hierarchy_v1",
+  "candidate": "semi_position_scale",
+  "mapping": {
+    "SP_L": "SP_LOW",
+    "SP_A": "SP_OTHER",
+    "SP_T": "SP_OTHER"
+  },
+  "frozen_source_sha256": {
+    "final": "7dec9d222d51e67adce3f9c665d9687d56fa769f6e0b037496985e21e4a322cf",
+    "lobo": "bb20522377309a2c11437480a4d470ad1a198a059b17de9d7f20218a913b938e"
+  },
+  "refitted": false,
+  "validation": "frozen K3 labels exclude complete target building; then aggregate SP_A/SP_T; source-specific same-image/reference panels require >=2 people on each side",
+  "adoption": "SP_LOW conditionally supported; SP_OTHER is comparison parent, SP_A supported only old origin; SP_T is relative comparison, not uniform quality",
+  "preserved_contracts": [
+    "original_annotation",
+    "reference",
+    "ring_order",
+    "quality_eligibility",
+    "fusion"
+  ],
+  "counts": {
+    "all_data_inventory": 62,
+    "all_data_assigned": 59,
+    "lobo_buildings": 12,
+    "lobo_inventory_rows": 744
+  }
+}
