@@ -1,0 +1,15 @@
+{
+ "schema":"corner_extension_plan_v1",
+ "scope":"Supplement frozen Pro core events and embedded representative cases; no fusion, labels, score, reference or eligibility edits",
+ "prior_basis":"Latest main 451-event corner panel and four human-feedback examples, not available in Pro input commit; examples motivate dimensions but never fit a nearness threshold",
+ "primary":"Continuous same-count bound-preserving cyclic corresponding-corner BEV and top-3D mean/max in camera-height h",
+ "parallel":"Original Pro legacy joint and shape flags unchanged; report disagreement and distance distributions, never replace flags post hoc",
+ "normalizations":"Keep absolute h and symmetric sqrt(mean footprint area), local mean camera radius; A bbox diagonal retained for historical compatibility only",
+ "matching":"Normalize winding for matching indices only, choose cyclic shift minimizing worst paired top/bottom historical angular distance; unique numerical solution is a candidate, not semantic equivalence. Report angle and second-best gap",
+ "gates":["all jointly unique candidates","both arms angle <=9deg","both arms angle <=12deg"],
+ "gates_interpretation":"Existing neighborhood sensitivity scales, never validated human nearness thresholds",
+ "denominator":"All events and both arms retained; compare A/B and A/C continuous outcomes only on same events jointly eligible; incomplete/different count/invalid/ambiguous are null, not zero",
+ "aggregation":"event mean within pool, equal pool within building, equal buildings; report per-building rows and event quantiles separately; statistics worker handles building bootstrap",
+ "strata":["source","method_id","domain","context_id","phase","k","m"],
+ "limitations":"Explored internal v2 data and enriched core selection, not unseen external confirmation or full-width prevalence; continuous conditional estimates require separate full-denominator structural/failure rates"
+}

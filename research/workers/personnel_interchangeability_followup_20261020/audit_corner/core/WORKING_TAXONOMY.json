@@ -1,0 +1,1475 @@
+[
+  {
+    "replay_group": "Rnew2_C01>C02_m2",
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "direction": "C01>C02",
+    "direction_provenance": "frozen event direction",
+    "role_description": "new-source, conditional direct-swap geometry roles",
+    "members_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W100",
+      "W101",
+      "W102",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W111",
+      "W112",
+      "W113",
+      "W114",
+      "W115",
+      "W116",
+      "W117",
+      "W118",
+      "W119",
+      "W120",
+      "W121",
+      "W122",
+      "W123",
+      "W124",
+      "W125",
+      "W126",
+      "W127",
+      "W128",
+      "W129",
+      "W130",
+      "W131",
+      "W132",
+      "W133",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 58,
+      "joint_events": 47,
+      "joint_images": 26,
+      "joint_buildings": 6,
+      "k": 13,
+      "m": 2
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.0324964307260446,
+      "cross_bev_mean_h": 0.0463287494561541,
+      "delta_bev_mean_h": 0.0138323187301095,
+      "cross_larger_bev_mean_h": 0.6342592592592593,
+      "within_bev_max_h": 0.0789993498352907,
+      "cross_bev_max_h": 0.1104237870304426,
+      "delta_bev_max_h": 0.0314244371951519,
+      "cross_larger_bev_max_h": 0.5740740740740741,
+      "within_top_mean_h": 0.0391570598557545,
+      "cross_top_mean_h": 0.056009130624986,
+      "delta_top_mean_h": 0.0168520707692315,
+      "cross_larger_top_mean_h": 0.6990740740740741,
+      "within_top_max_h": 0.085016736579518,
+      "cross_top_max_h": 0.1216208644432837,
+      "delta_top_max_h": 0.0366041278637657,
+      "cross_larger_top_max_h": 0.5740740740740741,
+      "within_bev_max_pairscale": 0.0251096140159626,
+      "cross_bev_max_pairscale": 0.0332927210938943,
+      "delta_bev_max_pairscale": 0.0081831070779316,
+      "cross_larger_bev_max_pairscale": 0.5740740740740741,
+      "within_top_max_pairscale": 0.0279951993236585,
+      "cross_top_max_pairscale": 0.0384304016517005,
+      "delta_top_max_pairscale": 0.010435202328042,
+      "cross_larger_top_max_pairscale": 0.5740740740740741,
+      "within_bev_max_local_radius_fraction": 0.0253043337853643,
+      "cross_bev_max_local_radius_fraction": 0.0317792602571791,
+      "delta_bev_max_local_radius_fraction": 0.0064749264718148,
+      "cross_larger_bev_max_local_radius_fraction": 0.5833333333333334,
+      "within_top_max_local_radius_fraction": 0.0317702971042873,
+      "cross_top_max_local_radius_fraction": 0.043971744588729,
+      "delta_top_max_local_radius_fraction": 0.0122014474844416,
+      "cross_larger_top_max_local_radius_fraction": 0.6342592592592592
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.20853174603174598,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 10
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.20853174603174598,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 10
+        },
+        "shape_main": {
+          "building_equal_rate": 0.6373015873015873,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 38
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.4517857142857143,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 27
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.09444444444444444,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 5
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.008333333333333333,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 1
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.10277777777777779,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 6
+        },
+        "shape_main": {
+          "building_equal_rate": 0.7206349206349206,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 41
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.6095238095238096,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 33
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests."
+    ]
+  },
+  {
+    "replay_group": "Rnew2_C02>C01_m2",
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "direction": "C02>C01",
+    "direction_provenance": "frozen event direction",
+    "role_description": "new-source, conditional direct-swap geometry roles",
+    "members_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W100",
+      "W101",
+      "W102",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W111",
+      "W113",
+      "W114",
+      "W115",
+      "W116",
+      "W117",
+      "W118",
+      "W119",
+      "W120",
+      "W121",
+      "W122",
+      "W123",
+      "W124",
+      "W125",
+      "W126",
+      "W127",
+      "W128",
+      "W129",
+      "W130",
+      "W131",
+      "W132",
+      "W133",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 58,
+      "joint_events": 53,
+      "joint_images": 28,
+      "joint_buildings": 6,
+      "k": 13,
+      "m": 2
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.0412170022154458,
+      "cross_bev_mean_h": 0.0362587743778017,
+      "delta_bev_mean_h": -0.004958227837644,
+      "cross_larger_bev_mean_h": 0.4291666666666667,
+      "within_bev_max_h": 0.1211933053065739,
+      "cross_bev_max_h": 0.0900880421035332,
+      "delta_bev_max_h": -0.0311052632030407,
+      "cross_larger_bev_max_h": 0.4124999999999999,
+      "within_top_mean_h": 0.0484259248794472,
+      "cross_top_mean_h": 0.044907253355872,
+      "delta_top_mean_h": -0.0035186715235752,
+      "cross_larger_top_mean_h": 0.4611111111111111,
+      "within_top_max_h": 0.1317137087705081,
+      "cross_top_max_h": 0.0976615812128664,
+      "delta_top_max_h": -0.0340521275576416,
+      "cross_larger_top_max_h": 0.4180555555555555,
+      "within_bev_max_pairscale": 0.033061487343018,
+      "cross_bev_max_pairscale": 0.0254041871131245,
+      "delta_bev_max_pairscale": -0.0076573002298935,
+      "cross_larger_bev_max_pairscale": 0.5097222222222222,
+      "within_top_max_pairscale": 0.0373034662288317,
+      "cross_top_max_pairscale": 0.0287104857983231,
+      "delta_top_max_pairscale": -0.0085929804305085,
+      "cross_larger_top_max_pairscale": 0.4319444444444444,
+      "within_bev_max_local_radius_fraction": 0.0422992245951845,
+      "cross_bev_max_local_radius_fraction": 0.0279904730479352,
+      "delta_bev_max_local_radius_fraction": -0.0143087515472492,
+      "cross_larger_bev_max_local_radius_fraction": 0.4499999999999999,
+      "within_top_max_local_radius_fraction": 0.0548078443440505,
+      "cross_top_max_local_radius_fraction": 0.0388003985246683,
+      "delta_top_max_local_radius_fraction": -0.0160074458193822,
+      "cross_larger_top_max_local_radius_fraction": 0.5013888888888889
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.07023809523809522,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 4
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.011904761904761904,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 1
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.08214285714285714,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 5
+        },
+        "shape_main": {
+          "building_equal_rate": 0.7585317460317461,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 43
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.5680555555555556,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 35
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.05833333333333333,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 3
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.011904761904761904,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 1
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.07023809523809522,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 4
+        },
+        "shape_main": {
+          "building_equal_rate": 0.7501984126984128,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 42
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.5539682539682539,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 31
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests.",
+      "Continuous mean distances do not show cross-class separation at m=2; do not generalize the m=5 role down to this condition."
+    ]
+  },
+  {
+    "replay_group": "Rnew2_C01>C02_m5",
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "direction": "C01>C02",
+    "direction_provenance": "frozen event direction",
+    "role_description": "new-source, conditional direct-swap geometry roles",
+    "members_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W100",
+      "W101",
+      "W102",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W111",
+      "W112",
+      "W113",
+      "W114",
+      "W115",
+      "W116",
+      "W117",
+      "W118",
+      "W119",
+      "W120",
+      "W121",
+      "W122",
+      "W123",
+      "W124",
+      "W125",
+      "W126",
+      "W127",
+      "W128",
+      "W129",
+      "W130",
+      "W131",
+      "W132",
+      "W133",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 58,
+      "joint_events": 47,
+      "joint_images": 24,
+      "joint_buildings": 6,
+      "k": 13,
+      "m": 5
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.0470883674731103,
+      "cross_bev_mean_h": 0.0772189738571588,
+      "delta_bev_mean_h": 0.0301306063840485,
+      "cross_larger_bev_mean_h": 0.6770833333333334,
+      "within_bev_max_h": 0.1097426377267759,
+      "cross_bev_max_h": 0.173929895693087,
+      "delta_bev_max_h": 0.0641872579663111,
+      "cross_larger_bev_max_h": 0.6770833333333334,
+      "within_top_mean_h": 0.0589017382589645,
+      "cross_top_mean_h": 0.0949306765737844,
+      "delta_top_mean_h": 0.0360289383148198,
+      "cross_larger_top_mean_h": 0.6840277777777778,
+      "within_top_max_h": 0.1170906804604986,
+      "cross_top_max_h": 0.1886797197265938,
+      "delta_top_max_h": 0.0715890392660951,
+      "cross_larger_top_max_h": 0.642361111111111,
+      "within_bev_max_pairscale": 0.0324522651179678,
+      "cross_bev_max_pairscale": 0.0524843501170799,
+      "delta_bev_max_pairscale": 0.0200320849991121,
+      "cross_larger_bev_max_pairscale": 0.6770833333333334,
+      "within_top_max_pairscale": 0.0362128721132559,
+      "cross_top_max_pairscale": 0.0607139264040278,
+      "delta_top_max_pairscale": 0.0245010542907719,
+      "cross_larger_top_max_pairscale": 0.642361111111111,
+      "within_bev_max_local_radius_fraction": 0.0381016761969283,
+      "cross_bev_max_local_radius_fraction": 0.0449181952976206,
+      "delta_bev_max_local_radius_fraction": 0.0068165191006922,
+      "cross_larger_bev_max_local_radius_fraction": 0.6041666666666666,
+      "within_top_max_local_radius_fraction": 0.0464808528971542,
+      "cross_top_max_local_radius_fraction": 0.0569691734743305,
+      "delta_top_max_local_radius_fraction": 0.0104883205771762,
+      "cross_larger_top_max_local_radius_fraction": 0.607638888888889
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.1841269841269841,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 9
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.1841269841269841,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 9
+        },
+        "shape_main": {
+          "building_equal_rate": 0.5267857142857143,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 33
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.39246031746031745,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 22
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.07857142857142857,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 5
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.07857142857142857,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 5
+        },
+        "shape_main": {
+          "building_equal_rate": 0.7728174603174603,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 42
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.5880952380952381,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 32
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests."
+    ]
+  },
+  {
+    "replay_group": "Rnew2_C02>C01_m5",
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "direction": "C02>C01",
+    "direction_provenance": "frozen event direction",
+    "role_description": "new-source, conditional direct-swap geometry roles",
+    "members_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W100",
+      "W101",
+      "W102",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W111",
+      "W112",
+      "W113",
+      "W114",
+      "W115",
+      "W116",
+      "W117",
+      "W118",
+      "W119",
+      "W120",
+      "W121",
+      "W122",
+      "W123",
+      "W124",
+      "W125",
+      "W126",
+      "W127",
+      "W128",
+      "W129",
+      "W130",
+      "W131",
+      "W132",
+      "W133",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "C02": [
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W132",
+        "W133"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 58,
+      "joint_events": 50,
+      "joint_images": 27,
+      "joint_buildings": 6,
+      "k": 13,
+      "m": 5
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.0613458436953464,
+      "cross_bev_mean_h": 0.096468986818142,
+      "delta_bev_mean_h": 0.0351231431227955,
+      "cross_larger_bev_mean_h": 0.5648148148148148,
+      "within_bev_max_h": 0.1631941230434872,
+      "cross_bev_max_h": 0.2112051586284766,
+      "delta_bev_max_h": 0.0480110355849893,
+      "cross_larger_bev_max_h": 0.5023148148148148,
+      "within_top_mean_h": 0.0723363347313946,
+      "cross_top_mean_h": 0.1113122882614906,
+      "delta_top_mean_h": 0.0389759535300959,
+      "cross_larger_top_mean_h": 0.5347222222222222,
+      "within_top_max_h": 0.1712994705805472,
+      "cross_top_max_h": 0.226983568750186,
+      "delta_top_max_h": 0.0556840981696388,
+      "cross_larger_top_max_h": 0.4837962962962963,
+      "within_bev_max_pairscale": 0.0446416817525356,
+      "cross_bev_max_pairscale": 0.0576286879880266,
+      "delta_bev_max_pairscale": 0.012987006235491,
+      "cross_larger_bev_max_pairscale": 0.5023148148148148,
+      "within_top_max_pairscale": 0.0492898099362187,
+      "cross_top_max_pairscale": 0.0640355673719113,
+      "delta_top_max_pairscale": 0.0147457574356925,
+      "cross_larger_top_max_pairscale": 0.4837962962962963,
+      "within_bev_max_local_radius_fraction": 0.0381924661289453,
+      "cross_bev_max_local_radius_fraction": 0.0502622843493527,
+      "delta_bev_max_local_radius_fraction": 0.0120698182204073,
+      "cross_larger_bev_max_local_radius_fraction": 0.5254629629629629,
+      "within_top_max_local_radius_fraction": 0.0506393457351957,
+      "cross_top_max_local_radius_fraction": 0.0618254898167973,
+      "delta_top_max_local_radius_fraction": 0.0111861440816015,
+      "cross_larger_top_max_local_radius_fraction": 0.5625
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.1119047619047619,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 5
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.02023809523809524,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 2
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.008333333333333333,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 1
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.13214285714285715,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 7
+        },
+        "shape_main": {
+          "building_equal_rate": 0.5837301587301588,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 35
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.4476190476190476,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 28
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.03273809523809524,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 2
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.011904761904761904,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 1
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.03273809523809524,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 2
+        },
+        "shape_main": {
+          "building_equal_rate": 0.704563492063492,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 40
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.4773809523809524,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 28
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests.",
+      "Conditional average separation only: cross-class BEV mean is larger in 28/50 jointly eligible events (56%; building-weighted 56.48%), and max-BEV is larger in 24/50 (48%). Six positive building means do not establish that most individual replacements differ clearly. No human-nearness threshold has been validated."
+    ]
+  },
+  {
+    "replay_group": "old_G_anchor",
+    "method_id": "R_geo9_source_signed_p2_K2",
+    "direction": "C02>C01",
+    "direction_provenance": "deduced from frozen A_counts to C_counts; old event has no direction field",
+    "role_description": "historical geometry-role anchor, compatible with previous 451-panel evidence",
+    "members_by_class": {
+      "C01": [
+        "W001",
+        "W002",
+        "W010",
+        "W011",
+        "W012",
+        "W013",
+        "W015",
+        "W017",
+        "W028",
+        "W031",
+        "W032",
+        "W034",
+        "W036",
+        "W037",
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W133"
+      ],
+      "C02": [
+        "W006",
+        "W008",
+        "W029",
+        "W030",
+        "W033",
+        "W035",
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W132",
+        "W134"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W006",
+      "W008",
+      "W017",
+      "W028",
+      "W029",
+      "W032",
+      "W033",
+      "W035",
+      "W100",
+      "W101",
+      "W102",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W111",
+      "W112",
+      "W113",
+      "W114",
+      "W115",
+      "W116",
+      "W117",
+      "W118",
+      "W119",
+      "W120",
+      "W121",
+      "W122",
+      "W123",
+      "W124",
+      "W125",
+      "W126",
+      "W127",
+      "W128",
+      "W129",
+      "W130",
+      "W131",
+      "W132",
+      "W133",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [
+        "W017",
+        "W028",
+        "W032",
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W117",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W133"
+      ],
+      "C02": [
+        "W006",
+        "W008",
+        "W029",
+        "W033",
+        "W035",
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W120",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W127",
+        "W130",
+        "W131",
+        "W132",
+        "W134"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 39,
+      "joint_events": 33,
+      "joint_images": 21,
+      "joint_buildings": 5,
+      "k": 17,
+      "m": 8
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.053564548419843,
+      "cross_bev_mean_h": 0.0871509811249949,
+      "delta_bev_mean_h": 0.0335864327051519,
+      "cross_larger_bev_mean_h": 0.6,
+      "within_bev_max_h": 0.1404840023986063,
+      "cross_bev_max_h": 0.1591809953061601,
+      "delta_bev_max_h": 0.0186969929075538,
+      "cross_larger_bev_max_h": 0.6125,
+      "within_top_mean_h": 0.0642247161837651,
+      "cross_top_mean_h": 0.1070977891558006,
+      "delta_top_mean_h": 0.0428730729720355,
+      "cross_larger_top_mean_h": 0.7625,
+      "within_top_max_h": 0.1493189497902519,
+      "cross_top_max_h": 0.1818050485568258,
+      "delta_top_max_h": 0.0324860987665739,
+      "cross_larger_top_max_h": 0.625,
+      "within_bev_max_pairscale": 0.0388337399931057,
+      "cross_bev_max_pairscale": 0.0457011254201441,
+      "delta_bev_max_pairscale": 0.0068673854270384,
+      "cross_larger_bev_max_pairscale": 0.6125,
+      "within_top_max_pairscale": 0.0443640236602215,
+      "cross_top_max_pairscale": 0.0593718136750931,
+      "delta_top_max_pairscale": 0.0150077900148715,
+      "cross_larger_top_max_pairscale": 0.625,
+      "within_bev_max_local_radius_fraction": 0.0336407960891329,
+      "cross_bev_max_local_radius_fraction": 0.0400800883338536,
+      "delta_bev_max_local_radius_fraction": 0.0064392922447206,
+      "cross_larger_bev_max_local_radius_fraction": 0.6875,
+      "within_top_max_local_radius_fraction": 0.0435036205575508,
+      "cross_top_max_local_radius_fraction": 0.0620743318416657,
+      "delta_top_max_local_radius_fraction": 0.0185707112841148,
+      "cross_larger_top_max_local_radius_fraction": 0.7
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.14107142857142857,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 6
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.14107142857142857,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 6
+        },
+        "shape_main": {
+          "building_equal_rate": 0.6011904761904762,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 23
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.42023809523809524,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 16
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.0744047619047619,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 4
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.0744047619047619,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 4
+        },
+        "shape_main": {
+          "building_equal_rate": 0.6672619047619047,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 24
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.5922619047619048,
+          "available_pairs": 39,
+          "raw_nonzero_pairs": 21
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests."
+    ]
+  },
+  {
+    "replay_group": "old_R_anchor",
+    "method_id": "R_role_ward_K5",
+    "direction": "C05>C02",
+    "direction_provenance": "deduced from frozen A_counts to C_counts; old event has no direction field",
+    "role_description": "historical geometry-role anchor, compatible with previous 451-panel evidence",
+    "members_by_class": {
+      "C01": [
+        "W001",
+        "W011",
+        "W012",
+        "W013",
+        "W032",
+        "W034",
+        "W101",
+        "W103",
+        "W105",
+        "W106",
+        "W111",
+        "W113",
+        "W119",
+        "W121",
+        "W124",
+        "W128",
+        "W129",
+        "W133"
+      ],
+      "C02": [
+        "W002",
+        "W015",
+        "W036",
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W110",
+        "W114",
+        "W116",
+        "W118",
+        "W120",
+        "W123",
+        "W125",
+        "W127",
+        "W131",
+        "W132",
+        "W134"
+      ],
+      "C03": [
+        "W006",
+        "W010",
+        "W017",
+        "W028",
+        "W031",
+        "W037",
+        "W117"
+      ],
+      "C04": [
+        "W008",
+        "W029",
+        "W030",
+        "W033",
+        "W035"
+      ],
+      "C05": [
+        "W109",
+        "W112",
+        "W115",
+        "W122",
+        "W126",
+        "W130"
+      ]
+    },
+    "actual_replacement_participants": [
+      "W100",
+      "W102",
+      "W104",
+      "W107",
+      "W108",
+      "W109",
+      "W110",
+      "W112",
+      "W114",
+      "W115",
+      "W116",
+      "W118",
+      "W120",
+      "W122",
+      "W123",
+      "W125",
+      "W126",
+      "W127",
+      "W130",
+      "W131",
+      "W132",
+      "W134"
+    ],
+    "actual_replacement_participants_by_class": {
+      "C01": [],
+      "C02": [
+        "W100",
+        "W102",
+        "W104",
+        "W107",
+        "W108",
+        "W110",
+        "W114",
+        "W116",
+        "W118",
+        "W120",
+        "W123",
+        "W125",
+        "W127",
+        "W131",
+        "W132",
+        "W134"
+      ],
+      "C03": [],
+      "C04": [],
+      "C05": [
+        "W109",
+        "W112",
+        "W115",
+        "W122",
+        "W126",
+        "W130"
+      ]
+    },
+    "continuous_common_support": {
+      "attempted_events": 58,
+      "joint_events": 52,
+      "joint_images": 28,
+      "joint_buildings": 6,
+      "k": 13,
+      "m": 2
+    },
+    "continuous_metrics": {
+      "within_bev_mean_h": 0.0253397945205747,
+      "cross_bev_mean_h": 0.0343808589335451,
+      "delta_bev_mean_h": 0.0090410644129703,
+      "cross_larger_bev_mean_h": 0.7361111111111112,
+      "within_bev_max_h": 0.0728631103283635,
+      "cross_bev_max_h": 0.0846242224200865,
+      "delta_bev_max_h": 0.0117611120917229,
+      "cross_larger_bev_max_h": 0.6361111111111111,
+      "within_top_mean_h": 0.0300995580277553,
+      "cross_top_mean_h": 0.0428807428866996,
+      "delta_top_mean_h": 0.0127811848589443,
+      "cross_larger_top_mean_h": 0.6819444444444445,
+      "within_top_max_h": 0.0840529596739657,
+      "cross_top_max_h": 0.0913071094827435,
+      "delta_top_max_h": 0.0072541498087777,
+      "cross_larger_top_max_h": 0.6680555555555556,
+      "within_bev_max_pairscale": 0.0191026280270971,
+      "cross_bev_max_pairscale": 0.0245290517447757,
+      "delta_bev_max_pairscale": 0.0054264237176785,
+      "cross_larger_bev_max_pairscale": 0.6361111111111111,
+      "within_top_max_pairscale": 0.0222015039994366,
+      "cross_top_max_pairscale": 0.0269558278433977,
+      "delta_top_max_pairscale": 0.0047543238439611,
+      "cross_larger_top_max_pairscale": 0.6680555555555556,
+      "within_bev_max_local_radius_fraction": 0.0165215081103386,
+      "cross_bev_max_local_radius_fraction": 0.0252799497057854,
+      "delta_bev_max_local_radius_fraction": 0.0087584415954467,
+      "cross_larger_bev_max_local_radius_fraction": 0.6138888888888888,
+      "within_top_max_local_radius_fraction": 0.0201222403438149,
+      "cross_top_max_local_radius_fraction": 0.037085275343692,
+      "delta_top_max_local_radius_fraction": 0.0169630349998771,
+      "cross_larger_top_max_local_radius_fraction": 0.6652777777777777
+    },
+    "all_attempt_risks": {
+      "cross": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.1363095238095238,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 6
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.1363095238095238,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 6
+        },
+        "shape_main": {
+          "building_equal_rate": 0.7507936507936508,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 44
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.5591269841269841,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 31
+        }
+      },
+      "within": {
+        "exclusive_different_corner_count": {
+          "building_equal_rate": 0.07083333333333333,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 3
+        },
+        "noncomplete": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "missing_connected_geometry": {
+          "building_equal_rate": 0.0,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 0
+        },
+        "node_count_difference_any": {
+          "building_equal_rate": 0.07083333333333333,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 3
+        },
+        "shape_main": {
+          "building_equal_rate": 0.8093253968253968,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 47
+        },
+        "legacy_joint_main": {
+          "building_equal_rate": 0.7007936507936509,
+          "available_pairs": 58,
+          "raw_nonzero_pairs": 41
+        }
+      }
+    },
+    "warnings": [
+      "Same-count unique cyclic candidate does not establish semantic identity.",
+      "Core is enriched internal replication; no external-person generalization.",
+      "Whole source class may contain people not represented in this direction; exact event member lists remain in original frozen core requests."
+    ]
+  }
+]

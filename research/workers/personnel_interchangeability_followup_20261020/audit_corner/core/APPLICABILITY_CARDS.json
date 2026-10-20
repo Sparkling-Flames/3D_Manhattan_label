@@ -1,0 +1,2166 @@
+[
+  {
+    "method_id": "F20_all_QTG_balanced_medoids_K4",
+    "domain": "all",
+    "context_id": "fixed_n13_m2",
+    "phase": "assessment",
+    "k": 13,
+    "m": 2,
+    "direction": "C02>C04",
+    "replay_group": "F05_QTG_up",
+    "attempted_events": 486,
+    "attempted_images": 41,
+    "attempted_buildings": 6,
+    "joint_events": 413,
+    "joint_images": 41,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8497942386831275,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 445,
+          "different_corner_count": 34,
+          "incomplete_geometry": 4,
+          "missing_connected_geometry": 3
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.051632237053715835,
+            "event_median": 0.0150653000888503,
+            "event_p90": 0.11843668111330423,
+            "event_max": 1.7166068800554526
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.13901447176552853,
+            "event_median": 0.0356028382976721,
+            "event_p90": 0.3235943009759372,
+            "event_max": 2.8407259318666176
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.059632344861377966,
+            "event_median": 0.0198660725202112,
+            "event_p90": 0.13712442488683432,
+            "event_max": 1.7241714897343745
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.15075269905850489,
+            "event_median": 0.0442983057043449,
+            "event_p90": 0.3484650988211698,
+            "event_max": 2.842727998621967
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.0408680058479343,
+            "event_median": 0.0165365601873052,
+            "event_p90": 0.08300768809839208,
+            "event_max": 0.6876434293777004
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.04636741368557843,
+            "event_median": 0.0194446245157456,
+            "event_p90": 0.09503905216993676,
+            "event_max": 0.6881280618563383
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.037034654793176615,
+            "event_median": 0.0185985892052952,
+            "event_p90": 0.06460426787302247,
+            "event_max": 0.5256534930108351
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.6034722222222222,
+            "joint_candidates_building_equal_rate": 0.651837822671156
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7755787037037036,
+            "joint_candidates_building_equal_rate": 0.8382831289081288
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7241512345679012,
+            "joint_candidates_building_equal_rate": 0.7733365400032066
+          }
+        },
+        "ring_reversed_nonzero_events": 5,
+        "high_angle_correspondence_warning_nonzero_events": 2,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 424,
+          "different_corner_count": 54,
+          "incomplete_geometry": 5,
+          "missing_connected_geometry": 3
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.05385200842931156,
+            "event_median": 0.0147004774271783,
+            "event_p90": 0.1311403609258207,
+            "event_max": 0.9460782221664849
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.15064884218981786,
+            "event_median": 0.0329776095326147,
+            "event_p90": 0.37562664580430377,
+            "event_max": 2.5167210048868345
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.0621614525448737,
+            "event_median": 0.0208630328817928,
+            "event_p90": 0.134337418734675,
+            "event_max": 0.9475693424860442
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.16111933760156902,
+            "event_median": 0.0420226416522487,
+            "event_p90": 0.3767894594957744,
+            "event_max": 2.517123522202637
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.0476275775391235,
+            "event_median": 0.0154587280930827,
+            "event_p90": 0.0946404776956237,
+            "event_max": 1.259024864892808
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.052554483826159966,
+            "event_median": 0.0203924855017561,
+            "event_p90": 0.09548179306161114,
+            "event_max": 1.260471588898369
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.04469651081550916,
+            "event_median": 0.0182238474673429,
+            "event_p90": 0.07680993138963009,
+            "event_max": 1.435129042693358
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5366126543209876,
+            "joint_candidates_building_equal_rate": 0.5950667388167388
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7118055555555557,
+            "joint_candidates_building_equal_rate": 0.803653098444765
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.6644675925925926,
+            "joint_candidates_building_equal_rate": 0.7426707551707552
+          }
+        },
+        "ring_reversed_nonzero_events": 2,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 1
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.0022197713755957235,
+      "bev_max_h": 0.011634370424289331,
+      "top_mean_h": 0.002529107683495735,
+      "top_max_h": 0.010366638543064133
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "F20_all_QTG_balanced_medoids_K4",
+    "domain": "all",
+    "context_id": "fixed_n13_m2",
+    "phase": "assessment",
+    "k": 13,
+    "m": 2,
+    "direction": "C04>C02",
+    "replay_group": "F04_QTG_down",
+    "attempted_events": 504,
+    "attempted_images": 43,
+    "attempted_buildings": 6,
+    "joint_events": 443,
+    "joint_images": 43,
+    "joint_buildings": 6,
+    "joint_fraction": 0.878968253968254,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 472,
+          "different_corner_count": 27,
+          "incomplete_geometry": 5
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.03983139303693608,
+            "event_median": 0.0095177449880526,
+            "event_p90": 0.06112121658871655,
+            "event_max": 1.2954300049019445
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.09376511344426215,
+            "event_median": 0.0241725787658451,
+            "event_p90": 0.15959522647212568,
+            "event_max": 2.0697157583985804
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.045743317772769986,
+            "event_median": 0.014180284529651,
+            "event_p90": 0.06964838799237706,
+            "event_max": 1.2975654726386372
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.10074214555781953,
+            "event_median": 0.0311620625747883,
+            "event_p90": 0.1716898858343693,
+            "event_max": 2.069849585611192
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.032486059441734126,
+            "event_median": 0.0116416825447941,
+            "event_p90": 0.051870781928303376,
+            "event_max": 1.0969769470832489
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03608998666047206,
+            "event_median": 0.0150034579978096,
+            "event_p90": 0.05950461222124691,
+            "event_max": 1.097047877290226
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.0334583009270376,
+            "event_median": 0.0137830702592932,
+            "event_p90": 0.04505350911024472,
+            "event_max": 1.442689020877818
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.7005401234567902,
+            "joint_candidates_building_equal_rate": 0.7341905162738497
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8386574074074075,
+            "joint_candidates_building_equal_rate": 0.892824074074074
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.8007716049382716,
+            "joint_candidates_building_equal_rate": 0.8395061728395062
+          }
+        },
+        "ring_reversed_nonzero_events": 7,
+        "high_angle_correspondence_warning_nonzero_events": 2,
+        "matched_reflex_disagreement_n_nonzero_events": 2
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 449,
+          "different_corner_count": 46,
+          "incomplete_geometry": 7,
+          "missing_connected_geometry": 2
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.05365922680289415,
+            "event_median": 0.0151889497467598,
+            "event_p90": 0.12038558868673269,
+            "event_max": 1.6179805570579953
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.1491918046685118,
+            "event_median": 0.0384405016250046,
+            "event_p90": 0.3508019815812234,
+            "event_max": 2.4771269427520863
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.06286299733017016,
+            "event_median": 0.0217433172684346,
+            "event_p90": 0.1400463309816628,
+            "event_max": 1.619043770274415
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.16094766096759297,
+            "event_median": 0.0475611008393867,
+            "event_p90": 0.37327753985214196,
+            "event_max": 2.4800912085639526
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.050091275190379626,
+            "event_median": 0.0177123984133155,
+            "event_p90": 0.09668700812583438,
+            "event_max": 1.30402374805731
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.055521865223392274,
+            "event_median": 0.023124049003732,
+            "event_p90": 0.10316962257584436,
+            "event_max": 1.3055842143166343
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.04704297561424931,
+            "event_median": 0.0209481361765905,
+            "event_p90": 0.06152529670805273,
+            "event_max": 1.4476298282589666
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5121913580246914,
+            "joint_candidates_building_equal_rate": 0.5735353535353536
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7296296296296295,
+            "joint_candidates_building_equal_rate": 0.8050462962962962
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.6936728395061728,
+            "joint_candidates_building_equal_rate": 0.7628395061728396
+          }
+        },
+        "ring_reversed_nonzero_events": 10,
+        "high_angle_correspondence_warning_nonzero_events": 3,
+        "matched_reflex_disagreement_n_nonzero_events": 3
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.013827833765958072,
+      "bev_max_h": 0.05542669122424966,
+      "top_mean_h": 0.017119679557400173,
+      "top_max_h": 0.06020551540977344
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "F20_highQ23_T_qK2",
+    "domain": "all",
+    "context_id": "fixed_n13_m2",
+    "phase": "assessment",
+    "k": 13,
+    "m": 2,
+    "direction": "C02>C01",
+    "replay_group": "F01_time",
+    "attempted_events": 480,
+    "attempted_images": 42,
+    "attempted_buildings": 6,
+    "joint_events": 428,
+    "joint_images": 42,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8916666666666667,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 443,
+          "different_corner_count": 28,
+          "incomplete_geometry": 6,
+          "missing_connected_geometry": 3
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.04406642537992028,
+            "event_median": 0.01455720256072305,
+            "event_p90": 0.09081252873678307,
+            "event_max": 1.5656917360129856
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.11199602365752416,
+            "event_median": 0.032142710205480554,
+            "event_p90": 0.2362745216001837,
+            "event_max": 2.18788399197904
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.050552032699214704,
+            "event_median": 0.0193863990188675,
+            "event_p90": 0.09638702277415247,
+            "event_max": 1.5674177479461382
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.12225189245466468,
+            "event_median": 0.0442834832940836,
+            "event_p90": 0.2629606031212313,
+            "event_max": 2.1898046463083043
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03326676817565526,
+            "event_median": 0.01440768723687475,
+            "event_p90": 0.07028242813484882,
+            "event_max": 0.5344026948654921
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03791488437850163,
+            "event_median": 0.01897569177861525,
+            "event_p90": 0.07659007806392241,
+            "event_max": 0.5348718252459085
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.03372378937209675,
+            "event_median": 0.017649022509922,
+            "event_p90": 0.05776390664175998,
+            "event_max": 0.5444267802794083
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.632175925925926,
+            "joint_candidates_building_equal_rate": 0.6927170514670514
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8094907407407407,
+            "joint_candidates_building_equal_rate": 0.882876984126984
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7649305555555556,
+            "joint_candidates_building_equal_rate": 0.8263583253166585
+          }
+        },
+        "ring_reversed_nonzero_events": 4,
+        "high_angle_correspondence_warning_nonzero_events": 2,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 444,
+          "different_corner_count": 31,
+          "incomplete_geometry": 4,
+          "missing_connected_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.03791374078471393,
+            "event_median": 0.01284698378035715,
+            "event_p90": 0.0755487012868415,
+            "event_max": 1.1389742087286523
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.11247770993469759,
+            "event_median": 0.03054658897098335,
+            "event_p90": 0.20903023616228875,
+            "event_max": 2.240254746500832
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.045536501914478465,
+            "event_median": 0.0204663831815367,
+            "event_p90": 0.08645088372950374,
+            "event_max": 1.139856772366406
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.1234998729399231,
+            "event_median": 0.04041273466681135,
+            "event_p90": 0.22773456440416975,
+            "event_max": 2.2406113045840925
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03270951147631856,
+            "event_median": 0.0145224992118313,
+            "event_p90": 0.060326660181462606,
+            "event_max": 0.5022786030223563
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03773493415058609,
+            "event_median": 0.01929566218199275,
+            "event_p90": 0.06995144625232685,
+            "event_max": 0.5023585454915046
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.031643896152115054,
+            "event_median": 0.0169146801573597,
+            "event_p90": 0.04823980658593082,
+            "event_max": 0.5494982033656373
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.6321759259259259,
+            "joint_candidates_building_equal_rate": 0.7012862754529422
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8050925925925926,
+            "joint_candidates_building_equal_rate": 0.8862734487734487
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7569444444444445,
+            "joint_candidates_building_equal_rate": 0.8280102613435947
+          }
+        },
+        "ring_reversed_nonzero_events": 6,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 1
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": -0.006152684595206355,
+      "bev_max_h": 0.00048168627717343204,
+      "top_mean_h": -0.0050155307847362385,
+      "top_max_h": 0.0012479804852584125
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "F20_highQ23_T_qK2",
+    "domain": "all",
+    "context_id": "whole_team",
+    "phase": "assessment",
+    "k": 7,
+    "m": 7,
+    "direction": "C01:5|C02:2>C01:4|C02:3",
+    "replay_group": "mixed_highQ23_5fast_2slow",
+    "attempted_events": 18,
+    "attempted_images": 11,
+    "attempted_buildings": 5,
+    "joint_events": 16,
+    "joint_images": 10,
+    "joint_buildings": 5,
+    "joint_fraction": 0.8888888888888888,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 17,
+          "different_corner_count": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.025212678025004025,
+            "event_median": 0.021471174646591998,
+            "event_p90": 0.05318963817100165,
+            "event_max": 0.0623042523047973
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.04586458051911044,
+            "event_median": 0.0435026231505808,
+            "event_p90": 0.08392116328866969,
+            "event_max": 0.0979310517769627
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.030132354057130946,
+            "event_median": 0.0266542205692872,
+            "event_p90": 0.059527412115621,
+            "event_max": 0.0675212179242256
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.05206507239597622,
+            "event_median": 0.0474199370055985,
+            "event_p90": 0.09156644098426076,
+            "event_max": 0.099539931290064
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.017019879099483985,
+            "event_median": 0.016121930465130697,
+            "event_p90": 0.02765052619515745,
+            "event_max": 0.0341651707388394
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.021635729590619608,
+            "event_median": 0.01814430833240615,
+            "event_p90": 0.0372433108158998,
+            "event_max": 0.0455741959277044
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.022708126219585203,
+            "event_median": 0.019717069594828752,
+            "event_p90": 0.04280418998184225,
+            "event_max": 0.0566655763884958
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.7333333333333333,
+            "joint_candidates_building_equal_rate": 0.7833333333333333
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.9,
+            "joint_candidates_building_equal_rate": 1.0
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.9,
+            "joint_candidates_building_equal_rate": 1.0
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 16,
+          "different_corner_count": 2
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.03062293196231945,
+            "event_median": 0.025025073122526248,
+            "event_p90": 0.053490618313475305,
+            "event_max": 0.0796639647076021
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.07154811683416004,
+            "event_median": 0.0575433480290291,
+            "event_p90": 0.12473247059448433,
+            "event_max": 0.2125987532562306
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.036872529832024804,
+            "event_median": 0.03115177551474075,
+            "event_p90": 0.05760768112251545,
+            "event_max": 0.0895610847294449
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.07820296940785074,
+            "event_median": 0.06333099869189066,
+            "event_p90": 0.13111716505541077,
+            "event_max": 0.2126799057824623
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.02649082652176858,
+            "event_median": 0.02084550603894625,
+            "event_p90": 0.03991556294321315,
+            "event_max": 0.0904363191472117
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03097369905776262,
+            "event_median": 0.02237929952700545,
+            "event_p90": 0.044504517660235,
+            "event_max": 0.0904708402140076
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.0302004601692129,
+            "event_median": 0.0213810282138182,
+            "event_p90": 0.06239164251249535,
+            "event_max": 0.0984126246221092
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.6,
+            "joint_candidates_building_equal_rate": 0.6333333333333333
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8166666666666667,
+            "joint_candidates_building_equal_rate": 0.8833333333333332
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.8666666666666666,
+            "joint_candidates_building_equal_rate": 0.9333333333333332
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.0054102539373154235,
+      "bev_max_h": 0.025683536315049604,
+      "top_mean_h": 0.0067401757748938584,
+      "top_max_h": 0.026137897011874515
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "F20_highQ23_T_qK2",
+    "domain": "all",
+    "context_id": "whole_team",
+    "phase": "assessment",
+    "k": 7,
+    "m": 7,
+    "direction": "C01:5|C02:2>C01:6|C02:1",
+    "replay_group": "mixed_highQ23_5fast_2slow",
+    "attempted_events": 2,
+    "attempted_images": 2,
+    "attempted_buildings": 1,
+    "joint_events": 2,
+    "joint_images": 2,
+    "joint_buildings": 1,
+    "joint_fraction": 1.0,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 2
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.0885616107687798,
+            "event_median": 0.0885616107687798,
+            "event_p90": 0.09253439513011572,
+            "event_max": 0.0935275912204497
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.1452758527211542,
+            "event_median": 0.1452758527211542,
+            "event_p90": 0.15036206106196878,
+            "event_max": 0.1516336131471724
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.0909153327915976,
+            "event_median": 0.0909153327915976,
+            "event_p90": 0.09476041419541352,
+            "event_max": 0.0957216845463675
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.1465120671888688,
+            "event_median": 0.1465120671888688,
+            "event_p90": 0.15102631028781743,
+            "event_max": 0.1521548710625546
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03443910014347195,
+            "event_median": 0.03443910014347195,
+            "event_p90": 0.03624411325061095,
+            "event_max": 0.0366953665273957
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03472818404952345,
+            "event_median": 0.03472818404952345,
+            "event_p90": 0.036402845652643095,
+            "event_max": 0.036821511053423
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.0354817742711818,
+            "event_median": 0.0354817742711818,
+            "event_p90": 0.03595619268438884,
+            "event_max": 0.0360747972876906
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5,
+            "joint_candidates_building_equal_rate": 0.5
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.5,
+            "joint_candidates_building_equal_rate": 0.5
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5,
+            "joint_candidates_building_equal_rate": 0.5
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 2
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.095093770082001,
+            "event_median": 0.095093770082001,
+            "event_p90": 0.09756754937364924,
+            "event_max": 0.0981859941965613
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.14806527230229855,
+            "event_median": 0.14806527230229855,
+            "event_p90": 0.1553830163080286,
+            "event_max": 0.1572124523094611
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.0966983977237339,
+            "event_median": 0.0966983977237339,
+            "event_p90": 0.09925771570001261,
+            "event_max": 0.0998975451940823
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.14848667360699885,
+            "event_median": 0.14848667360699885,
+            "event_p90": 0.1558868371599617,
+            "event_max": 0.1577368780482024
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.035063736797286346,
+            "event_median": 0.035063736797286346,
+            "event_p90": 0.03737270829619727,
+            "event_max": 0.037949951170925
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03516390582219875,
+            "event_median": 0.03516390582219875,
+            "event_p90": 0.03749401617144911,
+            "event_max": 0.0380765437587617
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.0347000023743029,
+            "event_median": 0.0347000023743029,
+            "event_p90": 0.0358157659664037,
+            "event_max": 0.0360947068644289
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.0,
+            "joint_candidates_building_equal_rate": 0.0
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.5,
+            "joint_candidates_building_equal_rate": 0.5
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5,
+            "joint_candidates_building_equal_rate": 0.5
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.006532159313221195,
+      "bev_max_h": 0.0027894195811443423,
+      "top_mean_h": 0.005783064932136303,
+      "top_max_h": 0.0019746064181300482
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "nested_same_source_team",
+    "phase": "assessment",
+    "k": 13,
+    "m": 2,
+    "direction": "C01>C02",
+    "replay_group": "Rnew2_C01>C02_m2",
+    "attempted_events": 58,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 47,
+    "joint_images": 26,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8103448275862069,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 52,
+          "different_corner_count": 5,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.03249643072604459,
+            "event_median": 0.01609459179102,
+            "event_p90": 0.08379078215644294,
+            "event_max": 0.2819950844949442
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.07899934983529065,
+            "event_median": 0.0408900556612449,
+            "event_p90": 0.18974899390131103,
+            "event_max": 0.5969961493380289
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.03915705985575446,
+            "event_median": 0.0172674693265923,
+            "event_p90": 0.09103785328267089,
+            "event_max": 0.3712209761202567
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.08501673657951797,
+            "event_median": 0.0420045723519618,
+            "event_p90": 0.19093089989424974,
+            "event_max": 0.5989917583601023
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.025109614015962622,
+            "event_median": 0.0174589952448069,
+            "event_p90": 0.06029801313123991,
+            "event_max": 0.1197586090081445
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.02799519932365847,
+            "event_median": 0.0190741996033372,
+            "event_p90": 0.0632259530432802,
+            "event_max": 0.1201589321272678
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.025304333785364286,
+            "event_median": 0.0177527618789264,
+            "event_p90": 0.04266522151373965,
+            "event_max": 0.1381448455671158
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.6095238095238096,
+            "joint_candidates_building_equal_rate": 0.6458333333333334
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8218253968253969,
+            "joint_candidates_building_equal_rate": 0.9583333333333334
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7206349206349206,
+            "joint_candidates_building_equal_rate": 0.8194444444444445
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 1
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 48,
+          "different_corner_count": 10
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.04632874945615415,
+            "event_median": 0.0181031747844714,
+            "event_p90": 0.0969567182367444,
+            "event_max": 0.6856732457448154
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.11042378703044259,
+            "event_median": 0.0484351672322026,
+            "event_p90": 0.3256626314764551,
+            "event_max": 1.0056184015447818
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.056009130624986,
+            "event_median": 0.0244554183899539,
+            "event_p90": 0.10700998701263552,
+            "event_max": 0.7211812632418425
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.12162086444328367,
+            "event_median": 0.0569597794788603,
+            "event_p90": 0.3351784878468265,
+            "event_max": 1.0065240250123555
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.033292721093894265,
+            "event_median": 0.0154586382505863,
+            "event_p90": 0.08253748276449245,
+            "event_max": 0.2111461881738241
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.038430401651700544,
+            "event_median": 0.0206026738710524,
+            "event_p90": 0.09782155322164025,
+            "event_max": 0.212723707851253
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.03177926025717911,
+            "event_median": 0.0185791115634417,
+            "event_p90": 0.06983660214280368,
+            "event_max": 0.1985862245435709
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.4517857142857143,
+            "joint_candidates_building_equal_rate": 0.525462962962963
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7057539682539682,
+            "joint_candidates_building_equal_rate": 0.8564814814814815
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.6373015873015873,
+            "joint_candidates_building_equal_rate": 0.7800925925925926
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.01383231873010956,
+      "bev_max_h": 0.031424437195151936,
+      "top_mean_h": 0.016852070769231536,
+      "top_max_h": 0.0366041278637657
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "nested_same_source_team",
+    "phase": "assessment",
+    "k": 13,
+    "m": 2,
+    "direction": "C02>C01",
+    "replay_group": "Rnew2_C02>C01_m2",
+    "attempted_events": 58,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 53,
+    "joint_images": 28,
+    "joint_buildings": 6,
+    "joint_fraction": 0.9137931034482759,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 54,
+          "different_corner_count": 3,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.04121700221544577,
+            "event_median": 0.0211952526663593,
+            "event_p90": 0.10829262946990134,
+            "event_max": 0.4225454170822848
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.12119330530657392,
+            "event_median": 0.055322490663372,
+            "event_p90": 0.334427431641764,
+            "event_max": 0.8834834351506495
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.04842592487944725,
+            "event_median": 0.0274183350740628,
+            "event_p90": 0.14014848251693282,
+            "event_max": 0.4646507537405459
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.13171370877050806,
+            "event_median": 0.0588959778912372,
+            "event_p90": 0.34225418306531824,
+            "event_max": 0.9280908823124724
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03306148734301801,
+            "event_median": 0.0160790072436432,
+            "event_p90": 0.08124706353553864,
+            "event_max": 0.1950111203727297
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03730346622883172,
+            "event_median": 0.0194865433825038,
+            "event_p90": 0.08203765015920968,
+            "event_max": 0.2537120049536169
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.04229922459518453,
+            "event_median": 0.0209507900478184,
+            "event_p90": 0.07450932991353985,
+            "event_max": 0.709184768486074
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5539682539682539,
+            "joint_candidates_building_equal_rate": 0.6055555555555556
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.830952380952381,
+            "joint_candidates_building_equal_rate": 0.9027777777777777
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7501984126984128,
+            "joint_candidates_building_equal_rate": 0.8180555555555555
+          }
+        },
+        "ring_reversed_nonzero_events": 1,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 53,
+          "different_corner_count": 4,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.0362587743778017,
+            "event_median": 0.0214942247606592,
+            "event_p90": 0.07418947799721386,
+            "event_max": 0.352939712139369
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.0900880421035332,
+            "event_median": 0.0440285123847636,
+            "event_p90": 0.24598365934373811,
+            "event_max": 0.6788632635908993
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.044907253355872,
+            "event_median": 0.0227168603145816,
+            "event_p90": 0.09407076147450194,
+            "event_max": 0.4040752602831297
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.09766158121286644,
+            "event_median": 0.0441150080014968,
+            "event_p90": 0.2534061057720148,
+            "event_max": 0.6790669108160304
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.02540418711312446,
+            "event_median": 0.0165088199862085,
+            "event_p90": 0.06349843284445354,
+            "event_max": 0.1231648394800221
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.028710485798323127,
+            "event_median": 0.0199566681825746,
+            "event_p90": 0.06661083804388408,
+            "event_max": 0.1232017867993706
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.02799047304793523,
+            "event_median": 0.0206611648673645,
+            "event_p90": 0.06322032421088543,
+            "event_max": 0.1375835609194908
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5680555555555556,
+            "joint_candidates_building_equal_rate": 0.6402777777777778
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8029761904761905,
+            "joint_candidates_building_equal_rate": 0.8791666666666668
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7585317460317461,
+            "joint_candidates_building_equal_rate": 0.8347222222222223
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": -0.004958227837644068,
+      "bev_max_h": -0.031105263203040717,
+      "top_mean_h": -0.0035186715235752536,
+      "top_max_h": -0.034052127557641615
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "nested_same_source_team",
+    "phase": "assessment",
+    "k": 13,
+    "m": 5,
+    "direction": "C01>C02",
+    "replay_group": "Rnew2_C01>C02_m5",
+    "attempted_events": 58,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 47,
+    "joint_images": 24,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8103448275862069,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 53,
+          "different_corner_count": 5
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.047088367473110314,
+            "event_median": 0.0217207208454316,
+            "event_p90": 0.11580225827885703,
+            "event_max": 0.4315296876476429
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.10974263772677588,
+            "event_median": 0.043221689013822,
+            "event_p90": 0.2622496509601418,
+            "event_max": 0.8979037005204433
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.058901738258964546,
+            "event_median": 0.0254055721129758,
+            "event_p90": 0.12459529376067909,
+            "event_max": 0.4533518246709357
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.11709068046049859,
+            "event_median": 0.0537370694235612,
+            "event_p90": 0.2647559053330075,
+            "event_max": 0.8998130250681879
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03245226511796778,
+            "event_median": 0.0160554983863521,
+            "event_p90": 0.07164234449452528,
+            "event_max": 0.244817393943771
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.03621287211325588,
+            "event_median": 0.0236783034650513,
+            "event_p90": 0.07373157559084553,
+            "event_max": 0.2453379796810842
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.03810167619692834,
+            "event_median": 0.0236031402472042,
+            "event_p90": 0.06898251855082596,
+            "event_max": 0.1663927858717968
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5880952380952381,
+            "joint_candidates_building_equal_rate": 0.7083333333333334
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.808531746031746,
+            "joint_candidates_building_equal_rate": 0.9270833333333334
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7728174603174603,
+            "joint_candidates_building_equal_rate": 0.8854166666666666
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 1
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 49,
+          "different_corner_count": 9
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.07721897385715884,
+            "event_median": 0.0286719285515806,
+            "event_p90": 0.1835795999616098,
+            "event_max": 0.8335206399166923
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.173929895693087,
+            "event_median": 0.051696848441207,
+            "event_p90": 0.4786584064979393,
+            "event_max": 1.664476169273645
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.0949306765737844,
+            "event_median": 0.0404396754666099,
+            "event_p90": 0.19708855219259377,
+            "event_max": 1.0100142422000862
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.18867971972659378,
+            "event_median": 0.0819036618030379,
+            "event_p90": 0.49687443396674524,
+            "event_max": 1.7530211525306028
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.05248435011707992,
+            "event_median": 0.0245725083019904,
+            "event_p90": 0.11126948871631757,
+            "event_max": 0.4721436804841191
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.06071392640402785,
+            "event_median": 0.0288751307683811,
+            "event_p90": 0.12166845969150655,
+            "event_max": 0.4972602637402123
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.04491819529762058,
+            "event_median": 0.0255113124750889,
+            "event_p90": 0.09840245807606038,
+            "event_max": 0.2305484013760487
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.39246031746031745,
+            "joint_candidates_building_equal_rate": 0.46874999999999994
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.5109126984126984,
+            "joint_candidates_building_equal_rate": 0.607638888888889
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5267857142857143,
+            "joint_candidates_building_equal_rate": 0.6215277777777778
+          }
+        },
+        "ring_reversed_nonzero_events": 2,
+        "high_angle_correspondence_warning_nonzero_events": 1,
+        "matched_reflex_disagreement_n_nonzero_events": 1
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.030130606384048526,
+      "bev_max_h": 0.06418725796631113,
+      "top_mean_h": 0.036028938314819854,
+      "top_max_h": 0.0715890392660952
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "nested_same_source_team",
+    "phase": "assessment",
+    "k": 13,
+    "m": 5,
+    "direction": "C02>C01",
+    "replay_group": "Rnew2_C02>C01_m5",
+    "attempted_events": 58,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 50,
+    "joint_images": 27,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8620689655172413,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 55,
+          "different_corner_count": 2,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.06134584369534648,
+            "event_median": 0.022957318422595498,
+            "event_p90": 0.17257382087807455,
+            "event_max": 0.8111857502130702
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.16319412304348724,
+            "event_median": 0.053006264830144506,
+            "event_p90": 0.38605152208751936,
+            "event_max": 2.3402996019410205
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.07233633473139457,
+            "event_median": 0.027643635506900847,
+            "event_p90": 0.18367375038458061,
+            "event_max": 0.904236651108135
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.17129947058054718,
+            "event_median": 0.0612645723377565,
+            "event_p90": 0.3899824993127531,
+            "event_max": 2.3441364374601488
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.04464168175253557,
+            "event_median": 0.0207420226025456,
+            "event_p90": 0.1045129009319061,
+            "event_max": 0.4281384825300519
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.04928980993621875,
+            "event_median": 0.024623928747038698,
+            "event_p90": 0.10551780678931376,
+            "event_max": 0.428840399898031
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.03819246612894533,
+            "event_median": 0.023295081467902948,
+            "event_p90": 0.06979515914943862,
+            "event_max": 0.2158241589124784
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.4773809523809524,
+            "joint_candidates_building_equal_rate": 0.5046296296296297
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8186507936507935,
+            "joint_candidates_building_equal_rate": 0.8472222222222223
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.704563492063492,
+            "joint_candidates_building_equal_rate": 0.7083333333333334
+          }
+        },
+        "ring_reversed_nonzero_events": 1,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 51,
+          "different_corner_count": 5,
+          "incomplete_geometry": 1,
+          "missing_connected_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.09646898681814202,
+            "event_median": 0.021799076006304652,
+            "event_p90": 0.20365651963848974,
+            "event_max": 1.2276340063408917
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.21120515862847664,
+            "event_median": 0.0507644883122571,
+            "event_p90": 0.5189372495328354,
+            "event_max": 1.7107497364166817
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.11131228826149057,
+            "event_median": 0.0307366982614431,
+            "event_p90": 0.21340021021005876,
+            "event_max": 1.254190715248528
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.22698356875018602,
+            "event_median": 0.06008477884147975,
+            "event_p90": 0.525067938974529,
+            "event_max": 1.7521316737308588
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.057628687988026596,
+            "event_median": 0.01761129318489445,
+            "event_p90": 0.13922478374980937,
+            "event_max": 0.4607752878635529
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.06403556737191131,
+            "event_median": 0.02137632675484815,
+            "event_p90": 0.14240379242767243,
+            "event_max": 0.4747426122695926
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.05026228434935265,
+            "event_median": 0.021995189803274952,
+            "event_p90": 0.10363880238966838,
+            "event_max": 0.2461814690963655
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.4476190476190476,
+            "joint_candidates_building_equal_rate": 0.5185185185185185
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.6075396825396826,
+            "joint_candidates_building_equal_rate": 0.6851851851851851
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5837301587301588,
+            "joint_candidates_building_equal_rate": 0.6574074074074074
+          }
+        },
+        "ring_reversed_nonzero_events": 1,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.03512314312279554,
+      "bev_max_h": 0.0480110355849894,
+      "top_mean_h": 0.038975953530096,
+      "top_max_h": 0.055684098169638846
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "posthoc_W132_same_class_substitution",
+    "phase": "assessment",
+    "k": 13,
+    "m": 5,
+    "direction": "C01>C02",
+    "replay_group": "W132_fixed_support_probe",
+    "attempted_events": 218,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 170,
+    "joint_images": 25,
+    "joint_buildings": 6,
+    "joint_fraction": 0.7798165137614679,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 196,
+          "different_corner_count": 22
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.07380354417708557,
+            "event_median": 0.0175825239001302,
+            "event_p90": 0.1369733082913805,
+            "event_max": 0.5834230426388171
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.20571433461723046,
+            "event_median": 0.0349017871230332,
+            "event_p90": 0.2618431515604857,
+            "event_max": 2.0367760630034306
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.08583238448463042,
+            "event_median": 0.0248207155844026,
+            "event_p90": 0.1459376331496637,
+            "event_max": 0.5961558437293425
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.21887082927298873,
+            "event_median": 0.052988374519457204,
+            "event_p90": 0.2644532157215425,
+            "event_max": 2.0819123036700518
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.05262458230053723,
+            "event_median": 0.014875566638756,
+            "event_p90": 0.0697025009019438,
+            "event_max": 0.4620939441603473
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.05801927574546167,
+            "event_median": 0.0194660663885765,
+            "event_p90": 0.0726254410380951,
+            "event_max": 0.4723342370688634
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.06393552785704924,
+            "event_median": 0.0208521195982328,
+            "event_p90": 0.07749095399030365,
+            "event_max": 0.5167088395193623
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5902437641723356,
+            "joint_candidates_building_equal_rate": 0.632638888888889
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7812058080808081,
+            "joint_candidates_building_equal_rate": 0.8065972222222223
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7610782570604,
+            "joint_candidates_building_equal_rate": 0.7706845238095238
+          }
+        },
+        "ring_reversed_nonzero_events": 3,
+        "high_angle_correspondence_warning_nonzero_events": 4,
+        "matched_reflex_disagreement_n_nonzero_events": 4
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 176,
+          "different_corner_count": 40,
+          "missing_connected_geometry": 2
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.09847341670271352,
+            "event_median": 0.01830795197625565,
+            "event_p90": 0.19719900107883473,
+            "event_max": 0.9263357978076936
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.2252483980844426,
+            "event_median": 0.0422643462643968,
+            "event_p90": 0.6015316676756693,
+            "event_max": 1.664476169273645
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.11708745255172019,
+            "event_median": 0.026265586835176852,
+            "event_p90": 0.20029267799183767,
+            "event_max": 1.0324696987016433
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.24454398786469714,
+            "event_median": 0.057930411221696704,
+            "event_p90": 0.601774619147297,
+            "event_max": 1.7530211525306028
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.06351952094621685,
+            "event_median": 0.02263387673423465,
+            "event_p90": 0.1138538558546527,
+            "event_max": 0.4721436804841191
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.07287282575580296,
+            "event_median": 0.028801875999177752,
+            "event_p90": 0.12371466422434102,
+            "event_max": 0.4972602637402123
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.052371788571926266,
+            "event_median": 0.024352597087227403,
+            "event_p90": 0.09935819106128796,
+            "event_max": 0.2305484013760487
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.3773821548821548,
+            "joint_candidates_building_equal_rate": 0.4004313973063973
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.501218820861678,
+            "joint_candidates_building_equal_rate": 0.5414186507936508
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5196428571428572,
+            "joint_candidates_building_equal_rate": 0.5592757936507937
+          }
+        },
+        "ring_reversed_nonzero_events": 8,
+        "high_angle_correspondence_warning_nonzero_events": 2,
+        "matched_reflex_disagreement_n_nonzero_events": 2
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.024669872525627953,
+      "bev_max_h": 0.019534063467212148,
+      "top_mean_h": 0.031255068067089775,
+      "top_max_h": 0.025673158591708406
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+    "domain": "ordinary_new",
+    "context_id": "posthoc_W132_same_class_substitution",
+    "phase": "assessment",
+    "k": 13,
+    "m": 5,
+    "direction": "C02>C01",
+    "replay_group": "W132_fixed_support_probe",
+    "attempted_events": 133,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 112,
+    "joint_images": 27,
+    "joint_buildings": 6,
+    "joint_fraction": 0.8421052631578947,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 123,
+          "different_corner_count": 9,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.06430837336107102,
+            "event_median": 0.0224075410392342,
+            "event_p90": 0.1241721487755771,
+            "event_max": 0.8152210947038642
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.1779446448892511,
+            "event_median": 0.0532685468836831,
+            "event_p90": 0.3625087829478383,
+            "event_max": 2.6625774962071143
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.07638263804391125,
+            "event_median": 0.027643635506900847,
+            "event_p90": 0.134382368374812,
+            "event_max": 0.904236651108135
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.18686392646350547,
+            "event_median": 0.0612645723377565,
+            "event_p90": 0.36534318211449907,
+            "event_max": 2.666944594726089
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.04740463030835019,
+            "event_median": 0.019808067829787848,
+            "event_p90": 0.08211466512603355,
+            "event_max": 0.4918384173410227
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.052324411027815126,
+            "event_median": 0.0244502052592231,
+            "event_p90": 0.08254555869800831,
+            "event_max": 0.4926451194283815
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.040876146094090154,
+            "event_median": 0.0227641037661032,
+            "event_p90": 0.06940195208977552,
+            "event_max": 0.2492547165909333
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.4817063492063492,
+            "joint_candidates_building_equal_rate": 0.5271604938271605
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7396825396825397,
+            "joint_candidates_building_equal_rate": 0.7925925925925926
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.667063492063492,
+            "joint_candidates_building_equal_rate": 0.6944444444444443
+          }
+        },
+        "ring_reversed_nonzero_events": 2,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 116,
+          "different_corner_count": 13,
+          "missing_connected_geometry": 3,
+          "incomplete_geometry": 1
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.09975571827934042,
+            "event_median": 0.01708459501285365,
+            "event_p90": 0.19318269757697967,
+            "event_max": 1.2276340063408917
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.21716177551921134,
+            "event_median": 0.0435167022601342,
+            "event_p90": 0.4779186769109588,
+            "event_max": 1.7107497364166817
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.1149129130787442,
+            "event_median": 0.0253711878874022,
+            "event_p90": 0.20189788496019614,
+            "event_max": 1.254190715248528
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.2322759169366955,
+            "event_median": 0.0500905571956301,
+            "event_p90": 0.4846296686165401,
+            "event_max": 1.7521316737308588
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.05887459273064502,
+            "event_median": 0.01467757149327235,
+            "event_p90": 0.13387120566937338,
+            "event_max": 0.4607752878635529
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.06516146693304165,
+            "event_median": 0.0198818371417772,
+            "event_p90": 0.13558930040355024,
+            "event_max": 0.4747426122695926
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.0508036253966494,
+            "event_median": 0.0208679256702295,
+            "event_p90": 0.09981164265326241,
+            "event_max": 0.2461814690963655
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.4446560846560846,
+            "joint_candidates_building_equal_rate": 0.5160493827160494
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.6092063492063492,
+            "joint_candidates_building_equal_rate": 0.687037037037037
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.5853968253968254,
+            "joint_candidates_building_equal_rate": 0.6592592592592593
+          }
+        },
+        "ring_reversed_nonzero_events": 2,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.0354473449182694,
+      "bev_max_h": 0.03921713062996024,
+      "top_mean_h": 0.038530275034832945,
+      "top_max_h": 0.04541199047319003
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_geo9_source_signed_p2_K2",
+    "domain": "all",
+    "context_id": null,
+    "phase": "assessment_reused_v2",
+    "k": 17,
+    "m": 8,
+    "direction": null,
+    "replay_group": "old_G_anchor",
+    "attempted_events": 39,
+    "attempted_images": 23,
+    "attempted_buildings": 5,
+    "joint_events": 33,
+    "joint_images": 21,
+    "joint_buildings": 5,
+    "joint_fraction": 0.8461538461538461,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 35,
+          "different_corner_count": 4
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.053564548419843,
+            "event_median": 0.0181749529971981,
+            "event_p90": 0.17192883335391101,
+            "event_max": 0.5060308615550431
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.1404840023986063,
+            "event_median": 0.0449457526401978,
+            "event_p90": 0.411843244885288,
+            "event_max": 0.8764670026816113
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.0642247161837651,
+            "event_median": 0.027794904164419,
+            "event_p90": 0.17725873694341276,
+            "event_max": 0.5093305003939148
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.14931894979025187,
+            "event_median": 0.0503230141858239,
+            "event_p90": 0.43142991490494054,
+            "event_max": 0.8796874683044861
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.03883373999310565,
+            "event_median": 0.0175158188951142,
+            "event_p90": 0.08134542709357422,
+            "event_max": 0.2180823580833376
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.04436402366022153,
+            "event_median": 0.0213705977188135,
+            "event_p90": 0.08508032453027799,
+            "event_max": 0.2182254808091265
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.033640796089132945,
+            "event_median": 0.0188967008992854,
+            "event_p90": 0.06581334041591855,
+            "event_max": 0.1676897672965467
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5922619047619048,
+            "joint_candidates_building_equal_rate": 0.6708333333333334
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7351190476190477,
+            "joint_candidates_building_equal_rate": 0.8333333333333333
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.6672619047619047,
+            "joint_candidates_building_equal_rate": 0.7583333333333334
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 33,
+          "different_corner_count": 6
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.08715098112499489,
+            "event_median": 0.0292256325410318,
+            "event_p90": 0.21716187659333236,
+            "event_max": 0.7758953037808456
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.15918099530616012,
+            "event_median": 0.0578447577291542,
+            "event_p90": 0.4336068185554123,
+            "event_max": 1.333788168478106
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.10709778915580062,
+            "event_median": 0.0433388911044092,
+            "event_p90": 0.22798627495629362,
+            "event_max": 0.8908395554476652
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.18180504855682578,
+            "event_median": 0.0757636359434166,
+            "event_p90": 0.4546041099362089,
+            "event_max": 1.3414271296169242
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.045701125420144116,
+            "event_median": 0.021859286305007,
+            "event_p90": 0.12441353969132676,
+            "event_max": 0.2920183500892316
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.05937181367509311,
+            "event_median": 0.0266588197482157,
+            "event_p90": 0.13044007526209328,
+            "event_max": 0.3240221808347517
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.04008008833385364,
+            "event_median": 0.0247541078476708,
+            "event_p90": 0.10752006998978426,
+            "event_max": 0.1397065983513035
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.42023809523809524,
+            "joint_candidates_building_equal_rate": 0.525
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.5511904761904762,
+            "joint_candidates_building_equal_rate": 0.6583333333333333
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.6011904761904762,
+            "joint_candidates_building_equal_rate": 0.7083333333333333
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.033586432705151895,
+      "bev_max_h": 0.018696992907553805,
+      "top_mean_h": 0.04287307297203552,
+      "top_max_h": 0.032486098766573906
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  },
+  {
+    "method_id": "R_role_ward_K5",
+    "domain": "all",
+    "context_id": null,
+    "phase": "assessment_reused_v2",
+    "k": 13,
+    "m": 2,
+    "direction": null,
+    "replay_group": "old_R_anchor",
+    "attempted_events": 58,
+    "attempted_images": 29,
+    "attempted_buildings": 6,
+    "joint_events": 52,
+    "joint_images": 28,
+    "joint_buildings": 6,
+    "joint_fraction": 0.896551724137931,
+    "interpretation": "Conditional continuous geometry estimate, not validated human-nearness success or unseen-person generalization",
+    "arms": {
+      "within": {
+        "status_counts": {
+          "unique_cyclic_candidate": 55,
+          "different_corner_count": 3
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.025339794520574725,
+            "event_median": 0.007685995361685899,
+            "event_p90": 0.04551071242887331,
+            "event_max": 0.3627988463486563
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.07286311032836354,
+            "event_median": 0.02025229302045045,
+            "event_p90": 0.13190722679686598,
+            "event_max": 1.083238344394485
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.030099558027755255,
+            "event_median": 0.0103728042767136,
+            "event_p90": 0.046553234289542486,
+            "event_max": 0.3646357526751672
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.08405295967396569,
+            "event_median": 0.0211071874982151,
+            "event_p90": 0.13498463060901436,
+            "event_max": 1.0851077670220086
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.0191026280270971,
+            "event_median": 0.0068980713949062,
+            "event_p90": 0.0525984536275036,
+            "event_max": 0.2074410271124755
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.022201503999436604,
+            "event_median": 0.0080249266979472,
+            "event_p90": 0.05380063022884338,
+            "event_max": 0.2077990230715067
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.016521508110338628,
+            "event_median": 0.008561262054905,
+            "event_p90": 0.03727684139527758,
+            "event_max": 0.0980697940329048
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.7007936507936509,
+            "joint_candidates_building_equal_rate": 0.7791666666666667
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.8176587301587301,
+            "joint_candidates_building_equal_rate": 0.9
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.8093253968253968,
+            "joint_candidates_building_equal_rate": 0.8916666666666666
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      },
+      "cross": {
+        "status_counts": {
+          "unique_cyclic_candidate": 52,
+          "different_corner_count": 6
+        },
+        "metrics": {
+          "bev_mean_h": {
+            "building_equal_mean": 0.03438085893354508,
+            "event_median": 0.0139550490760714,
+            "event_p90": 0.097383254654253,
+            "event_max": 0.3697299453930202
+          },
+          "bev_max_h": {
+            "building_equal_mean": 0.08462422242008648,
+            "event_median": 0.03602042511717175,
+            "event_p90": 0.23374247732976103,
+            "event_max": 0.7815835817994083
+          },
+          "top_mean_h": {
+            "building_equal_mean": 0.04288074288669961,
+            "event_median": 0.017911090039063098,
+            "event_p90": 0.10475575184037725,
+            "event_max": 0.4693464791469742
+          },
+          "top_max_h": {
+            "building_equal_mean": 0.09130710948274347,
+            "event_median": 0.04200976647764,
+            "event_p90": 0.23617712031579757,
+            "event_max": 0.8307157771701192
+          },
+          "bev_max_pairscale": {
+            "building_equal_mean": 0.024529051744775685,
+            "event_median": 0.015426508060911,
+            "event_p90": 0.05809466316002038,
+            "event_max": 0.1442719717851734
+          },
+          "top_max_pairscale": {
+            "building_equal_mean": 0.026955827843397746,
+            "event_median": 0.0166096648823449,
+            "event_p90": 0.06211144814591741,
+            "event_max": 0.1533412496837028
+          },
+          "bev_max_local_radius_fraction": {
+            "building_equal_mean": 0.025279949705785388,
+            "event_median": 0.01754743100339155,
+            "event_p90": 0.05031090908355039,
+            "event_max": 0.0945246078092136
+          }
+        },
+        "frozen_pro_flags": {
+          "joint_stable_main": {
+            "all_attempts_building_equal_rate": 0.5591269841269841,
+            "joint_candidates_building_equal_rate": 0.6583333333333333
+          },
+          "geometry_noQ_main": {
+            "all_attempts_building_equal_rate": 0.7821428571428571,
+            "joint_candidates_building_equal_rate": 0.9041666666666667
+          },
+          "geometry_shape_main": {
+            "all_attempts_building_equal_rate": 0.7507936507936508,
+            "joint_candidates_building_equal_rate": 0.8708333333333332
+          }
+        },
+        "ring_reversed_nonzero_events": 0,
+        "high_angle_correspondence_warning_nonzero_events": 0,
+        "matched_reflex_disagreement_n_nonzero_events": 0
+      }
+    },
+    "distance_difference": {
+      "bev_mean_h": 0.009041064412970357,
+      "bev_max_h": 0.011761112091722939,
+      "top_mean_h": 0.012781184858944354,
+      "top_max_h": 0.007254149808777782
+    },
+    "applicability_cautions": [
+      "Same-count unique cyclic correspondence does not establish shared semantic structure.",
+      "Failure and changed-count events remain outside continuous-distance estimand but inside attempted denominator.",
+      "Class IDs are method-local. A direction can be useful without every pair of classes being separated."
+    ]
+  }
+]
