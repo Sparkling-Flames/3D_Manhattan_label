@@ -1,0 +1,1701 @@
+{
+  "all_features_equal": true,
+  "all_labels_equal": true,
+  "all_partition_sizes_known_sets_and_capacities_equal": true,
+  "canonical_labels_sha256": "072f8a5939d40942e88bed136e7b475437895092f560bd20c790777cc678d40a",
+  "commands": [
+    [
+      "/workspace/shared/interchangeability_audit_20261020/venv/bin/python",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/interchangeability_20261020/forward/audit_and_features.py",
+      "--repo",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/repo",
+      "--prior",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/analysis",
+      "--followup",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/interchangeability_20261020/reproduction/feature_support",
+      "--out",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/reconstructed"
+    ],
+    [
+      "/workspace/shared/interchangeability_audit_20261020/venv/bin/python",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/interchangeability_20261020/forward/build_candidates.py",
+      "--features",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/reconstructed/features_train.csv.gz",
+      "--repo",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/repo",
+      "--split",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/portable_input/analysis/composition/SPLIT.json",
+      "--out",
+      "/workspace/shared/interchangeability_audit_20261020/audit_learning/full_forward_rebuild/reconstructed"
+    ]
+  ],
+  "external_restored": "/workspace/shared/interchangeability_audit_20261020/restored",
+  "feature_columns": 328,
+  "feature_comparison": [
+    {
+      "equal": true,
+      "field": "train_key",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "worker_id",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "metric",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "core_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "core_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "core_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "core_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "core_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "person_origin",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "q_beta",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_effect_connectivity_nullity",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_residual_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_residual_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "pair_count_residual_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "reference_pair_gap_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "reference_fewer_pairs_fraction",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "reference_more_pairs_fraction",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_median",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_p90",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "pair_count_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "iou_2d_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "S_bottom_deg_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "dir_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "Hmean_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "Hcenter_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "height_mean_ratio_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "declared_pair_count_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "easy_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "easy_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "easy_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "easy_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "theta_easy_estimate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "theta_easy",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_easy_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_easy_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "medium_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "medium_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "medium_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "medium_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "theta_medium_estimate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "theta_medium",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_medium_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_medium_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "theta_hard_estimate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "theta_hard",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_hard_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "absolute_hard_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_minus_easy",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "hard_minus_medium",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "medium_minus_easy",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "t_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "t_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "t_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "t_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "t_source_origin_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "t_log_residual_tail",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_median",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_p90",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "source_time_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "time_source_kind",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "target_time_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "target_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "target_time_median",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_raw_rate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_error_nonedit_count",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_raw_rate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_error_nonedit_count",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_raw_rate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_old_edit_count",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_raw_rate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_edit_count",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_attributable_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_attributable_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_gain_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_initial_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_final_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_varying_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "scope_out_raw_rate",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_out_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "scope_gold_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "individual_review_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "specific_error_candidate_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "legacy_explicit_person_error_n",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "doorway_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "doorway_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_v1_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "semi_new_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "semi_new_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_manual_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_manual_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_manual_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_manual_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_manual_q_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_manual_q_abs_mean",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_manual_pair_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_semi_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_semi_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_semi_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "special_semi_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_semi_q_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_semi_q_abs_mean",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "special_semi_pair_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_doorway_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_easy_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_medium_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_q_abs_mean",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_q_abs_p10",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_q_abs_sd",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_q_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_pair_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_bottom_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_top_y_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_height_log_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_images",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_median_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_min_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_hard_time_max_seconds",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_varying_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_manual_scope_effect",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_varying_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_new_scope_effect",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_records",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_buildings",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_varying_tasks",
+      "max_abs_difference": 0.0
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_supported",
+      "max_abs_difference": null
+    },
+    {
+      "equal": true,
+      "field": "cond_semi_v1_scope_effect",
+      "max_abs_difference": null
+    }
+  ],
+  "feature_tolerance_absolute": 1e-09,
+  "finished_utc": "2026-10-19T17:32:00.816937+00:00",
+  "history_buildings": [
+    "2t7WUuJeko7",
+    "S9hNv5qa7GM",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "jh4fc5c5qoQ",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "zsNo4HB9uLZ"
+  ],
+  "inputs_manifest_sha256": "b025e8b1e54ed45eda46f795b5cb9da23c46c64e7ae171e61298ae10a40ff03b",
+  "label_rows": 11280,
+  "method_count": 188,
+  "no_raw_export_reprocessing": true,
+  "original_features_file_sha256": "5475b0d2a826d609cab3adfe3b436078cf2d427605c1ca7b9b3d580c00e532df",
+  "output_note": "Transient gzip container/header may differ; numeric features, full label definitions, capacities and class member sets are checked explicitly. Do not package portable_input, duplicated restored sources, or rebuild caches.",
+  "package_root": "/workspace/shared/interchangeability_audit_20261020/unpacked",
+  "rebuilt_features_file_sha256": "826f7f3c3bf31b3c848c5e203bb26bfc6a1c803631b5d07f479a233801f796c0",
+  "schema": "portable_full_forward_rebuild_audit_v1",
+  "target_building_outcomes_not_used_for_training": true,
+  "worker_rows": 60
+}

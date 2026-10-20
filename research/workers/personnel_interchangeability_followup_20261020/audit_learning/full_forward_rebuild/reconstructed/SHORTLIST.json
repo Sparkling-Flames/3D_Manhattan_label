@@ -1,0 +1,816 @@
+{
+  "schema": "history_capacity_diverse_forward_shortlist_v1",
+  "items": [
+    {
+      "priority": 1,
+      "method_id": "F20_all_Q_zero_K2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 32,
+        "C02": 23
+      },
+      "known_people": 55,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 2,
+      "method_id": "F20_all_QxT_K4",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 20,
+        "C04": 9,
+        "C03": 14,
+        "C01": 11
+      },
+      "known_people": 54,
+      "capacity": {
+        "history_max_images_mge2": 78,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 78,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 3,
+      "method_id": "F20_all_T_qK3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 18,
+        "C02": 18,
+        "C03": 18
+      },
+      "known_people": 54,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "efficiency_and_interchangeability",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 4,
+      "method_id": "F20_all_QTG_balanced_medoids_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C03": 18,
+        "C02": 18,
+        "C01": 18
+      },
+      "known_people": 54,
+      "capacity": {
+        "history_max_images_mge2": 78,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 78,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 5,
+      "method_id": "F20_all_QTG_balanced_medoids_K4",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 13,
+        "C04": 13,
+        "C03": 14,
+        "C02": 14
+      },
+      "known_people": 54,
+      "capacity": {
+        "history_max_images_mge2": 77,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 77,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 6,
+      "method_id": "F20_coarseQ_refineHigh_T",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 32,
+        "C03": 12,
+        "C02": 11
+      },
+      "known_people": 55,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 7,
+      "method_id": "F20_coarseQ_refineHigh_TxDetail",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 32,
+        "C04": 8,
+        "C02": 8,
+        "C03": 4,
+        "C05": 3
+      },
+      "known_people": 55,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 8,
+      "method_id": "F20_highQ23_T_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 12,
+        "C02": 11
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 77,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 77,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "efficiency_and_interchangeability",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 9,
+      "method_id": "F20_highQ23_T_qK3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 8,
+        "C02": 7,
+        "C03": 8
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 74,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 74,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "efficiency_and_interchangeability",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 10,
+      "method_id": "F20_highQ23_Detail_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 11,
+        "C01": 12
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 77,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 77,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 11,
+      "method_id": "F20_highQ23_Bottom_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 12,
+        "C02": 11
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 76,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 76,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 12,
+      "method_id": "F20_highQ23_Height_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 12,
+        "C02": 11
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 76,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 72,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 13,
+      "method_id": "F20_highQ23_TxDetail_K4",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 8,
+        "C03": 8,
+        "C01": 4,
+        "C04": 3
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 75,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 66,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 14,
+      "method_id": "F20_highQ23_TG_balanced_medoids_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 7,
+        "C03": 8,
+        "C01": 8
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 76,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 68,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 15,
+      "method_id": "F20_highQ23_TQtail_balanced_medoids_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 7,
+        "C03": 8,
+        "C02": 8
+      },
+      "known_people": 23,
+      "capacity": {
+        "history_max_images_mge2": 77,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 68,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 16,
+      "method_id": "F20_highQ18_T_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 9,
+        "C02": 9
+      },
+      "known_people": 18,
+      "capacity": {
+        "history_max_images_mge2": 75,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 74,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "efficiency_and_interchangeability",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 17,
+      "method_id": "F20_highQ23_HardAdapt_qK2_hard",
+      "domain": "hard",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 8,
+        "C01": 8
+      },
+      "known_people": 16,
+      "capacity": {
+        "history_max_images_mge2": 11,
+        "history_max_buildings_mge2": 6,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 5,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 18,
+      "method_id": "F20_highQnew_T_Scope_balanced_K2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 8,
+        "C01": 7
+      },
+      "known_people": 15,
+      "capacity": {
+        "history_max_images_mge2": 68,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 68,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 19,
+      "method_id": "F20_highQnew_DG_balanced_K2",
+      "domain": "hard",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 8,
+        "C02": 7
+      },
+      "known_people": 15,
+      "capacity": {
+        "history_max_images_mge2": 9,
+        "history_max_buildings_mge2": 5,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 5,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 20,
+      "method_id": "F20_highQnew_T_NewNonedit_balanced_K2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 6,
+        "C02": 6
+      },
+      "known_people": 12,
+      "capacity": {
+        "history_max_images_mge2": 65,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 65,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 21,
+      "method_id": "F20_highQnew_T_NewEdit_balanced_K2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 5,
+        "C02": 6
+      },
+      "known_people": 11,
+      "capacity": {
+        "history_max_images_mge2": 58,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 58,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 22,
+      "method_id": "F20_new_Scope_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 17,
+        "C01": 18
+      },
+      "known_people": 35,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 23,
+      "method_id": "F20_new_T_Scope_balanced_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 12,
+        "C02": 12,
+        "C03": 11
+      },
+      "known_people": 35,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 24,
+      "method_id": "F20_new_NewNonedit_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 14,
+        "C02": 14
+      },
+      "known_people": 28,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 25,
+      "method_id": "F20_new_T_NewNonedit_balanced_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C03": 9,
+        "C02": 9,
+        "C01": 10
+      },
+      "known_people": 28,
+      "capacity": {
+        "history_max_images_mge2": 78,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 78,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 26,
+      "method_id": "F20_new_NewEdit_qK2",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 14,
+        "C02": 13
+      },
+      "known_people": 27,
+      "capacity": {
+        "history_max_images_mge2": 79,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 79,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 27,
+      "method_id": "F20_new_T_NewEdit_balanced_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 9,
+        "C01": 9,
+        "C03": 9
+      },
+      "known_people": 27,
+      "capacity": {
+        "history_max_images_mge2": 78,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 78,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 28,
+      "method_id": "F20_newCommon_Full_balanced_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 9,
+        "C03": 8,
+        "C02": 9
+      },
+      "known_people": 26,
+      "capacity": {
+        "history_max_images_mge2": 78,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 78,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 29,
+      "method_id": "F20_newCommon_NoQ_balanced_K3",
+      "domain": "all",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C03": 9,
+        "C01": 9,
+        "C02": 8
+      },
+      "known_people": 26,
+      "capacity": {
+        "history_max_images_mge2": 76,
+        "history_max_buildings_mge2": 10,
+        "history_max_source_matched_images_mge2": 76,
+        "history_max_source_matched_buildings_mge2": 10,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 30,
+      "method_id": "F20_hard_TDG_balanced_K3",
+      "domain": "hard",
+      "pool_filter": "ordinary_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 12,
+        "C01": 11,
+        "C03": 12
+      },
+      "known_people": 35,
+      "capacity": {
+        "history_max_images_mge2": 12,
+        "history_max_buildings_mge2": 6,
+        "history_max_source_matched_images_mge2": 12,
+        "history_max_source_matched_buildings_mge2": 6,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 31,
+      "method_id": "F20_semi_new_QT_balanced_K3",
+      "domain": "semi_new",
+      "pool_filter": "semi_new",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C03": 9,
+        "C02": 9,
+        "C01": 9
+      },
+      "known_people": 27,
+      "capacity": {
+        "history_max_images_mge2": 9,
+        "history_max_buildings_mge2": 4,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 4,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 32,
+      "method_id": "F20_semi_new_QTGEditReport_balanced_K3",
+      "domain": "semi_new",
+      "pool_filter": "semi_new",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C03": 9,
+        "C02": 8,
+        "C01": 8
+      },
+      "known_people": 25,
+      "capacity": {
+        "history_max_images_mge2": 9,
+        "history_max_buildings_mge2": 4,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 4,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 33,
+      "method_id": "F20_semiNew_NewNonedit_qK2",
+      "domain": "semi_new",
+      "pool_filter": "semi_new",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 14,
+        "C02": 14
+      },
+      "known_people": 28,
+      "capacity": {
+        "history_max_images_mge2": 9,
+        "history_max_buildings_mge2": 4,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 4,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 34,
+      "method_id": "F20_semiNew_Scope_qK2",
+      "domain": "semi_new",
+      "pool_filter": "semi_new",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C02": 17,
+        "C01": 18
+      },
+      "known_people": 35,
+      "capacity": {
+        "history_max_images_mge2": 9,
+        "history_max_buildings_mge2": 4,
+        "history_max_source_matched_images_mge2": 9,
+        "history_max_source_matched_buildings_mge2": 4,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 35,
+      "method_id": "F20_semi_v1_QTGEdit_balanced_K3",
+      "domain": "semi_v1",
+      "pool_filter": "semi_v1",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 6,
+        "C02": 6,
+        "C03": 7
+      },
+      "known_people": 19,
+      "capacity": {
+        "history_max_images_mge2": 7,
+        "history_max_buildings_mge2": 4,
+        "history_max_source_matched_images_mge2": 7,
+        "history_max_source_matched_buildings_mge2": 4,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    },
+    {
+      "priority": 36,
+      "method_id": "F20_doorway_QTG_balanced_K3",
+      "domain": "doorway",
+      "pool_filter": "doorway_manual",
+      "capacity_gate_passed": true,
+      "class_sizes": {
+        "C01": 9,
+        "C03": 9,
+        "C02": 9
+      },
+      "known_people": 27,
+      "capacity": {
+        "history_max_images_mge2": 8,
+        "history_max_buildings_mge2": 5,
+        "history_max_source_matched_images_mge2": 8,
+        "history_max_source_matched_buildings_mge2": 5,
+        "interpretation": "Exact membership capacity bounds with fixed unlabelled/background people allowed; not observed fusion success. Background class mix and individual sampling remain for direct experiment."
+      },
+      "objective": "interchangeability_and_quality",
+      "selection_basis": "pre-outcome feature-domain diversity plus history-only membership capacity; no target fusion score selection"
+    }
+  ],
+  "additional_ablation_families": [
+    {
+      "family": "newCommon_K2",
+      "method_ids": [
+        "F20_newCommon_Full_balanced_K2",
+        "F20_newCommon_NoQ_balanced_K2",
+        "F20_newCommon_NoT_balanced_K2",
+        "F20_newCommon_Nodifficulty_balanced_K2",
+        "F20_newCommon_Nogeometry_balanced_K2",
+        "F20_newCommon_Nosemi_edit_balanced_K2",
+        "F20_newCommon_Nonew_report_nonedit_balanced_K2",
+        "F20_newCommon_Noscope_propensity_balanced_K2"
+      ]
+    },
+    {
+      "family": "newCommon_K3",
+      "method_ids": [
+        "F20_newCommon_Full_balanced_K3",
+        "F20_newCommon_NoQ_balanced_K3",
+        "F20_newCommon_NoT_balanced_K3",
+        "F20_newCommon_Nodifficulty_balanced_K3",
+        "F20_newCommon_Nogeometry_balanced_K3",
+        "F20_newCommon_Nosemi_edit_balanced_K3",
+        "F20_newCommon_Nonew_report_nonedit_balanced_K3",
+        "F20_newCommon_Noscope_propensity_balanced_K3"
+      ]
+    }
+  ],
+  "no_outcome_screening_performed": true,
+  "omission_note": "Complete ledger includes unsupported and small classes; shortlist is a capacity-and-domain proposal for the root's direct A/B versus A/C experiment, not an effectiveness claim."
+}
