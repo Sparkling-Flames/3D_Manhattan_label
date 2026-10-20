@@ -1,0 +1,40 @@
+{
+  "schema": "fusion_mechanism_followup_integration_v1",
+  "updated_date": "2026-10-21",
+  "topic_root": "research/fusion/fusion_mechanism_followup_20261021",
+  "entry": "README.md",
+  "handoff": "HANDOFF.md",
+  "field_contract": "FIELD_CONTRACT.json",
+  "current_evidence": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "shared_fusion_modified": false,
+  "shared_quality_modified": false,
+  "research_candidate_production_ready": false,
+  "method_panel": {"teams": 32, "images": 12, "manual_teams": 28, "semi_teams": 4, "new_small_controls": 7, "baseline_scored": 24, "candidate_scored": 23},
+  "saved_paths": {"rows": 44, "paths": 4, "new_full_path_rerun": false},
+  "findings": [
+    {"id": "same_ratio_local_vote", "image": "e9zR4mvMWw7-19", "condition": "manual", "figure": "e9z_same_ratio.png", "summary": "相同原9人，分别加入同新来源L成员W101/W107，均为10人5H5L；焦点5/4票，B8L2为89.447/57.290。W107按楼外元数据选择，未用目标评分。"},
+    {"id": "background_correspondence", "image": "jtcxE69GiFV-26", "condition": "manual", "figure": "jtc_same_ratio.png", "summary": "同W106与同4F1S，换出W128时已知3份来源拆入两个2票组；同团队只改对应可恢复3票，B8L2由15.357至64.442。其它背景有恢复节点但无完整来源环。"},
+    {"id": "automatic_rescue", "image": "q9vSo1VnCiC-30", "condition": "manual", "figure": "q9_automatic_candidate.png", "summary": "锁定已达票组的候选于17人团队救回15票组，含已审全部13份观察；5至6节点，B8L2由37.948至95.601，新增2份尚未经人审认证。"},
+    {"id": "adjacent_failure", "image": "zsNo4HB9uLZ-05", "condition": "manual", "figure": "adjacent_negative.png", "summary": "全局最大相容组提取误合已审邻角；锁定原达票组避免此例，但旧同角拆组仍有3条未解决。"},
+    {"id": "initialization_duplicate_failure", "image": "Z6MFQCViBuw-10", "condition": "semi", "figure": "semi_boundary.png", "summary": "人审确认新6票组与原8票组为同角，候选重复输出；W017确证原样保留旧P1角点重复trap，其余共享来源按证据强度单列。"},
+    {"id": "position_and_threshold", "image": "UwV83HsGsw3-22", "condition": "manual", "figure": "saved_growth_paths.png", "summary": "5至8人节点同为6但位置/范围变差；8至9人原4票节点因门槛升至5失选，旧观察分组未变。"}
+  ],
+  "initialization_scan": {
+    "source": "INITIALIZATION_COVERAGE.json",
+    "semi_records_scanned": 1099,
+    "exact_initialization_bound": 574,
+    "missing_exact_initialization": 525,
+    "confirmed_historical_unchanged": 25,
+    "confirmed_images": 6,
+    "confirmed_current_pool": 20,
+    "confirmed_duplicate_current_pool": 10,
+    "reported_only": 45,
+    "reported_images": 13,
+    "figure": "semi_initialization_examples.png",
+    "qualification_or_weight_changed": false,
+    "is_error_rate_estimate": false
+  },
+  "manual_review": {"new_questions_required_now": false, "Z610": "已回答同目标并完成P1来源核查", "connection_missing": "保留未连线，未要求批量排序"},
+  "validation": {"targeted_tests": 5, "global_suite_run": false, "all_88048_teams_rerun": false, "independent_blind_validation": false},
+  "catalog_and_global_docs_owner": "统筹线程"
+}

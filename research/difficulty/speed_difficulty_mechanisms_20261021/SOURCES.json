@@ -1,0 +1,33 @@
+{
+  "analysis_revision": "speed_difficulty_mechanisms_v2_20261021_r1",
+  "data_release": "v2",
+  "primary_records": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "external_bundle": {
+    "logical_name": "HOHONET_personnel_research_20261020",
+    "access": "Read-only external user-provided package; local location passed via --bundle, not published in indexes",
+    "used": [
+      "claims/speed_n5_comparisons.csv.gz",
+      "claims/claim_teams.json.gz",
+      "tables/speed/speed_n5_historical_difficulty_pairs.csv",
+      "tables/speed/speed_n5_common_target_domains.csv"
+    ],
+    "inspected_for_design_and_interpretation": [
+      "code/speed/speed_study.py",
+      "code/speed/analyze_speed.py",
+      "code/speed/plot_speed_profiles.py",
+      "mechanisms/MECHANISM_REPORT.md",
+      "mechanisms/REPRODUCTION_AND_SCHEMA.md"
+    ]
+  },
+  "reused_derived_evidence": [
+    "research/difficulty/difficulty_mechanisms_v2_20261020/reference_conditions.csv",
+    "research/difficulty/difficulty_mechanisms_v2_20261020/record_conditions.csv.gz"
+  ],
+  "case_engine": "tools/thesis_main/analysis/fusion_change_mechanisms_20261020.py::engine, normalized_state",
+  "case_input_snapshot": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+  "case_photo": "Existing data/mp3d_layout/img_v/<image_id>.jpg; no image download or modification",
+  "display_helpers": "Reused personnel_marking_patterns_20261020 case_visuals helpers; processed 1024x512 coordinate convention",
+  "new_team_designs": 0,
+  "unique_existing_teams_replayed": 7,
+  "global_index_owner": "Coordinator; not updated in this package"
+}

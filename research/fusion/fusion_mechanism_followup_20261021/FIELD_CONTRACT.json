@@ -1,0 +1,58 @@
+{
+  "schema": "fusion_mechanism_followup_20261021_v1",
+  "scope": "当前v2的有限具体团队机制对照；不修改人员、资格、评分、预处理或生产融合",
+  "keys": {
+    "object_id": "连接当前逐份证据，不以worker_id跨图片代替",
+    "team_key_or_key": "具体人员集合；n为该团队人数，不是记录行数或独立重复样本数",
+    "source_pair_index": "原始来源点对索引；用于跨团队关系追踪，不以feature_id跨团队认同一实体",
+    "feature_id_or_group": "仅在对应方法、对应团队内有效的身份组编号",
+    "condition": "manual和semi分开；本轮团队没有当前OOS或门洞标记"
+  },
+  "metrics": {
+    "B8L2": "既有冻结引擎0—100分；同输入参考下事后评价，不参与归属或调参",
+    "D10": "既有配对敏感性分数，不是新融合方法",
+    "iou_2d": "引擎底面IoU，0—1",
+    "omission_and_extension": "按该团队固定参考面积归一化的遗漏、外扩比例；CSV保留比例而非百分数",
+    "nodes": "达票节点数，不是正确节点数或物理墙角真值",
+    "support": "单组不同人员支持人数，每人每组最多一票",
+    "threshold_or_minimum_support": "全团队MV50的ceil(n/2)，不改成作答该角者人数",
+    "direct_edges": "原作答里直接邻接的支持人数",
+    "projected_edges": "去掉未选节点后投影邻接的支持人数，不代表原作答直接画过这条边",
+    "full_projected_ring_support": "来源作答投影到全部所选节点后的环支持；不等于每条直接边都获同人数支持",
+    "known_target_observations_present": "固定焦点清单中仍在该团队的观察数，不是该图全部已认证同实体来源",
+    "largest_known_subset": "焦点清单在当前单一身份组中的最大人数"
+  },
+  "tables": {
+    "CASE_TEAMS.csv": "Pro保存12团队的原指标、成员、参考与输出摘要",
+    "FOCUS_SUPPORT.csv": "焦点组支持、历史分层构成、相邻边及完整投影环；每行不是一个独立实验",
+    "CASE_TRANSITIONS.csv": "同一案例前后团队共享原观察的关系；retained_partition_changed指旧观察分组变化",
+    "METHOD_COMPARISONS.csv": "32团队baseline/candidate/unrestricted方法结果；空分数不填0，连接状态另存",
+    "HUMAN_RELATION_RESULTS.csv": "11条旧人审约束×3方法；different_targets_merged仅比较已明确不同的目标清单，非全局准确率",
+    "BACKGROUND_LOCAL_SUPPORT.csv": "jtc/e9z固定焦点来源在具体团队下的支持和可连接状态",
+    "FIGURE_PANELS.csv": "每张正式对照图的团队、方法及指标，不增加研究样本",
+    "INITIALIZATION_FLAGS.csv": "仅输出25份精确绑定且历史错误未改、45份仅自报记录；保留排除作答的资格状态",
+    "INITIALIZATION_IMAGES.csv": "上表逐图汇总；confirmed_historical与confirmed_current_pool不可混用",
+    "INITIALIZATION_TEAM_EXPOSURE.csv": "4支Semi案例及11支既有路径团队的已确认、仅自报和其它来源；包含来源不等于该来源导致全部输出变化"
+  },
+  "json": {
+    "REQUESTS.json": "32个具体团队的输入object_ids、角色、池ID；expected只用于固定基线复放检查",
+    "METHOD_STATES.json.gz": "完整成员、两两归属后的组、票数、坐标、连接及事后得分；baseline=冻结原方法，candidate=锁定达票组的多数救回，unrestricted=失败的全局相容组提取",
+    "HUMAN_CONTROLS.json": "旧关系映射到当前object_id及来源点对；不恢复历史资格",
+    "HUMAN_REVIEW.json": "本机原始人工回执；不随公开资料提交。结论摘要见Z610_P1_TRAP_NOTE.md；只表示目标同一，不是精确坐标认证",
+    "INITIALIZATION_COVERAGE.json": "1099份Semi的证据覆盖与检索数量，不是错误率或新融合样本数",
+    "COVERAGE.json": "方法对照与保存路径的不同覆盖分母",
+    "inputs/LOWQ_SELECTION.json": "同来源低历史Q补充成员的元数据选择快照；不按目标图分数/几何挑人"
+  },
+  "initialization_evidence": {
+    "confirmed_unchanged": "已有已确认错误＋精确初始绑定＋初始与历史原始提交相同（绝对容差1e-9像素）；current_final_matches_historical与pool_analysis_eligible另列",
+    "reported_only": "仅报告错误未改，缺精确初始几何；不得提升为独立核验结论",
+    "edited_or_other_unknown_workers": "未命中以上两类的团队成员，含编辑后错误是否纠正未知者，不能解释成已纠正或无错误"
+  },
+  "missingness": {
+    "no_connection": "无覆盖全部达票节点的来源环；节点结果仍保留，不是自动判无真实结构或质量0",
+    "unscored_identity_controls": "6支旧人审身份面板刻意不评分；当前不合格来源不恢复质量资格",
+    "complete_conditional": "几何与参考满足既有引擎测量条件，不等于视觉目标或所有身份已认证",
+    "bool_null": "未知初始化关系保留null，不改成false"
+  },
+  "estimation_boundary": "人工反馈、q9正例和相邻负例均为开发控制；32团队、44路径行和1099逐份记录为不同分母，不作为独立盲测或自动准确率"
+}

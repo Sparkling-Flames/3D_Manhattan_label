@@ -1,0 +1,73 @@
+{
+  "schema": "speed_difficulty_mechanisms_v2_20261021_r1",
+  "data_release": "v2",
+  "purpose": "Explain existing n=5 4-fast-1-slow versus 5-slow results, not new personnel classification or difficulty scoring",
+  "primary_records": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "external_bundle": "HOHONET_personnel_research_20261020",
+  "identity": {
+    "record": "object_id; claim team member_object_ids joined to current v2 record with worker, image, reference and eligibility verified",
+    "team": "Existing team_key, pool_id, reference_id, member_workers and member_object_ids; no new team design",
+    "comparison": "Existing panel_id, replicate, base_team_key, candidate_team_key; exact team pairs can repeat across replicates",
+    "case": "image, domain=above_peer_Q, layer=ordinary_manual, replicate; selected replicate 0, plus pa14 replicate 1 counterexample"
+  },
+  "scope": {
+    "comparison_filter": "n_fast=4, contrast=versus_slow; assert n=5 and origin=new; 1012 existing comparison rows across layers/domains",
+    "common_domains": "Intersection of allQ and above_peer_Q target image IDs separately per layer, without selecting by outcome",
+    "ordinary_manual": "77 common images / 19 buildings; allQ available 142 images, above_peer_Q 77",
+    "ordinary_semi": "18 allQ images / 10 buildings; no high-Q counterpart, no cross-domain mechanism claim",
+    "doorway_manual": "13 allQ images / 9 buildings, 3 high-Q images / 2 buildings; 3 common images; separate descriptive records only",
+    "fully_scored_sensitivity": "71 common ordinary Manual images for which all 4 draws in both domains are scored; eligibility sensitivity, not main population",
+    "personnel_history": "Outside target building; same condition and source; original design supports >=8 images and >=3 buildings for Q and time; Q peer gap <=3, time contrast >=1.5; not refitted here"
+  },
+  "aggregation": {
+    "quality_difference": "Candidate B8L2 minus base B8L2, inherited; missing remains missing; failed outcomes are not assigned zero",
+    "D10_difference": "Inherited matched 8-to-10-degree sensitivity, not a new score or changed geometry",
+    "weights": "Average member-draw rows within image/building, then image means within building, then equal building means",
+    "failure_rates": "both_scored/both_complete/base_failed/candidate_failed use same image-then-building weighting, not raw percentages",
+    "scored_comparisons": "Raw count of both_scored==true comparison rows; exact repeats are not new independent observations",
+    "images_with_any_unscored": "Count of images with at least one row not both_scored",
+    "comparisons": "Input row count for each summary; for actual_replacement_pairs this counts pair exposures rather than team comparisons",
+    "leave_building_min/max": "Range of equal-building quality means after dropping each available building once; not confidence intervals",
+    "same_count": "Inherited base/candidate fused node-count equality, not correctness or equality to reference",
+    "source_time_ratio": "exp(image/building averaged log_source_time_ratio); source reported/active labor time, not actual wall-clock delivery time",
+    "person_pair_means": "Average actual replaced pairs and member draws within image, then equal building means; not 4x more independent people or images"
+  },
+  "conditions": {
+    "reference_binding": "Base and candidate same reference_id, linked to reused reference_conditions.csv; selected case reference points equal current v2 evidence",
+    "H0_plain": "ref_H==0 and no short edge",
+    "H0_short": "ref_H==0 and reference edge length/perimeter<0.04 with both endpoint turns>=15 degrees",
+    "H_positive": "ref_H>0 under solid-polygon self-occlusion assumption; does not encode RGB/furniture visibility",
+    "unknown": "Missing ref_H, not coerced to H0",
+    "short_edge": "Includes narrow rectangular end walls as well as small turns; no automatic semantic necessity",
+    "effective_turns": "Inherited 5-degree near-collinear exclusion; point count and effective turn count distinct",
+    "difficulty": "Existing coarse label; no use of target Q to change difficulty"
+  },
+  "person_features": {
+    "actual_replacement_pairs": "Only history pairs with fast in candidate-minus-base and slow in base-minus-candidate; exactly 4 per panel; retained fifth slow excluded",
+    "overall_Q_gap": "Historical fast-minus-slow peer-relative overall Q, inherited from selected pair table",
+    "hard_Q_mean_gap/hard_Q_peer_gap": "Historical difficult-image fast-minus-slow absolute/peer-relative Q; no missing-to-zero substitution",
+    "target_Q_gap": "Current v2 individual B8L2 fast-minus-slow on the target image, not a personnel-selection variable",
+    "turn_gap": "Fast annotation_turn5 minus slow annotation_turn5",
+    "reduced_gap": "Fast-minus-slow indicator of fewer effective turns than exact declared reference",
+    "unmatched_gap": "Fast-minus-slow 9-degree one-to-one bottom-ray unmatched reference fraction; not physical semantic wall identity"
+  },
+  "mechanism_outputs": {
+    "selected_states.json.gz": "Full unchanged native fusion state of 7 unique existing teams, preserving identity groups, observation source indices and candidate",
+    "selected_teams.json.gz": "Existing saved scores/members/IDs of those teams; not new effectiveness observations",
+    "selected_references.json": "Current exact reference points and floors for 3 mechanism pools",
+    "selected_measurements.json": "Complete native measurement dictionaries plus B8L2/D10 for selected states; diagnostics, no score replacement",
+    "case_design.json": "Four existing comparison designs: Uw22 r0, B6-48 r0, pa14 r0/r1; selection is explanatory, not prevalence estimation",
+    "local_support.csv": "All local identity groups by case/arm, votes, selected flag, workers and centers; nearest_ref_index uses horizontal proximity only, not a new semantic correspondence",
+    "case_reference_offsets.csv": "Only equal-count selected teams; one-to-one nearest cyclic horizontal reference-corner mapping for these cases, asserted unique; pixel dx/dy, camera-height corner distance, reference edge length and directed edge angle; not used for formal scores",
+    "case_replaced_people.csv": "Exactly 4 actual replaced fast/slow pairs per selected comparison design; exact repeated teams are not extra cases",
+    "members_figures": "Every line uses current processed evidence points, original pair order; no added/removed points; yellow reference, black fusion in member panels",
+    "replay_checks.json": "Native scores match saved B8L2/D10 within 1e-7 absolute tolerance; no saved full geometry existed in claim_teams, so this is not claimed as an external exact-geometry comparison"
+  },
+  "frozen_boundaries": [
+    "External Pro bundle read-only; current references, scores, points, ordering, eligibility, coarse labels, fusion and scoring implementation unchanged",
+    "Manual and Semi separate; doorway separate; no cross-condition classification fitting",
+    "No new personnel labels, N1, full-team experiment rerun, public dashboard or global catalog changes",
+    "Retrospective finite-pool observations do not identify a causal effect of human working speed",
+    "No automatic inference of scope choice, RGB occlusion, semantic detail correctness or difficult-image expertise from a proxy"
+  ]
+}

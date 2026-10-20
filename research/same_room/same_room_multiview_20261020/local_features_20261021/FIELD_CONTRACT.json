@@ -1,0 +1,83 @@
+{
+  "identity": "room + feature + image_id + worker_id + object_id + condition",
+  "map": "G046 A/A and B/B across the three named views user-confirmed on 2026-10-21 as two turns of one corner; G057 photo-supported by Codex, not human-confirmed; explicit binding, no propagation",
+  "hit": "unique within-image azimuth match within 3/6/9 degrees; primary 3 preselected; not semantic correctness or bottom accuracy",
+  "visibility": "recorded separately, not inferred from GT hiddenness",
+  "prediction": "target view excluded; other people baseline uses same available source images and excludes target worker; equal blend, constant 0.5 and 0.5*other+0.25 are fixed, not fitted",
+  "aggregation": "feature x target image equal within each room; two rooms reported separately, not inferential population evidence",
+  "source_pair_index": "index in points_1024x512 ordered pair sequence, not raw export order; object_id links coordinate_evidence",
+  "tables": {
+    "CONDITION_COVERAGE.csv": [
+      "image",
+      "condition",
+      "records",
+      "independent",
+      "geometry"
+    ],
+    "FUSION_FEATURE_LINK.csv": [
+      "room",
+      "feature",
+      "image",
+      "tolerance_deg",
+      "common_workers",
+      "raw_azimuth_hits",
+      "minimum_support",
+      "selected_endpoint_hit",
+      "nearby_groups",
+      "nearby_max_group_support",
+      "nearby_selected_groups",
+      "endpoint_Q",
+      "geometry_pointer"
+    ],
+    "LOCAL_BEHAVIOR.csv": [
+      "room",
+      "feature",
+      "image_code",
+      "image_id",
+      "worker_id",
+      "object_id",
+      "condition",
+      "origin",
+      "reference_id",
+      "reference_corner",
+      "tolerance_deg",
+      "hit",
+      "source_pair_index",
+      "dx",
+      "bottom_dy",
+      "quality_usable"
+    ],
+    "LOCAL_PREDICTIONS.csv": [
+      "room",
+      "feature",
+      "image",
+      "worker",
+      "object_id",
+      "tolerance_deg",
+      "method",
+      "history_images",
+      "y",
+      "probability",
+      "brier",
+      "absolute_error"
+    ],
+    "PREDICTION_SUMMARY.csv": [
+      "room",
+      "tolerance_deg",
+      "method",
+      "targets",
+      "brier",
+      "absolute_error",
+      "within_target_auc"
+    ],
+    "VIEW_RATES.csv": [
+      "room",
+      "feature",
+      "image_code",
+      "tolerance_deg",
+      "workers",
+      "hits",
+      "rate"
+    ]
+  }
+}

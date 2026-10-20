@@ -1,0 +1,41 @@
+{
+  "source_bundle": "HOHONET_personnel_research_20261020",
+  "source_audit": "v2_evidence_audit_20261019",
+  "low_tail_shared_images": 106,
+  "low_tail": {
+    "W122": {
+      "mean": 86.083225054684,
+      "q10": 50.10989434232025,
+      "below_50": 10
+    },
+    "W126": {
+      "mean": 86.41855871591522,
+      "q10": 61.00257170861849,
+      "below_50": 2
+    }
+  },
+  "speed_member_check": {
+    "scored_pairs": 279,
+    "near_B8L2_2_points": 88,
+    "near_score_geometry_screen": 20,
+    "screen_images": 19,
+    "screen_buildings": 14,
+    "screen_gain": 9,
+    "screen_loss": 11,
+    "screen_definition": "|delta B8L2|<2 and (vertex count changes or |delta corner recall|>=.2 or |delta wall coverage|>=.1 or maximum corresponding BEV corner distance>=.2h); exploratory diagnostic, not failure rate"
+  },
+  "selected_speed_pair_ids": [
+    [
+      "zsNo4HB9uLZ-09__manual__2b1196fa29__dc5fad203b02d4bbae9c",
+      "zsNo4HB9uLZ-09__manual__2b1196fa29__16ccea5a36f8c786e12c"
+    ],
+    [
+      "x8F5xyUWy9e-03__manual__ec015dc331__360bec1e89a025cc8801",
+      "x8F5xyUWy9e-03__manual__ec015dc331__387f95614ce897ef55ca"
+    ],
+    [
+      "yqstnuAEVhm-05__manual__b5861fa0fb__6d7be3629120c2c8218b",
+      "yqstnuAEVhm-05__manual__b5861fa0fb__42521444fef225edf102"
+    ]
+  ]
+}

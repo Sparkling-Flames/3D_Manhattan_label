@@ -1,0 +1,116 @@
+{
+  "features": [
+    {
+      "room": "G046",
+      "feature": "G046_shower_step_outer",
+      "label": "洗手台与淋浴区窄转折外端",
+      "views": {
+        "S9hNv5qa7GM-05": 4,
+        "S9hNv5qa7GM-12": 4,
+        "S9hNv5qa7GM-21": 4
+      },
+      "correspondence_status": "user_confirmed_cross_view_same_corner_20261021",
+      "physical_evidence": "same vanity/shower/step and L-shaped boundary",
+      "necessity": "user_confirmed_existing_reference",
+      "visibility": "vertical wall edge visible; bottom partly cabinet/fixture/stitched-region obscured; visibility is not scored numerically",
+      "reference_unchanged": true,
+      "direct_relations": [
+        {
+          "image_a": "S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee",
+          "image_b": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        },
+        {
+          "image_a": "S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee",
+          "image_b": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        },
+        {
+          "image_a": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+          "image_b": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        }
+      ]
+    },
+    {
+      "room": "G046",
+      "feature": "G046_shower_step_inner",
+      "label": "洗手台与淋浴区窄转折内端",
+      "views": {
+        "S9hNv5qa7GM-05": 5,
+        "S9hNv5qa7GM-12": 5,
+        "S9hNv5qa7GM-21": 5
+      },
+      "correspondence_status": "user_confirmed_cross_view_same_corner_20261021",
+      "physical_evidence": "same vanity/shower/step and L-shaped boundary",
+      "necessity": "user_confirmed_existing_reference",
+      "visibility": "vertical wall edge visible; bottom partly cabinet/fixture/stitched-region obscured; visibility is not scored numerically",
+      "reference_unchanged": true,
+      "direct_relations": [
+        {
+          "image_a": "S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee",
+          "image_b": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        },
+        {
+          "image_a": "S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee",
+          "image_b": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        },
+        {
+          "image_a": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+          "image_b": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        }
+      ]
+    },
+    {
+      "room": "G057",
+      "feature": "G057_control_wall_door_end",
+      "label": "门与墙控旁窄墙体门侧端",
+      "views": {
+        "VFuaQ6m2Qom-07": 9,
+        "VFuaQ6m2Qom-10": 5
+      },
+      "correspondence_status": "image_and_reference_supported_by_codex_not_human_confirmed",
+      "physical_evidence": "same door, wall control, marble counter and narrow projecting wall",
+      "necessity": "existing_reference_no_new_human_necessity_adjudication",
+      "visibility": "vertical wall edge visible; bottom partly cabinet/fixture/stitched-region obscured; visibility is not scored numerically",
+      "reference_unchanged": true,
+      "direct_relations": [
+        {
+          "image_a": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+          "image_b": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        }
+      ]
+    },
+    {
+      "room": "G057",
+      "feature": "G057_control_wall_vanity_end",
+      "label": "门与墙控旁窄墙体台柜侧端",
+      "views": {
+        "VFuaQ6m2Qom-07": 10,
+        "VFuaQ6m2Qom-10": 6
+      },
+      "correspondence_status": "image_and_reference_supported_by_codex_not_human_confirmed",
+      "physical_evidence": "same door, wall control, marble counter and narrow projecting wall",
+      "necessity": "existing_reference_no_new_human_necessity_adjudication",
+      "visibility": "vertical wall edge visible; bottom partly cabinet/fixture/stitched-region obscured; visibility is not scored numerically",
+      "reference_unchanged": true,
+      "direct_relations": [
+        {
+          "image_a": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+          "image_b": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+          "adoption_version": "same_room_user_working_classification_20261016_v2"
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    "G057 other repeated vanity details not mapped; no transitive or full-ring extension",
+    "G178 rectangular reference alone cannot disambiguate physical corners; localization work retained separately",
+    "No supported doorway or Semi cross-view feature case adopted in this packet",
+    "No camera extrinsics found in the inspected local data; reference alignment alone not accepted as identity"
+  ]
+}
