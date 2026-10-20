@@ -1,0 +1,54 @@
+{
+  "Q_matching": "Overall class effects are reported first. Tight historical-Q overlap is limited and is not a reason to discard the original class signal.",
+  "output_sha256": {
+    "ANCHOR_CAPACITY_FIXED_N_CURVES.csv": "4557628e02efca96717af845eb43f5f8e2f7e210aa2447c34ad32e6f959d8883",
+    "PHASE_SUMMARY.csv": "9c1178cd7acb8b84a374b26673662290d4c4f74bfae455ee84f871cd87f560da",
+    "Q_MATCHED_PHASE.csv": "83c8f2d16167b4e19de7b44db59a38c48a67d5ff2dd0d438f58289ce35a0ea1e",
+    "SHAPE_MATCHED_PHASE.csv": "17c4985f3f655be9ea9c13f32442c296288d29bc3e574925b3ddc4341003ac1c"
+  },
+  "rank_deficient_models": [
+    {
+      "columns": 19,
+      "model": "counts_source",
+      "rank": 18,
+      "response": "net_Q",
+      "target": "R"
+    },
+    {
+      "columns": 20,
+      "model": "plus_block_historical_Q",
+      "rank": 19,
+      "response": "net_Q",
+      "target": "R"
+    },
+    {
+      "columns": 19,
+      "model": "counts_source",
+      "rank": 18,
+      "response": "cross_minus_within_abs_Q",
+      "target": "R"
+    },
+    {
+      "columns": 20,
+      "model": "plus_block_historical_Q",
+      "rank": 19,
+      "response": "cross_minus_within_abs_Q",
+      "target": "R"
+    },
+    {
+      "columns": 19,
+      "model": "counts_source",
+      "rank": 18,
+      "response": "cross_minus_within_floor_diff",
+      "target": "R"
+    },
+    {
+      "columns": 20,
+      "model": "plus_block_historical_Q",
+      "rank": 19,
+      "response": "cross_minus_within_floor_diff",
+      "target": "R"
+    }
+  ],
+  "reason": "All R replacement blocks are new-source only, making block_new_fraction constant and collinear with the intercept. Least-squares fitted values/R2 remain defined, but that individual source coefficient and intercept have no separate interpretation. These descriptive fits do not identify a label effect independent of people or quality."
+}

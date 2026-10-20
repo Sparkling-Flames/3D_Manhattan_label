@@ -1,0 +1,226 @@
+{
+  "schema": "independent_baseline_all_event_identity_audit_v1",
+  "passed": true,
+  "request_sha256": "1b680fb3ff82723c61b58ccd61df472133a46eb0c7cf51dd59c47050219eae1b",
+  "events": 33332,
+  "requests": 99996,
+  "unique_team_keys": 99779,
+  "independent_images": 96,
+  "independent_buildings": 12,
+  "workers": 55,
+  "all_feasible_integer_target_pool_m_n_cells": 20679,
+  "all_integer_cells_covered": true,
+  "source_matched_every_event": true,
+  "all_three_pairwise_intersections_equal_core": true,
+  "all_nested_core_chains_exact": true,
+  "distinct_unordered_block_draws_every_cell": true,
+  "zero_capacity_target_pools": [
+    {
+      "target": "R",
+      "pool_id": "B6ByNegPMKs-33__manual__c5a0f2370f",
+      "N": 27,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 3
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "UwV83HsGsw3-17__manual__b27fdc2bc6",
+      "N": 32,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 6
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "X7HyMhZNoso-13__manual__373442ac7c",
+      "N": 29,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 4
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "e9zR4mvMWw7-19__manual__3b9450ee54",
+      "N": 29,
+      "outgoing": {},
+      "incoming": {
+        "v1": 3,
+        "new": 5
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "q9vSo1VnCiC-02__manual__25b2a3db5d",
+      "N": 29,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 5
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "q9vSo1VnCiC-23__manual__fc6ea88ba2",
+      "N": 9,
+      "outgoing": {},
+      "incoming": {
+        "new": 5
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "rPc6DW4iMge-06__manual__34216003a1",
+      "N": 23,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 2,
+        "new": 2
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "rPc6DW4iMge-20__manual__43a4f6717a",
+      "N": 27,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 5
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "rPc6DW4iMge-22__manual__c9c05c21ea",
+      "N": 16,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 2,
+        "new": 2
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "N": 32,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "v1": 3,
+        "new": 7
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "yqstnuAEVhm-26__manual__11c1ecd733",
+      "N": 9,
+      "outgoing": {
+        "new": 1
+      },
+      "incoming": {
+        "new": 5
+      }
+    },
+    {
+      "target": "R",
+      "pool_id": "yqstnuAEVhm-34__manual__cdcf90233b",
+      "N": 29,
+      "outgoing": {},
+      "incoming": {
+        "v1": 3,
+        "new": 6
+      }
+    }
+  ],
+  "overlap_prior_composition_unique_teams": 444,
+  "overlap_codex_followup_unique_teams": 0,
+  "unique_teams_novel_vs_compared_manifests": 99335,
+  "comparison_manifest_sources": [
+    {
+      "path": "analysis/composition/DISCOVERY_BLOCK_REQUESTS.json.gz",
+      "sha256": "af2a6fa99bc45dba4d4241d669438b67cc2b01d5ba50e96032a24058d0d656b1"
+    },
+    {
+      "path": "analysis/composition/DISCOVERY_CONDITION_REQUESTS.json.gz",
+      "sha256": "f6a6da3aa7c9910b92db1cfd96bcbb1706e045d163b002d22b9455afa296923b"
+    },
+    {
+      "path": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+      "sha256": "2644052e0bbfb1e9b61fdb02358009d28a18bb5b78e3ca661605ce4d85acd811"
+    },
+    {
+      "path": "analysis/composition/DISCOVERY_CURVE_REQUESTS.json.gz",
+      "sha256": "c34247528d46e68e64cd7204d90ebfcda9a3b9c719087fe341319e55383b65d9"
+    },
+    {
+      "path": "analysis/composition/DISCOVERY_GRID_REQUESTS.json.gz",
+      "sha256": "02da799ae9cd2c7a7444b342f10a925dbc42294421d276c9fc545d1bfd112299"
+    },
+    {
+      "path": "analysis/composition/DISCOVERY_NESTED_REQUESTS.json.gz",
+      "sha256": "3190d2d0406eb2794ffe361978dd51612b67deb0af0abe5c82996ca486b76d3c"
+    },
+    {
+      "path": "analysis/composition/FINAL_REQUESTS.json.gz",
+      "sha256": "b033cd6974be8eb6e3add5f266a0869baf8175849b80d933cd9dd1e3f9f82be9"
+    },
+    {
+      "path": "analysis/composition/SCREEN_REQUESTS.json.gz",
+      "sha256": "edfb3b39977bed726d239edaa5889900f415f4eebf70310b3d0f8fcdf25e5ddd"
+    },
+    {
+      "path": "analysis/composition/SPECIAL_REQUESTS.json.gz",
+      "sha256": "61fe555a6d783d6b60f978f62a2f3c18493e7b44dc5ddab318c469e6c009553e"
+    },
+    {
+      "path": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+      "sha256": "202814a68491129ff332205c1392cc98217ff9ce672fb7c0227a9f3e01ef38aa"
+    },
+    {
+      "path": "analysis/composition/VALIDATION_CONDITION_REQUESTS.json.gz",
+      "sha256": "d67683b894e28f9a6696ed78371592b78c45da391928b449130e0f7bebb15396"
+    },
+    {
+      "path": "analysis/composition/VALIDATION_CONFIRM_REQUESTS.json.gz",
+      "sha256": "51548dcee2cb110279b0c59e027eeb0c71be106cc10264ad4c30e7aa1cd40a08"
+    },
+    {
+      "path": "analysis/composition/VALIDATION_CURVE_REQUESTS.json.gz",
+      "sha256": "b96212a008d09cdea6531cd1a1b0a10552aabef1b46063ce21d7df7d8bee360a"
+    },
+    {
+      "path": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+      "sha256": "651b0ad34e433cb6a0b4e8c65613c990547d5fd0666718b636c29ea8f38132c0"
+    },
+    {
+      "path": "current_main_20261020/research/workers/personnel_composition_followup_20261019/REQUESTS.json.gz",
+      "sha256": "79ea6d2ec81e59fe5ef0d940ab89e9d28b0d5d0bb20ae45d299b87558775eb66"
+    }
+  ],
+  "fusion_results_read": false,
+  "limitations": [
+    "Novelty check covers the explicitly listed prior composition/followup manifests only, not every historical single-person cache.",
+    "Distinct draws share workers and images; repeated teams/events are not independent images.",
+    "All feasible n,m are covered, not all member combinations or all source vectors."
+  ]
+}

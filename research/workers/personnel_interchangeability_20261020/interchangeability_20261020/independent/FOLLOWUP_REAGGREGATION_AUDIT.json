@@ -1,0 +1,889 @@
+{
+  "schema": "independent_codex_followup_reaggregation_v1",
+  "all_passed": true,
+  "events": 451,
+  "unique_actual_teams": 1353,
+  "images": 66,
+  "pools": 66,
+  "buildings": 12,
+  "workers": 55,
+  "original_events": 133,
+  "additional_events": 318,
+  "original_supported_target_pools": 106,
+  "all_extra_target_pools_have_3_new_distinct_cores": true,
+  "all_same_background_actual_m_source_class_invariants": true,
+  "score_status_counts": {
+    "complete_conditional": 1346,
+    "below_four": 1,
+    "no_connection": 5,
+    "invalid_floor": 1
+  },
+  "event_field_mismatches": [],
+  "aggregate_cells_compared": 3022,
+  "aggregate_max_abs_difference": 7.105427357601002e-15,
+  "native_replay_executed": true,
+  "native_replay_teams": 30,
+  "native_results": [
+    {
+      "event_id": "G_17_8__yqstnuAEVhm-01__manual__36b313c914__extra0",
+      "arm": "A",
+      "pool_id": "yqstnuAEVhm-01__manual__36b313c914",
+      "team_key": "yqstnuAEVhm-01__manual__36b313c914__ae033e47f1f9282c57fd",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 2.842170943040401e-14,
+        "D10": 2.842170943040401e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__yqstnuAEVhm-01__manual__36b313c914__extra0",
+      "arm": "B",
+      "pool_id": "yqstnuAEVhm-01__manual__36b313c914",
+      "team_key": "yqstnuAEVhm-01__manual__36b313c914__0560afdd5a6c093462a1",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 4.263256414560601e-14,
+        "D10": 4.263256414560601e-14,
+        "IoU3D100": 7.105427357601002e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__yqstnuAEVhm-01__manual__36b313c914__extra0",
+      "arm": "C",
+      "pool_id": "yqstnuAEVhm-01__manual__36b313c914",
+      "team_key": "yqstnuAEVhm-01__manual__36b313c914__b644bb7f95ac150657d6",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": -4.263256414560601e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__pa4otMbVnkk-14__manual__1ee397d26d__extra1",
+      "arm": "A",
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "team_key": "pa4otMbVnkk-14__manual__1ee397d26d__aa1241892c4d3b9eb642",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -4.263256414560601e-14,
+        "D10": -4.263256414560601e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__pa4otMbVnkk-14__manual__1ee397d26d__extra1",
+      "arm": "B",
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "team_key": "pa4otMbVnkk-14__manual__1ee397d26d__de78a9fdabba4463354a",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 1.4210854715202004e-14,
+        "D10": 4.263256414560601e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 1.3877787807814457e-17
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__pa4otMbVnkk-14__manual__1ee397d26d__extra1",
+      "arm": "C",
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "team_key": "pa4otMbVnkk-14__manual__1ee397d26d__1034a54d078bac9bdd26",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__27d4bf178709fcd69d7d72f3",
+      "arm": "A",
+      "pool_id": "e9zR4mvMWw7-10__manual__ecf22b00ab",
+      "team_key": "e9zR4mvMWw7-10__manual__ecf22b00ab__1e9d58c57628fb6bee0f",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__27d4bf178709fcd69d7d72f3",
+      "arm": "B",
+      "pool_id": "e9zR4mvMWw7-10__manual__ecf22b00ab",
+      "team_key": "e9zR4mvMWw7-10__manual__ecf22b00ab__9242e033ca6be5173fb1",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -4.263256414560601e-14,
+        "D10": -4.263256414560601e-14,
+        "IoU3D100": -2.842170943040401e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__27d4bf178709fcd69d7d72f3",
+      "arm": "C",
+      "pool_id": "e9zR4mvMWw7-10__manual__ecf22b00ab",
+      "team_key": "e9zR4mvMWw7-10__manual__ecf22b00ab__8e8579034c57562f9641",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -7.105427357601002e-14,
+        "D10": -7.105427357601002e-14,
+        "IoU3D100": -8.526512829121202e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__628fd3b8f045594252879b49",
+      "arm": "A",
+      "pool_id": "pa4otMbVnkk-09__manual__7b9cc79111",
+      "team_key": "pa4otMbVnkk-09__manual__7b9cc79111__57b606d045ae90b33ee5",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -4.263256414560601e-14,
+        "D10": -4.263256414560601e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__628fd3b8f045594252879b49",
+      "arm": "B",
+      "pool_id": "pa4otMbVnkk-09__manual__7b9cc79111",
+      "team_key": "pa4otMbVnkk-09__manual__7b9cc79111__c3926cf0229baf6fa16e",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -2.842170943040401e-14,
+        "D10": -2.842170943040401e-14,
+        "IoU3D100": -4.263256414560601e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__628fd3b8f045594252879b49",
+      "arm": "C",
+      "pool_id": "pa4otMbVnkk-09__manual__7b9cc79111",
+      "team_key": "pa4otMbVnkk-09__manual__7b9cc79111__71347739b58c2e546ddb",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__jtcxE69GiFV-09__manual__751e8c357b__extra1",
+      "arm": "A",
+      "pool_id": "jtcxE69GiFV-09__manual__751e8c357b",
+      "team_key": "jtcxE69GiFV-09__manual__751e8c357b__8c021bde01074c45c955",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__jtcxE69GiFV-09__manual__751e8c357b__extra1",
+      "arm": "B",
+      "pool_id": "jtcxE69GiFV-09__manual__751e8c357b",
+      "team_key": "jtcxE69GiFV-09__manual__751e8c357b__352d69da3107446f378c",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -1.4210854715202004e-14,
+        "D10": 0.0,
+        "IoU3D100": 4.263256414560601e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 1.1102230246251565e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__jtcxE69GiFV-09__manual__751e8c357b__extra1",
+      "arm": "C",
+      "pool_id": "jtcxE69GiFV-09__manual__751e8c357b",
+      "team_key": "jtcxE69GiFV-09__manual__751e8c357b__5794a7778265553ba595",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 2.842170943040401e-14,
+        "D10": 2.842170943040401e-14,
+        "IoU3D100": 2.842170943040401e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 1.1102230246251565e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-18__manual__ba2dd293b0__extra0",
+      "arm": "A",
+      "pool_id": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "team_key": "B6ByNegPMKs-18__manual__ba2dd293b0__ba815483cad71ce21441",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -5.684341886080802e-14,
+        "D10": -5.684341886080802e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-18__manual__ba2dd293b0__extra0",
+      "arm": "B",
+      "pool_id": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "team_key": "B6ByNegPMKs-18__manual__ba2dd293b0__772883ca6f7d3580da22",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 1.4210854715202004e-14,
+        "D10": 1.4210854715202004e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-18__manual__ba2dd293b0__extra0",
+      "arm": "C",
+      "pool_id": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "team_key": "B6ByNegPMKs-18__manual__ba2dd293b0__6beee988b880b3f5f922",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 2.842170943040401e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__f18d51f7ceed40db6133ebe5",
+      "arm": "A",
+      "pool_id": "7y3sRwLe3Va-23__manual__0e28c733e4",
+      "team_key": "7y3sRwLe3Va-23__manual__0e28c733e4__85dbe0eb78d538c7402f",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 1.4210854715202004e-14,
+        "D10": 1.4210854715202004e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__f18d51f7ceed40db6133ebe5",
+      "arm": "B",
+      "pool_id": "7y3sRwLe3Va-23__manual__0e28c733e4",
+      "team_key": "7y3sRwLe3Va-23__manual__0e28c733e4__d086b472d2323e5ce8e0",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__f18d51f7ceed40db6133ebe5",
+      "arm": "C",
+      "pool_id": "7y3sRwLe3Va-23__manual__0e28c733e4",
+      "team_key": "7y3sRwLe3Va-23__manual__0e28c733e4__3bae1a5388f80d386cf1",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -1.4210854715202004e-14,
+        "D10": -1.4210854715202004e-14,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__563045742a4e9475b1219da4",
+      "arm": "A",
+      "pool_id": "pa4otMbVnkk-18__manual__bbb972aaa9",
+      "team_key": "pa4otMbVnkk-18__manual__bbb972aaa9__917290d5f15ffaca8cfe",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": -2.842170943040401e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__563045742a4e9475b1219da4",
+      "arm": "B",
+      "pool_id": "pa4otMbVnkk-18__manual__bbb972aaa9",
+      "team_key": "pa4otMbVnkk-18__manual__bbb972aaa9__c4a8ae595204f74fc9c2",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": -2.842170943040401e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 2.220446049250313e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "block__563045742a4e9475b1219da4",
+      "arm": "C",
+      "pool_id": "pa4otMbVnkk-18__manual__bbb972aaa9",
+      "team_key": "pa4otMbVnkk-18__manual__bbb972aaa9__6e377bc1c967f6c24032",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -7.105427357601002e-15,
+        "D10": 0.0,
+        "IoU3D100": -8.526512829121202e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__X7HyMhZNoso-07__manual__dd2275185f__extra0",
+      "arm": "A",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__1e4032fdc25db6e3a52a",
+      "score_status": "no_connection",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": null,
+        "D10": null,
+        "IoU3D100": null
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": false,
+          "exact": true,
+          "max_abs_difference": null
+        },
+        {
+          "field": "footprint",
+          "available": false,
+          "exact": true,
+          "max_abs_difference": null
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__X7HyMhZNoso-07__manual__dd2275185f__extra0",
+      "arm": "B",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__68a79cd274db33b1c607",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -7.105427357601002e-15,
+        "D10": 0.0,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "G_17_8__X7HyMhZNoso-07__manual__dd2275185f__extra0",
+      "arm": "C",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__cdfd484e20188a1ab7fc",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 7.105427357601002e-15,
+        "IoU3D100": 4.263256414560601e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-47__manual__9eae4a3584__extra0",
+      "arm": "A",
+      "pool_id": "B6ByNegPMKs-47__manual__9eae4a3584",
+      "team_key": "B6ByNegPMKs-47__manual__9eae4a3584__bf7492c295f112d7828c",
+      "score_status": "invalid_floor",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": null,
+        "D10": null,
+        "IoU3D100": null
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": false,
+          "max_abs_difference": 1.1102230246251565e-16
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-47__manual__9eae4a3584__extra0",
+      "arm": "B",
+      "pool_id": "B6ByNegPMKs-47__manual__9eae4a3584",
+      "team_key": "B6ByNegPMKs-47__manual__9eae4a3584__09000fd596e02aecc5c2",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": -1.4210854715202004e-14,
+        "D10": -1.4210854715202004e-14,
+        "IoU3D100": -1.4210854715202004e-14
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "event_id": "R_13_2__B6ByNegPMKs-47__manual__9eae4a3584__extra0",
+      "arm": "C",
+      "pool_id": "B6ByNegPMKs-47__manual__9eae4a3584",
+      "team_key": "B6ByNegPMKs-47__manual__9eae4a3584__d66382d0777ebb7b3705",
+      "score_status": "complete_conditional",
+      "metadata_exact": true,
+      "score_deltas": {
+        "B8L2": 0.0,
+        "D10": 7.105427357601002e-15,
+        "IoU3D100": 0.0
+      },
+      "geometry": [
+        {
+          "field": "points",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        },
+        {
+          "field": "footprint",
+          "available": true,
+          "exact": true,
+          "max_abs_difference": 0.0
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "native_distinct_images": 10,
+  "native_distinct_buildings": 7,
+  "new_metric_pairs": 902,
+  "source_sha256": {
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/REQUESTS.json.gz": "79ea6d2ec81e59fe5ef0d940ab89e9d28b0d5d0bb20ae45d299b87558775eb66",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/TEAMS.json.gz": "478b9a0d1c004fa914b2b9c2bfa9e2ec8b4c2c7497453f266c36d459fd7cdbaf",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/EVENTS.csv.gz": "26b82251e1ed4ce1ac086ce5da0e8229fba82356a2008eda129fa6316433d486",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/SUMMARY.csv": "b2b9b43224fb8b93d63819f1422adcf48459b73c04276bdd375b8e1b38439c01",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/PER_IMAGE.csv": "3c3580c056aaa4b9e5d869e53a5feb0790e886c2129bd7c19514eee964e59ba8",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/PER_BUILDING.csv": "368c30744bf231546dd7485c9c86514d7a1097b2895a46927e0569a7a0bf526a",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/CRITERION_COMPONENTS.csv": "d0fb4937e0498d72c241f951450381e2a1ffcf39ec0540db0e06b96136ac5ba0",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/REGISTRATION.json": "97ba58b256053c4cb2260f931fb61b77ec8302462aaf439a6b68803fcb547926",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/FIELD_CONTRACT.json": "217555d13d1db5f2a28a0741d208c007f74b837c6c98ff16dbe200365c8e742e",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "interchangeability_20261020/independent/audit_followup.py": "cfebf45812b9d228979c1fb4d7b48444c24888cedc6205f72e40f502cb63f7ec",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+    "analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f"
+  },
+  "all_sources_unchanged": true,
+  "elapsed_seconds": 11.414449304997106,
+  "interpretation": "Already explored v2; additional shared backgrounds in the same previously supported images. 451 old pairs remeasured from retained geometries; only the explicitly listed native subset is independently re-fused here."
+}

@@ -1,0 +1,234 @@
+{
+  "utc": "2026-10-19T14:28:36.367923+00:00",
+  "interpretation": "Refit on nine of ten already-adopted historical buildings. Label sensitivity only, not independent new-image or new-worker validation; common-set ARI always accompanies lost/gained support.",
+  "main_labels_unchanged": {
+    "worker_labels.csv.gz": "ce8f572a5b8f23bbe8ab0f508394bff19fe4d40d27e8c2b7f5b6829fc3f81c97",
+    "method_manifest.json": "6777c6c8032bc4b7dedddef6e94a5ab3199091aad2ccaa32e51b70f33dd96dbd"
+  },
+  "methods": [
+    "F20_all_QTG_balanced_medoids_K3",
+    "F20_all_QTG_balanced_medoids_K4",
+    "F20_all_Q_zero_K2",
+    "F20_all_QxT_K4",
+    "F20_all_T_qK3",
+    "F20_coarseQ_refineHigh_T",
+    "F20_coarseQ_refineHigh_TxDetail",
+    "F20_doorway_QTG_balanced_K3",
+    "F20_hard_TDG_balanced_K3",
+    "F20_highQ18_T_qK2",
+    "F20_highQ23_Bottom_qK2",
+    "F20_highQ23_Detail_qK2",
+    "F20_highQ23_HardAdapt_qK2_hard",
+    "F20_highQ23_Height_qK2",
+    "F20_highQ23_TG_balanced_medoids_K3",
+    "F20_highQ23_TQtail_balanced_medoids_K3",
+    "F20_highQ23_T_qK2",
+    "F20_highQ23_T_qK3",
+    "F20_highQ23_TxDetail_K4",
+    "F20_highQnew_DG_balanced_K2",
+    "F20_highQnew_T_NewEdit_balanced_K2",
+    "F20_highQnew_T_NewNonedit_balanced_K2",
+    "F20_highQnew_T_Scope_balanced_K2",
+    "F20_newCommon_Full_balanced_K2",
+    "F20_newCommon_Full_balanced_K3",
+    "F20_newCommon_NoQ_balanced_K2",
+    "F20_newCommon_NoQ_balanced_K3",
+    "F20_newCommon_NoT_balanced_K2",
+    "F20_newCommon_NoT_balanced_K3",
+    "F20_newCommon_Nodifficulty_balanced_K2",
+    "F20_newCommon_Nodifficulty_balanced_K3",
+    "F20_newCommon_Nogeometry_balanced_K2",
+    "F20_newCommon_Nogeometry_balanced_K3",
+    "F20_newCommon_Nonew_report_nonedit_balanced_K2",
+    "F20_newCommon_Nonew_report_nonedit_balanced_K3",
+    "F20_newCommon_Noscope_propensity_balanced_K2",
+    "F20_newCommon_Noscope_propensity_balanced_K3",
+    "F20_newCommon_Nosemi_edit_balanced_K2",
+    "F20_newCommon_Nosemi_edit_balanced_K3",
+    "F20_new_NewEdit_qK2",
+    "F20_new_NewNonedit_qK2",
+    "F20_new_Scope_qK2",
+    "F20_new_T_NewEdit_balanced_K3",
+    "F20_new_T_NewNonedit_balanced_K3",
+    "F20_new_T_Scope_balanced_K3",
+    "F20_semiNew_NewNonedit_qK2",
+    "F20_semiNew_Scope_qK2",
+    "F20_semi_new_QTGEditReport_balanced_K3",
+    "F20_semi_new_QT_balanced_K3",
+    "F20_semi_v1_QTGEdit_balanced_K3"
+  ],
+  "folds": [
+    {
+      "removed_history_building": "2t7WUuJeko7",
+      "training_buildings": [
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4614,
+      "formal_quality_history_rows": 2460,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "S9hNv5qa7GM",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4242,
+      "formal_quality_history_rows": 2232,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "VFuaQ6m2Qom",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4590,
+      "formal_quality_history_rows": 2408,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "Z6MFQCViBuw",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4513,
+      "formal_quality_history_rows": 2403,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "b8cTxDM8gDG",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4483,
+      "formal_quality_history_rows": 2513,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "jh4fc5c5qoQ",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4519,
+      "formal_quality_history_rows": 2410,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "uNb9QFRL6hY",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 2854,
+      "formal_quality_history_rows": 1730,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "wc2JMjhGNzB",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 3905,
+      "formal_quality_history_rows": 2097,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "x8F5xyUWy9e",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "zsNo4HB9uLZ"
+      ],
+      "history_records": 4627,
+      "formal_quality_history_rows": 2508,
+      "methods": 50
+    },
+    {
+      "removed_history_building": "zsNo4HB9uLZ",
+      "training_buildings": [
+        "2t7WUuJeko7",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "Z6MFQCViBuw",
+        "b8cTxDM8gDG",
+        "jh4fc5c5qoQ",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e"
+      ],
+      "history_records": 4556,
+      "formal_quality_history_rows": 2441,
+      "methods": 50
+    }
+  ],
+  "target_fusion_outcomes_read": false,
+  "code_sha256": "bf46d757ed0f1a4b80283cef6a0e95204fca8d5534d221f096794afbdc1061d7"
+}

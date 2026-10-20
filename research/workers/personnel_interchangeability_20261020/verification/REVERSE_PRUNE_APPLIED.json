@@ -1,0 +1,119 @@
+{
+  "files": 14,
+  "bytes": 10475347,
+  "removed": [
+    {
+      "path": "interchangeability_20261020/reverse/mixed_audit/class_explanations.csv.gz",
+      "bytes": 3422700,
+      "sha256": "b596bdc1d0b872ef4219c331f0f161007ba005d7874ccfdbd8c90d5ee3b9ba49",
+      "estimated_zip_deflate6_bytes": 3422207,
+      "role_id": "all_candidate_profiles",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_explain_types.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_audit/class_explanations.csv.gz",
+      "bytes": 3013232,
+      "sha256": "2873d42a2a5ce5165e0383177a8146acf19c53ec0213b507a2c094d71c6ee5ea",
+      "estimated_zip_deflate6_bytes": 3013018,
+      "role_id": "all_candidate_profiles",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_explain_types.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_matched_anchor_building.csv.gz",
+      "bytes": 619504,
+      "sha256": "15e5590994f2eac8779f085ae0bdc7a07717e6b639c070a54072599ac7924dc8",
+      "estimated_zip_deflate6_bytes": 619694,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_building_draws.csv.gz",
+      "bytes": 289325,
+      "sha256": "9dffdd58d3f77efc15eb2b276866c014e53b09effd866900c7a9dee9ba3d95a2",
+      "estimated_zip_deflate6_bytes": 289415,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_building_draws.csv.gz",
+      "bytes": 512284,
+      "sha256": "0e6adac684a77a61d817168461f1f94bd52d416d70f2f802d8c412da1bf1ca19",
+      "estimated_zip_deflate6_bytes": 512444,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/direction_m_aggregate.csv.gz",
+      "bytes": 567184,
+      "sha256": "a49c16c4fee466be348c4fa233600b4d822bde9ff625829a0a84aa1b28bdb5b9",
+      "estimated_zip_deflate6_bytes": 567359,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/within_class_difficulty_per_building.csv.gz",
+      "bytes": 476857,
+      "sha256": "ab8f9845e81a790d3b0aef20b18c90c7955eefdac2e088de9869130a0f0754e6",
+      "estimated_zip_deflate6_bytes": 477007,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/within_class_per_building.csv.gz",
+      "bytes": 286600,
+      "sha256": "b9e4308cab91bc5b8c4ded26c1f0ba16e19cdba9e7765d432133d65ee5e8f179",
+      "estimated_zip_deflate6_bytes": 286690,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/method_per_building.csv.gz",
+      "bytes": 243523,
+      "sha256": "587130e5686d8ccd6ea1d5ff7f03be484712b2c5826ac84515725d07ac16e6a5",
+      "estimated_zip_deflate6_bytes": 243598,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_n_and_added_class_per_true_image.csv.gz",
+      "bytes": 559358,
+      "sha256": "eaac18e19467c2a761622cfe7d0826a47fc9c40acc17e5341bd75b1e1a398579",
+      "estimated_zip_deflate6_bytes": 559533,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_n_and_added_class_per_building.csv.gz",
+      "bytes": 169447,
+      "sha256": "338f95dfc92fa2abe35b08a4d8dbe18e40f392bdf49abd07a2b8f099ae34512d",
+      "estimated_zip_deflate6_bytes": 169502,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_support_increment_per_true_image.csv.gz",
+      "bytes": 92464,
+      "sha256": "8eacce325b4d3fffa4d65aa75b2d36cfb7b4be9b0270c90aadc8be17336d32ef",
+      "estimated_zip_deflate6_bytes": 92494,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_support_increment_per_building.csv.gz",
+      "bytes": 21055,
+      "sha256": "a7a1131b7995ad4b7d15669438a89e9fd43ae2baf17e5283e1a1b6ec31aac63f",
+      "estimated_zip_deflate6_bytes": 21065,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/nested_stress/nested_stress_class_pair_building.csv.gz",
+      "bytes": 201814,
+      "sha256": "0ab533a8de7e05766bc515cc7a3cc6155e8895300ffe5fcf9b661b20fb7d7eb3",
+      "estimated_zip_deflate6_bytes": 201879,
+      "role_id": "legacy_nested_stress_class_pair",
+      "rebuild_entry": "interchangeability_20261020/reverse/stress_nested_history.py"
+    }
+  ],
+  "all_required_51_inputs_protected": true
+}

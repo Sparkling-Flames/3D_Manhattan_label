@@ -1,0 +1,16 @@
+{
+  "labels_sha256": "f9808de471f56773aae3a41df1e4b7f7f366a2fa071d39acd036b4f40be2e6d9",
+  "shortlist_sha256": "80c32a5f08ca00107da4712c3a82b2d60a2e2d6e08c16adaf88e6ffe02161070",
+  "source_script_sha256": "fafa234763f6f8c9ae1f203967dea909d1eb2a21a7290659098baf3d29a8894e",
+  "seed": 2026102005,
+  "random_draws": 40,
+  "randomization": "Within each training-source cohort permute the fitted labels, preserving every class's new/v1 counts and capacity exactly.",
+  "evaluation": "Same eligible worker cohort and heldout real anchors as candidate; exactly same bg -> n -> image -> building weighting, every contrast requires both within/between pairs on that anchor.",
+  "matched_anchor_comparison": "Separate paired tables restrict candidate and baseline to the intersection of anchors supporting both within/between relations under BOTH partitions; all deltas use identical anchors.",
+  "source_only": "Known source metadata, no quality response. A one-source domain cannot create a source between-class contrast; recorded unavailable.",
+  "no_full_history_Q_baseline": true,
+  "no_discovery_validation_outcomes_loaded": true,
+  "maximum_fast_vs_original_difference": 3.3306690738754696e-16,
+  "interpretation": "Internal history selection/audit only. Random-draw quantiles are not independent image confidence intervals; post-selection results require outer target checks.",
+  "elapsed_seconds": 82.93764368900156
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "portable_forward_feature_inputs_v1",
+  "package_inputs": [
+    {
+      "source": "analysis/composition/SPLIT.json",
+      "stage": "analysis/composition/SPLIT.json",
+      "sha256": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+      "bytes": 2035
+    },
+    {
+      "source": "analysis/forward/build_forward.py",
+      "stage": "analysis/forward/build_forward.py",
+      "sha256": "06cdb011d874681c6940b405ec88a6e226fbc1d70780ea0b5c3154d4c543ce31",
+      "bytes": 25601
+    },
+    {
+      "source": "analysis/forward/results/features_train.csv.gz",
+      "stage": "analysis/forward/results/features_train.csv.gz",
+      "sha256": "783568cf98a2612308ed53a68d2a1bcc3ad10000bb6587d79b521efbbbd89117",
+      "bytes": 30973
+    },
+    {
+      "source": "analysis/forward/results/worker_labels.csv.gz",
+      "stage": "analysis/forward/results/worker_labels.csv.gz",
+      "sha256": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+      "bytes": 31890
+    },
+    {
+      "source": "interchangeability_20261020/forward/audit_and_features.py",
+      "stage": "interchangeability_20261020/forward/audit_and_features.py",
+      "sha256": "78f589517a773f375cee3c697c0bfe17d30a17b0743744498226fa95b7312b94",
+      "bytes": 18079
+    },
+    {
+      "source": "interchangeability_20261020/forward/build_candidates.py",
+      "stage": "interchangeability_20261020/forward/build_candidates.py",
+      "sha256": "5a73db217b1703b3954540d9cbf2af2030c368164698aaec7f43b1ea8fbe7e54",
+      "bytes": 35312
+    },
+    {
+      "source": "interchangeability_20261020/forward/features_train.csv.gz",
+      "stage": "interchangeability_20261020/forward/features_train.csv.gz",
+      "sha256": "5475b0d2a826d609cab3adfe3b436078cf2d427605c1ca7b9b3d580c00e532df",
+      "bytes": 56861
+    },
+    {
+      "source": "interchangeability_20261020/forward/worker_labels.csv.gz",
+      "stage": "interchangeability_20261020/forward/worker_labels.csv.gz",
+      "sha256": "ce8f572a5b8f23bbe8ab0f508394bff19fe4d40d27e8c2b7f5b6829fc3f81c97",
+      "bytes": 38388
+    },
+    {
+      "source": "interchangeability_20261020/forward/method_manifest.json",
+      "stage": "interchangeability_20261020/forward/method_manifest.json",
+      "sha256": "6777c6c8032bc4b7dedddef6e94a5ab3199091aad2ccaa32e51b70f33dd96dbd",
+      "bytes": 1931822
+    },
+    {
+      "source": "interchangeability_20261020/reproduction/feature_support/HIGH_Q_FEATURES.csv",
+      "stage": "interchangeability_20261020/reproduction/feature_support/HIGH_Q_FEATURES.csv",
+      "sha256": "2e8c9cd8b91b1ed612a510074d1b2863d2206a51e30bd24f52d035b3801f195b",
+      "bytes": 3542
+    },
+    {
+      "source": "interchangeability_20261020/reproduction/feature_support/SUBDIVISION_SUPPORT.csv",
+      "stage": "interchangeability_20261020/reproduction/feature_support/SUBDIVISION_SUPPORT.csv",
+      "sha256": "5881b4c7a70391a97e65f26712b08447bec44b37075aef20f59d2e5e1eba00c2",
+      "bytes": 312
+    },
+    {
+      "source": "interchangeability_20261020/reproduction/feature_support/POOL_INVENTORY.csv",
+      "stage": "repo/research/workers/personnel_composition_handoff_20261019/POOL_INVENTORY.csv",
+      "sha256": "64e2f690309300fa0f81e3853e03c7313ab156123e072b746635acc1fa3bfa5d",
+      "bytes": 58984
+    },
+    {
+      "source": "interchangeability_20261020/reproduction/feature_support/POOL_MEMBERS.csv.gz",
+      "stage": "repo/research/workers/personnel_composition_handoff_20261019/POOL_MEMBERS.csv.gz",
+      "sha256": "f4be8422f54256b591418717c51c28eff0ab15672a92c53088ac8a4c70805b95",
+      "bytes": 69759
+    }
+  ],
+  "restored_inputs": [
+    {
+      "source": "work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "stage": "repo/research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+      "bytes": 14751756
+    },
+    {
+      "source": "work_personnel_typing_A_20261019/forward/build_features.py",
+      "stage": "repo/research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/build_features.py",
+      "sha256": "4b54ac047cf4853fcb4e26d6073437d42b0e37c1ad9c8316bafc9de207f1c6f7",
+      "bytes": 19955
+    },
+    {
+      "source": "work_personnel_typing_A_20261019/recovered/work_v2_20261019/profiles/run_profiles.py",
+      "stage": "repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/profiles/run_profiles.py",
+      "sha256": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc",
+      "bytes": 34042
+    }
+  ],
+  "source_support_provenance": {
+    "HIGH_Q_FEATURES.csv": "current_main_20261020/research/workers/personnel_composition_followup_20261019/HIGH_Q_FEATURES.csv",
+    "SUBDIVISION_SUPPORT.csv": "current_main_20261020/research/workers/personnel_composition_followup_20261019/SUBDIVISION_SUPPORT.csv",
+    "POOL_INVENTORY.csv": "repo/research/workers/personnel_composition_handoff_20261019/POOL_INVENTORY.csv",
+    "POOL_MEMBERS.csv.gz": "repo/research/workers/personnel_composition_handoff_20261019/POOL_MEMBERS.csv.gz"
+  },
+  "scope": "Historical ten-building feature extraction and all candidate labels/capacity tables only; no target outcome fit or raw export cleaning."
+}

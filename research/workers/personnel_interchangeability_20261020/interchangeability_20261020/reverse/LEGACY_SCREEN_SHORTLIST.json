@@ -1,0 +1,126 @@
+{
+  "schema": "direct_swap_legacy_screen_shortlist_v1",
+  "status": "selected_before_any_new_target_block_outcomes",
+  "labels": "interchangeability_20261020/reverse/legacy_fit/worker_labels.csv.gz",
+  "labels_sha256": "36f28a0883f343d76a22714d99c08db36d11361ee13502d1cd985e1fd1f4a026",
+  "selection": "coarse interpretable, intermediate capacity, and high-K stress candidates; direct-risk inner-CV support and expression diversity; not only maximal scalar score",
+  "methods": [
+    {
+      "method_id": "R_directswap_joint_spectral_K2__ordinary",
+      "domain": "ordinary",
+      "class_sizes": {
+        "C01": 32,
+        "C02": 23
+      },
+      "inner_cv": {
+        "within_stable_main": 0.6952093030231395,
+        "between_stable_main": 0.6422927309171385,
+        "within_bad_wide": 0.1772598251907357,
+        "gap_geometry": 0.0312329828846392,
+        "gap_continuous": 0.0275840547546764,
+        "cv_buildings": 10.0,
+        "cv_images": 77.0,
+        "cv_within_events": 60753.0,
+        "cv_between_events": 56657.0
+      }
+    },
+    {
+      "method_id": "R_directswap_continuous_partition_b2_K3__ordinary",
+      "domain": "ordinary",
+      "class_sizes": {
+        "C01": 14,
+        "C02": 23,
+        "C03": 18
+      },
+      "inner_cv": {
+        "within_stable_main": 0.6996196515533003,
+        "between_stable_main": 0.6465603698932039,
+        "within_bad_wide": 0.1756087184981797,
+        "gap_geometry": 0.0335213052529633,
+        "gap_continuous": 0.028195375449924,
+        "cv_buildings": 10.0,
+        "cv_images": 77.0,
+        "cv_within_events": 46002.0,
+        "cv_between_events": 71436.0
+      }
+    },
+    {
+      "method_id": "R_directswap_continuous_spectral_K6__ordinary",
+      "domain": "ordinary",
+      "class_sizes": {
+        "C01": 8,
+        "C02": 13,
+        "C03": 10,
+        "C04": 7,
+        "C05": 9,
+        "C06": 8
+      },
+      "inner_cv": {
+        "within_stable_main": 0.7111904464615652,
+        "between_stable_main": 0.6573642742092102,
+        "within_bad_wide": 0.1692322973798179,
+        "gap_geometry": 0.0347489064746756,
+        "gap_continuous": 0.0256127658654073,
+        "cv_buildings": 10.0,
+        "cv_images": 77.0,
+        "cv_within_events": 22269.0,
+        "cv_between_events": 95214.0
+      }
+    },
+    {
+      "method_id": "R_directswap_continuous_partition_b0_K8__ordinary",
+      "domain": "ordinary",
+      "class_sizes": {
+        "C01": 5,
+        "C02": 14,
+        "C03": 7,
+        "C04": 7,
+        "C05": 5,
+        "C06": 5,
+        "C07": 7,
+        "C08": 5
+      },
+      "inner_cv": {
+        "within_stable_main": 0.7154354906389706,
+        "between_stable_main": 0.6594099906937978,
+        "within_bad_wide": 0.1639992153016755,
+        "gap_geometry": 0.0357103426249025,
+        "gap_continuous": 0.0297150411391359,
+        "cv_buildings": 10.0,
+        "cv_images": 77.0,
+        "cv_within_events": 17874.0,
+        "cv_between_events": 99598.0
+      }
+    },
+    {
+      "method_id": "R_directswap_continuous_partition_b0_K12__ordinary",
+      "domain": "ordinary",
+      "class_sizes": {
+        "C01": 4,
+        "C02": 4,
+        "C03": 5,
+        "C04": 4,
+        "C05": 4,
+        "C06": 4,
+        "C07": 4,
+        "C08": 4,
+        "C09": 4,
+        "C10": 4,
+        "C11": 10,
+        "C12": 4
+      },
+      "inner_cv": {
+        "within_stable_main": 0.7279209367562475,
+        "between_stable_main": 0.6615795352433865,
+        "within_bad_wide": 0.1584641610529416,
+        "gap_geometry": 0.0374605457812702,
+        "gap_continuous": 0.0309520637465473,
+        "cv_buildings": 10.0,
+        "cv_images": 77.0,
+        "cv_within_events": 10168.0,
+        "cv_between_events": 107269.0
+      }
+    }
+  ],
+  "hard_caution": "Unrestricted hard K2 currently nearly reconstructs source cohorts under sparse cross-source relation opportunity; it is not promoted as a difficulty-expert class. Within-source domains will be separately generated."
+}

@@ -1,0 +1,15 @@
+{
+  "source_context_baseline": "context_joint is centered against the whole same-background entrant graph before domain filtering. Thus source-conditioned context_joint candidates indirectly use other-source entrant outcomes for centering on TRAINING buildings; no fold/building leakage. None of the 15 selected source-conditional methods uses context_joint.",
+  "source_only_baseline": "When source partition cannot provide both within/between pairs on an anchor it is unavailable, not zero. Paired tables use only the exact common-anchor intersection.",
+  "lobo_summary": "Only dropped buildings that actually contributed domain outcomes enter the headline mean. Hard domain has 6 active buildings; dropping 4 non-hard buildings trivially yields unchanged labels and is excluded.",
+  "nontransitivity": "Old engineering joint thresholds and no-Q geometric thresholds need not be transitive. Same-context open wedges are exact actual-output relations, not estimates; aggregate edge wedges have explicitly different opportunity sets.",
+  "profiles": "All Q/T/Semi/scope/shape summaries use the frozen 10-history-building feature file. FULL labels and target outcomes are not used. Names are descriptions only; eta-squared increases with class flexibility and is not incremental predictive information.",
+  "bad_tails": "Pair-history p10 is a quantile across supported PERSON-PAIR mean stability values, not a per-team Q p10. Empirical heldout wide-threshold failure is retained separately.",
+  "gaps": "Direct risk classification searches actual replacement evidence, yet remains heuristic; it does not enumerate every possible partition, team, background, n or ratio. All integer K permitted by minimum-four capacity were attempted.",
+  "no_new_independent_claim": "CV buildings are within already explored v2 history. Root target blocks are separate class-efficacy checks; new teams do not increase the number of independent images or buildings.",
+  "source_script_sha256": "bd08b482af972bdaa65ac4531e5c9ebaa637e31882ce0239e47d3ad79e8f7431",
+  "selected_methods": 15,
+  "selected_classes": 86,
+  "selected_worker_class_rows": 743,
+  "all_candidates": 1808
+}

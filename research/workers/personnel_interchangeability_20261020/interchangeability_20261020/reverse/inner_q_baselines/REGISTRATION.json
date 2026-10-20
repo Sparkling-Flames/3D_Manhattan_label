@@ -1,0 +1,12 @@
+{
+  "seed": 2026102007,
+  "random_draws": 40,
+  "classes_refitted_or_selected": false,
+  "Q_feature": "q_beta rebuilt independently on each 8-building training fold",
+  "Q_only": "Balanced empirical q_beta quantiles with same K as the candidate, ties broken by worker ID; minimum4 in each Q bin",
+  "source_Q_bins": "Within each training-source cohort, up to3 balanced empirical q_beta bins, as capacity permits minimum4",
+  "randomization": "Permute candidate class labels only within source x Q-bin strata, preserving exactly every class's count in each stratum and thus class capacity",
+  "interpretation": "Separate coarse control sensitivity. Does not exactly equalize numeric Q, quality tails, difficulty adaptation or other worker features.",
+  "evaluation": "Exact common heldout anchor intersection for each candidate/baseline pair; same worker Q-supported cohort, same n/image/building weighting",
+  "no_discovery_validation_fitting": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "direct_replacement_additional_history_training_v1",
+  "registered_before_reading_additional_panel_outcomes": true,
+  "seed": 2026102003,
+  "source_panel_registration": "interchangeability_20261020/history_panel/HISTORY_PANEL_REGISTRATION.json",
+  "source_anchors": "interchangeability_20261020/history_panel/history_anchors.json.gz",
+  "source_native_results": "interchangeability_20261020/history_panel/native_runs/pools/<pool_id>.json.gz",
+  "old_source_panel": "Pro_exact_fixed_background_v1, ten history buildings only",
+  "new_source_panel": "Metadata-only all-entrant pair panel on the same ten history buildings, n=3/4/5/6/7/9/11/13/15/17/19/21/23/25/29/31",
+  "learning": "Fit an independent mixed-history version using original A exact events plus new history panel events. Retain the legacy-A-only version as a separately identified input/n sensitivity.",
+  "candidate_algorithms_and_losses": "Same code grid and opportunity gates as learn_swap_types.py; no algorithm or tolerance change based on new-panel outcomes.",
+  "inner_folds": "Same deterministic five two-building folds, SEED=2026102003; both panels exclude heldout buildings when learning each inner fold.",
+  "aggregation": "Average backgrounds within pool/n, n within image, then images within building; all attempts retained and continuous missing preserved.",
+  "class_identity": "Mixed-panel method IDs append __mixed_history_v1; legacy IDs and labels are retained separately and never overwritten.",
+  "opportunity_clarification_before_mixed_fit": "Every class, not only the aggregate within-class graph, must have >=75% supported internal pairs. This is an opportunity gate, not an outcome threshold. Original A-only outputs retain their original aggregate gate and will report per-class support.",
+  "source_condition_extension": ["ordinary_new", "hard_new", "hard_v1"],
+  "source_condition_reason": "Before reading any target building outputs, source-stratified domains are added because the unrestricted hard relation graph has sparse cross-source opportunity; direct risk within each source is needed to distinguish a source partition from new within-source personnel information.",
+  "forbidden_inputs": ["discovery building outcomes", "validation building outcomes", "followup 451 outcomes", "historical A_nested_even_v1 during fitting/selection"],
+  "reserved_check": "A_nested_even_v1 from history buildings only is an after-freeze background stress check; it is not new independent images or an external blind test.",
+  "geometry": "Use frozen legacy pair_metrics for direct replacement learning. New richer shape diagnostics are a separately named assessment and will not be computed for all 359916 new pairs."
+}

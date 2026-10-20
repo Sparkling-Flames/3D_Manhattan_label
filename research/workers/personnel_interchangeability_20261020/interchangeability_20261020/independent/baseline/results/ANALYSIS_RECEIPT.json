@@ -1,0 +1,1374 @@
+{
+  "all_attempted_events": 33332,
+  "all_attempted_shape_pairs": 18380,
+  "all_requested_events_and_teams_consumed": true,
+  "analyzer_sha256": "4e60bb7bf4b8dfc0dcc27f5c77b109ab7ee3009808719a479bd46645d61e12c6",
+  "buildings": 12,
+  "complete_unique_teams": 97040,
+  "continuous_missing": "No zero imputation; nondeferred stability failures stay False in attempted-event denominators; numeric summaries report available support. Native n=2 two_person_deferred is separated; formal tables n>=3, all-attempted table retained.",
+  "formal_n_ge_3_events": 32742,
+  "formal_shape_registered_events": 8600,
+  "images": 96,
+  "independence": "Same known55 people,96 v2 images,12 already explored nonhistory buildings. Neither33,332 events nor99,779 teams are independent images.",
+  "native_pool_sources": [
+    {
+      "actual_teams_read": 1186,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "f51d8e6e54c8339d76fff652e922d211ea3fbfb1e7aa205115dae0ac2cebf4ee",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 396,
+      "native_file_sha256": "a7d70f28ea55ec3a0904a4fb825d099bee8dd7d8e36bb4d85feca3fde5c455f2",
+      "pool_id": "7y3sRwLe3Va-03__manual__21c720698a",
+      "requested_unique": 1186
+    },
+    {
+      "actual_teams_read": 583,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e765f0aacdf291a9f5b19bc698adb84b44ab238b3cad6a13afed374c77b385f0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 195,
+      "native_file_sha256": "d07aa25584c5e8e5e22ca635ca6a16fce56f377b28938fa69326bd43b3800f22",
+      "pool_id": "7y3sRwLe3Va-04__manual__d7b320ab08",
+      "requested_unique": 583
+    },
+    {
+      "actual_teams_read": 1177,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "d24277e666678e887df6f6a17443e09205942a0c32c2418ee0914a8dafe6eaa8",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 393,
+      "native_file_sha256": "dcfe4c64675357b6bccdf0417b019b329fc621fb05825941b376aa0d90bce0c1",
+      "pool_id": "7y3sRwLe3Va-11__manual__feec3565b2",
+      "requested_unique": 1177
+    },
+    {
+      "actual_teams_read": 1455,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "ab97581b8b14ab63961da9145004e356d3dde13f7182db5e058d98955b5c3039",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 486,
+      "native_file_sha256": "59869a823f77c322d46d8206be17607055c89a46fbc14edaa3d05138024d1311",
+      "pool_id": "7y3sRwLe3Va-13__manual__5b6c87b5f3",
+      "requested_unique": 1455
+    },
+    {
+      "actual_teams_read": 977,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "144988a81cb3113726b255f110c3adbea375fb3a2cfd35d96811245f456364c5",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 326,
+      "native_file_sha256": "fbe6e47e309116b269e94f90ca2a6eac63a647ba86d2560ef85ea25e14a8435d",
+      "pool_id": "7y3sRwLe3Va-19__manual__cde87da031",
+      "requested_unique": 977
+    },
+    {
+      "actual_teams_read": 1497,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "93f6c71fff477ff28637734ec14013150d015ff318249b31cf8219b0aecd4969",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 500,
+      "native_file_sha256": "d88072a120b575cc9aefde908a2ff6ffe59c5ac4dcf639199ab7c9f0c8a6d106",
+      "pool_id": "7y3sRwLe3Va-21__manual__d48c756085",
+      "requested_unique": 1497
+    },
+    {
+      "actual_teams_read": 919,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "718b428685058b9a075f2841f6e66147a1afd81e8361b3377c93845118d9e7bb",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 307,
+      "native_file_sha256": "ef558e302cf92566cc2c6f4dc677c987c4c325432e58319ab0b0c9594ccada6a",
+      "pool_id": "7y3sRwLe3Va-23__manual__0e28c733e4",
+      "requested_unique": 919
+    },
+    {
+      "actual_teams_read": 1339,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "63a3e1e703f905194d4f1ade2435b84ca750235be86ff5335d1289687bea844d",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 447,
+      "native_file_sha256": "0cf484388c6f21b0fce727ae2cf747df2d9ac23f9cacce1c56bbcd7b1e959b5a",
+      "pool_id": "7y3sRwLe3Va-26__manual__c9d0cbdd90",
+      "requested_unique": 1339
+    },
+    {
+      "actual_teams_read": 1271,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "5ea571a5104d295f91642b40b9c075d2e154aabfeda8ddc74f5aea75d516a4df",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 425,
+      "native_file_sha256": "ac3a5c44810ba0062c6ca40040e23e8333287d218e52cf6b3db83b0f04b52ff9",
+      "pool_id": "B6ByNegPMKs-10__manual__2a73346a88",
+      "requested_unique": 1271
+    },
+    {
+      "actual_teams_read": 444,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "81fa6d54acb911f0a586b546016533dbe4166e540472ffd5694e0580cc87062c",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 149,
+      "native_file_sha256": "ce47bec199d4fe5afecb8db48b28d76b3cf6b745de0ac9f180d7b08543459dc2",
+      "pool_id": "B6ByNegPMKs-11__manual__f3a7523e7c",
+      "requested_unique": 444
+    },
+    {
+      "actual_teams_read": 969,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "41287c8ae46d84bcc2e62aff0248b5ce0ff35875cecb7cc97bf5fff6a4b15434",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 323,
+      "native_file_sha256": "ea321267300fbb676395eae46a80ced8dbfa5bb5f974eb664b7aa51a89e528b3",
+      "pool_id": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "requested_unique": 969
+    },
+    {
+      "actual_teams_read": 1243,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "15f039ab62360617721bfe5795f828b929b5bc7235b0b03b54040ca88bcec821",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 415,
+      "native_file_sha256": "d0569448e3ead7e6625e96dece42f625ba9d03582b2560626cf459b11dd88fce",
+      "pool_id": "B6ByNegPMKs-21__manual__5f07be7326",
+      "requested_unique": 1243
+    },
+    {
+      "actual_teams_read": 1238,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "38a9e252d96e312daf6da65f091377c5b7eb3f1002fea566f0a59c835a5f5d89",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 414,
+      "native_file_sha256": "e681c066af854a30e7ba04f0fede2501b1add66e4c614313bfa75954d524b7ee",
+      "pool_id": "B6ByNegPMKs-22__manual__5070de2f55",
+      "requested_unique": 1238
+    },
+    {
+      "actual_teams_read": 320,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "3afca25a63f9dcda3ae6be2a2300352fbd8d3c3cffeb6c1d300ee8d10a10f235",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 107,
+      "native_file_sha256": "058ed66908a87ee1d16083f6b5301d45b7c5a30053aaa36f18783197220c2b7e",
+      "pool_id": "B6ByNegPMKs-33__manual__c5a0f2370f",
+      "requested_unique": 320
+    },
+    {
+      "actual_teams_read": 368,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "a5991fe0faacf625facc6f70234f54f679fbef07178d908d00d47fbad2186443",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 123,
+      "native_file_sha256": "140f0c80d2a9b56777e1eaaddf49b94eabb3922a7305d9a51b43e669c4fff8f9",
+      "pool_id": "B6ByNegPMKs-40__manual__19077f2fe3",
+      "requested_unique": 368
+    },
+    {
+      "actual_teams_read": 1433,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "d952a81fac3a44622cc25d3b6495e9b571065b54792d8f03a215fed99e57953f",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 478,
+      "native_file_sha256": "af1016e449ce36178d1639a031f21d1c6fa27f7fe5a87a295ee3b78033cb3ddc",
+      "pool_id": "B6ByNegPMKs-47__manual__9eae4a3584",
+      "requested_unique": 1433
+    },
+    {
+      "actual_teams_read": 886,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "48a5ce03d683eaef48c750ce2bb902521e093969877c70e5f6b55e9b2c2ee231",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 296,
+      "native_file_sha256": "d5de577680df9747e44546a3cb14142f344d3e03bbe98afd9f1328eacc1214bf",
+      "pool_id": "B6ByNegPMKs-48__manual__51abd0a06d",
+      "requested_unique": 886
+    },
+    {
+      "actual_teams_read": 1213,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "da2e8370f382ba70dc6c603cd98bf27b27f54b87f73b4bf309a47f2035a1a501",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 405,
+      "native_file_sha256": "b355443a8376a21c8c9e43e0bd1d1df2365f82f3d365d9adfb65a6a6da29817b",
+      "pool_id": "B6ByNegPMKs-50__manual__66ebac0de6",
+      "requested_unique": 1213
+    },
+    {
+      "actual_teams_read": 848,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e68c5e72b7e94b47ed15796eae2b0259dd94eabbd86518bf5cd489f17a175349",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 284,
+      "native_file_sha256": "c89688447b3e9a56094ed0ee08e38b2fc9a5e429b9a6e3e26a402758a92d1a56",
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "requested_unique": 848
+    },
+    {
+      "actual_teams_read": 1036,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "2686950a3aaa0a5162584e49db1b844827e4eece0090bbb7faa80de13c4c4b44",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 346,
+      "native_file_sha256": "8806684b480a610e69a26a693fba78a17b41c1df9eb9a6bd2598450328f2b7e1",
+      "pool_id": "UwV83HsGsw3-12__manual__66a7b558e6",
+      "requested_unique": 1036
+    },
+    {
+      "actual_teams_read": 804,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "4be7dd2d094d9e77292b7438b0ba7d8d61cc958fa7371a6a9837395f533cc4cf",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 268,
+      "native_file_sha256": "af0c4571d1acf14f6142f7815593323e0e28709cc6b7e44ecf6897fc11aad035",
+      "pool_id": "UwV83HsGsw3-17__manual__b27fdc2bc6",
+      "requested_unique": 804
+    },
+    {
+      "actual_teams_read": 1112,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "36f63d5094ccbcb24f46daba58febfd7bcdf25bf46b3634211df26b120a912e2",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 371,
+      "native_file_sha256": "9a378466a629864694e1af52164c59e849e522a0a297f57ee9387a373e74dbab",
+      "pool_id": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "requested_unique": 1112
+    },
+    {
+      "actual_teams_read": 1693,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "711d858660023154c7611b992f636a0481c980956811ce4dcceb6fcf8c5a71da",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 566,
+      "native_file_sha256": "a0ba8ab5ada4db421fa9ce8c05a463e5c5d3d73fe0c9ce1aebf8e48c29151e4a",
+      "pool_id": "VLzqgDo317F-02__manual__5c35a52ccc",
+      "requested_unique": 1693
+    },
+    {
+      "actual_teams_read": 1707,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "5b3ec8b399cc57c3ac1c5b3ab9b1782a8fee2658a62beb73f83ad8cfff4e74c8",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 572,
+      "native_file_sha256": "df9c33a3b8c374b64c5ee184314fcf58b328ededb3e2f7c29f5f82804d11a7bc",
+      "pool_id": "X7HyMhZNoso-05__manual__5212c0d241",
+      "requested_unique": 1707
+    },
+    {
+      "actual_teams_read": 1617,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "31be24a65234c97ac03ec22c67c02fbc9aaaf59efbd0a16fd7fb66ca2ac916bf",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 540,
+      "native_file_sha256": "1a74448bad326c582d2c12cccfbd0b620532047f65f3c42169f75024b2e118d6",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "requested_unique": 1617
+    },
+    {
+      "actual_teams_read": 624,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "17b7a6eab736dd9134dc608fab136ba0550541f5a9a2f9abbd2c80972cf28580",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 208,
+      "native_file_sha256": "87172842c8af2880dcdebfe1b81131ca8e0e9c8592e0483dfc96515ffa9300af",
+      "pool_id": "X7HyMhZNoso-13__manual__373442ac7c",
+      "requested_unique": 624
+    },
+    {
+      "actual_teams_read": 1499,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "9c1e78e0c28b57ddcddd46a40f943565888ec0d16691189a52b2c30282bb00ae",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 500,
+      "native_file_sha256": "7f80968f0c7a67cea67ada044f7eb6e2bbaf7f0eb41d799187e7f7b10600d5ce",
+      "pool_id": "X7HyMhZNoso-19__manual__4177d22d41",
+      "requested_unique": 1499
+    },
+    {
+      "actual_teams_read": 1044,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "00eb26f110b1f3197b88b6a5f304546709d13f32b3768e5fbd3e1c2d47a9efd4",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 349,
+      "native_file_sha256": "6e8452126bdf45e6c6dc5724431d0dd511bd92bd6b32af4dc41d5cf21b18049b",
+      "pool_id": "e9zR4mvMWw7-02__manual__727235294b",
+      "requested_unique": 1044
+    },
+    {
+      "actual_teams_read": 1147,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "37a9494fb279b08e2e49bf962d4ca82e6c535d27ef27ad6d3375e35855564515",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 384,
+      "native_file_sha256": "3f643051701cfed0691252af50e9c5ba87f287e001e82088c394ba211878008b",
+      "pool_id": "e9zR4mvMWw7-03__manual__8bf3d02cab",
+      "requested_unique": 1147
+    },
+    {
+      "actual_teams_read": 1231,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0f3175096fbac31fb2223517cafe97e51f8d3ce7a1ccf7d07dc05deab695e11e",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 411,
+      "native_file_sha256": "623fe6a70a8fab5d6e5ae0dc4ce02e8fcfe9b372b8ca6c69a86bd348bf2f1083",
+      "pool_id": "e9zR4mvMWw7-10__manual__ecf22b00ab",
+      "requested_unique": 1231
+    },
+    {
+      "actual_teams_read": 1183,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0d23538fb743004fc8e8253a80aba546fb5f32747a1b42acd422f3e790576082",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 395,
+      "native_file_sha256": "8422bad84cd78bb76cb8871d2bd6773e382b2cf615d517fe86811e4d8ca3115e",
+      "pool_id": "e9zR4mvMWw7-15__manual__64c3e640b7",
+      "requested_unique": 1183
+    },
+    {
+      "actual_teams_read": 621,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "29926d0853aaed7a1c1a98bb8d3983295c94466882c850420e5f6fb2556b9b23",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 208,
+      "native_file_sha256": "b980a8b2fa986ae82535ef6cdc2aebf141082c780a689d72c7a260038e7eb6f4",
+      "pool_id": "e9zR4mvMWw7-19__manual__3b9450ee54",
+      "requested_unique": 621
+    },
+    {
+      "actual_teams_read": 1104,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "abc4264680c7f01da3b6a4bd051006e76b11bfa887b13d9ffdd74a5185e913c8",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 370,
+      "native_file_sha256": "22aed58c67dbbefbddc9e9055362b42561ab03f2b834604e5981bfbdf092078b",
+      "pool_id": "e9zR4mvMWw7-26__manual__1b2aa0a6e7",
+      "requested_unique": 1104
+    },
+    {
+      "actual_teams_read": 1076,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "01f547b7d343e3d178569e4f122a1b0df2d88ba81c3813f045df2bdc6897538e",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 359,
+      "native_file_sha256": "e70029bed1f2d06b002913caa2877750ebb853ae68ad15315d50d35923e99717",
+      "pool_id": "e9zR4mvMWw7-28__manual__3975e135c7",
+      "requested_unique": 1076
+    },
+    {
+      "actual_teams_read": 1130,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "d65436f4fc300dda582570e93f328a36625c24930899cc80d271ebc364722065",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 378,
+      "native_file_sha256": "0a4f48c8311a93793347dd46918948baa35f865a9fce4f03f278951d095df726",
+      "pool_id": "e9zR4mvMWw7-32__manual__111c2ddfac",
+      "requested_unique": 1130
+    },
+    {
+      "actual_teams_read": 1276,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "b888004088141d4038ddc3e4ae3473fdbafed08705c1a8d3d89ce6e1586c4d29",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 426,
+      "native_file_sha256": "99f7ea6290637ddefe52833a9f3241ac70658d379beea5dbdf8926a2f3117022",
+      "pool_id": "e9zR4mvMWw7-39__manual__9326cbf6d2",
+      "requested_unique": 1276
+    },
+    {
+      "actual_teams_read": 1286,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "317359d65ab83f51795b2d57501d06deb10e695f9a49728e22fd7abb7291f0c4",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 429,
+      "native_file_sha256": "2b2a483a5e7efaa8068fc4047116983680d3e7270a0afd296b068d75240aa2a3",
+      "pool_id": "jtcxE69GiFV-03__manual__cff6e9a2b3",
+      "requested_unique": 1286
+    },
+    {
+      "actual_teams_read": 1254,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "53cee9459db1ede9c584f963c17fd792e8b0426f67ff8203a1458b214945d485",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 420,
+      "native_file_sha256": "c51c14fcfe700057e2b631224e4947a47010e0829fde54f8d60fa64199b3b69f",
+      "pool_id": "jtcxE69GiFV-04__manual__628a7c6a3a",
+      "requested_unique": 1254
+    },
+    {
+      "actual_teams_read": 1362,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "80e4a506bb247b3946234735c23d66baec57f5030e6835538284e52036c32c2f",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 455,
+      "native_file_sha256": "5001e36b4279c4ce7f3ffcb190760d006c121b7f8e9a0aac42431cd275477b17",
+      "pool_id": "jtcxE69GiFV-09__manual__751e8c357b",
+      "requested_unique": 1362
+    },
+    {
+      "actual_teams_read": 1299,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "ebc9d9c85a220137d73b9a4fae525684f7a82d1befca1f24b5fba6c82f77a639",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 435,
+      "native_file_sha256": "b867d169b2ef0da54c55ff49af076c55138fae6810f02d00e06260a5cf3d3f61",
+      "pool_id": "jtcxE69GiFV-10__manual__9353efd9c9",
+      "requested_unique": 1299
+    },
+    {
+      "actual_teams_read": 1451,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "f894c60c642fc09e5b10b0e0bcc642a50e96dfcc373c41f6aaa6dc77afe77362",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 485,
+      "native_file_sha256": "7400a6e1ff3d290af92c4cdb860b99def50b81f5511b1a0ed0658198b5b8c3a2",
+      "pool_id": "jtcxE69GiFV-13__manual__8809c22f6e",
+      "requested_unique": 1451
+    },
+    {
+      "actual_teams_read": 1390,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "2a730cba29b21f844ce7b160c7243923c8dc88188b2ab1fa192fd60d1d3c28f4",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 464,
+      "native_file_sha256": "58bca10eb2b3348c5707039b806ee65f583cdbfa4e2fb8cdffdc1601753753b2",
+      "pool_id": "jtcxE69GiFV-22__manual__70a3575644",
+      "requested_unique": 1390
+    },
+    {
+      "actual_teams_read": 1441,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e429a8e68938e450e5be6bad09805138a7f55f0563928f633364f772e006b53d",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 482,
+      "native_file_sha256": "62396cfd6338f4badb2e83649124bec63664ef055e1779e90dbf3a22c5f9ad96",
+      "pool_id": "jtcxE69GiFV-23__manual__c9d4c2c03b",
+      "requested_unique": 1441
+    },
+    {
+      "actual_teams_read": 1236,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "9f4042ffb909ae0ce2107665f0a7f560772d487688b1be4a2186ca72557b4080",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 412,
+      "native_file_sha256": "2bfdce68bf13e429e0cd6b6a26b97b0962ad28c0af0e55dcbb48ca6de76eee0d",
+      "pool_id": "jtcxE69GiFV-26__manual__7ff2cf23aa",
+      "requested_unique": 1236
+    },
+    {
+      "actual_teams_read": 1246,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "071a1d3d7a2b1d295e03a347fa10fa2e28184a399dd0852c0fcd22aea358d899",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 416,
+      "native_file_sha256": "fa5235878a7d357df91928da2ba96be234c57deac2571c6a3cc9f529c6823c22",
+      "pool_id": "jtcxE69GiFV-28__manual__19653e8bc7",
+      "requested_unique": 1246
+    },
+    {
+      "actual_teams_read": 1339,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "ed7c1192a2d14a0ddd828eb5a8aa3bb3803fbb99e116de511c70751a78bf6780",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 447,
+      "native_file_sha256": "ce25fb909e02fedc0e3ca67310a6dfda1171add216c9a9c8dec71cb66a9cbb30",
+      "pool_id": "jtcxE69GiFV-30__manual__d0ce5ff4e1",
+      "requested_unique": 1339
+    },
+    {
+      "actual_teams_read": 1185,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "7f977eac0a759cc6afe6cd143961e0d3961a6a47044c1d3c818681faa3736aca",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 396,
+      "native_file_sha256": "00ca257637f653d8b6949b746bd54145ec86cb9fd5f5dbb1134032abe0f983bf",
+      "pool_id": "pRbA3pwrgk9-04__manual__da07b79cf0",
+      "requested_unique": 1185
+    },
+    {
+      "actual_teams_read": 1185,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "53bd11d1b08cf92bba8c73eb33c04ee1a5f7b0e434639995f28144df5ad0a0a7",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 396,
+      "native_file_sha256": "3c4025f35f3426dc26296e4cda834f287e813630463f00cff0873710be715057",
+      "pool_id": "pRbA3pwrgk9-05__manual__bd34c00b46",
+      "requested_unique": 1185
+    },
+    {
+      "actual_teams_read": 1092,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "19b2656a4668cf6724bed97b4016a9a58ad8d8b997590eea99913b26b6630f75",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 366,
+      "native_file_sha256": "180d394002a90a8607b02a600233f3afedcd922df48bf17f727d5482dc69220e",
+      "pool_id": "pRbA3pwrgk9-06__manual__3b04cf9a1d",
+      "requested_unique": 1092
+    },
+    {
+      "actual_teams_read": 1160,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "d8a9d25a1a14e634f3ff2d6efa19f836564b79da9c754a1ac489c0e5d8cadff0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 387,
+      "native_file_sha256": "bf42315edb6b6f078d33710e9e2b080a070f949092ccba2c4608b65cd492306a",
+      "pool_id": "pRbA3pwrgk9-07__manual__e8409547b5",
+      "requested_unique": 1160
+    },
+    {
+      "actual_teams_read": 1293,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "a01b908785b0c9204443bb8cf38e6d97be9b02139b501c659cf3ddcb3159f0e3",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 432,
+      "native_file_sha256": "3510b64fc1da64a65209adb313dc0fc44e332290777f4096c60c2c21a3b77f62",
+      "pool_id": "pRbA3pwrgk9-10__manual__cb00db271c",
+      "requested_unique": 1293
+    },
+    {
+      "actual_teams_read": 1145,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0c2c4e3ec3892962671070bcc4debd6ddd5b062a8f8c424838920d09042948b9",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 382,
+      "native_file_sha256": "8be99cfb5b29bcc2fab4566992d8923a90a5221647b660d97f8c2271bc213bf9",
+      "pool_id": "pRbA3pwrgk9-14__manual__c4667a1d8c",
+      "requested_unique": 1145
+    },
+    {
+      "actual_teams_read": 1426,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "40c4b33b87ac50b3b481c0e0b99077362d15353ca590efde90c2d2c42e561dcc",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 477,
+      "native_file_sha256": "06bab02da2955351070fab9f8bc03afbc41267fd9f43960a849968de18d98d47",
+      "pool_id": "pa4otMbVnkk-05__manual__420a0b6ed3",
+      "requested_unique": 1426
+    },
+    {
+      "actual_teams_read": 1222,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "9c71369d381a2e7efb6a8f6fe6a78523da76e6da65ceb387ae3c2f0a5c4771e0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 408,
+      "native_file_sha256": "078c202f72c6ab887cfdc29cfc45a263bd620d82d4b8523e85da351e81687e6b",
+      "pool_id": "pa4otMbVnkk-06__manual__48064bc2d8",
+      "requested_unique": 1222
+    },
+    {
+      "actual_teams_read": 1115,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "c401c28e2aa90d2775755ef857351a3ce691d330e5feeac33185923db71a8119",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 372,
+      "native_file_sha256": "864f05280894a4f6a42c7fa157b3f1c7ff840b692099285f0d1eabf7c6fd7184",
+      "pool_id": "pa4otMbVnkk-09__manual__7b9cc79111",
+      "requested_unique": 1115
+    },
+    {
+      "actual_teams_read": 1219,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "bf2c7587e91fc2569bb2d023cef12dbc58b3d4096aacda5d497894be8d2844c1",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 407,
+      "native_file_sha256": "e764ed312d6d5c74ffea275d85bb9bd4a05ebe49f2f6de05ea31dcc45a725e23",
+      "pool_id": "pa4otMbVnkk-10__manual__28cf269def",
+      "requested_unique": 1219
+    },
+    {
+      "actual_teams_read": 1586,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e2ea7bcaf2f682facc4616dcdf25d097427cb086ae0fc9c86c3786a131fdaf5c",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 530,
+      "native_file_sha256": "4d3d55bfa54ce62c88cfe90b16c96bad6aa65ac8b755968b177ace1eaca8192d",
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "requested_unique": 1586
+    },
+    {
+      "actual_teams_read": 966,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "3fe9e00ef17043368eb6d42488ad1b144d6f87e17b62432f26a9cec43b9579f0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 323,
+      "native_file_sha256": "38d70008d51bac1eb77cc2c1b47c8f1a2b6c87c5fcb65c25a370252c1e73ac11",
+      "pool_id": "pa4otMbVnkk-17__manual__d9ca524aff",
+      "requested_unique": 966
+    },
+    {
+      "actual_teams_read": 1473,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "35960dbb3ae174c75c0c52a6a1e9bfacaae2d900138854a8920778b6501a4b90",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 491,
+      "native_file_sha256": "81aef58e2162f6480bffb57af63d27b2fc94e7fb5acca11473963c7aadd672a6",
+      "pool_id": "pa4otMbVnkk-18__manual__bbb972aaa9",
+      "requested_unique": 1473
+    },
+    {
+      "actual_teams_read": 1232,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "dc0a73f854eb97ab94bb342445c73c96bbecc3331ef8eb5b790a81e799c0c4ed",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 411,
+      "native_file_sha256": "994a2cf7e52d76027a6133c7d7c8673037939cd6b151c85cf390d27b8a323a91",
+      "pool_id": "pa4otMbVnkk-42__manual__d6e0ab41ee",
+      "requested_unique": 1232
+    },
+    {
+      "actual_teams_read": 1371,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "24a890d8cf87cecdce994e836737e5064b47eee1e2b91ed50be56d0554ea3b4f",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 458,
+      "native_file_sha256": "c01c47ca2abab52980109f9f48ddcc05bf40d31478fa036b122f8205401610b7",
+      "pool_id": "pa4otMbVnkk-44__manual__2787d70dcb",
+      "requested_unique": 1371
+    },
+    {
+      "actual_teams_read": 1287,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "5a490e7ccdc4a0927c5051174905d17a914b0165fbb01e5e350202cb6eef81ab",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 429,
+      "native_file_sha256": "97f61172520de36c231119b475277cba18c6096e5dcf2ee259e962a224d229d1",
+      "pool_id": "pa4otMbVnkk-48__manual__ec437a76cb",
+      "requested_unique": 1287
+    },
+    {
+      "actual_teams_read": 1242,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "762fb37f88e42edf639cbac88935f2cf62016f51cd739305f36d1a1cf34ab00f",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 414,
+      "native_file_sha256": "8f85731a61e934082e2481520b37bb82356c28d91849ca2c268a141665fd276c",
+      "pool_id": "q9vSo1VnCiC-01__manual__00b55d1a3c",
+      "requested_unique": 1242
+    },
+    {
+      "actual_teams_read": 660,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "c994a08be672acf207983984964c84037821cb755e51761175a3f9f1851fa01a",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 220,
+      "native_file_sha256": "e93fe2dd0e4f6265409c670653f26adb5ec6aa47d61aace7b2c9da2d4fdec899",
+      "pool_id": "q9vSo1VnCiC-02__manual__25b2a3db5d",
+      "requested_unique": 660
+    },
+    {
+      "actual_teams_read": 1166,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "19656c03802b8a9ec1b34999b4c2f0cc7de378986b494f5e1f814085b220ac72",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 390,
+      "native_file_sha256": "c4c1615de887d9828ab3e333f7a13388406c6d7ac7ffa06671c3ab299fdfdf33",
+      "pool_id": "q9vSo1VnCiC-03__manual__2bff6c4167",
+      "requested_unique": 1166
+    },
+    {
+      "actual_teams_read": 1330,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0f7e2a71129fa35117f980c9efea282da2a02333e97231dc9ca0b293c09e2e43",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 444,
+      "native_file_sha256": "be11c23ff125ab4443bc83ad74f34854ab73bd9c3d73c69b063912ddda04df73",
+      "pool_id": "q9vSo1VnCiC-15__manual__6d5ae69ee8",
+      "requested_unique": 1330
+    },
+    {
+      "actual_teams_read": 44,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e854eb011a0c96888c10695db8fa54c5bb79c17d282991a2d887a2ce607da581",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 16,
+      "native_file_sha256": "7c3419da0178948b4ff004022b22b698d9ddfa3cc2a08dd96a2f8f5ee172ba7d",
+      "pool_id": "q9vSo1VnCiC-23__manual__fc6ea88ba2",
+      "requested_unique": 44
+    },
+    {
+      "actual_teams_read": 1266,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "2f9d8084c82d9743d58d6de9b51922dd93ef86c9702531b140f5d80a880aa25e",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 422,
+      "native_file_sha256": "9e92f23ca34e0ffc6b1e2752743cf57659a2cde8d8c033a38ad0ec3099a9f5f4",
+      "pool_id": "q9vSo1VnCiC-30__manual__4ca90db796",
+      "requested_unique": 1266
+    },
+    {
+      "actual_teams_read": 674,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "dd71e545b27b0386f57c4cd3005630744a03c66c5f8c36e1f47c6e245663c85f",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 225,
+      "native_file_sha256": "75d76016e9d9cafcfca23aa32793239cdc9477ea68eb575833f46e90e0f81e3c",
+      "pool_id": "q9vSo1VnCiC-32__manual__b919efebcf",
+      "requested_unique": 674
+    },
+    {
+      "actual_teams_read": 734,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e0924bd1d5ec824aa68598e13695a55737439cd52e71264e271f0343d45c9a36",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 245,
+      "native_file_sha256": "0ab6312c646989fec80fbbd324448b64552984f97da01e604ea2118788854641",
+      "pool_id": "rPc6DW4iMge-01__manual__25b44e9036",
+      "requested_unique": 734
+    },
+    {
+      "actual_teams_read": 360,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e8088e2a2a1571b84f86574c645b9ca09d051b3ef50aec0c2748223a9388ed9d",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 121,
+      "native_file_sha256": "1f5f9a7589f7b64feadf5b2a024cb97550c42e55d0c9946de3f2e4f8fc798d2a",
+      "pool_id": "rPc6DW4iMge-05__manual__1488ef1b7c",
+      "requested_unique": 360
+    },
+    {
+      "actual_teams_read": 290,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "d509ad0bcc2fcd44d14a83b6e1d69ebdd458f15ff4017a9eea6943c1ef106282",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 97,
+      "native_file_sha256": "212464a1d1198b921b10b23cb016929272331535bec377cdbc3053f31e3b4ae1",
+      "pool_id": "rPc6DW4iMge-06__manual__34216003a1",
+      "requested_unique": 290
+    },
+    {
+      "actual_teams_read": 404,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "03e3a1029e913dfe707a13b50e9c782abaf08653a3bb3c08490071826f20fc8b",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 135,
+      "native_file_sha256": "678a1150723426518964d289f9d81c80f3afb5d994bfdfe49829d16708f6d162",
+      "pool_id": "rPc6DW4iMge-09__manual__104df2b507",
+      "requested_unique": 404
+    },
+    {
+      "actual_teams_read": 1269,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "b9d5c58eff38a3bbabf9bdf82de4744422a6f2a857e2a1d7b804e2f50b1ea396",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 423,
+      "native_file_sha256": "12e8bf6e4816846963921597be9128939597acb2bb5621be0346ab78a43378de",
+      "pool_id": "rPc6DW4iMge-13__manual__d183e8f454",
+      "requested_unique": 1269
+    },
+    {
+      "actual_teams_read": 616,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "e347470d36b664637ad80074d7bdb9b03aa85e27ca1f78f3b2b68a569cb390a7",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 206,
+      "native_file_sha256": "22cf9de88c4d75888bd6027c227f41eb9ac2f74fd5893e5de50d59f95aed7ef2",
+      "pool_id": "rPc6DW4iMge-15__manual__8d8f5ed033",
+      "requested_unique": 616
+    },
+    {
+      "actual_teams_read": 799,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "36de9ea85ef057f23128fec01741692adffde5f01c899242dec353e34ad5ff28",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 267,
+      "native_file_sha256": "345418b01005c8b8367514dd25e24bfa7b3f09454bab7b3aaab038b2ccbdd1ab",
+      "pool_id": "rPc6DW4iMge-16__manual__e75a57549b",
+      "requested_unique": 799
+    },
+    {
+      "actual_teams_read": 1257,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "688ecbf09c95a07873bbbb3580c9abef6b11488720b9bbd8b77e8a6d1d2d312d",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 420,
+      "native_file_sha256": "34dd699e431ca265ed214958b010912a97299a6ab48ead6278cbb9a91d10caf9",
+      "pool_id": "rPc6DW4iMge-17__manual__4c161a9011",
+      "requested_unique": 1257
+    },
+    {
+      "actual_teams_read": 450,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "2bd21b82d90df43fbd0c0ec80e09be175cff4f8801d467759a0bea374f04b1fa",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 150,
+      "native_file_sha256": "48e47079269fb940e2c22ad2389243de4780fc615a72096b30361094d8304b55",
+      "pool_id": "rPc6DW4iMge-20__manual__43a4f6717a",
+      "requested_unique": 450
+    },
+    {
+      "actual_teams_read": 152,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0b146f023ed917c2efe1433d224284d92ec77cc1d3f83def245cf1bf547cdd32",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 51,
+      "native_file_sha256": "f377a3be49b8cbbff062c2004398215f4507b72b91a14d86a7924289f6ede245",
+      "pool_id": "rPc6DW4iMge-22__manual__c9c05c21ea",
+      "requested_unique": 152
+    },
+    {
+      "actual_teams_read": 1511,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "4c2afcc26ae07511e4e882804328839a09d48bdc4694f5582325bb4d419e7f3c",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 504,
+      "native_file_sha256": "7facab8f9697ac721730e6794d340fdd8c06fbbe6a9e0cddd10fc4c38385815d",
+      "pool_id": "yqstnuAEVhm-01__manual__36b313c914",
+      "requested_unique": 1511
+    },
+    {
+      "actual_teams_read": 1148,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "088861041a8ff972846606e4e9f522cd1f0710a7aa5b4f7cb33f01b8ac331051",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 384,
+      "native_file_sha256": "eecbc96f35f51495729a3e13ffcab3e80bf1d61680fdabb6e9b6f7f06a2198ff",
+      "pool_id": "yqstnuAEVhm-02__manual__a65088884b",
+      "requested_unique": 1148
+    },
+    {
+      "actual_teams_read": 602,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "c949e0640093a67dc2350017b0eb9f5b98a1ebf8c0438feb986b6b04885cb568",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 201,
+      "native_file_sha256": "f58b449dd6eaecde4c20d4c4811f87c46b18f4fb396933658835218c6145832f",
+      "pool_id": "yqstnuAEVhm-04__manual__c93631c594",
+      "requested_unique": 602
+    },
+    {
+      "actual_teams_read": 1033,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "30b4b017bb5daaa39756b962c4f676863603e83c9af480b6cd07b51aee89b591",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 345,
+      "native_file_sha256": "08f867f5bf20ae4c9f28e7cee6e9faa120c05251ac8592f7ee008d38aa6a721e",
+      "pool_id": "yqstnuAEVhm-05__manual__b5861fa0fb",
+      "requested_unique": 1033
+    },
+    {
+      "actual_teams_read": 1181,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "8017123d1a4fd302af09968e79a989d9a5c2e23d3df0e24337ca05d0e6e1ff53",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 395,
+      "native_file_sha256": "9e30ac1daf7843fc0563e9740539cbeaa3eb3496c59be740b5dcd928c27e2acb",
+      "pool_id": "yqstnuAEVhm-06__manual__66ac89aa0b",
+      "requested_unique": 1181
+    },
+    {
+      "actual_teams_read": 905,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "ddab50dc03c3423017e4512f8cad2c850e9ce0f353ce6e3b98285f5eb673d3c9",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 302,
+      "native_file_sha256": "bc56a8753e027003ff7750db901f6ae4dc73596c13fd0ce53f92c2aeb4803113",
+      "pool_id": "yqstnuAEVhm-07__manual__8e3106a4a2",
+      "requested_unique": 905
+    },
+    {
+      "actual_teams_read": 993,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "83e15c531f2a75c13eb2982b6372899a67148075e097648b95446e277f918b23",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 331,
+      "native_file_sha256": "69d8b652c0c158dc5f0b5b3e14b5c1191e8ddea32d325b332a2bbfd9a66831c1",
+      "pool_id": "yqstnuAEVhm-08__manual__192666967f",
+      "requested_unique": 993
+    },
+    {
+      "actual_teams_read": 990,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0b1deec70d2bbf76a7b5f226d84f8e8ea583cbc680e53e55841bb0f33eab332c",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 331,
+      "native_file_sha256": "d69b67574d94a9b8cf736904f52ff7265bae84871ecae81c70154195caea7b2e",
+      "pool_id": "yqstnuAEVhm-09__manual__41ac53fd26",
+      "requested_unique": 990
+    },
+    {
+      "actual_teams_read": 834,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0ee6edc5d3db9f6b206fb0fe1dc832926de9599aaaddd44958511bb25895381b",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 279,
+      "native_file_sha256": "4b75ff7715aaa3539af3a0d310d8b8af689ba947f27cb29c1f73c01981fe64a2",
+      "pool_id": "yqstnuAEVhm-10__manual__a1e4e9ee47",
+      "requested_unique": 834
+    },
+    {
+      "actual_teams_read": 980,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "34cad3d0c038a7eea7fc5318cdf1bc66e452150c5fed421a0d9e9ddfb79cc7f2",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 327,
+      "native_file_sha256": "5b478608737f25a9561acb4d8fe5384f34c33d5db656e83968a95e13dc8bf858",
+      "pool_id": "yqstnuAEVhm-24__manual__a74bf1910b",
+      "requested_unique": 980
+    },
+    {
+      "actual_teams_read": 473,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "0d69ff2d38df17b16eb19b6360b544d6165bc30ea9065551ad8b1bf2df8387e0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 158,
+      "native_file_sha256": "a8a3f7e8bfb731319f5f0ea9a41aa8686976b0cae4901209f40e52f01f2501a7",
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "requested_unique": 473
+    },
+    {
+      "actual_teams_read": 33,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "777fd7fd5ed483607027d494496d30dd601cc0b5146d0ecb1752c123c710d474",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 12,
+      "native_file_sha256": "b7858c488ca545c9ccd40cd083f69877ece92aa466fdaf6d4d825e90ff2fcd46",
+      "pool_id": "yqstnuAEVhm-26__manual__11c1ecd733",
+      "requested_unique": 33
+    },
+    {
+      "actual_teams_read": 1127,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "20f68a9281839227c1078710da924f8c8393c35193f796bfa7a541ec83c2fb79",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 376,
+      "native_file_sha256": "69c6427e4e3e9b8c09bbc5af543e2dc94fb0af655fd7838c665a42596c857fe9",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "requested_unique": 1127
+    },
+    {
+      "actual_teams_read": 1202,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "fe7df126af83b701e7563238373e3e1c7727e568c4e14e279d1b8a0127ae5403",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 402,
+      "native_file_sha256": "b087aeae73f165b318dd0954c31c625ce3384c698253696aaa7f76fb83f2c60f",
+      "pool_id": "yqstnuAEVhm-29__manual__4e672d5f71",
+      "requested_unique": 1202
+    },
+    {
+      "actual_teams_read": 569,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "4516e0e2798ea96de95e9519ff478e4148f7b4dfcd054d165934345636e953d0",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 190,
+      "native_file_sha256": "8c8e2002881c65cb9f42f4fa6dbd631b1ec87eae715aac4bf9cbbacca0c6e79d",
+      "pool_id": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "requested_unique": 569
+    },
+    {
+      "actual_teams_read": 606,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "15c8d75640b1ae509a9b670b725b934961afcee5ce31694aa43f601e3ba438ac",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 203,
+      "native_file_sha256": "53488f2c78a6e220e7976be7f14449a6d9c8b821e9273a7535886aaefd21abba",
+      "pool_id": "yqstnuAEVhm-32__manual__085c02c4fa",
+      "requested_unique": 606
+    },
+    {
+      "actual_teams_read": 348,
+      "context": {
+        "fusion_gap": 7.5,
+        "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+        "pool_digest": "584ccdb8656c7cda8b693c46a4ccd1385ab986b73d5d1078a455cf2aca11d549",
+        "runner_sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "science_commit": "82c6164b0d4630de5316199c92aa405930973168"
+      },
+      "events": 116,
+      "native_file_sha256": "fb7e3e20a674f2b6a448a8cc730e899bddcefb86786fdcbbc4860d47737ab08e",
+      "pool_id": "yqstnuAEVhm-34__manual__cdcf90233b",
+      "requested_unique": 348
+    }
+  ],
+  "nested_steps": 95172,
+  "request_sha256": "1b680fb3ff82723c61b58ccd61df472133a46eb0c7cf51dd59c47050219eae1b",
+  "schema": "known_baseline_all_event_analysis_v1",
+  "seconds": 648.7549709410014,
+  "two_person_deferred_events": 590,
+  "unique_score_status_counts": {
+    "below_four": 270,
+    "complete_conditional": 97040,
+    "invalid_floor": 55,
+    "no_connection": 716,
+    "two_person_deferred": 1698
+  },
+  "unique_teams": 99779,
+  "weights": "First average block draws in each pool,n,m cell, then cells within image, images within building, buildings within stratum. Overall averages describe this enumerated n,m grid, not natural recruitment frequencies.",
+  "workers": 55
+}

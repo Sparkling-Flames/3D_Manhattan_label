@@ -1,0 +1,368 @@
+{
+  "batches": [
+    {
+      "batch_id": "history_panel",
+      "generator": "interchangeability_20261020/code/design_history_panel.py",
+      "generator_exists": true,
+      "generator_sha256": "7e0cfcc5e23dc62cbd4b0301097d25cf049eb81e5659d226d52f663c52a05c22",
+      "native_dir": "interchangeability_20261020/history_panel/native_runs",
+      "phase": "history",
+      "registration_files": [
+        "interchangeability_20261020/history_panel/HISTORY_PANEL_REGISTRATION.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/history_panel/HISTORY_PANEL_REGISTRATION.json": "c6bfc3e0dc2b1d29f6b49b131943f91b8ed5e1252e809b2004e82b40d0f3b877"
+      },
+      "requests": "interchangeability_20261020/history_panel/history_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "f5c4cce84b6a62aa63dccac9b87ffcf25a23441e5f403cc1a5b22efcf6cf76d2",
+      "role": "New frozen-history entrant panel for reverse training; old retained A pair observations excluded",
+      "run_receipt": "interchangeability_20261020/history_panel/native_runs/RUN_history_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "34cc84a030a26ae283f0361edcdd4fd4d303e3ae935cfcdc1e6e742abc294e5f"
+    },
+    {
+      "batch_id": "known_GR_integer_baseline",
+      "generator": "interchangeability_20261020/independent/baseline/design_baseline.py",
+      "generator_exists": true,
+      "generator_sha256": "0f37c2ad1dce4bb3bfc4b3afdbed271e347b2a3920cfbf5ddd74eba61e157081",
+      "native_dir": "interchangeability_20261020/independent/baseline/native_runs",
+      "phase": "discovery+assessment",
+      "registration_files": [
+        "interchangeability_20261020/independent/baseline/BASELINE_SPEC.json",
+        "interchangeability_20261020/independent/baseline/DESIGN_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/independent/baseline/BASELINE_SPEC.json": "9e534b11cfd006c8c06db4a9910b20cb4fc96b8957899b535574ad395a3dcbe0",
+        "interchangeability_20261020/independent/baseline/DESIGN_FREEZE.json": "426bacaa28bc1e05b4e747222e389d4319158b727f0a8a5706495d4185414dab"
+      },
+      "requests": "interchangeability_20261020/independent/baseline/REQUESTS.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "1b680fb3ff82723c61b58ccd61df472133a46eb0c7cf51dd59c47050219eae1b",
+      "role": "Already known G/R directions; all feasible registered integer n,m; nested core",
+      "run_receipt": "interchangeability_20261020/independent/baseline/native_runs/RUN_REQUESTS.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "6066a027a0d1fa51a10fb00f54639ba4b784e5a14346019a57d162e246ad6421"
+    },
+    {
+      "batch_id": "common_panel_discovery",
+      "generator": "interchangeability_20261020/forward/common_panel/design_common_panel.py",
+      "generator_exists": true,
+      "generator_sha256": "1d61e2988bd02a50f922d785385acfd0ad480b89fc2bd04ef60aa2906c5aac87",
+      "native_dir": "interchangeability_20261020/forward/common_panel/native",
+      "phase": "discovery",
+      "registration_files": [
+        "interchangeability_20261020/forward/common_panel/COMMON_PANEL_REGISTRATION.json",
+        "interchangeability_20261020/forward/common_panel/REGISTERED_COMPARISON.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/forward/common_panel/COMMON_PANEL_REGISTRATION.json": "f1962b0deb6b75f32c514fa48058c95162201c22cc03b6aba28102c03ac764f9",
+        "interchangeability_20261020/forward/common_panel/REGISTERED_COMPARISON.json": "af07c95fd1fedc43455fa19589fc8b0ef035599859f6fab8c348c6c2672bbad5"
+      },
+      "requests": "interchangeability_20261020/forward/common_panel/common_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "33dc0e465b865535519305d878fbeeb1ca1bd857dc525941d9f7b16f9a65c0dd",
+      "role": "Common actual teams shared by forward and competitor classifications",
+      "run_receipt": "interchangeability_20261020/forward/common_panel/native/RUN_common_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "d10eba3ccda61f76d18aa75159348e0ac68a40a31c5d94ca21fd025e1400d0ee"
+    },
+    {
+      "batch_id": "common_panel_assessment",
+      "generator": "interchangeability_20261020/forward/common_panel/design_common_panel.py",
+      "generator_exists": true,
+      "generator_sha256": "1d61e2988bd02a50f922d785385acfd0ad480b89fc2bd04ef60aa2906c5aac87",
+      "native_dir": "interchangeability_20261020/forward/common_panel/assessment/native",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/forward/common_panel/assessment/COMMON_PANEL_REGISTRATION.json",
+        "interchangeability_20261020/forward/common_panel/assessment/REGISTERED_COMPARISON.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/forward/common_panel/assessment/COMMON_PANEL_REGISTRATION.json": "283eb5488f7d2f3718a04f03a25f33f6e4b04e159992fa478186bc7b0f2fa54a",
+        "interchangeability_20261020/forward/common_panel/assessment/REGISTERED_COMPARISON.json": "27c73900f43a6bb0f520a40783d1422507566a6d52f380035405f26349543a95"
+      },
+      "requests": "interchangeability_20261020/forward/common_panel/assessment/common_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "87c8781899b94c496a626b1ffde2ef66789967352a5b897a9ea70d98824358a1",
+      "role": "Frozen common-team assessment panel; competitors reuse these native results",
+      "run_receipt": "interchangeability_20261020/forward/common_panel/assessment/native/RUN_common_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "263182ee6a9995439ed62e2d3a86225b7b2b2410fd987fb22b9e6a0aa20d5921"
+    },
+    {
+      "batch_id": "forward_discovery",
+      "generator": "interchangeability_20261020/code/design_blocks.py",
+      "generator_exists": true,
+      "generator_sha256": "daaad2f118d4a5ca6052c0b8a9e19ce3408213650faa555757e530b1d8551eec",
+      "native_dir": "interchangeability_20261020/discovery/native_forward",
+      "phase": "discovery",
+      "registration_files": [
+        "interchangeability_20261020/discovery/FORWARD_SPEC.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/discovery/FORWARD_SPEC.json": "1ad80781ad93e8ad813ce860206b9ba85dc0343ff8b0dd641a87edbd6b96f9a5"
+      },
+      "requests": "interchangeability_20261020/discovery/forward_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "6bf1dc24154626b68f063ada884cdf2749bda0c507ec00d96a490eb713fcd7cb",
+      "role": "Forward category-block discovery, including supported task conditions",
+      "run_receipt": "interchangeability_20261020/discovery/native_forward/RUN_forward_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "77dce5a680eef969b4e75a453e2d301af2412641973e42463c4daa274dfe62a0"
+    },
+    {
+      "batch_id": "reverse_discovery",
+      "generator": "interchangeability_20261020/code/design_blocks.py",
+      "generator_exists": true,
+      "generator_sha256": "daaad2f118d4a5ca6052c0b8a9e19ce3408213650faa555757e530b1d8551eec",
+      "native_dir": "interchangeability_20261020/discovery/native_reverse",
+      "phase": "discovery",
+      "registration_files": [
+        "interchangeability_20261020/discovery/REVERSE_SPEC.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/discovery/REVERSE_SPEC.json": "aca7e56ecace374161e519452b28283fe770cf3f1a81c6a4db711905621895e4"
+      },
+      "requests": "interchangeability_20261020/discovery/reverse_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "83eae22d9df47e8d6b2e4fda2755e2a48f5079359c8451a12c8f379ea93d5c71",
+      "role": "Reverse category-block discovery; labels learned from frozen history",
+      "run_receipt": "interchangeability_20261020/discovery/native_reverse/RUN_reverse_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "98ee2a024fb856946058fe4ea5628d558b3cec8b197bfd8df8f50ba76b14bac9"
+    },
+    {
+      "batch_id": "condition_discovery",
+      "generator": "interchangeability_20261020/code/design_condition_transfer.py",
+      "generator_exists": true,
+      "generator_sha256": "dc8132d0962d952f4df7c544a94fcd85522bd6fdad1d9d29738b2f7ee44891fd",
+      "native_dir": "interchangeability_20261020/condition_transfer/native_discovery",
+      "phase": "discovery",
+      "registration_files": [],
+      "registration_sha256": {},
+      "requests": "interchangeability_20261020/condition_transfer/discovery_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "913953c11eb0d9b3f9a281a5a475ca04ea1b6a70d7f1321dd539dcec6364b562",
+      "role": "Same exact crews and reference on linked observed Manual/Semi pools",
+      "run_receipt": "interchangeability_20261020/condition_transfer/native_discovery/RUN_discovery_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "8deeb52dccadaa46076f9a99ef96d3a64a6255ba077b5e79d8b89e36ad34fa62"
+    },
+    {
+      "batch_id": "condition_assessment",
+      "generator": "interchangeability_20261020/code/design_condition_transfer.py",
+      "generator_exists": true,
+      "generator_sha256": "dc8132d0962d952f4df7c544a94fcd85522bd6fdad1d9d29738b2f7ee44891fd",
+      "native_dir": "interchangeability_20261020/condition_transfer/native_assessment",
+      "phase": "assessment",
+      "registration_files": [],
+      "registration_sha256": {},
+      "requests": "interchangeability_20261020/condition_transfer/assessment_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "dd11318bccb350237ebccc35ce8b9f893afffaa0aa640f927d5b8d569487a16c",
+      "role": "Fixed same-crew Manual/Semi transfer rules on reused-v2 assessment buildings",
+      "run_receipt": "interchangeability_20261020/condition_transfer/native_assessment/RUN_assessment_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "7685cb16725a1e61c70fa37bf37256f800ff041879d471de85b73cc68af7e937"
+    },
+    {
+      "batch_id": "mixed_discovery",
+      "generator": "interchangeability_20261020/code/design_mixed_challenge.py",
+      "generator_exists": true,
+      "generator_sha256": "df9996358a7aeeb6d54010999632039a208d175cf7a0e681256c734ae6c1376d",
+      "native_dir": "interchangeability_20261020/mixed_challenge/native_discovery",
+      "phase": "discovery",
+      "registration_files": [
+        "interchangeability_20261020/independent/mixed_challenge/ASSESSMENT_DESIGN_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/independent/mixed_challenge/ASSESSMENT_DESIGN_FREEZE.json": "5733846571459f42f628f60ace502b36a500a7b5ee378e6296f95c46cbbc296e"
+      },
+      "requests": "interchangeability_20261020/mixed_challenge/discovery_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "d589fd3c5dda00ad7c6af97afdc80543b7489d0ef0ba116d09d589ad7dc15c9e",
+      "role": "Seven predeclared genuinely mixed / whole-team replacement routes",
+      "run_receipt": "interchangeability_20261020/mixed_challenge/native_discovery/RUN_discovery_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "e11f59a0b3563b52fae0164a14f9ae5f37420780565bc98c489707622136667b"
+    },
+    {
+      "batch_id": "mixed_assessment",
+      "generator": "interchangeability_20261020/code/design_mixed_challenge.py",
+      "generator_exists": true,
+      "generator_sha256": "df9996358a7aeeb6d54010999632039a208d175cf7a0e681256c734ae6c1376d",
+      "native_dir": "interchangeability_20261020/independent/mixed_challenge/native_assessment",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/independent/mixed_challenge/ASSESSMENT_DESIGN_FREEZE.json",
+        "interchangeability_20261020/independent/mixed_challenge/VECTOR_REPLICATION_FREEZE.json",
+        "interchangeability_20261020/independent/mixed_challenge/CONTRAST_REPLICATION_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/independent/mixed_challenge/ASSESSMENT_DESIGN_FREEZE.json": "5733846571459f42f628f60ace502b36a500a7b5ee378e6296f95c46cbbc296e",
+        "interchangeability_20261020/independent/mixed_challenge/CONTRAST_REPLICATION_FREEZE.json": "99a9d19fdaf8685c588dbb864688ea1d933fc377839acd58cf66d97989ffb035",
+        "interchangeability_20261020/independent/mixed_challenge/VECTOR_REPLICATION_FREEZE.json": "0470fa52caf0ed1011df188f2b6692eff4d4d96eb24365295dc3ef4cbda68ad8"
+      },
+      "requests": "interchangeability_20261020/independent/mixed_challenge/assessment_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "834e204ae11d7628e7f74be1e06eb34700a52c5cba7934be0fa6d328ebc66325",
+      "role": "Same seven routes; frozen exact-vector and contrast priorities retained",
+      "run_receipt": "interchangeability_20261020/independent/mixed_challenge/native_assessment/RUN_assessment_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "23c69a4b090c687fc806137237ddf9aca540a40a596e538fd390e5d446b00fdb"
+    },
+    {
+      "batch_id": "ratio_grid_discovery",
+      "generator": "interchangeability_20261020/code/design_ratio_grid.py",
+      "generator_exists": true,
+      "generator_sha256": "237009d69d322f25e79d7e9d6dc006824e4a639af19fd3329b6925f882aa06ee",
+      "native_dir": "interchangeability_20261020/ratio_grid/native_discovery",
+      "phase": "discovery",
+      "registration_files": [],
+      "registration_sha256": {},
+      "requests": "interchangeability_20261020/ratio_grid/discovery_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "cbd590b3468063e241b654a159e837115e27a9381c97721e27e4420139e6a1b0",
+      "role": "Frozen pure/mixed count-vector grid with sampled personnel crews",
+      "run_receipt": "interchangeability_20261020/ratio_grid/native_discovery/RUN_discovery_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "2a17e039ab98491287c9902a7424fbc368a72cb8fd9b39b07f2fc7892bbd52b0"
+    },
+    {
+      "batch_id": "ratio_same_image_replication",
+      "generator": "interchangeability_20261020/code/design_ratio_replication.py",
+      "generator_exists": true,
+      "generator_sha256": "2fdf34056c1bb500c6cada704339cf17854291f0442f3437f478bb8414551c65",
+      "native_dir": "interchangeability_20261020/ratio_grid/native_replication",
+      "phase": "discovery",
+      "registration_files": [
+        "interchangeability_20261020/ratio_grid/RATIO_REPLICATION_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/ratio_grid/RATIO_REPLICATION_FREEZE.json": "e7dfaea9e8b77ea5fac88f6e2965019f72c03ea10db0ef50ca2439700189ba26"
+      },
+      "requests": "interchangeability_20261020/ratio_grid/replication_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "da0ef91f9e7e8d37508e23bb39da3a8b030ad38ea6ff78b15155aec6a8a3c7cb",
+      "role": "Five discovery-selected ratios; new exact members on the same images",
+      "run_receipt": "interchangeability_20261020/ratio_grid/native_replication/RUN_replication_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "ccac58808bea94de475b20bd41a1009b89e0567909263c450dfacd4839386849"
+    },
+    {
+      "batch_id": "ratio_assessment",
+      "generator": "interchangeability_20261020/code/design_ratio_replication.py",
+      "generator_exists": true,
+      "generator_sha256": "2fdf34056c1bb500c6cada704339cf17854291f0442f3437f478bb8414551c65",
+      "native_dir": "interchangeability_20261020/ratio_grid/native_assessment",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/ratio_grid/RATIO_REPLICATION_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/ratio_grid/RATIO_REPLICATION_FREEZE.json": "e7dfaea9e8b77ea5fac88f6e2965019f72c03ea10db0ef50ca2439700189ba26"
+      },
+      "requests": "interchangeability_20261020/ratio_grid/assessment_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "ebeb11b2c750d3e81e7e63f22861790dfedca431df4cb5797584c614934cc951",
+      "role": "Five frozen ratios evaluated on other reused-v2 buildings",
+      "run_receipt": "interchangeability_20261020/ratio_grid/native_assessment/RUN_assessment_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "760168729cb57fafcae28922535417772e3e3989f23ecafb37e9aa27f76252c7"
+    },
+    {
+      "batch_id": "ratio_P05_local_census",
+      "generator": "interchangeability_20261020/code/local_ratio_census.py",
+      "generator_exists": true,
+      "generator_sha256": "26444b24a0b6fed7411383802132bbbbf2895fcba8932a4f8e71d3b29bde3d1a",
+      "native_dir": "interchangeability_20261020/ratio_grid/local_census/native",
+      "phase": "discovery",
+      "registration_files": [],
+      "registration_sha256": {},
+      "requests": "interchangeability_20261020/ratio_grid/local_census/requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "a4b5148ab93b852c29d3b4a095c5813beea885ad9cdea8f596ca47e121fa67fe",
+      "role": "Post-result local mechanism census: one image, fixed n5 and four vectors; not validation",
+      "run_receipt": "interchangeability_20261020/ratio_grid/local_census/native/RUN_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "75b4c27208745a85c7b668d4af5616f5dc3a4ae89840915bcd29618339357d56"
+    },
+    {
+      "batch_id": "fixed_direction_assessment",
+      "generator": "interchangeability_20261020/code/design_blocks.py",
+      "generator_exists": true,
+      "generator_sha256": "daaad2f118d4a5ca6052c0b8a9e19ce3408213650faa555757e530b1d8551eec",
+      "native_dir": "interchangeability_20261020/assessment/native_directions",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/assessment/DIRECTION_SPEC.json",
+        "interchangeability_20261020/assessment/ASSESSMENT_FREEZE.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/assessment/ASSESSMENT_FREEZE.json": "0d2dd76059d476a913b10fd6c3aa554963e5a38e410ab79246e995f2d7acfdfc",
+        "interchangeability_20261020/assessment/DIRECTION_SPEC.json": "05cf5526a73f9f569adcaf35950e09d0965ac8b036f00b354bd5cc51ad22137a"
+      },
+      "requests": "interchangeability_20261020/assessment/direction_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "51e27df0d569a6649d1f341d806b764869694d2d515327bf5225c74b58431de9",
+      "role": "Frozen forward/reverse directions assessed on reused-v2 buildings",
+      "run_receipt": "interchangeability_20261020/assessment/native_directions/RUN_direction_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "7c15bdf4536d1c479ca68d7c23f3554f738d68162d063fdbc59dc468f44a8dd5"
+    },
+    {
+      "batch_id": "new2_nested_assessment",
+      "generator": "interchangeability_20261020/code/design_nested_new2.py",
+      "generator_exists": true,
+      "generator_sha256": "7b616d24579594314ced3db1b045047390c9e7a51cdcc020352fb71a16ded8b4",
+      "native_dir": "interchangeability_20261020/assessment/native_nested_new2",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/assessment/NESTED_NEW2_SPEC.json",
+        "interchangeability_20261020/assessment/NESTED_NEW2_DESIGN_RECEIPT.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/assessment/NESTED_NEW2_DESIGN_RECEIPT.json": "67bc2d785619c610b36ac372c927f6d86d836899aa1b159286fa2a2f1b6f869d",
+        "interchangeability_20261020/assessment/NESTED_NEW2_SPEC.json": "9fb8262f43db59a3ad2a409ff570f23ac88fe9a7a074bed2d0ad5830878850b9"
+      },
+      "requests": "interchangeability_20261020/assessment/nested_new2_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "9f0f11544b068128027f5a8164f03cd053c8cbaef5b5d2feafa340e2c6488cf2",
+      "role": "Fixed new2 bidirectional m2/m5 blocks across every feasible nested n",
+      "run_receipt": "interchangeability_20261020/assessment/native_nested_new2/RUN_nested_new2_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "ab8132c50f3c42a78d38e525ff20d45bfb87935a4c559b6b71dfbd5a390be109"
+    },
+    {
+      "batch_id": "W132_postassessment_probe",
+      "generator": "interchangeability_20261020/reverse/assessment_interpretation/design_w132_probe.py",
+      "generator_exists": true,
+      "generator_sha256": "217d9052dd764055618da35ea08d84d11ca67a4328d798b5aa5ac2bf78f1d044",
+      "native_dir": "interchangeability_20261020/assessment/native_w132_probe",
+      "phase": "assessment",
+      "registration_files": [
+        "interchangeability_20261020/reverse/assessment_interpretation/w132_probe/REGISTER.json"
+      ],
+      "registration_sha256": {
+        "interchangeability_20261020/reverse/assessment_interpretation/w132_probe/REGISTER.json": "4f27aa3fe91d6ca84400dcdd172ae84a4a0902c4ecce62d09b2cb7796135cc0f"
+      },
+      "requests": "interchangeability_20261020/assessment/w132_probe_requests.json.gz",
+      "requests_exists": true,
+      "requests_sha256": "b4c1025781fe5852918011008b49a7f415ff2013ccf09df13365c8b184f85c20",
+      "role": "Post-assessment mechanism probe; same-class W132 alternatives enumerated",
+      "run_receipt": "interchangeability_20261020/assessment/native_w132_probe/RUN_w132_probe_requests.json",
+      "run_receipt_exists": true,
+      "run_receipt_sha256": "1bbc42582c7d12b964a3f1bcb224425151dd5f668fbff56073fc89f8e9e7d971"
+    }
+  ],
+  "exclusions": [
+    "Restored prior-A 122082 replacement-pair observations: retained training input, not current native calls",
+    "condition_transfer/requests.json.gz is the union of the two registered phase manifests, not a third native batch",
+    "Reconstruction-check manifests and rebuilt metadata are copies, not native executions",
+    "Common-panel competitors and alternative metrics reuse the same native teams",
+    "Extra teams in any native cache that are not requested by its registered manifest",
+    "Supplementary audit and illustrative-case replays are reported separately, not new independent image evidence"
+  ],
+  "schema": "registered_native_batch_registry_v1"
+}

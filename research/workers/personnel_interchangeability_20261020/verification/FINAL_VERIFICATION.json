@@ -1,0 +1,75 @@
+{
+  "schema": "final_lean_directory_verification_20261020_v1",
+  "all_scientific_replay_checks_passed": true,
+  "final_directory": "/workspace/scratch/1d99618bd862/delivery/personnel_interchangeability_20261020",
+  "source_main": "445686f8f3cf6039c4ce1f60016cad1d26829044",
+  "scientific_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "snapshot_sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+  "core_native": {
+    "tasks": 17726,
+    "crews_ignoring_image": 13899,
+    "pools": 46,
+    "images": 46,
+    "buildings": 7,
+    "people": 59,
+    "checked_fields_each": 32,
+    "exact_geometry_sha_every_team": true,
+    "paired_events_recomputed": 1819,
+    "max_numeric_difference": 0.0,
+    "fresh_native_evaluations": 17726,
+    "old_result_cache_read": false,
+    "receipt": "core/CORE_REPLAY_RECEIPT.json"
+  },
+  "cases_native": {
+    "cases": 10,
+    "unique_teams": 39,
+    "images": 9,
+    "buildings": 5,
+    "full_snapshot_read": false,
+    "old_result_cache_read": false,
+    "all_members_and_reference_and_geometry_checked": true,
+    "receipt": "CASES_REPLAY_RECEIPT.json"
+  },
+  "request_designs": {
+    "named_designs": 18,
+    "all_named_covered": true,
+    "all_equal": true,
+    "regenerated": 16,
+    "retained_exact": 2,
+    "omitted": [],
+    "receipt": "DESIGN_REBUILD_RECEIPT.json"
+  },
+  "forward_full": {
+    "people": 60,
+    "feature_columns": 328,
+    "candidates": 188,
+    "label_rows": 11280,
+    "all_features_equal": true,
+    "all_labels_equal": true,
+    "all_capacities_equal": true,
+    "tolerance": 1e-09,
+    "target_building_outcomes_not_used_for_training": true,
+    "receipt": "FORWARD_FULL_REBUILD_RECEIPT.json"
+  },
+  "after_pruning_checks": [
+    {
+      "manifest": "interchangeability_20261020/reproduction/PACKAGE_DEPENDENCIES.json",
+      "files": 51,
+      "all_present_and_exact": true
+    },
+    {
+      "manifest": "interchangeability_20261020/reverse/REVERSE_MINIMAL_REPRODUCTION.json",
+      "files": 144,
+      "all_present_and_exact": true
+    }
+  ],
+  "pdf_visual_review": "PDF_VISUAL_REVIEW.json",
+  "forward_redraw": "FORWARD_PLOT_REDRAW.json",
+  "reverse_redraw": "../interchangeability_20261020/reverse/PRUNE_REBUILDABLE.json#plot_dependency_audit",
+  "boundaries": [
+    "Actual native replay ran from this lean delivery directory. Subsequent pruning removed only unconsumed derived summaries and duplicate tables; scientific replay entries, exact input manifests and case hashes were rechecked after pruning.",
+    "The complete 17-batch search and all reverse models were not recomputed a second time at delivery. Their original actual run receipts, labels, candidate ledgers and reconstruction code remain.",
+    "Repeated teams, internal v2 assessment and delivery replays are not additional independent images, people or external blind tests.",
+    "The scientific result equality is numerical and exact membership/reference/geometry equality. Redrawn PNG bytes may differ with the shipped font subset; this is recorded, not claimed bitwise equal."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "all_frozen_file_guards_verified": true,
+  "analyses_executed": false,
+  "created_utc": "2026-10-19T16:37:36.535925+00:00",
+  "phases": [
+    {
+      "anchors_sha256": "ca347e3c34d20744f969b6b4e91d98463246d758fbf47fedb46ee217352eb16c",
+      "commands": [
+        [
+          "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel/summarize_common_panel.py",
+          "--panel",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel",
+          "--snapshot",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+          "--labels",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/worker_labels.csv.gz",
+          "--features",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/features_train.csv.gz"
+        ],
+        [
+          "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel/compare_competitors.py",
+          "--phase",
+          "discovery"
+        ]
+      ],
+      "exact_native_requested_members_checked": 14243,
+      "phase": "discovery",
+      "pools": 49,
+      "registration_sha256": "f1962b0deb6b75f32c514fa48058c95162201c22cc03b6aba28102c03ac764f9",
+      "requests_sha256": "33dc0e465b865535519305d878fbeeb1ca1bd857dc525941d9f7b16f9a65c0dd"
+    },
+    {
+      "anchors_sha256": "0006e810d8ba732ed4bacd7a2c7dfd760fb8ffd9a504ccb48eb461e0779e7829",
+      "commands": [
+        [
+          "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel/summarize_common_panel.py",
+          "--panel",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel/assessment",
+          "--snapshot",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+          "--labels",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/worker_labels.csv.gz",
+          "--features",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/features_train.csv.gz"
+        ],
+        [
+          "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+          "/workspace/scratch/1d99618bd862/interchangeability_20261020/reproduction/common_analysis_check_scratch/portable_input/interchangeability_20261020/forward/common_panel/compare_competitors.py",
+          "--phase",
+          "assessment"
+        ]
+      ],
+      "exact_native_requested_members_checked": 10577,
+      "phase": "assessment",
+      "pools": 41,
+      "registration_sha256": "283eb5488f7d2f3718a04f03a25f33f6e4b04e159992fa478186bc7b0f2fa54a",
+      "requests_sha256": "87c8781899b94c496a626b1ffde2ef66789967352a5b897a9ea70d98824358a1"
+    }
+  ],
+  "schema": "portable_common_analysis_preparation_v1",
+  "scientific_registration_changed": false,
+  "scope": "A preparation-only run checks real original native member presence and exact source/registration/request/anchor hashes. It is not another statistical replication; use --run to regenerate summary tables from the existing native geometries."
+}

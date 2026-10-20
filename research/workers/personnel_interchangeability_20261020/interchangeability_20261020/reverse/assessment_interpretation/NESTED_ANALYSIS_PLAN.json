@@ -1,0 +1,20 @@
+{
+  "schema": "nested_new2_assessment_analysis_plan_v1",
+  "classification_and_direction_rules": "Unchanged assessment/ASSESSMENT_FREEZE.json and assessment/NESTED_NEW2_SPEC.json",
+  "primary": "n13,m5 for both directions; n13,m2 is the explicitly frozen dilution control",
+  "curves": [
+    "All capacity-feasible integer n with every fixed path, reporting support at each point",
+    "Same metadata cohort supporting both m at n13, while retaining any further support loss at large n",
+    "Balanced metadata cohort supporting both m for the fixed n5..21 pressure span"
+  ],
+  "cohort_selection": "Capacity and metadata only; never selected by score, geometry, direction success or failure",
+  "aggregation": "Replicate events within reference pool, reference pools equally within true image ID, images equally within building, buildings equally; pool and true-image support always separate",
+  "geometry": "Frozen old joint strict/main/wide, noQ geometry and new shape remain separate, together with floor/prism/node/wall/corner diagnostics",
+  "quality": "Signed C-B B8L2 primary and D10 sensitivity; within/cross absolute changes, per-pool descriptive p10/p90, decline>5, endpoint quality and failures separately",
+  "failures": "Incomplete and unscorable endpoints retain attempted denominators; absent capacity is no experiment and is not a failed team or score zero",
+  "step_localization": "All successive integer-n steps of the identical frozen block/core path; score/node/corner change and recorded minimum-support increments reported, with class of the single shared added person. Local largest steps are mechanism illustrations, not newly validated threshold hypotheses",
+  "identity_sensitivity": "At frozen n13/m2 and n13/m5, delete events involving each worker in replaceable blocks; retain changed support, empty cases and all signs. Descriptive deletion does not identify a causal person effect",
+  "independence": "Two paths, many n, repeated people, and new teams are not new independent images or buildings. No external blind-test claim",
+  "design_relation_between_m": "m2 and m5 use separate frozen block/core draws; nesting is exact across n within each m/path, not exact person matching between m scales",
+  "outcome_boundary_at_plan_write": "Native and metric summaries are running; no assessment effect or curve has been opened for selection. Only metadata capacity and completion receipts observed"
+}

@@ -1,0 +1,25 @@
+category,target,definition,eligible_events,images,buildings,ranking,ascending,limit,eligible_arm_steps
+class_geometric_contrast,G,"A/B main passes; A/C no-Q geometry fails; same exact core,n,m and source counts.",757.0,45,6,floor_contrast,False,1,
+class_geometric_contrast,R,"A/B main passes; A/C no-Q geometry fails; same exact core,n,m and source counts.",290.0,41,6,floor_contrast,False,1,
+both_draws_multi_person_geometric_contrast,G,m>=2; both registered member/background draws have A/B main pass and A/C no-Q fail; rank mean geometric contrast across the two draws. Their source vectors are retained separately.,72.0,16,4,two_draw_mean_floor_contrast,False,1,
+both_draws_multi_person_geometric_contrast,R,m>=2; both registered member/background draws have A/B main pass and A/C no-Q fail; rank mean geometric contrast across the two draws. Their source vectors are retained separately.,20.0,12,6,two_draw_mean_floor_contrast,False,1,
+quality_only_legacy_cross_break,G,"A/B main passes; A/C main fails but legacy no-Q passes, so its main failure is explained by the Q threshold.",1091.0,47,6,Q_contrast,False,1,
+quality_only_legacy_cross_break,R,"A/B main passes; A/C main fails but legacy no-Q passes, so its main failure is explained by the Q threshold.",865.0,44,6,Q_contrast,False,1,
+same_composition_similar_Q_different_geometry,G,A/B scores within 2 but legacy no-Q geometry fails; same composition is not overall interchangeable.,301.0,36,5,within_floor_jaccard_difference,False,1,
+same_composition_similar_Q_different_geometry,R,A/B scores within 2 but legacy no-Q geometry fails; same composition is not overall interchangeable.,87.0,13,4,within_floor_jaccard_difference,False,1,
+lower_historical_Q_block_improves_this_image,G,"C block historical Q at least 2 below B, yet B8 and D10 improve by at least 5 on this image; illustrative conditional contribution, not learned selection success.",515.0,35,6,net_Q,False,1,
+lower_historical_Q_block_improves_this_image,R,"C block historical Q at least 2 below B, yet B8 and D10 improve by at least 5 on this image; illustrative conditional contribution, not learned selection success.",119.0,15,4,net_Q,False,1,
+cross_class_fusion_failure,G,A/B are evaluable; changed class C is not; failures retained and not zero-imputed.,74.0,13,4,B_B8L2,False,1,
+cross_class_fusion_failure,R,A/B are evaluable; changed class C is not; failures retained and not zero-imputed.,75.0,6,3,B_B8L2,False,1,
+within_different_nodes_shape_equivalent,G,Registered shape criterion passes with different original node counts; inspect true corners and collinearity before interpretation.,0.0,0,0,within_floor_jaccard_difference,True,1,
+within_different_nodes_shape_equivalent,R,Registered shape criterion passes with different original node counts; inspect true corners and collinearity before interpretation.,1.0,1,1,within_floor_jaccard_difference,True,1,
+within_shape_passes_depth_proxy_changes,G,Registered shape passes but mean-height prism proxy IoU < .95; proxy is not exact full 3D IoU.,73.0,31,6,within_mean_height_prism_pair_iou,True,1,
+within_shape_passes_depth_proxy_changes,R,Registered shape passes but mean-height prism proxy IoU < .95; proxy is not exact full 3D IoU.,7.0,7,3,within_mean_height_prism_pair_iou,True,1,
+cross_different_nodes_shape_equivalent,G,Registered shape criterion passes with different original node counts; inspect true corners and collinearity before interpretation.,1.0,1,1,cross_floor_jaccard_difference,True,1,
+cross_different_nodes_shape_equivalent,R,Registered shape criterion passes with different original node counts; inspect true corners and collinearity before interpretation.,1.0,1,1,cross_floor_jaccard_difference,True,1,
+cross_shape_passes_depth_proxy_changes,G,Registered shape passes but mean-height prism proxy IoU < .95; proxy is not exact full 3D IoU.,93.0,34,6,cross_mean_height_prism_pair_iou,True,1,
+cross_shape_passes_depth_proxy_changes,R,Registered shape passes but mean-height prism proxy IoU < .95; proxy is not exact full 3D IoU.,19.0,14,6,cross_mean_height_prism_pair_iou,True,1,
+threshold_quality_improves,G,Registered nested step; old shared observation partition unchanged; threshold increases; selected groups lose selection with unchanged support; Q moves by more than 2.,,8,3,B8L2_change,False,1,10.0
+threshold_quality_worsens,G,Registered nested step; old shared observation partition unchanged; threshold increases; selected groups lose selection with unchanged support; Q moves by more than 2.,,9,4,B8L2_change,True,1,21.0
+threshold_quality_improves,R,Registered nested step; old shared observation partition unchanged; threshold increases; selected groups lose selection with unchanged support; Q moves by more than 2.,,1,1,B8L2_change,False,1,1.0
+threshold_quality_worsens,R,Registered nested step; old shared observation partition unchanged; threshold increases; selected groups lose selection with unchanged support; Q moves by more than 2.,,6,3,B8L2_change,True,1,10.0

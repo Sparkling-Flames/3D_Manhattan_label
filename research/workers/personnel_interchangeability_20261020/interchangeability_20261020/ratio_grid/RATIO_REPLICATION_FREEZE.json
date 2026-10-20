@@ -1,0 +1,85 @@
+{
+  "schema": "ratio_confirmation_freeze_v1",
+  "frozen_utc": "2026-10-19T15:34:33.118723+00:00",
+  "seed": 2026102027,
+  "rules": [
+    {
+      "rule_id": "P01",
+      "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+      "domain": "ordinary_new",
+      "allowed_origins": [
+        "new"
+      ],
+      "n": 4,
+      "mixture": {
+        "C01": 3,
+        "C02": 1
+      }
+    },
+    {
+      "rule_id": "P02",
+      "method_id": "R_directswap_geometry_partition_b2_K2__ordinary_new__mixed_history_v1",
+      "domain": "ordinary_new",
+      "allowed_origins": [
+        "new"
+      ],
+      "n": 5,
+      "mixture": {
+        "C01": 3,
+        "C02": 2
+      }
+    },
+    {
+      "rule_id": "P03",
+      "method_id": "F20_highQ23_T_qK2",
+      "domain": "all",
+      "allowed_origins": [
+        "new",
+        "v1"
+      ],
+      "n": 3,
+      "mixture": {
+        "C01": 2,
+        "C02": 1
+      }
+    },
+    {
+      "rule_id": "P04",
+      "method_id": "F20_newCommon_Full_balanced_K3",
+      "domain": "all",
+      "allowed_origins": [
+        "new"
+      ],
+      "n": 3,
+      "mixture": {
+        "C02": 1,
+        "C03": 2
+      }
+    },
+    {
+      "rule_id": "P05",
+      "method_id": "F20_newCommon_Full_balanced_K3",
+      "domain": "all",
+      "allowed_origins": [
+        "new"
+      ],
+      "n": 5,
+      "mixture": {
+        "C01": 1,
+        "C02": 3,
+        "C03": 1
+      }
+    }
+  ],
+  "draws_per_composition": 16,
+  "selection": "Discovery ratio grid only: five exact mixtures with striking positive cases, deliberately tested on every supporting image in both panels, including negative discovery images. No assessment outcomes were read to choose ratios. Full grid ledger retains non-winners.",
+  "discovery_replication": "Same 13 metadata-chosen discovery images, exclude every concrete team previously evaluated for the same method/pool/n/vector. If no novel team exists, record finite-population exhaustion; never call repeat a new member draw.",
+  "assessment": "All ordinary Manual pools in the six registered assessment buildings; enumerate all concrete teams if <=16, otherwise sample 16 distinct teams. The v2 buildings were explored in earlier rounds; this is frozen internal reuse assessment, not external blind testing.",
+  "comparators": "Each supported pure constituent at the same n; retain every pure comparison and the mixture minus best pure mean as descriptive complementarity. Require capacity for every constituent pure group before complete comparison.",
+  "statistics": "Image and building equal-weight quality direction, failures and within-composition dispersion; report exact independent buildings/images/workers/unique teams. Same-mixture new-member replication does not imply new independent images or equal actual turnover across ratios.",
+  "sources": {
+    "discovery_contrasts_sha256": "2fda1816f9bfc266a84a2208c3fae82eab6eef15666e8c44cc727207682362a9",
+    "discovery_requests_sha256": "cbd590b3468063e241b654a159e837115e27a9381c97721e27e4420139e6a1b0"
+  },
+  "prespecified_no_changes": "No classifier, reference, fusion, score or geometric criterion is changed after these outcomes."
+}

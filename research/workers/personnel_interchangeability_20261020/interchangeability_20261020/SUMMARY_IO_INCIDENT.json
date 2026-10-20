@@ -1,0 +1,6 @@
+{
+  "issue": "Interrupted gzip CSV writes plus observed cgroup OOM termination of forward summary worker",
+  "native_results": "Complete forward native outputs retained; only summary computations resumed",
+  "fix": "gzip.compress bytes, one fsync atomic write, CRC readback; resume requires exact event IDs; bounded geometry signature cache; fewer summary workers",
+  "scientific_changes": "None to frozen fusion or metric values. Added explicitly signed Q-drop fields to distinguish abs-difference tails."
+}

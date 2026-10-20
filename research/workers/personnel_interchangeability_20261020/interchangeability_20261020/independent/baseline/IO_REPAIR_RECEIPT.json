@@ -1,0 +1,17 @@
+{
+  "schema": "baseline_csv_io_repair_v1",
+  "failed_direct_stream_sizes": [
+    2754247,
+    3118938
+  ],
+  "failure": "Gzip EOF missing after process completion; two independent regenerated direct pandas streams truncated at different lengths. Both requests remained intact.",
+  "repair": "Generate full CSV and complete gzip member in memory; one verified binary write, fsync, atomic rename, decode and compare; next-process all-event audit succeeded.",
+  "fixed_compressed_bytes": 3228386,
+  "fixed_uncompressed_bytes": 26741834,
+  "fixed_csv_rows": 33332,
+  "fixed_sha256": "64d043e575d5e2c10d8341551c0732b113af1da743e60048f8948c71567d7508",
+  "before_member_reconstruction_digest": "56f666b914702d4a62ec6c576839d66e810b371e16f3d6875debc7a022c007ec",
+  "after_member_reconstruction_digest": "56f666b914702d4a62ec6c576839d66e810b371e16f3d6875debc7a022c007ec",
+  "scientific_members_changed": false,
+  "requests_hash_changed_only_because_embedded_spec_code_hash_changed": true
+}

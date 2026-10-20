@@ -1,0 +1,989 @@
+{
+  "aggregation": "Equal eligible A within core; cores within pool/n; n within pool for ALL-n summary; pictures within building; equal buildings. Repeated cores/teams are not independent images or people.",
+  "capacity": "Projected classes may be smaller than the full historical class. Missing same-vector disjoint B is a genuine capacity loss, never imputed as a stable or unstable pair.",
+  "competitor_labels_sha256": "c1eeec9d89521c0e5b26d249fd9b81c7427a7d8519712feea659522ae4bcac37",
+  "direction": "Retain actual outgoing/incoming count vectors with supports, quality direction, failure and low tail. No favorable direction is selected from assessment or used to alter separately frozen ratio hypotheses.",
+  "frozen_utc": "2026-10-19T15:29:33.007405+00:00",
+  "inherited_metric_contract_sha256": "af07c95fd1fedc43455fa19589fc8b0ef035599859f6fab8c348c6c2672bbad5",
+  "method_ids": [
+    "F20_newCommon_Full_balanced_K2",
+    "F20_newCommon_Full_balanced_K3",
+    "F_rule_Q_quantile_K2",
+    "F_rule_Q_quantile_K3",
+    "F20_all_QTG_balanced_medoids_K4",
+    "R_directswap_geometry_partition_b0_K2__ordinary_new__mixed_history_v1",
+    "R_directswap_geometry_partition_b0_K7__ordinary_new__mixed_history_v1",
+    "R_directswap_geometry_partition_b0_K7__ordinary__mixed_history_v1"
+  ],
+  "methods": [
+    {
+      "common26_class_sizes": {
+        "C01": 13,
+        "C02": 13
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W101",
+          "W105",
+          "W106",
+          "W113",
+          "W118",
+          "W120",
+          "W122",
+          "W127",
+          "W128",
+          "W130",
+          "W131",
+          "W134"
+        ],
+        "C02": [
+          "W102",
+          "W104",
+          "W107",
+          "W111",
+          "W112",
+          "W114",
+          "W119",
+          "W123",
+          "W124",
+          "W125",
+          "W126",
+          "W129",
+          "W133"
+        ]
+      },
+      "domain": "all",
+      "frozen_definition": {
+        "capacities": [
+          13,
+          13
+        ],
+        "groups_equal_weight": true,
+        "medoid_indices": [
+          21,
+          1
+        ],
+        "medoid_workers": [
+          "W129",
+          "W101"
+        ],
+        "missing_handling": "complete required opportunities; no imputation",
+        "objective": 21.69266552227783,
+        "requested_k": 2,
+        "restarts": 8,
+        "seed": 2026102003,
+        "selected_iteration": 1,
+        "selected_restart": 4,
+        "transforms": {
+          "Q": {
+            "center": [
+              -0.8415870351330843,
+              -20.43585254141984,
+              13.912124234146319
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "q_beta",
+              "q_residual_p10",
+              "q_residual_sd"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              7.376722059713428,
+              9.123381118104376,
+              2.254231096358911
+            ]
+          },
+          "T": {
+            "center": [
+              -0.006847756916530201,
+              0.38593717437946884
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "t_source_origin_effect",
+              "t_log_residual_tail"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.4599282458020937,
+              0.0633112075109507
+            ]
+          },
+          "difficulty": {
+            "center": [
+              -0.12151220745676786,
+              -0.06709640554236275
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "hard_minus_easy",
+              "medium_minus_easy"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              3.4132811723378023,
+              3.3690106807660167
+            ]
+          },
+          "geometry": {
+            "center": [
+              -0.0432156165366711,
+              -0.0005394252183481,
+              0.0018550016011947999
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "pair_count_effect",
+              "bottom_y_effect",
+              "height_log_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.12469328212316366,
+              0.00120421659596475,
+              0.0060919548720376505
+            ]
+          },
+          "new_report_nonedit": {
+            "center": [
+              -0.0614070766980698
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "semi_new_error_nonedit_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.1123152225856702
+            ]
+          },
+          "scope_propensity": {
+            "center": [
+              0.00015700884660614997
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "scope_out_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.05420128865808035
+            ]
+          },
+          "semi_edit": {
+            "center": [
+              0.01370152764947395
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "semi_new_edit_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.1333164743790289
+            ]
+          }
+        }
+      },
+      "method_id": "F20_newCommon_Full_balanced_K2",
+      "name_zh": "共同26人七域等权二类",
+      "original_class_sizes": {
+        "C01": 13,
+        "C02": 13
+      },
+      "original_known_people": 26,
+      "source": "forward"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 9,
+        "C02": 9,
+        "C03": 8
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W101",
+          "W105",
+          "W106",
+          "W113",
+          "W118",
+          "W127",
+          "W128",
+          "W131"
+        ],
+        "C02": [
+          "W104",
+          "W107",
+          "W111",
+          "W114",
+          "W119",
+          "W123",
+          "W125",
+          "W129",
+          "W133"
+        ],
+        "C03": [
+          "W102",
+          "W112",
+          "W120",
+          "W122",
+          "W124",
+          "W126",
+          "W130",
+          "W134"
+        ]
+      },
+      "domain": "all",
+      "frozen_definition": {
+        "capacities": [
+          9,
+          9,
+          8
+        ],
+        "groups_equal_weight": true,
+        "medoid_indices": [
+          1,
+          21,
+          2
+        ],
+        "medoid_workers": [
+          "W101",
+          "W129",
+          "W102"
+        ],
+        "missing_handling": "complete required opportunities; no imputation",
+        "objective": 19.49061442544586,
+        "requested_k": 3,
+        "restarts": 8,
+        "seed": 2026102003,
+        "selected_iteration": 2,
+        "selected_restart": 2,
+        "transforms": {
+          "Q": {
+            "center": [
+              -0.8415870351330843,
+              -20.43585254141984,
+              13.912124234146319
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "q_beta",
+              "q_residual_p10",
+              "q_residual_sd"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              7.376722059713428,
+              9.123381118104376,
+              2.254231096358911
+            ]
+          },
+          "T": {
+            "center": [
+              -0.006847756916530201,
+              0.38593717437946884
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "t_source_origin_effect",
+              "t_log_residual_tail"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.4599282458020937,
+              0.0633112075109507
+            ]
+          },
+          "difficulty": {
+            "center": [
+              -0.12151220745676786,
+              -0.06709640554236275
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "hard_minus_easy",
+              "medium_minus_easy"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              3.4132811723378023,
+              3.3690106807660167
+            ]
+          },
+          "geometry": {
+            "center": [
+              -0.0432156165366711,
+              -0.0005394252183481,
+              0.0018550016011947999
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "pair_count_effect",
+              "bottom_y_effect",
+              "height_log_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.12469328212316366,
+              0.00120421659596475,
+              0.0060919548720376505
+            ]
+          },
+          "new_report_nonedit": {
+            "center": [
+              -0.0614070766980698
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "semi_new_error_nonedit_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.1123152225856702
+            ]
+          },
+          "scope_propensity": {
+            "center": [
+              0.00015700884660614997
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "scope_out_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.05420128865808035
+            ]
+          },
+          "semi_edit": {
+            "center": [
+              0.01370152764947395
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "semi_new_edit_effect"
+            ],
+            "group_weight": 0.14285714285714285,
+            "scale": [
+              0.1333164743790289
+            ]
+          }
+        }
+      },
+      "method_id": "F20_newCommon_Full_balanced_K3",
+      "name_zh": "共同26人七域等权三类",
+      "original_class_sizes": {
+        "C01": 9,
+        "C02": 9,
+        "C03": 8
+      },
+      "original_known_people": 26,
+      "source": "forward"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 13,
+        "C02": 13
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W101",
+          "W105",
+          "W106",
+          "W111",
+          "W113",
+          "W119",
+          "W120",
+          "W123",
+          "W124",
+          "W128",
+          "W129",
+          "W133"
+        ],
+        "C02": [
+          "W102",
+          "W104",
+          "W107",
+          "W112",
+          "W114",
+          "W118",
+          "W122",
+          "W125",
+          "W126",
+          "W127",
+          "W130",
+          "W131",
+          "W134"
+        ]
+      },
+      "domain": "all",
+      "frozen_definition": {
+        "actual_k": 2,
+        "column": "q_beta",
+        "edges": [
+          -1.039121313747486
+        ],
+        "meaning": "training quantile ordinal bin; no natural-cluster claim",
+        "requested_k": 2
+      },
+      "method_id": "F_rule_Q_quantile_K2",
+      "name_zh": "55人历史相对Q分位二类，投影至共同26人",
+      "original_class_sizes": {
+        "C01": 28,
+        "C02": 27
+      },
+      "original_known_people": 55,
+      "source": "history_Q"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 8,
+        "C02": 10,
+        "C03": 8
+      },
+      "common26_members": {
+        "C01": [
+          "W105",
+          "W106",
+          "W111",
+          "W113",
+          "W119",
+          "W124",
+          "W128",
+          "W129"
+        ],
+        "C02": [
+          "W100",
+          "W101",
+          "W107",
+          "W114",
+          "W120",
+          "W123",
+          "W125",
+          "W127",
+          "W131",
+          "W133"
+        ],
+        "C03": [
+          "W102",
+          "W104",
+          "W112",
+          "W118",
+          "W122",
+          "W126",
+          "W130",
+          "W134"
+        ]
+      },
+      "domain": "all",
+      "frozen_definition": {
+        "actual_k": 3,
+        "column": "q_beta",
+        "edges": [
+          -4.507236912820565,
+          0.8221695022950462
+        ],
+        "meaning": "training quantile ordinal bin; no natural-cluster claim",
+        "requested_k": 3
+      },
+      "method_id": "F_rule_Q_quantile_K3",
+      "name_zh": "55人历史相对Q分位三类，投影至共同26人",
+      "original_class_sizes": {
+        "C01": 19,
+        "C02": 18,
+        "C03": 18
+      },
+      "original_known_people": 55,
+      "source": "history_Q"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 8,
+        "C02": 9,
+        "C03": 4,
+        "C04": 5
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W113",
+          "W119",
+          "W124",
+          "W127",
+          "W128",
+          "W131",
+          "W134"
+        ],
+        "C02": [
+          "W101",
+          "W105",
+          "W106",
+          "W107",
+          "W118",
+          "W123",
+          "W125",
+          "W129",
+          "W133"
+        ],
+        "C03": [
+          "W104",
+          "W111",
+          "W114",
+          "W120"
+        ],
+        "C04": [
+          "W102",
+          "W112",
+          "W122",
+          "W126",
+          "W130"
+        ]
+      },
+      "domain": "all",
+      "frozen_definition": {
+        "capacities": [
+          14,
+          14,
+          13,
+          13
+        ],
+        "groups_equal_weight": true,
+        "medoid_indices": [
+          39,
+          20,
+          34,
+          47
+        ],
+        "medoid_workers": [
+          "W120",
+          "W101",
+          "W115",
+          "W128"
+        ],
+        "missing_handling": "complete required opportunities; no imputation",
+        "objective": 37.90886034672384,
+        "requested_k": 4,
+        "restarts": 8,
+        "seed": 2026102003,
+        "selected_iteration": 4,
+        "selected_restart": 0,
+        "transforms": {
+          "Q": {
+            "center": [
+              -0.8430435798998384,
+              -19.405882787264417,
+              13.712528628892665
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "q_beta",
+              "q_residual_p10",
+              "q_residual_sd"
+            ],
+            "group_weight": 0.3333333333333333,
+            "scale": [
+              8.936874011706518,
+              11.126749623301743,
+              2.5256870833165106
+            ]
+          },
+          "T": {
+            "center": [
+              -0.008338941947585651,
+              0.410590366975609
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "t_source_origin_effect",
+              "t_log_residual_tail"
+            ],
+            "group_weight": 0.3333333333333333,
+            "scale": [
+              0.6336171481722902,
+              0.14085703573403363
+            ]
+          },
+          "geometry": {
+            "center": [
+              -0.043705480203184,
+              -9.993093176429976e-05,
+              0.0019596207450059498
+            ],
+            "clipping": [
+              -3,
+              3
+            ],
+            "fields": [
+              "pair_count_effect",
+              "bottom_y_effect",
+              "height_log_effect"
+            ],
+            "group_weight": 0.3333333333333333,
+            "scale": [
+              0.26950164362321716,
+              0.002266733543467275,
+              0.0106555527708697
+            ]
+          }
+        }
+      },
+      "method_id": "F20_all_QTG_balanced_medoids_K4",
+      "name_zh": "历史Q／T／几何四类，投影至共同26人",
+      "original_class_sizes": {
+        "C01": 13,
+        "C02": 14,
+        "C03": 14,
+        "C04": 13
+      },
+      "original_known_people": 54,
+      "source": "forward"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 16,
+        "C02": 10
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W102",
+          "W104",
+          "W107",
+          "W112",
+          "W114",
+          "W118",
+          "W120",
+          "W122",
+          "W123",
+          "W125",
+          "W126",
+          "W127",
+          "W130",
+          "W131",
+          "W134"
+        ],
+        "C02": [
+          "W101",
+          "W105",
+          "W106",
+          "W111",
+          "W113",
+          "W119",
+          "W124",
+          "W128",
+          "W129",
+          "W133"
+        ]
+      },
+      "domain": "ordinary_new",
+      "frozen_definition": {
+        "algorithm": "partition_b0",
+        "representation": "geometry",
+        "requested_k": 2
+      },
+      "method_id": "R_directswap_geometry_partition_b0_K2__ordinary_new__mixed_history_v1",
+      "name_zh": "新来源历史无Q融合关系二类",
+      "original_class_sizes": {
+        "C01": 21,
+        "C02": 14
+      },
+      "original_known_people": 35,
+      "source": "reverse"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 4,
+        "C02": 2,
+        "C03": 7,
+        "C04": 4,
+        "C05": 4,
+        "C06": 3,
+        "C07": 2
+      },
+      "common26_members": {
+        "C01": [
+          "W100",
+          "W104",
+          "W118",
+          "W131"
+        ],
+        "C02": [
+          "W101",
+          "W111"
+        ],
+        "C03": [
+          "W102",
+          "W112",
+          "W122",
+          "W126",
+          "W127",
+          "W130",
+          "W134"
+        ],
+        "C04": [
+          "W105",
+          "W106",
+          "W113",
+          "W124"
+        ],
+        "C05": [
+          "W107",
+          "W114",
+          "W123",
+          "W125"
+        ],
+        "C06": [
+          "W128",
+          "W129",
+          "W133"
+        ],
+        "C07": [
+          "W119",
+          "W120"
+        ]
+      },
+      "domain": "ordinary_new",
+      "frozen_definition": {
+        "algorithm": "partition_b0",
+        "representation": "geometry",
+        "requested_k": 7
+      },
+      "method_id": "R_directswap_geometry_partition_b0_K7__ordinary_new__mixed_history_v1",
+      "name_zh": "新来源历史无Q融合关系七类",
+      "original_class_sizes": {
+        "C01": 4,
+        "C02": 4,
+        "C03": 11,
+        "C04": 4,
+        "C05": 4,
+        "C06": 4,
+        "C07": 4
+      },
+      "original_known_people": 35,
+      "source": "reverse"
+    },
+    {
+      "common26_class_sizes": {
+        "C01": 2,
+        "C02": 10,
+        "C03": 1,
+        "C05": 3,
+        "C06": 4,
+        "C07": 6
+      },
+      "common26_members": {
+        "C01": [
+          "W106",
+          "W119"
+        ],
+        "C02": [
+          "W102",
+          "W112",
+          "W114",
+          "W120",
+          "W122",
+          "W125",
+          "W126",
+          "W127",
+          "W130",
+          "W134"
+        ],
+        "C03": [
+          "W105"
+        ],
+        "C05": [
+          "W128",
+          "W129",
+          "W133"
+        ],
+        "C06": [
+          "W101",
+          "W111",
+          "W113",
+          "W124"
+        ],
+        "C07": [
+          "W100",
+          "W104",
+          "W107",
+          "W118",
+          "W123",
+          "W131"
+        ]
+      },
+      "domain": "ordinary",
+      "frozen_definition": {
+        "algorithm": "partition_b0",
+        "representation": "geometry",
+        "requested_k": 7
+      },
+      "method_id": "R_directswap_geometry_partition_b0_K7__ordinary__mixed_history_v1",
+      "name_zh": "普通历史无Q融合关系七类，投影至共同26人",
+      "original_class_sizes": {
+        "C01": 6,
+        "C02": 16,
+        "C03": 6,
+        "C04": 7,
+        "C05": 7,
+        "C06": 7,
+        "C07": 6
+      },
+      "original_known_people": 55,
+      "source": "reverse"
+    }
+  ],
+  "metrics": "Same main/strict/wide, noQ geometry, continuous floor/angle/nodes, signed and absolute B8L2/D10, complete failures, and separate source/target block times as original panel. No new fusion/scoring/reference.",
+  "original_16_registration_unchanged_sha256": "f1962b0deb6b75f32c514fa48058c95162201c22cc03b6aba28102c03ac764f9",
+  "phases": {
+    "assessment": {
+      "anchor_sha256": "0006e810d8ba732ed4bacd7a2c7dfd760fb8ffd9a504ccb48eb461e0779e7829",
+      "buildings": [
+        "B6ByNegPMKs",
+        "UwV83HsGsw3",
+        "X7HyMhZNoso",
+        "pa4otMbVnkk",
+        "q9vSo1VnCiC",
+        "rPc6DW4iMge"
+      ],
+      "m": 2,
+      "n_values": [
+        5,
+        9,
+        13,
+        17
+      ],
+      "panel_path": "interchangeability_20261020/forward/common_panel/assessment",
+      "registration_sha256": "283eb5488f7d2f3718a04f03a25f33f6e4b04e159992fa478186bc7b0f2fa54a",
+      "request_sha256": "87c8781899b94c496a626b1ffde2ef66789967352a5b897a9ea70d98824358a1",
+      "unique_teams": 10577
+    },
+    "discovery": {
+      "anchor_sha256": "ca347e3c34d20744f969b6b4e91d98463246d758fbf47fedb46ee217352eb16c",
+      "buildings": [
+        "7y3sRwLe3Va",
+        "VLzqgDo317F",
+        "e9zR4mvMWw7",
+        "jtcxE69GiFV",
+        "pRbA3pwrgk9",
+        "yqstnuAEVhm"
+      ],
+      "m": 2,
+      "n_values": [
+        5,
+        9,
+        13,
+        17
+      ],
+      "panel_path": "interchangeability_20261020/forward/common_panel",
+      "registration_sha256": "f1962b0deb6b75f32c514fa48058c95162201c22cc03b6aba28102c03ac764f9",
+      "request_sha256": "33dc0e465b865535519305d878fbeeb1ca1bd857dc525941d9f7b16f9a65c0dd",
+      "unique_teams": 14243
+    }
+  },
+  "population": [
+    "W100",
+    "W101",
+    "W102",
+    "W104",
+    "W105",
+    "W106",
+    "W107",
+    "W111",
+    "W112",
+    "W113",
+    "W114",
+    "W118",
+    "W119",
+    "W120",
+    "W122",
+    "W123",
+    "W124",
+    "W125",
+    "W126",
+    "W127",
+    "W128",
+    "W129",
+    "W130",
+    "W131",
+    "W133",
+    "W134"
+  ],
+  "population_origin": "all new",
+  "primary": "For same core/n/m/base A, compare all disjoint same-composition B versus different-composition C. Native eligible A support is reported; primary method ranking uses intersection of eligible A across all eight competitors. Original16 feature deletions remain separately reported on their original common16 support.",
+  "schema": "common26_frozen_forward_reverse_Q_competition_v1",
+  "script_sha256": "02b66ce5e99aad66a151ac923897fe03ad08425078b33abdb931c0560d563a0b",
+  "secondary": "Report pairwise eligibility intersections with each FullK2 and FullK3 benchmark; those pairwise supports may differ and cannot be mixed-ranked. Repeat the same method lists/support rules on assessment. Also A-centered history-Qclose3 neighbor restriction, with no target Q adjustment.",
+  "selection": "Parent-fixed eight existing history-only methods. No labels refit or target-dependent cut points; existing common-panel outcomes have been seen only for the original16 forward ablations, not for these newly projected competitors. Assessment outcomes have not yet been opened or summarized by this analyst.",
+  "source_files": {
+    "forward": {
+      "labels_path": "interchangeability_20261020/forward/worker_labels.csv.gz",
+      "labels_sha256": "ce8f572a5b8f23bbe8ab0f508394bff19fe4d40d27e8c2b7f5b6829fc3f81c97",
+      "manifest_path": "interchangeability_20261020/forward/method_manifest.json",
+      "manifest_sha256": "6777c6c8032bc4b7dedddef6e94a5ab3199091aad2ccaa32e51b70f33dd96dbd"
+    },
+    "history_Q": {
+      "labels_path": "current_main_20261020/research/workers/personnel_composition_study_20261019/analysis/forward/results/worker_labels.csv.gz",
+      "labels_sha256": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+      "manifest_path": "current_main_20261020/research/workers/personnel_composition_study_20261019/analysis/forward/results/method_manifest.json",
+      "manifest_sha256": "ab9f734538c646751ac4dc071ce11506e83de27f361ae1f0870f41dba3890142"
+    },
+    "reverse": {
+      "labels_path": "interchangeability_20261020/reverse/mixed_fit/worker_labels.csv.gz",
+      "labels_sha256": "f9808de471f56773aae3a41df1e4b7f7f366a2fa071d39acd036b4f40be2e6d9",
+      "manifest_path": "interchangeability_20261020/reverse/mixed_fit/METHOD_MANIFEST.json",
+      "manifest_sha256": "3855d1639c0d21bb01a9bf2ec096f40a0b5542a6015d2213a639b0b930c40424"
+    }
+  }
+}

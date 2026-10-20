@@ -1,0 +1,547 @@
+{
+  "schema": "interchangeability_history_features_20261020_v1",
+  "utc": "2026-10-19T14:07:53.977973+00:00",
+  "main_commit": "445686f8f3cf6039c4ce1f60016cad1d26829044",
+  "scientific_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "history_buildings": [
+    "2t7WUuJeko7",
+    "S9hNv5qa7GM",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "jh4fc5c5qoQ",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "zsNo4HB9uLZ"
+  ],
+  "train_key": "history_d199d7b13dccfe7e",
+  "history_records_read": 4767,
+  "target_outcomes_used": false,
+  "source_sha256": {
+    "repo/research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "current_main_20261020/research/workers/personnel_composition_study_20261019/analysis/forward/build_forward.py": "06cdb011d874681c6940b405ec88a6e226fbc1d70780ea0b5c3154d4c543ce31",
+    "current_main_20261020/research/workers/personnel_composition_study_20261019/analysis/forward/results/features_train.csv.gz": "783568cf98a2612308ed53a68d2a1bcc3ad10000bb6587d79b521efbbbd89117",
+    "current_main_20261020/research/workers/personnel_composition_study_20261019/analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/HIGH_Q_FEATURES.csv": "2e8c9cd8b91b1ed612a510074d1b2863d2206a51e30bd24f52d035b3801f195b",
+    "current_main_20261020/research/workers/personnel_composition_followup_20261019/SUBDIVISION_SUPPORT.csv": "5881b4c7a70391a97e65f26712b08447bec44b37075aef20f59d2e5e1eba00c2"
+  },
+  "prior_feature_columns_checked": 156,
+  "prior_features_match": true,
+  "high_Q23": {
+    "definition": "core_supported and history q_beta >= 0; F_rule_Q_threshold_K2 C02",
+    "workers": [
+      "W002",
+      "W008",
+      "W015",
+      "W029",
+      "W030",
+      "W033",
+      "W035",
+      "W036",
+      "W102",
+      "W104",
+      "W108",
+      "W109",
+      "W110",
+      "W112",
+      "W114",
+      "W115",
+      "W118",
+      "W122",
+      "W125",
+      "W126",
+      "W130",
+      "W131",
+      "W134"
+    ],
+    "origin_counts": {
+      "new": 15,
+      "v1": 8
+    },
+    "followup_all_shared_fields_equal": true,
+    "extra_vs_Q_tertile_high18": [
+      "W029",
+      "W110",
+      "W114",
+      "W125",
+      "W131"
+    ],
+    "Q_tertile_high18_is_subset": true
+  },
+  "inherited_time": {
+    "filter": "history; pool_analysis_eligible; manual; ordinary_difficulty_eligible; easy/medium/hard; source_active_time_seconds > 0",
+    "unit": "seconds as frozen evidence; no raw export processing or unit conversion",
+    "additional_minimum_seconds": null,
+    "additional_maximum_seconds": null,
+    "nonpositive_or_missing_in_gate": 555,
+    "unsupported_not_zero": true,
+    "support_gate": {
+      "records": 6,
+      "buildings": 3
+    },
+    "source_summaries": [
+      {
+        "origin": "new",
+        "source_kind": "user_processed_reported_not_raw_log_replayed",
+        "dense_OLS_max_abs_difference": 1.354472090042691e-14,
+        "n": 2379,
+        "min_seconds": 6.622,
+        "p01_seconds": 16.83668,
+        "median_seconds": 115.194,
+        "p99_seconds": 749.7642599999983,
+        "max_seconds": 1500.27,
+        "below_1_second": 0,
+        "below_5_seconds": 0,
+        "above_1800_seconds": 0,
+        "above_3600_seconds": 0
+      },
+      {
+        "origin": "v1",
+        "source_kind": "inherited_v1_audited_source",
+        "dense_OLS_max_abs_difference": 3.7969627442180354e-14,
+        "n": 431,
+        "min_seconds": 2.0,
+        "p01_seconds": 3.8999999999999995,
+        "median_seconds": 114.0,
+        "p99_seconds": 1416.5999999999935,
+        "max_seconds": 2334.0,
+        "below_1_second": 0,
+        "below_5_seconds": 5,
+        "above_1800_seconds": 4,
+        "above_3600_seconds": 0
+      }
+    ],
+    "interpretation": "exp(t_effect) is a source-specific task-adjusted time multiplier; cross-source absolute efficiency not inferred"
+  },
+  "prior_feature_fit": {
+    "train_buildings": [
+      "2t7WUuJeko7",
+      "S9hNv5qa7GM",
+      "VFuaQ6m2Qom",
+      "Z6MFQCViBuw",
+      "b8cTxDM8gDG",
+      "jh4fc5c5qoQ",
+      "uNb9QFRL6hY",
+      "wc2JMjhGNzB",
+      "x8F5xyUWy9e",
+      "zsNo4HB9uLZ"
+    ],
+    "q_records": 2578,
+    "q_images": 81,
+    "q_fit": {
+      "nullity": 1,
+      "constraint_error": 1.580957587066223e-13,
+      "raw_rows": 2578,
+      "effective_person_tasks": 2578,
+      "duplicate_rows_collapsed": 0
+    },
+    "time_source_fits": {
+      "('new', 'user_processed_reported_not_raw_log_replayed')": {
+        "nullity": 1,
+        "constraint_error": 3.352873534367973e-14,
+        "raw_rows": 2379,
+        "effective_person_tasks": 2379,
+        "duplicate_rows_collapsed": 0
+      },
+      "('v1', 'inherited_v1_audited_source')": {
+        "nullity": 1,
+        "constraint_error": 1.1102230246251565e-14,
+        "raw_rows": 431,
+        "effective_person_tasks": 431,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "scope_fit": {
+      "nullity": 2,
+      "constraint_error": 1.429412144204889e-15,
+      "raw_rows": 4570,
+      "effective_person_tasks": 4562,
+      "duplicate_rows_collapsed": 8
+    },
+    "semi_fits": {
+      "old_error_nonedit": {
+        "nullity": 1,
+        "constraint_error": 2.2898349882893854e-15,
+        "raw_rows": 26,
+        "effective_person_tasks": 26,
+        "duplicate_rows_collapsed": 0
+      },
+      "new_error_nonedit": {
+        "nullity": 1,
+        "constraint_error": 7.632783294297951e-17,
+        "raw_rows": 109,
+        "effective_person_tasks": 109,
+        "duplicate_rows_collapsed": 0
+      },
+      "old_edit": {
+        "nullity": 1,
+        "constraint_error": 1.3322676295501878e-15,
+        "raw_rows": 234,
+        "effective_person_tasks": 234,
+        "duplicate_rows_collapsed": 0
+      },
+      "new_edit": {
+        "nullity": 1,
+        "constraint_error": 9.124645483638005e-16,
+        "raw_rows": 219,
+        "effective_person_tasks": 219,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "uses_target_outcomes": false
+  },
+  "prior_condition_fit": {
+    "doorway": {
+      "training_records": 308,
+      "training_images": 9,
+      "training_buildings": 5,
+      "supported_workers": 35,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "q_fit": {
+        "nullity": 1,
+        "constraint_error": 1.0835776720341528e-13,
+        "raw_rows": 308,
+        "effective_person_tasks": 308,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "semi_v1": {
+      "training_records": 186,
+      "training_images": 12,
+      "training_buildings": 4,
+      "supported_workers": 24,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "q_fit": {
+        "nullity": 1,
+        "constraint_error": 0.0,
+        "raw_rows": 186,
+        "effective_person_tasks": 186,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "semi_new": {
+      "training_records": 197,
+      "training_images": 9,
+      "training_buildings": 4,
+      "supported_workers": 27,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "q_fit": {
+        "nullity": 1,
+        "constraint_error": 3.2862601528904634e-14,
+        "raw_rows": 197,
+        "effective_person_tasks": 197,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "special_manual": {
+      "training_records": 0,
+      "training_images": 0,
+      "training_buildings": 0,
+      "supported_workers": 0,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "q_fit": {
+        "raw_rows": 0,
+        "effective_person_tasks": 0,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "special_semi": {
+      "training_records": 0,
+      "training_images": 0,
+      "training_buildings": 0,
+      "supported_workers": 0,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "q_fit": {
+        "raw_rows": 0,
+        "effective_person_tasks": 0,
+        "duplicate_rows_collapsed": 0
+      }
+    }
+  },
+  "extended_conditions": {
+    "manual": {
+      "records": 2578,
+      "images": 81,
+      "buildings": 10,
+      "time_records": 2272,
+      "quality_supported": 55,
+      "time_supported": 54,
+      "gate": {
+        "tasks": 8,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 6.328271240363392e-15,
+            "raw_rows": 1964,
+            "effective_person_tasks": 1964,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 2.5215940446798868e-14
+        },
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 9.992007221626409e-16,
+            "raw_rows": 308,
+            "effective_person_tasks": 308,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 2.786659791809143e-14
+        }
+      },
+      "scope_fit": {
+        "records": 4103,
+        "fit": {
+          "nullity": 2,
+          "constraint_error": 0.0,
+          "raw_rows": 4103,
+          "effective_person_tasks": 4095,
+          "duplicate_rows_collapsed": 8
+        },
+        "gate": {
+          "responses": 10,
+          "buildings": 3,
+          "varying_tasks": 2
+        },
+        "supported": 35
+      }
+    },
+    "doorway": {
+      "records": 308,
+      "images": 9,
+      "buildings": 5,
+      "time_records": 252,
+      "quality_supported": 35,
+      "time_supported": 27,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 1.8041124150158794e-15,
+            "raw_rows": 195,
+            "effective_person_tasks": 195,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 7.077671781985373e-15
+        },
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 1.2004286453759505e-15,
+            "raw_rows": 57,
+            "effective_person_tasks": 57,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 8.659739592076221e-15
+        }
+      }
+    },
+    "semi_new": {
+      "records": 197,
+      "images": 9,
+      "buildings": 4,
+      "time_records": 197,
+      "quality_supported": 27,
+      "time_supported": 27,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 3.6637359812630166e-15,
+            "raw_rows": 197,
+            "effective_person_tasks": 197,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 1.9806378759312793e-13
+        }
+      },
+      "scope_fit": {
+        "records": 219,
+        "fit": {
+          "nullity": 1,
+          "constraint_error": 3.0531133177191805e-16,
+          "raw_rows": 219,
+          "effective_person_tasks": 219,
+          "duplicate_rows_collapsed": 0
+        },
+        "gate": {
+          "responses": 10,
+          "buildings": 3,
+          "varying_tasks": 2
+        },
+        "supported": 0
+      }
+    },
+    "semi_v1": {
+      "records": 186,
+      "images": 12,
+      "buildings": 4,
+      "time_records": 145,
+      "quality_supported": 24,
+      "time_supported": 19,
+      "gate": {
+        "tasks": 4,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 0.0,
+            "raw_rows": 145,
+            "effective_person_tasks": 145,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 3.643751966819764e-13
+        }
+      },
+      "scope_fit": {
+        "records": 218,
+        "fit": {
+          "nullity": 1,
+          "constraint_error": 0.0,
+          "raw_rows": 218,
+          "effective_person_tasks": 218,
+          "duplicate_rows_collapsed": 0
+        },
+        "gate": {
+          "responses": 10,
+          "buildings": 3,
+          "varying_tasks": 2
+        },
+        "supported": 0
+      }
+    },
+    "manual_easy": {
+      "records": 1728,
+      "images": 53,
+      "buildings": 10,
+      "time_records": 1478,
+      "quality_supported": 55,
+      "time_supported": 51,
+      "gate": {
+        "tasks": 6,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 5.662137425588298e-15,
+            "raw_rows": 1305,
+            "effective_person_tasks": 1305,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 3.630429290524262e-14
+        },
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 3.6637359812630166e-15,
+            "raw_rows": 173,
+            "effective_person_tasks": 173,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 1.199040866595169e-14
+        }
+      }
+    },
+    "manual_medium": {
+      "records": 458,
+      "images": 16,
+      "buildings": 9,
+      "time_records": 416,
+      "quality_supported": 40,
+      "time_supported": 35,
+      "gate": {
+        "tasks": 6,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 2.220446049250313e-16,
+            "raw_rows": 368,
+            "effective_person_tasks": 368,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 8.870681966755001e-14
+        },
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 2,
+            "constraint_error": 2.4424906541753444e-15,
+            "raw_rows": 48,
+            "effective_person_tasks": 48,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 9.459100169806334e-14
+        }
+      }
+    },
+    "manual_hard": {
+      "records": 392,
+      "images": 12,
+      "buildings": 6,
+      "time_records": 378,
+      "quality_supported": 37,
+      "time_supported": 36,
+      "gate": {
+        "tasks": 6,
+        "buildings": 3
+      },
+      "time_fit": {
+        "('new', 'user_processed_reported_not_raw_log_replayed')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 6.661338147750939e-16,
+            "raw_rows": 291,
+            "effective_person_tasks": 291,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 3.930189507173054e-14
+        },
+        "('v1', 'inherited_v1_audited_source')": {
+          "fit": {
+            "nullity": 1,
+            "constraint_error": 3.9968028886505635e-15,
+            "raw_rows": 87,
+            "effective_person_tasks": 87,
+            "duplicate_rows_collapsed": 0
+          },
+          "dense_OLS_max_abs_difference": 1.1146639167236572e-13
+        }
+      }
+    }
+  },
+  "scope_boundary": "Response propensity only; compatible in-scope adjudication count is not bidirectional OOS accuracy; no correctness or target pool OOS label in classes.",
+  "semi_boundary": "Old confirmed and new reported opportunities separate; editing is not correction; no missing initialization gain invented."
+}

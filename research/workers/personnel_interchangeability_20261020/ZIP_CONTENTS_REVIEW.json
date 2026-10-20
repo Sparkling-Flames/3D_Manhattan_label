@@ -1,0 +1,20 @@
+{
+  "actual_replay_receipt": "verification/FINAL_VERIFICATION.json",
+  "all_entry_crc_valid": true,
+  "all_sha_manifest_payload_entries_equal": true,
+  "archive_bytes": 49851218,
+  "archive_filename": "personnel_interchangeability_20261020.zip",
+  "checked_utc": "2026-10-19T17:13:05.516704+00:00",
+  "checksum_note": "The whole ZIP SHA256 is recorded outside the archive to avoid circular self-reference. The included file manifest covers every scientific/document payload; ZIP CRC additionally covers the manifest and this inspection record.",
+  "excluded_from_package": [
+    "Original panorama PNG collection",
+    "Complete frozen inventory snapshot and source records",
+    "Native per-team flow/state caches",
+    "All pair-distance matrices and per-fold model caches",
+    "Duplicate repository checkout, virtual environment and long logs"
+  ],
+  "file_count": 645,
+  "forbidden_payloads_found": [],
+  "schema": "actual_zip_contents_review_v1",
+  "uncompressed_bytes": 72786749
+}

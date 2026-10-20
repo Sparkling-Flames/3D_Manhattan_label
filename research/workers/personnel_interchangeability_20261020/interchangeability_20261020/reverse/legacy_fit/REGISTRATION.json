@@ -1,0 +1,91 @@
+{
+  "schema": "direct_replacement_risk_personnel_types_v1",
+  "seed": 2026102003,
+  "latest_document_main": "445686f8f3cf6039c4ce1f60016cad1d26829044",
+  "scientific_source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "history_buildings": [
+    "2t7WUuJeko7",
+    "S9hNv5qa7GM",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "jh4fc5c5qoQ",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "zsNo4HB9uLZ"
+  ],
+  "inner_heldout_buildings": [
+    [
+      "Z6MFQCViBuw",
+      "b8cTxDM8gDG"
+    ],
+    [
+      "S9hNv5qa7GM",
+      "zsNo4HB9uLZ"
+    ],
+    [
+      "VFuaQ6m2Qom",
+      "uNb9QFRL6hY"
+    ],
+    [
+      "jh4fc5c5qoQ",
+      "wc2JMjhGNzB"
+    ],
+    [
+      "2t7WUuJeko7",
+      "x8F5xyUWy9e"
+    ]
+  ],
+  "source_panel_for_learning": "Pro_exact_fixed_background_v1",
+  "not_used_for_class_learning_or_selection": [
+    "A_nested_even_v1",
+    "discovery buildings",
+    "validation buildings",
+    "followup 451 events"
+  ],
+  "domains": {
+    "ordinary": "ordinary Manual all existing difficulties and n=8/12/16/24",
+    "hard": "ordinary Manual difficulty==困难; review-based conditional domain",
+    "small_n": "ordinary Manual trained on n<=12 (observed 8/12)",
+    "large_n": "ordinary Manual trained on n>=16 (observed 16/24)"
+  },
+  "candidate_K": "Every integer 2..floor(number_of_supported_workers/4), recomputed in every training fold; no fixed upper cap.",
+  "algorithms": [
+    "complete",
+    "spectral",
+    "partition_b0",
+    "partition_b2"
+  ],
+  "representations": [
+    "joint",
+    "geometry",
+    "continuous",
+    "context_joint"
+  ],
+  "opportunity": {
+    "worker_min_buildings": 3,
+    "worker_min_images": 4,
+    "pair_min_buildings": 2,
+    "pair_min_images": 3,
+    "minimum_class_size": 4,
+    "within_known_pair_fraction_min": 0.75
+  },
+  "shrinkage": {
+    "prior_equivalent_buildings": 1.0,
+    "center": "training-domain supported-pair mean only",
+    "unknown": "never zero distance; zero graph affinity and zero estimation weight; complete linkage uses pessimistic unit distance"
+  },
+  "risk_expressions": {
+    "joint": "1-P(original joint_main)",
+    "geometry": "1-P(both complete, floor<=.05, same nodes, bound angle<=3deg); no Q cutoff",
+    "continuous": "mean(.5*clip(floor_distance/.1,0,1)+.5*clip(prism_distance/.1,0,1)); unavailable/incomplete attempt gets declared loss1, original distances remain missing",
+    "context_joint": "clip(.5+mean(event joint failure minus same-background failure baseline),0,1)"
+  },
+  "partition_loss": "Known-relation weighted within distance mean + .03*sum(class fraction squared); beta2 augments distance by 2*(wide-tail risk)^2, divided by3. Minimum class4; two fixed starts; max300 improving single-person moves.",
+  "selection": "Inner heldout same n/background within-versus-between comparisons; each background contributes only if both relations exist; equal n within image and equal images within building, then building equal. All scores/components/support retained.",
+  "selection_score": "gap_main + .5*gap_geometry + .25*gap_continuous - .5*within_bad_wide - .1*within_geometry_failure; an aid, not the sole claim or quality/efficiency score.",
+  "failures": "Joint stability false on incomplete/unscored attempts; original continuous/quality fields stay missing; finite denominators separate.",
+  "timing_semantics": "time is used only for post-fit explanation, not risk formation; source/target time not conflated",
+  "created_before_candidate_fitting": true
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "interchangeability_pair_metric_contract_v1",
+  "registered_utc": "2026-10-19T13:58:29.445281+00:00",
+  "status": "frozen_before_new_batch_metrics",
+  "main_commit": "445686f8f3cf6039c4ce1f60016cad1d26829044",
+  "interface": "pair_metrics(a,b,*,fe=None,cache=None)->JSON-safe dict; a/b are retained final team rows of same pool/reference/k. geometry_metrics(a,b,cache=None) is an optional geometry-only helper for nested different-k diagnostics.",
+  "primary": "Unchanged historical joint_stable_strict/main/wide; main remains primary across-method comparator. New shape is parallel sensitivity, never substituted after seeing results.",
+  "knowledge_boundary": "The 451 Codex followup events and their published results are already known; this is not a new external blind test. New metrics are fixed before new batch learning/selection/evaluation. No human-nearness answers have been collected.",
+  "legacy_thresholds": {
+    "strict": {
+      "abs_B8L2": 1,
+      "floor_1_IoU": 0.02,
+      "bound_cyclic_deg": 2
+    },
+    "main": {
+      "abs_B8L2": 2,
+      "floor_1_IoU": 0.05,
+      "bound_cyclic_deg": 3
+    },
+    "wide": {
+      "abs_B8L2": 5,
+      "floor_1_IoU": 0.1,
+      "bound_cyclic_deg": 5
+    }
+  },
+  "legacy_common": "both complete, same original node count, bound correspondence only if same cyclic point-pair count; old implementation imported unchanged",
+  "decompositions": "geometry_noQ_{strict,main,wide} removes only Q bound, keeping old complete/floor/node/angular conditions; quality_only_{strict,main,wide} retains complete and Q only. geometry_main aliases geometry_noQ_main for Codex criterion compatibility.",
+  "shape_common": "both complete; valid finite original footprints; no point repair, alignment, scale normalization of the actual geometries, or reference changes. No equal original node-count condition.",
+  "shape_thresholds": {
+    "strict": {
+      "floor_1_IoU": 0.02,
+      "wall_distance_fraction": 0.02,
+      "symmetric_wall_coverage_min": 0.98,
+      "true_corner_match_distance_fraction": 0.02,
+      "true_corner_F1_min": 0.98,
+      "bottom_and_top_boundary_p95_deg": 2
+    },
+    "main": {
+      "floor_1_IoU": 0.05,
+      "wall_distance_fraction": 0.05,
+      "symmetric_wall_coverage_min": 0.95,
+      "true_corner_match_distance_fraction": 0.05,
+      "true_corner_F1_min": 0.95,
+      "bottom_and_top_boundary_p95_deg": 3
+    },
+    "wide": {
+      "floor_1_IoU": 0.1,
+      "wall_distance_fraction": 0.1,
+      "symmetric_wall_coverage_min": 0.9,
+      "true_corner_match_distance_fraction": 0.1,
+      "true_corner_F1_min": 0.9,
+      "bottom_and_top_boundary_p95_deg": 5
+    }
+  },
+  "shape_scale": "sqrt((areaA+areaB)/2), symmetric and same frozen camera-height floor frame; positive footprint areas required",
+  "wall_definition": "Both directional wall-coverage recalls; min is symmetric coverage. Existing pointwise slab clipping/projected interval union, unoriented wall direction <=10deg. Exact collinear subdivisions do not change boundary.",
+  "corner_definition": "True turns strictly >10deg, positions matched maximum-cardinality first then minimum Euclidean total distance within threshold. F1=2*matched/(true_corners_A+true_corners_B). Convex/reflex type and wall-angle differences are exposed separately, not inferred semantic necessity.",
+  "boundary_definition": "1024 fixed mid-column azimuths. Camera must be strictly inside each valid simple floor. Nearest positive floor-ray/segment hit defines visible bottom boundary and linearly interpolated top edge. Top and bottom angular deviations report mean/p95/max; radial and inferred wall-total-height log ratios report p95/max. At least 99% common azimuth coverage required for shape. These are deterministic sampled visible boundary diagnostics, not full hidden-roof geometry.",
+  "boundary_distance_definition": "512 equally spaced arclength midpoint samples per cyclic footprint, symmetric point-to-full-polyline distances normalized by pair scale; mean/p95/max are sampled approximations, never called exact Hausdorff.",
+  "coordinates": "Frozen continuous ERP x/1024 and y/512 convention, camera height one, floor y=-1. New 3D boundary reconstruction verifies supplied footprint against bottom rays. Old +0.5 angular bound code remains unchanged.",
+  "prism_proxy": "prism_proxy_pair_iou aliases retained mean_height_prism_pair_iou from old pair metric, using each final row height_mean_ratio; never called true room volume IoU. geometry_shape_main_and_prism_proxy_iou_lt_095 reports possible residual height difference.",
+  "exact_solid_definition": "exact_flat_prism_pair_iou only if each final top endpoint inferred from paired rays lies at one common horizontal height within numerical tolerance (1e-8 relative +1e-10 absolute), vertical pairs agree, and valid floor geometry exists. Analytic intersection area*min(total heights) / union volume is exact for that explicitly identifiable prism model, not physical scene truth. Nonflat/invalid/unidentified roof => null with reason; do not invent roof triangulation.",
+  "failures": "All attempted pairs retained. Unavailable continuous metrics null; legacy/new stability false if required inputs unavailable. Available denominators separately countable. No zero-imputation of geometry or Q.",
+  "cache": "Optional dict caches geometry signatures keyed by geometry bytes; clear per pool or bounded batch. Caches are rebuildable and excluded from delivery.",
+  "frozen_dependencies": {
+    "analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f",
+    "analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+    "analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29"
+  },
+  "exclusions": [
+    "No fusion/scoring/qualification/target-reference change",
+    "No N1",
+    "No new mixed total score",
+    "No human semantic necessary-structure truth"
+  ]
+}

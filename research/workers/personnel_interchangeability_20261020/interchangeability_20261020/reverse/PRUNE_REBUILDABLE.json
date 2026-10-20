@@ -1,0 +1,363 @@
+{
+  "schema": "reverse_safe_prune_rebuildable_v1",
+  "delete_performed": false,
+  "execution_owner": "/root",
+  "root_relative_paths": true,
+  "scope_zh": "仅对当前精简目录提出移除；源研究结果不删除，不改报告、冻结规则、标签、参考或融合。",
+  "totals": {
+    "files": 14,
+    "source_bytes": 10475347,
+    "source_MiB": 9.990069389343262,
+    "estimated_zip_deflate6_bytes": 10475905,
+    "estimated_zip_deflate6_MiB": 9.990601539611816
+  },
+  "estimate_note_zh": "逐项对当前交付同SHA文件计算标准deflate level6载荷，非最终ZIP实测；未计ZIP目录头，最终节省由root重新打包测量。",
+  "selected_profiles_coverage": {
+    "methods": 15,
+    "classes": 86,
+    "worker_class_rows": 743,
+    "all_history_features_retained": true
+  },
+  "prune": [
+    {
+      "path": "interchangeability_20261020/reverse/mixed_audit/class_explanations.csv.gz",
+      "bytes": 3422700,
+      "sha256": "b596bdc1d0b872ef4219c331f0f161007ba005d7874ccfdbd8c90d5ee3b9ba49",
+      "estimated_zip_deflate6_bytes": 3422207,
+      "role_id": "all_candidate_profiles",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_explain_types.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_audit/class_explanations.csv.gz",
+      "bytes": 3013232,
+      "sha256": "2873d42a2a5ce5165e0383177a8146acf19c53ec0213b507a2c094d71c6ee5ea",
+      "estimated_zip_deflate6_bytes": 3013018,
+      "role_id": "all_candidate_profiles",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_explain_types.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_matched_anchor_building.csv.gz",
+      "bytes": 619504,
+      "sha256": "15e5590994f2eac8779f085ae0bdc7a07717e6b639c070a54072599ac7924dc8",
+      "estimated_zip_deflate6_bytes": 619694,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_building_draws.csv.gz",
+      "bytes": 289325,
+      "sha256": "9dffdd58d3f77efc15eb2b276866c014e53b09effd866900c7a9dee9ba3d95a2",
+      "estimated_zip_deflate6_bytes": 289415,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_building_draws.csv.gz",
+      "bytes": 512284,
+      "sha256": "0e6adac684a77a61d817168461f1f94bd52d416d70f2f802d8c412da1bf1ca19",
+      "estimated_zip_deflate6_bytes": 512444,
+      "role_id": "inner_baseline_building_draws",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/direction_m_aggregate.csv.gz",
+      "bytes": 567184,
+      "sha256": "a49c16c4fee466be348c4fa233600b4d822bde9ff625829a0a84aa1b28bdb5b9",
+      "estimated_zip_deflate6_bytes": 567359,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/within_class_difficulty_per_building.csv.gz",
+      "bytes": 476857,
+      "sha256": "ab8f9845e81a790d3b0aef20b18c90c7955eefdac2e088de9869130a0f0754e6",
+      "estimated_zip_deflate6_bytes": 477007,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/within_class_per_building.csv.gz",
+      "bytes": 286600,
+      "sha256": "b9e4308cab91bc5b8c4ded26c1f0ba16e19cdba9e7765d432133d65ee5e8f179",
+      "estimated_zip_deflate6_bytes": 286690,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/discovery_interpretation/method_per_building.csv.gz",
+      "bytes": 243523,
+      "sha256": "587130e5686d8ccd6ea1d5ff7f03be484712b2c5826ac84515725d07ac16e6a5",
+      "estimated_zip_deflate6_bytes": 243598,
+      "role_id": "discovery_extra_strata",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_n_and_added_class_per_true_image.csv.gz",
+      "bytes": 559358,
+      "sha256": "eaac18e19467c2a761622cfe7d0826a47fc9c40acc17e5341bd75b1e1a398579",
+      "estimated_zip_deflate6_bytes": 559533,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_n_and_added_class_per_building.csv.gz",
+      "bytes": 169447,
+      "sha256": "338f95dfc92fa2abe35b08a4d8dbe18e40f392bdf49abd07a2b8f099ae34512d",
+      "estimated_zip_deflate6_bytes": 169502,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_support_increment_per_true_image.csv.gz",
+      "bytes": 92464,
+      "sha256": "8eacce325b4d3fffa4d65aa75b2d36cfb7b4be9b0270c90aadc8be17336d32ef",
+      "estimated_zip_deflate6_bytes": 92494,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_support_increment_per_building.csv.gz",
+      "bytes": 21055,
+      "sha256": "a7a1131b7995ad4b7d15669438a89e9fd43ae2baf17e5283e1a1b6ec31aac63f",
+      "estimated_zip_deflate6_bytes": 21065,
+      "role_id": "nested_adjacent_step_details",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py"
+    },
+    {
+      "path": "interchangeability_20261020/reverse/nested_stress/nested_stress_class_pair_building.csv.gz",
+      "bytes": 201814,
+      "sha256": "0ab533a8de7e05766bc515cc7a3cc6155e8895300ffe5fcf9b661b20fb7d7eb3",
+      "estimated_zip_deflate6_bytes": 201879,
+      "role_id": "legacy_nested_stress_class_pair",
+      "rebuild_entry": "interchangeability_20261020/reverse/stress_nested_history.py"
+    }
+  ],
+  "explicitly_keep_zh": [
+    "全部1808候选台账/折状态、两版冻结标签与完整manifest、15路线原始138逐折楼小表",
+    "所有主评估逐图/逐楼、精确n/m方向和压力、失败、LOOW/LOBO、全部10完整向量与116精确事件",
+    "W132登记、同支持原/新结果及精确请求；全部最终成员请求与核心重放包；所有代码",
+    "历史来源baseline每draw与matched-anchor draw小表、Q-only/Q×source每draw及全部45汇总、fold8 Q特征",
+    "发现全部方法/类内总汇和预选支持、失败与反例，不只保留胜者"
+  ],
+  "caution_zh": "原宽画像和步骤CSV仍可由登记代码重建。恢复输入、重建原生指标和重训类别是不同成本层级；本次精简没有声称再次执行它们。",
+  "do_not_edit_assembler_automatically": true,
+  "rebuild_roles": {
+    "all_candidate_profiles": {
+      "role_zh": "可重建的全候选人员画像",
+      "reason_zh": "752+555个有效候选、4699+3981类别的宽画像是冻结标签与历史特征的确定性描述。15条主路线的86类、743逐人解释及New2详细画像另保留；删除宽画像不删除失败候选、标签或类容量。",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_explain_types.py",
+      "rebuild_recipe_zh": "恢复历史输入并按REVERSE_REPRODUCTION_ZH.md重建相应fit/historical_pair_relations.csv.gz；对legacy/mixed分别运行 audit_explain_types.py --root . --fit interchangeability_20261020/reverse/<family>_fit --out /tmp/reverse_<family>_audit_rebuild。无需修改冻结类或重新选择目标方向。",
+      "preserved_evidence": [
+        "interchangeability_20261020/reverse/review_tables/selected_class_names_and_profiles_zh.csv",
+        "interchangeability_20261020/reverse/review_tables/selected_worker_explanations.csv.gz",
+        "interchangeability_20261020/reverse/review_tables/selected_method_history_summary.csv",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_HISTORY_CLASS_FEATURES.csv",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_HISTORY_WORKERS.csv.gz",
+        "interchangeability_20261020/reverse/legacy_fit/worker_labels.csv.gz",
+        "interchangeability_20261020/reverse/mixed_fit/worker_labels.csv.gz",
+        "interchangeability_20261020/reverse/legacy_fit/METHOD_MANIFEST.json",
+        "interchangeability_20261020/reverse/mixed_fit/METHOD_MANIFEST.json",
+        "analysis/forward/results/features_train.csv.gz"
+      ]
+    },
+    "inner_baseline_building_draws": {
+      "role_zh": "历史内基线建筑×随机draw明细",
+      "reason_zh": "保留同锚配对draw汇总、全部40draw均值/分位、支持失败台账与种子2026102005；建筑×draw明细不是目标评估逐楼证据。相应mixed完整同锚建筑明细本来就未装包。",
+      "rebuild_entry": "interchangeability_20261020/reverse/audit_inner_baselines.py",
+      "rebuild_recipe_zh": "audit_inner_baselines.py --root . --fit interchangeability_20261020/reverse/<family>_fit --shortlist interchangeability_20261020/reverse/<FAMILY>_SCREEN_SHORTLIST.json --out /tmp/reverse_<family>_baselines_rebuild --random-draws 40；mixed另加 --supplemental-events interchangeability_20261020/reverse/native_history_events.csv.gz。输入先按反向恢复说明准备。",
+      "preserved_evidence": [
+        "interchangeability_20261020/reverse/legacy_baselines/BASELINE_RECEIPT.json",
+        "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_summary.csv",
+        "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_draw_summary.csv",
+        "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_matched_anchor_draw.csv",
+        "interchangeability_20261020/reverse/legacy_baselines/inner_baseline_ledger.csv",
+        "interchangeability_20261020/reverse/legacy_baselines/fast_aggregation_parity.csv",
+        "interchangeability_20261020/reverse/mixed_baselines/BASELINE_RECEIPT.json",
+        "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_summary.csv",
+        "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_draw_summary.csv",
+        "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_matched_anchor_draw.csv",
+        "interchangeability_20261020/reverse/mixed_baselines/inner_baseline_ledger.csv",
+        "interchangeability_20261020/reverse/mixed_baselines/fast_aggregation_parity.csv"
+      ]
+    },
+    "discovery_extra_strata": {
+      "role_zh": "发现阶段非主张的分层输出",
+      "reason_zh": "保留所有15方法发现总汇、类内/难度总汇、预选方向原始支持与全部成员剔除反例。删除的是额外建筑分层和全方向×m展开；实际固定评估的逐图/逐楼完全不删。",
+      "rebuild_entry": "interchangeability_20261020/reverse/discovery_interpretation/analyze_reverse_discovery.py",
+      "rebuild_recipe_zh": "先用保留的REVERSE_SPEC及verify_designs.py重建发现reverse_requests，再用冻结fusion_runner/summarize_blocks得到reverse_metrics；运行 analyze_reverse_discovery.py --discovery interchangeability_20261020/discovery --out /tmp/reverse_discovery_rebuild --rebuild-index。",
+      "preserved_evidence": [
+        "interchangeability_20261020/reverse/discovery_interpretation/ANALYSIS_PLAN.json",
+        "interchangeability_20261020/reverse/discovery_interpretation/REVERSE_DISCOVERY_INTERPRETATION_RECEIPT.json",
+        "interchangeability_20261020/reverse/discovery_interpretation/method_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/within_class_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/within_class_difficulty_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/RECOMMENDED_DIRECTIONS.json",
+        "interchangeability_20261020/reverse/discovery_interpretation/RECOMMENDED_DIRECTIONS_DISCOVERY_SUPPORT.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/SELECTED_MEMBER_REMOVAL_DESCRIPTIVE.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/SELECTED_CROSS_BLOCK_SUPPORT.csv.gz",
+        "interchangeability_20261020/reverse/discovery_interpretation/n_qualification.csv.gz"
+      ]
+    },
+    "nested_adjacent_step_details": {
+      "role_zh": "固定嵌套路径相邻人数步骤的逐图/逐楼中间表",
+      "reason_zh": "保留人数曲线总汇及逐楼、两个steps总汇、元数据cohort、精确嵌套请求和案例最终几何；所有主n13/m2,m5逐图/逐楼、难度、LOOW、W132、全部完整向量均保留。这些只可重建的相邻step分层不支撑额外已验证阈值主张。",
+      "rebuild_entry": "interchangeability_20261020/reverse/assessment_interpretation/analyze_nested_new2.py",
+      "rebuild_recipe_zh": "从原精确nested_new2_requests经冻结fusion_runner与summarize_blocks重建nested_new2_metrics，然后运行 analyze_nested_new2.py；只按原NESTED_ANALYSIS_PLAN和容量cohort生成，不改类或n/m。",
+      "preserved_evidence": [
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/curves_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/curves_per_building.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_n_and_added_class_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/steps_by_support_increment_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/METADATA_COHORTS.json",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/primary_n13_aggregate.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/primary_n13_per_true_image.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/primary_n13_per_building.csv.gz",
+        "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/PERSON_REMOVAL_DESCRIPTIVE.csv.gz",
+        "interchangeability_20261020/assessment/nested_new2_requests.json.gz"
+      ]
+    },
+    "legacy_nested_stress_class_pair": {
+      "role_zh": "训练后旧A_nested条件压力的类别对×建筑细表",
+      "reason_zh": "保留压力总汇、全部方法逐楼、支持资格与同一人对换背景表；类别对×建筑展开可从旧7272事件和冻结标签重建，不属于目标主评估。",
+      "rebuild_entry": "interchangeability_20261020/reverse/stress_nested_history.py",
+      "rebuild_recipe_zh": "按A_archive恢复旧A事件后运行 stress_nested_history.py --root . --out /tmp/reverse_nested_stress_rebuild；只读冻结labels，不重新选类。",
+      "preserved_evidence": [
+        "interchangeability_20261020/reverse/nested_stress/NESTED_STRESS_RECEIPT.json",
+        "interchangeability_20261020/reverse/nested_stress/nested_stress_summary.csv",
+        "interchangeability_20261020/reverse/nested_stress/nested_stress_building.csv",
+        "interchangeability_20261020/reverse/nested_stress/nested_stress_support.csv",
+        "interchangeability_20261020/reverse/nested_stress/nested_same_pair_changed_background.csv"
+      ]
+    }
+  },
+  "plot_dependency_audit": {
+    "scope_zh": "只有列明7文件的临时隔离布局实际重绘；没有历史或目标原生数据、未读任何剔除表、未调用融合或重新学习。",
+    "stages_run": [
+      "plot_nested_chinese.py",
+      "plot_w132_probe.py"
+    ],
+    "all_three_pngs_created": true,
+    "inputs": [
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/assessment_summary_common.py",
+        "bytes": 15429,
+        "sha256": "44989c6f8a036b47a68d05567107e4c969c2fa78e947b7822bd22fa0d4c5d931"
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/plot_nested_chinese.py",
+        "bytes": 7487,
+        "sha256": "1c3b0d7c8e8f21428531420643680cfc398e7fc461da27d20d1bfc16c5b5fb45"
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/plot_w132_probe.py",
+        "bytes": 3809,
+        "sha256": "6b952894b49deb7a65a5b0f3f56ea54487bbceec0f32a8bb4e3fb6581272044c"
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/curves_aggregate.csv.gz",
+        "bytes": 90307,
+        "sha256": "9f623cd99927ac40d55b95f51fd1a90c27fc98d1469b91bcce65caa6ccd06223"
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/primary_n13_aggregate.csv.gz",
+        "bytes": 4450,
+        "sha256": "719bdaa22affa62ae0b32dc743a4c0caf954e8c31036df7b70ad364bbb0d7864"
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/w132_probe/all_available_aggregate.csv.gz",
+        "bytes": 2604,
+        "sha256": "10c57d45fa488426c65b6f79de02fc636cf211829b2995f0e65631fb23b2d966"
+      },
+      {
+        "path": "analysis/fonts/NotoSansSC-Regular.ttf",
+        "bytes": 271108,
+        "sha256": "823df9829ebe48625d5d3a414035b43878af2a43df06773eb5ee133456f32cf9"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_C01_TO_C02_CURVES_ZH.png",
+        "bytes": 723187,
+        "sha256": "160c858d50eae96de9ac4a69f99cfb41de0ae3c442bafc3dc0b276c627e9d147",
+        "identical_to_packaged_png": false
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_C02_TO_C01_CURVES_ZH.png",
+        "bytes": 726297,
+        "sha256": "6af93655ccacc3135db0efb59801f06a92c20590b736032e7a55432f7c92b2fa",
+        "identical_to_packaged_png": false
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/w132_probe/W132_MATCHED_MECHANISM_ZH.png",
+        "bytes": 282107,
+        "sha256": "967151467d9e988f522c31af239c70cd4d0ae15958888a6ba3ad7543cb7238ef",
+        "identical_to_packaged_png": false
+      }
+    ],
+    "raster_comparison": [
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_C01_TO_C02_CURVES_ZH.png",
+        "same_size": true,
+        "changed_pixel_fraction": 0.0013472625517443446,
+        "pixel_RMSE": 3.5373063949432906,
+        "source_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        },
+        "rebuild_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        }
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/nested_new2/NEW2_C02_TO_C01_CURVES_ZH.png",
+        "same_size": true,
+        "changed_pixel_fraction": 0.0013625108162923288,
+        "pixel_RMSE": 3.537871524792299,
+        "source_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        },
+        "rebuild_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        }
+      },
+      {
+        "path": "interchangeability_20261020/reverse/assessment_interpretation/w132_probe/W132_MATCHED_MECHANISM_ZH.png",
+        "same_size": true,
+        "changed_pixel_fraction": 0.00081995180517348,
+        "pixel_RMSE": 1.2182096141560979,
+        "source_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        },
+        "rebuild_png_info": {
+          "Software": "Matplotlib version3.10.8, https://matplotlib.org/",
+          "dpi": [
+            210.00719999999998,
+            210.00719999999998
+          ]
+        }
+      }
+    ],
+    "image_byte_identity_claimed": false,
+    "font_boundary_zh": "最终包使用271108字节的中文子集字体，原图使用10596288字节全字体；均已记录SHA。三图在仅保留输入的隔离布局成功生成、尺寸一致、没有缺字警告；PNG非逐字节同一，像素差约0.08%–0.14%，不声称字节相等。数值表未改变，差异与字体环境变化并列记录。",
+    "original_full_font_sha256": "74ed603e50b720b3a6b964e5614baab836c74398fa65f3108b3869159595cd86"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "code_sha256": "cf03446a8724ee34746069b13ad0b90a98a000ff4f2390064b4151438749ca26",
+  "deduplication": "Unordered actual team pair within pool and fixed reference, across all method/direction/route occurrences. Route/role subgroup counts deduplicate independently and are not additive.",
+  "formal_n": "n>=3; n2 deferred separately",
+  "main_noQ_shape": "Original strict/main/wide and frozen noQ/shape unchanged. Disagreements describe metric sensitivity; no replacement of the primary endpoint.",
+  "metric_contract_sha256": "2d96e8f8e03ed0345fe2174cacfd22e0053d54752e05988baf900b3fe38b1491",
+  "prism": "Mean-height prism is a proxy. Exact flat-prism IoU requires identified constant ceiling, missing otherwise. >10% boundary-height and proxy<.90 flags are descriptive diagnostics, not new acceptance rules.",
+  "quality_reversal": "B8 improves >=2 while D10 worsens >=2, or converse. Canonical pair orientation does not alter disagreement.",
+  "read_boundary": "Only forward/reverse discovery metrics and their selected native final rows. No assessment results or raw observations read, no fusion/scoring/reference/classification changed.",
+  "schema": "frozen_discovery_pair_metric_sensitivity_v1",
+  "source_files": [
+    {
+      "buildings": 6,
+      "event_file": "interchangeability_20261020/discovery/forward_metrics/event_metrics.csv.gz",
+      "event_ids": 62610,
+      "event_rows": 62610,
+      "event_sha256": "c321289349ad30ca77460be652b57563b951584534cb024e1ef9a41066e13fb3",
+      "images": 55,
+      "phases": [
+        "discovery"
+      ],
+      "pools": 64,
+      "route": "forward",
+      "summary_sha256": "f8b9a7b005a36e51489224712eb96278f7b689488cb77b4a4be77987f0655628"
+    },
+    {
+      "buildings": 6,
+      "event_file": "interchangeability_20261020/discovery/reverse_metrics/event_metrics.csv.gz",
+      "event_ids": 33468,
+      "event_rows": 33468,
+      "event_sha256": "b4aa4340d93f8b6c5ecdb9a72ca452a7218707c13b1ba7b1dd762b218aa6b1da",
+      "images": 51,
+      "phases": [
+        "discovery"
+      ],
+      "pools": 51,
+      "route": "reverse",
+      "summary_sha256": "22b598d34c52b3d0c46bdc3f61af2476722672d3ad1d060d4dd80bb550384cd5"
+    }
+  ]
+}

@@ -1,0 +1,3228 @@
+{
+  "schema": "pair_diagnostic_counterexamples_v1",
+  "all_passed": true,
+  "probes": [
+    {
+      "name": "identical",
+      "passed": true,
+      "explanation": "Same output must be identical in all criteria.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 0.0,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": true,
+        "joint_stable_main": true,
+        "joint_stable_wide": true,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 1.0,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 0.0,
+        "top_y_absdiff_deg_p95": 0.0,
+        "top_y_absdiff_deg_max": 0.0,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.0,
+        "boundary_total_height_abs_logratio_p95": 0.0,
+        "boundary_total_height_abs_logratio_max": 0.0,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": true,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.0,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": true,
+        "quality_only_strict": true,
+        "geometry_noQ_main": true,
+        "quality_only_main": true,
+        "geometry_noQ_wide": true,
+        "quality_only_wide": true,
+        "geometry_main": true,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "extra_collinear_vertex",
+      "passed": true,
+      "explanation": "Old node requirement rejects a genuinely redundant point; new geometry criterion remains invariant.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__9c43d76c908bfabdda92",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 5,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              512.0,
+              223.8295254072314
+            ],
+            [
+              512.0,
+              288.1704745927686
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              0.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 1.0,
+        "node_count_difference": 1.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": null,
+        "structure_reason": "different_pair_count",
+        "bound_cyclic_shift": null,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 1.0,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 1.3270634591222574e-15,
+        "top_y_absdiff_deg_p95": 8.881784197001252e-15,
+        "top_y_absdiff_deg_max": 1.0658141036401503e-14,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 6.418476861114186e-17,
+        "boundary_total_height_abs_logratio_p95": 4.440892098500627e-16,
+        "boundary_total_height_abs_logratio_max": 4.440892098500627e-16,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": true,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.000000000000001,
+        "inferred_ceiling_y_range_b": 8.881784197001252e-16,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": true,
+        "different_original_nodes_shape_main_passes": true
+      }
+    },
+    {
+      "name": "cyclic_start",
+      "passed": true,
+      "explanation": "Changing cyclic starting index does not change geometry.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__825f2971f85c4bb27dd1",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ],
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 0.0,
+        "structure_reason": "",
+        "bound_cyclic_shift": 2,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": true,
+        "joint_stable_main": true,
+        "joint_stable_wide": true,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 1.0,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 0.0,
+        "top_y_absdiff_deg_p95": 0.0,
+        "top_y_absdiff_deg_max": 0.0,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.0,
+        "boundary_total_height_abs_logratio_p95": 0.0,
+        "boundary_total_height_abs_logratio_max": 0.0,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": true,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.0,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": true,
+        "quality_only_strict": true,
+        "geometry_noQ_main": true,
+        "quality_only_main": true,
+        "geometry_noQ_wide": true,
+        "quality_only_wide": true,
+        "geometry_main": true,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "reverse_ring_diagnostic_only",
+      "passed": true,
+      "explanation": "New geometric diagnostics ignore ring orientation; frozen input ring is never edited.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__24ced4b2517d0e8ce956",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              -5.0,
+              -5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 88.92471535134557,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 1.0,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 0.0,
+        "top_y_absdiff_deg_p95": 0.0,
+        "top_y_absdiff_deg_max": 0.0,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.0,
+        "boundary_total_height_abs_logratio_p95": 0.0,
+        "boundary_total_height_abs_logratio_max": 0.0,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": true,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.0,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": true,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "missing_true_notch",
+      "passed": true,
+      "explanation": "Missing real concave structure is not treated as collinear redundancy.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__939026d87bcac686c773",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 8,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              991.8295254072315,
+              224.43860399463426
+            ],
+            [
+              991.8295254072315,
+              287.56139600536574
+            ],
+            [
+              948.4371877629782,
+              187.46355896288512
+            ],
+            [
+              948.4371877629782,
+              324.53644103711486
+            ],
+            [
+              75.56281223702183,
+              187.46355896288512
+            ],
+            [
+              75.56281223702183,
+              324.53644103711486
+            ],
+            [
+              32.17047459276853,
+              224.43860399463426
+            ],
+            [
+              32.17047459276853,
+              287.56139600536574
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              1.0,
+              5.0
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              -1.0,
+              2.0
+            ],
+            [
+              -1.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 4.0,
+        "node_count_difference": 4.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.06000000000000005,
+        "floor_symdiff_h2": 6.0,
+        "mean_height_prism_pair_iou": 0.94,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": null,
+        "structure_reason": "different_pair_count",
+        "bound_cyclic_shift": null,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 9.848857801796104,
+        "shape_floor_jaccard_difference": 0.06000000000000005,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 8,
+        "true_corner_count_difference": 4,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 2,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 0.94,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.017824448717638622,
+        "boundary_distance_normalized_p95": 0.16993166580136657,
+        "boundary_distance_normalized_max": 0.30460384954008574,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 2.1996893952950614,
+        "bottom_y_absdiff_deg_p95": 15.107375550316547,
+        "bottom_y_absdiff_deg_max": 15.255062699804721,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 2.1996893952950627,
+        "top_y_absdiff_deg_p95": 15.107375550316558,
+        "top_y_absdiff_deg_max": 15.255062699804736,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.13601190551256992,
+        "radius_abs_logratio_p95": 0.9162907318741551,
+        "radius_abs_logratio_max": 0.9162907318741552,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 3.2959746043559335e-17,
+        "boundary_total_height_abs_logratio_p95": 2.220446049250313e-16,
+        "boundary_total_height_abs_logratio_max": 2.220446049250313e-16,
+        "wall_coverage_a_by_b_strict": 0.95,
+        "wall_coverage_b_by_a_strict": 0.8260869565217391,
+        "wall_coverage_symmetric_min_strict": 0.8260869565217391,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 0.6666666666666666,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": 0.95,
+        "wall_coverage_b_by_a_main": 0.8260869565217391,
+        "wall_coverage_symmetric_min_main": 0.8260869565217391,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 0.6666666666666666,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": 0.95,
+        "wall_coverage_b_by_a_wide": 0.8260869565217391,
+        "wall_coverage_symmetric_min_wide": 0.8260869565217391,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 0.6666666666666666,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.0000000000000004,
+        "inferred_ceiling_y_range_b": 4.440892098500626e-16,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 0.94,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "shape_pass_but_height_proxy_loss",
+      "passed": true,
+      "explanation": "A few angular degrees can encode meaningful height change in a wide room; retain separate proxy/exact height result.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__b710e7f90a9dc1a53207",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.2,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              228.60330108756253
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              228.60330108756253
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              228.60330108756253
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              228.60330108756253
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 0.9090909090909091,
+        "height_ratio_pair_abs_logdiff": 0.0953101798043249,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 1.5821849858753998,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": true,
+        "joint_stable_main": true,
+        "joint_stable_wide": true,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 0.9090909090909093,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.1999999999999993,
+        "inferred_total_height_mean_abs_logratio": 0.09531017980432453,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 1.9832980174259354,
+        "top_y_absdiff_deg_p95": 2.184223147348691,
+        "top_y_absdiff_deg_max": 2.1857914713401616,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.09531017980432455,
+        "boundary_total_height_abs_logratio_p95": 0.09531017980432453,
+        "boundary_total_height_abs_logratio_max": 0.09531017980432477,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.1999999999999993,
+        "inferred_total_height_max_b": 2.1999999999999993,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": true,
+        "quality_only_strict": true,
+        "geometry_noQ_main": true,
+        "quality_only_main": true,
+        "geometry_noQ_wide": true,
+        "quality_only_wide": true,
+        "geometry_main": true,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 0.9090909090909091,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": true,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "nonflat_ceiling_not_exact_solid",
+      "passed": true,
+      "explanation": "Nonflat endpoint heights do not determine an interior roof surface; report proxy and boundary profile only.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__7289836ccf46459e8bfd",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.35,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              217.5479904053203
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              217.5479904053203
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 0.851063829787234,
+        "height_ratio_pair_abs_logdiff": 0.16126814759612226,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 5.468817647601186,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": null,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "nonflat_ceiling_interior_surface_not_identified",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.3499999999999996,
+        "inferred_total_height_mean_abs_logratio": 0.16126814759612215,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 3.4410541643245303,
+        "top_y_absdiff_deg_p95": 5.431082920889981,
+        "top_y_absdiff_deg_max": 5.467921991892048,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.15821895425763616,
+        "boundary_total_height_abs_logratio_p95": 0.2812192120370919,
+        "boundary_total_height_abs_logratio_max": 0.2993113107448327,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.6999999999999993,
+        "inferred_ceiling_y_range_b": 0.6999999999999993,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 0.851063829787234,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "same_mean_height_different_top_boundary",
+      "passed": true,
+      "explanation": "Mean-height proxy alone can conceal large top boundary changes.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6fb285063b107147555d",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.5,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              211.07720804049362
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              211.07720804049362
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__d07f94448ce3dbc6935f",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.5,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              211.07720804049362
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              211.07720804049362
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 7.743702072735564,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": null,
+        "exact_flat_prism_status_a": "nonflat_ceiling_interior_surface_not_identified",
+        "exact_flat_prism_status_b": "nonflat_ceiling_interior_surface_not_identified",
+        "inferred_total_height_mean_a": 2.5,
+        "inferred_total_height_mean_b": 2.5,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 4.00599366072727,
+        "top_y_absdiff_deg_p95": 7.404325492681409,
+        "top_y_absdiff_deg_max": 7.717946372134515,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.177565547266318,
+        "boundary_total_height_abs_logratio_p95": 0.37358652039837353,
+        "boundary_total_height_abs_logratio_max": 0.40291693326121464,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.9999999999999996,
+        "inferred_ceiling_y_range_a": 0.9999999999999996,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.9999999999999996,
+        "inferred_ceiling_y_range_b": 0.9999999999999996,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "same_erp_top_bottom_changes_depth",
+      "passed": true,
+      "explanation": "Moving bottom-y changes inferred horizontal depth and total height even with unchanged top-y.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__086b1a653bf431e4566d",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.15,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              275.9417010231928
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              275.9417010231928
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              275.9417010231928
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              275.9417010231928
+            ]
+          ],
+          "footprint": [
+            [
+              -5.75,
+              -5.75
+            ],
+            [
+              5.75,
+              -5.75
+            ],
+            [
+              5.75,
+              5.75
+            ],
+            [
+              -5.75,
+              5.75
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.2438563327032136,
+        "floor_symdiff_h2": 32.25,
+        "mean_height_prism_pair_iou": 0.703389457950499,
+        "height_ratio_pair_abs_logdiff": 0.07232066157962613,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 1.0387127095621729,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.776131031126154,
+        "shape_floor_jaccard_difference": 0.2438563327032136,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 0.7033894579504986,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.1500000000000012,
+        "inferred_total_height_mean_abs_logratio": 0.07232066157962673,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.07026723917118538,
+        "boundary_distance_normalized_p95": 0.07128294945229945,
+        "boundary_distance_normalized_max": 0.0955246196480823,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 1.3075741343184775,
+        "bottom_y_absdiff_deg_p95": 1.4430546730321279,
+        "bottom_y_absdiff_deg_max": 1.4441191941836546,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 8.965050923848139e-15,
+        "top_y_absdiff_deg_p95": 1.2434497875801753e-14,
+        "top_y_absdiff_deg_max": 1.4210854715202004e-14,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.1397619423751587,
+        "radius_abs_logratio_p95": 0.13976194237515885,
+        "radius_abs_logratio_max": 0.139761942375159,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.07232066157962672,
+        "boundary_total_height_abs_logratio_p95": 0.07232066157962673,
+        "boundary_total_height_abs_logratio_max": 0.07232066157962673,
+        "wall_coverage_a_by_b_strict": 0.0,
+        "wall_coverage_b_by_a_strict": 0.0,
+        "wall_coverage_symmetric_min_strict": 0.0,
+        "true_corner_matched_n_strict": 0,
+        "true_corner_F1_strict": 0.0,
+        "true_corner_max_matched_distance_normalized_strict": null,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": null,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": 0.0,
+        "wall_coverage_b_by_a_main": 0.0,
+        "wall_coverage_symmetric_min_main": 0.0,
+        "true_corner_matched_n_main": 0,
+        "true_corner_F1_main": 0.0,
+        "true_corner_max_matched_distance_normalized_main": null,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": null,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 0.8695652173913043,
+        "wall_coverage_symmetric_min_wide": 0.8695652173913043,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.09842680723871798,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.1500000000000012,
+        "inferred_total_height_max_b": 2.1500000000000012,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": true,
+        "geometry_noQ_main": false,
+        "quality_only_main": true,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": true,
+        "geometry_main": false,
+        "quality_main": true,
+        "prism_proxy_pair_iou": 0.703389457950499,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "self_intersection_not_repaired",
+      "passed": true,
+      "explanation": "Self-intersecting output remains invalid/missing, not buffered into a different polygon.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__0c6b5a2b370d22f63ab6",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": false,
+        "complete_floor_evaluable": false,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": false,
+        "both_complete": false,
+        "B8L2_a": 80.0,
+        "B8L2_b": 80.0,
+        "B8L2_change": 0.0,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": null,
+        "floor_symdiff_h2": null,
+        "mean_height_prism_pair_iou": null,
+        "height_ratio_pair_abs_logdiff": null,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": 0.0,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": 88.92471535134557,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": true,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "invalid",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "floor_unavailable",
+        "shape_pair_scale": null,
+        "shape_floor_jaccard_difference": null,
+        "true_corner_n_a": null,
+        "true_corner_n_b": null,
+        "true_corner_count_difference": null,
+        "true_reflex_corner_n_a": null,
+        "true_reflex_corner_n_b": null,
+        "boundary_common_azimuth_fraction": null,
+        "exact_flat_prism_pair_iou": null,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "floor_unavailable",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": null,
+        "inferred_total_height_mean_abs_logratio": null,
+        "boundary_distance_normalized_n": 0,
+        "boundary_distance_normalized_mean": null,
+        "boundary_distance_normalized_p95": null,
+        "boundary_distance_normalized_max": null,
+        "bottom_y_absdiff_deg_n": 0,
+        "bottom_y_absdiff_deg_mean": null,
+        "bottom_y_absdiff_deg_p95": null,
+        "bottom_y_absdiff_deg_max": null,
+        "top_y_absdiff_deg_n": 0,
+        "top_y_absdiff_deg_mean": null,
+        "top_y_absdiff_deg_p95": null,
+        "top_y_absdiff_deg_max": null,
+        "radius_abs_logratio_n": 0,
+        "radius_abs_logratio_mean": null,
+        "radius_abs_logratio_p95": null,
+        "radius_abs_logratio_max": null,
+        "boundary_total_height_abs_logratio_n": 0,
+        "boundary_total_height_abs_logratio_mean": null,
+        "boundary_total_height_abs_logratio_p95": null,
+        "boundary_total_height_abs_logratio_max": null,
+        "wall_coverage_a_by_b_strict": null,
+        "wall_coverage_b_by_a_strict": null,
+        "wall_coverage_symmetric_min_strict": null,
+        "true_corner_matched_n_strict": null,
+        "true_corner_F1_strict": null,
+        "true_corner_max_matched_distance_normalized_strict": null,
+        "matched_corner_reflex_disagreement_n_strict": null,
+        "matched_corner_turn_absdiff_deg_max_strict": null,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": null,
+        "wall_coverage_b_by_a_main": null,
+        "wall_coverage_symmetric_min_main": null,
+        "true_corner_matched_n_main": null,
+        "true_corner_F1_main": null,
+        "true_corner_max_matched_distance_normalized_main": null,
+        "matched_corner_reflex_disagreement_n_main": null,
+        "matched_corner_turn_absdiff_deg_max_main": null,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": null,
+        "wall_coverage_b_by_a_wide": null,
+        "wall_coverage_symmetric_min_wide": null,
+        "true_corner_matched_n_wide": null,
+        "true_corner_F1_wide": null,
+        "true_corner_max_matched_distance_normalized_wide": null,
+        "matched_corner_reflex_disagreement_n_wide": null,
+        "matched_corner_turn_absdiff_deg_max_wide": null,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": false,
+        "geometry_noQ_main": false,
+        "quality_only_main": false,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": false,
+        "geometry_main": false,
+        "quality_main": false,
+        "prism_proxy_pair_iou": null,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "missing_geometry_retained",
+      "passed": true,
+      "explanation": "Failure flags remain false and unavailable quantities remain null.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": null,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": false,
+        "complete_floor_evaluable": false,
+        "height_mean_ratio": 2.0,
+        "geometry": null
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": false,
+        "both_complete": false,
+        "B8L2_a": 80.0,
+        "B8L2_b": null,
+        "B8L2_change": null,
+        "D10_change": 0.0,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": null,
+        "floor_symdiff_h2": null,
+        "mean_height_prism_pair_iou": null,
+        "height_ratio_pair_abs_logdiff": null,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": null,
+        "abs_D10_change": 0.0,
+        "structure_bound_cyclic_deg": null,
+        "structure_reason": "missing_connected_points",
+        "bound_cyclic_shift": null,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": false,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "missing",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "floor_unavailable",
+        "shape_pair_scale": null,
+        "shape_floor_jaccard_difference": null,
+        "true_corner_n_a": null,
+        "true_corner_n_b": null,
+        "true_corner_count_difference": null,
+        "true_reflex_corner_n_a": null,
+        "true_reflex_corner_n_b": null,
+        "boundary_common_azimuth_fraction": null,
+        "exact_flat_prism_pair_iou": null,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "floor_unavailable",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": null,
+        "inferred_total_height_mean_abs_logratio": null,
+        "boundary_distance_normalized_n": 0,
+        "boundary_distance_normalized_mean": null,
+        "boundary_distance_normalized_p95": null,
+        "boundary_distance_normalized_max": null,
+        "bottom_y_absdiff_deg_n": 0,
+        "bottom_y_absdiff_deg_mean": null,
+        "bottom_y_absdiff_deg_p95": null,
+        "bottom_y_absdiff_deg_max": null,
+        "top_y_absdiff_deg_n": 0,
+        "top_y_absdiff_deg_mean": null,
+        "top_y_absdiff_deg_p95": null,
+        "top_y_absdiff_deg_max": null,
+        "radius_abs_logratio_n": 0,
+        "radius_abs_logratio_mean": null,
+        "radius_abs_logratio_p95": null,
+        "radius_abs_logratio_max": null,
+        "boundary_total_height_abs_logratio_n": 0,
+        "boundary_total_height_abs_logratio_mean": null,
+        "boundary_total_height_abs_logratio_p95": null,
+        "boundary_total_height_abs_logratio_max": null,
+        "wall_coverage_a_by_b_strict": null,
+        "wall_coverage_b_by_a_strict": null,
+        "wall_coverage_symmetric_min_strict": null,
+        "true_corner_matched_n_strict": null,
+        "true_corner_F1_strict": null,
+        "true_corner_max_matched_distance_normalized_strict": null,
+        "matched_corner_reflex_disagreement_n_strict": null,
+        "matched_corner_turn_absdiff_deg_max_strict": null,
+        "geometry_shape_strict": false,
+        "wall_coverage_a_by_b_main": null,
+        "wall_coverage_b_by_a_main": null,
+        "wall_coverage_symmetric_min_main": null,
+        "true_corner_matched_n_main": null,
+        "true_corner_F1_main": null,
+        "true_corner_max_matched_distance_normalized_main": null,
+        "matched_corner_reflex_disagreement_n_main": null,
+        "matched_corner_turn_absdiff_deg_max_main": null,
+        "geometry_shape_main": false,
+        "wall_coverage_a_by_b_wide": null,
+        "wall_coverage_b_by_a_wide": null,
+        "wall_coverage_symmetric_min_wide": null,
+        "true_corner_matched_n_wide": null,
+        "true_corner_F1_wide": null,
+        "true_corner_max_matched_distance_normalized_wide": null,
+        "matched_corner_reflex_disagreement_n_wide": null,
+        "matched_corner_turn_absdiff_deg_max_wide": null,
+        "geometry_shape_wide": false,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "geometry_noQ_strict": false,
+        "quality_only_strict": false,
+        "geometry_noQ_main": false,
+        "quality_only_main": false,
+        "geometry_noQ_wide": false,
+        "quality_only_wide": false,
+        "geometry_main": false,
+        "quality_main": false,
+        "prism_proxy_pair_iou": null,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": false,
+        "different_original_nodes_shape_main_passes": false
+      }
+    },
+    {
+      "name": "Q_missing_is_separate_from_shape",
+      "passed": true,
+      "explanation": "Q-free decomposition does not silently require a Q score.",
+      "a": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": 80.0,
+        "D10": 80.0,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "b": {
+        "pool_id": "synthetic",
+        "reference_id": "fixed",
+        "k": 3,
+        "member_workers": [
+          "a",
+          "b",
+          "c"
+        ],
+        "team_key": "synthetic__6dddd9704407d5be6839",
+        "B8L2": null,
+        "D10": null,
+        "nodes": 4,
+        "new_n": 3,
+        "complete_evaluable": true,
+        "complete_floor_evaluable": true,
+        "height_mean_ratio": 2.0,
+        "geometry": {
+          "points": [
+            [
+              384.0,
+              233.10373838071922
+            ],
+            [
+              384.0,
+              278.8962616192808
+            ],
+            [
+              640.0,
+              233.10373838071922
+            ],
+            [
+              640.0,
+              278.8962616192808
+            ],
+            [
+              896.0,
+              233.10373838071922
+            ],
+            [
+              896.0,
+              278.8962616192808
+            ],
+            [
+              128.0,
+              233.10373838071922
+            ],
+            [
+              128.0,
+              278.8962616192808
+            ]
+          ],
+          "footprint": [
+            [
+              -5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              5.0
+            ],
+            [
+              -5.0,
+              5.0
+            ]
+          ]
+        }
+      },
+      "metrics": {
+        "shared_workers": 3,
+        "turnover": 0,
+        "symmetric_member_difference": 0,
+        "same_members": true,
+        "complete_a": true,
+        "complete_b": true,
+        "both_complete": true,
+        "B8L2_a": 80.0,
+        "B8L2_b": null,
+        "B8L2_change": null,
+        "D10_change": null,
+        "node_count_change": 0.0,
+        "node_count_difference": 0.0,
+        "new_n_change": 0.0,
+        "floor_jaccard_difference": 0.0,
+        "floor_symdiff_h2": 0.0,
+        "mean_height_prism_pair_iou": 1.0,
+        "height_ratio_pair_abs_logdiff": 0.0,
+        "geometry_comparison_error": "",
+        "abs_B8L2_change": null,
+        "abs_D10_change": null,
+        "structure_bound_cyclic_deg": 0.0,
+        "structure_reason": "",
+        "bound_cyclic_shift": 0,
+        "ref_node_set_jaccard_difference_5": null,
+        "ref_edge_set_jaccard_difference_5": null,
+        "ref_node_set_jaccard_difference_9": null,
+        "ref_edge_set_jaccard_difference_9": null,
+        "joint_stable_strict": false,
+        "joint_stable_main": false,
+        "joint_stable_wide": false,
+        "quality_comparable": false,
+        "pair_metric_schema": "interchangeability_pair_diagnostics_v1",
+        "shape_floor_status_a": "ok",
+        "shape_floor_status_b": "ok",
+        "shape_ray_status_a": "ok",
+        "shape_ray_status_b": "ok",
+        "shape_pair_scale": 10.0,
+        "shape_floor_jaccard_difference": 0.0,
+        "true_corner_n_a": 4,
+        "true_corner_n_b": 4,
+        "true_corner_count_difference": 0,
+        "true_reflex_corner_n_a": 0,
+        "true_reflex_corner_n_b": 0,
+        "boundary_common_azimuth_fraction": 1.0,
+        "exact_flat_prism_pair_iou": 1.0,
+        "exact_flat_prism_status_a": "identified_horizontal_ceiling_prism",
+        "exact_flat_prism_status_b": "identified_horizontal_ceiling_prism",
+        "inferred_total_height_mean_a": 2.0,
+        "inferred_total_height_mean_b": 2.0,
+        "inferred_total_height_mean_abs_logratio": 0.0,
+        "boundary_distance_normalized_n": 1024,
+        "boundary_distance_normalized_mean": 0.0,
+        "boundary_distance_normalized_p95": 0.0,
+        "boundary_distance_normalized_max": 0.0,
+        "bottom_y_absdiff_deg_n": 1024,
+        "bottom_y_absdiff_deg_mean": 0.0,
+        "bottom_y_absdiff_deg_p95": 0.0,
+        "bottom_y_absdiff_deg_max": 0.0,
+        "top_y_absdiff_deg_n": 1024,
+        "top_y_absdiff_deg_mean": 0.0,
+        "top_y_absdiff_deg_p95": 0.0,
+        "top_y_absdiff_deg_max": 0.0,
+        "radius_abs_logratio_n": 1024,
+        "radius_abs_logratio_mean": 0.0,
+        "radius_abs_logratio_p95": 0.0,
+        "radius_abs_logratio_max": 0.0,
+        "boundary_total_height_abs_logratio_n": 1024,
+        "boundary_total_height_abs_logratio_mean": 0.0,
+        "boundary_total_height_abs_logratio_p95": 0.0,
+        "boundary_total_height_abs_logratio_max": 0.0,
+        "wall_coverage_a_by_b_strict": 1.0,
+        "wall_coverage_b_by_a_strict": 1.0,
+        "wall_coverage_symmetric_min_strict": 1.0,
+        "true_corner_matched_n_strict": 4,
+        "true_corner_F1_strict": 1.0,
+        "true_corner_max_matched_distance_normalized_strict": 0.0,
+        "matched_corner_reflex_disagreement_n_strict": 0,
+        "matched_corner_turn_absdiff_deg_max_strict": 0.0,
+        "geometry_shape_strict": true,
+        "wall_coverage_a_by_b_main": 1.0,
+        "wall_coverage_b_by_a_main": 1.0,
+        "wall_coverage_symmetric_min_main": 1.0,
+        "true_corner_matched_n_main": 4,
+        "true_corner_F1_main": 1.0,
+        "true_corner_max_matched_distance_normalized_main": 0.0,
+        "matched_corner_reflex_disagreement_n_main": 0,
+        "matched_corner_turn_absdiff_deg_max_main": 0.0,
+        "geometry_shape_main": true,
+        "wall_coverage_a_by_b_wide": 1.0,
+        "wall_coverage_b_by_a_wide": 1.0,
+        "wall_coverage_symmetric_min_wide": 1.0,
+        "true_corner_matched_n_wide": 4,
+        "true_corner_F1_wide": 1.0,
+        "true_corner_max_matched_distance_normalized_wide": 0.0,
+        "matched_corner_reflex_disagreement_n_wide": 0,
+        "matched_corner_turn_absdiff_deg_max_wide": 0.0,
+        "geometry_shape_wide": true,
+        "inferred_total_height_min_a": 2.0,
+        "inferred_total_height_max_a": 2.0,
+        "inferred_ceiling_y_range_a": 0.0,
+        "inferred_total_height_min_b": 2.0,
+        "inferred_total_height_max_b": 2.0,
+        "inferred_ceiling_y_range_b": 0.0,
+        "geometry_noQ_strict": true,
+        "quality_only_strict": false,
+        "geometry_noQ_main": true,
+        "quality_only_main": false,
+        "geometry_noQ_wide": true,
+        "quality_only_wide": false,
+        "geometry_main": true,
+        "quality_main": false,
+        "prism_proxy_pair_iou": 1.0,
+        "geometry_shape_main_and_prism_proxy_iou_lt_095": false,
+        "legacy_main_rejects_shape_main_passes": true,
+        "different_original_nodes_shape_main_passes": false
+      }
+    }
+  ],
+  "symmetry_fields": [
+    "shape_pair_scale",
+    "shape_floor_jaccard_difference",
+    "wall_coverage_symmetric_min_main",
+    "true_corner_F1_main",
+    "bottom_y_absdiff_deg_p95",
+    "top_y_absdiff_deg_p95",
+    "geometry_shape_main"
+  ],
+  "symmetric_geometry_passed": true,
+  "human_calibrated": false,
+  "scientific_fusion_executed": false,
+  "source_sha256": {
+    "pair_diagnostics.py": "c887ad51ccedeb0a3ac9741254acbc0367f2085776d08e138c29ea9212c29d81",
+    "METRIC_CONTRACT.json": "2d96e8f8e03ed0345fe2174cacfd22e0053d54752e05988baf900b3fe38b1491",
+    "audit_pair_diagnostics.py": "bed5e94218439207d739198edc45d8de0a7b6d4d69c3df8ec4cca4fdd2779509"
+  }
+}

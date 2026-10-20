@@ -1,0 +1,72 @@
+{
+  "allocated_request_rows": 99996,
+  "assessment_buildings": [
+    "B6ByNegPMKs",
+    "UwV83HsGsw3",
+    "X7HyMhZNoso",
+    "pa4otMbVnkk",
+    "q9vSo1VnCiC",
+    "rPc6DW4iMge"
+  ],
+  "core_order": "One seeded random permutation of remaining eligible members for each fixed draw. Every n uses its first n-m members. n changes membership and composition as well as vote threshold; not pure causal effect of head count.",
+  "current_main_commit": "445686f8f3cf6039c4ce1f60016cad1d26829044",
+  "discovery_buildings": [
+    "7y3sRwLe3Va",
+    "VLzqgDo317F",
+    "e9zR4mvMWw7",
+    "jtcxE69GiFV",
+    "pRbA3pwrgk9",
+    "yqstnuAEVhm"
+  ],
+  "domain": "all/global_known55",
+  "draw_allocation": "All cells one draw; R two distinct unordered(A,B),C block partitions when possible; remaining budget goes to G second draws by salted-hash round-robin strata (m,historical phase,building,difficulty). Feasible source vectors in salted-hash order, draws cycle vectors. Identity samples seeded, reject duplicate block partition. No result is read.",
+  "historical_phase_names_preserved": true,
+  "integer_coverage": "All m=1..sum(source capacities); all n=max(2,m)..N-2m. Two-person and other non-evaluable attempts retained.",
+  "interpretation": "Previously selected G and R directions, reused and repeatedly explored v2. All these non-history buildings are assessment strata, not new external blind images or people. History10 features/labels frozen unchanged.",
+  "layer": "ordinary_manual",
+  "native_science_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "omissions": [
+    "All exact member sets are not enumerated: one or two block draws per pool,m only.",
+    "Not all feasible source allocations are sampled if more than the allocated draws.",
+    "No enriched core order under this request budget; random-order nested chains only.",
+    "Unknown reverse-label workers are excluded from class experiments, not assigned a low class.",
+    "No doorways/Semi/special pools in this known global ordinary-Manual baseline; those belong to separate condition studies."
+  ],
+  "prespecified_sensitivities": {
+    "Q": "Overall utility first; then historical block Q(C)-Q(B) continuous linear adjustment plus |gap|<=2 support subset. Historical q_beta only, no target-building Q feature. This does not identify independent causal class effects when class and people confound.",
+    "core_proportions": "core incoming-class fraction bins [0,.25),[.25,.5),[.5,.75),[.75,1], plus empty core separately; total replacement fraction m/n; report support.",
+    "low_tail": "Signed C-B quality p10 and finite negative/positive counts; complete/evaluable and failure states for every arm; no zero imputation.",
+    "person": "Leave each actual worker out of all events containing them, and separately leave each block worker out; report remaining buildings/images/events, not a new intervention.",
+    "source": "A/B/C exact source-count match; separate all-new/all-v1/mixed blocks and source proportions where feasible.",
+    "threshold": "Adjacent fixed-block nested-core steps; ceil(n/2) and added-member identity/class/source recorded. Node supports are observation identities, not necessary-structure semantics."
+  },
+  "primary_analysis": "All attempted events: within A-B versus cross A-C, and signed C-B B8L2/D10; stable flags use failures=False, continuous missing stays null. Equal weight draws within image, images within building, buildings within stratum. Every target,n,m; source-vector and historical-phase/difficulty/core-proportion conditions retained.",
+  "schema": "known_direction_all_integer_n_m_nested_core_v1",
+  "seed": 2026102007,
+  "shape_selection": "Metadata only: n_min/n_max, n in {2m-1,2m,2m+1}, and event salted hash modulo 11 equals 0. Every selected event computes both A-B and A-C new metrics. Other events retain all original strict/main/wide and no-Q criteria. Adjacent n geometry diagnostics are allowed only when both endpoints are in the registered subset.",
+  "source_capacity": "For each source s, outgoing A and B each require v_s, incoming C requires v_s; v_s<=min(floor(out_s/2),in_s), sum(v_s)=m. Blocks A,B,C disjoint, common core excludes all three.",
+  "source_sha256": {
+    "analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+    "analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+    "analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f",
+    "analysis/forward/results/features_train.csv.gz": "783568cf98a2612308ed53a68d2a1bcc3ad10000bb6587d79b521efbbbd89117",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+    "interchangeability_20261020/independent/METRIC_CONTRACT.json": "2d96e8f8e03ed0345fe2174cacfd22e0053d54752e05988baf900b3fe38b1491",
+    "interchangeability_20261020/independent/baseline/design_baseline.py": "0f37c2ad1dce4bb3bfc4b3afdbed271e347b2a3920cfbf5ddd74eba61e157081",
+    "interchangeability_20261020/independent/pair_diagnostics.py": "c887ad51ccedeb0a3ac9741254acbc0367f2085776d08e138c29ea9212c29d81",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+  },
+  "targets": {
+    "G": {
+      "incoming": "C01",
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "outgoing": "C02"
+    },
+    "R": {
+      "incoming": "C02",
+      "method_id": "R_role_ward_K5",
+      "outgoing": "C05"
+    }
+  },
+  "team_request_budget": 100000
+}

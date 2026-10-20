@@ -1,0 +1,87 @@
+{
+  "schema": "independent_reverse_learner_code_boundary_audit_v1",
+  "source_sha256": "d30f704765e630c13cb1987ea61f6278738c8ae970e2a8dd65e2a1a1bc6d7385",
+  "matches_actual_run_source_sha256": true,
+  "science_target_results_read": false,
+  "refitting_performed": false,
+  "checked_functions": [
+    "load_history",
+    "domain_mask",
+    "pair_building_table",
+    "make_graph",
+    "spectral_init",
+    "repair_minimum",
+    "partition_loss",
+    "optimize_partition",
+    "fit_labels",
+    "evaluate",
+    "main"
+  ],
+  "checks": [
+    {
+      "item": "Building isolation",
+      "status": "pass_readonly",
+      "evidence": "Only10 history buildings loaded. Pair/building aggregation is separable by building; fold graph filters heldout buildings before support, pair prior, graph risk, and labels. Same-background context contains one building, so no crossfold outcome contamination."
+    },
+    {
+      "item": "Declared missing/failure handling",
+      "status": "pass_readonly",
+      "evidence": "Original floor/prism/Q continuous fields remain missing. continuous_loss is separately named and explicitly assigns1 for unavailable/incomplete attempts. Geometry risk has no Q cutoff but keeps old same-node and angle conditions. Prism component is a mean-height proxy, not exact volumetric reconstruction."
+    },
+    {
+      "item": "Opportunity",
+      "status": "pass_readonly",
+      "evidence": "Worker>=4images/3buildings;pair>=3images/2buildings. Unknown graph edges have weight0, not zero distance; complete linkage uses distance1. Mixed fit final class coverage gate0.75 is applied perclass plus overall, with failures retained in candidate ledger."
+    },
+    {
+      "item": "Optimization direction",
+      "status": "pass_algebra_review",
+      "evidence": "Minimizes weighted within loss plus .03 class-size concentration. Single-node move updates num/den once per undirected edge and changes sum(size^2) by2*(destination-origin+1). Finite local heuristic/two starts/300moves, not guaranteed global optimum."
+    },
+    {
+      "item": "Evaluation comparison",
+      "status": "pass_readonly",
+      "evidence": "A background contributes only with both within and between frozen label pairs, matched at same image,n,background. Equal background means, observedn,image,building averaging. Not a full composition/multiple-person experiment by itself."
+    },
+    {
+      "item": "Source-conditional context baseline",
+      "status": "qualified_interpretation",
+      "evidence": "context_bad is calculated before domain filtering with all entrant origins in each panel,pool,k,background. Source-domain context_joint labels therefore use same-training-background other-source outcome rates in centering. No heldout building leak. Frozen labels unchanged; developer notified; reverse agent confirmed and will append provenance note. Root-selected source-domain shortlists usejoint/geometry, notcontext_joint, perreverse agent message."
+    },
+    {
+      "item": "New history n2 eligibility",
+      "status": "pass_actual_metadata",
+      "evidence": "Supplemental359916 events observedn3,4,5,6,7,9,11,13,15,17,19,21,23,25,29,31; no native two_person_deferred event enters this supplementary learner. Exact person-pair/background duplicates0 in supplementary panel."
+    },
+    {
+      "item": "Minor field naming",
+      "status": "documentation_note",
+      "evidence": "evaluate temporary unique_pairs aggregation uses rowcount(size), not nunique(worker_a,worker_b); this column is not used in scoring or finalsupport return. Avoid quoting it as unique-pair support. Registration selection-score callswithin_geometry_failure; executable term iswithin_failure=notbothcomplete."
+    }
+  ],
+  "input_support": {
+    "history_events": 489270,
+    "panels": {
+      "A_nested_even_v1": {
+        "events": 7272,
+        "images": 79,
+        "buildings": 10
+      },
+      "H20_metadata_allentrant_v1": {
+        "events": 359916,
+        "images": 81,
+        "buildings": 10
+      },
+      "Pro_exact_fixed_background_v1": {
+        "events": 122082,
+        "images": 79,
+        "buildings": 10
+      }
+    }
+  },
+  "limits": [
+    "Code/algebra and supplemental metadata audit, not reexecution of1040 candidate fits.",
+    "No discovery/assessment scientific result was read for this audit.",
+    "Inner-CV selection has already seen these history fold outcomes; subsequent finalized labels require separate block assessment."
+  ]
+}
