@@ -8,3 +8,6 @@
 
 /* Long reference links must not shrink the primary navigation to zero. */
 .sidebar{overflow-y:auto}.sidebar nav,.sidefoot{flex-shrink:0}
+
+/* Long group names and reference paths must fit the comparison panel. */
+.toolbar label{min-width:0;max-width:100%}.toolbar select{max-width:100%}.panel{overflow-wrap:anywhere}.toolbar input[type=checkbox]{width:16px;height:16px;min-height:0;padding:0}

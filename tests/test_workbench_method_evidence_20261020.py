@@ -61,7 +61,7 @@ def test_saved_state_rejects_cross_context_votes(field,value):
 
 
 def test_read_only_packer_does_not_import_or_run_research_engines():
-    source = Path(builder.__file__).read_text()
+    source = Path(builder.__file__).read_text(encoding='utf-8')
     assert 'view-data.js\'\n    single = json.loads' not in source
     assert "single_source = ROOT/'research/workers/personnel_type_validation_next_20261019/CASE_SCORE_AUDIT.json'" in source
     for forbidden in ('import fusion_engine','scoring_engine(', 'compute_score(', 'score_task(', 'fe.fuse('):
@@ -91,7 +91,7 @@ def test_materialized_evidence_has_real_selected_states_and_offline_twin():
     assert data['support']['totals']['records']==10439
     assert data['support']['retained']['workers']==60
     assert data['support']['totals']['quality_records']==7302
-    script = path.with_suffix('.js').read_text()
+    script = path.with_suffix('.js').read_text(encoding='utf-8')
     assert script.startswith('window.researchLocalData[document.currentScript.src')
     assert json.loads(script.split(']= ',1)[1].strip().rstrip(';'))==data
     assert all((builder.ROOT/s['path']).is_file() for s in data['sources'])

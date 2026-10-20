@@ -14,7 +14,7 @@
 |数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|14|输入版本、人数门槛、GT/空间绑定和排除状态。|
 |质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|97|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
 |图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|29|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
-|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|65|可解释人员标法类型与换人/换类/构成作用两条正式主线；Q、T、难度、Semi、盲信、scope及历史标法共同研究。|
+|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|65|人员分类、人员画像、人员组合效益三线分别研究；Manual/Semi分开，换人/换类保留正式地位。新Pro返回后统一分配接续任务。|
 |融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|32|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
 |同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|16|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
 |描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|23|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|

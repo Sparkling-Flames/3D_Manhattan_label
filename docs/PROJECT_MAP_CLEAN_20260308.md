@@ -1,6 +1,6 @@
 # HOHONET 项目地图
 
-- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究，Pro新任务尚待返回。
+- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究；人员分类、画像、组合效益分为三线，新Pro返回后统一分配线程任务。
 
 - 2026-10-20当前统筹：[人员标法分类与换类研究总览](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。新增进度文档与最新人员研究包已登记资料目录，无工具或数据路径迁移。
 
