@@ -1,8 +1,14 @@
 # HOHONET 文档入口
 
-- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究，Pro新任务尚待返回。
+- **整体研究主文档：** [研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)。统一人员、图片、质量、融合、人数/组合及同房关系；盲信、个人筛除、scope和难度继续保留独立用途。
+- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办、指定研究台线程任务和新分类两处修正；[同房后续Pro准备](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第9节尚未发起。
+- 对话接续辅助：[完整交接](thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md)，不替代模型与主题记录。
 
-- 2026-10-20当前总览：[人员标法分类、换人换类与整体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。人员分类、画像、组合效益三线分别记录；Manual/Semi分开。新Pro待返回，之后统一分配各线程；质量、难度、融合、同房及展示进度集中说明。下方旧阶段状态保留轮次。 研究台接续见[十模块离线入口](../research/statistics/research_explorer_v1_r2_20261017/index.html)，只读新增17张表，明细与限制保留在源包。
+- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类Pro已返回并完成关键独立复算，进入统计口径修正与采用收口，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+
+- 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
+
+- 2026-10-20总览入口（状态已续至10/21）：[人员标法分类、换人换类与整体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。人员分类、画像、组合效益三线分别记录；Manual/Semi分开。新分类与画像/组合Pro均已返回，最新独立审查见上方10/21入口。下方旧阶段状态保留轮次。 研究台接续见[十模块离线入口](../research/statistics/research_explorer_v1_r2_20261017/index.html)，展示采用状态以各轮回执为准。
 
 - 2026-10-20：[人员可互换性独立审查与复算](../research/statistics/personnel_interchangeability_audit_20261020/README.md)，保留失败分母、未全量重跑与重训等审查边界。
 

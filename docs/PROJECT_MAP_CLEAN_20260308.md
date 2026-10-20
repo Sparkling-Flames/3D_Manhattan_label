@@ -1,8 +1,14 @@
 # HOHONET 项目地图
 
-- 2026-10-20各线程成果已汇总：[最新发现与条件分开研究](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。[研究台交互入口](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=patterns)已接20案例及同房5组21保存视角；Manual/Semi分别研究；人员分类、画像、组合效益分为三线，新Pro返回后统一分配线程任务。
+- **整体研究主文档：** [研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)。统一人员、图片、质量、融合、人数/组合及同房关系；盲信、个人筛除、scope和难度继续保留独立用途。
+- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办、指定研究台线程任务和新分类两处修正；[同房后续Pro准备](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第9节尚未发起。
+- 对话接续辅助：[完整交接](thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md)，不替代模型与主题记录。
 
-- 2026-10-20当前统筹：[人员标法分类与换类研究总览](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。新增进度文档与最新人员研究包已登记资料目录，无工具或数据路径迁移。
+- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类Pro已返回并完成关键独立复算，进入统计口径修正与采用收口，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+
+- 新增人员分类研究副本：`research/workers/personnel_taxonomy_20261021/`；校正后的展示接口及难度、质量、融合、同房机制表由`tools/thesis_main/analysis/build_research_workbench_v2_20261019.py`接入既有`research/statistics/research_explorer_v1_r2_20261017/`，回执见该目录`INTEGRATION_RECEIPT_20261021.md`。原下载包保持原样；现有协议、评分和融合入口不变。
+
+- 2026-10-20当前统筹：[人员标法分类与换类研究总览](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。新增画像/组合归档、难度/质量/融合续研、同房局部对应及人工总览已登记资料目录。新脚本仍在tools/thesis_main/analysis/；无工具或数据路径迁移。
 
 - 同房预测入口：[多视角历史与人员重放计划](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)及[2026-10-20实算结果](../research/same_room/same_room_multiview_20261020/README.md)。平均质量、个人Q和真实融合曲线均已执行；未知同建筑关系不当作异房。
 

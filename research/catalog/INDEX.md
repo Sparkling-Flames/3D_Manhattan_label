@@ -1,6 +1,6 @@
 # HOHONET 研究资料总目录
 
-目录版本：research_catalog_20261020_v18_condition_findings；盘点日期：2026-10-20。
+目录版本：research_catalog_20261021_v22_coordination_handoff；盘点日期：2026-10-21。
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
 
@@ -10,14 +10,14 @@
 
 |主题|入口|资料数|说明|
 |---|---|---:|---|
-|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|85|原意、跨模块关系、进度、版本采用与交接。|
+|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|86|原意、跨模块关系、进度、版本采用与交接。|
 |数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|14|输入版本、人数门槛、GT/空间绑定和排除状态。|
-|质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|97|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
-|图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|29|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
-|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|65|人员分类、人员画像、人员组合效益三线分别研究；Manual/Semi分开，换人/换类保留正式地位。新Pro返回后统一分配接续任务。|
-|融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|32|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
-|同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|16|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
-|描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|23|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
+|质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|98|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
+|图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|30|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
+|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|67|人员分类、人员画像、人员组合效益三线分别研究；Manual/Semi分开，换人/换类保留正式地位。画像与组合已初核；六个原线程开展独立接续，分类另行重启。|
+|融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|33|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
+|同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|17|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
+|描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|24|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
 |文献与跨模块资料|[打开主题入口](../../docs/thesis_main/topics/literature/README.md)|4|文献阅读和跨模块共同基础；跨模块整包保持原结构并通过引用关联。|
 |历史归档与未分类快照|[打开主题入口](../../docs/thesis_main/topics/archive/README.md)|257|保留原位且不属于当前主题入口的旧结果和历史快照；按原路径及日期回溯，不代表当前方法或待办。|
 
