@@ -1,0 +1,27 @@
+{
+  "inputs_sha256": {
+    "COMMON_ENDPOINT_PAIRS.csv.gz": "64a8cb5132b03109f001101839e6267b4a5f324c1f23d7baac471731eca317ab",
+    "COMMON_LIBRARY_BUILDINGS.csv": "fbe0a4f632615a83694c54b8afdb368aae0ee8a9a59a83843611f2dbbd0c8921",
+    "COMMON_LIBRARY_SUMMARY.csv": "62409838a203decad9e68f6992864522094e01e3241149ed6f8aa968d44c23a2",
+    "COMMON_LIBRARY_RECEIPT.json": "bd7f5ab7905c8e08bb8ce439cec3db738044fd957d7923448921dafe1d8a1d65"
+  },
+  "pair_rows": 63476,
+  "exact_request_pair_set_verified": true,
+  "exact_endpoint_membership_identifiers_verified": true,
+  "all_count_vector_arms_and_pure_flags_independently_verified": true,
+  "exclusive_status_risks_verified": true,
+  "all_unavailable_distances_null": true,
+  "summary_cells": 288,
+  "compared_numeric_values": 3456,
+  "max_aggregate_error": 2.220446049250313e-16,
+  "observed_images": 11,
+  "observed_buildings": 6,
+  "frozen_anchors": 152,
+  "statuses": {
+    "unique_cyclic_candidate": 55023,
+    "different_corner_count": 5882,
+    "incomplete_geometry": 2184,
+    "missing_connected_geometry": 387
+  },
+  "interpretation": "Same raw endpoint library and four-cell common anchor per metric, NOT identical within-pair populations across methods. Conditional distances and all-observed risk supports reported separately. Existing assessment reuse, selected12image design; only11images have library support."
+}
