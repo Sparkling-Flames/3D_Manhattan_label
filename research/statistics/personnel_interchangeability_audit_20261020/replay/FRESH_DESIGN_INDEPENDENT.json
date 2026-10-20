@@ -1,0 +1,17 @@
+{
+  "all_passed": true,
+  "request_sha256": "2324bf001fbc0b5387632758b817645fe5cd6965e391850a6ccc4e0c89167600",
+  "teams": 12229,
+  "class_specific_events": 2552,
+  "nested_groups": 200,
+  "common_anchors": 152,
+  "common_disjoint_block_pairs": 63476,
+  "checks": [
+    "Exact worker IDs, availability and deterministic team keys",
+    "Exact A/B/C class vectors and source-matched new-worker exchanged blocks",
+    "Exact turnover m and identical common core",
+    "Nested prefix cores and constant exchanged blocks within group",
+    "Shared-library blocks disjoint from core; each declared pair disjoint and exact m"
+  ],
+  "phase": "reused_internal12image_metadata_probe; not all assessment images and not fresh independent holdout"
+}

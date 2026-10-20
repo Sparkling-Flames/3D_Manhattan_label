@@ -1,0 +1,164 @@
+[
+  {
+    "id": "F01_time",
+    "title": "高Q23慢→快",
+    "use": "当前人员的来源劳动时间候选优先级",
+    "application_gate": "保留来源匹配、任务模式与历史支持；逐队实算完整性、质量和结构。",
+    "observed_support": {
+      "events": 480,
+      "images": 42,
+      "buildings": 6
+    },
+    "observed_estimates": {
+      "net_B8L2_change": -0.02922362807258529,
+      "within_joint_stable_main": 0.632175925925926,
+      "cross_joint_stable_main": 0.6321759259259259,
+      "within_geometry_shape_main": 0.7649305555555556,
+      "cross_geometry_shape_main": 0.7569444444444445,
+      "within_Q_drop_gt5": 0.05916456228956229,
+      "B_complete": 0.9743055555555555,
+      "C_complete": 0.9930555555555555
+    },
+    "descriptive_building_intervals": [
+      {
+        "metric": "net_B8L2_change",
+        "bootstrap_2_5": -0.3713378692409819,
+        "bootstrap_97_5": 0.3052325237409755
+      },
+      {
+        "metric": "within_joint_stable_main",
+        "bootstrap_2_5": 0.537037037037037,
+        "bootstrap_97_5": 0.7099537037037038
+      },
+      {
+        "metric": "stability_gap",
+        "bootstrap_2_5": -0.0263888888888888,
+        "bootstrap_97_5": 0.0347222222222222
+      },
+      {
+        "metric": "within_geometry_shape_main",
+        "bootstrap_2_5": 0.6777777777777776,
+        "bootstrap_97_5": 0.8302083333333332
+      },
+      {
+        "metric": "shape_gap",
+        "bootstrap_2_5": -0.0197916666666666,
+        "bootstrap_97_5": 0.0364583333333333
+      }
+    ],
+    "limitations": [
+      "不是目标重做耗时或并行完成时长",
+      "不能由近零平均Q声称逐队质量等效",
+      "同类换人仍存在>5分下降坏尾"
+    ],
+    "validation": "已探索v2楼的内部冻结复查；没有新人员外部预测验收"
+  },
+  {
+    "id": "Rnew2_C02>C01_m5",
+    "title": "新批C02→C01，n13/m5",
+    "use": "已测完整构成的有向质量候选",
+    "application_gate": "只用于现有35名新批和有支持的图片/core；保留完整类别计数。",
+    "observed_support": {
+      "events": 58,
+      "images": 29,
+      "buildings": 6
+    },
+    "observed_estimates": {
+      "net_B8L2_change": 6.652347087523754,
+      "within_joint_stable_main": 0.4773809523809524,
+      "cross_joint_stable_main": 0.4476190476190476,
+      "within_geometry_shape_main": 0.704563492063492,
+      "cross_geometry_shape_main": 0.5837301587301588,
+      "within_Q_drop_gt5": 0.052976190476190475,
+      "B_complete": 1.0,
+      "C_complete": 0.9916666666666667
+    },
+    "descriptive_building_intervals": [
+      {
+        "metric": "net_B8L2_change",
+        "bootstrap_2_5": 2.317613567794925,
+        "bootstrap_97_5": 11.860200529029743
+      },
+      {
+        "metric": "within_joint_stable_main",
+        "bootstrap_2_5": 0.2936507936507936,
+        "bootstrap_97_5": 0.6611111111111111
+      },
+      {
+        "metric": "stability_gap",
+        "bootstrap_2_5": -0.0793650793650793,
+        "bootstrap_97_5": 0.1408730158730158
+      },
+      {
+        "metric": "within_geometry_shape_main",
+        "bootstrap_2_5": 0.5178571428571428,
+        "bootstrap_97_5": 0.8722222222222222
+      },
+      {
+        "metric": "shape_gap",
+        "bootstrap_2_5": 0.0166666666666666,
+        "bootstrap_97_5": 0.2833333333333334
+      }
+    ],
+    "limitations": [
+      "历史Q差未排除",
+      "旧主互换分离仅约2.98个百分点",
+      "不是任意同类新人可互换"
+    ],
+    "validation": "已探索v2楼的内部冻结复查；没有新人员外部预测验收"
+  },
+  {
+    "id": "mixed_highQ23_5fast_2slow",
+    "title": "高Q快5慢2，整队n7",
+    "use": "有限人员内稳定构成候选",
+    "application_gate": "先确认实际成员容量及图像条件，再逐队实算。",
+    "observed_support": {
+      "events": 20,
+      "images": 12,
+      "buildings": 5
+    },
+    "observed_estimates": {
+      "net_B8L2_change": 0.3234049628730906,
+      "within_joint_stable_main": 0.725,
+      "cross_joint_stable_main": 0.5416666666666666,
+      "within_geometry_shape_main": 0.8833333333333332,
+      "cross_geometry_shape_main": 0.8583333333333332,
+      "within_Q_drop_gt5": 0.125,
+      "B_complete": 1.0,
+      "C_complete": 1.0
+    },
+    "descriptive_building_intervals": [
+      {
+        "metric": "net_B8L2_change",
+        "bootstrap_2_5": -0.6967261794014765,
+        "bootstrap_97_5": 1.3738338702788606
+      },
+      {
+        "metric": "within_joint_stable_main",
+        "bootstrap_2_5": 0.525,
+        "bootstrap_97_5": 0.925
+      },
+      {
+        "metric": "stability_gap",
+        "bootstrap_2_5": 0.0333333333333333,
+        "bootstrap_97_5": 0.35
+      },
+      {
+        "metric": "within_geometry_shape_main",
+        "bootstrap_2_5": 0.7499999999999999,
+        "bootstrap_97_5": 1.0
+      },
+      {
+        "metric": "shape_gap",
+        "bootstrap_2_5": 0.0,
+        "bootstrap_97_5": 0.075
+      }
+    ],
+    "limitations": [
+      "12图5楼，建筑不确定性宽",
+      "常驻人员导致删人后支持清空",
+      "相近不等于高质量或最优配比"
+    ],
+    "validation": "已探索v2楼的内部冻结复查；没有新人员外部预测验收"
+  }
+]
