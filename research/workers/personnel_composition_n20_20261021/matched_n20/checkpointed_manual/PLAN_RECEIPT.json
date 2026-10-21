@@ -1,0 +1,30 @@
+{
+  "condition": "manual",
+  "events": 269814,
+  "pools": 164,
+  "buildings": 22,
+  "max_events_per_shard": 20000,
+  "shards": 164,
+  "needed_endpoint_keys": 58159,
+  "unique_oriented_geometry_pairs": 471200,
+  "design_sha256": "73d32d311dc858e4eaf031ddacee4cf1ff1752e31fd0fae41d7e5e8ffe8f5fd6",
+  "all_finite_registered_panel_events_retained": true,
+  "uses_outcomes_to_plan": false,
+  "processing_order": "building, pool_id; frozen design order within each pool",
+  "outputs": [
+    {
+      "path": "checkpointed_manual/CHECKPOINT_PLAN.csv",
+      "rows": 164,
+      "columns": 6,
+      "bytes": 28914,
+      "sha256": "a268b6fb22abed557699e64c0af5f509f30eea3e1a451ced0a33db311ebc09ce"
+    },
+    {
+      "path": "checkpointed_manual/POOL_PAIR_SCALE.csv",
+      "rows": 164,
+      "columns": 4,
+      "bytes": 9137,
+      "sha256": "89f2cc1b357a2851d8641e24a8226dd7cdcc834a49e84a355a28ebf7aa07cfe6"
+    }
+  ]
+}

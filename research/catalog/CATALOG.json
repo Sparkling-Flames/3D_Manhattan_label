@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261021_v23_same_room_review",
+  "catalog_version": "research_catalog_20261021_v24_personnel_n20_archive",
   "inventory_date": "2026-10-21",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -354,9 +354,13 @@
     {
       "id": "workers",
       "title": "人员研究",
-      "description": "人员分类、人员画像、人员组合效益三线分别研究；Manual/Semi分开，换人/换类保留正式地位。画像与组合已初核；六个原线程开展独立接续，分类另行重启。",
+      "description": "人员分类、人员画像与团队构成分别研究，Manual/Semi分开；n=20整体构成续研包已归档，成员配置覆盖不冒称个人组合穷举。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-21 n=20整体构成续研五个Pro交付包已归档，独立核验边界见人员总记录",
+          "path": "research/workers/personnel_composition_n20_20261021/README.md"
+        },
         {
           "text": "2026-10-21：人员画像与组合效益精简归档及接口；182格画像、12接口及4例12队已接研究台；不是新正式分类",
           "path": "research/workers/personnel_profiles_composition_20261020/README.md"
@@ -11147,12 +11151,102 @@
       "current_path": "research/workers/personnel_taxonomy_20261021",
       "source": "用户提供的Pro复现包；仓库副本仅修正图/楼汇总与共同点数匹配",
       "adoption_status": "Manual M0/M1为结构表达工作分类；细类条件解释，Semi尺度条件补充，A2独立关系轴",
-      "verification_status": "校正聚合与匹配重算、定向测试及研究台接口校验；原下载包保留",
-      "availability": "本地研究包；未提交或推送",
+      "verification_status": "校正聚合与匹配重算、定向测试及研究台接口校验；源Pro下载包仍留本机",
+      "availability": "研究副本已归档GitHub main；原始Pro下载包保留本机",
       "relationships": [
         "research/workers/personnel_taxonomy_20261021/DISPLAY_INTERFACE.json",
         "research/workers/personnel_taxonomy_20261021/REPORT_ZH.md",
         "research/statistics/research_explorer_v1_r2_20261017/README.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-n20-matched-20261021",
+      "title": "n=20同构成与改构成匹配对照及九批索引",
+      "theme": "workers",
+      "type": "匹配事件研究包与复现材料",
+      "date": "20261021",
+      "source_path": "external_package:HOHONET_n20_同构成改构成匹配对照_总结代码与九批索引_20261021.zip",
+      "current_path": "research/workers/personnel_composition_n20_20261021/matched_n20",
+      "source": "Pro续研交付包；按原包结构归档",
+      "adoption_status": "有限登记成员面板内的同背景、同替换人数匹配证据；不代表成员空间穷举",
+      "verification_status": "源ZIP与解压目录逐文件哈希一致；独立复核范围及未复算部分见人员总体进度",
+      "availability": "已归档GitHub main；不表示已接入研究台",
+      "relationships": [
+        "research/workers/personnel_composition_n20_20261021/README.md",
+        "research/workers/personnel_composition_n20_20261021/matched_n20/MANUAL_N20_FINDINGS_ZH.md",
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-n20-semi-cases-20261021",
+      "title": "n=20 Semi尺度构成与位置中位数正反机制案例",
+      "theme": "workers",
+      "type": "真实作答机制案例与逐观察证据",
+      "date": "20261021",
+      "source_path": "external_package:HOHONET_n20_Semi尺度机制正例与反例_20261021.zip",
+      "current_path": "research/workers/personnel_composition_n20_20261021/semi_mechanism_cases",
+      "source": "Pro续研交付包；相同原图复用仓库已跟踪字节",
+      "adoption_status": "解释两个实际团队结果的机制案例；不估计发生率或修改人员标签",
+      "verification_status": "源ZIP与解压目录逐文件哈希一致；完整局部核验边界见总记录",
+      "availability": "已归档GitHub main；不表示已接入研究台",
+      "relationships": [
+        "research/workers/personnel_composition_n20_20261021/README.md",
+        "research/workers/personnel_composition_n20_20261021/semi_mechanism_cases/README_ZH.md",
+        "data/mp3d_layout/test/img/q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103.png"
+      ]
+    },
+    {
+      "id": "MAT-personnel-n20-interpretation-20261021",
+      "title": "n=20共同端点解释与权重补充",
+      "theme": "workers",
+      "type": "分析口径补充与支持表",
+      "date": "20261021",
+      "source_path": "external_package:N20_FINAL_INTERPRETATION_ADDENDUM_20261021.zip",
+      "current_path": "research/workers/personnel_composition_n20_20261021/interpretation_addendum",
+      "source": "Pro续研解释补充包；保留原包清单",
+      "adoption_status": "澄清权重、共同端点及支持域；不改变既有标签和分析合同",
+      "verification_status": "源ZIP与解压目录逐文件哈希一致；数值采用边界见总记录",
+      "availability": "已归档GitHub main；不表示已接入研究台",
+      "relationships": [
+        "research/workers/personnel_composition_n20_20261021/README.md",
+        "research/workers/personnel_composition_n20_20261021/interpretation_addendum/N20_INTEGRATION_NOTES_ZH.md",
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-n20-stage-coverage-20261021",
+      "title": "人员多域阶段身份与n=20方法覆盖台账",
+      "theme": "workers",
+      "type": "阶段映射、方法覆盖账与生成代码",
+      "date": "20261021",
+      "source_path": "external_package:HOHONET_阶段身份_52行域组合与n20方法覆盖_20261021.zip",
+      "current_path": "research/workers/personnel_composition_n20_20261021/stage_coverage",
+      "source": "Pro续研阶段覆盖交付包；旧字段与本轮追加字段分开登记",
+      "adoption_status": "用于辨明52行旧覆盖台账与本轮新增深研，不把配置覆盖当作全部成员穷举",
+      "verification_status": "源ZIP与解压目录逐文件哈希一致；字段阶段映射见包内台账",
+      "availability": "已归档GitHub main；不表示已接入研究台",
+      "relationships": [
+        "research/workers/personnel_composition_n20_20261021/README.md",
+        "research/workers/personnel_composition_n20_20261021/stage_coverage/STAGE_COVERAGE_LEDGER_ZH.md",
+        "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-n20-summary-report-20261021",
+      "title": "人员分类与整体构成n=20续研总报告和关键图表",
+      "theme": "workers",
+      "type": "研究总报告、图表与生成器",
+      "date": "20261021",
+      "source_path": "external_package:HOHONET_续研总报告与关键图表_20261021.zip",
+      "current_path": "research/workers/personnel_composition_n20_20261021/summary_report",
+      "source": "Pro续研报告交付包；保留Markdown、HTML、图表与构建材料",
+      "adoption_status": "汇总报告；解释与结论按人员总体进度中的独立复核范围使用",
+      "verification_status": "源ZIP与解压目录逐文件哈希一致；不等同于逐项重建报告",
+      "availability": "已归档GitHub main；不表示已接入研究台",
+      "relationships": [
+        "research/workers/personnel_composition_n20_20261021/README.md",
+        "research/workers/personnel_composition_n20_20261021/summary_report/report/HOHONET_人员分类与整体构成_续研报告_20261021.md",
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
       ]
     },
     {
@@ -11293,4 +11387,3 @@
     }
   ]
 }
-

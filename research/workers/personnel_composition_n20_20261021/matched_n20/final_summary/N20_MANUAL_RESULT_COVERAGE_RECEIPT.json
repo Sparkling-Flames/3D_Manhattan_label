@@ -1,0 +1,48 @@
+{
+  "condition": "manual",
+  "n": 20,
+  "minimum_matched_actual_m": 4,
+  "batches": 9,
+  "shards": 164,
+  "pools": 164,
+  "buildings": 22,
+  "events": 269814,
+  "all_complete_events": 264867,
+  "events_with_any_native_failure": 4947,
+  "columns_per_event_file": 697,
+  "all_batch_zip_hashes_rechecked": true,
+  "no_repeated_buildings_between_batches": true,
+  "no_repeated_or_missing_shards_between_batches": true,
+  "batch_shard_hashes_equal_streaming_summary_inputs": true,
+  "event_id_union_equal_frozen_design": true,
+  "event_id_verification_source": {
+    "path": "checkpointed_manual/summary/SUMMARY_RECEIPT.json",
+    "bytes": 36644,
+    "sha256": "3308c4cb5f72a9baca186e4f40915760ac78433ce3c7ef8d7af67e178a2482d3"
+  },
+  "event_id_verification_note": "Exact event ID equality was checked in the streaming summary; this index verifies the complete hash chain from those same immutable shards to all nine ZIPs, without copying or recomputing wide data.",
+  "plan_receipt": {
+    "path": "checkpointed_manual/PLAN_RECEIPT.json",
+    "bytes": 913,
+    "sha256": "1792d530b9625d49142716054bb6b27424e0db7edc9504c58609c82f02059c55"
+  },
+  "frozen_design_sha256": "73d32d311dc858e4eaf031ddacee4cf1ff1752e31fd0fae41d7e5e8ffe8f5fd6",
+  "all_possible_population_member_sets_enumerated": false,
+  "all_legal_events_within_method_registered_finite_panel_enumerated": true,
+  "outputs": [
+    {
+      "path": "final_summary/N20_MANUAL_RESULT_BATCH_INDEX.csv",
+      "bytes": 3151,
+      "sha256": "b35b2ece0de858433668ea66a2ba9f8ab3473961a6852738793b7ae6de67d3ce",
+      "rows": 9,
+      "columns": 13
+    },
+    {
+      "path": "final_summary/N20_MANUAL_RESULT_SHARD_INDEX.csv",
+      "bytes": 54806,
+      "sha256": "c633c2d6e982f0450e00ac5932ffdbfd86df84e3775298f67fe23173dd32b310",
+      "rows": 164,
+      "columns": 13
+    }
+  ]
+}

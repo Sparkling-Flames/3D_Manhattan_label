@@ -1,0 +1,68 @@
+{
+  "observed_exception": "EOFError: Compressed file ended before the end-of-stream marker was reached",
+  "initial_worker_partition": 1,
+  "first_uncommitted_part": "part_0092",
+  "pool_id": "pa4otMbVnkk-48__manual__ec437a76cb",
+  "registered_events": 7274,
+  "original_temporary_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_global_composition_20261021/continuation_20261021/n20_abc/checkpointed_manual/shards/part_0092_EVENTS.csv.gz.pending",
+  "original_temporary_bytes_observed": 3714882,
+  "original_temporary_sha256": null,
+  "original_full_traceback_preserved": false,
+  "export_stage_assessment": "Readback of temporary gzip export; only gzip reads after opening this temporary output occur in save_csv readback, while frozen source shards revalidated intact. Exact original call stack was truncated in tool output.",
+  "root_cause": "unconfirmed; no attribution to disk, interruption or writer collision",
+  "writer_context_closed_before_readback": true,
+  "fixed_partition_input": {
+    "path": "checkpointed_manual/POOL_PAIR_SCALE.csv",
+    "sha256": "89f2cc1b357a2851d8641e24a8226dd7cdcc834a49e84a355a28ebf7aa07cfe6"
+  },
+  "partition_assignment_depends_on_endpoint_availability": false,
+  "four_partition_pool_sets_disjoint": true,
+  "four_partition_pool_union": 164,
+  "oriented_pairs_per_partition": [
+    117788,
+    117811,
+    117803,
+    117798
+  ],
+  "completed_shards_hash_rechecked_before_resume": 148,
+  "changed_completed_shards": 0,
+  "recovery": "Only missing receipts resumed sequentially from the fixed full design; completed shards skipped. No fusion or scoring repeated.",
+  "recovered_part_receipt": {
+    "part": "part_0092",
+    "condition": "manual",
+    "building": "pa4otMbVnkk",
+    "pool_id": "pa4otMbVnkk-48__manual__ec437a76cb",
+    "events": 7274,
+    "all_scored": 7274,
+    "all_complete": 7274,
+    "new_oriented_geometry_pairs": 13529,
+    "pool_cumulative_pairs": 13529,
+    "input_sha256": "31ee61540e1886f6e9e2bcee1a8c354cef10ef5aa3d4d879feab483cd1defbf1",
+    "code_sha256": "3a3e33547ec14cd4575cdeb515b8d806292c456dd2d2739e7551b13a0fed0e7a",
+    "kernel_sha256": "8acc1497800883a55452655889c74acd91a4a7b8134011818b7babad4ce8ca30",
+    "partition_index": 0,
+    "partition_count": 1,
+    "seconds": 40.84008052199715,
+    "events_per_second": 178.10933970387404,
+    "fusion_calls": 0,
+    "score_calls": 0,
+    "output": {
+      "path": "checkpointed_manual/shards/part_0092_EVENTS.csv.gz",
+      "rows": 7274,
+      "columns": 697,
+      "bytes": 16130770,
+      "sha256": "44ffc350374a3f45917c5318dc85ffcccad52f514f83a14b7e2f5aa33aa16a63"
+    }
+  },
+  "all_events_now_computed": 269814,
+  "all_shards_now_computed": 164,
+  "future_export_hardening": "atomic_checkpoint_io.py uses PID+nanosecond unique temporary paths, closes gzip writer, fsyncs, reads back header/column widths/count/ordered unique event IDs before atomic replace; errors retain exact phase/path/traceback.",
+  "resume_process_used_preloaded_legacy_writer": "Some recovery exports used the already imported earlier writer; all were readback-verified. The hardened writer is used for subsequent summaries and reproduction.",
+  "partition_ledger": {
+    "path": "checkpointed_manual/FIXED_FOUR_PARTITION_ASSIGNMENT.csv",
+    "rows": 164,
+    "columns": 5,
+    "bytes": 10368,
+    "sha256": "15564863cf959c5a70d5e492449b1173fed55a1ccfbea80a1b32a76e3e794377"
+  }
+}

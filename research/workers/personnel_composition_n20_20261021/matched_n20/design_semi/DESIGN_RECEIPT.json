@@ -1,0 +1,45 @@
+{
+  "condition": "semi",
+  "n": 20,
+  "minimum_actual_m": 4,
+  "registered_family_pool_groups": 64,
+  "registered_method_tier_pool_groups": 106,
+  "events": 1517,
+  "unique_physical_triples_across_methods": 1489,
+  "same_oriented_triples_in_previous_ABC": 0,
+  "all_matched_triples_in_declared_registered_panel_enumerated": true,
+  "all_possible_membersets_enumerated": false,
+  "all_methods_union_membersets_relabelled": false,
+  "outcomes_accessed_for_design": false,
+  "labels_target_building_excluded": true,
+  "source_sha256": {
+    "continuation_20261021/next_stage/candidate_n20/CONFIG_MEMBERSHIP.csv.gz": "dafab3fad16939065cee4f2b4acb0247842eaa55f92ed2cbf3ce3b5d6846c2c5",
+    "continuation_20261021/next_stage/candidate_n20/ENDPOINT_REQUESTS.json.gz": "b6814db7652b6e53a2129d2345fd0d49aedc88049f1b4a6dfe6dc8d83ccc2169",
+    "composition/FROZEN_LABELS.csv": "5b1832776fd0a4fe393fc30157fd07dc4b8a99f944e0bb5599933d12cfa39359"
+  },
+  "code_sha256": "6d7e1c9c58e1b3f26a9f14ac894672f7e1abe3a3b677e1e2c7ab39d7a5913dc0",
+  "seconds": 23.85485127600259,
+  "outputs": [
+    {
+      "path": "design_semi/MATCHED_ABC_EVENTS.csv.gz",
+      "rows": 1517,
+      "columns": 44,
+      "bytes": 167427,
+      "sha256": "ff4ee6d7f58a76f0b741394bb0fbb650b5870ac397d99048cb8eb18c1a0010d3"
+    },
+    {
+      "path": "design_semi/MATCHED_ABC_POOL_SCALE.csv",
+      "rows": 106,
+      "columns": 25,
+      "bytes": 34404,
+      "sha256": "27060403eea4765f277da62660fd4ee1e4709a3b11461ce125061013096357d3"
+    },
+    {
+      "path": "design_semi/MATCHED_ABC_M_SCALE.csv",
+      "rows": 492,
+      "columns": 21,
+      "bytes": 147971,
+      "sha256": "243fd5866bb6219ed43fdd4d51f189968b5016ffebfbc04c3547371460f8e4f6"
+    }
+  ]
+}
