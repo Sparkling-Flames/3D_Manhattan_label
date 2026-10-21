@@ -84,3 +84,12 @@ G046 三视角 A↔A、B↔B 已确认，不再请求。附近原答命中与同
 
 这是可用于同房章节的阶段性实证收束，不是整个同房任务全部完成的宣告。已独立实算的部分、Pro 待验部分及人工问题已明确分开。
 
+## 研究台接入（2026-10-21）
+
+本接入分支将已保存的 13 张汇总表接入[同房独立补算模块](../../statistics/research_explorer_v1_r2_20261017/index.html#module=same_room_review)，包含校准5表、结构3表、人数选择3表和D10敏感性2表。表头、行数、来源与页签顺序见[显示接口](../../statistics/research_explorer_v1_r2_20261017/SAME_ROOM_REVIEW_INTERFACE_20261021.json)。G015采用口径同时进入研究台来源文档。
+
+仓库根运行 `python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019`，研究台由121表增至134表，概览由8节增至9节。生成的 `v2-data/`、`v2-resources/` 仅本地使用，快照保持 `v2_integrated_analysis_20261019`。
+
+本轮仅补显式UTF-8读取、登记与展示，不重跑研究或修改已有数值。G015继续以现有GT评价，GT、原答、分数、排名和融合不变；Manual为主、OOS排除、门洞单列。PR #19独立补算与未取得的Pro 47.1MiB包分别保留来源身份。
+
+`stopping/support.csv`、`stopping/d10_sensitivity/support.csv`、`stopping/d10_sensitivity/group_summary.csv`、`review/case_manifest.json`及所有 `.csv.gz` 留在源包，不展开进入本模块。低尾、失败与完整率同时保留，不宣称within-2全面优于固定7。接入验证见[回执](../../statistics/research_explorer_v1_r2_20261017/INTEGRATION_RECEIPT_20261021_SAME_ROOM.md)。
