@@ -1,0 +1,86 @@
+{
+  "scope": "Manual ordinary only; B8L2 primary, D10 sensitivity; origins all/new/v1 separate",
+  "semi": "Not evaluated: frozen personal-Q supports are Manual only.",
+  "target_use": "Target Q used only for evaluation and retrospective Q<50 subgroup, never feature construction.",
+  "relative": "Mean of admitted out-of-building own Q minus same-image other-admitted-worker mean; singleton peer tasks missing.",
+  "source": "Primary matched-history observed variant uses only history images on which person contributed, matching own-source image budget. All-source expanded variant uses every strict-majority history image, including peer-only images where person is absent. Both exclude predicted person from peers.",
+  "lowtail": "Within held-out building/origin/metric, bottom quartile of unique eligible persons external task-relative Q; no target Q selection.",
+  "clipping": "Fixed [0,100], no tuning.",
+  "comparison": "Independent frozen-support calculation, not reproduction of inaccessible 47 MiB newPro package or its 11.116 claim.",
+  "weighting": "Split, fixed worker across m, worker, overlapping group, image, building equal; minimum-majority and maximum-history separately.",
+  "sources": {
+    "research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "research/same_room/same_room_v2_prediction_20261019/training_admission.csv": "7c14cf1cda8a8568cb1838d7312e169ac1020d8c4e03e4f709caec0bb21953b7",
+    "research/same_room/same_room_multiview_20261020/individual_features.csv.gz": "b121a873603820c8fce14998c9f5005d9c21bdd0921992c49de7114bf69b3d57",
+    "research/same_room/same_room_multiview_20261020/GROUPS.json": "f87b2170098f8c9b2c7383b187f20f971d6ea9c034bed03ba4b663458e620491",
+    "research/same_room/same_room_multiview_20261020/splits.csv.gz": "0d11104d7b0d7c3180f86e65c61ebb33830aa6eb86dacbe16747ad1655d87acf"
+  },
+  "checks": [
+    {
+      "metric": "B8L2",
+      "origin": "all",
+      "input_rows": 140357,
+      "supported_rows": 140357,
+      "missing_rows": 0,
+      "max_baseline_difference": 2.842170943040401e-14,
+      "max_source_difference": 5.684341886080802e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 1
+    },
+    {
+      "metric": "B8L2",
+      "origin": "v1",
+      "input_rows": 14870,
+      "supported_rows": 14870,
+      "missing_rows": 0,
+      "max_baseline_difference": 1.4210854715202004e-14,
+      "max_source_difference": 2.842170943040401e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 4
+    },
+    {
+      "metric": "B8L2",
+      "origin": "new",
+      "input_rows": 85089,
+      "supported_rows": 85089,
+      "missing_rows": 0,
+      "max_baseline_difference": 2.842170943040401e-14,
+      "max_source_difference": 5.684341886080802e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 1
+    },
+    {
+      "metric": "D10",
+      "origin": "all",
+      "input_rows": 140357,
+      "supported_rows": 140357,
+      "missing_rows": 0,
+      "max_baseline_difference": 2.842170943040401e-14,
+      "max_source_difference": 5.684341886080802e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 4
+    },
+    {
+      "metric": "D10",
+      "origin": "v1",
+      "input_rows": 14870,
+      "supported_rows": 14870,
+      "missing_rows": 0,
+      "max_baseline_difference": 1.4210854715202004e-14,
+      "max_source_difference": 2.842170943040401e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 4
+    },
+    {
+      "metric": "D10",
+      "origin": "new",
+      "input_rows": 85089,
+      "supported_rows": 85089,
+      "missing_rows": 0,
+      "max_baseline_difference": 2.842170943040401e-14,
+      "max_source_difference": 5.684341886080802e-14,
+      "max_actual_difference": 1.4210854715202004e-14,
+      "clipped_rows": 9
+    }
+  ]
+}

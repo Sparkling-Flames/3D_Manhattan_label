@@ -1,0 +1,10 @@
+{
+  "input": "research/same_room/same_room_multiview_20261020/structure_transfer/transfer_predictions.csv.gz",
+  "input_sha256": "b912489d9a0e58401ca87b3450d13b5fffeb1177b65855460bab28bf8326463e",
+  "input_rows": 11153,
+  "duplicate_metric_building_image_worker": 0,
+  "source_commit": "3391bc6ba241172e06fa114728b4c58d40558b3f",
+  "estimand": "Worker-average within target image, image-average within building, equal building mean paired absolute-error difference.",
+  "bootstrap": "20,000 bootstrap resamples of 7 building means; seed 20261021; descriptive only, not independent held-out confirmation.",
+  "scope": "Existing all available source histories. No re-enumeration of strict-majority information budgets; does not verify the inaccessible new Pro package."
+}

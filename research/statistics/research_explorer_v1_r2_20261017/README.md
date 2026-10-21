@@ -180,3 +180,9 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 `index.html#module=mechanisms`按[机制表接口](MECHANISM_INTERFACE_20261021.json)读取16张已保存表：难度5张、质量2张、融合5张、同房4张。每表保留原包的行粒度、字段、来源及分母，能够在原研究台筛选、查看详情和导出；有图或对象标识的行可以关联原逐图入口。原图及其它机制图链接至[六站总览](../review_progress_20261021/index.html)。G046 A/B同角是人工确认的直接关系，G057局部预测未优于恒定0.5基线；这些结论不作全局同房推断。新机制表是保存分析的展示，不会因页面筛选重跑评分、融合或预测。
 
 两组新入口使v2离线构建共121张表（原87张、分类18张、机制16张）。构建器核对新表的声明字段及行数，再写入既有`v2-data/`分片。浏览器点击验收限制同上。
+
+## 2026-10-21 同房独立补算接入
+
+[同房独立补算 · 10/21](index.html#module=same_room_review)新增13页签，读取[源包](../../same_room/same_room_independent_followup_20261021/README.md)固定提交 `e83286b7814afc614253aa392050e9a3851ae058` 的保存结果。研究台121→134表，概览8→9节；显示接口见 [SAME_ROOM_REVIEW_INTERFACE_20261021.json](SAME_ROOM_REVIEW_INTERFACE_20261021.json)。
+
+仓库根执行 `python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019`。快照仍为 `v2_integrated_analysis_20261019`，生成数据仅本地使用。校准、结构、人数选择及D10敏感性按各自支持查看，不重跑研究、评分或融合。G015保持现有固定GT；Pro新团队和47.1MiB包仍未复现。低尾、完整率、反例及未接明细见源包和[本轮回执](INTEGRATION_RECEIPT_20261021_SAME_ROOM.md)。

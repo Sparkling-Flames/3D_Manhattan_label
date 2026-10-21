@@ -22,6 +22,7 @@ const modules={
  same_room:['同房比较','基于已有关系与可比范围，比较同成员跨视角表现；未知不当作异房。',[
   ['原答图对','same_room__endpoint_pairs'],['同成员同顺序过程','same_room__process_paired_prefixes'],['配对过程汇总','same_room__consumer_pair_summary'],['关系组与覆盖','statistics__room_group_registry'],['候选与过程接入','same_room__same_room_endpoint_integration']]],
  multiview:['同房多视角叠加','沿相同人员或相同保存团队比较不同视角，原答与团队评分分别显示。',[]],
+ same_room_review:['同房独立补算 · 10/21','个人Q校准、结构迁移增量与源图人数选择；保留支持、低尾、缺失和反例，不重新融合。',[]],
  time:['时间与Semi','来源时间、同目标时间、兼容净改善与确认纠错分别解释。',[
   ['Semi初始化与最终','workers__semi_initialization_scores'],['来源活动时间','quality__shared_records'],['同目标审计时间','quality__shared_records'],['确认错误与未知','workers__semi_correction_evidence'],['初始化来源','workers__initialization_evidence'],['时间缺失','statistics__time_missing_records']]],
  data:['数据探索','按对象粒度查看作答、图片、人员、团队与过程节点，筛选和来源保持可追溯。',[

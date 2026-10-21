@@ -1,5 +1,11 @@
 # 研究分析交付入口
 
+## 2026-10-21：同房独立补算与研究台接入
+
+- [独立补算源包](research/same_room/same_room_independent_followup_20261021/README.md)：固定PR #19头，校准、结构和人数选择结果原样保留。
+- [研究台13表模块](research/statistics/research_explorer_v1_r2_20261017/index.html#module=same_room_review)：补UTF-8、CATALOG与消费接口，121→134表；快照不变，G015固定GT，不重跑研究。
+- [接入回执](research/statistics/research_explorer_v1_r2_20261017/INTEGRATION_RECEIPT_20261021_SAME_ROOM.md)：验证与浏览器状态、限制及交付范围。
+
 ## 2026-10-20：人员类别、类别块与同房多视角接续
 
 - [人员可互换性 Pro 包归档](research/workers/personnel_interchangeability_20261020/README_ZH.md)：保留冻结研究及适用范围，不将候选类别视为任意互换保证。

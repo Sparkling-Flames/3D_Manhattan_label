@@ -1,0 +1,339 @@
+{
+  "schema": "same_room_review_display_v1",
+  "data_release": "v2",
+  "snapshot_id": "v2_integrated_analysis_20261019",
+  "display_revision": "same_room_review_20261021_r1",
+  "source_package": "research/same_room/same_room_independent_followup_20261021",
+  "source_commit": "e83286b7814afc614253aa392050e9a3851ae058",
+  "module": {
+    "id": "same_room_review",
+    "title": "同房独立补算 · 10/21",
+    "description": "个人Q校准、结构迁移增量与源图人数选择；保留建筑/图/组支持、低尾与缺失，不重新融合。",
+    "tabs": [
+      [
+        "质量校准汇总",
+        "same_room_review__calibration_summary"
+      ],
+      [
+        "校准支持核对",
+        "same_room_review__calibration_support"
+      ],
+      [
+        "逐建筑校准",
+        "same_room_review__calibration_buildings"
+      ],
+      [
+        "配对建筑比较",
+        "same_room_review__calibration_paired"
+      ],
+      [
+        "留一楼敏感性",
+        "same_room_review__calibration_lobo"
+      ],
+      [
+        "结构迁移汇总",
+        "same_room_review__structure_summary"
+      ],
+      [
+        "结构逐建筑",
+        "same_room_review__structure_buildings"
+      ],
+      [
+        "结构逐图",
+        "same_room_review__structure_images"
+      ],
+      [
+        "人数选择汇总",
+        "same_room_review__stopping_summary"
+      ],
+      [
+        "人数选择 Pareto",
+        "same_room_review__stopping_pareto"
+      ],
+      [
+        "人数选择逐组",
+        "same_room_review__stopping_groups"
+      ],
+      [
+        "D10 人数敏感性",
+        "same_room_review__stopping_d10_summary"
+      ],
+      [
+        "D10 Pareto",
+        "same_room_review__stopping_d10_pareto"
+      ]
+    ]
+  },
+  "tables": [
+    {
+      "id": "same_room_review__calibration_summary",
+      "source": "research/same_room/same_room_independent_followup_20261021/calibration/summary.csv",
+      "rows": 252,
+      "columns": [
+        "metric",
+        "origin",
+        "stage",
+        "subset",
+        "method",
+        "mae",
+        "bias",
+        "buildings",
+        "images"
+      ]
+    },
+    {
+      "id": "same_room_review__calibration_support",
+      "source": "research/same_room/same_room_independent_followup_20261021/calibration/support_checks.csv",
+      "rows": 6,
+      "columns": [
+        "metric",
+        "origin",
+        "input_rows",
+        "supported_rows",
+        "missing_rows",
+        "max_baseline_difference",
+        "max_source_difference",
+        "max_actual_difference",
+        "clipped_rows"
+      ]
+    },
+    {
+      "id": "same_room_review__calibration_buildings",
+      "source": "research/same_room/same_room_independent_followup_20261021/calibration/building_metrics.csv",
+      "rows": 1624,
+      "columns": [
+        "metric",
+        "origin",
+        "building",
+        "method",
+        "mae",
+        "bias",
+        "images",
+        "stage",
+        "subset"
+      ]
+    },
+    {
+      "id": "same_room_review__calibration_paired",
+      "source": "research/same_room/same_room_independent_followup_20261021/calibration/paired_building_comparisons.csv",
+      "rows": 232,
+      "columns": [
+        "metric",
+        "origin",
+        "stage",
+        "subset",
+        "building",
+        "half_blend",
+        "observed_peer_plus_relative_clipped",
+        "out_of_building_person",
+        "peer_plus_relative_clipped",
+        "peer_plus_relative_unclipped",
+        "peer_source_only",
+        "same_person_source",
+        "calibration_minus_own_source",
+        "calibration_minus_half_blend",
+        "observed_calibration_minus_own_source",
+        "observed_calibration_minus_half_blend"
+      ]
+    },
+    {
+      "id": "same_room_review__calibration_lobo",
+      "source": "research/same_room/same_room_independent_followup_20261021/calibration/leave_one_building_out_sensitivity.csv",
+      "rows": 232,
+      "columns": [
+        "metric",
+        "origin",
+        "stage",
+        "subset",
+        "omitted_building",
+        "remaining_buildings",
+        "calibration_minus_own_source",
+        "observed_calibration_minus_own_source"
+      ]
+    },
+    {
+      "id": "same_room_review__structure_summary",
+      "source": "research/same_room/same_room_independent_followup_20261021/structure/summary.csv",
+      "rows": 8,
+      "columns": [
+        "metric",
+        "target_records",
+        "images",
+        "buildings",
+        "workers",
+        "history_n_min",
+        "history_n_max",
+        "own_source_mae",
+        "source_peers_mae",
+        "outside_history_mae",
+        "own_gain_vs_source_peers",
+        "positive_buildings",
+        "tied_buildings",
+        "negative_buildings",
+        "leave_one_building_gain_min",
+        "leave_one_building_gain_max",
+        "descriptive_bootstrap_lower",
+        "descriptive_bootstrap_upper"
+      ]
+    },
+    {
+      "id": "same_room_review__structure_buildings",
+      "source": "research/same_room/same_room_independent_followup_20261021/structure/building_errors.csv",
+      "rows": 56,
+      "columns": [
+        "metric",
+        "building",
+        "error",
+        "baseline_error",
+        "other_source_error",
+        "own_gain_vs_source_peers",
+        "own_gain_vs_outside_history"
+      ]
+    },
+    {
+      "id": "same_room_review__structure_images",
+      "source": "research/same_room/same_room_independent_followup_20261021/structure/image_errors.csv",
+      "rows": 352,
+      "columns": [
+        "metric",
+        "building",
+        "image",
+        "error",
+        "baseline_error",
+        "other_source_error"
+      ]
+    },
+    {
+      "id": "same_room_review__stopping_summary",
+      "source": "research/same_room/same_room_independent_followup_20261021/stopping/summary.csv",
+      "rows": 1008,
+      "columns": [
+        "panel",
+        "horizon",
+        "policy",
+        "support",
+        "history_budget",
+        "weighting",
+        "attempts",
+        "groups",
+        "buildings",
+        "targets",
+        "chosen_fraction",
+        "mean_k",
+        "target_complete_fraction",
+        "target_valid",
+        "target_q_mean",
+        "target_q10",
+        "target_below80_fraction",
+        "paired_terminal_n",
+        "loss_to_terminal_mean",
+        "loss_to_terminal_gt2_fraction",
+        "loss_to_terminal_gt5_fraction",
+        "source_fullcurve_fraction"
+      ]
+    },
+    {
+      "id": "same_room_review__stopping_pareto",
+      "source": "research/same_room/same_room_independent_followup_20261021/stopping/pareto.csv",
+      "rows": 504,
+      "columns": [
+        "panel",
+        "horizon",
+        "weighting",
+        "history_budget",
+        "policy",
+        "mean_k",
+        "target_q_mean",
+        "nondominated",
+        "dominated_by"
+      ]
+    },
+    {
+      "id": "same_room_review__stopping_groups",
+      "source": "research/same_room/same_room_independent_followup_20261021/stopping/group_summary.csv",
+      "rows": 3360,
+      "columns": [
+        "panel",
+        "horizon",
+        "policy",
+        "support",
+        "history_budget",
+        "group_id",
+        "building",
+        "attempts",
+        "groups",
+        "buildings",
+        "targets",
+        "chosen_fraction",
+        "mean_k",
+        "target_complete_fraction",
+        "target_valid",
+        "target_q_mean",
+        "target_q10",
+        "target_below80_fraction",
+        "paired_terminal_n",
+        "loss_to_terminal_mean",
+        "loss_to_terminal_gt2_fraction",
+        "loss_to_terminal_gt5_fraction",
+        "source_fullcurve_fraction"
+      ]
+    },
+    {
+      "id": "same_room_review__stopping_d10_summary",
+      "source": "research/same_room/same_room_independent_followup_20261021/stopping/d10_sensitivity/summary.csv",
+      "rows": 1008,
+      "columns": [
+        "panel",
+        "horizon",
+        "policy",
+        "support",
+        "history_budget",
+        "weighting",
+        "attempts",
+        "groups",
+        "buildings",
+        "targets",
+        "chosen_fraction",
+        "mean_k",
+        "target_complete_fraction",
+        "target_valid",
+        "target_q_mean",
+        "target_q10",
+        "target_below80_fraction",
+        "paired_terminal_n",
+        "loss_to_terminal_mean",
+        "loss_to_terminal_gt2_fraction",
+        "loss_to_terminal_gt5_fraction",
+        "source_fullcurve_fraction"
+      ]
+    },
+    {
+      "id": "same_room_review__stopping_d10_pareto",
+      "source": "research/same_room/same_room_independent_followup_20261021/stopping/d10_sensitivity/pareto.csv",
+      "rows": 504,
+      "columns": [
+        "panel",
+        "horizon",
+        "weighting",
+        "history_budget",
+        "policy",
+        "mean_k",
+        "target_q_mean",
+        "nondominated",
+        "dominated_by"
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "path": "research/same_room/same_room_independent_followup_20261021/review/ADOPTED_INTERPRETATION.json",
+      "label": "G015 采用口径（固定GT）"
+    }
+  ],
+  "limits": [
+    "只读展示已保存结果；不重跑校准、人数选择、结构复核或融合。",
+    "Manual 为主，OOS 排除、门洞单列；支持 7栋/44图/55人。",
+    "G015 现有GT仍为正确参考，不修改GT/原答/分数/排名。",
+    "PR #19 为独立补算；Pro 47.1MiB 包及新团队未复现。"
+  ]
+}

@@ -21,6 +21,7 @@ EXTRA = EXPLORER / 'DISPLAY_TABLES_20261020.json'
 MULTIVIEW = ROOT / 'research/same_room/same_room_multiview_20261020'
 TAXONOMY = ROOT / 'research/workers/personnel_taxonomy_20261021'
 MECHANISMS = PAGE / 'MECHANISM_INTERFACE_20261021.json'
+SAME_ROOM_REVIEW = PAGE / 'SAME_ROOM_REVIEW_INTERFACE_20261021.json'
 MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
                     'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
                     'background_buildings.csv']
@@ -659,9 +660,20 @@ def build():
         if len(mechanisms[spec['id']]) != spec['rows']:
             raise ValueError('research mechanism row count drift: ' + spec['id'])
     tables.update(mechanisms)
+    review_interface = read(SAME_ROOM_REVIEW)
+    if (review_interface['schema'] != 'same_room_review_display_v1'
+            or review_interface['data_release'] != 'v2'
+            or review_interface['snapshot_id'] != SNAPSHOT):
+        raise ValueError('same-room review display interface drift')
+    review, review_provenance = load_declared_tables(review_interface)
+    for spec in review_interface['tables']:
+        if len(review[spec['id']]) != spec['rows']:
+            raise ValueError('same-room review row count drift: ' + spec['id'])
+    tables.update(review)
     source_map = dict(extra_provenance)
     source_map.update(taxonomy_provenance)
     source_map.update(mechanism_provenance)
+    source_map.update(review_provenance)
     source_map.update({f'same_room_multiview__{Path(f).stem}':
                        f'{MULTIVIEW.relative_to(ROOT).as_posix()}/{f}' for f in MULTIVIEW_TABLES})
     metadata = [display_table(PAGE/'v2-data', name, rows,
@@ -715,6 +727,11 @@ def build():
                     ('逐人库存','statistics__worker_inventory'),('排除归因','workers__exclusion_evidence'),
                     ('重叠限制原因','statistics__exclusion_reason_hits'),('逐项需求覆盖','statistics__requirements_coverage')]
     }
+    modules[review_interface['module']['id']] = [
+        (title, table_id) for title, table_id in review_interface['module']['tabs']]
+    review_missing = [tid for _, tid in review_interface['module']['tabs'] if tid not in tables]
+    if review_missing:
+        raise ValueError('missing same-room review tables: ' + ', '.join(review_missing))
     for module, tabs in EXTRA_MODULE_TABS.items():
         modules[module].extend(tabs)
     modules={key:[tab for tab in tabs if tab[1] in tables] for key,tabs in modules.items()}
@@ -722,7 +739,9 @@ def build():
     if missing:
         raise ValueError('missing display tables: ' + ', '.join(missing))
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
-          documents=[dict(path='research/statistics/v2_integrated_analysis_20261019/COVERAGE.json',content=coverage),
+          documents=[dict(path=spec['path'], content=read(ROOT / spec['path']))
+                     for spec in review_interface['documents']] + [
+                     dict(path='research/statistics/v2_integrated_analysis_20261019/COVERAGE.json',content=coverage),
                      dict(path=SAME_ROOM.relative_to(ROOT).as_posix()+'/CONSUMER_INTERFACE.json',content=read(SAME_ROOM/'CONSUMER_INTERFACE.json')),
                      dict(path='research/statistics/v2_evidence_audit_20261019/COVERAGE.json',content=read(EVIDENCE/'COVERAGE.json'))]))
     summary = pack_resources(light,evidence)
@@ -781,6 +800,21 @@ def build():
              counterexample='57 万任务未全部重跑、1,808 反向候选未全部重训、10 张重建表压缩 SHA 与历史记录不同。',
              tables=[dict(id='fusion__audit_failure_denominators', label='失败与分母')]),
     ])
+    sections.append(dict(
+        title='同房独立补算（2026-10-21）',
+        finding=('同预算建筑等权个人Q校准 MAE 12.3637→11.1447（6/7栋改善）；'
+                 '本人同房历史比同源他人多保留约0.096个角点、9°未匹配少1.10个百分点；'
+                 '共同完整支持上，源曲线 within-2 平均6.58人/Q88.59，固定7人为7人/Q87.43。'),
+        support=('校准：7栋/44图/55人；人数：6组/6栋、共同完整1,160/1,536条真实路径；'
+                 '源记录共124,924保存节点；Manual为主；'
+                 '独立补算；Pro 47.1MiB包未复现。'),
+        counterexample=('VFuaQ6m2Qom校准+0.362变差；目标Q<50被高估（25.72 vs 23.44）；'
+                        'within-2低尾80.10低于固定7的81.64、完整率98.44% vs 98.77%；'
+                        'G015理论结构未改GT；定位/范围不跨视角迁移。'),
+        tables=[dict(id='same_room_review__calibration_summary', label='质量校准汇总'),
+                dict(id='same_room_review__structure_summary', label='结构迁移汇总'),
+                dict(id='same_room_review__stopping_summary', label='人数选择汇总'),
+                dict(id='same_room_review__stopping_d10_summary', label='D10人数敏感性')]))
     write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 
