@@ -1,0 +1,56 @@
+{
+  "package": "same_room_quality_20261021/prior_integration",
+  "main_commit": "561584c8f64d5349d497ec1c6e91f1aeb4bbd7c9",
+  "pr19_fixed_head": "e83286b7814afc614253aa392050e9a3851ae058",
+  "pr19_in_main_at_retrieval": false,
+  "prior_47MiB_pro_archive_recovered": false,
+  "primary_report": "REPORT_ZH.md",
+  "reproduction": "REPRODUCE.md",
+  "field_contract": "FIELD_CONTRACT.json",
+  "old_new_inventory": "RECOVERY_AND_CHANGELOG.csv",
+  "condition": "ordinary_manual",
+  "frozen_input_rows_reused": 124924,
+  "new_native_geometry_calls": 1678,
+  "new_score_calls": 0,
+  "new_native_prefix_references": 2094,
+  "new_native_path_orders": 60,
+  "tables": {
+    "primary_summary": "stopping_summary.csv",
+    "group_actual_history": "stopping_group_actual_m.csv",
+    "target_actual_history": "stopping_target_actual_m.csv.gz",
+    "exact_selected_teams": "decisions_whole_maxhistory.csv.gz",
+    "support": "stopping_support.csv",
+    "dot_protocol_bridge": "dot_rule_bridge.csv",
+    "source_acquisition_projects": "source_acquisition_project_cost.csv.gz",
+    "source_acquisition_groups": "source_acquisition_group_actual_m.csv",
+    "source_acquisition_summary": "source_acquisition_summary.csv",
+    "native_online_summary": "online_geometry_summary.csv",
+    "native_online_target": "online_geometry_target.csv",
+    "native_online_decisions": "online_geometry_decisions.csv",
+    "native_online_transitions": "online_geometry_transitions.csv",
+    "native_online_geometry": "online_geometry_prefixes.json.gz",
+    "native_online_orders": "online_geometry_orders.json"
+  },
+  "figures": [
+    "stopping_quality_tail.png",
+    "stopping_cost_source_acquisition.png",
+    "online_geometry_stable_wrong_G046_21.png",
+    "online_G046_21_original_annotations.png"
+  ],
+  "visual_cases": [
+    {
+      "case_id": "G04621_stable_geometry_orientation",
+      "manifest": "online_G046_21_visual_manifest.json",
+      "metrics": "online_G046_21_case_evidence.csv",
+      "geometry": "online_geometry_prefixes.json.gz",
+      "release_original_viewed": true,
+      "human_rejudgment_requested": false
+    }
+  ],
+  "optional_geometry_reuse": [
+    "G205 three views, all seven common people: filter group_id MV0008 and k 7",
+    "G047 supported four-view common seven: filter group_id MV0002S3 and k 7"
+  ],
+  "files_not_needed_in_delivery": ["run.log", "online_run.log", "online_run_reuse.log", "plot.log", "__pycache__"],
+  "scope_note": "The source original Pro archive is missing. Reconstruction and new geometry experiments are explicitly identified, and do not substitute for root's new-team/replacement reconstruction. No ordinary-Manual result is relabeled as validated Semi or doorway performance."
+}
