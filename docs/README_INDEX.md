@@ -1,10 +1,10 @@
 # HOHONET 文档入口
 
 - **整体研究主文档：** [研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)。统一人员、图片、质量、融合、人数/组合及同房关系；盲信、个人筛除、scope和难度继续保留独立用途。
-- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办、指定研究台线程任务和新分类两处修正；[同房后续Pro准备](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第9节尚未发起。
+- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办及研究台状态；新分类两处修正与表格接入已完成。[同房续研及独立审查](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第10节区分Pro报告与Dot PR；第11—12节重点补足均值/个人质量相似性，保留结构、选队与停止，附整合上轮包的Pro任务。
 - 对话接续辅助：[完整交接](thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md)，不替代模型与主题记录。
 
-- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类Pro已返回并完成关键独立复算，进入统计口径修正与采用收口，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类已完成统计修正、工作采用与接入；同房新返回及PR独立审查已更新，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
 
 - 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
 
@@ -257,7 +257,7 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 - 2026-10-19 新Pro类别组合研究：[前置数据与支持核查](../research/workers/personnel_composition_handoff_20261019/README.md)、[提示词](thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md)。整理工具 `tools/thesis_main/analysis/prepare_personnel_composition_handoff_20261019.py`，关键测试 `tests/test_personnel_composition_handoff_20261019.py`；此项为前置整理历史，后续组合研究已返回，最新状态见人员任务书。
 
-- 2026-10-19 类别组合返回后：[过程审查、变量覆盖与并行安排](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)。T/scope候选与直接替换验证分开；Semi及新非编辑已有条件实验。Pro拟负责直接互换性分型，Codex负责独立验收；新轮未发起，返回包未自动归档或接研究台。
+- 2026-10-21更新：[人员方法覆盖、组合研究与验收](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)。五域任选2—5域的正向探索、反向关系与结构分类并列；已补记真实替换学习、直接m2块学习和188候选/共同消融实验，八处相关归档在GitHub main。下一轮补五域子集、大团队、类别块及质量分项，本轮方法修订尚未推送。
 
 - 2026-10-20：[直接可互换人员分型Pro接续](thesis_main/Pro接续_直接可互换人员分型与条件细类_20261020.md)；[451对照独立核查与四例叠图](../research/workers/personnel_composition_followup_20261019/README.md)。前轮精简包归档`research/workers/personnel_composition_study_20261019/`；本轮工具`tools/thesis_main/analysis/personnel_composition_followup_20261019.py`。
 
