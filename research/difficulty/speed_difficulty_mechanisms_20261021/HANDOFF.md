@@ -1,5 +1,7 @@
 # 难度机制线交付
 
+本专题已完成2026-10-21收尾，采用结论与实际缺口见 [阶段定稿](../difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md)，下游定位接口见 [INTERPRETATION_INTERFACE.json](../difficulty_mechanisms_v2_20261020/INTERPRETATION_INTERFACE.json)。本次只补结果说明与接口，既有数表／代码未改、未重跑团队。特别澄清显式参考边夹角与原评分`dir`正交规整诊断的区别，分数分项解释交质量专题。下方验证记录保留其原轮执行身份。
+
 日期：2026-10-21。按统筹接续要求，只修改本难度主题及对应工具／测试；原Pro包只读。
 
 ## 发现和入口

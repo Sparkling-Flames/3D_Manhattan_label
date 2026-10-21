@@ -1,0 +1,300 @@
+{
+  "schema": "difficulty_interpretation_interface_v2_20261021_r1",
+  "status": "adopted_descriptive_conditions_and_cases; current_v2_topic_closed",
+  "purpose": "Quality and fusion integration: locate conditions, expressions and support; no new worker labels, difficulty score or formal protocol",
+  "data_release": "v2",
+  "primary_input": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "results_document": "research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md",
+  "join_contract": {
+    "record": "object_id; preserve worker_id, image_id, condition, origin, reference_id and eligibility",
+    "team": "pool_id + team_key, member_object_ids/member_workers; exact repeated team draws are not independent teams",
+    "image_conditions": "reference_id; reference traits depend on this exact target, not merely image_id",
+    "reference_comparisons": "Inherited formal quality and current difficulty-target binding; no reference replacement",
+    "gt_free_expression": "Non-OOS independent expression can include reference-problem rows; no restoration of quality/voting eligibility"
+  },
+  "claims": [
+    {
+      "id": "D01",
+      "adoption": "Condition association with expression simplification; not causal difficulty",
+      "condition": "ordinary Manual, formal current target, six effective reference turns",
+      "support": {
+        "images": 33,
+        "answers": 1023,
+        "person_condition_pairs_per_contrast": 47
+      },
+      "table": "research/difficulty/difficulty_mechanisms_v2_20261020/fixed_complexity_summary.csv",
+      "filter": {
+        "ref_turn5": 6
+      },
+      "values": [
+        {
+          "mechanism": "geometric_self_occlusion",
+          "images": 13,
+          "buildings": 9,
+          "reduction_rate_image_equal": 0.556605159546336,
+          "reduction_rate_building_equal": 0.5451716039951334
+        },
+        {
+          "mechanism": "plain_H0",
+          "images": 10,
+          "buildings": 7,
+          "reduction_rate_image_equal": 0.1071428571428571,
+          "reduction_rate_building_equal": 0.136734693877551
+        },
+        {
+          "mechanism": "short_edge_H0",
+          "images": 10,
+          "buildings": 7,
+          "reduction_rate_image_equal": 0.2978151260504201,
+          "reduction_rate_building_equal": 0.2815726290516206
+        }
+      ],
+      "paired_table": "research/difficulty/difficulty_mechanisms_v2_20261020/person_fixed6_conditions.csv",
+      "figure": "research/difficulty/difficulty_mechanisms_v2_20261020/fixed6_conditions.png",
+      "limit": "H is geometric self-occlusion under opaque solid-wall assumption; reduced is fewer effective turns than declared reference, not semantic omission truth"
+    },
+    {
+      "id": "D02",
+      "adoption": "Same-person response and same-image person differences at narrow/weak boundary cues",
+      "condition": "b8cTxDM8gDG-07 versus jtcxE69GiFV-13; each image has its own exact six-turn reference",
+      "support": {
+        "shared_people": 33,
+        "six_to_four": 23,
+        "six_to_five": 2,
+        "six_to_six": 8
+      },
+      "table": "research/difficulty/difficulty_mechanisms_v2_20261020/same_people_clear_curtain.csv",
+      "object_reference_zoom_manifest": "research/difficulty/difficulty_mechanisms_v2_20261020/overlay_evidence.json",
+      "figure": "research/difficulty/difficulty_mechanisms_v2_20261020/same_people_conditions_overlay.png",
+      "limit": "Different rooms, not controlled visibility intervention; photo cue interpretation is not a final semantic wall adjudication"
+    },
+    {
+      "id": "D03",
+      "adoption": "Common-target speed-mixture losses vary by structural condition",
+      "condition": "new ordinary Manual, n=5, four fast and one retained slow versus five slow; common images across worker domains",
+      "support": {
+        "common_images": 77,
+        "buildings": 19,
+        "planned_draws_per_image_per_domain": 4
+      },
+      "table": "research/difficulty/speed_difficulty_mechanisms_20261021/condition_summary.csv",
+      "filter": {
+        "scope": "common_domains",
+        "layer": "ordinary_manual",
+        "split": "mechanism"
+      },
+      "values": [
+        {
+          "domain": "above_peer_Q",
+          "mechanism": "H0_plain",
+          "images": 53,
+          "buildings": 16,
+          "comparisons": 212,
+          "scored_comparisons": 212,
+          "quality_difference": 0.9579523304596702,
+          "same_count": 1.0
+        },
+        {
+          "domain": "above_peer_Q",
+          "mechanism": "H0_short",
+          "images": 7,
+          "buildings": 5,
+          "comparisons": 28,
+          "scored_comparisons": 28,
+          "quality_difference": -9.688227529570984,
+          "same_count": 1.0
+        },
+        {
+          "domain": "above_peer_Q",
+          "mechanism": "H_positive",
+          "images": 17,
+          "buildings": 9,
+          "comparisons": 68,
+          "scored_comparisons": 64,
+          "quality_difference": -4.875864149518154,
+          "same_count": 0.5671296296296295
+        },
+        {
+          "domain": "allQ",
+          "mechanism": "H0_plain",
+          "images": 53,
+          "buildings": 16,
+          "comparisons": 212,
+          "scored_comparisons": 212,
+          "quality_difference": 1.0289913244339273,
+          "same_count": 0.97265625
+        },
+        {
+          "domain": "allQ",
+          "mechanism": "H0_short",
+          "images": 7,
+          "buildings": 5,
+          "comparisons": 28,
+          "scored_comparisons": 28,
+          "quality_difference": -6.505743628259191,
+          "same_count": 0.85
+        },
+        {
+          "domain": "allQ",
+          "mechanism": "H_positive",
+          "images": 17,
+          "buildings": 9,
+          "comparisons": 68,
+          "scored_comparisons": 62,
+          "quality_difference": 1.1707956069030236,
+          "same_count": 0.4282407407407407
+        }
+      ],
+      "sensitivity_table": "research/difficulty/speed_difficulty_mechanisms_20261021/fully_scored_common_summary.csv",
+      "figure": "research/difficulty/speed_difficulty_mechanisms_20261021/common_conditions.png",
+      "limit": "Same target images but different member sets and baseline levels across domains; missing quality is not zero; group building sets differ; not speed causal effect"
+    },
+    {
+      "id": "D04",
+      "adoption": "Historical overall/difficult Q, target individual Q and local team contribution are distinct",
+      "condition": "Actual four replaced fast/slow pairs only; fifth retained slow excluded",
+      "table": "research/difficulty/speed_difficulty_mechanisms_20261021/replacement_pairs_common_domains.csv",
+      "filter": {
+        "domain": "above_peer_Q"
+      },
+      "values": [
+        {
+          "mechanism": "H0_plain",
+          "overall_Q_gap": 0.0193825627120401,
+          "hard_Q_peer_gap": 0.5543563035218708,
+          "target_Q_gap": 0.138737742477813,
+          "turn_gap": -0.03515625
+        },
+        {
+          "mechanism": "H0_short",
+          "overall_Q_gap": -0.0930478575016288,
+          "hard_Q_peer_gap": 0.9676044677332,
+          "target_Q_gap": -5.217436340283069,
+          "turn_gap": 0.01875
+        },
+        {
+          "mechanism": "H_positive",
+          "overall_Q_gap": -0.069850734831315,
+          "hard_Q_peer_gap": 1.0131436385202734,
+          "target_Q_gap": 0.5249220932595282,
+          "turn_gap": -0.3587962962962963
+        }
+      ],
+      "record_table": "research/difficulty/speed_difficulty_mechanisms_20261021/actual_replacement_pairs.csv.gz",
+      "limit": "No new difficult-expert labels; inherited out-of-target-building histories, missing remains missing; repeated pair exposures not extra people"
+    },
+    {
+      "id": "D05",
+      "adoption": "Doorway extent/scale dispersion, separately from correctness",
+      "condition": "GT-free independent Manual expressions; one per worker/image, at least three persons/image",
+      "support": {
+        "ordinary_images": 216,
+        "doorway_images": 17,
+        "paired_people_each_layer_at_least_two_images": 51,
+        "greater_doorway_deviation_people": 42
+      },
+      "table": "research/difficulty/difficulty_mechanisms_v2_20261020/doorway_area_image_spread.csv",
+      "person_table": "research/difficulty/difficulty_mechanisms_v2_20261020/person_doorway_area_spread.csv",
+      "figure": "research/difficulty/difficulty_mechanisms_v2_20261020/doorway_area_spread.png",
+      "limit": "Area includes scale and localization; not confirmed scope disagreement or scope-response correctness"
+    }
+  ],
+  "cases": [
+    {
+      "id": "DC01",
+      "image": "UwV83HsGsw3-22",
+      "replicate": 0,
+      "condition": "manual",
+      "layer": "ordinary",
+      "mechanism": "two reference turns: 3 votes to 2, fixed threshold=3; six to four fused nodes",
+      "base_workers": [
+        "W110",
+        "W112",
+        "W114",
+        "W122",
+        "W130"
+      ],
+      "candidate_workers": [
+        "W102",
+        "W118",
+        "W126",
+        "W130",
+        "W134"
+      ],
+      "before_support_workers": [
+        "W112",
+        "W122",
+        "W130"
+      ],
+      "after_support_workers": [
+        "W102",
+        "W130"
+      ],
+      "figure": "research/difficulty/speed_difficulty_mechanisms_20261021/UwV83HsGsw3-22_members.png"
+    },
+    {
+      "id": "DC02",
+      "image": "B6ByNegPMKs-48",
+      "replicate": 0,
+      "condition": "manual",
+      "layer": "ordinary",
+      "mechanism": "all four nodes keep five votes; short-edge location sensitivity",
+      "reference_edge_angle_deg_before": 4.712,
+      "reference_edge_angle_deg_after": 40.792,
+      "figure": "research/difficulty/speed_difficulty_mechanisms_20261021/B6ByNegPMKs-48_members.png",
+      "limit": "Explicit reference-edge angle differs from native dir orthogonality regularity; quality decomposition owned by quality topic"
+    },
+    {
+      "id": "DC03",
+      "image": "pa4otMbVnkk-14",
+      "replicates": [
+        0,
+        1
+      ],
+      "condition": "manual",
+      "layer": "ordinary",
+      "mechanism": "same mixture ratio, Q98.625 versus53.062; three common members, two-person composition differs",
+      "figure": "research/difficulty/speed_difficulty_mechanisms_20261021/pa4otMbVnkk-14_teams.png",
+      "limit": "Not a single-member replacement attribution"
+    },
+    {
+      "id": "DC04",
+      "image": "b8cTxDM8gDG-17",
+      "condition": "manual",
+      "layer": "ordinary",
+      "mechanism": "H>0 counterexample: highQ 4F1S versus5S mean +14.54446387174758",
+      "table": "research/difficulty/speed_difficulty_mechanisms_20261021/common_image_effects.csv",
+      "filter": {
+        "domain": "above_peer_Q",
+        "image": "b8cTxDM8gDG-17"
+      },
+      "limit": "Direction counterexample only; no new local semantic mechanism adjudication"
+    }
+  ],
+  "case_source_contract": {
+    "design": "research/difficulty/speed_difficulty_mechanisms_20261021/case_design.json",
+    "support": "research/difficulty/speed_difficulty_mechanisms_20261021/local_support.csv",
+    "reference_offsets": "research/difficulty/speed_difficulty_mechanisms_20261021/case_reference_offsets.csv",
+    "teams": "research/difficulty/speed_difficulty_mechanisms_20261021/selected_teams.json.gz",
+    "references": "research/difficulty/speed_difficulty_mechanisms_20261021/selected_references.json",
+    "processed_records": "Join member_object_ids to primary_input",
+    "score_measurements": "research/difficulty/speed_difficulty_mechanisms_20261021/selected_measurements.json"
+  },
+  "adoption_limits": {
+    "manual": "Main condition evidence; new mixture cohort separate from old whole-expression cohort; counts not summed",
+    "semi": "18 allQ images /10 buildings, no highQ domain; do not transfer Manual mechanism statistics or fit personnel classes here",
+    "doorway": "HighQ mixture only3 images/2 buildings; no structural speed-mixture generalization",
+    "gt": "GT-problem expressions retained, correctness reference gates unchanged",
+    "time": "Inherited same-source active/reported labor cost only; no raw-log replay or actual parallel delivery inference"
+  },
+  "verification_this_closeout": "Read saved tables and manifests; check quoted values, links, exact case/member and support boundaries. No new model, fusion, scoring or code tests.",
+  "global_index_updates_for_coordinator": [
+    "research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md",
+    "research/difficulty/difficulty_mechanisms_v2_20261020/INTERPRETATION_INTERFACE.json"
+  ],
+  "remaining_substantive_gaps": [
+    "No full RGB boundary visibility/semantic necessary-detail annotation",
+    "No independent predictive validation of structural response on new workers/buildings",
+    "Sparse Semi highQ and doorway mechanism support"
+  ]
+}
