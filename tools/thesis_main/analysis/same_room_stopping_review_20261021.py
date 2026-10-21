@@ -53,8 +53,8 @@ def measure(part):
 def run(input_dir=INPUT, output_dir=OUTPUT, metric="B8L2", save_cases=False):
     output_dir.mkdir(parents=True, exist_ok=True)
     nodes = pd.read_csv(input_dir / 'replay_nodes.csv.gz', low_memory=False)
-    groups = {g['group_id']: g for g in json.load(open(input_dir/'REPLAY_GROUPS.json'))}
-    with gzip.open(input_dir/'REPLAY_ORDERS.json.gz', 'rt') as f:
+    groups = {g['group_id']: g for g in json.load(open(input_dir/'REPLAY_GROUPS.json', encoding='utf-8'))}
+    with gzip.open(input_dir/'REPLAY_ORDERS.json.gz', 'rt', encoding='utf-8') as f:
         orders = json.load(f)
     order_map = {(o['group_id'], o['replay']): o['workers'] for o in orders}
     assert nodes.request_id.is_unique

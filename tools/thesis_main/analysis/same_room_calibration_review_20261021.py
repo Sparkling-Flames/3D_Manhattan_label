@@ -55,7 +55,7 @@ def aggregate(rows):
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     path=ROOT/'research/statistics/v2_evidence_audit_20261019/records.json.gz'
-    raw=json.load(gzip.open(path,'rt'))['records']
+    raw=json.load(gzip.open(path,'rt',encoding='utf-8'))['records']
     d=pd.DataFrame([{**{k:r[k] for k in ['object_id','image_id','worker_id','building_id','condition','origin','is_oos','is_doorway','pool_analysis_eligible','quality_usable','quality_use','B8L2','D10']},'current_binding':r['binding_evidence']['chosen_target_id']==r['binding_evidence']['current_target_id']} for r in raw])
     admission=ROOT/'research/same_room/same_room_v2_prediction_20261019/training_admission.csv'
     gate=pd.read_csv(admission).set_index('object_id').training_allowed
@@ -65,7 +65,7 @@ def main():
     assert not d.duplicated(['image_id','worker_id']).any()
     p=pd.read_csv(BASE/'individual_features.csv.gz')
     split=pd.read_csv(BASE/'splits.csv.gz').set_index('split_id')
-    groups={g['group_id']:g for g in json.loads((BASE/'GROUPS.json').read_text())}
+    groups={g['group_id']:g for g in json.loads((BASE/'GROUPS.json').read_text(encoding='utf-8'))}
     outputs=[];checks=[]
     for (metric,origin),part in p.groupby(['metric','origin'],sort=False):
         records=d[d[metric].notna() & (True if origin=='all' else d.origin.eq(origin))]
