@@ -8,7 +8,7 @@ This is an independent analysis of the repository's **124,924 actual replay node
 - For each strict-majority source-view combination and held-out target, choose the earliest evaluable prefix whose source mean quality is within **0, 1, 2 or 5 points** of the maximum source mean quality over that source curve. All selected source views must be evaluable at a candidate prefix. No available source prefix means no choice, not a target-informed fallback.
 - These are **retrospective source-reference-informed rules**, not online no-ground-truth stopping. They inspect the entire source curve. The cost is target prefix workers only; **source reference establishment, source curve acquisition and their time are not counted**.
 - Fixed budgets are prespecified at 1, 3, 5, 7, 9, 12, 16, 20 and 30, plus terminal pool. Each budget is capped to the available pool and horizon, so all policies use the exact same groups and attempted cases. k=2 is excluded because the source replay defers two-person sorting.
-- `minimum_majority` and `maximum_history` are reported separately. `all_m_pooled` is a combination-weighted sensitivity, not an equivalent history budget. Actual source-view counts appear in `target_summary.csv.gz` and `support.csv`.
+- `minimum_majority` and `maximum_history` are reported separately. `all_m_pooled` is a combination-weighted sensitivity, not an equivalent history budget. Actual source-view counts appear in `target_summary.csv` and `support.csv`.
 - `all_attempts` preserves missing outcomes and reports completeness. Its mean Q is available-case, so a quality difference alone is not a fully paired comparison. `common_complete` requires every candidate prefix on **all group views** to be complete, invariant across policies and history budgets. It is a conditional diagnostic, not an estimate for discarded paths.
 - Equal-group estimates first average target-level summaries equally within group. Equal-building estimates then average groups equally within each building, then buildings equally. Weighted `target_q10` is an **average of target-level 10th percentiles**, not a pooled 10th percentile. Case-weighted summaries are also retained.
 - Split-target-path cases are repeated evaluations of the same paths; they are not independent rooms. Coverage subsets overlap and are not additional independently discovered rooms. Thresholds were not selected by held-out target outcomes; all four are reported. Pareto flags are descriptive on the prespecified comparison set, not held-out policy optimization.
@@ -43,7 +43,7 @@ The D10 source rule is recomputed independently, with unchanged prespecified thr
 ## Artifacts and reproduction
 
 - `summary.csv`: support, history budget, panel, horizon, policy and weighting summaries.
-- `group_summary.csv`, `target_summary.csv.gz`: hierarchical audit details.
+- `group_summary.csv`, `target_summary.csv`: hierarchical audit details.
 - `support.csv`: source-view budgets and common-complete path counts.
 - `pareto.csv`: mean cost/quality dominance on common-complete supports only.
 - `MANIFEST.json`: input hashes and analysis contract; `VALIDATION.json`: executed checks.
@@ -59,3 +59,6 @@ python -m pytest tests/test_same_room_stopping_review_20261021.py -q
 
 Full policy-case export is reproducible with `--save-cases` and is intentionally not published by default. Seven focused tests passed using the available recovered Python environment. An initial exhaustive baseline export exceeded memory; the final compact prespecified comparison completed successfully. Existing inputs and production code were not modified.
 
+
+
+文件布局补充：当前关键明细使用普通 CSV；原 .gz 文件仅保留原交付身份。新读取入口见 research/statistics/archive_layout_20261021/README.md。本次转换不改变指标或样本。

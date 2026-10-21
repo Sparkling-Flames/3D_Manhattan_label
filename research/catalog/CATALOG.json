@@ -190,6 +190,10 @@
       "page_path": "docs/thesis_main/topics/quality/README.md",
       "current_basis": [
         {
+          "text": "当前分析文件直接可用：评分引擎源码目录、PR19普通CSV与历史ZIP盘点",
+          "path": "research/statistics/archive_layout_20261021/README.md"
+        },
+        {
           "text": "2026-10-21：画像低尾、近分异形与组合质量解释；接收诊断成果，B8L2/D10与N1状态不变",
           "path": "research/quality/v2_profile_combo_quality_20261021/README.md"
         },
@@ -540,6 +544,10 @@
       "description": "同房直接关系证据、共同人员、质量/融合曲线和迁移比较。",
       "page_path": "docs/thesis_main/topics/same_room/README.md",
       "current_basis": [
+        {
+          "text": "当前分析文件直接可用：评分引擎源码目录、PR19普通CSV与历史ZIP盘点",
+          "path": "research/statistics/archive_layout_20261021/README.md"
+        },
         {
           "text": "2026-10-21：同房局部实体对应与人员观测；G046两端同角获用户确认，G057预测优势未成立",
           "path": "research/same_room/same_room_multiview_20261020/local_features_20261021/README.md"
@@ -11244,6 +11252,24 @@
         "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
         "research/statistics/review_progress_20261021/index.html"
       ]
+    },
+    {
+      "id": "MAT-direct-analysis-files-20261021",
+      "title": "当前分析文件直接可用：第一批整理",
+      "theme": "statistics",
+      "type": "文件组织与运行入口修复",
+      "date": "20261021",
+      "source_path": "research/statistics/archive_layout_20261021/README.md",
+      "current_path": "research/statistics/archive_layout_20261021/README.md",
+      "source": "用户要求当前关键分析文件不以ZIP交付",
+      "adoption_status": "评分/GT不变；普通目录作为当前运行入口，旧归档保留",
+      "verification_status": "13文件哈希、直接目录测试、11队原生评分和普通CSV内容一致性",
+      "availability": "普通仓库文件，不需要解包",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine_manifest.json",
+        "research/statistics/archive_layout_20261021/PLAIN_TABLES.json"
+      ]
     }
   ]
 }
+
