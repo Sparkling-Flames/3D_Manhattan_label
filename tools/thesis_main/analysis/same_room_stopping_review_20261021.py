@@ -133,7 +133,7 @@ def run(input_dir=INPUT, output_dir=OUTPUT, metric="B8L2", save_cases=False):
                                       targets=part.target_image.nunique(),target_valid=int(part.target_q.notna().sum())))
     summary=pd.DataFrame(summaries); summary.to_csv(output_dir/'summary.csv',index=False)
     pd.DataFrame(group_summaries).to_csv(output_dir/'group_summary.csv',index=False)
-    pd.DataFrame(target_summaries).to_csv(output_dir/'target_summary.csv.gz',index=False)
+    pd.DataFrame(target_summaries).to_csv(output_dir/'target_summary.csv',index=False)
     pareto=[]
     for key, p in summary[summary.support.eq('common_complete')].groupby(['panel','horizon','weighting','history_budget']):
         for row in p.itertuples():

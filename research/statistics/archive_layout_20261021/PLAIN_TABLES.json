@@ -1,0 +1,130 @@
+[
+  {
+    "source_pr": 19,
+    "source_commit": "e83286b7814afc614253aa392050e9a3851ae058",
+    "source_path": "research/same_room/same_room_independent_followup_20261021/calibration/worker_targets.csv.gz",
+    "gzip_sha256": "d41f4112df7765bd4a1c3e3d5f3abb55986c1e4c945313bd3a83b190370069de",
+    "decompressed_sha256": "e07376fa15133f6bd1b59464829482b1f880c2b6f7c3bb2d2d3637e0717d1bd0",
+    "rows": 93660,
+    "header": [
+      "metric",
+      "origin",
+      "group_id",
+      "building",
+      "target_image",
+      "worker_id",
+      "m",
+      "N",
+      "method",
+      "mae",
+      "bias",
+      "actual",
+      "relative"
+    ],
+    "plain_files": [
+      {
+        "path": "research/same_room/same_room_independent_followup_20261021/calibration/worker_targets/B8L2.csv",
+        "rows": 46830,
+        "bytes": 8435801,
+        "sha256": "48eda6c282033b309029f718e315e3151a93dcadb5310a4ccfac7f2c83451cb1"
+      },
+      {
+        "path": "research/same_room/same_room_independent_followup_20261021/calibration/worker_targets/D10.csv",
+        "rows": 46830,
+        "bytes": 8389693,
+        "sha256": "10e24335399bbaa3da62be602a59a072626f16a0694d25ea80db651299fe78d5"
+      }
+    ],
+    "cell_strings_unchanged": true
+  },
+  {
+    "source_pr": 19,
+    "source_commit": "e83286b7814afc614253aa392050e9a3851ae058",
+    "source_path": "research/same_room/same_room_independent_followup_20261021/stopping/target_summary.csv.gz",
+    "gzip_sha256": "37b80192972d00750009c4b1bfbd9efa88c55e3ee14d477865ecb8be3c4b83e5",
+    "decompressed_sha256": "975cde5bad3b3ee361d9e14927f9a08af3191c9410a40bbb21347d296ac8dab6",
+    "rows": 17472,
+    "header": [
+      "panel",
+      "horizon",
+      "policy",
+      "support",
+      "history_budget",
+      "group_id",
+      "building",
+      "target_image",
+      "source_views",
+      "group_views",
+      "attempts",
+      "groups",
+      "buildings",
+      "targets",
+      "chosen_fraction",
+      "mean_k",
+      "target_complete_fraction",
+      "target_valid",
+      "target_q_mean",
+      "target_q10",
+      "target_below80_fraction",
+      "paired_terminal_n",
+      "loss_to_terminal_mean",
+      "loss_to_terminal_gt2_fraction",
+      "loss_to_terminal_gt5_fraction",
+      "source_fullcurve_fraction"
+    ],
+    "plain_files": [
+      {
+        "path": "research/same_room/same_room_independent_followup_20261021/stopping/target_summary.csv",
+        "rows": 17472,
+        "bytes": 4145654,
+        "sha256": "975cde5bad3b3ee361d9e14927f9a08af3191c9410a40bbb21347d296ac8dab6"
+      }
+    ],
+    "cell_strings_unchanged": true
+  },
+  {
+    "source_pr": 19,
+    "source_commit": "e83286b7814afc614253aa392050e9a3851ae058",
+    "source_path": "research/same_room/same_room_independent_followup_20261021/stopping/d10_sensitivity/target_summary.csv.gz",
+    "gzip_sha256": "d4d8a246267614766eca19a5c474f940837a2dc4e18808b229ed2d5f52a6f942",
+    "decompressed_sha256": "d306b0d70b156653723cf45c3d34c1be5a5ebf1c283d1da29884222df6e7814e",
+    "rows": 17472,
+    "header": [
+      "panel",
+      "horizon",
+      "policy",
+      "support",
+      "history_budget",
+      "group_id",
+      "building",
+      "target_image",
+      "source_views",
+      "group_views",
+      "attempts",
+      "groups",
+      "buildings",
+      "targets",
+      "chosen_fraction",
+      "mean_k",
+      "target_complete_fraction",
+      "target_valid",
+      "target_q_mean",
+      "target_q10",
+      "target_below80_fraction",
+      "paired_terminal_n",
+      "loss_to_terminal_mean",
+      "loss_to_terminal_gt2_fraction",
+      "loss_to_terminal_gt5_fraction",
+      "source_fullcurve_fraction"
+    ],
+    "plain_files": [
+      {
+        "path": "research/same_room/same_room_independent_followup_20261021/stopping/d10_sensitivity/target_summary.csv",
+        "rows": 17472,
+        "bytes": 4142525,
+        "sha256": "d306b0d70b156653723cf45c3d34c1be5a5ebf1c283d1da29884222df6e7814e"
+      }
+    ],
+    "cell_strings_unchanged": true
+  }
+]
