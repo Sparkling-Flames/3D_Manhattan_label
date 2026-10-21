@@ -19,6 +19,7 @@
 - 最终构建：`raw_records=10439, images=261, quality_records=7302, retained_people=60, tables=134`。
 - 结构校验：`STRUCTURE OK: tables=134, review=13, sections=9`；13/13表的行数、列名顺序和来源路径与源CSV一致，所有表均有分片，概览链接均可解析。
 - `index.json`、`overview.json`、`v2-resources/index.json`快照均为`v2_integrated_analysis_20261019`；`data_release=v2`。
+- 复核修正：概览把校准的7栋/44图/55人与人数选择的6组/6栋、共同完整1,160/1,536路径分开标明；CATALOG生成的`research/catalog/INDEX.md`及项目地图已同步。G015审阅前清单的待定状态与当前采用记录已在说明中区分。
 - `browser_check: passed`。Edge离线打开新增模块，逐一点击全部13个页签，内容就绪，无pageerror，禁用fetch后仍可读取本地脚本分片；原分类成员与A2修正页签回归通过。浏览器测试后关闭，无常驻服务。
 - 保留入口HTML既有CRLF；使用`git -c core.whitespace=cr-at-eol diff --check`检查空白。
 
@@ -61,14 +62,17 @@ python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019
 
 ## 接入改动文件
 
-原PR #19的41文件随分支保留，以下列出本次接入新增或修改的17文件：
+原PR #19的41文件随分支保留，以下列出本次接入新增或修改的20文件：
 
 - 修改：`"docs/thesis_main/\345\233\233\347\272\277\347\250\213\346\210\220\346\236\234\344\270\216\350\256\272\346\226\207\344\270\273\347\272\277\346\240\270\345\257\271_20261015.md"`
 - 修改：`"docs/thesis_main/topics/same_room/\345\220\214\346\210\277\351\242\204\346\265\213\347\240\224\347\251\266\350\256\241\345\210\222_\345\244\232\350\247\206\350\247\222\345\216\206\345\217\262\344\270\216\344\272\272\345\221\230\351\207\215\346\224\276_20261019.md"`
 - 修改：`RESEARCH_ANALYSIS_INDEX.md`
 - 修改：`docs/README_INDEX.md`
+- 修改：`docs/PROJECT_MAP_CLEAN_20260308.md`
 - 修改：`research/catalog/CATALOG.json`
+- 修改：`research/catalog/INDEX.md`
 - 修改：`research/same_room/same_room_independent_followup_20261021/README.md`
+- 修改：`research/same_room/same_room_independent_followup_20261021/review/README.md`
 - 修改：`research/statistics/research_explorer_v1_r2_20261017/COVERAGE.md`
 - 新增：`research/statistics/research_explorer_v1_r2_20261017/INTEGRATION_RECEIPT_20261021_SAME_ROOM.md`
 - 修改：`research/statistics/research_explorer_v1_r2_20261017/README.md`
