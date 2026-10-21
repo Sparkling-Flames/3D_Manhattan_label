@@ -1,0 +1,21 @@
+{
+  "stage": "frozen-class outer-building evaluation",
+  "outcomes": [
+    "turn_history",
+    "short_history",
+    "redundancy_history",
+    "area_history",
+    "height_history",
+    "B8L2_peer_delta",
+    "D10_peer_delta",
+    "log_time_peer_delta"
+  ],
+  "model": "fixed ridge .01, source indicator in every model, same map excluding target building for all train/test records",
+  "weights": "reference then image then building equal",
+  "support": "all model comparisons within a support use exactly the same records for each outcome",
+  "interpretation": "relative raw-expression/quality/log-source-time prediction; no percentage-hour-saving claim",
+  "scope": "ordinary non-OOS behavior with original quality gates; doorway and special-conditional remain separate",
+  "exact_continuous_control": "each outer fold uses the same numerical input columns as its selected geometry or joint family; existing structure5 and historical QT4 benchmarks are retained",
+  "repeated_data": true,
+  "external_blind_test": false
+}

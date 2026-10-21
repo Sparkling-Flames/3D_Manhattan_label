@@ -1,0 +1,446 @@
+{
+  "schema_id": "v3_endpoint_csv_restore_1",
+  "native_fusion_gap": 7.5,
+  "field_types": {
+    "B8L2": [
+      "float"
+    ],
+    "D10": [
+      "float"
+    ],
+    "Hcenter": [
+      "float"
+    ],
+    "Hmean": [
+      "float"
+    ],
+    "IoU3D100": [
+      "float"
+    ],
+    "S_bottom_deg": [
+      "float"
+    ],
+    "below_four": [
+      "bool"
+    ],
+    "bottom_y_mean_px": [
+      "float"
+    ],
+    "bounds_max_x_h": [
+      "float"
+    ],
+    "bounds_max_z_h": [
+      "float"
+    ],
+    "bounds_min_x_h": [
+      "float"
+    ],
+    "bounds_min_z_h": [
+      "float"
+    ],
+    "building": [
+      "str"
+    ],
+    "centroid_x_h": [
+      "float"
+    ],
+    "centroid_z_h": [
+      "float"
+    ],
+    "complete_evaluable": [
+      "bool"
+    ],
+    "complete_floor_evaluable": [
+      "bool"
+    ],
+    "condition": [
+      "str"
+    ],
+    "connection_available": [
+      "bool"
+    ],
+    "diag_corner_recall_05": [
+      "float"
+    ],
+    "diag_status": [
+      "str"
+    ],
+    "diag_wall_coverage_03": [
+      "float"
+    ],
+    "diag_wall_coverage_05": [
+      "float"
+    ],
+    "difficulty": [
+      "str"
+    ],
+    "difficulty_aligned": [
+      "bool"
+    ],
+    "dir": [
+      "float"
+    ],
+    "endpoint_origin": [
+      "str"
+    ],
+    "extension": [
+      "float"
+    ],
+    "floor_evaluable": [
+      "bool"
+    ],
+    "fusion_seconds": [
+      "float"
+    ],
+    "geometry": [
+      "dict"
+    ],
+    "geometry_area_h2": [
+      "float"
+    ],
+    "geometry_reason": [
+      "str"
+    ],
+    "geometry_status": [
+      "str"
+    ],
+    "half_vote_nodes": [
+      "int"
+    ],
+    "height_max_h": [
+      "float"
+    ],
+    "height_mean_h": [
+      "float"
+    ],
+    "height_mean_ratio": [
+      "float"
+    ],
+    "height_min_h": [
+      "float"
+    ],
+    "historical_583261_set_overlap": [
+      "bool"
+    ],
+    "identity_groups_n": [
+      "int"
+    ],
+    "image": [
+      "str"
+    ],
+    "image_id": [
+      "str"
+    ],
+    "iou_2d": [
+      "float"
+    ],
+    "k": [
+      "int"
+    ],
+    "layer": [
+      "str"
+    ],
+    "location_unresolved": [
+      "bool"
+    ],
+    "member_object_ids": [
+      "list"
+    ],
+    "member_workers": [
+      "list"
+    ],
+    "minimum_support": [
+      "int"
+    ],
+    "minority_observations_n": [
+      "int"
+    ],
+    "new_member_n": [
+      "int"
+    ],
+    "new_n": [
+      "int"
+    ],
+    "node_supports": [
+      "list"
+    ],
+    "nodes": [
+      "int"
+    ],
+    "old_member_n": [
+      "int"
+    ],
+    "old_n": [
+      "int"
+    ],
+    "omission": [
+      "float"
+    ],
+    "order_status": [
+      "str"
+    ],
+    "order_tied": [
+      "bool"
+    ],
+    "parity": [
+      "int"
+    ],
+    "pool_id": [
+      "str"
+    ],
+    "pool_n": [
+      "int"
+    ],
+    "ref_edge_recall_5": [
+      "float"
+    ],
+    "ref_edge_recall_9": [
+      "float"
+    ],
+    "ref_matched_edges_5": [
+      "list"
+    ],
+    "ref_matched_edges_9": [
+      "list"
+    ],
+    "ref_matched_nodes_5": [
+      "list"
+    ],
+    "ref_matched_nodes_9": [
+      "list"
+    ],
+    "ref_node_recall_5": [
+      "float"
+    ],
+    "ref_node_recall_9": [
+      "float"
+    ],
+    "reference_id": [
+      "str"
+    ],
+    "reference_nodes": [
+      "int"
+    ],
+    "reference_version": [
+      "str"
+    ],
+    "room_id": [
+      "str"
+    ],
+    "scene": [
+      "str"
+    ],
+    "score_seconds": [
+      "float"
+    ],
+    "score_status": [
+      "str"
+    ],
+    "selected_support_min": [
+      "float"
+    ],
+    "source_inventory_n": [
+      "int"
+    ],
+    "source_parallel_active_seconds": [
+      "float"
+    ],
+    "source_time_known_n": [
+      "int"
+    ],
+    "source_time_known_sum_seconds": [
+      "float"
+    ],
+    "source_time_total_seconds": [
+      "float"
+    ],
+    "target_individual_B8L2_known_n": [
+      "int"
+    ],
+    "target_individual_B8L2_mean": [
+      "float"
+    ],
+    "target_individual_B8L2_min": [
+      "float"
+    ],
+    "target_time_known_n": [
+      "int"
+    ],
+    "target_time_known_sum_seconds": [
+      "float",
+      "int"
+    ],
+    "team_key": [
+      "str"
+    ],
+    "time_source_kinds": [
+      "str"
+    ],
+    "time_source_table": [
+      "str"
+    ],
+    "top_y_mean_px": [
+      "float"
+    ],
+    "unselected_groups_n": [
+      "int"
+    ],
+    "v3_batch_id": [
+      "str"
+    ],
+    "v3_source_main": [
+      "str"
+    ],
+    "prior_endpoint_origin": [
+      "str"
+    ]
+  },
+  "non_scalar_encoding": {
+    "geometry": "geometry_json",
+    "member_workers": "pipe string",
+    "member_object_ids": "pipe string",
+    "node_supports": "pipe integer",
+    "ref_matched_nodes_5": "pipe integer",
+    "ref_matched_nodes_9": "pipe integer",
+    "ref_matched_edges_5": "pipe integer",
+    "ref_matched_edges_9": "pipe integer"
+  },
+  "metadata_samples": [
+    {
+      "batch": "batch_001",
+      "sample_file": "B6ByNegPMKs-22__semi__5070de2f55.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_002",
+      "sample_file": "e9zR4mvMWw7-32__semi__111c2ddfac.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_003",
+      "sample_file": "wc2JMjhGNzB-18__semi__d4949d0b37.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_004",
+      "sample_file": "B6ByNegPMKs-47__manual__9eae4a3584.json.gz",
+      "states": [
+        "complete_conditional",
+        "invalid_floor",
+        "no_connection"
+      ]
+    },
+    {
+      "batch": "batch_005",
+      "sample_file": "UwV83HsGsw3-22__manual__f3e5ed92db.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_006",
+      "sample_file": "e9zR4mvMWw7-39__manual__9326cbf6d2.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_007",
+      "sample_file": "jtcxE69GiFV-28__manual__19653e8bc7.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_008",
+      "sample_file": "x8F5xyUWy9e-08__manual__0b13997fd3.json.gz",
+      "states": [
+        "below_four",
+        "complete_conditional",
+        "no_connection"
+      ]
+    },
+    {
+      "batch": "batch_009",
+      "sample_file": "yqstnuAEVhm-29__manual__4e672d5f71.json.gz",
+      "states": [
+        "complete_conditional",
+        "no_connection"
+      ]
+    },
+    {
+      "batch": "batch_010",
+      "sample_file": "B6ByNegPMKs-22__semi__5070de2f55.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_011",
+      "sample_file": "e9zR4mvMWw7-32__semi__111c2ddfac.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_012",
+      "sample_file": "B6ByNegPMKs-47__manual__9eae4a3584.json.gz",
+      "states": [
+        "complete_conditional",
+        "invalid_floor"
+      ]
+    },
+    {
+      "batch": "batch_013",
+      "sample_file": "b8cTxDM8gDG-07__manual__3eefa592b6.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_014",
+      "sample_file": "jtcxE69GiFV-28__manual__19653e8bc7.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_015",
+      "sample_file": "pRbA3pwrgk9-07__manual__e8409547b5.json.gz",
+      "states": [
+        "complete_conditional"
+      ]
+    },
+    {
+      "batch": "batch_016",
+      "sample_file": "yqstnuAEVhm-29__manual__4e672d5f71.json.gz",
+      "states": [
+        "complete_conditional",
+        "no_connection"
+      ]
+    },
+    {
+      "batch": "batch_017",
+      "sample_file": "zsNo4HB9uLZ-16__manual__7e980a16d1.json.gz",
+      "states": [
+        "complete_conditional",
+        "no_connection"
+      ]
+    },
+    {
+      "batch": "f01_001",
+      "sample_file": "jtcxE69GiFV-28__manual__19653e8bc7.json.gz",
+      "states": [
+        "complete_conditional",
+        "no_connection"
+      ]
+    }
+  ],
+  "note": "CSV blank scalar means absent/unknown; original absent versus explicit-null keys cannot be distinguished. Identity, metrics, known lists and geometry remain lossless."
+}

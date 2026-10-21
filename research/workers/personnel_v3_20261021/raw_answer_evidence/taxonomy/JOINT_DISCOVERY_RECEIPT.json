@@ -1,0 +1,44 @@
+{
+  "seconds": 179.40616536140442,
+  "labels": 2852,
+  "input_domains": {
+    "EQT": [
+      "E",
+      "Q",
+      "T"
+    ],
+    "GEQT": [
+      "E",
+      "G",
+      "Q",
+      "T"
+    ],
+    "CQT": [
+      "C",
+      "Q",
+      "T"
+    ]
+  },
+  "quality": "own-condition B8L2, qualified only, same-image peer mean residual, worker-building equal means; downside mean minus within-building 10th percentile",
+  "time": "own-condition log source seconds centered within same image/origin/time_source_kind; worker-building equal means",
+  "geometry": "same input and frozen gates as geometric candidate",
+  "objective": "equal structural, scale, quality, time reconstruction domains; paired inner-building selection",
+  "K": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "minimum_class_members": 3,
+  "team_outcomes_seen": false,
+  "unknown_filled_zero": false,
+  "stage": "initial_computational_pass_superseded_by_LABEL_FREEZE",
+  "final_label_freeze": "LABEL_FREEZE.json",
+  "final_candidate_instances": 2622,
+  "final_inner_validation_rows": 15995,
+  "final_selection_loss_denominator": "all inner buildings, capacity failures retained",
+  "final_K_capacity": "CLASS_CAPACITY_LIMITS.csv and CAPACITY_RANGE_AMENDMENT.json"
+}

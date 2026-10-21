@@ -1,0 +1,41 @@
+{
+  "condition": "semi",
+  "family": "old_multivariate",
+  "regime": "historical_only",
+  "panels": 46,
+  "policies": [
+    "QT__balanced",
+    "QT__quality",
+    "QT_class_coarse__balanced",
+    "QT_class_coarse__quality",
+    "QT_class_fine__balanced",
+    "QT_class_fine__quality",
+    "class_coarse__balanced",
+    "class_coarse__quality",
+    "class_fine__balanced",
+    "class_fine__quality",
+    "history_Q",
+    "history_T",
+    "ordinary_uniform",
+    "source__balanced",
+    "source__quality"
+  ],
+  "rows": 690,
+  "endpoint_unique": 41577,
+  "failure_retained": true,
+  "quality_failure_imputed_zero": false,
+  "partial": false,
+  "registered_supported_panels": 46,
+  "pending_supported_panels": 0,
+  "time_panel_gate": "every common candidate has full compatible source seconds",
+  "sources": {
+    "batches/batch_001/ENDPOINT_SCALARS.csv.gz": "9beb6b6966868f9db911d147788f4dfdef6082274804e15739e70fa81828f918",
+    "batches/batch_002/ENDPOINT_SCALARS.csv.gz": "760f71a8571175843297b43558b581761d3cd15b56960241197d082dbb45ece9",
+    "batches/batch_003/ENDPOINT_SCALARS.csv.gz": "7f898603b234b236b43ebcbc6b7712eccc65417ac1a05a73d2095bc3fb5f0a72",
+    "batches/batch_004/ENDPOINT_SCALARS.csv.gz": "f18b3c2ebe11d8293f927d91faf6f5deefe765705d44220c338c1260b6fd1f92",
+    "batches/batch_005/ENDPOINT_SCALARS.csv.gz": "233a19e242192f4693923630b02c4324eb8719624be877ca29e1e631cc20cdff",
+    "batches/batch_006/ENDPOINT_SCALARS.csv.gz": "61cf2aa6ef234c16e097b658dd729a3d271e2efb267272e3e9ce25f7d9b8b82e",
+    "batches/batch_010/ENDPOINT_SCALARS.csv.gz": "445414fbd17a2cd402f5192856e4407ea075bf976b5aa9d26b0afbaa70999097",
+    "batches/batch_011/ENDPOINT_SCALARS.csv.gz": "256b86463957ff9dcaf4000fc44dcccae31df0ce36b9e2342142ccb22222a550"
+  }
+}

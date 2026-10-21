@@ -1,0 +1,13 @@
+{
+  "reason": "Exact field-name mapping fixes mean_turn_history incorrectly matching a broad mean_t prefix in preliminary QT comparator. It also restores turn_history to pure continuous-structure comparator.",
+  "affected": "historical_only preliminary QT and pure continuous-structure selection models; all recomputed before primary cross_panel_LOBO",
+  "not_affected": [
+    "native endpoint values",
+    "historical Q/T direct selection",
+    "coarse/fine class-only choices",
+    "QT plus all structural features choices"
+  ],
+  "new_fusion_evaluations": 0,
+  "preliminary_outcome_scope": "One Semi/old_structure historical-only partial evaluation, excluded from final report",
+  "corrected_policy_version": "v3_exact_field_mapping_20261021"
+}

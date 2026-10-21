@@ -11,6 +11,7 @@
 - 2026-10-21同房五包：[精简研究交付与独立核验](../research/same_room/same_room_profile_return_review_20261021/README.md)；报告、关键代码和支持表为普通文件，完整中间库的复现边界见包内说明。评分源码和关键逐目标表的[直接读取整理](../research/statistics/archive_layout_20261021/README.md)单列。
 
 - 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
+- 2026-10-22新增[人员分类与构成v3补充包](../research/workers/personnel_v3_20261021/README.md)：包含实际选择用途、F01完整配比、jtc-28机制、整合报告和楼外证据；来源及排除项见包内清单。
 
 - 2026-10-20总览入口（状态已续至10/21）：[人员标法分类、换人换类与整体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。人员分类、画像、组合效益三线分别记录；Manual/Semi分开。新分类与画像/组合Pro均已返回，最新独立审查见上方10/21入口。下方旧阶段状态保留轮次。 研究台接续见[十模块离线入口](../research/statistics/research_explorer_v1_r2_20261017/index.html)，展示采用状态以各轮回执为准。
 

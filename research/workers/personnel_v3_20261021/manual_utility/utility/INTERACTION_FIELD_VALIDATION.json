@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "condition": "manual",
+      "heldout_building": "2t7WUuJeko7",
+      "rows": 32,
+      "all_predictors": 250,
+      "pair_terms": 86,
+      "model_columns": {
+        "source": 2,
+        "QT": 18,
+        "class_coarse": 10,
+        "class_fine": 10,
+        "QT_class_coarse": 26,
+        "QT_class_fine": 26,
+        "continuous_structure": 22,
+        "QT_continuous_structure": 38,
+        "exact_continuous": 26,
+        "exact_continuous_class_fine": 34,
+        "class_coarse_interaction": 30,
+        "class_fine_interaction": 30,
+        "QT_interaction": 38,
+        "QT_continuous_structure_interaction": 128,
+        "exact_continuous_interaction": 68,
+        "exact_continuous_interaction_class_fine": 96
+      },
+      "products_match_declared_means": true
+    },
+    {
+      "condition": "semi",
+      "heldout_building": "7y3sRwLe3Va",
+      "rows": 32,
+      "all_predictors": 246,
+      "pair_terms": 85,
+      "model_columns": {
+        "source": 2,
+        "QT": 18,
+        "class_coarse": 10,
+        "class_fine": 12,
+        "QT_class_coarse": 26,
+        "QT_class_fine": 28,
+        "continuous_structure": 22,
+        "QT_continuous_structure": 38,
+        "exact_continuous": 22,
+        "exact_continuous_class_fine": 32,
+        "class_coarse_interaction": 30,
+        "class_fine_interaction": 42,
+        "QT_interaction": 38,
+        "QT_continuous_structure_interaction": 128,
+        "exact_continuous_interaction": 52,
+        "exact_continuous_interaction_class_fine": 92
+      },
+      "products_match_declared_means": true
+    }
+  ],
+  "target_scores_used": false
+}

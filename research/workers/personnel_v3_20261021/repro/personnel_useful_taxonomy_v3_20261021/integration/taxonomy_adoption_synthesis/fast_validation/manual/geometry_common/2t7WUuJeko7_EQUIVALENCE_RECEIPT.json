@@ -1,0 +1,481 @@
+{
+  "status": "equivalent_within_tolerance",
+  "condition": "manual",
+  "domain": "geometry_common",
+  "building": "2t7WUuJeko7",
+  "absolute_tolerance": 1e-08,
+  "original_code_sha256": "20d6e3e7bff7bbff21cb703915557d6c364050a2141370de8767d79a613088aa",
+  "execution_engine_sha256": "378e6cedf889b10b49e3762161a3aaad1cdf8f893eedc9c1349b5fb038011852",
+  "support": {
+    "condition": "manual",
+    "domain": "geometry_common",
+    "building": "2t7WUuJeko7",
+    "valid_target_rows": 5544,
+    "target_panels": 6,
+    "all_target_rows": 5544,
+    "valid_train_rows": 207900,
+    "known_workers": 59
+  },
+  "tables": {
+    "PREDICTION": {
+      "rows": 1806,
+      "columns": 19,
+      "max_abs_error": 8.215650382226158e-15,
+      "columns_checked": [
+        {
+          "column": "panel_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "pool_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "image",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "difficulty",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "source_domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "n",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "model",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "mse",
+          "max_abs_error": 3.9968028886505635e-15,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "baseline_mse",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "response_r2",
+          "max_abs_error": 8.215650382226158e-15,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "mae",
+          "max_abs_error": 1.5543122344752192e-15,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_buildings",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "active_features",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "c0a3b41abe7f4761dd750a1cc210443ce1b58a01c98a4df0809e62fc0a051e01",
+      "accelerated_sha256": "d08108f0db6d6e03e8be3a7396265f1e6063f752f03143586615c8380b6bc590"
+    },
+    "DECOMPOSITION": {
+      "rows": 516,
+      "columns": 23,
+      "max_abs_error": 0.0,
+      "columns_checked": [
+        {
+          "column": "panel_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "pool_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "image",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "difficulty",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "source_domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "n",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "method",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "valid_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "substitutable_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "single_member_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "members_in_substitutable_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "total_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "within_configuration_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "between_configuration_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "between_share",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "degenerate_no_total_variation",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "complete_finite_panel",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "d790c45641b8a6c20e7a15aa12dd20c1fbc6b0ec41eecdf0ac9a230d9266f03f",
+      "accelerated_sha256": "d790c45641b8a6c20e7a15aa12dd20c1fbc6b0ec41eecdf0ac9a230d9266f03f"
+    },
+    "MODELS": {
+      "rows": 308,
+      "columns": 10,
+      "max_abs_error": 8.822098607197404e-11,
+      "columns_checked": [
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "heldout_building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "model",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "ridge",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "predictors",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "coefficients",
+          "max_abs_error": 8.822098607197404e-11,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_buildings",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "5a5db08e94d7900d1a481c413beaf62a99779dbcc89c863c30db86e276d4220a",
+      "accelerated_sha256": "70ecc3e0668a582761ec6bc0647f1b5e0332a210cebab219f7fa45d0e4cec998"
+    }
+  },
+  "execution": {
+    "seconds": 8.467437005994725,
+    "has_results": true,
+    "outcome_count": 22,
+    "mask_groups": 7,
+    "models": 14,
+    "features": 110,
+    "masks": [
+      {
+        "mask_id": 0,
+        "outcomes": [
+          "B8L2",
+          "D10",
+          "IoU3D100",
+          "Hmean",
+          "Hcenter"
+        ],
+        "skipped": false,
+        "train_rows": 206637,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 1,
+        "outcomes": [
+          "failure",
+          "nodes"
+        ],
+        "skipped": false,
+        "train_rows": 207900,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 2,
+        "outcomes": [
+          "fusion_turn_n",
+          "fusion_short_turn_edges",
+          "fusion_redundancy_n",
+          "ref_node_recall_9",
+          "ref_edge_recall_9"
+        ],
+        "skipped": false,
+        "train_rows": 207372,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 3,
+        "outcomes": [
+          "log_geometry_area"
+        ],
+        "skipped": false,
+        "train_rows": 207026,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 4,
+        "outcomes": [
+          "height_mean_h",
+          "top_y_mean_px",
+          "bottom_y_mean_px"
+        ],
+        "skipped": false,
+        "train_rows": 207366,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 5,
+        "outcomes": [
+          "iou_2d",
+          "S_bottom_deg",
+          "dir",
+          "omission",
+          "extension"
+        ],
+        "skipped": false,
+        "train_rows": 207032,
+        "target_rows": 5544,
+        "train_buildings": 21,
+        "all_features": 110,
+        "active_features": 110,
+        "original_scalar_rhs_roundoff_fallback": [
+          {
+            "model": "old_coarse",
+            "outcome": "omission"
+          },
+          {
+            "model": "old_fine",
+            "outcome": "omission"
+          },
+          {
+            "model": "new_coarse",
+            "outcome": "omission"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "omission"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "omission"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "omission"
+          },
+          {
+            "model": "behavior_same_fields_mean",
+            "outcome": "omission"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "omission"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "omission"
+          },
+          {
+            "model": "old_coarse_quadratic",
+            "outcome": "omission"
+          },
+          {
+            "model": "old_fine_quadratic",
+            "outcome": "omission"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "omission"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "omission"
+          }
+        ]
+      },
+      {
+        "mask_id": 6,
+        "outcomes": [
+          "log_source_time"
+        ],
+        "skipped": false,
+        "train_rows": 114194,
+        "target_rows": 2772,
+        "train_buildings": 20,
+        "all_features": 110,
+        "active_features": 82,
+        "original_scalar_rhs_roundoff_fallback": []
+      }
+    ]
+  },
+  "total_seconds": 29.628088022000156,
+  "fusion_calls": 0,
+  "scoring_calls": 0,
+  "reference_outputs_modified": false
+}

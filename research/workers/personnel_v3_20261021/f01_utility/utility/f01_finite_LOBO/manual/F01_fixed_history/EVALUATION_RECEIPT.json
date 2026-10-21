@@ -1,0 +1,38 @@
+{
+  "condition": "manual",
+  "family": "F01_fixed_history",
+  "regime": "f01_finite_LOBO",
+  "panels": 12,
+  "policies": [
+    "QT__balanced",
+    "QT__quality",
+    "QT_class_coarse__balanced",
+    "QT_class_coarse__quality",
+    "QT_interaction__balanced",
+    "QT_interaction__quality",
+    "class_coarse__balanced",
+    "class_coarse__quality",
+    "class_coarse_interaction__balanced",
+    "class_coarse_interaction__quality",
+    "history_Q",
+    "history_T",
+    "ordinary_uniform",
+    "source__balanced",
+    "source__quality",
+    "transfer_main_QT__balanced",
+    "transfer_main_QT__quality",
+    "transfer_main_QT_interaction__balanced",
+    "transfer_main_QT_interaction__quality"
+  ],
+  "rows": 228,
+  "endpoint_unique": 1872,
+  "failure_retained": true,
+  "quality_failure_imputed_zero": false,
+  "partial": false,
+  "registered_supported_panels": 12,
+  "pending_supported_panels": 0,
+  "time_panel_gate": "every common candidate has full compatible source seconds",
+  "sources": {
+    "batches/f01_001/ENDPOINT_SCALARS.csv.gz": "09cd51301add49135ecebe8119e671b7d1e72143084106fd8a1214397bd5c27a"
+  }
+}

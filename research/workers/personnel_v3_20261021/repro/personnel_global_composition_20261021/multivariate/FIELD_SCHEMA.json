@@ -1,0 +1,58 @@
+{
+  "primary_tables": {
+    "personnel_labels_readable.csv": "248行：4种方法×62人；Manual3法、Semi1法；非统一层级。W022的Semi显式未知。",
+    "class_explanations_zh.csv": "各方法粗/细类中文名、解释、实际成员、域均值、来源组成。",
+    "labels_lobo.csv.gz": "原3候选22楼外机器接口。",
+    "same_source_candidate_labels.csv": "同新批QTD敏感性候选，含ALL及22楼外。",
+    "continuous_features_lobo.csv.gz": "条件×楼外折×人员：每域连续特征、支持、机会量及时间来源/秒单位。",
+    "training_class_centroids_lobo.csv.gz": "每个外楼训练侧各类真实成员及域均值，供目标机制解释。",
+    "domain_subset_26_coverage.csv": "Manual/Semi各26子集，单固定Ward2机会/稳定性筛查，不等于构成实验。"
+  },
+  "join_keys": [
+    "method_id",
+    "condition",
+    "heldout_building",
+    "worker_id"
+  ],
+  "all_data_key": "heldout_building=ALL仅作最终研究标签；目标图/建筑结果必须使用其building_id对应楼外行。",
+  "class_columns": {
+    "coarse_class": "父层类别ID；QH/QL是同条件任务调整Q效应正负，C1/C2是训练侧无Q等权Ward2。",
+    "fine_class": "父层+小数编号；无合格细分时等于父层，不是缺失。",
+    "known": "是否满足该方法全部域与人群支持。",
+    "missing_reason": "逐域机会不足或人群之外；不可作0或恢复组队资格。"
+  },
+  "gates": {
+    "Q_manual": "8个任务且3建筑，ordinary_primary且quality_usable；Q_semi=4任务且3建筑。",
+    "T": "6任务且3建筑，pool_analysis_eligible且ordinary_difficulty_eligible，正源活动秒；按origin/time_source_kind单独估计。",
+    "D": "简单、中等、困难每档均6任务且3建筑；否则D未知，即使部分池化给出数字也不采用。",
+    "scope": "10个自身条件非OOS普通图回答任务、3建筑、至少2个有人员回答分歧的任务；ridge5任务效应。",
+    "Semi": "编辑6任务3建筑；错误机会未改3任务2建筑；二者均足；旧精确初始化与新报告层级不混。"
+  },
+  "domain_features": {
+    "Q": [
+      "q_effect",
+      "q_downside"
+    ],
+    "T": [
+      "t_effect",
+      "t_tail"
+    ],
+    "D": [
+      "hard_minus_easy",
+      "medium_minus_easy"
+    ],
+    "scope": [
+      "scope_out_effect"
+    ],
+    "Semi": [
+      "semi_edit_effect",
+      "semi_error_nonedit_effect"
+    ]
+  },
+  "weights": "单域内特征平均平方距离，域间等权；训练人群IQR缩放并clip[-3,3]。层级Q父层只用Q效应；子层各进入域等权。",
+  "scope_correctness": "全数据普通非OOS有裁定机会Manual25、Semi68，均报告为正确且无差异；不拿正确率强行分型。scope_out_effect仅回答倾向。",
+  "Semi_interpretation": "新批525条均无精确初始化，edited/error_nonedit来自用户处理报告；未改/编辑不是心理动机或纠错成功。Manual的Semi域是跨条件辅助。",
+  "inventory_qualification": "行为可用已筛除或GT暂停记录；Q仍资格限定。标签不修改原图/原标注/环序/GT/参考绑定/评分/融合/人员池资格。门洞库存单列，不把普通类别门洞表现当独立类别验证。",
+  "source_main": "51b519f943b2dd3a4fb2f0198133ac5dd17209ab",
+  "selection_status": "全库存已反复探索；楼外重拟合是真实样本外建筑检查，不称新盲测。新增同来源敏感性在看到来源关联后追加，仍在融合结果前冻结。"
+}

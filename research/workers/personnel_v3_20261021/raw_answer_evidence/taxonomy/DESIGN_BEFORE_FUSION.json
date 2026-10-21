@@ -1,0 +1,21 @@
+{
+  "stage": "v3_new_classification_before_new_composition_outcomes",
+  "latest_main": "324dba44d0a82d9d64a62965f2e549ee05165417",
+  "aim": "Explain repeatable marking expression using an open number of classes and independently evaluate new composition outcomes.",
+  "fit_inventory": "ordinary non-OOS personal-comparison expression records with peer_n >= 3; preserve historical exclusions as behavior only; special_conditional quality domain is not ordinary quality validation",
+  "conditions": ["manual", "semi"],
+  "raw_features": ["turn_n = pair_n - near_straight_nodes_5deg", "short_turn_edges", "near_straight_nodes_5deg", "log_area", "log_height"],
+  "normalization": "same image, condition, layer and reference peer median; equal buildings per worker",
+  "conditional_opportunity": "same panel median noncollinear turn count >= 6; geometry opportunity only, not a semantic truth or correctness label",
+  "candidate_families": ["TURN", "STRUCTURE", "SCALE", "JOINT", "CONTEXT"],
+  "k_candidates": [2, 3, 4, 5, 6, 7, 8],
+  "smallest_multimember_class": 3,
+  "fit_support": {"images": 12, "buildings": 4, "conditional_images": 3, "conditional_buildings": 2},
+  "candidate_selection": "nested held-building reconstruction of actual expression; inner building left out before worker histories, scaling, clustering and class centroids; outer building absent from all selection",
+  "coarse_fine": "one Ward tree for a chosen feature family; fine cut minimizes inner loss, coarse is simplest supported ancestor within paired one-standard-error of the fine cut",
+  "outcome_selection_excludes": ["fusion endpoints", "team quality", "team time", "target building raw records"],
+  "benchmarks": ["old M/SP", "source", "continuous structural history", "continuous QT", "continuous QT plus structure"],
+  "unknown": "missing opportunity retained as missing, not zero",
+  "evaluation_status": "new classifiers and new member/background panels on a repeatedly studied repository; not new external blind data",
+  "contracts_changed": false
+}

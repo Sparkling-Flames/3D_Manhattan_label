@@ -1,0 +1,30 @@
+{
+  "condition": "manual",
+  "family": "F01_fixed_history",
+  "regime": "f01_finite_LOBO",
+  "inputs": {
+    "endpoint_batches": {
+      "batches/f01_001/ENDPOINT_SCALARS.csv.gz": "09cd51301add49135ecebe8119e671b7d1e72143084106fd8a1214397bd5c27a"
+    }
+  },
+  "policy_version": "v3_exact_field_mapping_20261021",
+  "labels_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_useful_taxonomy_v3_20261021/composition/F01_FROZEN_LABELS_LOBO.csv.gz",
+  "labels_sha256": "08f6d229b01780a578bd50bb7f7d006c1ba0cb7f971c3ea6f8897064352a67c4",
+  "qt_features_sha256": "1c65d2c5650bfa4453efc73547073fd62e3d4ba2fa0219646e0d31538aa11d62",
+  "features_sha256": "6a8d61af3f2c67027f852ee41caef082e1c01fe51b812548152e52192e9e4f96",
+  "design_sha256": "ae82f99871dc72508bcf49fa924bc6a430e956c138662c54f9dc3212c71533f2",
+  "panel_sha256": "bb2da3734c9e22a7b132bf66a7dc4ddf778bc28e7cbf51465c4f962962493aa1",
+  "target_outcomes_used_for_selection": false,
+  "selected_records": 4899,
+  "candidate_records": 1872,
+  "evaluated_panels": 12,
+  "tie_epsilon": 1e-09,
+  "ridge": 0.1,
+  "quadratic_team_mean_models": true,
+  "policy_code_sha256": "7dd2217a99f4783a60db1bc1717e9b83c720531b15d348b388ff18116109a65c",
+  "design_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_useful_taxonomy_v3_20261021/composition/F01_CAPACITY_TEAMS.csv.gz",
+  "panel_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_useful_taxonomy_v3_20261021/composition/F01_PANELS.csv",
+  "class_definition": "unchanged frozen historical10 F01; native coarse only",
+  "response_fitting": "other legal target buildings in complete finite F01 domain",
+  "single_set_panels_excluded_from_selection": 2
+}
