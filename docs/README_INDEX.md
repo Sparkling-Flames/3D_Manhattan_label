@@ -1,10 +1,10 @@
 # HOHONET 文档入口
 
 - **整体研究主文档：** [研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)。统一人员、图片、质量、融合、人数/组合及同房关系；盲信、个人筛除、scope和难度继续保留独立用途。
-- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办、指定研究台线程任务和新分类两处修正；[同房后续Pro准备](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第9节尚未发起。
+- **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办及研究台状态；新分类两处修正与表格接入已完成。[同房续研及独立审查](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第10节区分Pro报告与Dot PR；第11—12节重点补足均值/个人质量相似性，保留结构、选队与停止，附整合上轮包的Pro任务。
 - 对话接续辅助：[完整交接](thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md)，不替代模型与主题记录。
 
-- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类Pro已返回并完成关键独立复算，进入统计口径修正与采用收口，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+- 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类已完成统计修正、工作采用与接入；同房新返回及PR独立审查已更新，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
 
 - 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
 
