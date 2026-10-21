@@ -1,0 +1,42 @@
+{
+  "metric": "B8L2",
+  "reference": "archived actual replay_nodes, not unavailable newPro package",
+  "source_establishment_cost_not_counted": true,
+  "target_quality_excluded_from_choice": true,
+  "source_rule": "earliest available prefix within tolerance of full source mean curve maximum",
+  "source_rule_is_retrospective": true,
+  "missing_source_policy": "skip incomplete source prefixes; if no finite source mean exists choose -1 and report unchosen, no target-informed fallback",
+  "fixed_budgets": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    12,
+    16,
+    20,
+    30
+  ],
+  "thresholds": [
+    0,
+    1,
+    2,
+    5
+  ],
+  "thresholds_not_fit_to_targets": true,
+  "k2": "excluded: two-person sorting deferred in source replay",
+  "cost": "target prefix member count only; fixed_k means min(k, horizon, available pool), identical groups and cases for all budgets. cap16 uses min(16, pool size), not universally 16",
+  "support": "all_attempts retains missing target outcomes; common_complete requires every candidate prefix on ALL group views, identical across policies AND source history budgets",
+  "weighting": "case; equal targets within replay-groups; equal replay-groups; equal buildings after equal replay-groups within building. Coverage subsets overlap and are not independent rooms.",
+  "low_tail": "case target_q10 is pooled; group/building target_q10 is mean target-level quantiles under stated hierarchy, not pooled quantile",
+  "history_budgets": "minimum_majority and maximum_history separately; all_m_pooled is explicitly combination-weighted sensitivity, not a replacement for per-budget claims",
+  "uncertainty": "descriptive finite replay design, no independent-room inference or heldout tuning",
+  "input_sha256": {
+    "replay_nodes.csv.gz": "da04e2d07180a2ace65ed3d0b3d11789591f6b2f6fc75478f1403326b3f80a2c",
+    "REPLAY_GROUPS.json": "1448038779cc9a93dbc7e1352c94688f39b6b4a1517c76dce5e436ad66536f1e",
+    "REPLAY_ORDERS.json.gz": "aba57b1b53b16ead1e003308f1d1ef2abb020b93d8ae6f41246fc00d7d6c56fc"
+  },
+  "actual_nodes": 124924,
+  "policy_case_rows": 4439792,
+  "ordered_members_verified": true
+}
