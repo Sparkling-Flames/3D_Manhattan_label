@@ -97,7 +97,10 @@ def main():
             a=x.copy();a['method']=method;a['predicted']=value;a['error']=a.predicted-a.actual;a['absolute_error']=a.error.abs();outputs.append(a)
     allrows=pd.concat(outputs,ignore_index=True)
     worker,building,summary=aggregate(allrows)
-    worker.to_csv(OUT/'worker_targets.csv.gz',index=False,compression={'method':'gzip','mtime':0})
+    target_dir = OUT/'worker_targets'
+    target_dir.mkdir(exist_ok=True)
+    for metric, part in worker.groupby('metric', sort=False):
+        part.to_csv(target_dir/f'{metric}.csv', index=False)
     building.to_csv(OUT/'building_metrics.csv',index=False);summary.to_csv(OUT/'summary.csv',index=False)
     pd.DataFrame(checks).to_csv(OUT/'support_checks.csv',index=False)
     paired=building.pivot(index=['metric','origin','stage','subset','building'],columns='method',values='mae').reset_index()

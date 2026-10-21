@@ -9,7 +9,7 @@ import numpy as np
 from .worker_wq_integration_20261015 import frozen_engine
 
 ROOT = Path(__file__).resolve().parents[3]
-ARCHIVE = ROOT / 'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
+ARCHIVE = ROOT / 'research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine'
 MODEL_SOURCE = ROOT / 'research/quality/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py'
 IDENTITY = ('object_id', 'image_id', 'worker_id', 'condition', 'current_target_id', 'reference_version')
 METRICS = ('iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter',
@@ -18,7 +18,7 @@ METRICS = ('iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter',
 
 @contextmanager
 def scoring_engine(archive_path=ARCHIVE, model_source=MODEL_SOURCE):
-    """一次打开冻结引擎，适合对整批queue复用；临时文件自动清理。"""
+    """优先读取普通源码目录；保留历史 ZIP 参数兼容，不改变评分。"""
     spec = importlib.util.spec_from_file_location('scope_frozen_working_models', model_source)
     models = importlib.util.module_from_spec(spec)
     # dataclass解析类型时需要可查到其定义模块。
@@ -26,8 +26,16 @@ def scoring_engine(archive_path=ARCHIVE, model_source=MODEL_SOURCE):
     sys.modules[spec.name] = models
     try:
         spec.loader.exec_module(models)
-        with zipfile.ZipFile(archive_path) as archive, frozen_engine(archive) as engine:
-            yield engine, models
+        source = Path(archive_path)
+        # Existing callers may still pass the historical .zip spelling. A checkout
+        # with the adjacent directory needs neither that ZIP nor extraction.
+        direct = source.with_suffix('') if source.suffix == '.zip' else source
+        if direct.is_dir():
+            with frozen_engine(direct) as engine:
+                yield engine, models
+        else:
+            with zipfile.ZipFile(source) as archive, frozen_engine(archive) as engine:
+                yield engine, models
     finally:
         del sys.modules[spec.name]
 

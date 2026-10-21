@@ -55,7 +55,7 @@ Run from repository root:
 
 - `METHOD.json`: definitions, exact input hashes, numerical source-reconstruction checks
 - `support_checks.csv`: row support, reconstruction differences, clipping counts
-- `worker_targets.csv.gz`: auditable repeated-split-aggregated personal errors
+- `worker_targets/B8L2.csv 与 worker_targets/D10.csv`: auditable repeated-split-aggregated personal errors
 - `summary.csv`: all origin/metric/history/subgroup summaries
 - `building_metrics.csv`: per-building errors and bias
 - `paired_building_comparisons.csv`: paired per-building MAE differences
@@ -63,3 +63,6 @@ Run from repository root:
 
 The five critical unit tests cover exclusion of self from peer means, observed-source versus expanded-source budgets, outside-building history and target-score perturbation invariance, singleton missingness, saved admission exclusion, and building-equal aggregation. Actual-data assertions additionally verify every split is strict-majority, history/target disjoint and complete for its group, unique image/person rows, complete saved admission, and exact numerical agreement with the frozen legacy features.
 
+
+
+文件布局补充：当前关键明细使用普通 CSV；原 .gz 文件仅保留原交付身份。新读取入口见 research/statistics/archive_layout_20261021/README.md。本次转换不改变指标或样本。

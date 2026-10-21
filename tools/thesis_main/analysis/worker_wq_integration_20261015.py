@@ -54,7 +54,15 @@ def table(name, data):
 
 @contextmanager
 def frozen_engine(archive):
-    # Reuse the archived reviewed engine verbatim; only temporary runtime files are extracted.
+    # Current deployments use checked-in source files; archives remain legacy inputs.
+    if isinstance(archive, (str, Path)):
+        target = Path(archive)
+        spec = importlib.util.spec_from_file_location('personnel_frozen_quality', target/'src/quality.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        yield module
+        return
+    # Compatibility for old callers holding an already-open ZipFile.
     with tempfile.TemporaryDirectory(prefix='worker_wq_') as directory:
         target = Path(directory)
         for name in archive.namelist():
