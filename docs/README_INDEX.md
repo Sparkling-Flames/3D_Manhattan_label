@@ -257,7 +257,7 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 - 2026-10-19 新Pro类别组合研究：[前置数据与支持核查](../research/workers/personnel_composition_handoff_20261019/README.md)、[提示词](thesis_main/Pro新轮_人员类别组合替换提示词_20261019.md)。整理工具 `tools/thesis_main/analysis/prepare_personnel_composition_handoff_20261019.py`，关键测试 `tests/test_personnel_composition_handoff_20261019.py`；此项为前置整理历史，后续组合研究已返回，最新状态见人员任务书。
 
-- 2026-10-19 类别组合返回后：[过程审查、变量覆盖与并行安排](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)。T/scope候选与直接替换验证分开；Semi及新非编辑已有条件实验。Pro拟负责直接互换性分型，Codex负责独立验收；新轮未发起，返回包未自动归档或接研究台。
+- 2026-10-21更新：[人员方法覆盖、组合研究与验收](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)。五域任选2—5域的正向探索、反向关系与结构分类并列；已补记真实替换学习、直接m2块学习和188候选/共同消融实验，八处相关归档在GitHub main。下一轮补五域子集、大团队、类别块及质量分项，本轮方法修订尚未推送。
 
 - 2026-10-20：[直接可互换人员分型Pro接续](thesis_main/Pro接续_直接可互换人员分型与条件细类_20261020.md)；[451对照独立核查与四例叠图](../research/workers/personnel_composition_followup_20261019/README.md)。前轮精简包归档`research/workers/personnel_composition_study_20261019/`；本轮工具`tools/thesis_main/analysis/personnel_composition_followup_20261019.py`。
 
