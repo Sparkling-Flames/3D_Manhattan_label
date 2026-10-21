@@ -1,0 +1,71 @@
+{
+  "schema": "same_room_stopping_rebuild_20261021_v1",
+  "main_commit": "561584c8f64d5349d497ec1c6e91f1aeb4bbd7c9",
+  "pr19_fixed_head": "e83286b7814afc614253aa392050e9a3851ae058",
+  "evidence_identity": "reconstructed policies on archived native results plus separately counted new native geometry branch",
+  "condition": "ordinary_manual",
+  "main_metric": "B8L2",
+  "sensitivity_metric": "D10 evaluated on frozen B8L2-selected teams",
+  "relation_identity": "existing REPLAY_GROUPS supported declarations; no new room grouping",
+  "join_keys": {
+    "group_id": "archived supported replay panel, MVxxxx or coverage subset MVxxxxSx",
+    "parent_group": "original whole panel when this is a supported subset; does not create new room facts",
+    "room_id": "existing Gxxx room declaration identifier in archived rows",
+    "image_id": "full public image id; target_image uses the same identifier",
+    "image_code": "short public code; replay source uses column image",
+    "replay": "archived order index within group_id",
+    "request_id": "exact archived group/order/image/k prefix request",
+    "team_id": "frozen pool plus canonical member subset identity",
+    "member_object_ids": "pipe-delimited exact eligible source object identifiers",
+    "ordered_workers": "pipe-delimited exact arrival/collection order used in replay",
+    "reference_id": "unchanged archived GT/reference binding",
+    "history": "pipe-delimited observed source image ids, disjoint from target",
+    "m": "number of actual historical source images",
+    "N": "number of views in this existing supported panel",
+    "split_id": "explicit group_id_m{m}_h{lexicographic_combination_index}; not an independent room"
+  },
+  "decisions": {
+    "requested_k": "prefix chosen from source history or fixed budget, before target geometry top-up",
+    "selected_k": "actual final collected prefix; -1 if no supported choice",
+    "geometry_complete": "geometry_status==ok, selected nodes>=4, connection available; no target reference quantity used",
+    "target_Q": "evaluation only after selection; unknown/non-evaluable remains missing",
+    "full_common_pool": "all available workers shared by the supported panel, not all annotators on each image",
+    "online_three_transitions_2deg": "first k>=5 where four complete same-nodecount outputs have three consecutive native bound cyclic angular distances<=2 degrees; full pool fallback"
+  },
+  "summary_fields": {
+    "attempts": "repeated split-target-path attempts, never number of independent rooms",
+    "valid_n": "actually scoreable target outcomes",
+    "quality_available_rate": "valid target outcomes divided by all attempts under stated hierarchy",
+    "geometry_complete_rate": "complete target native geometry divided by all attempts",
+    "q_mean": "available-case B8L2 mean under stated hierarchy",
+    "q10": "target-level 10th percentile, then group/building average; not a pooled quantile",
+    "loss_gt5_to_full_rate_paired": "fraction whose selected target Q is >5 below full common-pool Q, among actual paired evaluable outputs",
+    "loss_gt5_to_fixed7_geometry_rate_paired": "fraction whose selected target Q is >5 below fixed7 plus same geometry-top-up rule, among paired outputs",
+    "loss_gt5_or_missing_rate_all": "event flag combining missing output or >5-point full-pool loss; not a zero-imputed quality score",
+    "mean_activity_ratio_to_fixed7_geometry": "mean of path-specific activity ratios; distinct from ratio of target means",
+    "ratio_mean_activity_to_fixed7_geometry": "ratio after averaging paths within target/m, then target/group/building average; matches historical Pro time-ratio convention",
+    "same_final_k_random_available_q": "average target Q over random actual paths at identical final k; available-case, completeness separately retained",
+    "same_requested_k_random_geometry_q": "random actual paths start at same requested k then independently top up to complete geometry; final k may differ",
+    "activity_all_new_complete": "fixed panel-wide support: all common workers new-origin and all source/target full-pool activity times known",
+    "project_ratio_to_fixed7_geometry": "source full-curve activity plus all remaining target selected activity, divided by fixed7+geometry collection on all views in same historical split",
+    "project_ratio_to_full_common_pool": "same project numerator divided by all views collected to full common pool",
+    "mean_source_full_activity_seconds": "all common workers' annotation activity summed once per source image; permutations do not multiply it",
+    "median_break_even_future_target_views": "conditional descriptive extrapolation only on paths with positive target savings; not a guaranteed observed payback or deployment forecast"
+  },
+  "time_contract": {
+    "field": "source_new_total_seconds",
+    "meaning": "reported annotation activity, user_processed_reported_not_raw_log_replayed",
+    "excluded": "old-origin mixtures, unknown activity, reference-making labor, scoring labor, queue time and money conversion",
+    "missing": "preserved; not zero or imputed",
+    "historical_source_cost": "existing history is sunk for target-only comparison; from-zero source acquisition is separately computed"
+  },
+  "weighting": "within actual m: repeated split/path average in target; target equal, supported group equal within building, building equal",
+  "supports": {
+    "all_attempts": "primary, including missing outcomes and failures",
+    "dot_common_complete": "conditional diagnostic; all candidate k except2 complete on every view, invariant across policies",
+    "whole_group": "six supported whole common-worker pools, 24 images, 6 buildings",
+    "coverage_subset": "14 overlapping supported subpanels, 19 actual images, 3 buildings; never pooled into whole_group",
+    "online_geometry_small_sample": "three stable-hash archived orders per supported panel; 60 paths/43 images/2094 prefix references/1678 native geometry calls; not external validation"
+  },
+  "visual_features": "online_G046_21_visual_manifest.json: explicit reference-corner indices and ERP1024x512 crop bounds; no new cross-view physical correspondence adjudication"
+}

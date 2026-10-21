@@ -1,0 +1,44 @@
+{
+  "status": "本轮新增与固定输入重建；无原件恢复宣称",
+  "input_commit": "561584c8f64d5349d497ec1c6e91f1aeb4bbd7c9",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "report": "REPORT_ZH.md",
+  "readable_all_group_atlas": "GROUP_ATLAS_ZH.md",
+  "field_contract": "FIELD_CONTRACT.md",
+  "reproduction": "README.md",
+  "figures": [
+    "figures/01_declared_group_means.png",
+    "figures/02_matched_unknown_background.png",
+    "figures/03_mean_holdout_and_history_budget.png"
+  ],
+  "critical_tables": [
+    "tables/pair_summary.csv",
+    "tables/direct_pair_similarity.csv",
+    "tables/declared_group_similarity.csv",
+    "tables/declared_group_views.csv",
+    "tables/matched_unknown_summary.csv",
+    "tables/matched_control_support_bridge.csv",
+    "tables/matched_unknown_buildings.csv",
+    "tables/direct_mean_summary.csv",
+    "tables/mean_holdout_summary.csv",
+    "tables/mean_holdout_groups.csv",
+    "tables/mean_holdout_targets.csv"
+  ],
+  "exact_reproduction_tables": [
+    "tables/matched_unknown_candidates.csv.gz",
+    "tables/mean_prediction_values.csv.gz",
+    "tables/mean_feature_index.csv.gz",
+    "tables/mean_calibration_folds.csv",
+    "tables/direct_mean_prediction_values.csv.gz",
+    "tables/G130_G202_record_cases.csv"
+  ],
+  "exclude_from_delivery": [
+    "input/**",
+    "code/__pycache__/**",
+    "tables/mean_holdout_predictions.csv.gz"
+  ],
+  "reason_for_exclusions": "临时重复仓库输入与已由宽表替代的逐方法长缓存不交付；不含原图全集或环境。",
+  "new_fusion_calls": 0,
+  "new_room_clustering": false,
+  "external_validation_claimed": false
+}

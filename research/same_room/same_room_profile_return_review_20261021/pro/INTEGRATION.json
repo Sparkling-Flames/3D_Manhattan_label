@@ -1,0 +1,55 @@
+{
+  "package": "HOHONET_same_room_20261021",
+  "analysis_version": "same_room_quality_person_uncertainty_20261021_r1",
+  "main_commit": "561584c8f64d5349d497ec1c6e91f1aeb4bbd7c9",
+  "dot_fixed_head": "e83286b7814afc614253aa392050e9a3851ae058",
+  "dot_merged_at_acquisition": false,
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "label_version": "personnel_taxonomy_20261021_v1",
+  "label_correction": "CORRECTION_RECEIPT.json at fixed main",
+  "original_previous_archive_recovered": false,
+  "canonical_report": "REPORT_ZH.md",
+  "field_contract": "FIELD_CONTRACT.md",
+  "artifacts": [
+    "room_similarity",
+    "personal_similarity",
+    "native_teams",
+    "prior_integration",
+    "case_evidence",
+    "figures"
+  ],
+  "computations": {
+    "new_native_scored_teams": 45551,
+    "reused_exact_teams": 1,
+    "unique_teams": 45552,
+    "swap_view_events": 7032,
+    "selection_rows": 41194,
+    "additional_state_replays_same_teams": 2,
+    "online_geometry_calls": 1678,
+    "online_new_scores": 0,
+    "reused_saved_prefixes": 124924
+  },
+  "denominator_note": "teams, paths, overlapping declarations and person-pairs are not independent images or rooms",
+  "shared_keys": [
+    "object_id",
+    "image_id",
+    "image_code",
+    "reference_id",
+    "reference_version",
+    "pool_id",
+    "team_key",
+    "worker_id",
+    "heldout_building"
+  ],
+  "new_keys": [
+    "path_id",
+    "event_id",
+    "row_id",
+    "local_feature_key"
+  ],
+  "scope": "Manual ordinary comparable main; Semi, doorway, incomparable scopes separate",
+  "vote_eligibility_changed": false,
+  "score_changed": false,
+  "reference_changed": false,
+  "validation": "exploration and internal held-out evaluation, no new external validation"
+}

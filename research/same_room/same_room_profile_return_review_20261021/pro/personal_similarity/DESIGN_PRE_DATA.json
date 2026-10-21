@@ -1,0 +1,34 @@
+{
+  "schema": "personal_same_room_increment_design_v1",
+  "status": "written before current repository acquisition and outcome inspection",
+  "scope": "Existing adopted room declarations and direct relations only. Ordinary Manual main; Semi, doorway, scope-incomparable and quality-ineligible behavior kept separate.",
+  "primary_question": "Does a person's same-room performance contain reproducible information after subtracting source-view public quality and external stable personal quality?",
+  "source_features": {
+    "public": "Per source view, mean formal Q of other eligible workers, excluding the target worker; then mean over this worker's actually available source views.",
+    "external": "Worker's mean leave-one-peer quality residual on eligible ordinary tasks outside the target building; recomputed from actual records.",
+    "own_surprise": "mean(source Q - source other-worker Q) - external; zero means the source performance is explained by public room level and stable worker difference.",
+    "class_surprise": "Source same-class leave-worker-out quality beyond public source quality; class features are derived from the provided corrected building-excluded labels, never refit here. Expected external class effects will be separated when supported.",
+    "budgets": "All existing m>N/2 splits retained. Single-source direct pairs are a distinct budget and support, not an extension of the main denominator."
+  },
+  "descriptive_outputs": [
+    "Exact common-worker source/target Q, leave-worker-out residual, common-pool residual, rank, low-tail status, external historical level and residual surprise",
+    "Per-pair, per-declaration and per-person differences, correlations, signs, low-tail transition rates and actual support",
+    "Balanced common-worker by-view matrices for descriptive worker/view/interaction sum-of-squares decomposition; overlap and eligibility explicit"
+  ],
+  "prediction_families": [
+    "External absolute Q",
+    "Own source Q mean",
+    "Public source Q only",
+    "Fixed public + external relative Q",
+    "Fixed public + external + half own surprise",
+    "Building-excluded calibrated public/external baseline",
+    "Same calibrated baseline plus own surprise",
+    "Same calibrated baseline plus class source information",
+    "Same calibrated baseline plus own and class source information",
+    "Fixed shallow robust boosting as a nonlinear supplement, paired baseline and extended features",
+    "Building-excluded calibrated low-tail probability, baseline versus own/class increments"
+  ],
+  "validation": "Every fitted coefficient is learned outside the outer target building. Recomputed training personal-history features also exclude the outer target building and each training target building. Provided taxonomy labels for all rows are the outer target-building-excluded version. Exploration and internal building checks remain explicit, never represented as future external validation.",
+  "evaluation": "Common support within each comparison; source combinations average within target answer and history budget, then workers within image, images within building, buildings equally. MAE, bias, ranking, low-tail probability and worst-error strata remain distinct. Labels and outcomes are never chosen to improve target scores.",
+  "stopping_rule": "Complete these prespecified information comparisons, inspect group/person mechanisms and retain null or adverse increments; no repeated outcome-guided tuning until a positive result appears."
+}

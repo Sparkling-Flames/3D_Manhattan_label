@@ -1,0 +1,26 @@
+﻿topic,provenance_status,action_and_result,evidence,adoption
+旧47.1MiB原包及原请求库,旧原件未恢复,本轮未在工作区、main、固定PR及可搜索文件中找到；不从回复文本合成原始结果,RECOVERY_AND_CHANGELOG.csv,不冒充原件恢复
+既有房间原分类及直接关系,仓库原始证据引用,沿用20261016_v2，允许重叠，不补传递边,INPUT_INDEX.csv,保留
+旧7.24/16.38/0.261,本轮重建,逐对复算；7.24是共同人员均值差，不是实际池均值差,room_similarity/tables/pair_summary.csv,修正口径，保留事实
+全量两视角/多视角均值,本轮新增,123对64图；实际池/共同池/组成变化，未知背景严格匹配,room_similarity/tables/direct_pair_similarity.csv,保留为主结论
+平均Q多数历史,本轮重建及新增,全部m>N/2与单源；人员/难度校正公平比较,room_similarity/tables/mean_holdout_summary.csv,简单源均值采用
+全64图单源留出,本轮新增,两视角组进入实际留出用途,room_similarity/tables/direct_mean_prediction_values.csv.gz,采用
+个人同房相似性,本轮新增,公共水平/稳定个人/剩余项，逐组逐人证据,personal_similarity/information_decomposition_summary.csv,主解释修正
+个人预测强基线,本轮新增及Dot数值桥,同目标/本人可观察源图下P+theta为主,personal_similarity/prediction_summary.csv,采用
+旧类别0.303改善,旧原件未恢复；本轮重新比较,强基线上最高历史只改善0.067；广义单源与低尾不改善,personal_similarity/REPORT_ZH.md,不延续旧数字为主结论
+个人排序与G178/G057,本轮新增,半本人项整体MAE不改善，但排序/部分组有收益,personal_similarity/prediction_group_budget.csv,条件性保留
+G130/G202/G236原答,本轮新增,Release原图、同类反向定位变化、范围/公共视角变化,case_evidence/,保留
+G117两视角相同替换,本轮重建,相同核心/两人块原生执行，保存局部身份组票账,case_evidence/G117_repeat.json.gz,保留机制
+G015反向替换,本轮重建,固定评分与已有壁炉/简化GT解释分别保留,case_evidence/G015_reversal.json.gz,保留反例
+G205同7人全票终点,本轮重建,角数/票数相同，位置与Q不同,case_evidence/G205_position.json.gz,保留
+旧全量跨视角团队库,旧原件未恢复；本轮另建,45552唯一队、7032替换事件、41194策略行，非旧库原样恢复,native_teams/RUN_RECEIPT.json,采用新库并保留身份
+跨类历史Q作用,本轮新增,LOBO Q匹配、校准基线、固定嵌套人数,native_teams/SWAP_SUMMARY.csv,类别平均Q优势解释修正
+旧80.3%同向率,旧库未复核；本轮新增条件比较,源端阈值和双端阈值分开，复制幅度弱于零效应基线,native_teams/TRANSFER_SUMMARY.csv,双端率降为描述
+楼外/源图选队与Q/T,本轮重建研究问题及新增,更广同支持真实融合；报告劳动、失败、坏尾,native_teams/POLICY_SUMMARY.csv,楼外Q/T条件采用
+G172省时坏尾,本轮新增,已有两队补全状态，短边定位和方向损失解释,case_evidence/G172_time_bad_tail.json.gz,保留关键反例
+停止与人数旧成果,本轮重建,读取124924已保存前缀，19规则、全部实际m；原前缀非本轮新算,prior_integration/REBUILD_RECEIPT.json,保留
+Dot与Pro数字差,本轮重建桥,最小k、几何补收、完整子集、人员源预算分别对齐,prior_integration/dot_rule_bridge.csv,不强行统一
+旧省时30.40/24.97尾率,本轮重建修正解释,二者各自相对全员；源Q-k直接对固定7损失>5为16.03%,prior_integration/stopping_summary.csv,明确基准
+源历史取得劳动,本轮新增,按实际划分只计一次源原答，不按重放路径重复计,prior_integration/source_acquisition_summary.csv,已有历史与从零分开
+无目标GT在线停止,本轮新增,1678次原生几何、固定阈值；G046稳定错位平台,prior_integration/ONLINE_GEOMETRY_RECEIPT.json,本规则不作主策略
+旧曲线形状/单步回落其它全量指标,旧运行原件未恢复,本轮只保留可追溯原曲线和当前停止结果，未按旧回复补造其余数值,prior_integration/REPRODUCE.md,未复核内容不作主结论

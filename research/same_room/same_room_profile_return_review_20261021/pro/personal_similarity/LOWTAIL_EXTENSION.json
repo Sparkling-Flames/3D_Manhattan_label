@@ -1,0 +1,7 @@
+{
+  "reason": "The rich continuous risk model is not a sufficient strongest-baseline comparison. Add fixed simple public-plus-external, calibrated-Q, source-peer-risk and own-surprise logistic baselines once.",
+  "status": "new explicit internal extension after initial risk results; no changes or tuning of Q regressors",
+  "hyperparameter_selection": "none",
+  "outer_building_exclusion": true,
+  "final_fair_class_comparison": "Add the fixed existing class-source residuals and class indicators directly to (P,theta), with/without own surprise. Same C=1, outer-building isolation and no tuning. This closes the comparison rather than selecting a new model family."
+}

@@ -6,7 +6,8 @@
 
 - 2026-10-21：[人工查看六站总览](../research/statistics/review_progress_20261021/index.html)与[六线程验收](../research/statistics/review_progress_20261021/README.md)。统计归档、画像/组合展示、难度、质量与融合机制已验收；G046两端同角已获用户确认，G057局部预测尚未超过恒定概率基线。M01的GT错误排除原因与标法差异已分开记录。新分类已完成统计修正、工作采用与接入；同房新返回及PR独立审查已更新，详见[人员总体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
 
-- 2026-10-21同房接入：[同房独立补算源包](../research/same_room/same_room_independent_followup_20261021/README.md)与[研究台13表模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=same_room_review)。UTF-8、CATALOG与消费接口已补齐；G015固定GT，Pro新团队未验，接入分支待PR合并。
+- 2026-10-21同房接入：[同房独立补算源包](../research/same_room/same_room_independent_followup_20261021/README.md)与[研究台13表模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=same_room_review)。UTF-8、CATALOG与消费接口已补齐；G015固定GT。后续五包核验状态见下条。
+- 2026-10-21同房五包：[精简研究交付与独立核验](../research/same_room/same_room_profile_return_review_20261021/README.md)；报告、关键代码和支持表为普通文件，完整中间库的复现边界见包内说明。评分源码和关键逐目标表的[直接读取整理](../research/statistics/archive_layout_20261021/README.md)单列。
 
 - 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
 

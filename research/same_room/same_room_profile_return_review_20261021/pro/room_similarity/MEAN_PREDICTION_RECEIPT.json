@@ -1,0 +1,38 @@
+{
+  "commit": "561584c8f64d5349d497ec1c6e91f1aeb4bbd7c9",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "status": "本轮新增；既有多数历史均值直接预测按固定输入重建",
+  "primary_condition": "ordinary_manual",
+  "groups": 9,
+  "images": 44,
+  "budgets": "m=1 plus every integer floor(N/2)+1 ... N-1; all historical subsets enumerated",
+  "metrics": [
+    "B8L2",
+    "D10"
+  ],
+  "methods": [
+    "external_image_mean",
+    "outside_roster_mean",
+    "outside_peer_roster_mean",
+    "source_mean",
+    "roster_adjusted_source",
+    "peer_adjusted_source",
+    "known_difficulty_adjusted_source",
+    "calibrated_roster_only",
+    "calibrated_source_mean",
+    "calibrated_roster_source",
+    "calibrated_peer_roster_only",
+    "calibrated_peer_source"
+  ],
+  "target_quality_only_for_evaluation": true,
+  "calibration": "outer building excluded; train-row personnel histories also exclude own building; old training admission preserved; linear specifications fixed without tuning",
+  "mean_history": "only available worker histories averaged; coverage recorded; no observed Q imputation",
+  "known_difficulty": "conditional benchmark requiring adopted target difficulty; not a no-target-information deployment strategy",
+  "weighting": "history subsets within target-budget, groups within image, images within building, buildings equal",
+  "new_external_validation": false,
+  "source_cost": "history_records is number of reference-evaluated independent source answers, not a money or delivery-time estimate",
+  "raw_prediction_rows": 118248,
+  "unsupported_rows": 0,
+  "minimum_target_roster_history_coverage": 0.9705882352941176,
+  "method_discovery": "exploratory current-inventory comparison; relative-peer baselines added to challenge absolute-Q roster correction; not a preregistered external test"
+}
