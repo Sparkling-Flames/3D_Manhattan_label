@@ -1,4 +1,4 @@
-from tools.thesis_main.analysis.fusion_mechanism_followup_20261021 import support_first_partition, rescue_candidate, initialization_flag
+from tools.thesis_main.analysis.fusion_mechanism_followup_20261021 import support_first_partition, rescue_candidate, initialization_flag, mechanism_stage
 
 
 def test_larger_compatible_identity_wins_over_close_incompatible_fragments():
@@ -43,3 +43,16 @@ def test_reported_unchanged_is_not_promoted_to_verified_initialization():
          exact_initialization_bound=True,initialization_points=[[470.19199999999995,180.2288]],
          raw_final_points=[[470.192,180.2288]],correction_evidence={'initialization_error_type':'corner_duplicate'})
     assert initialization_flag(r)['evidence']=='confirmed_unchanged'
+
+
+def test_mechanism_trace_preserves_split_sources_and_missing_connection():
+    groups=[dict(feature_id=str(i),members=[dict(worker=w,source_pair_index=0)],
+                 support=1,selected=False,center=[[i,0],[i,1]]) for i,w in enumerate(['a','b'])]
+    state=dict(n=2,minimum_support=2,identity_groups=groups,node_consensus={'nodes':[]},
+               candidate={'points':None,'reason':'no_source_ring_covering_all_selected_nodes'},ring_diagnostics={})
+    objects={w:dict(object_id=w,worker_id=w,points_1024x512=[[1,2],[1,3]],reference_id='ref',reference_version='v') for w in ['a','b','c']}
+    result=mechanism_stage(state,['a','b'],{('a',0),('b',0)},objects,{'B8L2':None})
+    assert len(result['known_focal_observations_present'])==2
+    assert len(result['focal_groups'])==2
+    assert result['output_points'] is None and result['score']['B8L2'] is None
+    assert result['original_answers'][0]['points']==objects['a']['points_1024x512']

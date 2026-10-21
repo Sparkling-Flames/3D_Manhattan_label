@@ -1,6 +1,6 @@
 # 本轮交付与接续边界
 
-2026-10-21。主入口为[README](README.md)，机器字段为[FIELD_CONTRACT.json](FIELD_CONTRACT.json)。
+2026-10-21。主入口为[README](README.md)，结果定稿为[RESULTS](RESULTS.md)，机器字段为[FIELD_CONTRACT.json](FIELD_CONTRACT.json)。本轮授权的融合机制收尾已完成，研究台仍未修改。
 
 ## 完成内容
 
@@ -9,16 +9,17 @@
 3. q9-30最小自动候选恢复15票组，包含已审13份观察；保留zs相邻目标误合的失败方法、3条同角仍拆散的限制及Z6同角重复输出负例。现用共享融合和评分均未修改。
 4. 根据用户新判断查明Z6旧P1角点重复trap；检索1099份Semi既有证据，将25份确证历史未改（其中20份仍在当前池）与45份仅自报记录分开。完成来源叠图、逐份/逐图/团队清单，没有清洗作答或改变资格。
 5. 回填Z6人审原话并更新两张正式图的解释。没有新增待用户批量审核清单。
+6. 本次收尾复用上述保存状态，形成11条精确成员变化、16个去重展示状态的完整证据链及两张人员原答图，未新增团队。补看原答发现W113也在jtc局部画了近邻点，已将“没画”收窄为“原被归另一组”；采用局部表达及对应配置的解释，不由焦点组缺成员推定实体遗漏。
 
 ## 文件与复算
 
 - 专用工具：`tools/thesis_main/analysis/fusion_mechanism_followup_20261021.py`；测试：`tests/test_fusion_clique_candidate_20261021.py`。
 - 本包inputs保留最小案例、路径和楼外元数据选择，重复执行优先读仓库快照；外部原包只用于首次接入。
 - `python -m tools.thesis_main.analysis.fusion_mechanism_followup_20261021`：复放有限32团队、保存三方法及评分、制图和初始化证据检索。
-- `python -m tools.thesis_main.analysis.fusion_mechanism_followup_20261021 --figures-only`：复用已存方法状态，只检索初始化和制图。
-- `python -m pytest tests/test_fusion_clique_candidate_20261021.py -q`：5项针对性测试。
+- `python -m tools.thesis_main.analysis.fusion_mechanism_followup_20261021 --figures-only`：复用已存方法状态，整理机制证据链、检索初始化和制图；不重新融合或评分。
+- `python -m pytest tests/test_fusion_clique_candidate_20261021.py -q`：6项针对性测试。
 
-本轮32团队已完成计算；后续初始化检查与图注修订没有再次重跑团队。5项测试通过，正式图已经查看；结果CSV/JSON和本主题相对链接经定向检查。所有无完整来源环的评分保留缺失，没有补零。
+前轮32团队已完成计算；本次收尾没有再次重跑团队。6项测试通过，包含证据链保留拆散来源与无连接缺分的测试；正式新增人员图已经查看，结果CSV/JSON和本主题相对链接经定向检查。逐一核对16个展示状态的155次原答出现、130次焦点来源点对出现：原答坐标与当前逐份接口相同、来源点对索引与当前环序对应、票数与全N门槛一致、资格和参考保持；这些出现次数不是独立作答数量。11条对照的增加／退出人员及固定参考也已核对。所有无完整来源环的评分保留缺失，没有补零；没有重新评分。
 
 ## 不变的边界与未做检查
 
@@ -28,6 +29,8 @@
 
 ## 同步与接续
 
-已检查`docs/PROJECT_MAP_CLEAN_20260308.md`和`docs/README_INDEX.md`；此次只写本主题产物及专用脚本/测试。按本轮分工，全局目录、总体进度和展示接入由统筹同步，未覆盖其它线程在这些文件中的修改。`INTEGRATION.json`提供本主题接入摘要。
+已检查`docs/PROJECT_MAP_CLEAN_20260308.md`和`docs/README_INDEX.md`及现有目录记录；本包已有`MAT-fusion_mechanism_followup_20261021`登记。此次只写本主题产物、前轮主题README的接续状态及专用脚本/测试。按本轮分工，全局目录、总体进度和展示接入由统筹同步，未覆盖其它线程修改。`INTEGRATION.json`提供本主题接入摘要。
 
-下一步安全任务：人员解释复用e9z同配比、jtc同慢者背景及Uw固定核心对照；研究候选先留分支，若扩大验证，集中检查新救回节点。Semi须同时展示初始化证据和最终表达，不能把相同先验造成的重复误当多人独立发现新细节，也不能用简单删除trap来证明算法更好。现有Z6人审已足够解释本轮负例；无完整来源环的候选留待需要完整交付时再作排序。
+交由统筹合并的登记条目：在既有本包记录的关键入口中增加`research/fusion/fusion_mechanism_followup_20261021/RESULTS.md`，需要逐链回读时增加同目录`MECHANISM_CHAINS.json`及`MECHANISM_TRANSITIONS.csv`。其余PNG作为本包支撑图，无需另设主题；前轮README已注明接续完成，不用迁移历史结果。
+
+采用决定：局部补票、门槛失选、对应拆散、位置变化和Semi共享初始化重复已形成可追溯正反例，本专题按该范围收尾，不等待分类续研或自动算法完成。下一步由人员大团队结果引用现成机制解释；研究候选留分支，未审目标身份、全库发生频率与无完整来源环是明确限制，本轮不为此新增审核队列或继续修补。

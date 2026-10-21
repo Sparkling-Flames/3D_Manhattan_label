@@ -152,6 +152,77 @@ def rescue_candidate(baseline):
                 method='locked_selected_majority_clique_rescue_v1',search_nodes=visits,**assemble_fusion(groups,assignments))
 
 
+def mechanism_stage(state,object_ids,focus,objects,score):
+    """保留固定来源清单及其去向；未进入清单不推断为没画真实目标。"""
+    focal=[g for g in state['identity_groups'] if observations(g)&focus]
+    present=set().union(*(observations(g) for g in state['identity_groups']))
+    sources=[objects[oid] for oid in object_ids]
+    return dict(n=state['n'],threshold=state['minimum_support'],
+        team_workers=sorted(r['worker_id'] for r in sources),object_ids=object_ids,
+        known_focal_observations_present=sorted(present&focus),
+        focal_groups=[dict(feature_id=g['feature_id'],support=g['support'],selected=g['selected'],
+             center=g['center'],members=g['members'],
+             known_focal_members=sorted(observations(g)&focus)) for g in focal],
+        original_answers=[dict(object_id=r['object_id'],worker=r['worker_id'],points=r['points_1024x512']) for r in sources],
+        node_count=len(state['node_consensus']['nodes']),output_points=state['candidate']['points'],
+        connection_reason=state['candidate'].get('reason'),ring=state['ring_diagnostics'],
+        reference_id=sources[0]['reference_id'],reference_version=sources[0]['reference_version'],
+        score=score)
+
+
+def closeout_evidence(states,cases,objects):
+    stages={};transitions=[]
+    def focal(case):
+        p=case['panels'][1]
+        return set().union(*(observations(g) for g in normalized_state(p['state'])['identity_groups']
+                             if g['feature_id'] in p['focus_group_ids']))
+    def add(name,key,method,focus):
+        d=states[key]
+        if method=='assisted':
+            h=read(PREVIOUS/'LOCAL_REVIEW_CONTROL.json');state=normalized_state(h['state']);score=h['score']
+        else:state=d[method];score=d.get(method+'_score',{})
+        stages[name]=dict(team_key=key,method=method,image=d['request']['image'],condition=d['request']['condition'],
+                         **mechanism_stage(state,d['request']['object_ids'],focus,objects,score))
+    def connect(name,before,after,kind):
+        a,b=stages[before],stages[after]
+        transitions.append(dict(contrast=name,mechanism=kind,before=before,after=after,image=a['image'],condition=a['condition'],
+            members_before=a['team_workers'],members_after=b['team_workers'],
+            incoming=sorted(set(b['team_workers'])-set(a['team_workers'])),outgoing=sorted(set(a['team_workers'])-set(b['team_workers'])),
+            n_before=a['n'],n_after=b['n'],threshold_before=a['threshold'],threshold_after=b['threshold'],
+            known_sources_before=len(a['known_focal_observations_present']),known_sources_after=len(b['known_focal_observations_present']),
+            support_before=[g['support'] for g in a['focal_groups']],support_after=[g['support'] for g in b['focal_groups']],
+            selected_before=[g['selected'] for g in a['focal_groups']],selected_after=[g['selected'] for g in b['focal_groups']],
+            nodes_before=a['node_count'],nodes_after=b['node_count'],B8L2_before=a['score'].get('B8L2'),B8L2_after=b['score'].get('B8L2')))
+    e=cases['manual_e9z19_lowQ_complement'];j=cases['manual_jtc26_speed_complement'];u=cases['manual_Uw22_local_dilution']
+    for case,prefix in [(e,'e9z'),(j,'jtc'),(u,'Uw')]:
+        for i,p in enumerate(case['panels']):add(prefix+str(i),p['team_key'],'baseline',focal(case))
+    add('e9z_W107','e9z19_same_source_lowQ_W107','baseline',focal(e))
+    for method in ['baseline','candidate']:add('jtc_dropW128_'+method,'jtc26_4F1S_drop_W128',method,focal(j))
+    connect('e9z_same_ratio','e9z1','e9z_W107','same_ratio_specific_members')
+    connect('e9z_addition','e9z0','e9z1','local_vote_completion')
+    connect('e9z_threshold','e9z1','e9z2','unchanged_support_higher_threshold')
+    connect('jtc_swap','jtc0','jtc1','local_vote_completion')
+    connect('jtc_background','jtc1','jtc_dropW128_baseline','same_ratio_correspondence_splitting')
+    connect('jtc_repair','jtc_dropW128_baseline','jtc_dropW128_candidate','same_members_correspondence_control')
+    connect('Uw_position','Uw0','Uw1','position_before_node_loss')
+    connect('Uw_threshold','Uw1','Uw2','unchanged_support_higher_threshold')
+    key=next(k for k,d in states.items() if d['request']['image']=='q9vSo1VnCiC-30' and d['baseline']['n']==17)
+    human=read(PREVIOUS/'HUMAN_REVIEW.json')
+    focus={(m['worker'],m['source_pair_index']) for g in human['sources'] for m in g['members']}
+    for method in ['baseline','assisted','candidate']:add('q9_'+method,key,method,focus)
+    connect('q9_human_control','q9_baseline','q9_assisted','same_members_human_identity_control')
+    connect('q9_auto_control','q9_baseline','q9_candidate','same_members_automatic_candidate')
+    key=next(k for k,d in states.items() if d['request']['condition']=='semi' and d['baseline']['n']==11)
+    focus=set().union(*(observations(g) for g in states[key]['candidate']['identity_groups']
+                        if g['feature_id']=='node_001' or g['feature_id'].startswith('rescue_')))
+    for method in ['baseline','candidate']:add('semi_'+method,key,method,focus)
+    connect('semi_duplicate','semi_baseline','semi_candidate','same_target_duplicate_output')
+    save(OUT/'MECHANISM_CHAINS.json',dict(schema='fusion_mechanism_chains_v1',
+        expression_status='focal source membership is observed; physical absence is not inferred from nonmembership',
+        source='METHOD_STATES.json.gz; q9 assisted from previous LOCAL_REVIEW_CONTROL.json',stages=stages,transitions=transitions))
+    csv(OUT/'MECHANISM_TRANSITIONS.csv',pd.DataFrame(transitions))
+
+
 def run():
     OUT.mkdir(parents=True,exist_ok=True)
     evidence=read(ROOT/'research/statistics/v2_evidence_audit_20261019/records.json.gz')['records']
@@ -329,6 +400,7 @@ def figures():
     objects={x['object_id']:x for x in evidence}
     states=read(OUT/'METHOD_STATES.json.gz')
     cases={c['case_id']:c for c in [read(p) for p in (OUT/'inputs/pro_cases').glob('*.json')]}
+    closeout_evidence(states,cases,objects)
     jtc=cases['manual_jtc26_speed_complement'];e9z=cases['manual_e9z19_lowQ_complement']
 
     def target(case,panel_index=1):
@@ -390,6 +462,38 @@ def figures():
 
     paired_key=next(k for k,v in states.items() if v['request']['role']=='same_source_lowQ_entrant')
     paired_worker=states[paired_key]['request']['incoming_worker']
+    for case,workers,title in [(e9z,['W101',paired_worker],'e9z-19：相同背景下，具体新成员的原答不同'),
+                               (jtc,['W113','W106'],'jtc-26：原被替换者与补入者的原答')]:
+        p=case['panels'][1];focus=target(case)
+        fig,axes=plt.subplots(2,2,figsize=(12,7.2),gridspec_kw={'height_ratios':[1,1.1]})
+        for col,worker in enumerate(workers):
+            source=next(r for r in objects.values() if r['image_code']==case['meta']['image']
+                        and r['worker_id']==worker and r['condition']==case['meta']['condition'])
+            photo=np.asarray(Image.open(next(ROOT.glob('data/mp3d_layout/*/img/'+source['image_id']+'.png'))).convert('RGB'))
+            highlighted=[m for g in normalized_state(p['state'])['identity_groups'] for m in g['members']
+                         if (m['worker'],m['source_pair_index']) in focus and m['worker']==worker]
+            for row in range(2):
+                ax=axes[row,col];visual._erp_background(ax,photo)
+                visual._erp_edges(ax,source['points_1024x512'],'#23d6ff',linewidth=1.7,markers=True)
+                for m in highlighted:
+                    pair=np.asarray(m['points']);ax.plot(pair[:,0],pair[:,1],color='#ff8b27',lw=3)
+                if row:
+                    bounds=case['zoom_bounds'];ax.set_xlim(bounds[:2]);ax.set_ylim(bounds[3],bounds[2])
+                    indices=source['coordinate_evidence'].get('ordered_source_pair_indices')
+                    if indices is None:indices=range(len(source['points_1024x512'])//2)
+                    label_n=0
+                    for index,pair in zip(indices,np.asarray(source['points_1024x512']).reshape(-1,2,2)):
+                        if bounds[0]<=pair[0,0]<=bounds[1]:
+                            ax.annotate(f'P{index}: x={pair[0,0]:.1f}',xy=pair.mean(axis=0),xytext=(.03,.9-label_n*.16),textcoords='axes fraction',
+                                        fontsize=8,color='white',bbox=dict(facecolor='#142637',alpha=.8,edgecolor='none'),
+                                        arrowprops=dict(arrowstyle='-',color='white',lw=.7))
+                            label_n+=1
+                ax.set_xticks([]);ax.set_yticks([])
+            axes[0,col].set_title(worker+'完整当前处理作答：'+str(len(source['points_1024x512'])//2)+'对点',fontsize=11)
+            axes[1,col].set_title('固定焦点来源清单中'+str(len(highlighted))+'份观察；局部放大',fontsize=10)
+        fig.suptitle(title,fontsize=14)
+        fig.text(.03,.025,'青色=该人员全部原答连接；橙色=固定焦点清单内的点对。原答按当前处理点位及环序展示。\n未进入清单不自动证明没画真实目标；结合完整路径判断局部表达，不把算法身份组直接当物理真值。',fontsize=9)
+        fig.tight_layout(rect=(0,.10,1,.94));fig.savefig(OUT/('e9z_source_compare.png' if case is e9z else 'jtc_source_compare.png'),dpi=155);plt.close(fig)
     plot('e9z_same_ratio',[(e9z['panels'][1]['team_key'],'baseline','5H5L：加入W101'),
           (paired_key,'baseline','同来源、同5H5L：改加入'+paired_worker),
           (e9z['panels'][2]['team_key'],'baseline','原W101路径再加W031：5H6L')],e9z_target,e9z['zoom_bounds'],
