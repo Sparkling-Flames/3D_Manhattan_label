@@ -1,0 +1,1 @@
+本包解压到固定main仓库根目录；先读 research/workers/personnel_exchange_adoption_followup_20261022/运行与文件索引.md。大事件与旧端点按DOWNLOAD_MAP.csv单独取得，不在本包重复保存。真人v2，v3仅研究轮次。

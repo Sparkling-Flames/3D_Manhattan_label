@@ -1,0 +1,227 @@
+**本轮实质续研已完成，可以据此选分类、选换类方向和替换规模，人员分类主线可以收尾。**
+
+我确认了 **PR #23 已合并**，本轮以包含该 PR 的 `main` 提交 `8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235` 为接续基准，底层始终使用**真实数据 v2**。旧分类、旧选队收益、旧匹配替换结果分别保留；新增的是更充分的成员／背景覆盖、大团队换块、固定原队的规模路径，以及实际原图—票数—融合机制。
+
+这里的“三条主线”也没有被当成只能分三类：Manual 结构方案为三类；Manual 联合方案全数据描述为五类，实际楼外折有 **K4、K5、K6**；Semi 保留自身联合分类及结构三粗四细。旧 M、SP、A2、QTD、Rnew2、F01和跨条件方案继续按各自身份保留。
+
+先给主要文件：
+
+- **:chatgpt-content-reference{index="0"}[中文主报告：单文件阅读版，已嵌入案例图](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/人员分类主线_有效换类条件与采用判断.html)**
+- :chatgpt-content-reference{index="1"}[中文主报告 Markdown](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/人员分类主线_有效换类条件与采用判断.md)
+- **:chatgpt-content-reference{index="2"}[有效换类条件表：43个实际条件，含分母、风险和覆盖](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/有效换类条件表.csv)**
+- :chatgpt-content-reference{index="3"}[条件表精简版](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/有效换类条件表_精简.csv)
+- **:chatgpt-content-reference{index="4"}[全部下载清单](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/FILE_INDEX.md)**
+
+## 一、最终建议采用哪些条件
+
+下表的 Q 都是**三队共同可评分事件上的 C−B**，即跨类替换相对同类替换的净效果。改善比例按图片和建筑的平均效果统计，不用重复事件数代替独立支持。
+
+| 分类与换类方向 | 总人数／换人数 | 净 Q | 改善图片 | 改善建筑 | 建议 |
+|---|---:|---:|---:|---:|---|
+| **Manual 联合：换入历史 Q 较高、相对源类更快的目标类** | **20／4** | **+3.14** | **6/7** | **5/5** | **质量与时间兼顾的首选** |
+| Manual 联合：换入训练折最高历史 Q、相对较慢的目标类；阶段 B 新背景 | **20／4** | **+4.71** | **16/20** | **10/14** | **接受时间增加的质量优先方案** |
+| **Manual 结构：常规表达→较多转折** | **20／4** | **+1.69** | **96/120** | **14/16** | 覆盖较广的定向升质 |
+| 同一结构方向 | **20／7** | **+3.14** | **63/77** | **15/16** | 有容量时采用较大块 |
+| 同一结构方向，且13人背景中“较多转折”成员≤4人 | **20／7** | **+3.75** | **60/67** | **15/15** | **优先采用的背景条件** |
+| **Semi 自身联合：换入历史较快、Q较高的目标角色** | **12／4** | **+3.49** | **3/5** | **3/4** | 效率与质量兼顾 |
+| 同一 Semi 方向 | **14／3** | **+1.49** | **5/7** | **4/5** | 图片支持较广的效率方案 |
+
+时间方面，几条方向的用途很清楚：
+
+- **Manual 联合 n20/m4、较高 Q 且相对更快方向**：共同 ABC 内 C/B 记录时间约 **−1.56%**。按 C 相对 A/B 时间均值、全部可靠记录统计为 **−1.69%**。
+- **Manual 联合最高历史 Q、较慢方向**：对应约 **+7.16%／+7.20%**，适合以时间换质量。
+- **Manual 结构方向**：在质量与时间共同有效、同一记录来源的子集，m4 约 **+1.58%**，m7 约 **+2.13%**；主要用途是升质。
+- **Semi n12/m4、n14/m3**：记录时间分别约 **−10.09%、−5.68%**，各自支持中的所有图片都节时。
+
+这些时间均为**已有作答记录秒数按成员求和**，不是本轮实测生产工时。结构时间子集分别为50图和19图，没有把它们与120图、77图的质量分母混写。全部比较口径和分母保存在条件表字段说明.md[条件表字段说明](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/条件表字段说明.md)。
+
+## 二、“同类换人较近，跨类变化较大”在哪些条件成立
+
+这一问题现在有了具体答案，而且与“换类是否有益”分开判断。
+
+| 条件 | 同类绝对 Q 变化 | 跨类绝对 Q 变化 | 解释 |
+|---|---:|---:|---|
+| Manual 联合，n20/m4，较高 Q 且相对更快 | **3.30** | **4.61** | 6/7图、5/5楼支持跨类变化更大 |
+| Manual 联合，最高 Q 较慢方向，阶段 B n20/m4 | **3.86** | **8.04** | **17/20图、13/14楼**支持跨类变化更大 |
+| Manual 结构，n20/m4 | **3.08** | **3.60** | 12/16楼支持跨类变化更大 |
+| Manual 结构，n20/m7 | **3.26** | **4.10** | 11/16楼支持跨类变化更大 |
+| Semi 联合，n12/m4 | **5.17** | **4.54** | 主要支持效率和定向收益 |
+| Semi 联合，n14/m3 | **4.39** | **3.57** | 同类内部仍有较大质量波动 |
+
+Manual 联合使用两源对称的跨类幅度，结构沿用其原登记的 \(|C-A|\)，Semi 保留 A/B 双方向；具体定义在表中分别标注。这些方法的人群和背景也不同，因此这里用于识别**各自有效条件**，没有横向拼成统一排名。
+
+### 成员和背景的扩展，确实增加了证据
+
+**Manual 联合 n20/m4** 在21/27个可评分共同背景上平均升质，另一个背景的 C 全失败完整保留。去掉任一可变化目标成员后的有限子集中，楼均值仍为正，约 **+1.81到+5.05**；收益并非由唯一一个成员包办。
+
+**Manual 联合最高 Q 较慢方向**，阶段 A 后新增40个背景、21,000个物理 ABC。新背景中 **30/39个可评分背景正向**，所以推荐它有实际的背景重复依据。该条件属于阶段 A 发现后进行的新背景内部检查，报告没有称为全新建筑盲测。
+
+**Manual 结构 m7** 的背景作用尤其清楚：
+
+- D中较多转折成员≤4/13：60/67图、15/15楼改善，C没有失败。
+- D中已有5—8名较多转折成员：逐对净 Q 约 **−0.87**，仅4/11图改善。
+
+因此，结构类的实用规则是：**背景缺少这类表达时补入较多转折成员；已有较多支持时，不再默认继续增加同类席位。**
+
+此外，固定原队 A、沿同一成员路径从 m4 增至 m7，净效果平均增加 **+1.29 Q**，56/76张可比图、13/16楼正向。这补上了只比较不同图片支持上的 m4、m7均值所不能回答的问题。详细结果见REPORT_ZH.md[结构主报告](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/structure/REPORT_ZH.md)和MANUAL_JOINT_FINDINGS_ZH.md[Manual 联合主报告](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/manual_joint/MANUAL_JOINT_FINDINGS_ZH.md)。
+
+## 三、这些类别实际怎样标，粗类和连续特征分别有什么用
+
+### Manual 结构三类值得保留
+
+全数据描述标签中，简化型6人、常规表达34人、较多转折19人，另3人证据不足。
+
+- **简化型**：W008、W029、W030、W034、W035、W037。在复杂结构机会中更经常省去转折、合并短边。
+- **常规表达**：包括W100、W101、W103、W104、W106、W116、W128等。常见轮廓表达接近同伴中心，复杂机会中的转折相对少。
+- **较多转折**：包括W102、W109、W112、W115、W122、W126、W130等。同一复杂结构机会下，更常保留短转折和凹凸。
+
+复杂结构机会下，三类中心化转折历史约为 **−2.37、−0.55、+0.79**。较多转折类的近共线冗余并不最高，因而这个区分包含了“保留真实转折”和“增加冗余点”的区别，超出了总角点数。
+
+### 联合分类增加的是可操作的质量—时间角色
+
+Manual 全数据联合描述的五类为：
+
+| 描述角色 | 人数 |
+|---|---:|
+| 较快，仍保留部分复杂细节 | 10 |
+| 常规表达大类 | 23 |
+| 复杂结构简化 | 6 |
+| 较慢常规表达 | 9 |
+| 较高历史 Q、复杂转折较多 | 9 |
+
+最后一类的全数据成员为 **W002、W027、W102、W109、W112、W115、W122、W126、W130**。但“快”是相对源类而言：这一目标角色面对不同源类，可以承担“节时升质”或“增加时间换质量”两种用途。
+
+实际执行使用**逐折历史中心和逐折成员表**。全数据五类名单没有代替楼外标签，不同折的 J/K 编号没有直接拼接。
+
+### 连续 Q/T 仍然有价值
+
+在19,896个同原队锚点上，Manual 的“先限定目标类，再按 \(q-10t\) 排序”与不加类别约束的同一连续策略，选出了**完全相同的成员集合**。
+
+因此，本轮明确判断是：
+
+> 分类提供了可解释的目标池、替换方向和规模规则；在这些支持上，没有观察到它超出连续 QT10 的额外数值收益。
+
+n20/m4时，QT10相对同一原队约 **Q＋2.71、记录时间−4.12%**；只按历史 Q 选择约 **Q＋2.64、时间＋1.93%**。连续特征适合表达速度偏好和类内取舍。
+
+旧M父内细类、Semi结构细类、SP与A2仍保留。它们没有被强行拼成新的统一层级，也没有因为未包办所有用途而被删除。CLASSIFICATION_SCHEME_CATALOG.csv[分类方案总表](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/classification/CLASSIFICATION_SCHEME_CATALOG.csv)列明了各方案的输入、成员域、层级、支持与采用身份；ALL_METHOD_LABELS_ALL_DATA.csv[全数据逐人标签](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/classification/ALL_METHOD_LABELS_ALL_DATA.csv)和ALL_METHOD_LABELS_LOBO.csv.gz[楼外标签](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/classification/ALL_METHOD_LABELS_LOBO.csv.gz)可以单独下载。
+
+## 四、变化发生在哪里：已经用实际原图和票账解释
+
+### 1. Manual 联合 n20/m4：补足关键票，同时保留几何代价
+
+下面是真正来自 **Manual 结构＋Q/T联合分类** 的案例。固定16人背景，源类换入4名目标类成员：
+
+- 一个必要回折：背景7票，源块提供1票、目标块提供3票，支持 **8→10**。
+- 另一个必要回折：背景6票，源块提供0票、目标块提供4票，支持 **6→10**。
+- 两处共同背景的原观察集合完全相同，两个节点跨过门槛10。
+- 相对同类替换队 B，C的 **Q＋3.37、D10＋4.37、记录时间−0.70%**。
+- 同时，C仍比原队 A 低约1.02分，底面与三维分项有代价。
+
+
+
+
+
+
+
+这说明目标类提供了可追溯的结构补充，效果同时受到未入选的相邻结构和远端定位影响。MANUAL_JOINT_CASE_ZH.md[完整案例说明、精确成员和票账](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/manual_joint/mechanism_case/MANUAL_JOINT_CASE_ZH.md)已保存。
+
+### 2. 角点数不变，也能明显改善定位
+
+2t7-09的结构分类 n20/m4案例中，A/B/C都是四角，C−B却有：
+
+- Q约 **＋6.00**；
+- 三维代理约 **＋5.33**；
+- 底面IoU约 **＋0.042**；
+- 底点角误差约 **−0.55°**。
+
+总体结构实验中，m4/m7可比 B、C约 **91.6%／94.3%节点数相同**。所以这条分类的作用包含同点数下的位置、上下界与局部形状变化。
+
+### 3. 必要结构可以成套补足，也可能只补到一侧
+
+B6-47结构 n20/m7案例中，四个关键结构机会的支持约从 **6／9／8／8票**提高到 **12／10／12／14票**，门槛为10；B为6节点，C为10节点，净 Q约 **＋5.90**。
+
+同图另一个 m4失败案例则只补到薄墙一侧，另一侧观察分裂为3票和5票，均未过门槛；输出跨接边与另一条边相交，形成无效底面。它解释的是**结构成套支持与连接风险**。
+
+### 4. 人数改变可以通过门槛反转局部效果
+
+7y-03中固定X/Y/Z，只向共同背景加入W121，使n20变为n21。关键结构的观察和归组不变：
+
+- A/B仍有11票；
+- C仍有10票；
+- 门槛由10升到11。
+
+C的该节点失选，Q从 **95.50降到54.21**。这是明确的门槛机制；总体人数路径仍有多数正向，报告没有用这个反例否定整条分类。
+
+### 5. Semi既有纯节时，也有需要具体成员处理的低尾
+
+一个Semi n12/m4案例中，B/C几何和Q完全相同，记录时间却减少 **12.01%**。
+
+另一个n12/m3案例中，B到C的Q从96.62降到59.10；在同一个目标类中将W127换为W109、保留另外两名成员后，Q回升到84.35，记录时间再减少4.48%，但仍未达到原B。这说明类内成员信息能修正部分低尾。
+
+上述案例均有原答、ERP／BEV／3D、精确成员、观察归组、节点票与连接票。机制解释_原答到融合.md[机制总说明与案例入口](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/mechanisms/机制解释_原答到融合.md)可独立阅读。
+
+## 五、风险与条件边界已进入采用判断
+
+本轮没有因为个别反例取消多数成立的规律，但也保留了实际失败和明显损失：
+
+- **Manual 联合较快 n20/m4**：C有5/252个唯一端点失败；共同可评分事件中，对称损失超过10分的层级比例约 **0.27%**。
+- **最高历史Q较慢方向阶段B**：C为0/600失败，但源团队存在失败；对称损失超过10分约 **6.25%**。它的变化更强，代价和低尾也更大。
+- **结构 n20/m4、m7**：C层级失败约 **0.84%、0.52%**。困难图的收益和失败更集中，因此作为结构补充专项使用。
+- **Semi n12/m4**：可评分不同B/C对中，损失超过10分为 **53/2,718，约1.95%原始比例**；层级平衡后约1.09%。目标C没有失败，但源团队失败仍计入全部尝试。
+
+Semi主扩展总体为 **Q＋1.90、时间−7.23%**，4/7图、4/5楼同时改善，全部7图节时。它的同类绝对波动通常大于跨类波动，仍然可以按**效率与质量取舍**收尾。完整风险和分项见REPORT_ZH.md[Semi主报告](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/semi/REPORT_ZH.md)。
+
+## 六、完成量和枚举范围
+
+| 研究线 | 完整事件行 | 唯一物理 ABC |
+|---|---:|---:|
+| Manual 联合阶段 A | 81,221 | 81,221 |
+| Manual 联合阶段 B | 21,000 | 21,000 |
+| Manual 结构，含人数／规模路径 | 29,928 | 29,082 |
+| Semi 联合，含配置补齐 | 13,882 | 6,941 |
+| **合计** | **146,031** | **138,244** |
+
+总计覆盖 **130张不同图片、22栋楼、137个采集条件池、8,193个实际共同背景**。包含连续策略对照后，交付 **101,092个唯一端点**，其中101,031个本轮原生计算、61个历史精确复用。
+
+全量与有限枚举的边界也已写清：
+
+- **Manual联合**：484个冻结有限面板内部，完整枚举源两块分区和目标子集；全池组合没有穷尽。所选249个单元的6,895个可行背景人数向量中，实际覆盖399个。
+- **结构**：所选n20方向／规模下，正式域及同来源时间域合计 **3,073/3,073个可行ABC背景人数配置**已覆盖；具体成员与D按固定规则均衡覆盖。
+- **Semi**：**631/631个配置**已完成，8个小格完成具体成员与背景全枚举；其他格完成冻结有限储备内的源划分。
+- 全人员池的组合空间、未覆盖数量、未选单元与机会不足分别保存，没有把配置覆盖称为全部成员组合穷尽。
+
+上轮缺失的大文件也已恢复：**31份完整历史事件、437,518行，以及56份历史批次端点文件**，保留原阶段身份。COVERAGE_FINAL_ZH.md[覆盖报告](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/coverage/COVERAGE_FINAL_ZH.md)和HISTORICAL_DOWNLOAD_INDEX_ZH.md[历史完整下载清单](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/historical/HISTORICAL_DOWNLOAD_INDEX_ZH.md)均可单独取得。
+
+## 七、完整交付文件
+
+### 精简包
+
+- **HOHONET_20261022_报告标签关键表与代码.zip[报告、标签、关键表、冻结请求与代码 ZIP，56.25 MB](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/packages/HOHONET_20261022_报告标签关键表与代码.zip)**
+- **HOHONET_20261022_实际原图叠图与票账案例.zip[实际原图、叠图与票账案例 ZIP，30.37 MB](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/packages/HOHONET_20261022_实际原图叠图与票账案例.zip)**
+
+包内没有原图全集、虚拟环境或重复运行缓存；完整大事件和端点独立提供。
+
+### 完整逐事件表
+
+| 文件 | 行数 | 大小 |
+|---|---:|---:|
+| EVENTS_COMPLETE.csv.gz[Manual联合阶段A完整事件](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/manual_joint/EVENTS_COMPLETE.csv.gz) | 81,221 | 190.45 MB |
+| EVENTS_COMPLETE.csv.gz[Manual联合阶段B完整事件](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/manual_joint/phase_b_highq_slower/EVENTS_COMPLETE.csv.gz) | 21,000 | 32.93 MB |
+| EVENTS_COMPLETE.csv.gz[Manual结构完整事件](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/structure/EVENTS_COMPLETE.csv.gz) | 29,928 | 56.64 MB |
+| EVENTS_COMPLETE.csv.gz[Semi完整事件](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/semi/EVENTS_COMPLETE.csv.gz) | 13,882 | 21.17 MB |
+
+前三份同时提供 **18个不超过25 MiB的可选分片**，完整表与分片任选一种。各分片保留表头、行区间、SHA及顺序核对结果：README.md[分片说明](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/event_parts/README.md)。所有分片的直接链接在FILE_INDEX.md[总下载清单](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/FILE_INDEX.md)。
+
+### 端点、策略与复现
+
+- ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz[101,092个去重端点标量，含质量、时间与失败](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz)
+- ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz[配套完整几何端点](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz)
+- POLICIES_COMPLETE.csv.gz[Manual完整连续策略结果](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/manual_joint/POLICIES_COMPLETE.csv.gz)
+- CONTINUOUS_QT_COMPLETE.csv.gz[Semi连续Q/T对照](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/semi/CONTINUOUS_QT_COMPLETE.csv.gz)
+- :chatgpt-content-reference{index="29"}[复现与恢复说明](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/integration/reproduce/REPRODUCE_ZH.md)
+
+按你的要求，本轮是完成一池、一批、一条主线就保存，再合并完整表。交付前已核对分片与原表的完整行序、事件编号、端点键与几何对应，以及两个ZIP的内容校验值；失败记录完整保留。
+
+**研究判断已经明确：优先采用 Manual 联合 n20/m4、Manual 结构 n20/m4及背景目标类较少时的m7、Semi n12/m4或n14/m3。其他类别和规模保留各自的解释与补充用途，无需继续无止境增加分类才能完成这条主线。**
+
+最后有一项保存限制需要交代：**自动审批拒绝了将包含逐人成员、完整事件和端点的新研究包上传到长期文件库**，理由是当前授权没有明确覆盖该存储目的地。上述完整文件已经生成并可下载；若你希望同时长期保存，请明确授权：**“将本轮完整研究包保存到 ChatGPT 文件库。”**

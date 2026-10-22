@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v30_document_status_alignment",
+  "catalog_version": "research_catalog_20261022_v31_personnel_adoption_followup",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -10,7 +10,11 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
-          "text": "2026-10-22用户已说明Pro正在续研与整合；本地同步维护文档，远端由用户推送",
+          "text": "最新人员续研已返回：固定A、背景、Semi衔接与QT复核，阶段采用及交付补件",
+          "path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md"
+        },
+        {
+          "text": "已返回的本轮Pro任务依据；当前采用见人员续研入口",
           "path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md"
         },
         {
@@ -370,7 +374,11 @@
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
         {
-          "text": "2026-10-22用户已说明Pro正在续研与整合；本地同步维护文档，远端由用户推送",
+          "text": "最新人员续研已返回：固定A、背景、Semi衔接与QT复核，阶段采用及交付补件",
+          "path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md"
+        },
+        {
+          "text": "已返回的本轮Pro任务依据；当前采用见人员续研入口",
           "path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md"
         },
         {
@@ -11615,7 +11623,7 @@
       "source_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
       "current_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
       "source": "用户要求继续实质研究并整合最新成果；本地整理后由用户推送main",
-      "adoption_status": "用户已说明Pro正在继续研究；任务书作为接续依据，新结果按实际交付验收",
+      "adoption_status": "对应Pro已返回；任务正文保留历史，当前采用见personnel_exchange_adoption_followup_20261022",
       "verification_status": "are-you-sure自检后明确继续研究与文件整合并行；只做文档和引用核查，未新增实验",
       "availability": "本地main整理；由用户自行推送远端",
       "relationships": [
@@ -11639,6 +11647,25 @@
       "relationships": [
         "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
         "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel_adoption_followup_20261022",
+      "title": "人员分类与有效换类：实质续研、独立核查和阶段采用",
+      "theme": "workers",
+      "type": "续研来源包与独立核验",
+      "date": "20261022",
+      "source_path": "HOHONET_人员分类换类_本轮实质续研与采用_20261022.zip",
+      "current_path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md",
+      "source": "用户提供Pro最新32.3MB ZIP及完成说明；Dot审查为用户转述外部证据",
+      "adoption_status": "保留分类解释、变化区分、定向升质与质量时间取舍；背景硬阈值改为边际补充规律；旧全集交付待补",
+      "verification_status": "187文件读取，184清单路径/大小核对；1092ABC和3276端点、3220可评分端点公式、1448配对、固定A路径、19896成员一致、104储备312选择、13000行Semi主扩展已核；未全量原生融合/重新拟合",
+      "availability": "本地归档，远端由用户自行推送",
+      "relationships": [
+        "research/workers/personnel_exchange_adoption_followup_20261022/audit/LOCAL_INDEPENDENT_CHECK.json",
+        "tools/thesis_main/analysis/audit_personnel_adoption_20261022.py",
+        "tests/test_personnel_adoption_background_20261022.py",
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
       ]
     }
   ]

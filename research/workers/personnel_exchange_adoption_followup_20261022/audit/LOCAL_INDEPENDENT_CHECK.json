@@ -1,0 +1,174 @@
+{
+  "data": "real_v2",
+  "method": "saved member/endpoint relations, score formula and independent hierarchical aggregation",
+  "not_run": [
+    "native fusion",
+    "raw annotation to feature reconstruction",
+    "classification refitting",
+    "human image adjudication"
+  ],
+  "background_endpoints": {
+    "total": 3276,
+    "scored": 3220,
+    "unscored": 56,
+    "score_max_abs_error": 5.684341886080802e-14
+  },
+  "background_abc": {
+    "events": 1092,
+    "anchors": 78,
+    "images": 39,
+    "buildings": 15,
+    "common_scored": 1058,
+    "C_failed": 23,
+    "net_Q": 3.777573909579353,
+    "loss_gt5": 42,
+    "loss_gt10": 9
+  },
+  "background_gradient": {
+    "pairs": 1448,
+    "common_six_scored": 1397,
+    "A_change_B8L2": 0.5657323484931458,
+    "B_change_B8L2": 0.914916846013389,
+    "C_change_B8L2": 0.07424250447846076,
+    "net_change_B8L2": -0.8406743415349284,
+    "images_valid": 39,
+    "images_direction": 23,
+    "buildings_valid": 15,
+    "buildings_direction": 11
+  },
+  "fixed_A_paths": [
+    {
+      "source_role": "TURN/K3/E2",
+      "target_role": "TURN/K3/E3",
+      "m_from": 4,
+      "m_to": 5,
+      "paths": 18,
+      "common_paths": 18,
+      "C_direct": 0.05329415464380283,
+      "B_direct": 0.16624635413428837,
+      "net_direct": -0.11295219949048553,
+      "C_directions": {
+        "images_valid": 9,
+        "images_direction": 3,
+        "buildings_valid": 7,
+        "buildings_direction": 3
+      },
+      "net_directions": {
+        "images_valid": 9,
+        "images_direction": 4,
+        "buildings_valid": 7,
+        "buildings_direction": 3
+      }
+    },
+    {
+      "source_role": "TURN/K3/E2",
+      "target_role": "TURN/K3/E3",
+      "m_from": 4,
+      "m_to": 6,
+      "paths": 58,
+      "common_paths": 53,
+      "C_direct": -1.0175870780206626,
+      "B_direct": 0.08208136484099642,
+      "net_direct": -1.099668442861659,
+      "C_directions": {
+        "images_valid": 27,
+        "images_direction": 13,
+        "buildings_valid": 12,
+        "buildings_direction": 4
+      },
+      "net_directions": {
+        "images_valid": 27,
+        "images_direction": 16,
+        "buildings_valid": 12,
+        "buildings_direction": 5
+      }
+    },
+    {
+      "source_role": "TURN/K3/E2",
+      "target_role": "TURN/K3/E3",
+      "m_from": 4,
+      "m_to": 7,
+      "paths": 154,
+      "common_paths": 151,
+      "C_direct": 1.4052707108174285,
+      "B_direct": 0.11093785593538692,
+      "net_direct": 1.2943328548820414,
+      "C_directions": {
+        "images_valid": 76,
+        "images_direction": 59,
+        "buildings_valid": 16,
+        "buildings_direction": 11
+      },
+      "net_directions": {
+        "images_valid": 76,
+        "images_direction": 56,
+        "buildings_valid": 16,
+        "buildings_direction": 13
+      }
+    },
+    {
+      "source_role": "TURN/K3/E3",
+      "target_role": "TURN/K3/E2",
+      "m_from": 4,
+      "m_to": 5,
+      "paths": 40,
+      "common_paths": 40,
+      "C_direct": -0.4835382587837625,
+      "B_direct": 0.2717098357973382,
+      "net_direct": -0.7552480945811008,
+      "C_directions": {
+        "images_valid": 20,
+        "images_direction": 8,
+        "buildings_valid": 8,
+        "buildings_direction": 3
+      },
+      "net_directions": {
+        "images_valid": 20,
+        "images_direction": 7,
+        "buildings_valid": 8,
+        "buildings_direction": 1
+      }
+    },
+    {
+      "source_role": "TURN/K3/E3",
+      "target_role": "TURN/K3/E2",
+      "m_from": 4,
+      "m_to": 6,
+      "paths": 38,
+      "common_paths": 34,
+      "C_direct": 1.1175332576654793,
+      "B_direct": 0.3201710865595664,
+      "net_direct": 0.7973621711059129,
+      "C_directions": {
+        "images_valid": 18,
+        "images_direction": 13,
+        "buildings_valid": 8,
+        "buildings_direction": 6
+      },
+      "net_directions": {
+        "images_valid": 18,
+        "images_direction": 9,
+        "buildings_valid": 8,
+        "buildings_direction": 3
+      }
+    }
+  ],
+  "continuous_QT": {
+    "identical_anchors": 19896,
+    "candidate_blocks": 748,
+    "reservoirs": 104,
+    "choices_recomputed": 312,
+    "QT10_minus_uniform_Q": -0.4191594380304181,
+    "QT10_time_pct": -2.5336884874827432
+  },
+  "semi": {
+    "oriented_rows_in_received_link_table": 13000,
+    "physical_ABC": 6500,
+    "common_old_cells": 14,
+    "old_net_Q": 0.1532657099181728,
+    "new_net_Q_common_cells": 3.130149873200336,
+    "new_time_pct_common_cells": -9.339468781218141,
+    "case_7y13_backgrounds": 9,
+    "case_7y13_physical_ABC": 315
+  }
+}

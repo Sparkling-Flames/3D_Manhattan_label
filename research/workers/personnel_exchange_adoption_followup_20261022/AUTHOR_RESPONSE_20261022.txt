@@ -1,0 +1,215 @@
+**本轮已完成实质续研，并分阶段保存了报告、完整结果和代码。人员分类主线现在可以在当前真实 v2 数据范围内收尾：已经能够明确选分类、选换入角色、选替换规模，并说明质量、时间和背景的取舍。**
+
+本轮实际读取的最新 main 是 [`cf053a6e31d17393c0e8216ce15660fa37b8b7bb`](https://github.com/Sparkling-Flames/3D_Manhattan_label/commit/cf053a6e31d17393c0e8216ce15660fa37b8b7bb)。PR #23 已合并；最新难度、质量、融合、同房、画像和下载归档材料已纳入解释。**底层始终使用真实数据 v2，v3 仅指研究轮次。**
+
+先给出主要文件：
+
+- **中文主报告，可直接阅读：** 人员分类与换类_采用结论与实质续研.html[人员分类与换类_采用结论与实质续研.html](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/人员分类与换类_采用结论与实质续研.html)
+- **可编辑报告：** 人员分类与换类_采用结论与实质续研.md[人员分类与换类_采用结论与实质续研.md](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/人员分类与换类_采用结论与实质续研.md)
+- **直接用于选择研究条件：** 推荐条件_阅读表.csv[推荐条件_阅读表.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/integration/推荐条件_阅读表.csv)
+- **本轮报告、代码、表格和新增机制完整包，约 32.3 MB：** HOHONET_人员分类换类_本轮实质续研与采用_20261022.zip[HOHONET_人员分类换类_本轮实质续研与采用_20261022.zip](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/packages/HOHONET_人员分类换类_本轮实质续研与采用_20261022.zip)
+- **统一入口与复现说明：** 运行与文件索引.md[运行与文件索引.md](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/运行与文件索引.md)
+
+## 一、最终建议采用哪些换类条件
+
+以下均采用匹配的 A/B/C 设计：
+
+- A＝D＋X：原队；
+- B＝D＋Y：同类换人；
+- C＝D＋Z：跨类换人。
+
+**表中的净效果是 C−B，即相对同类替换的增益。** 平均效果按背景／成员面板、图片、建筑逐层汇总，最终建筑等权；不是把大量重复背景事件当成独立样本。
+
+| 用途 | 分类与换入方向 | 总人数 n／换人数 m | 净 Q | 净 D10 | 净 Q 改善图片／建筑 | 记录时间变化 |
+|---|---|---:|---:|---:|---|---:|
+| **质量与时间兼顾** | Manual 联合：换入较高历史 Q、相对源类更快的角色 | **20／4，20%** | **+3.142** | +3.218 | **6/7 图；5/5 楼** | **−1.565%** |
+| **时间换质量** | Manual 联合：换入本折最高历史 Q、相对较慢的角色 | **20／4，20%** | **+4.707** | +4.433 | **16/20 图；10/14 楼** | **+7.165%** |
+| **覆盖较广的结构升质** | Manual 结构：常规表达→较多转折 | **20／4，20%** | **+1.690** | +1.647 | **96/120 图；14/16 楼** | 可比子集约 +1.60% |
+| **较大结构块补充** | Manual 结构：常规表达→较多转折 | **20／7，35%** | **+3.141** | +2.882 | **63/77 图；15/16 楼** | 可比子集约 +2.20% |
+| **Semi 质量与效率** | Semi 自身联合：较高历史 Q、相对更快的目标角色 | **12／4，33.3%** | **+3.493** | +2.795 | **3/5 图；3/4 楼** | **−10.09%** |
+| **Semi 更广容量补充** | 同一角色方向家族 | **14／3，21.4%** | **+1.494** | +1.357 | **5/7 图；4/5 楼** | **−5.68%** |
+
+Manual 联合两条主方向的质量与时间使用共同 ABC 可评价支持。结构时间分别只有 **50 图／16 楼**和 **19 图／14 楼**，报告单列了时间分母。时间来自库存中可靠、可比的成员记录秒数之和，不是本轮新测的生产耗时。完整有符号变化、分项、失败、成员容量和背景范围均在推荐表及全部43条件_继承与采用更新.csv[全部43条件_继承与采用更新.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/integration/全部43条件_继承与采用更新.csv)中。
+
+我的采用判断是：
+
+- **Manual 联合 n20/m4 可以成为质量—时间研究的主条件。** 较快方向在 **22/27 个可评分背景**上净升质；最高 Q 较慢方向在 **29/39 个背景**上净升质。它们分别适合“兼顾质量和时间”与“愿意增加时间换质量”。
+- **结构 m7 值得保留为较大块替换。** 它有明显的群体升质价值，容量足够时可以采用；m4仍有更广的图片覆盖。
+- **Semi 可以按效率与条件性升质收尾。** n12/m4优先，n14/m3扩大容量；n16/m3保留为较大团队效率补充，不把质量支持较弱的条件包装成全面优胜。
+
+## 二、这些分类保留什么，各类人员怎样标
+
+本轮没有为了产生新结果重新全面搜类，也没有限制只能分三类。
+
+### Manual 结构三类继续采用
+
+| 工作类 | ALL 描述人数 | 实际标法与代表成员 |
+|---|---:|---|
+| **复杂结构明显简化** | 6 | W008、W029、W030、W034、W035、W037；复杂机会中明显少保留转折和短边 |
+| **常规转折表达** | 34 | 包括 W100、W104、W106、W116、W123、W128 等；接近同图常规表达，复杂机会略有简化 |
+| **较多转折与短细节** | 19 | 包括 W002、W027、W102、W109、W112、W115、W122、W126、W130 等；复杂机会中保留较多有效转折和短边，近共线冗余并不相应增加 |
+
+这三类解释的是**跨图表达倾向**。实际实验显示，它们的贡献既可以是必要结构补充，也可以是角点数不变时的定位和高度改善。
+
+### 联合分类承担组织与取舍用途
+
+Manual 结构＋Q/T 的 ALL 描述保留五类：较快适度转折、常规时间略简化、复杂结构明显简化、较慢常规转折、较高历史 Q 且较多细节。实际楼外折可以形成 **4、5或6类**，按角色语义对齐。
+
+较快 n20/m4 主实验中，目标角色实际覆盖的成员联合名单为：
+
+**W102、W109、W115、W122、W126、W130。**
+
+最高 Q 较慢方向另包含 **W112**。这里的“更快”是相对于该折源类的关系；不会把某一 ALL 类永久叫作快类。
+
+Semi 保留自己的结构三粗四细与自身联合分类。其中，**近共线分段较多**的一组为 W010、W014、W031、W037、W102、W130，与“较多真实转折”分开。它们都是多点表达，但表达含义不同。
+
+完整定义、所有成员及缺失状态见：
+
+- :chatgpt-content-reference{index="6"}[分类定义与完整ALL成员.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/integration/分类定义与完整ALL成员.csv)
+- :chatgpt-content-reference{index="7"}[分类方案_采用总表.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/integration/分类方案_采用总表.csv)
+
+旧 M、A2、SP、QTD、F01、Rnew2及真正使用同一人两条件历史的跨条件分类继续保留各自用途。**ALL名单用于描述人，效果评价使用对应目标建筑之外的标签。**
+
+## 三、本轮实质补上的三个问题
+
+### 1. 较大结构块是否真的让 C 队更好？——是，已经分解清楚
+
+固定原队 A，沿保存的嵌套成员路径从 m4 增至 m7。在 **151 条共同五端点可评分路径、76 图、16 楼**上：
+
+| 比较 | 平均 Q 变化 | 改善图片 | 改善建筑 |
+|---|---:|---:|---:|
+| **C7−C4** | **+1.405** | **59/76** | 11/16 |
+| B7−B4 | +0.111 | 38/76 | 7/16 |
+| 净优势增量 | **+1.294** | 56/76 | 13/16 |
+
+这次可以明确说：**在这些固定 A 的成员路径上，扩大到7人，多数图片中的 C 队本身提高了质量。**
+
+旧约 +1.337 的 C 变化采用另一个有效分母；本轮统一到五端点共同支持，三个量满足严格差值关系。m4→m6的另一支持子集没有同向收益，因此采用的是有证据的 m7 条件，而非“每多换一人都更好”。详见STRUCTURE_ADOPTION_REPORT_ZH.md[STRUCTURE_ADOPTION_REPORT_ZH.md](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/STRUCTURE_ADOPTION_REPORT_ZH.md)。
+
+### 2. 背景中已有更多转折类成员时，换类效果怎样变化？——边际优势通常减弱，主要是 B 改善
+
+旧背景两层的67图和11图，实际上只有一张共同图片。本轮补了真正的同图、同 XYZ 背景实验：
+
+- **39图、15楼**；
+- 每图两个历史预登记 XYZ 锚点，共78组；
+- XYZ固定，剩余14人中选13人作为 D，**每个锚点的14种背景全部计算**；
+- 共 **1,092 个物理 ABC**，其中1,014个为新 ABC；
+- 3,276个唯一端点中，**236个复用、3,040个补算**。
+
+固定前景 n20/m7，仅把 D 中一名常规成员换为较多转折成员，形成1,448个匹配背景对；其中1,397对共同六端点可评：
+
+| 背景增加一名目标类成员后 | 平均 Q 变化 |
+|---|---:|
+| A 自身 | +0.566 |
+| **B 自身** | **+0.915** |
+| C 自身 | +0.074 |
+| **换类净优势 C−B** | **−0.841** |
+
+净优势由 **4.460降至3.620**，**23/39图、11/15楼**减弱。
+
+**可以采用的规律是：背景已有更多该类表达时，大块换类的边际补充通常减弱；主要因为 B 得到改善，C平均仍略有提高。** 原先“背景不超过4人”的说法不再作为硬界限。
+
+同时，新背景空间整体仍支持这个换类方向：净 Q **+3.778**，**26/39图、13/15楼**提高。它并没有因为背景变化而失去实用价值。新增实验的时间来源不够统一，因此不新增效率结论。全部结果见新增规模与背景结果.csv[新增规模与背景结果.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/integration/新增规模与背景结果.csv)。
+
+
+
+结构换类_规模与背景效应.pngPNG
+
+
+
+### 3. 分类与连续 Q/T 怎么结合？——类别组织候选，连续特征选具体成员
+
+已完成同一 A、同一候选范围的比较：
+
+**19,896个锚点中，分类约束 QT10 与连续 QT10 选中了完全相同的成员。**
+
+因此，这里的分类价值是角色解释、候选容量和组织方式，没有额外的数值收益。无需继续调类来制造胜过连续特征的结论。
+
+本轮进一步在 **104个冻结目标储备、748个目标端点**内比较均匀选块与历史 Q/T 选块。n20/m4：
+
+- 均匀目标块相对 A：Q **+3.128**，时间 **−1.658%**；
+- QT10相对同一 A：Q **+2.709**，时间 **−4.150%**；
+- 因而相对均匀目标块，QT10是 **平均0.419分 Q 换额外2.534%的记录时间减少**。
+
+它相对原队仍然升质省时，只是在目标类内部进一步偏向效率。m3按 Q 选块则相对均匀目标块 **+0.581 Q、时间+0.937%**，8/10图、7/8楼有质量增益。
+
+这形成了可用的两层组织方式：**先用类别选换入角色，再用连续 Q/T 选具体成员并表达取舍。** 详见MANUAL_QT_ADOPTION_REPORT_ZH.md[MANUAL_QT_ADOPTION_REPORT_ZH.md](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/manual_qt_followup/MANUAL_QT_ADOPTION_REPORT_ZH.md)。
+
+## 四、Semi 的较大质量收益从哪里来，已经解释清楚
+
+旧28个事件的效率发现保留。把新旧结果对齐到旧14个“图片×类别方向×n×m”格，并使用统一权重：
+
+| 支持范围 | 净 Q | 记录时间 |
+|---|---:|---:|
+| 旧28事件、旧14格 | +0.153 | −8.58% |
+| **新成员／背景，只看旧14格** | **+3.130** | **−9.34%** |
+| 旧5图的全部新增规模／方向 | +2.056 | −7.55% |
+| 全部69格、7图5楼 | +1.898 | −7.23% |
+
+**主要质量增益已经在旧图片、旧规模中出现，来源是更充分的成员与背景支持；新增两张图片并非抬高总体平均值的原因。**
+
+7y-13、n12/m4是一个完整枚举例。目标块一直为 **W109/W115/W120/W127**：
+
+- 固定旧两个 D 和同一 Z，穷举源8人的35种无序分割，平均对称增益由旧路径的 **−5.368** 变为 **+4.952**；
+- 再覆盖全部9个 D，得到315个物理 ABC，平均 **+11.178**；
+- **9/9背景平均正向**，630个有向比较中389个正向。
+
+这解释了为何少量旧路径看不到后来出现的收益，也保留了具体成员组合造成的低尾。该例总分提高时，三维代理与底点分项仍有代价，报告没有把总分改善写成所有几何都改善。详见SEMI_ADOPTION_FINDINGS_ZH.md[SEMI_ADOPTION_FINDINGS_ZH.md](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/semi_followup/SEMI_ADOPTION_FINDINGS_ZH.md)。
+
+## 五、“同类换人较近、跨类变化较大”具体在哪些条件成立
+
+这个问题与“跨类是否有益”已经分开报告。
+
+- **Manual 联合较快 n20/m4：** 同类绝对 Q 变化 **3.303**，对称跨类变化 **4.608**；6/7图、5/5楼跨类幅度更大，同时净质量和时间均有收益。
+- **Manual 联合最高 Q 较慢 n20/m4：** 同类 **3.860**、对称跨类 **8.038**；17/20图、13/14楼跨类幅度更大，主要用途是时间换质量。
+- **结构 n20/m7：** 同类 **3.261**、跨类相对 A **4.100**；47/77图、11/16楼跨类幅度更大，而净质量改善达到63/77图、15/16楼。这里定向升质的证据比幅度分离更强。
+- **Semi n12/m4：** 同类 **5.173**、对称跨类 **4.541**，不支持同类普遍更稳定；其效率与定向收益仍可采用。
+
+不同方案的绝对变化定义在表中明确标出，未把对称跨类与单侧跨类混作同一个指标。
+
+风险也保留了实际分母。新背景实验中 C 失败 **23/1,092**；共同成功的1,058个 ABC 中，净损失超过5分为 **42个，3.97%**，超过10分为 **9个，0.85%**。这些反例用于说明条件与局部机制，并未否决多数图片、建筑上成立的方向。ABC_RISK_AND_MAGNITUDE.csv[ABC_RISK_AND_MAGNITUDE.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/background_gradient/ABC_RISK_AND_MAGNITUDE.csv)
+
+## 六、机制已经连接到实际标注、票数和融合
+
+本轮结论并不只依赖总 Q：
+
+- 结构 n20/m7 的净变化还包括三维代理 **+1.957**、底面 IoU **+0.0152**、底点角距 **−0.133°**，平均遗漏和外扩均下降。
+- 2t7-09的A/B/C都只有4个角点，但净 Q提高约 **5.995**，说明定位改善本身就有用途。
+- B6-47的较大转折块补足必要结构的局部支持，使多个机会跨过10票门槛；其中也存在旧观察重新分组。
+- 7y-03从20人增至21人时，关键结构仍为10票，门槛升至11票，导致结构退出及明显降质。
+- 无效底面与连接失败均保留原状态，没有修环后重新计作高分。
+
+新增的背景正反案例尤其直观：同一 XYZ、相同 n20/m7，仅换 D 中一人，C节点数都保持10个。
+
+- **W118→W112：** C提高 **16.239 Q**，净优势增加 **16.765**；包含旧观察重新并组。
+- **W125→W036：** C下降 **16.332 Q**，净优势减少 **16.948**；部分旧观察拆入未选组。W036历史上属于较多转折类，当图却只有4点对，解释了群体倾向与具体成员机会之间的差别。
+
+实际原图、ERP／BEV、精确成员及组票可直接取得：
+
+- :chatgpt-content-reference{index="14"}[background_net_gain.png](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/background_gradient/cases/background_net_gain.png)
+- :chatgpt-content-reference{index="15"}[background_net_loss.png](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/background_gradient/cases/background_net_loss.png)
+- :chatgpt-content-reference{index="16"}[LOCAL_GROUP_TRANSITIONS.csv](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/background_gradient/cases/LOCAL_GROUP_TRANSITIONS.csv)
+
+## 七、完整结果下载与接续
+
+上一轮作者文字所述的成果，这次已经从实际存在的文件中补齐，而不是只引用完成说明。**四份完整事件合计146,031行、138,244个物理ABC；101,092个唯一端点的标量与几何均可单独下载。**
+
+| 完整结果 | 文件 |
+|---|---|
+| Manual联合A，81,221行 | HOHONET_Manual联合A_完整事件_81221.csv.gz[HOHONET_Manual联合A_完整事件_81221.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_Manual联合A_完整事件_81221.csv.gz) |
+| Manual联合B，21,000行 | HOHONET_Manual联合B_完整事件_21000.csv.gz[HOHONET_Manual联合B_完整事件_21000.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_Manual联合B_完整事件_21000.csv.gz) |
+| Manual结构，29,928行 | HOHONET_Manual结构_完整事件_29928.csv.gz[HOHONET_Manual结构_完整事件_29928.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_Manual结构_完整事件_29928.csv.gz) |
+| Semi联合，13,882行 | HOHONET_Semi联合_完整事件_13882.csv.gz[HOHONET_Semi联合_完整事件_13882.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_Semi联合_完整事件_13882.csv.gz) |
+| 旧全集101,092个唯一端点 | HOHONET_端点标量_101092.csv.gz[HOHONET_端点标量_101092.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_端点标量_101092.csv.gz) · HOHONET_端点几何_101092.csv.gz[HOHONET_端点几何_101092.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_端点几何_101092.csv.gz) |
+| 本轮1,092个背景ABC | HOHONET_新增背景梯度_完整事件1092.csv.gz[HOHONET_新增背景梯度_完整事件1092.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_新增背景梯度_完整事件1092.csv.gz) |
+| 本轮3,276个关联端点 | HOHONET_新增背景梯度_端点标量3276.csv.gz[HOHONET_新增背景梯度_端点标量3276.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_新增背景梯度_端点标量3276.csv.gz) · HOHONET_新增背景梯度_端点几何3276.csv.gz[HOHONET_新增背景梯度_端点几何3276.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_新增背景梯度_端点几何3276.csv.gz) |
+| 本轮1,448个精确背景对 | HOHONET_新增背景梯度_精确配对1448.csv.gz[HOHONET_新增背景梯度_精确配对1448.csv.gz](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_adoption_followup_20261022/deliverables/HOHONET_新增背景梯度_精确配对1448.csv.gz) |
+
+继续接代码和旧机制时，使用：
+
+- HOHONET_20261022_报告标签关键表与代码.zip[HOHONET_20261022_报告标签关键表与代码.zip](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/packages/HOHONET_20261022_报告标签关键表与代码.zip)
+- HOHONET_20261022_实际原图叠图与票账案例.zip[HOHONET_20261022_实际原图叠图与票账案例.zip](sandbox:/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/packages/HOHONET_20261022_实际原图叠图与票账案例.zip)
+
+本轮包包含187个实际文件条目，报告链接已检查，压缩包完整性检查通过。下载文件到原仓库路径的映射、逐折标签、A/B/C与D/X/Y/Z关联、逐图／楼结果、分项分母和恢复命令均在统一索引中。
+
+**当前可以收尾的是分类的四种用途：标法解释、变化区分、定向升质、质量—时间取舍。** 本轮完成了选定范围内的背景穷举与实际成员分析；全池所有 XYZ、所有成员集合和所有顺序没有冒称穷尽。已有发现与旧选队收益各保留原阶段身份，后续可以直接从这些真实结果文件接续，无需再从摘要或缺件索引重新开始。

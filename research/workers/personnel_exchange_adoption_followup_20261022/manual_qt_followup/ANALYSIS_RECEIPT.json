@@ -1,0 +1,20 @@
+{
+  "new_main_commit": "cf053a6e31d17393c0e8216ce15660fa37b8b7bb",
+  "data_version": "v2",
+  "new_native_fusion_calls": 0,
+  "new_classification_fits": 0,
+  "global_policy_records": 79584,
+  "same_anchor_QT10_identity": 19896,
+  "frozen_target_panel_count": 104,
+  "frozen_target_block_records": 748,
+  "unique_target_endpoints": 748,
+  "finite_policy_anchor_rows": 79584,
+  "finite_selection_increment_rows": 59688,
+  "estimand": "P-A for all policies on same A; P-A minus uniform(C-A) for increments",
+  "aggregation": "anchors within D, D within image, images within building, buildings equal",
+  "selection_uses_target_quality": false,
+  "candidate_scope": "frozen target-class reservoir, not whole class",
+  "selection_history": "ACTUAL_MEMBER_LABELS.csv.gz q_history/t_history, identical to original policy ranking",
+  "quality_common_scope": "same A and all three history-selected endpoints have Q; uniform C conditioned on scored C",
+  "failures": "all registered candidates/selected endpoints retain failure rate independent of common Q mask"
+}
