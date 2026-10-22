@@ -1,0 +1,124 @@
+{
+  "study_id": "same_room_current_class_composition_20261023",
+  "repository_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "room_version": "same_room_user_working_classification_20261016_v2",
+  "classification": {
+    "main": "V3_BEHAVIOR/Manual/LOBO",
+    "control": "V3_JOINT_QT/Manual/LOBO",
+    "key": [
+      "method",
+      "condition",
+      "heldout_building",
+      "worker_id"
+    ],
+    "scope": "current frozen labels; no new clustering or label fitting"
+  },
+  "report": "REPORT_ZH.md",
+  "report_html": "REPORT_ZH.html",
+  "contract": "FIELD_CONTRACT.md",
+  "reproduce": "REPRODUCE.md",
+  "inputs": "source_index/INPUT_MANIFEST.json",
+  "frozen_engine_manifest": "source_index/FROZEN_INPUT_AND_CODE_MANIFEST.json",
+  "objects": {
+    "panel": {
+      "path": "design/PANELS.csv",
+      "key": [
+        "panel_id"
+      ]
+    },
+    "team_pair": {
+      "path": "design/PANEL_TEAM_LINKS.csv.gz",
+      "key": [
+        "panel_id",
+        "selected_mask"
+      ],
+      "team_joins": [
+        "team_key_a",
+        "team_key_b"
+      ]
+    },
+    "endpoint": {
+      "path": "results/native/ENDPOINT_SCALARS.csv.gz",
+      "parts_manifest": "results/native/PARTS_MANIFEST.json",
+      "key": [
+        "team_key"
+      ],
+      "observation_join": "member_object_ids",
+      "reference_join": "reference_id"
+    },
+    "exact_replacement": {
+      "key": [
+        "panel_id",
+        "mask_from",
+        "mask_to"
+      ],
+      "reconstruction": "code/inspect_event.py",
+      "actual_m": "half set symmetric difference; r is high-turn class net increase"
+    },
+    "budget_addition": {
+      "path": "results/budget/ADDITION_LINKS.csv.gz",
+      "key": [
+        "series_id",
+        "transition",
+        "selected_mask"
+      ]
+    },
+    "local_evidence": {
+      "path": "CASE_INDEX.csv",
+      "key": [
+        "case_id",
+        "side",
+        "phase"
+      ],
+      "geometry_coordinates": "frozen panorama1024x512 or per-view BEV camera-height h; no cross-camera registration"
+    },
+    "same_background": {
+      "path": "results/same_background/PRIMARY_ACTUAL_BACKGROUND_COMPARISONS.csv.gz",
+      "key": [
+        "panel_id",
+        "m",
+        "direction",
+        "shared_mask"
+      ],
+      "members": "actual_core",
+      "exact_links": [
+        "same_mask_pairs_json",
+        "cross_mask_pairs_json"
+      ]
+    },
+    "group_bridge": {
+      "path": "results/key_tables/SAME_ROOM_GROUP_OVERVIEW.csv",
+      "key": [
+        "group_id"
+      ],
+      "note": "prior and current supports retain separate columns"
+    }
+  },
+  "evidence_identity": "native saved outputs from new frozen-method experiments; summaries and diagnostic models use same bank, not external validation",
+  "actual_run": {
+    "panels": 1954,
+    "direct_pairs": 153,
+    "images": 106,
+    "buildings": 17,
+    "overlapping_groups": 37,
+    "native_unique_endpoints": 141260,
+    "complete_evaluable": 140123,
+    "not_complete_or_unscored": 1137,
+    "finite_design_replacement_events": 2140619,
+    "main_ordinary_panels": 309,
+    "main_ordinary_pairs": 118,
+    "main_ordinary_images": 59,
+    "main_ordinary_buildings": 11,
+    "main_ordinary_groups": 17
+  },
+  "prior": {
+    "ledger": "NEW_OLD_RESULTS_LEDGER.csv",
+    "byte_preserved_files": "prior/ADOPTED_FILES.json",
+    "old47MiB_original_recovered": false,
+    "dot_fixed_head": "e83286b7814afc614253aa392050e9a3851ae058"
+  },
+  "missing_policy": "retain unknown/failure/not_evaluable; never replace with Q=0, distance=0, or time=0",
+  "aggregation": "finite panel -> direct adopted pair -> overlapping user declaration -> building equal; raw counts separate",
+  "conditions": "new Manual; ordinary main, doorway/scope_different/other adoption state separate; no new unified Semi model",
+  "manual_review_needed": []
+}

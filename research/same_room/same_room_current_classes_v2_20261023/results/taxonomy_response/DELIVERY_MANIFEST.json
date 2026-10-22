@@ -1,0 +1,304 @@
+{
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "branch": "current structural composition vs actual members across directly adopted room views",
+  "status": "new analysis from frozen full native experiment; current labels/histories referenced unchanged",
+  "files": [
+    {
+      "path": "code/taxonomy_response/README.md",
+      "bytes": 5885,
+      "sha256": "b15b165ba72a6522a56c5a620515e4c9f26e4b01d4071c34615d67acd6b1e37c"
+    },
+    {
+      "path": "code/taxonomy_response/analyze_response.py",
+      "bytes": 27943,
+      "sha256": "e13d039b6dbf98333bd78bafe552594a94510e0408adcdeb4d8f6e984e03330a"
+    },
+    {
+      "path": "code/taxonomy_response/build_composition_cells.py",
+      "bytes": 4462,
+      "sha256": "8c2443459f349eab1c60ec4cdfa7fcff63a927308e16f31d9fdb166f0ca08a53"
+    },
+    {
+      "path": "code/taxonomy_response/calibrate_response.py",
+      "bytes": 11728,
+      "sha256": "36642efa2337ddee087c9dcf3dca09122b7701159b768a07d43fd69ac6b2fca8"
+    },
+    {
+      "path": "code/taxonomy_response/case_g015.py",
+      "bytes": 7152,
+      "sha256": "828b722860329dd1e48b81ef8ffd907abcb3f1ca247eff8025494e86f03394f9"
+    },
+    {
+      "path": "code/taxonomy_response/requirements.txt",
+      "bytes": 60,
+      "sha256": "d0066322d3ef6a963dfc3d2534ab36e16274c51b251f0aa9d5e6e4cdfab4504c"
+    },
+    {
+      "path": "code/taxonomy_response/summarize_response.py",
+      "bytes": 10513,
+      "sha256": "aa5f29d83714319da85fe0f37b28cb30db9145572e1345fa14d3259a4748fb00"
+    },
+    {
+      "path": "figures/G015_COMPOSITION_MEMBERS.png",
+      "bytes": 403727,
+      "sha256": "2b39d4b0d1577d14cb52c1ba6fae931376f2a259bf4139c7fb3ccd68a84b9afb"
+    },
+    {
+      "path": "figures/GROUP_COMPOSITION_MEMBER_REPEATABILITY.png",
+      "bytes": 407485,
+      "sha256": "c40fe361c26e75c3efd0f82ec846881e1fba1f8ff048978d2d42db9418ecff0b"
+    },
+    {
+      "path": "results/taxonomy_response/FINDINGS_ZH.md",
+      "bytes": 12200,
+      "sha256": "a33c45bb1fc1e29c93675835bd1b52f7776f197a2bd045bf6265948d240729d3"
+    },
+    {
+      "path": "results/taxonomy_response/METHOD_ZH.md",
+      "bytes": 8303,
+      "sha256": "c152219d8788e8d16f957c9e95a705d6fc5627dd080091b8d450ed83fe28570f"
+    },
+    {
+      "path": "results/taxonomy_response/README.md",
+      "bytes": 5885,
+      "sha256": "b15b165ba72a6522a56c5a620515e4c9f26e4b01d4071c34615d67acd6b1e37c"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/CALIBRATED_GROUP.csv.gz",
+      "bytes": 48818,
+      "sha256": "f86826131d8ae5056049b20081b4060afab0058df66bc2ed2f5d69b388ee907b"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/CALIBRATED_PANEL_RESULTS.csv.gz",
+      "bytes": 813569,
+      "sha256": "f1140125717cacba366ea605b8048701a0a0109b2145bd2c44b7490dcf8d4c29"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/CALIBRATED_SUMMARY.csv",
+      "bytes": 15679,
+      "sha256": "1f27da97de659e52a24e1c00b5caabab5656032b532ad53b6f9558a87b5af635"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/CALIBRATION_RECEIPT.json",
+      "bytes": 937,
+      "sha256": "eafda1a1140b854e73baf31d8885af843e7e6ca56804338b12c9ba02016b802b"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/FOLD_COEFFICIENTS.csv.gz",
+      "bytes": 24593,
+      "sha256": "9b5a98ae0b00219d674cdd5e093902cdf133a383d27957b66b9434de9ff36d2d"
+    },
+    {
+      "path": "results/taxonomy_response/calibration/FOLD_SUPPORT.csv",
+      "bytes": 2928,
+      "sha256": "e6351822237178bbf06db29521d387b1a1fe96ad9d1a51976145a8127254cdfd"
+    },
+    {
+      "path": "results/taxonomy_response/cases/CASE_G015_COMPOSITION_MEMBERS.csv.gz",
+      "bytes": 32883,
+      "sha256": "46b3db4c7fd97b1bf0053a0b94d2ad133d081a83a07de9a7f8a17faae78e548c"
+    },
+    {
+      "path": "results/taxonomy_response/cases/CASE_G015_PANEL_SUMMARY.csv",
+      "bytes": 1026,
+      "sha256": "92ead6b8d8221292845494edb6d50fa09a2b731ab8282f24cc701f770b3c2635"
+    },
+    {
+      "path": "results/taxonomy_response/cases/CASE_G015_SAME_CLASS_W104_W120.csv",
+      "bytes": 1184,
+      "sha256": "a441e6ce8cb14ef121d8d1f1938a062d6321873d1aa54b7670154dd94584a948"
+    },
+    {
+      "path": "results/taxonomy_response/inputs/LABELS_AND_HISTORIES_REQUIRED.csv.gz",
+      "bytes": 59918,
+      "sha256": "d049821c51a0143d9dca2f3e287320fc25072537bd670e56c4428d60beb5afb5"
+    },
+    {
+      "path": "results/taxonomy_response/inputs/REQUIRED_LABELS_RECEIPT.json",
+      "bytes": 1223,
+      "sha256": "97311c9b43b4508fa750a4cb670f7b533992e97a86a65b04ec0468459281c022"
+    },
+    {
+      "path": "results/taxonomy_response/results/ANALYSIS_RECEIPT.json",
+      "bytes": 2517,
+      "sha256": "e256c01a2204586d954bde965427b6c61f742fa436c48cf58726a4274df4fe7f"
+    },
+    {
+      "path": "results/taxonomy_response/results/COMPOSITION_DIRECTION_COUNTS.csv",
+      "bytes": 24808,
+      "sha256": "cea4dc1181b66c55d2f52a9f958bcf7d541778a4da21769f8b8d98c4cf18ff88"
+    },
+    {
+      "path": "results/taxonomy_response/results/COMPOSITION_DIRECTION_GROUP.csv.gz",
+      "bytes": 44224,
+      "sha256": "ddde036fcab74ec3617c99359100a8a0f7d9307d05a17e8a3ddf450a623be935"
+    },
+    {
+      "path": "results/taxonomy_response/results/COMPOSITION_DIRECTION_PANEL_PRIMARY.csv.gz",
+      "bytes": 347512,
+      "sha256": "9118dff22cf047479f2877c344e5d6db85c5365ddb28d1cc76bc976a7535903e"
+    },
+    {
+      "path": "results/taxonomy_response/results/COMPOSITION_DIRECTION_SUMMARY.csv",
+      "bytes": 53572,
+      "sha256": "034f0fd1e3fbdd34148a69ac9a4d5950b6201ca734af86795fb5a7cc4a1a5b21"
+    },
+    {
+      "path": "results/taxonomy_response/results/DECOMPOSITION_FAMILY_SUMMARY.csv.gz",
+      "bytes": 164203,
+      "sha256": "921c7cbd7eb58db2005b0c48d9147562ed1b5e56bcb336ef88df7d7243b97773"
+    },
+    {
+      "path": "results/taxonomy_response/results/DECOMPOSITION_GROUP.csv.gz",
+      "bytes": 830944,
+      "sha256": "7873358dd5b054c2bb2dfeb2297ee2978be9c8bde5f96077280416d8e2316277"
+    },
+    {
+      "path": "results/taxonomy_response/results/DECOMPOSITION_PAIR_N.csv.gz",
+      "bytes": 1645708,
+      "sha256": "cb934bef52bde6565b487e619e003e6ab13f488e8aa10f5a95b5227a53235fc9"
+    },
+    {
+      "path": "results/taxonomy_response/results/DECOMPOSITION_SUMMARY.csv.gz",
+      "bytes": 104023,
+      "sha256": "71c1f859caa66971e0b7a0f13cfd6ccdbf96129dd96398545679d744756d261e"
+    },
+    {
+      "path": "results/taxonomy_response/results/PAIRED_TEAM_RESPONSES_PRIMARY.csv.gz",
+      "bytes": 3185997,
+      "sha256": "777a8d1ccd9f4fef7c356d778627c90bcc152d2ce6ae68a5a46a1f5a74f07910"
+    },
+    {
+      "path": "results/taxonomy_response/results/PANEL_DECOMPOSITION_PRIMARY.csv.gz",
+      "bytes": 1200689,
+      "sha256": "26852415fd65161ebe4a74ac08853d9c9b01bb3e0b19a00623764e217bb9b485"
+    },
+    {
+      "path": "results/taxonomy_response/results/REPLICATE_COMPOSITION_CURVES.csv.gz",
+      "bytes": 481769,
+      "sha256": "639e8f28ecefa96601901459030fc58e44bfaa69219338e5b5a9c5ec749da595"
+    },
+    {
+      "path": "results/taxonomy_response/results/REPLICATE_GROUP.csv.gz",
+      "bytes": 69632,
+      "sha256": "78eadddfda998612f29992800b6735d0b34c538c1e98e688872d759d7c8f06df"
+    },
+    {
+      "path": "results/taxonomy_response/results/REPLICATE_MATCHED_COMPOSITION_CELLS.csv.gz",
+      "bytes": 645901,
+      "sha256": "cafc95e9c35525195b0adf3ea3c8c6ce23394cd77ac5ad70758faf2d5a630c8a"
+    },
+    {
+      "path": "results/taxonomy_response/results/REPLICATE_SUMMARY.csv",
+      "bytes": 51590,
+      "sha256": "3dda45e93ec69f461fc11db3ca69e94cf0f754b45943b07efdfc26ef67ddec42"
+    },
+    {
+      "path": "results/taxonomy_response/results/SOURCE_TRANSFER_PANEL_PRIMARY.csv.gz",
+      "bytes": 805099,
+      "sha256": "dbf63fa53c4291e3f41bc8c26b93497a8a6165ece1dd8a87cf53b568730bb92e"
+    },
+    {
+      "path": "results/taxonomy_response/results/SOURCE_TRANSFER_SUMMARY.csv",
+      "bytes": 115110,
+      "sha256": "741a580e9a361ea27a3ddbc59ab1a3492ff852bbdac86f6909c678008ace3d42"
+    },
+    {
+      "path": "results/taxonomy_response/summary/COMPOSITION_CELLS_PRIMARY.csv.gz",
+      "bytes": 1505875,
+      "sha256": "19f18483ad260e8c18515a8ff6f977b6bece97b069b6780b0c956438e4f07162"
+    },
+    {
+      "path": "results/taxonomy_response/summary/DECOMPOSITION_MEMBER_SUPPORTED_GROUP.csv.gz",
+      "bytes": 254841,
+      "sha256": "4d444fb3bd9ae14725ab6ebc4b6d79facecad5cff2dc3ba37d00ac64a727010e"
+    },
+    {
+      "path": "results/taxonomy_response/summary/DECOMPOSITION_MEMBER_SUPPORTED_SUMMARY.csv",
+      "bytes": 111986,
+      "sha256": "62d6e403d6a6afd1f810206937682b637a9b1d846475dcc3fc0dd5eba9358e7c"
+    },
+    {
+      "path": "results/taxonomy_response/summary/GROUP_PATTERN_PRIMARY.csv",
+      "bytes": 70027,
+      "sha256": "7b0c1b4a89f0584a22ac693791833fbff6b4743a40b043170e75f256071a05e4"
+    },
+    {
+      "path": "results/taxonomy_response/summary/GROUP_PATTERN_SUMMARY.csv.gz",
+      "bytes": 150429,
+      "sha256": "e16710639ee8139a18e9b2a41ed580e5c4b5334ae276991fbb021ef1f0420933"
+    },
+    {
+      "path": "results/taxonomy_response/summary/MODEL_COMMON_SUPPORT_COMPARISON.csv",
+      "bytes": 29851,
+      "sha256": "aa919f5aa077a27f2ba20204cb981f9773628c02e58691ff978f31d02217f660"
+    },
+    {
+      "path": "results/taxonomy_response/summary/MODEL_INCREMENT_BY_GROUP.csv",
+      "bytes": 47306,
+      "sha256": "5ab3bc7a203799d360fe4e2fd425ee44c62a3b7dc2de1e26e1c1a0b2056c2714"
+    },
+    {
+      "path": "results/taxonomy_response/summary/REPLICATE_CORRELATION_SUPPORT.csv",
+      "bytes": 20012,
+      "sha256": "87edeba5a55a239b32b2a4a9fb015ead14dff75b34818ce54ed08204c2d2e3d4"
+    },
+    {
+      "path": "results/taxonomy_response/summary/SAME_COMPOSITION_MEMBER_SPREAD_GROUP.csv",
+      "bytes": 42236,
+      "sha256": "45da8d8160a732c60bb251f9248b5bab87496b45eca77243ce1dda3d9f336fc6"
+    },
+    {
+      "path": "results/taxonomy_response/summary/SAME_COMPOSITION_MEMBER_SPREAD_PAIR.csv.gz",
+      "bytes": 65449,
+      "sha256": "3ce7122f34b6261d497d318ee27982ea95cf16354f8bc74cf7b4215036d00de6"
+    },
+    {
+      "path": "results/taxonomy_response/summary/SAME_COMPOSITION_MEMBER_SPREAD_SUMMARY.csv",
+      "bytes": 6074,
+      "sha256": "359215c9e3f7661e9cfcb766ee494c54ffe86516f0806971a05bfb7dd6f7d04d"
+    },
+    {
+      "path": "results/taxonomy_response/summary/SINGLE_MEMBER_CLASS_STRONG_REVERSALS.csv",
+      "bytes": 6674,
+      "sha256": "aced81819e6a473a6ac6d156acce2e539448b7b89abaf108d5264f04335c75b6"
+    },
+    {
+      "path": "results/taxonomy_response/summary/TIME_PREDICTION_PRIMARY.csv",
+      "bytes": 1956,
+      "sha256": "68780eac83798a95d510f7b2b0afe68babd0b950e0405985ae42c828852ce302"
+    },
+    {
+      "path": "results/taxonomy_response/summary/TIME_QUALITY_COMMON_SUPPORT_GROUP.csv",
+      "bytes": 19650,
+      "sha256": "112fea9069e3b1be915ec311533eff054d29741d2651acf0c8426ac4a9279373"
+    },
+    {
+      "path": "results/taxonomy_response/summary/TIME_QUALITY_COMMON_SUPPORT_PAIR.csv",
+      "bytes": 65030,
+      "sha256": "cf8feb2e8cca95049403d8741774aa7652b5ffef30f4fa99ed7b5f3298cda972"
+    },
+    {
+      "path": "results/taxonomy_response/summary/TIME_QUALITY_COMMON_SUPPORT_PANEL.csv",
+      "bytes": 80715,
+      "sha256": "22842882d30db9da6d682973a739e7d6b8cc909be5e6f0ee1d81f47db60f7068"
+    },
+    {
+      "path": "results/taxonomy_response/summary/TIME_QUALITY_COMMON_SUPPORT_SUMMARY.csv",
+      "bytes": 2804,
+      "sha256": "7c7c59ab888b3ef4591b1d5e6655f998b27e361de61dc9ac8eec878d8d633c7a"
+    }
+  ],
+  "total_bytes": 14162314,
+  "delivered_structure_pair_n_filter": "scheme=structure and support_domain=structure_all_known; all registered n, replicate, layers, and metrics preserved",
+  "not_delivered": [
+    "full 71126 paired rows duplicated from main native endpoints",
+    "all-n joint/structure cross-product pair summary",
+    "full temporary scalar/geometry pool caches",
+    "old exploratory partial and calibration_partial",
+    "temporary CALIBRATION_INPUT",
+    "font and original image collections"
+  ],
+  "read_mode": "Original analysis read all 106 completed pool checkpoints with --partial input path; all 1954 panels and 141260 endpoint requests complete",
+  "portable_input_check": "2108-row required Manual label/history subset copied as CSV field strings; parsed values match original columns exactly"
+}

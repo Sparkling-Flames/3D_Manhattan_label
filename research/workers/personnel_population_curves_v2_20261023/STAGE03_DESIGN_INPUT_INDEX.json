@@ -1,0 +1,238 @@
+{
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "data_release": "v2",
+  "design_complete": true,
+  "new_endpoint_computation": "running; status in separate checkpoints",
+  "exact_order_hash": "4e9094062d403397c4ac07635186b3b9df3e2d4f3b128548bf0491ed439111a9",
+  "inputs_match_latest_main": {
+    "ALL_METHOD_LABELS_LOBO.csv.gz": "322afaee576dbe4eed8a07436345f40cf3932d6c",
+    "FOLD_CLASS_DEFINITIONS.csv": "b8a06874bb749b7f663c3c15f9f6de4bd4163851"
+  },
+  "files": [
+    {
+      "file": "inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv",
+      "bytes": 217294,
+      "sha256": "fc2f624c5fd4a9c5c4c2a0072209a430d67a610c1d27ef2a3fcb4f53bc976137"
+    },
+    {
+      "file": "inputs/RAW_POOL_FEATURE_SUMMARY.csv",
+      "bytes": 1780817,
+      "sha256": "8b5a595627fbefec0f0aedf8d18ca19a2a9b728ddadc1341312fa1a199a0d1b6"
+    },
+    {
+      "file": "inputs/FOLD_CLASS_DEFINITIONS.csv",
+      "bytes": 247250,
+      "sha256": "aea5b6fe71e0605cfaad6011277736ea133fd1ee5c37195a0f93ba9f20a08d65"
+    },
+    {
+      "file": "inputs/REQUESTS_INITIAL.json.gz",
+      "bytes": 1421219,
+      "sha256": "d56f61f60d50c65d798e4241b1cc4ea6f7cd0c399180baa20dbbb0b985feec9e"
+    },
+    {
+      "file": "inputs/DIFFICULTY_AND_CURVE_CONTRACT.md",
+      "bytes": 7879,
+      "sha256": "63ff753c5aae846e2a54d13d2717c5040e5360b076aec56a31d57f55d86b710e"
+    },
+    {
+      "file": "inputs/HISTORICAL_UNIFORM_ORDERS.csv",
+      "bytes": 274402,
+      "sha256": "c263b6a682cf9f7394bd679664fe0b45d66c72e62ad0f517a3de541296feb3f1"
+    },
+    {
+      "file": "inputs/INPUT_SNAPSHOT.json.gz",
+      "bytes": 1464097,
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+    },
+    {
+      "file": "inputs/RAW_POOL_MEMBER_FEATURES.csv.gz",
+      "bytes": 668473,
+      "sha256": "6c5af5aef27838836d1ae77d45bb0029d695fe90bb16f1d1f6e854e4d1a116c8"
+    },
+    {
+      "file": "inputs/RECORD_ELIGIBILITY_TIME_LINK.csv.gz",
+      "bytes": 182216,
+      "sha256": "6e1aa55b7245d0b04fb3a537835aaa073caf12aab379863ca59a5e77d994ef72"
+    },
+    {
+      "file": "inputs/HISTORICAL_UNIFORM_PATH_LINKS.csv.gz",
+      "bytes": 1482181,
+      "sha256": "6b343354b3185bca04b236d22b16e3d56d5e2d6a03e24dadcaba10af87af990b"
+    },
+    {
+      "file": "inputs/POOL_DIFFICULTY_SUPPORT.csv",
+      "bytes": 96369,
+      "sha256": "8c80e93e1d25c2645fd30913f777e13204484aed1c95e41595e9b1b36df2740c"
+    },
+    {
+      "file": "inputs/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "bytes": 326510,
+      "sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21"
+    },
+    {
+      "file": "inputs/HISTORICAL_UNIFORM_PREFIX_ROWS.csv.gz",
+      "bytes": 10810678,
+      "sha256": "e82efbc21306ef5f6228176548f19056b692e8f008054898af5a381d11b4ef07"
+    },
+    {
+      "file": "design/ORDER_DESIGN_MANIFEST.json",
+      "bytes": 2175,
+      "sha256": "cdc41d856bb6083bed624f03e0df5a9a144f9c2ae90788b94b70850d543a227e"
+    },
+    {
+      "file": "design/POLICY_ROLE_OVERLAP.csv",
+      "bytes": 321291,
+      "sha256": "3316d1d9a9eb40574221974eda09f59e84b72d4d3e38a762e75b1d4c24df4d51"
+    },
+    {
+      "file": "design/CLASS_VECTOR_AXES_BY_POOL.csv",
+      "bytes": 111722,
+      "sha256": "b1d55ff78bf16e384b0abded2d21c733fe709c941fec804737e115b809296726"
+    },
+    {
+      "file": "design/POLICY_POOL_CAPACITY.csv",
+      "bytes": 690920,
+      "sha256": "d7cbaefb3f8ff788e112e23371bb6e83c14c95776127105ab8eaf9cfb4123ba6"
+    },
+    {
+      "file": "design/ENDPOINT_CLASS_VECTORS.csv.gz",
+      "bytes": 8050311,
+      "sha256": "6b14aa56aae15f739bcd052193d6b9ebff47b7791ac9855b7cb13ba8005b7763"
+    },
+    {
+      "file": "design/LEGACY_UNIFORM_ORDERS.csv.gz",
+      "bytes": 142674,
+      "sha256": "f7169959488b4f4a50442b369359c5a3c16304034ba03eb0d5c6592eafbfe2d9"
+    },
+    {
+      "file": "design/ORDER_COVERAGE.csv",
+      "bytes": 1758,
+      "sha256": "cfbc865c464dc46004aff6cc593d75da191aa7ffe1401d63b52b15757cc22f48"
+    },
+    {
+      "file": "design/POLICY_ROLE_OVERLAP_SUMMARY.csv",
+      "bytes": 2705,
+      "sha256": "54a85f786d2a5d39cd892ad8d29d099464b5db13c24d0f7a624d24a4a52f6cb1"
+    },
+    {
+      "file": "design/DESIGN_ZH.md",
+      "bytes": 8902,
+      "sha256": "0000952c1d4d8ac98bf156f49d209a2ed9d07ddf050bf7d8c051a29f5dbc7dce"
+    },
+    {
+      "file": "design/EXACT_ORDER_DESIGN.csv.gz",
+      "bytes": 950922,
+      "sha256": "4e9094062d403397c4ac07635186b3b9df3e2d4f3b128548bf0491ed439111a9"
+    },
+    {
+      "file": "design/LOBO_PRIORITY_ROLE_DEFINITIONS.csv",
+      "bytes": 88544,
+      "sha256": "f994710bc2db8004ceb34dc8a5924741e26c1ed8384e9e8c65f9713954c65a67"
+    },
+    {
+      "file": "design/CLASS_VECTOR_RECEIPT.json",
+      "bytes": 564,
+      "sha256": "2fad04f8b6ed32ff5b9f61f911240f79c5105a04fa1de40b977337274956d8a7"
+    },
+    {
+      "file": "design/ACTUAL_POOLS.csv",
+      "bytes": 112035,
+      "sha256": "7070468f740e3a4572c5161907c9d343a32e0d6a3671ba8783ec2792b425ed5f"
+    },
+    {
+      "file": "coverage/PREFIX_MEMBER_SPACE_COVERAGE.csv.gz",
+      "bytes": 336639,
+      "sha256": "64db89ac63d711631b72aff5e80ba8302b9f505a5a12534c38726570ef4cad4f"
+    },
+    {
+      "file": "coverage/ORDER_SPACE_COVERAGE.csv",
+      "bytes": 274113,
+      "sha256": "d8084affcddd072ecc8208c0377f10e5762a1040c3e72f51373e28cab2ebff42"
+    },
+    {
+      "file": "coverage/PREFIX_CLASS_VECTOR_COVERAGE.csv.gz",
+      "bytes": 944574,
+      "sha256": "a760e0ed5a30026bb9fd7b79c2dd4f99d171b871ca454b34fa687518e8641b0d"
+    },
+    {
+      "file": "coverage/SPACE_COVERAGE_RECEIPT.json",
+      "bytes": 445,
+      "sha256": "692713fd811739c3547fec8d997f47dc438d4f2cab4b1a5516a04933a765b645"
+    },
+    {
+      "file": "coverage/FORMAL_POOL_INVENTORY_COVERAGE.csv",
+      "bytes": 115477,
+      "sha256": "694f2d2560f07c6fc5905f27ed0ae0a6db011ce4ce0be4b095bf5374a595723d"
+    },
+    {
+      "file": "coverage/FORMAL_POOL_INVENTORY_RECEIPT.json",
+      "bytes": 337,
+      "sha256": "49cc5b03dfd60614ff032fb61a0b51fb962702ad63b1738ee383de2156b4990a"
+    },
+    {
+      "file": "code/enrich_cached_geometry.py",
+      "bytes": 5552,
+      "sha256": "05fef355595353455d283bd80a0c259ca0489cd8e52fa95a81daad073825a584"
+    },
+    {
+      "file": "code/run_prefix_endpoints.py",
+      "bytes": 13019,
+      "sha256": "2eafa516e1563662634b617646df2833d8edcd5093f3bc13d594aad963578a43"
+    },
+    {
+      "file": "code/coverage_space.py",
+      "bytes": 6772,
+      "sha256": "7e10332954bc2f4f6eca1f07d50d26a1c3dbd694fc1e85e50740c42e1602fbd7"
+    },
+    {
+      "file": "code/analyze_policy_curves.py",
+      "bytes": 28533,
+      "sha256": "7d92b9ef9e30d037043e65b7c8bb64a0cabfb52d86e03da064a9f4df2f9794be"
+    },
+    {
+      "file": "code/save_completed_pool_checkpoint.py",
+      "bytes": 3096,
+      "sha256": "3b4b1e06908c266e2921928a3077544e0164ebab4fa9456f1ddb8ba051dafc6c"
+    },
+    {
+      "file": "code/geometry_variation.py",
+      "bytes": 4913,
+      "sha256": "97a60dd19558dacd3f674d6cd0f96e178eea94f66683b6f5def8d1c58f39e542"
+    },
+    {
+      "file": "code/analyze_direct_policy_contrasts.py",
+      "bytes": 8184,
+      "sha256": "97cc0c7fa6d30d932bffe643b15d2286a03fac11dfdf84c9f811463b3e99cfe5"
+    },
+    {
+      "file": "code/register_population_orders.py",
+      "bytes": 11731,
+      "sha256": "c36e45b2e2b2539dfafb13b52638129387e170d7ecc3217811fa246a3b1b91a0"
+    },
+    {
+      "file": "code/analyze_natural_curves.py",
+      "bytes": 19832,
+      "sha256": "22c2791dfcb5b39f835bd03111d0235af660a6f996bc3c6af2e834e9250d1de1"
+    },
+    {
+      "file": "code/summarize_policy_components.py",
+      "bytes": 4448,
+      "sha256": "72c9c7489d2ec56b9a4e1d5774aed8751f7e099ac56e6fd10f4eb513032c02a6"
+    },
+    {
+      "file": "code/build_endpoint_class_vectors.py",
+      "bytes": 4087,
+      "sha256": "662f0361e2149c09ecc6fdda74d0ad9a6d5e338eb9985d9846aae21a78624e6c"
+    },
+    {
+      "file": "code/order_policies.py",
+      "bytes": 9743,
+      "sha256": "34fa2af2b30d4c798ce9aca066d02a2d8e4ac3c29a88d972bc73e9487336a7bc"
+    },
+    {
+      "file": "code/build_annotations.py",
+      "bytes": 7652,
+      "sha256": "c97acba2c7889d1590adeb3923045081aca5a05f3523775f1661fd0d4a65b8a9"
+    }
+  ]
+}

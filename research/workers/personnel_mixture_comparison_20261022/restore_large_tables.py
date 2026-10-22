@@ -4,8 +4,8 @@ from pathlib import Path
 import shutil
 
 
-def main():
-    root = Path(__file__).resolve().parent
+def main(root=None):
+    root = Path(root) if root is not None else Path(__file__).resolve().parent
     manifest = json.loads((root / "LARGE_TABLE_STORAGE.json").read_text(encoding="utf-8"))
     for item in manifest["files"]:
         target = root / item["path"]
@@ -25,4 +25,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, help='含 LARGE_TABLE_STORAGE.json 的研究包目录')
+    main(parser.parse_args().root)

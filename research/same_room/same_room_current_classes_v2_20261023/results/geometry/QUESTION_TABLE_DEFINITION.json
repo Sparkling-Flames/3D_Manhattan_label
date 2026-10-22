@@ -1,0 +1,22 @@
+{
+  "source_input": "/workspace/scratch/0640d80a5c3a/work/geometry_transfer/PANEL_M_R_GEOMETRY_SUMMARY.csv.gz",
+  "completed_panels": 1954,
+  "attempted_exact_adjustments": 2140619,
+  "primary_condition": "ordinary comparable Manual; replicate 0; n=max(3,k,min(N-k,floor(N/2)))",
+  "secondary_conditions": "ordinary_all_n retains all budgets and replicates; nonordinary strata use doorway_involved, scope_different, other_adoption_state, in that priority order",
+  "matched_comparison": "ordinary_mid_common_m1_panels restricts the one-member r=0/r=1 comparison to the same panels with both adjustment types; all primary data remain separately reported",
+  "selected_family": "TURN/JOINT are internal families of adopted V3_BEHAVIOR; here JOINT combines E/R/G structural-behavior axes, not independent V3_JOINT_QT quality/time taxonomy. No family is removed from the primary result.",
+  "r0": "same high/low class counts, actual member replacement",
+  "r_positive": "net increase in historically more-turn class; pure class block only when r=m",
+  "weighting": "finite-event summary within panel/m/r -> equal panels within direct image pair -> equal pairs within adopted group -> equal groups within building -> equal buildings",
+  "overlap": "original groups may overlap; expansion preserves adoption and is not a count of independent rooms",
+  "support_counts": "unweighted finite-event counts before group expansion; group-level support may overlap",
+  "missing": "each metric uses only panels with that metric; supported panel/pair/group/building counts retained",
+  "percentile": "panel_p90_mean is hierarchy-weighted mean of finite-event panel p90s, not pooled p90",
+  "correlations": "descriptive panel correlations arithmetically averaged, not inference or pooled correlation",
+  "position_small": "mean corresponding BEV distance <=0.02 camera heights; unique same-count correspondence in both views",
+  "unequal_count": "unavailable for matched-corner distance; never assigned zero or a large sentinel distance",
+  "geometry": "two within-view before/after comparisons; no cross-camera geometry registration",
+  "time": "no time-cost comparison added here",
+  "distance_means": "Per-view means use each view own valid same-count comparisons; geometry effect gap and position-state rates use joint valid correspondence. Their supports can differ."
+}

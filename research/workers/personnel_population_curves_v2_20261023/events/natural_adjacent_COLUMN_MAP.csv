@@ -1,0 +1,204 @@
+﻿dataset,input_position,event_column,action,arm,endpoint_key_column,endpoint_column,restore_expression,reason
+natural_adjacent,1,pool_id,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,2,image,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,3,image_id,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,4,building,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,5,condition,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,6,layer,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,7,difficulty,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,8,pool_n,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,9,path_id,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,10,k,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,11,team_key,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,12,k_previous,keep,previous,team_key_previous,k,ENDPOINT_SCALARS[team_key_previous].k,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,13,team_key_previous,keep,previous,team_key_previous,team_key,ENDPOINT_SCALARS[team_key_previous].team_key,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,14,threshold_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,15,threshold_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,16,threshold_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,17,B8L2_previous,keep,previous,team_key_previous,B8L2,ENDPOINT_SCALARS[team_key_previous].B8L2,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,18,B8L2_current,keep,current,team_key,B8L2,ENDPOINT_SCALARS[team_key].B8L2,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,19,B8L2_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,20,D10_previous,keep,previous,team_key_previous,D10,ENDPOINT_SCALARS[team_key_previous].D10,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,21,D10_current,keep,current,team_key,D10,ENDPOINT_SCALARS[team_key].D10,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,22,D10_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,23,iou_2d_previous,link_endpoint,previous,team_key_previous,iou_2d,ENDPOINT_SCALARS[team_key_previous].iou_2d,repeated raw endpoint measurement; event change retained
+natural_adjacent,24,iou_2d_current,link_endpoint,current,team_key,iou_2d,ENDPOINT_SCALARS[team_key].iou_2d,repeated raw endpoint measurement; event change retained
+natural_adjacent,25,iou_2d_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,26,IoU3D100_previous,link_endpoint,previous,team_key_previous,IoU3D100,ENDPOINT_SCALARS[team_key_previous].IoU3D100,repeated raw endpoint measurement; event change retained
+natural_adjacent,27,IoU3D100_current,link_endpoint,current,team_key,IoU3D100,ENDPOINT_SCALARS[team_key].IoU3D100,repeated raw endpoint measurement; event change retained
+natural_adjacent,28,IoU3D100_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,29,S_bottom_deg_previous,link_endpoint,previous,team_key_previous,S_bottom_deg,ENDPOINT_SCALARS[team_key_previous].S_bottom_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,30,S_bottom_deg_current,link_endpoint,current,team_key,S_bottom_deg,ENDPOINT_SCALARS[team_key].S_bottom_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,31,S_bottom_deg_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,32,dir_previous,link_endpoint,previous,team_key_previous,dir,ENDPOINT_SCALARS[team_key_previous].dir,repeated raw endpoint measurement; event change retained
+natural_adjacent,33,dir_current,link_endpoint,current,team_key,dir,ENDPOINT_SCALARS[team_key].dir,repeated raw endpoint measurement; event change retained
+natural_adjacent,34,dir_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,35,Hmean_previous,link_endpoint,previous,team_key_previous,Hmean,ENDPOINT_SCALARS[team_key_previous].Hmean,repeated raw endpoint measurement; event change retained
+natural_adjacent,36,Hmean_current,link_endpoint,current,team_key,Hmean,ENDPOINT_SCALARS[team_key].Hmean,repeated raw endpoint measurement; event change retained
+natural_adjacent,37,Hmean_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,38,Hcenter_previous,link_endpoint,previous,team_key_previous,Hcenter,ENDPOINT_SCALARS[team_key_previous].Hcenter,repeated raw endpoint measurement; event change retained
+natural_adjacent,39,Hcenter_current,link_endpoint,current,team_key,Hcenter,ENDPOINT_SCALARS[team_key].Hcenter,repeated raw endpoint measurement; event change retained
+natural_adjacent,40,Hcenter_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,41,height_mean_ratio_previous,link_endpoint,previous,team_key_previous,height_mean_ratio,ENDPOINT_SCALARS[team_key_previous].height_mean_ratio,repeated raw endpoint measurement; event change retained
+natural_adjacent,42,height_mean_ratio_current,link_endpoint,current,team_key,height_mean_ratio,ENDPOINT_SCALARS[team_key].height_mean_ratio,repeated raw endpoint measurement; event change retained
+natural_adjacent,43,height_mean_ratio_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,44,omission_previous,link_endpoint,previous,team_key_previous,omission,ENDPOINT_SCALARS[team_key_previous].omission,repeated raw endpoint measurement; event change retained
+natural_adjacent,45,omission_current,link_endpoint,current,team_key,omission,ENDPOINT_SCALARS[team_key].omission,repeated raw endpoint measurement; event change retained
+natural_adjacent,46,omission_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,47,extension_previous,link_endpoint,previous,team_key_previous,extension,ENDPOINT_SCALARS[team_key_previous].extension,repeated raw endpoint measurement; event change retained
+natural_adjacent,48,extension_current,link_endpoint,current,team_key,extension,ENDPOINT_SCALARS[team_key].extension,repeated raw endpoint measurement; event change retained
+natural_adjacent,49,extension_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,50,nodes_previous,keep,previous,team_key_previous,nodes,ENDPOINT_SCALARS[team_key_previous].nodes,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,51,nodes_current,keep,current,team_key,nodes,ENDPOINT_SCALARS[team_key].nodes,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,52,nodes_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,53,reference_node_shortfall_previous,link_endpoint,previous,team_key_previous,reference_node_shortfall,ENDPOINT_SCALARS[team_key_previous].reference_node_shortfall,repeated raw endpoint measurement; event change retained
+natural_adjacent,54,reference_node_shortfall_current,link_endpoint,current,team_key,reference_node_shortfall,ENDPOINT_SCALARS[team_key].reference_node_shortfall,repeated raw endpoint measurement; event change retained
+natural_adjacent,55,reference_node_shortfall_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,56,ref_node_recall_5_previous,link_endpoint,previous,team_key_previous,ref_node_recall_5,ENDPOINT_SCALARS[team_key_previous].ref_node_recall_5,repeated raw endpoint measurement; event change retained
+natural_adjacent,57,ref_node_recall_5_current,link_endpoint,current,team_key,ref_node_recall_5,ENDPOINT_SCALARS[team_key].ref_node_recall_5,repeated raw endpoint measurement; event change retained
+natural_adjacent,58,ref_node_recall_5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,59,ref_node_recall_9_previous,link_endpoint,previous,team_key_previous,ref_node_recall_9,ENDPOINT_SCALARS[team_key_previous].ref_node_recall_9,repeated raw endpoint measurement; event change retained
+natural_adjacent,60,ref_node_recall_9_current,link_endpoint,current,team_key,ref_node_recall_9,ENDPOINT_SCALARS[team_key].ref_node_recall_9,repeated raw endpoint measurement; event change retained
+natural_adjacent,61,ref_node_recall_9_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,62,ref_edge_recall_5_previous,link_endpoint,previous,team_key_previous,ref_edge_recall_5,ENDPOINT_SCALARS[team_key_previous].ref_edge_recall_5,repeated raw endpoint measurement; event change retained
+natural_adjacent,63,ref_edge_recall_5_current,link_endpoint,current,team_key,ref_edge_recall_5,ENDPOINT_SCALARS[team_key].ref_edge_recall_5,repeated raw endpoint measurement; event change retained
+natural_adjacent,64,ref_edge_recall_5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,65,ref_edge_recall_9_previous,link_endpoint,previous,team_key_previous,ref_edge_recall_9,ENDPOINT_SCALARS[team_key_previous].ref_edge_recall_9,repeated raw endpoint measurement; event change retained
+natural_adjacent,66,ref_edge_recall_9_current,link_endpoint,current,team_key,ref_edge_recall_9,ENDPOINT_SCALARS[team_key].ref_edge_recall_9,repeated raw endpoint measurement; event change retained
+natural_adjacent,67,ref_edge_recall_9_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,68,candidate_unassigned_pair_n_previous,link_endpoint,previous,team_key_previous,candidate_unassigned_pair_n,ENDPOINT_SCALARS[team_key_previous].candidate_unassigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,69,candidate_unassigned_pair_n_current,link_endpoint,current,team_key,candidate_unassigned_pair_n,ENDPOINT_SCALARS[team_key].candidate_unassigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,70,candidate_unassigned_pair_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,71,B8_floor_block_previous,link_endpoint,previous,team_key_previous,B8_floor_block,ENDPOINT_SCALARS[team_key_previous].B8_floor_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,72,B8_floor_block_current,link_endpoint,current,team_key,B8_floor_block,ENDPOINT_SCALARS[team_key].B8_floor_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,73,B8_floor_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,74,B8_direction_block_previous,link_endpoint,previous,team_key_previous,B8_direction_block,ENDPOINT_SCALARS[team_key_previous].B8_direction_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,75,B8_direction_block_current,link_endpoint,current,team_key,B8_direction_block,ENDPOINT_SCALARS[team_key].B8_direction_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,76,B8_direction_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,77,B8_global_height_block_previous,link_endpoint,previous,team_key_previous,B8_global_height_block,ENDPOINT_SCALARS[team_key_previous].B8_global_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,78,B8_global_height_block_current,link_endpoint,current,team_key,B8_global_height_block,ENDPOINT_SCALARS[team_key].B8_global_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,79,B8_global_height_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,80,B8_local_height_block_previous,link_endpoint,previous,team_key_previous,B8_local_height_block,ENDPOINT_SCALARS[team_key_previous].B8_local_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,81,B8_local_height_block_current,link_endpoint,current,team_key,B8_local_height_block,ENDPOINT_SCALARS[team_key].B8_local_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,82,B8_local_height_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,83,B8_height_block_previous,link_endpoint,previous,team_key_previous,B8_height_block,ENDPOINT_SCALARS[team_key_previous].B8_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,84,B8_height_block_current,link_endpoint,current,team_key,B8_height_block,ENDPOINT_SCALARS[team_key].B8_height_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,85,B8_height_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,86,D10_direction_block_previous,link_endpoint,previous,team_key_previous,D10_direction_block,ENDPOINT_SCALARS[team_key_previous].D10_direction_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,87,D10_direction_block_current,link_endpoint,current,team_key,D10_direction_block,ENDPOINT_SCALARS[team_key].D10_direction_block,repeated raw endpoint measurement; event change retained
+natural_adjacent,88,D10_direction_block_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,89,source_time_total_seconds_previous,keep,previous,team_key_previous,source_time_total_seconds,ENDPOINT_SCALARS[team_key_previous].source_time_total_seconds,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,90,source_time_total_seconds_current,keep,current,team_key,source_time_total_seconds,ENDPOINT_SCALARS[team_key].source_time_total_seconds,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,91,source_time_total_seconds_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,92,target_time_total_seconds_previous,keep,previous,team_key_previous,target_time_total_seconds,ENDPOINT_SCALARS[team_key_previous].target_time_total_seconds,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,93,target_time_total_seconds_current,keep,current,team_key,target_time_total_seconds,ENDPOINT_SCALARS[team_key].target_time_total_seconds,"retain Q/D10, nodes, time, identity or failure/support state for direct reading"
+natural_adjacent,94,target_time_total_seconds_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,95,bottom_y_mean_px_previous,link_endpoint,previous,team_key_previous,bottom_y_mean_px,ENDPOINT_SCALARS[team_key_previous].bottom_y_mean_px,repeated raw endpoint measurement; event change retained
+natural_adjacent,96,bottom_y_mean_px_current,link_endpoint,current,team_key,bottom_y_mean_px,ENDPOINT_SCALARS[team_key].bottom_y_mean_px,repeated raw endpoint measurement; event change retained
+natural_adjacent,97,bottom_y_mean_px_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,98,centroid_x_h_previous,link_endpoint,previous,team_key_previous,centroid_x_h,ENDPOINT_SCALARS[team_key_previous].centroid_x_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,99,centroid_x_h_current,link_endpoint,current,team_key,centroid_x_h,ENDPOINT_SCALARS[team_key].centroid_x_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,100,centroid_x_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,101,centroid_z_h_previous,link_endpoint,previous,team_key_previous,centroid_z_h,ENDPOINT_SCALARS[team_key_previous].centroid_z_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,102,centroid_z_h_current,link_endpoint,current,team_key,centroid_z_h,ENDPOINT_SCALARS[team_key].centroid_z_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,103,centroid_z_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,104,floor_WQ_previous,link_endpoint,previous,team_key_previous,floor_WQ,ENDPOINT_SCALARS[team_key_previous].floor_WQ,repeated raw endpoint measurement; event change retained
+natural_adjacent,105,floor_WQ_current,link_endpoint,current,team_key,floor_WQ,ENDPOINT_SCALARS[team_key].floor_WQ,repeated raw endpoint measurement; event change retained
+natural_adjacent,106,floor_WQ_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,107,floor_WQ_upper_bound_previous,link_endpoint,previous,team_key_previous,floor_WQ_upper_bound,ENDPOINT_SCALARS[team_key_previous].floor_WQ_upper_bound,repeated raw endpoint measurement; event change retained
+natural_adjacent,108,floor_WQ_upper_bound_current,link_endpoint,current,team_key,floor_WQ_upper_bound,ENDPOINT_SCALARS[team_key].floor_WQ_upper_bound,repeated raw endpoint measurement; event change retained
+natural_adjacent,109,floor_WQ_upper_bound_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,110,floor_area_camera_h2_previous,link_endpoint,previous,team_key_previous,floor_area_camera_h2,ENDPOINT_SCALARS[team_key_previous].floor_area_camera_h2,repeated raw endpoint measurement; event change retained
+natural_adjacent,111,floor_area_camera_h2_current,link_endpoint,current,team_key,floor_area_camera_h2,ENDPOINT_SCALARS[team_key].floor_area_camera_h2,repeated raw endpoint measurement; event change retained
+natural_adjacent,112,floor_area_camera_h2_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,113,floor_edge_min_h_previous,link_endpoint,previous,team_key_previous,floor_edge_min_h,ENDPOINT_SCALARS[team_key_previous].floor_edge_min_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,114,floor_edge_min_h_current,link_endpoint,current,team_key,floor_edge_min_h,ENDPOINT_SCALARS[team_key].floor_edge_min_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,115,floor_edge_min_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,116,floor_redundant5_n_previous,link_endpoint,previous,team_key_previous,floor_redundant5_n,ENDPOINT_SCALARS[team_key_previous].floor_redundant5_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,117,floor_redundant5_n_current,link_endpoint,current,team_key,floor_redundant5_n,ENDPOINT_SCALARS[team_key].floor_redundant5_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,118,floor_redundant5_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,119,floor_short_edge_03_n_previous,link_endpoint,previous,team_key_previous,floor_short_edge_03_n,ENDPOINT_SCALARS[team_key_previous].floor_short_edge_03_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,120,floor_short_edge_03_n_current,link_endpoint,current,team_key,floor_short_edge_03_n,ENDPOINT_SCALARS[team_key].floor_short_edge_03_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,121,floor_short_edge_03_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,122,floor_short_edge_05_n_previous,link_endpoint,previous,team_key_previous,floor_short_edge_05_n,ENDPOINT_SCALARS[team_key_previous].floor_short_edge_05_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,123,floor_short_edge_05_n_current,link_endpoint,current,team_key,floor_short_edge_05_n,ENDPOINT_SCALARS[team_key].floor_short_edge_05_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,124,floor_short_edge_05_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,125,height_drop_WQ_previous,link_endpoint,previous,team_key_previous,height_drop_WQ,ENDPOINT_SCALARS[team_key_previous].height_drop_WQ,repeated raw endpoint measurement; event change retained
+natural_adjacent,126,height_drop_WQ_current,link_endpoint,current,team_key,height_drop_WQ,ENDPOINT_SCALARS[team_key].height_drop_WQ,repeated raw endpoint measurement; event change retained
+natural_adjacent,127,height_drop_WQ_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,128,height_drop_current_previous,link_endpoint,previous,team_key_previous,height_drop_current,ENDPOINT_SCALARS[team_key_previous].height_drop_current,repeated raw endpoint measurement; event change retained
+natural_adjacent,129,height_drop_current_current,link_endpoint,current,team_key,height_drop_current,ENDPOINT_SCALARS[team_key].height_drop_current,repeated raw endpoint measurement; event change retained
+natural_adjacent,130,height_drop_current_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,131,height_loss_previous,link_endpoint,previous,team_key_previous,height_loss,ENDPOINT_SCALARS[team_key_previous].height_loss,repeated raw endpoint measurement; event change retained
+natural_adjacent,132,height_loss_current,link_endpoint,current,team_key,height_loss,ENDPOINT_SCALARS[team_key].height_loss,repeated raw endpoint measurement; event change retained
+natural_adjacent,133,height_loss_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,134,height_max_h_previous,link_endpoint,previous,team_key_previous,height_max_h,ENDPOINT_SCALARS[team_key_previous].height_max_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,135,height_max_h_current,link_endpoint,current,team_key,height_max_h,ENDPOINT_SCALARS[team_key].height_max_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,136,height_max_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,137,height_mean_h_previous,link_endpoint,previous,team_key_previous,height_mean_h,ENDPOINT_SCALARS[team_key_previous].height_mean_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,138,height_mean_h_current,link_endpoint,current,team_key,height_mean_h,ENDPOINT_SCALARS[team_key].height_mean_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,139,height_mean_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,140,height_min_h_previous,link_endpoint,previous,team_key_previous,height_min_h,ENDPOINT_SCALARS[team_key_previous].height_min_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,141,height_min_h_current,link_endpoint,current,team_key,height_min_h,ENDPOINT_SCALARS[team_key].height_min_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,142,height_min_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,143,height_sd_h_previous,link_endpoint,previous,team_key_previous,height_sd_h,ENDPOINT_SCALARS[team_key_previous].height_sd_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,144,height_sd_h_current,link_endpoint,current,team_key,height_sd_h,ENDPOINT_SCALARS[team_key].height_sd_h,repeated raw endpoint measurement; event change retained
+natural_adjacent,145,height_sd_h_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,146,ref_assigned_pair_n_previous,link_endpoint,previous,team_key_previous,ref_assigned_pair_n,ENDPOINT_SCALARS[team_key_previous].ref_assigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,147,ref_assigned_pair_n_current,link_endpoint,current,team_key,ref_assigned_pair_n,ENDPOINT_SCALARS[team_key].ref_assigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,148,ref_assigned_pair_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,149,ref_bottom_pair_max_deg_previous,link_endpoint,previous,team_key_previous,ref_bottom_pair_max_deg,ENDPOINT_SCALARS[team_key_previous].ref_bottom_pair_max_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,150,ref_bottom_pair_max_deg_current,link_endpoint,current,team_key,ref_bottom_pair_max_deg,ENDPOINT_SCALARS[team_key].ref_bottom_pair_max_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,151,ref_bottom_pair_max_deg_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,152,ref_bottom_pair_mean_deg_previous,link_endpoint,previous,team_key_previous,ref_bottom_pair_mean_deg,ENDPOINT_SCALARS[team_key_previous].ref_bottom_pair_mean_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,153,ref_bottom_pair_mean_deg_current,link_endpoint,current,team_key,ref_bottom_pair_mean_deg,ENDPOINT_SCALARS[team_key].ref_bottom_pair_mean_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,154,ref_bottom_pair_mean_deg_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,155,ref_top_pair_max_deg_previous,link_endpoint,previous,team_key_previous,ref_top_pair_max_deg,ENDPOINT_SCALARS[team_key_previous].ref_top_pair_max_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,156,ref_top_pair_max_deg_current,link_endpoint,current,team_key,ref_top_pair_max_deg,ENDPOINT_SCALARS[team_key].ref_top_pair_max_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,157,ref_top_pair_max_deg_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,158,ref_top_pair_mean_deg_previous,link_endpoint,previous,team_key_previous,ref_top_pair_mean_deg,ENDPOINT_SCALARS[team_key_previous].ref_top_pair_mean_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,159,ref_top_pair_mean_deg_current,link_endpoint,current,team_key,ref_top_pair_mean_deg,ENDPOINT_SCALARS[team_key].ref_top_pair_mean_deg,repeated raw endpoint measurement; event change retained
+natural_adjacent,160,ref_top_pair_mean_deg_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,161,ref_unassigned_pair_n_previous,link_endpoint,previous,team_key_previous,ref_unassigned_pair_n,ENDPOINT_SCALARS[team_key_previous].ref_unassigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,162,ref_unassigned_pair_n_current,link_endpoint,current,team_key,ref_unassigned_pair_n,ENDPOINT_SCALARS[team_key].ref_unassigned_pair_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,163,ref_unassigned_pair_n_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,164,top_y_mean_px_previous,link_endpoint,previous,team_key_previous,top_y_mean_px,ENDPOINT_SCALARS[team_key_previous].top_y_mean_px,repeated raw endpoint measurement; event change retained
+natural_adjacent,165,top_y_mean_px_current,link_endpoint,current,team_key,top_y_mean_px,ENDPOINT_SCALARS[team_key].top_y_mean_px,repeated raw endpoint measurement; event change retained
+natural_adjacent,166,top_y_mean_px_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,167,floor_turn5_previous,link_endpoint,previous,team_key_previous,floor_turn5_n,ENDPOINT_SCALARS[team_key_previous].floor_turn5_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,168,floor_turn5_current,link_endpoint,current,team_key,floor_turn5_n,ENDPOINT_SCALARS[team_key].floor_turn5_n,repeated raw endpoint measurement; event change retained
+natural_adjacent,169,floor_turn5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,170,floor_turn_gap5_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,171,floor_turn_gap5_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,172,floor_turn_gap5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,173,floor_turn_deficit5_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,174,floor_turn_deficit5_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,175,floor_turn_deficit5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,176,floor_turn_extra5_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,177,floor_turn_extra5_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,178,floor_turn_extra5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,179,floor_redundant_nodes5_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,180,floor_redundant_nodes5_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,181,floor_redundant_nodes5_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,182,score_unavailable_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,183,score_unavailable_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,184,score_unavailable_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,185,geometry_unavailable_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,186,geometry_unavailable_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,187,geometry_unavailable_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,188,sorting_deferred_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,189,sorting_deferred_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,190,sorting_deferred_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,191,below_four_flag_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,192,below_four_flag_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,193,below_four_flag_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,194,connection_unavailable_previous,keep,previous,team_key_previous,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,195,connection_unavailable_current,keep,current,team_key,,,retain original derived/state field: no direct endpoint-column replacement
+natural_adjacent,196,connection_unavailable_change,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,197,both_scored,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,198,quality_improves,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,199,quality_loss_gt5,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,200,quality_loss_gt10,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,201,nodes_lost,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,202,became_unscorable,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"
+natural_adjacent,203,became_scorable,keep,,,,,"event identity, metadata, or previously computed change/ratio/risk"

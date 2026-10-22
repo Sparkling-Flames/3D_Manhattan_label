@@ -20,3 +20,17 @@ def test_restore_concatenates_original_bytes_and_keeps_existing_file(tmp_path, m
     original_mtime = (tmp_path / "table.gz").stat().st_mtime_ns
     module.main()
     assert (tmp_path / "table.gz").stat().st_mtime_ns == original_mtime
+
+
+def test_restore_explicit_package_root(tmp_path):
+    script = Path(__file__).resolve().parents[1] / "research/workers/personnel_mixture_comparison_20261022/restore_large_tables.py"
+    spec = importlib.util.spec_from_file_location("restore_external_package", script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    (tmp_path / "part").write_bytes(b"source\x00bytes")
+    (tmp_path / "LARGE_TABLE_STORAGE.json").write_text(json.dumps({"files": [{
+        "path": "restored.gz", "bytes": 12,
+        "parts": [{"path": "part", "bytes": 12}]
+    }]}), encoding="utf-8")
+    module.main(tmp_path)
+    assert (tmp_path / "restored.gz").read_bytes() == b"source\x00bytes"

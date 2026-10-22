@@ -1,0 +1,15 @@
+{
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "budget": "mid_n_rep0",
+  "new_classification_fits": 0,
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "current_design_fixed": true,
+  "label_isolation": "each held-out building map is reused for ALL training and test teams; no target-building history in labels/profiles",
+  "prediction_mean": "source panel mean, never target panel mean",
+  "training_response": "target panel centered deviation only in outside-building training; target evaluation centered values never fit",
+  "regularization": "fixed standardized ridge 0.01; no target tuning",
+  "continuous_comparator": "source deviation; five historical means; source-only fitted linear/quadratic ridge response (degree/penalty chosen by source-only LOOCV); full continuous model includes all",
+  "status": "internal building-held-out response comparison in the same registered finite design",
+  "response_rows": 12400
+}

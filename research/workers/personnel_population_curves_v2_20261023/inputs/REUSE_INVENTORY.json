@@ -1,0 +1,49 @@
+{
+  "source_main": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "data_release": "v2",
+  "fusion_new_calls": 0,
+  "pools": 229,
+  "records": 7302,
+  "natural_existing_paths": 916,
+  "natural_prefix_rows": 29208,
+  "natural_unique_sets": 28411,
+  "independent_uniform_rows": 14764,
+  "same_room_prefix_rows": 124924,
+  "same_room_full_pool_order_occurrences": 0,
+  "same_room_full_pool_images": 0,
+  "reusable_endpoints": 204207,
+  "reusable_origin_counts": {
+    "v2_original_all_requests": 144253,
+    "v2_same_room_common_subpool": 59954
+  },
+  "score_conflicts": [],
+  "sources": [
+    {
+      "origin": "v2_original_all_requests",
+      "path": "source_recovery/v2_population_original/team_results.csv.gz",
+      "rows": 167581,
+      "sha256": "c80b3d539d173e57844e192b29edb31db87a4df5834424786d6eac9e69df2b52",
+      "families": {
+        "uniform_prefix": 29208,
+        "independent_random_team": 14764,
+        "cluster_oracle_prefix": 22876,
+        "fixed_background": 33970,
+        "cluster_oracle": 15056,
+        "profile_policy": 26063,
+        "profile_composition": 24228,
+        "behavior_policy": 1416
+      }
+    },
+    {
+      "origin": "v2_same_room_common_subpool",
+      "path": "HOHONET_population_latest/research/same_room/same_room_multiview_20261020/replay_nodes.csv.gz",
+      "rows": 124924,
+      "sha256": "da04e2d07180a2ace65ed3d0b3d11789591f6b2f6fc75478f1403326b3f80a2c",
+      "families": {
+        "same_room_multiview": 124924
+      }
+    }
+  ],
+  "mean_rule": "Preserve permutation occurrence weights for trajectory averages; deduplicate only endpoint calculation. Independent random teams may supplement a same-k analysis but are not trajectory prefixes. Same-room subpool trajectories are not full-pool random trajectories.",
+  "full_team_note": "All orders have one identical full-pool endpoint; zero final member variation is mechanical."
+}

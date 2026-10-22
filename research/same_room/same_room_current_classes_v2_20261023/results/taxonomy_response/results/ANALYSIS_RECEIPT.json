@@ -1,0 +1,37 @@
+{
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "partial": true,
+  "design_panels": 1954,
+  "complete_panels": 1954,
+  "primary_budget": "mid_n_rep0: floor(common known N/2), clipped by [max(3,k),N-k], replicate0 only",
+  "primary_panels": 398,
+  "endpoint_rows": 141260,
+  "paired_member_sets": 71126,
+  "decomposition_rows": 79128,
+  "source_transfer_rows": 82370,
+  "no_classification_refit": true,
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "immutable_input_signature": {
+    "analyze_response.py": "59555eb2c3aabb3e13f5f4a433a17a7a6ced4ce73acc24f569dc5c1a7eedd9f1",
+    "PANELS.csv": "551bb82eab8367b45215e8aa58c1803a56c43df2bccddb54472e5908d9505e65",
+    "PANEL_TEAM_LINKS.csv.gz": "fa42155520ade2130cf493096fe76fc3fe5dbd4a581e3b124df1bef73ff46e17",
+    "ALL_METHOD_LABELS_LOBO.csv.gz": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21"
+  },
+  "hierarchy": "finite panel -> direct pair -> declared group -> building equal",
+  "source_prediction_conditions": "one source view with GT and all saved source team endpoints; target only evaluation; labels and profile histories exclude target building",
+  "read_mode": "pool_snapshot (--partial requested only the input path; all 106 pools had finished before the snapshot read)",
+  "all_requested_panels_complete": true,
+  "all_requested_endpoints_complete": true,
+  "partial_flag_meaning": "actual CLI flag retained; this run contains the full registered design",
+  "summary_indicator_fix": "Nullable boolean indicators were converted to numeric and all hierarchical summaries regenerated from saved panel moments; no panel moments, source predictions, fusion or scores changed.",
+  "summary_code_sha256": "5aa809bf2b3312e99d6419f8a97b5cd98a29cb6fd7d417a6c3dc2608c5018000",
+  "portable_io_adaptation": "Final delivered scripts additionally accept --labels; case_g015 additionally accepts --native-scalars. Scientific calculations are unchanged. Nullable indicator aggregation was corrected from saved panel moments.",
+  "delivered_code_sha256": {
+    "analyze_response.py": "e13d039b6dbf98333bd78bafe552594a94510e0408adcdeb4d8f6e984e03330a",
+    "build_composition_cells.py": "8c2443459f349eab1c60ec4cdfa7fcff63a927308e16f31d9fdb166f0ca08a53",
+    "calibrate_response.py": "36642efa2337ddee087c9dcf3dca09122b7701159b768a07d43fd69ac6b2fca8",
+    "case_g015.py": "828b722860329dd1e48b81ef8ffd907abcb3f1ca247eff8025494e86f03394f9",
+    "summarize_response.py": "aa5f29d83714319da85fe0f37b28cb30db9145572e1345fa14d3259a4748fb00"
+  }
+}

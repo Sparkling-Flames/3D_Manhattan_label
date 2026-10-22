@@ -1,0 +1,43 @@
+{
+  "reconstruction_role": "corrupted-large-export omitted / reconstructed compact primary",
+  "source_repository_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "selection": "ordinary_comparable; replicate=0; n=max(3,k,min(N-k,floor(N/2)))",
+  "requested_primary_panels": 309,
+  "evaluated_primary_panels": 309,
+  "panels_with_actual_D_comparator": 269,
+  "background_strata": 17668,
+  "actual_m_values": [
+    1,
+    2
+  ],
+  "metrics": [
+    "B8L2",
+    "D10",
+    "fusion_turn_n"
+  ],
+  "endpoint_rows_used": 22610,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "missing_states_preserved": true,
+  "native_scalar_source": "work/native/ENDPOINT_SCALARS.csv.gz",
+  "native_scalar_source_sha256": "514400d13fd375c62d1bb9a945d064beea77e8f319ff78a2f0fc9ffa78018285",
+  "design_panels_sha256": "551bb82eab8367b45215e8aa58c1803a56c43df2bccddb54472e5908d9505e65",
+  "design_links_sha256": "fa42155520ade2130cf493096fe76fc3fe5dbd4a581e3b124df1bef73ff46e17",
+  "reference_summary_sha256": "30ab69eef8a28ff04b353029fcec0fb01e8aff46769f6e10337527ad9207138c",
+  "reference_rows_matched": 4,
+  "summary_fields_checked": 50,
+  "summary_maximum_absolute_difference": 1.7763568394002505e-15,
+  "tolerance": 1e-10,
+  "output_name": "PRIMARY_ACTUAL_BACKGROUND_COMPARISONS.csv.gz",
+  "output_sha256": "b59f69bf236aa68c9a948e92f5f40297782c57114434b96b5e4a5a969a938b6c",
+  "output_gzip_readback_rows": 17668,
+  "write_mode": "one atomic gzip stream; no append",
+  "mask_contract": "panel_id + selected_mask joins design/PANEL_TEAM_LINKS; same_mask_pairs are canonical within-class unordered orientations; cross_mask_pairs follow row direction; actual_core includes fixed core and shared candidate members",
+  "wall_seconds": 7.718977994998568,
+  "omitted_corrupted_large_export": {
+    "name": "ACTUAL_BACKGROUND_COMPARISONS.csv.gz",
+    "byte_size": 63731302,
+    "sha256": "24732e87408c884e1d1aae463eb69871b9e634ce585c05c986a5138402ea59fc",
+    "status": "previous read failed with gzip invalid code lengths; never parsed in this reconstruction"
+  }
+}

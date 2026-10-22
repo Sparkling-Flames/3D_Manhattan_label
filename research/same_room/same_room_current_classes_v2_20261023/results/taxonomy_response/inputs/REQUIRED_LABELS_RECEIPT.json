@@ -1,0 +1,43 @@
+{
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "source_path": "research/workers/personnel_mixture_comparison_20261022/inputs/four_main/ALL_METHOD_LABELS_LOBO.csv.gz",
+  "source_sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21",
+  "delivered_sha256": "d049821c51a0143d9dca2f3e287320fc25072537bd670e56c4428d60beb5afb5",
+  "rows": 2108,
+  "condition": "manual",
+  "heldout_buildings": [
+    "2t7WUuJeko7",
+    "7y3sRwLe3Va",
+    "S9hNv5qa7GM",
+    "UwV83HsGsw3",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "e9zR4mvMWw7",
+    "jh4fc5c5qoQ",
+    "jtcxE69GiFV",
+    "pRbA3pwrgk9",
+    "pa4otMbVnkk",
+    "q9vSo1VnCiC",
+    "rPc6DW4iMge",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "yqstnuAEVhm"
+  ],
+  "columns": [
+    "condition",
+    "method",
+    "heldout_building",
+    "worker_id",
+    "selected_family",
+    "coarse_label",
+    "known",
+    "q_history",
+    "turn_history",
+    "t_history",
+    "short_history",
+    "q_downside"
+  ],
+  "selection": "only fields and 17 held-out folds used by this branch; no labels or continuous values refitted, rounded, or imputed",
+  "serialization": "CSV field strings copied verbatim from source; no float parse/rewrite"
+}

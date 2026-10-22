@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd,numpy as np,json,gzip,itertools,sys
-root=Path(sys.argv[1]); data=root/'population'; pkg=root/'population_stage04D/research/workers/personnel_population_curves_v2_20261023'; out=root/'population_audit';out.mkdir(exist_ok=True)
+root=Path(sys.argv[1]).resolve(); data=root/'research/workers/personnel_population_curves_v2_20261023'; pkg=data; out=root/'analysis_results/pro_return_review_20261023';out.mkdir(parents=True,exist_ok=True)
 metrics=['B8L2','D10','IoU3D100','iou_2d','S_bottom_deg','dir','Hmean','reference_node_shortfall','floor_turn5_n','ref_top_pair_mean_deg','ref_bottom_pair_mean_deg','ref_edge_recall_5','source_time_total_seconds','source_time_known_n']
 cols=['team_key','member_workers','member_object_ids','k','score_available','score_failure_nonpolicy','endpoint_origin']+metrics
 s=pd.read_csv(data/'results/ENDPOINT_SCALARS.csv.gz',usecols=cols,low_memory=False)

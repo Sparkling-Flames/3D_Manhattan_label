@@ -1,0 +1,11 @@
+branch,question,search_scope,support,selection_and_validation,judgment,evidence
+S01,当前共同容量与可用类别,155个正式Manual直接图对；两对无法构造面板,153对、1954面板；n3-23/m1-4,无目标Q选人；完整枚举选定候选面板,主设计采用,design/DESIGN_RECEIPT.json
+S02,精确人员替换跨视角,全部1954面板的任意两支有限队,2140619事件；主普通118对,同一具体人员/替换块；0/1/2/5分阈值并列,小变化/真同向/反向分别采用,results/exact_changes/SUMMARY_BUILDING_EQUAL.csv
+S03,相同实际背景D对照,原全设计110580个背景格；主预算重建17668格,主m1 114对11楼；m2 90对9楼,固定D/n/m和源类别，不按Q筛D,类内不自动更可互换,results/same_background/PRIMARY_RECONSTRUCTION_RECEIPT.json
+S04,配比与成员分解,结构类主；联合类同实际队对照；全n/第二批成员,主309面板118对；Q分解308面板,全部/双端活跃/仅源活跃分别报告,多数趋势与幅度反例共同保留,results/taxonomy_response/FINDINGS_ZH.md
+S05,同配比换实际成员,rep0/rep1完整类别向量相同；剔除完全同队,结构主83对8楼12组,同视角与跨视角分别比较,同视角预测小益，跨视角幅度无益,results/taxonomy_response/results/REPLICATE_SUMMARY.csv
+S06,连续与类别质量校准,源均值/源精确队/连续源响应/楼外收缩/加结构/加联合,共同113对11楼17组,参数隔离目标建筑；固定银行内部验证,采用均值或强收缩；停止类别Q增量搜优,results/taxonomy_response/calibration/CALIBRATED_SUMMARY.csv
+S07,相对劳动时间响应,块耗时按语义；完整队Q/T同支持；源侧连续时间预测,完整队同支持39对；时间预测33对,未填时间；形状与绝对水平分开,保留实际成员速度迁移,results/taxonomy_response/summary/TIME_PREDICTION_PRIMARY.csv
+S08,对应角点与结构过程,全部1954面板几何；主m1同支持269面板,主114对58图11楼,同图内对应；异数/失败/不可算另列,位置幅度重复有条件；同节点非同定位,results/geometry/FINDINGS_ZH.md
+S09,同核心增人与奇偶门槛,复0四预算；同候选掩码与嵌套实际核心,45400连接；45338实际增人；低高117对,重复角色分开；时间同支持另报,13/17组正，保留强负例及深尾,results/budget/FINDINGS_ZH.md
+S10,原图机制探索,精确事件搜索+配比曲线；查看G015/G057/G078/G117/G172,20案例端点：16次重复full-state重放、4既存状态提取,解释选例用目标结果；不当频率估计或外部验证,配比/成员分离、初始偏差、短边方向、对应重组、票门槛,CASE_INDEX.csv

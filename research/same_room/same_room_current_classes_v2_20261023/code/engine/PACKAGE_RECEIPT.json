@@ -1,0 +1,53 @@
+{
+  "primary_m1_recheck": {
+    "rows_matched": 12,
+    "metrics_checked": [
+      "joint_distance_available_rate",
+      "both_position_small_rate",
+      "one_view_position_large_rate",
+      "both_position_large_rate",
+      "both_complete_rate"
+    ],
+    "maximum_absolute_difference": 0.0,
+    "used_only_bundled_finite_summary": true
+  },
+  "scripts": [
+    {
+      "file": "geometric_effects.py",
+      "sha256": "bb315588195ded89c1886c1a4b0404fe29773dbed4de7eb58d22e723386aa6b2",
+      "source_sha256": "b4137b1b4c4cde218c1cff1ca3211dad2f1682b811e541e748dcf1710cfd20c8",
+      "adaptation": "require explicit HOHONET_REPO instead of workspace default"
+    },
+    {
+      "file": "geometry_parallel_resume.py",
+      "sha256": "7d87c478a667e0d5b8cfd03c787f73fad5a084c0bf14f5dfb62d6e8cff5719db",
+      "source_sha256": "7d87c478a667e0d5b8cfd03c787f73fad5a084c0bf14f5dfb62d6e8cff5719db",
+      "adaptation": "none"
+    },
+    {
+      "file": "geometry_question_tables.py",
+      "sha256": "a9f2571ce252f4e6fb1f7c57dd808fda6edc05bd891f19c0d0533bde7bb7d2a0",
+      "source_sha256": "a9f2571ce252f4e6fb1f7c57dd808fda6edc05bd891f19c0d0533bde7bb7d2a0",
+      "adaptation": "none"
+    },
+    {
+      "file": "new_team_engine.py",
+      "sha256": "770cd316d5947fbf705ce657dc36b72e94dd344c5f1498a75d75b76afdf3a2fc",
+      "source_sha256": "6732219ab06e65b422b6fab17f5e529992a927c57c6bb8a4042ff0e2299523fd",
+      "adaptation": "require explicit HOHONET_REPO instead of workspace default"
+    },
+    {
+      "file": "plot_geometry_transfer.py",
+      "sha256": "69a9b96023da599daea0bb53071f175b92afe8cfea5738fc28691df31a10910b",
+      "source_sha256": "69a9b96023da599daea0bb53071f175b92afe8cfea5738fc28691df31a10910b",
+      "adaptation": "none"
+    },
+    {
+      "file": "summarize_geometry_transfer.py",
+      "sha256": "98231aa0662c4aa842d5570f7e162e212543a19a39c10df74676498596adec04",
+      "source_sha256": "98231aa0662c4aa842d5570f7e162e212543a19a39c10df74676498596adec04",
+      "adaptation": "none"
+    }
+  ],
+  "no_environment_or_font_bundled": true
+}

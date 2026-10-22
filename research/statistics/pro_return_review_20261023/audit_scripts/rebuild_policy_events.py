@@ -1,6 +1,6 @@
 from pathlib import Path
 import sys, pandas as pd,numpy as np,gzip,csv,json,io
-root=Path(sys.argv[1]);data=root/'population';pkg=root/'population_stage04D/research/workers/personnel_population_curves_v2_20261023';out=root/'population_audit';sys.path.insert(0,str(pkg/'code'))
+root=Path(sys.argv[1]).resolve();data=root/'research/workers/personnel_population_curves_v2_20261023';pkg=data;out=root/'analysis_results/pro_return_review_20261023';out.mkdir(parents=True,exist_ok=True);sys.path.insert(0,str(pkg/'code'))
 from analyze_policy_curves import paired_events,METRICS,FLAGS,META
 cols=set(METRICS+FLAGS+META+['team_key','source_time_known_n','target_time_known_n','member_workers'])
 s=pd.read_csv(data/'results/ENDPOINT_SCALARS.csv.gz',usecols=lambda c:c in cols,low_memory=False)
@@ -13,7 +13,7 @@ added=[];removed=[];common=[]
 for a,b in zip(p.priority_team_key,p.natural_team_key):
  aa,bb=lookup[a],lookup[b];added.append('|'.join(sorted(aa-bb)));removed.append('|'.join(sorted(bb-aa)));common.append(len(aa&bb))
 p['members_added']=added;p['members_removed']=removed;p['members_added_n']=p.actual_m;p['members_removed_n']=p.actual_m;p['members_shared_n']=common
-src=data/'events/POLICY_PAIRED_PREFIX_EVENTS_LINKED.csv.gz'
+src=data/'source_original/04C/POLICY_PAIRED_PREFIX_EVENTS_LINKED.csv.gz.truncated'
 with gzip.open(src,'rt',encoding='utf-8-sig',newline='') as f:cols=next(csv.reader(f))
 p=p[cols];assert len(p)==229050
 # Read every complete original CSV record. A gzip EOF is retained in the receipt, never treated as success.

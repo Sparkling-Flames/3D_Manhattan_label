@@ -1,0 +1,33 @@
+{
+  "schema": "native_csv_parts_v1",
+  "rows": 141260,
+  "columns": 50,
+  "uncompressed_sha256": "ba9f32d893b5427b64d2d9685d6ae44f7e225a59fb2f93c8a2d9175ed1807f26",
+  "parts": [
+    {
+      "file": "parts/ENDPOINT_SCALARS_PART_01.csv.gz",
+      "rows": 35315,
+      "bytes": 6117978,
+      "sha256": "74eaff7321eefee5e1e7cc820e7b8b2db6d0d8a430de15792ad5a215b1818f1a"
+    },
+    {
+      "file": "parts/ENDPOINT_SCALARS_PART_02.csv.gz",
+      "rows": 35315,
+      "bytes": 6264485,
+      "sha256": "415fb432bc234e76c79d467848814e30e4f13caf0d96932db3c351823d9aa74b"
+    },
+    {
+      "file": "parts/ENDPOINT_SCALARS_PART_03.csv.gz",
+      "rows": 35315,
+      "bytes": 6296702,
+      "sha256": "687a268e280bd9bc33a994e04e7a875a83423f8124252c332cda55cccd058952"
+    },
+    {
+      "file": "parts/ENDPOINT_SCALARS_PART_04.csv.gz",
+      "rows": 35315,
+      "bytes": 6270797,
+      "sha256": "6765d468f7d8fc1df717d7a1b1185e00501cb57ffdbb8b58b6837c503994c9da"
+    }
+  ],
+  "assembly": "decompress in part order; retain first header, remove later headers; no numerical conversion"
+}

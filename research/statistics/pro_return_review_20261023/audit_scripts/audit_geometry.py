@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd,numpy as np,json,gzip,itertools,sys
 from shapely.geometry import Polygon
-r=Path(sys.argv[1]);data=r/'population';pkg=r/'population_stage04D/research/workers/personnel_population_curves_v2_20261023';out=r/'population_audit'
+r=Path(sys.argv[1]).resolve();data=r/'research/workers/personnel_population_curves_v2_20261023';pkg=data;out=r/'analysis_results/pro_return_review_20261023'
 l=pd.read_csv(data/'results/PREFIX_TEAM_LINKS.csv.gz');o=pd.read_csv(data/'design/EXACT_ORDER_DESIGN.csv.gz');hard=set(o.loc[(o.difficulty=='困难')&(o.layer=='ordinary_manual')&(o.pool_n>=20),'pool_id'])
 x=l[l.pool_id.isin(hard)&l.policy.eq('natural_random')&l.k.isin([10,20])]
 need=set(x.team_key);geos={};decoder=json.JSONDecoder();buf='';count=0

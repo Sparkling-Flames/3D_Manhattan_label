@@ -1,0 +1,172 @@
+{
+  "schema": "personnel_population_curves_v2_20261023_completed",
+  "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+  "source_repository": "https://github.com/Sparkling-Flames/3D_Manhattan_label",
+  "data_release": "v2",
+  "research_date": "2026-10-23",
+  "status": "complete_registered_design_and_full_relational_event_delivery",
+  "required_ancestor_commit": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "contains_required_ef148c82d": true,
+  "ancestor_evidence": "SOURCE_COMMIT_ANCESTRY.json",
+  "ancestor_evidence_method": "GitHub compare API; merge base equals required commit",
+  "input_snapshot_sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+  "pool_count": 229,
+  "images": 196,
+  "buildings": 22,
+  "records": 7302,
+  "pool_min": 3,
+  "pool_max": 46,
+  "layer_pools": {
+    "ordinary_manual": 177,
+    "doorway_manual": 17,
+    "ordinary_semi": 32,
+    "special_manual": 2,
+    "special_semi": 1
+  },
+  "condition_pools": {
+    "manual": 196,
+    "semi": 33
+  },
+  "registered_paths": 12398,
+  "registered_prefix_rows": 404082,
+  "registered_unique_endpoints": 318816,
+  "natural_paths": 5424,
+  "natural_prefix_rows": 175032,
+  "natural_pool_order_counts": {
+    "24": 225,
+    "6": 4
+  },
+  "natural_design": "N>4: existing four plus twenty uniform without-replacement orders. N3: all six; N4: all twenty-four. Exact small-pool orders are not reweighted by the historical four.",
+  "policy_role_count": 4,
+  "policy_orders": 6974,
+  "policy_prefix_rows": 229050,
+  "policy_pool_role_order_counts": {
+    "8": 871,
+    "6": 1
+  },
+  "policy_counts": {
+    "joint_fast_first": {
+      "paths": 1702,
+      "prefix_rows": 55994,
+      "pools": 213
+    },
+    "joint_highq_first": {
+      "paths": 1752,
+      "prefix_rows": 57976,
+      "pools": 219
+    },
+    "natural_random": {
+      "paths": 5424,
+      "prefix_rows": 175032,
+      "pools": 229
+    },
+    "structure_dominant_first": {
+      "paths": 1784,
+      "prefix_rows": 58256,
+      "pools": 223
+    },
+    "structure_moreturn_first": {
+      "paths": 1736,
+      "prefix_rows": 56824,
+      "pools": 217
+    }
+  },
+  "policy_roles": {
+    "structure_moreturn_first": "existing held-out-building structure class with largest nonredundant-turn history center",
+    "structure_dominant_first": "existing held-out-building structure class with largest historical membership",
+    "joint_highq_first": "existing within-condition joint class with highest historical Q center",
+    "joint_fast_first": "existing within-condition joint class with lowest relative-time center"
+  },
+  "paired_comparison": "Same base_path_id, same k, same final actual pool; compare all available matching pairs, typically eight and one N3 role with all six.",
+  "new_unique_endpoint_results": 288628,
+  "reused_unique_endpoint_results": 30188,
+  "new_result_sources": {
+    "new_native_benchmark_20261023": 1,
+    "new_native_prefix_20261023": 288627
+  },
+  "reused_result_sources": {
+    "reused_later_round_local_cache": 65,
+    "v2_original_all_requests": 29578,
+    "v2_same_room_common_subpool": 545
+  },
+  "benchmark_accounting": "The earlier cache-hit count30189 included one endpoint newly benchmarked in this round; final reuse excludes it. New unique results include benchmark1 plus bulk288627.",
+  "geometry_only_restored_existing_endpoints": 345,
+  "geometry_endpoint_rows": 318616,
+  "k2_status": "All k=2 prefixes registered; connection deferred under frozen contract. No Q imputation; distinguish policy deferral from nonpolicy failure.",
+  "exact_event_rows": {
+    "natural_adjacent": 169608,
+    "natural_intervals": 45960,
+    "policy_paired": 229050,
+    "policy_direct": 112520
+  },
+  "total_linked_event_rows": 557138,
+  "endpoint_link_missing": 0,
+  "endpoint_duplicates": 0,
+  "main_report": {
+    "file": "../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+    "section": 6
+  },
+  "layout": {
+    "inputs": "frozen input snapshot, labels, definitions, difficulty/structure opportunities",
+    "design": "exact orders, role definitions/capacity, full endpoint class vectors and axes",
+    "coverage": "inventory eligibility and exact feasible/observed order, member-set and class-vector spaces",
+    "results": "canonical unique endpoint scalars/geometry and all prefix associations",
+    "natural": "completed natural-order aggregation, formerly population_work/difficulty/final24",
+    "policies": "completed paired-role aggregation, formerly population_work/composition/final",
+    "events": "all linked events with full changes and endpoint reconstruction maps",
+    "cases": "historical exact mechanisms plus complete-order context",
+    "code": "actual scripts; original frozen engine remains in pinned repository"
+  },
+  "completion_evidence": "results/COMPLETION.json",
+  "delivery_evidence": "results/DELIVERY_VERIFICATION.json",
+  "event_delivery_evidence": "events/DELIVERY_COVERAGE.csv",
+  "notes": [
+    "Effects remain separated by Manual/Semi; doorway and special layers kept separate.",
+    "Full class IDs and vectors are local to the held-out-building fold; ALL labels are not substituted.",
+    "Source time is a historical record sum in seconds with complete support, not newly measured production time.",
+    "Every metric has its own denominator; joint quality-time comparisons use common support.",
+    "Finite registered design is complete; full possible permutations and all possible member subsets are not claimed enumerated.",
+    "All original event changes and failures are retained in linked tables; endpoint original measurements can be restored by team_key.",
+    "Counts of unique new results are not a log of every native execution, including the separately recorded saved-tail repair."
+  ],
+  "historical_stage00_design_and_inprogress_status": {
+    "source_commit": "72a44e80c344975962e1071bd54d894dd86bb4b4",
+    "source_repository": "https://github.com/Sparkling-Flames/3D_Manhattan_label",
+    "data_release": "v2",
+    "research_date": "2026-10-23",
+    "input_snapshot_sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "pool_count": 229,
+    "images": 196,
+    "buildings": 22,
+    "records": 7302,
+    "layer_pools": {
+      "ordinary_manual": 177,
+      "doorway_manual": 17,
+      "ordinary_semi": 32,
+      "special_manual": 2,
+      "special_semi": 1
+    },
+    "pool_min": 3,
+    "pool_max": 46,
+    "existing_uniform_paths": 916,
+    "existing_uniform_prefix_rows": 29208,
+    "planned_natural_orders_per_pool": "24 except N3 exact6 and N4 exact24; existing4 retained separately for exact pools",
+    "planned_priority_orders_per_policy_pool": 8,
+    "priority_policy_n": 4,
+    "new_fusion_status": "running_with_atomic_pool_checkpoints",
+    "notes": [
+      "Final all-member endpoint invariant; prefix order remains empirical sampling unit.",
+      "N2 connection deferred by frozen policy; not counted as ordinary fusion failure.",
+      "Unknown labels remain actual voters and in priority remainder.",
+      "Doorway and special separate from ordinary difficulty.",
+      "Mean of individual consensus metrics, not scoring averaged geometry."
+    ],
+    "exact_small_pools": 10,
+    "registered_paths": 12398,
+    "registered_prefix_rows": 404082,
+    "registered_unique_endpoints": 318816,
+    "cache_hits_before_native": 30189,
+    "new_requests_after_cache": 288627,
+    "extra_geometry_restoration_existing_endpoints": 345
+  }
+}

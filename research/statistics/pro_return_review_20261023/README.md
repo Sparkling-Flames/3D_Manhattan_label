@@ -4,7 +4,7 @@
 
 **采用判断：核心结果可以收束，修正少数口径和交付问题。** 多数条件中可重复的差异、类别内成员波动、质量与时间的不同响应，均是有效研究结果；无需把每个人、每张图都成立，或分类胜过连续Q/T，作为采用前提。也不能仅凭审查者说“通过”而采用：下列结论来自本地端点、精确成员、标签和保存几何的实际复算。
 
-本目录保留独立复算表、诊断脚本及重建的04C事件表。原始下载件保持原样；12项实际使用输入见 [SOURCE_FILES.csv](SOURCE_FILES.csv)，它们尚未全部复制进本目录。此目录不是全部原生几何与全部来源ZIP的备份。
+本目录保留独立复算表、诊断脚本与修复回执。12项实际使用来源已归档，见 [SOURCE_FILES.csv](SOURCE_FILES.csv)：[人数过程](../../workers/personnel_population_curves_v2_20261023/README.md)和[同房当前类别](../../same_room/same_room_current_classes_v2_20261023/README.md)。修复后的04C表已移至人数专题的正式读取位置，避免重复储存。各来源包内容已逐字节核对；删除的下载副本见清理回执。未收到的自然派生包/同房案例完整包在各专题明确列示，不冒称全部历史成果均已备份。
 
 ## 1. 自然人数曲线：你的预期得到了哪些支持
 
@@ -82,7 +82,7 @@
 
 已从完整318,816端点、精确人员顺序和404,082前缀连接重建全部229,050行、130字段；与原文件全部224,972完整行逐字段比对，文本/缺失状态无差异，最大数值差9.1e−13。重建文件已完整读到gzip结尾，行数正确。不是用预测补尾，也未重新融合或评分。
 
-- [完整重建表](population/POLICY_PAIRED_PREFIX_EVENTS_LINKED_REBUILT.csv.gz)
+- [完整重建表](../../workers/personnel_population_curves_v2_20261023/events/POLICY_PAIRED_PREFIX_EVENTS_LINKED.csv.gz)
 - [恢复回执](population/EVENT_RECONSTRUCTION_RECEIPT.json)
 
 下游读取重建表替代原损坏表，直接策略表仍使用原04C正常文件。应称“原交付损坏、本地已恢复”，不把生产方原始完整性回执改写为通过。
@@ -93,27 +93,8 @@
 
 同房线完整读取141,260标量端点；核对71,126双视角团队的实际成员和类别向量、1,954面板的有限枚举；主预算308个可分解面板的配比/成员矩、m1时间共同支持及增人劳动比独立重算。未宣称本地重拟合四个预测模型或逐一检查全部2,140,619调整事件；Dot报告的这部分不转述成本地实核。
 
-五个诊断脚本在 `audit_scripts/`，均包含针对实际身份、分母或数值的断言。运行目录为仓库根，Python使用现有pandas/numpy/shapely，无新增依赖。复跑时准备一个工作目录：
+五个诊断脚本在 `audit_scripts/`，均包含针对实际身份、分母或数值的断言。来源归档后无需再建立临时解压布局，按[人数专题复跑](../../workers/personnel_population_curves_v2_20261023/REPRODUCE.md)及[同房专题复跑](../../same_room/same_room_current_classes_v2_20261023/REPRODUCE.md)直接读取本地仓库。人数标量超过100 MiB，Git保存原字节分块，本机完整表已恢复。
 
-```text
-work/
-  population/             # 03A、03C、04C合并解压到这里，保留results/design/events
-  population_stage04D/    # 04D按包内仓库布局解压，不能覆盖当前仓库文档
-  population_audit/       # 第一个人数核验脚本创建的输出
-  HOHONET_SRCC_20261023/   # 同房01—04合并解压的包目录
-    results/native/parts/ # 放入四个ENDPOINT_SCALARS_PART_*.csv.gz
-```
+当前主要结论所需输入已齐，没有必须补下载的材料。未重跑冻结原生融合、原答评分或上游全链分类训练。图表与研究台的下一步来源已落在[六组主文图表清单](MAIN_FIGURE_PLAN.csv)及[主报告第8节](../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md#8-论文图表与研究台推进2026-10-23)，本轮完成准备，尚未实施新增展示。
 
-`EXACT_ORDER_DESIGN.csv.gz`使用03C中的`design/`版本。按序运行：
-
-```powershell
-.venv/Scripts/python.exe -X utf8 research/statistics/pro_return_review_20261023/audit_scripts/audit_population.py <work绝对路径>
-.venv/Scripts/python.exe -X utf8 research/statistics/pro_return_review_20261023/audit_scripts/audit_geometry.py <work绝对路径>
-.venv/Scripts/python.exe -X utf8 research/statistics/pro_return_review_20261023/audit_scripts/rebuild_policy_events.py <work绝对路径>
-.venv/Scripts/python.exe -X utf8 research/statistics/pro_return_review_20261023/audit_scripts/audit_independent.py <同房包绝对路径>
-.venv/Scripts/python.exe -X utf8 research/statistics/pro_return_review_20261023/audit_scripts/audit_reuse_capacity.py <同房包绝对路径>
-```
-
-人数输出在`work/population_audit/`，同房输出在所传同房包目录。恢复脚本复用04D作者的事件构造函数；成员/Q/自然曲线/角色及几何另有独立计算检查。归档脚本只将工作路径改为命令行参数，其计算与已运行版本一致。
-
-当前主要结论所需输入已齐，**没有必须补下载的材料**。未重跑冻结原生融合、原答评分、上游全链分类训练，也未接入研究台；完整来源归档另按对应专题处理，不影响已核实结论的采用。
+归档与清理回执：[SOURCE_ARCHIVE_RECEIPT.json](SOURCE_ARCHIVE_RECEIPT.json)、[DOWNLOAD_CLEANUP.csv](DOWNLOAD_CLEANUP.csv)。422个来源条目合并为419个原始路径；12个已核验下载重复件已删除（475,034,418字节），修复前原件仍在专题归档。归档后的实际输入重算与5张已采用汇总一致，存储测试2项通过。来源SVG的生成器空白与历史文档格式保持原字节，新增维护文档单独检查。

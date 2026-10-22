@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "scope": "First 48 rows of each completed source; no full wide table regenerated",
+  "strict_original_columns": true,
+  "delivery_only_added_columns_excluded": 6,
+  "event_differences_recomputed": false,
+  "comparison": {
+    "numeric_atol": 1e-12,
+    "numeric_rtol": 1e-12,
+    "keep_cells": "Exact CSV string equality",
+    "text": "Exact parsed text equality",
+    "missing": "Identical parsed missing mask"
+  },
+  "code_sha256": "70552b808d5e94868d189147c622e68cb9f220c08b6781a1654d0c1b10f074f3",
+  "datasets": [
+    {
+      "dataset": "natural_adjacent",
+      "rows": 48,
+      "columns": 203,
+      "kept_columns_unchanged": 111,
+      "numeric_columns": 193,
+      "text_columns": 10,
+      "missing_mask_equal": true,
+      "column_order_equal": true,
+      "max_absolute_numeric_difference": 0.0,
+      "missing_endpoint_keys": 0
+    },
+    {
+      "dataset": "natural_intervals",
+      "rows": 48,
+      "columns": 194,
+      "kept_columns_unchanged": 102,
+      "numeric_columns": 189,
+      "text_columns": 5,
+      "missing_mask_equal": true,
+      "column_order_equal": true,
+      "max_absolute_numeric_difference": 0.0,
+      "missing_endpoint_keys": 0
+    },
+    {
+      "dataset": "policy_paired",
+      "rows": 48,
+      "columns": 208,
+      "kept_columns_unchanged": 124,
+      "numeric_columns": 186,
+      "text_columns": 22,
+      "missing_mask_equal": true,
+      "column_order_equal": true,
+      "max_absolute_numeric_difference": 0.0,
+      "missing_endpoint_keys": 0
+    },
+    {
+      "dataset": "policy_direct",
+      "rows": 48,
+      "columns": 221,
+      "kept_columns_unchanged": 137,
+      "numeric_columns": 196,
+      "text_columns": 25,
+      "missing_mask_equal": true,
+      "column_order_equal": true,
+      "max_absolute_numeric_difference": 0.0,
+      "missing_endpoint_keys": 0
+    }
+  ]
+}
