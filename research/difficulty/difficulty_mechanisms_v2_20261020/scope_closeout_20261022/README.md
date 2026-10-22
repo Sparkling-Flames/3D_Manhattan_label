@@ -61,6 +61,19 @@ OOS、非正交、门洞和粗难度分开。非正交本身不等于不可标�
 
 [逐份范围支持](record_scope_support.csv.gz)保留实际参考和当前目标；[分层支持表](scope_compatibility.csv)按条件、OOS／门洞、目标关系及原质量用途分开；[261图目标支持](image_scope_support.csv)显示参考多样性及实际目标完整性。表中图片可跨记录层出现，不将各层图片数相加成新总数。
 
+### 后续 v2 人数过程可直接复用的身份连接
+
+这只是现有输入定位，不是已算出的随机人数曲线。先以 `image_id` 连接下列来源，再按 `condition` 和声明目标分别形成真实人员池；不要从聚合图数反推成员名单或加入顺序。
+
+|来源|已有字段与用途|不能替代什么|
+|---|---|---|
+|[261图范围表](image_scope_support.csv)|`image_id`、图号 `image`、`target_id`、`coarse_class`、OOS/门洞、目标完整性及当前目标质量份数|一行是图目标支持，不是某个团队的可评分前缀|
+|[逐图分条件库存](../../../statistics/v2_integrated_analysis_20261019/image_inventory.csv)|`image_id + condition` 的库存、保留和质量人数；同一图跨条件有不同人员池|聚合人数不给出具体人员、重复提交或实际入队顺序|
+|[v2逐对象证据](../../../statistics/v2_evidence_audit_20261019/records.json.gz)|`object_id`、`worker_id`、`image_id`、`condition`、`quality_usable`、`pool_analysis_eligible`、`independent_vote_eligible`、`reference_id/version` 及排除原因；逐人核对池与目标绑定|质量可用、独立投票资格和可计算几何不是同一标志；不能填补缺失参考|
+|[336面板难度连接](../../../workers/personnel_mixture_audit_20261022/PANEL_DIFFICULTY_LINK.csv)|已研究的58图固定面板，含实际 `pool_id`、人数、成员域、当前粗类、目标和完整性|这是构成研究子集，不能冒充真人v2全池随机过程|
+
+未来过程仍需明确每图可用成员及实际/随机顺序，在固定 `image_id + condition + target_id + reference_version` 下保存每个前缀的成功、可评分和失败状态。仅1—2名有效标注者、参考暂停或目标不相容者沿用既有用途限制；不按当前Q改写粗难度，也不把可标门洞自动并入普通困难层。
+
 门洞的面积分散仍只作为范围／尺度线索，不是选错率或scope问卷正确率。Manual和Semi效果分别评价；分类发现本身可按当前主模型采用单条件或联合历史，这不是本专题限制的对象。Semi高Q组合与门洞细机制支持较少，保留未知，不从Manual推广。
 
 ## 4. ZIP有用证据的最小整合
