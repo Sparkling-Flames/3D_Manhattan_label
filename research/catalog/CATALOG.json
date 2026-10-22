@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v34_mixture_audit_difficulty_link",
+  "catalog_version": "research_catalog_20261022_v35_integrated_research_presentation",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -8641,15 +8641,15 @@
     },
     {
       "id": "MAT-docs--thesis_main--CONTEXT.md",
-      "title": "CONTEXT.md",
+      "title": "研究术语与导师汇报释义",
       "theme": "coordination",
       "type": "统筹/规范文档",
       "date": null,
       "source_path": "docs/thesis_main/CONTEXT.md",
       "current_path": "docs/thesis_main/CONTEXT.md",
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
-      "adoption_status": "历史/待判断",
-      "verification_status": "未独立复验",
+      "adoption_status": "当前研究解释；含指标简明释义与历史口径",
+      "verification_status": "释义按当前专题说明核对，不改变规范字段",
       "availability": "仓库已跟踪",
       "relationships": []
     },
@@ -10731,7 +10731,7 @@
       "source_path": "research/statistics/v2_integrated_analysis_20261019",
       "current_path": "research/statistics/v2_integrated_analysis_20261019",
       "source": "v2冻结输入与已审核来源的独立汇总",
-      "adoption_status": "描述统计与证据接入；新分类预测和融合实验待研究",
+      "adoption_status": "v2描述统计底座已采用；本包历史not_run不代表后续专题研究未开展",
       "verification_status": "逐份身份/资格/几何绑定和针对性边界检查",
       "availability": "GitHub main：压缩匿名统计表与重现上下文；完整原始评论包留本地",
       "relationships": []
@@ -10752,19 +10752,20 @@
     },
     {
       "id": "MAT-v2-workbench-pro-plan-20261019",
-      "title": "v2数据研究台与Pro推进",
+      "title": "研究台当前接入任务与导师汇报（历史v2说明保留）",
       "theme": "coordination",
       "type": "研究结果与说明",
       "date": "20261019",
       "source_path": "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
       "current_path": "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
       "source": "v2冻结输入与已审核来源的独立汇总",
-      "adoption_status": "历史整理/已执行交接；当前任务转人员多变量反向分型双线任务",
-      "verification_status": "逐份身份/资格/几何绑定和针对性边界检查",
-      "availability": "匿名审计载荷供用户后续上传main；原图Release与2图预览，原始账户日志仍本地",
+      "adoption_status": "已授权接入既有非分类成果；新分类暂缓；页面实施待目标线程验收",
+      "verification_status": "2026-10-22统筹核对专题说明与消费路径；不新增研究计算",
+      "availability": "本地main，用户自行推送",
       "relationships": [
-        "docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md",
-        "docs/thesis_main/Pro下一轮_多变量反向人员分型提示词_20261019.md"
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
+        "docs/thesis_main/CONTEXT.md",
+        "research/statistics/research_explorer_v1_r2_20261017/README.md"
       ]
     },
     {
@@ -11763,6 +11764,24 @@
         "tools/thesis_main/analysis/audit_personnel_mixture_20261022.py",
         "tools/thesis_main/analysis/audit_personnel_n20_mixture_20261022.py",
         "tests/test_personnel_mixture_audit_20261022.py"
+      ]
+    },
+    {
+      "id": "MAT-research-overall-conclusions-20261022",
+      "title": "全研究结论主线与导师汇报证据入口",
+      "theme": "coordination",
+      "type": "研究结果与说明",
+      "date": "20261022",
+      "source_path": "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
+      "current_path": "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
+      "source": "各专题已归档成果及统筹文档核对；历史采用原文保留",
+      "adoption_status": "当前跨专题解释；新增人员分类续研中，其余既有成果交研究台接入",
+      "verification_status": "核对专题当前说明、支持与链接；不冒称本轮全量原数据复算",
+      "availability": "本地main，用户自行推送",
+      "relationships": [
+        "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
+        "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
       ]
     }
   ]

@@ -1,3 +1,5 @@
+- **2026-10-22整体串联与研究台交接：** 复用[结论主线](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)、[接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)及[术语](thesis_main/CONTEXT.md)，串联数据、质量、难度、画像、融合、同房和用途；新增人员分类暂缓。仅修订既有文档与登记，无数据/代码迁移。
+
 - **2026-10-22混合构成独立核验：** 新增[审计包](../research/workers/personnel_mixture_audit_20261022/README.md)、两份analysis审计脚本及定向测试；归档两ZIP的93个不同来源文件，输出重聚合、字段合同和难度连接。未移动原来源、未重跑融合。
 
 - **2026-10-22人员分类/构成补充包：** [v3目录](../research/workers/personnel_v3_20261021/README.md)汇集7个有新增内容的复现、Manual/Semi/F01实际选择、jtc-28机制、整合报告和原答证据来源包；分类旧复现包被仓库修订版覆盖。只核验归档完整性，未独立复算分析结论。

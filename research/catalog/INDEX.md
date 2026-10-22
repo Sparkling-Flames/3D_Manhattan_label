@@ -1,6 +1,6 @@
 # HOHONET 研究资料总目录
 
-目录版本：research_catalog_20261022_v34_mixture_audit_difficulty_link；盘点日期：2026-10-22。
+目录版本：research_catalog_20261022_v35_integrated_research_presentation；盘点日期：2026-10-22。
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
 
@@ -10,7 +10,7 @@
 
 |主题|入口|资料数|说明|
 |---|---|---:|---|
-|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|86|原意、跨模块关系、进度、版本采用与交接。|
+|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|87|原意、跨模块关系、进度、版本采用与交接。|
 |数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|14|输入版本、人数门槛、GT/空间绑定和排除状态。|
 |质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|99|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
 |图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|31|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
