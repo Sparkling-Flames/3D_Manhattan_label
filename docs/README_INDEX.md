@@ -1,12 +1,14 @@
 # HOHONET 文档入口
 
+**固定阅读路线：** [整体模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [当前整体进度](thesis_main/四线程成果与论文主线核对_20261015.md) → [人员主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。人员主报告包含想法演变、已有发现、完整配比范例与下一步；各原包只负责证据。
+
 - **2026-10-22混合构成独立核验：** [各分类发现、完整配比、构成内波动与难度连接](../research/workers/personnel_mixture_audit_20261022/README.md)。新补两包逐面板复核、F01成员穷举和旧QTD重算已完成；随机人数曲线的版本与复用安排见人员统一比较清单。
 
 - **2026-10-22人员当前研究组织：** [多套分类、构成不确定性与待补比较](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。保留各分类用途；同构成换人与改变构成并列，不以升质为唯一标准。已有m5–9及直接AC，m4不是上限；整理、重聚合和新增实验缺口分别列明。
 
 - **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。
 
-- **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。本地main整理完成后由用户推送；用户已说明Pro正在续研，任务书保留为边研究边保存整合的依据，不另做接续包。
+- **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。当前任务已更新为全面比较混合配比与成员变化、再选择重点方法；待用户发送。旧任务折叠保留，不另做接续包。
 
 - **2026-10-22本地收尾与来源归档：** [Downloads清点与四类归档入口](../research/statistics/downloads_research_audit_20261022/README.md)、[难度与范围支持](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项与参考资格](../research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)。按现有v2及冻结方法接续，未改评分/融合；本轮提交仅整合本地main，来源归档不代表全量科学复算。
 
