@@ -1,0 +1,65 @@
+{
+  "schema": "quality_reference_closeout_20261022_v1",
+  "base_commit": "8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235",
+  "source": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "all_inventory_records": 10439,
+  "all_calculation_by_eligibility": [
+    {
+      "calculation_class": "floor_only",
+      "quality_usable": false,
+      "records": 941
+    },
+    {
+      "calculation_class": "full",
+      "quality_usable": false,
+      "records": 2061
+    },
+    {
+      "calculation_class": "full",
+      "quality_usable": true,
+      "records": 7302
+    },
+    {
+      "calculation_class": "uncomputable",
+      "quality_usable": false,
+      "records": 135
+    }
+  ],
+  "non_oos_records": 9217,
+  "non_oos_calculation_by_eligibility": [
+    {
+      "calculation_class": "floor_only",
+      "quality_usable": false,
+      "records": 938
+    },
+    {
+      "calculation_class": "full",
+      "quality_usable": false,
+      "records": 873
+    },
+    {
+      "calculation_class": "full",
+      "quality_usable": true,
+      "records": 7302
+    },
+    {
+      "calculation_class": "uncomputable",
+      "quality_usable": false,
+      "records": 104
+    }
+  ],
+  "non_oos_cleaning_disposition": {
+    "retained": 9009,
+    "excluded_by_review": 89,
+    "historical_not_accepted": 108,
+    "retained_pending": 11
+  },
+  "floor_only_with_full_reference": 13,
+  "pRb_12": {
+    "records": 35,
+    "formal_quality_records": 0,
+    "complete_diagnostic_records": 35,
+    "reason_source": "research/workers/personnel_marking_patterns_20261020/README.md M01"
+  },
+  "interpretation": "calculation, eligibility, scene/reference holds and individual attribution are separate; no eligibility promoted"
+}
