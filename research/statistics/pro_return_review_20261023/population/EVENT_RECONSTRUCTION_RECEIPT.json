@@ -1,0 +1,15 @@
+{
+  "source_file": "POLICY_PAIRED_PREFIX_EVENTS_LINKED.csv.gz",
+  "source_complete_rows": 224972,
+  "source_error": "Compressed file ended before the end-of-stream marker was reached",
+  "reconstructed_rows": 229050,
+  "reconstructed_missing_rows": 4078,
+  "columns": 130,
+  "max_numeric_error_on_existing_rows": 9.094947017729282e-13,
+  "text_errors": {},
+  "null_errors": {},
+  "native_fusion_calls": 0,
+  "rescoring_calls": 0,
+  "output": "POLICY_PAIRED_PREFIX_EVENTS_LINKED_REBUILT.csv.gz",
+  "method": "Recompute paired events from complete exact orders, prefix links and stored endpoint scalars; check every complete original row before replacing any delivery."
+}

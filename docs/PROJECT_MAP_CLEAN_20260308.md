@@ -1,3 +1,5 @@
+- **2026-10-23两轮Pro返回实核：** [人数过程、进入策略与同房当前分类](../research/statistics/pro_return_review_20261023/README.md)。核心结果可采用；04C完整229050行已本地重建，同房较大块已复用现成端点补算；源端阈值与劳动比口径已订正，完整来源包仍保留下载区。
+
 - **2026-10-23人员混合构成验收：** [统一主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)与[四包归档/独立核验](../research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md)。完整配比、成员变化、大块AC和难度结果接齐；修复旧n20失败统计，原表保留。新增一份analysis审计、一份大表恢复工具和两份定向测试；两张大表按原gzip字节分块。未改变数据、参考、资格、评分或融合合同；分类展示暂缓。
 
 - **2026-10-22整体串联与研究台交接：** 复用[结论主线](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)、[接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)及[术语](thesis_main/CONTEXT.md)，串联数据、质量、难度、画像、融合、同房和用途；新增人员分类暂缓。仅修订既有文档与登记，无数据/代码迁移。
