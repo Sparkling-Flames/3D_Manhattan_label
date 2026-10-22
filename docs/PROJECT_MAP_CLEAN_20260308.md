@@ -1,6 +1,8 @@
 - **2026-10-22人员分类/构成补充包：** [v3目录](../research/workers/personnel_v3_20261021/README.md)汇集7个有新增内容的复现、Manual/Semi/F01实际选择、jtc-28机制、整合报告和原答证据来源包；分类旧复现包被仓库修订版覆盖。只核验归档完整性，未独立复算分析结论。
 # HOHONET 项目地图
 
+- **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。仅新增任务书与作者回复来源记录；复用已有专题目录和研究代码，本地main由用户自行推送。
+
 - **2026-10-22本地收尾与来源归档：** [Downloads清点与四类归档入口](../research/statistics/downloads_research_audit_20261022/README.md)、[难度与范围支持](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项与参考资格](../research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)。按现有v2及冻结方法接续，未改评分/融合；本轮提交仅整合本地main，来源归档不代表全量科学复算。
 
 - 2026-10-21整体构成续研审查：[人员总记录](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)与[五包归档入口](../research/workers/personnel_composition_n20_20261021/README.md)。QTD为效率辅助分类，M细类质量控制证据收紧；两阶段核验及52行覆盖边界已整理，尚未接入研究台。

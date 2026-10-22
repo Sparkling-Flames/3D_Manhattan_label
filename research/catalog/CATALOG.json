@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v28_stage01_manual001_received",
+  "catalog_version": "research_catalog_20261022_v29_pro_continue_and_integrate",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22下一轮任务：有效换类续研与已有成果整合；用户自行推送main，任务尚未代发",
+          "path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md"
+        },
         {
           "text": "新对话首先阅读：用户思路、分类/画像/组合三线、验收和人工待审",
           "path": "docs/thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md"
@@ -369,6 +373,10 @@
       "description": "人员分类、人员画像与团队构成分别研究，Manual/Semi分开；n=20整体构成续研包已归档，成员配置覆盖不冒称个人组合穷举。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22下一轮任务：有效换类续研与已有成果整合；用户自行推送main，任务尚未代发",
+          "path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md"
+        },
         {
           "text": "2026-10-22有效换类续研与850项冻结小输入已归档；Manual、Semi、跨条件用途和复现边界见专题README",
           "path": "research/workers/personnel_effective_exchange_conditions_20261022/README.md"
@@ -11587,7 +11595,7 @@
       "source": "用户明确Downloads案例ZIP为此前文件，非此次Pro返回",
       "adoption_status": "仅保留此前案例来源；阶段待核，不作为此次人员主线收尾或新结果验收",
       "verification_status": "123个来源文件安全展开、长度与路径映射检查；未执行代码或复算研究结论",
-      "availability": "本地已保存待统筹提交；未公开推送",
+      "availability": "已纳入本地main；远端由用户自行推送",
       "relationships": [
         "research/workers/personnel_exchange_closure_20261022/delivery/received_case_zip/RECEIVED_MEMBERS.csv"
       ]
@@ -11603,9 +11611,46 @@
       "source": "用户此次实际返回的阶段01 Markdown、公开分类基线ZIP与manual_001 ZIP；与此前123文件案例来源分开",
       "adoption_status": "仅确认阶段01、既有ALL基线和首批Manual端点已接收；不采用43条件或146031事件等最终完成声明",
       "verification_status": "基线6文件中5份与已有taxonomy相同，248行ALL且无LOBO；REQUESTS/SCALARS/GEOMETRY各3489唯一一致团队、3图3楼、3463可评及26 invalid_floor；没有精确ABC事件关联，未重新融合或验收最终研究",
-      "availability": "本地已保存待统筹提交；原下载文件保留，未公开推送",
+      "availability": "已纳入本地main；原下载文件保留，远端由用户自行推送",
       "relationships": [
-        "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/RECEIPT.json"
+        "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/RECEIPT.json",
+        "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/AUDIT_RECEIPT.json",
+        "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel_pro_continue_and_integrate_20261022",
+      "title": "Pro下一轮：有效换类续研与已有产物整合",
+      "theme": "workers",
+      "type": "研究任务提示词",
+      "date": "20261022",
+      "source_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
+      "current_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
+      "source": "用户要求继续实质研究并整合最新成果；本地整理后由用户推送main",
+      "adoption_status": "下一轮工作安排，尚未代发或执行；不改变分类、数据或评分采用状态",
+      "verification_status": "are-you-sure自检后明确继续研究与文件整合并行；只做文档和引用核查，未新增实验",
+      "availability": "本地main整理；由用户自行推送远端",
+      "relationships": [
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "docs/thesis_main/四线程成果与论文主线核对_20261015.md",
+        "research/workers/personnel_exchange_closure_20261022/AUTHOR_COMPLETION_MESSAGE_20261022.txt"
+      ]
+    },
+    {
+      "id": "MAT-personnel_author_completion_message_20261022",
+      "title": "人员主线Pro完成说明原文：作者报告证据",
+      "theme": "workers",
+      "type": "作者回复来源记录",
+      "date": "20261022",
+      "source_path": "research/workers/personnel_exchange_closure_20261022/AUTHOR_COMPLETION_MESSAGE_20261022.txt",
+      "current_path": "research/workers/personnel_exchange_closure_20261022/AUTHOR_COMPLETION_MESSAGE_20261022.txt",
+      "source": "用户粘贴的本轮Pro完成说明原文",
+      "adoption_status": "仅保存报告来源；最终43条件及完整事件/端点尚未接收，不能作为独立验收",
+      "verification_status": "原文本逐字节保存；其中sandbox链接未据此认定为可下载文件，未复算报告数值",
+      "availability": "本地main整理；由用户自行推送远端",
+      "relationships": [
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md"
       ]
     }
   ]
