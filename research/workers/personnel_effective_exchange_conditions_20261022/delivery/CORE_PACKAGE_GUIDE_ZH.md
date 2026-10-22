@@ -6,14 +6,14 @@
 
 | 包 | 内容 | 正常用途 |
 |---|---|---|
-| `CORE_RESEARCH_CODE_AND_SMALL_EVIDENCE.zip` | 本轮关键 Python 代码；三家族冻结 ALL/LOBO 标签、中心、成员与未知原因；旧方法身份和映射；旧事件筛查的精简正式表；联合专题与扩大专题的正式汇总；代表案例的原答、冻结参考、原生状态、票账及图 | 直接阅读结果、取得标签、检查方法身份与案例；结合独立事件文件重聚合 |
-| `SMALL_ANALYSIS_INPUTS.zip` | 253 份精确冻结事件请求；253 格 `PANEL_SUMMARY.csv.gz` 和 253 格 `COMPLETION.json`；联合专题冻结请求；原生批次请求与完成回执；25 大事件分片的计划和小回执 | 从独立事件分片恢复可聚合输入；从独立紧凑端点重新生成原事件比较 |
+| `CORE_RESEARCH_CODE_AND_SMALL_EVIDENCE.zip` | 本轮关键 Python 代码；三家族冻结 ALL/LOBO 标签、中心、成员与未知原因；旧方法身份和映射；旧事件筛查的精简正式表；联合专题与扩大专题的正式汇总；代表案例的原答、冻结参考、原生状态、票账及图 | 核心选入文件已在本目录归档；原包中 171 个被标为中间/重复输入的文件未另行复制，原 ZIP 保留作来源包 |
+| `SMALL_ANALYSIS_INPUTS.zip` | 253 份精确冻结事件请求；253 格 `PANEL_SUMMARY.csv.gz` 和 253 格 `COMPLETION.json`；联合专题冻结请求；原生批次请求与完成回执；25 大事件分片的计划和小回执 | 已按原路径解压到本目录，供重聚合脚本读取 |
 
-所有归档成员都保留 `research/workers/...` 仓库相对路径，解压目标是 **HOHONET 仓库根目录**，不是研究子目录。原文件名、成员集合、类别向量、请求 SHA 和来源身份不变。完整事件与端点已独立交付，不在两个 ZIP 中再复制一次。包内也没有 runtime、PARTIAL、临时恢复副本、虚拟环境、原图全集或嵌套 ZIP。
+两个包中的有效路径都以 `research/workers/...` 开头。`SMALL_ANALYSIS_INPUTS.zip` 的 850 个文件已完整解压到仓库根目录，合计 50,646,993 字节；校验回执见 [SMALL_ANALYSIS_INPUTS_RECEIPT.json](SMALL_ANALYSIS_INPUTS_RECEIPT.json)。`CORE` 包按 `SOURCE_SELECTION.json` 的选择归档；171 个 `source_package_only` 文件保留在来源 ZIP，没有静默丢弃或重复展开。完整事件与端点仍需独立交付，不在这两个包中重复。包内也没有 runtime、PARTIAL、临时恢复副本、虚拟环境、原图全集或嵌套 ZIP。
 
-`CORE_PACKAGE_INPUTS.csv` 逐文件列出路径、所属包、角色、字节数与 SHA256；`delivery_mode=external` 表示独立交付或仓库依赖。包本身的 SHA、文件数及验证回执见 `CORE_PACKAGE_RECEIPT.json`。清单自身不记录循环自哈希，其 SHA 由回执保存。
+`CORE_PACKAGE_INPUTS.csv` 逐文件列出路径、所属包、角色、字节数与 SHA256；`delivery_mode=external` 表示独立交付或仓库依赖。来源包 SHA、文件数及已核验的清单项见 [CORE_PACKAGE_RECEIPT.json](CORE_PACKAGE_RECEIPT.json)。清单自身不记录循环自哈希，其 SHA 由回执保存。
 
-扩大专题的 253 份请求只保留分格原件，没有重复收入四张合并请求表。完整请求是复现“哪些人、哪些背景、哪些实际换人数”的输入，253 份小摘要则是便携重聚合的必要输入；二者不是新的实验结果。
+扩大专题的 253 份请求只保留分格原件，没有重复收入四张合并请求表。完整请求是复现“哪些人、哪些背景、哪些实际换人数”的输入，253 份小摘要是便携重聚合的必要输入；两者已随 `SMALL_ANALYSIS_INPUTS.zip` 归档，且不是新的实验结果。
 
 ## 2. 旧代码包与仓库依赖
 
@@ -36,7 +36,7 @@
 
 ## 3. 最轻量的可运行重聚合
 
-先把两个新 ZIP 解压到同一仓库根目录，并取得独立的 25 份扩大事件表与相应完成回执，放回：
+核心选入文件与 SMALL 输入当前已在仓库中，无需再次解压来源 ZIP。完整复现还需取得独立的 25 份扩大事件表与相应完成回执，放回：
 
 `research/workers/personnel_effective_exchange_conditions_20261022/delivery/expanded_events/`
 

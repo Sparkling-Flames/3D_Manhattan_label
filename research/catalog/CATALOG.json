@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261021_v24_personnel_n20_archive",
-  "inventory_date": "2026-10-21",
+  "catalog_version": "research_catalog_20261022_v25_exchange_inputs_archive",
+  "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -357,6 +357,10 @@
       "description": "人员分类、人员画像与团队构成分别研究，Manual/Semi分开；n=20整体构成续研包已归档，成员配置覆盖不冒称个人组合穷举。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22有效换类续研与850项冻结小输入已归档；Manual、Semi、跨条件用途和复现边界见专题README",
+          "path": "research/workers/personnel_effective_exchange_conditions_20261022/README.md"
+        },
         {
           "text": "2026-10-21 n=20整体构成续研五个Pro交付包已归档，独立核验边界见人员总记录",
           "path": "research/workers/personnel_composition_n20_20261021/README.md"
@@ -11400,6 +11404,25 @@
       "relationships": [
         "research/workers/personnel_v3_20261021/README.md",
         "research/workers/personnel_taxonomy_20261021/README.md",
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel-effective-exchange-conditions-20261022",
+      "title": "人员分类与有效换类条件续研及复现输入",
+      "theme": "workers",
+      "type": "研究包、复现输入与结果证据",
+      "date": "20261022",
+      "source_path": "CORE_RESEARCH_CODE_AND_SMALL_EVIDENCE.zip; SMALL_ANALYSIS_INPUTS.zip",
+      "current_path": "research/workers/personnel_effective_exchange_conditions_20261022/README.md",
+      "source": "Pro 的 2026-10-22 人员分类与换类续研交付；底层是真实 v2 数据，来源仅用仓库相对路径登记",
+      "adoption_status": "按具体支持域有条件采用；Manual、Semi 和跨条件方案分别解释，不宣称全池穷尽或普遍互换",
+      "verification_status": "CORE 包 437 项清单哈希/字节数匹配；SMALL 输入 850 项已按原路径归档并校验解压长度；统计独立核验边界见专题 README",
+      "availability": "匿名研究文件与冻结小输入已在仓库；CORE 来源包中 171 个中间/重复输入保留在本地来源包",
+      "relationships": [
+        "research/workers/personnel_effective_exchange_conditions_20261022/delivery/CORE_PACKAGE_GUIDE_ZH.md",
+        "research/workers/personnel_effective_exchange_conditions_20261022/delivery/CORE_PACKAGE_RECEIPT.json",
+        "research/workers/personnel_effective_exchange_conditions_20261022/delivery/SMALL_ANALYSIS_INPUTS_RECEIPT.json",
         "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
       ]
     }
