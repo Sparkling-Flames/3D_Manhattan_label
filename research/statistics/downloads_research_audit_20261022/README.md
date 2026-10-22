@@ -1,5 +1,7 @@
 # Downloads研究材料清点与来源归档（2026-10-22）
 
+**后续补件登记：** 最新Manual/Semi完整面板ZIP已归档到[混合构成审计](../../workers/personnel_mixture_audit_20261022/README.md)，96来源条目对应93个不同文件，见其SOURCE_FILES.csv。包含已请求的8张逐面板表，重聚合已完成；不再列为缺件。随后各轮完整端点的接收状态以[closure验收](../../workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)为准。下面首次清点和DEPENDENCY_MAP保留原时点身份，不将其缺件清单套作全部当前缺件。
+
 首次归档以PR #23合并提交8bfd3e476为基线，在独立managed worktree完成。2026-10-22用户明确选择“提交本地main即可”，来源归档现已并入本地main（含归档的提交3f74c12ad）；未公开推送、未创建PR。原Downloads文件、原评分/融合及各专题结论保持原样。**归档不是独立复算或采纳作者全部结论。** 数据v2；历史包名中的v3是研究轮次，不是数据版本。
 
 ## 可以采用的清点结论

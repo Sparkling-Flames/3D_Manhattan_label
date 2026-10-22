@@ -4,7 +4,9 @@
 
 ## 当前采用范围（2026-10-22文档更新）
 
-本页人员数值来自前轮`personnel_effective_exchange_conditions_20261022`的53条件研究；新`personnel_exchange_closure_20261022`的43条件仍按作者报告与实际接收分别记录，Pro正在续研和整合，见[人员当前状态](../../../docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。本页不代表所有研究已经结束。
+下方人员数值保留前轮53条件研究身份。后续closure和adoption已经返回，完整端点与Manual两条主方向已复核；不再处于等待Pro状态。最新[混合构成独立核验](../../workers/personnel_mixture_audit_20261022/README.md)又接回四套分类的构成内/间方差、共同域连续对照、F01全部配比及QTD方向。分类的意义包括结构、质量、时间、失败和难度条件差异，升质只是用途之一。实际状态见[人员当前记录](../../../docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+
+随机重排人员后的平均前缀曲线继续作为整体研究问题。先复用v1广图和v2同房/嵌套前缀，再接当前难度、范围与类别；稳定性、接近GT程度及改善速度分别观察，门洞可标性独立保留。具体比较见[统一组织第6节](../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。
 
 各专题最新解释入口：[人员画像与可靠性](../../workers/personnel_profiles_composition_20261020/PROFILE_FINDINGS.md)、[难度与范围](../../difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项](../../quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)、[融合与人数](../../fusion/fusion_paper_closeout_20261022/README.md)、[同房用途](../../same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md)。
 
@@ -16,7 +18,7 @@
 - 旧M父内 m5扩大后不支持整体跨类变幅优势，m6有较弱多数支持；两者仍可解释简化与结构遗漏，不能把失去一种用途写成分类完全无效。
 - Manual原联合类的旧选队 Q+1.432/时间−5.419% 与本轮纯块净Q+5.691/时间−3.632%是两种设计，不叠加。后者64事件中62共同可评分、2个C失败。
 - Semi28事件省时−8.544%、净Q+0.153支持效率方向，不证明非劣或普遍升质。
-- 真正Manual+Semi联合标签排除目标楼两条件，评价仍分条件。没有完成同一新ABC上的连续QT策略对照，因此不宣称离散新类优于连续QT。
+- 真正Manual+Semi联合标签排除目标楼两条件，评价仍分条件。当时未完成的新ABC连续QT对照已由后续具体选人实验补充；19,896锚点类别约束QT10与纯QT10选人相同，仍不支持离散新类额外胜过连续QT。
 
 ## 二、同房核心问题与保留成果
 [同房验收表](../../same_room/same_room_acceptance_20261022/SAME_ROOM_ACCEPTANCE.csv)与[说明](../../same_room/same_room_acceptance_20261022/SAME_ROOM_ACCEPTANCE.md)。本次找到的仍是此前04:17 UTC五包，不冒称新批次，不重复上传原件。

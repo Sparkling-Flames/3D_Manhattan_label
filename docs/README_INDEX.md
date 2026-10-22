@@ -1,5 +1,7 @@
 # HOHONET 文档入口
 
+- **2026-10-22混合构成独立核验：** [各分类发现、完整配比、构成内波动与难度连接](../research/workers/personnel_mixture_audit_20261022/README.md)。新补两包逐面板复核、F01成员穷举和旧QTD重算已完成；随机人数曲线的版本与复用安排见人员统一比较清单。
+
 - **2026-10-22人员当前研究组织：** [多套分类、构成不确定性与待补比较](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。保留各分类用途；同构成换人与改变构成并列，不以升质为唯一标准。已有m5–9及直接AC，m4不是上限；整理、重聚合和新增实验缺口分别列明。
 
 - **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。

@@ -1,3 +1,5 @@
+- **2026-10-22混合构成独立核验：** 新增[审计包](../research/workers/personnel_mixture_audit_20261022/README.md)、两份analysis审计脚本及定向测试；归档两ZIP的93个不同来源文件，输出重聚合、字段合同和难度连接。未移动原来源、未重跑融合。
+
 - **2026-10-22人员分类/构成补充包：** [v3目录](../research/workers/personnel_v3_20261021/README.md)汇集7个有新增内容的复现、Manual/Semi/F01实际选择、jtc-28机制、整合报告和原答证据来源包；分类旧复现包被仓库修订版覆盖。只核验归档完整性，未独立复算分析结论。
 
 - **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。

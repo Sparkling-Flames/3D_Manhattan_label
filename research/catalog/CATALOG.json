@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v33_personnel_composition_uncertainty",
+  "catalog_version": "research_catalog_20261022_v34_mixture_audit_difficulty_link",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
+          "path": "research/workers/personnel_mixture_audit_20261022/README.md"
+        },
         {
           "text": "当前人员研究组织：保留多套分类用途，固定构成内波动与跨构成差异并列；大块覆盖和待补比较",
           "path": "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
@@ -296,6 +300,10 @@
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
         {
+          "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
+          "path": "research/workers/personnel_mixture_audit_20261022/README.md"
+        },
+        {
           "text": "2026-10-22收尾：多数人员/图片分母、目标范围与参考资格、两份缺失源表",
           "path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md"
         },
@@ -377,6 +385,10 @@
       "description": "多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
+          "path": "research/workers/personnel_mixture_audit_20261022/README.md"
+        },
         {
           "text": "当前人员研究组织：保留多套分类用途，固定构成内波动与跨构成差异并列；大块覆盖和待补比较",
           "path": "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
@@ -531,6 +543,10 @@
       "description": "Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。",
       "page_path": "docs/thesis_main/topics/fusion/README.md",
       "current_basis": [
+        {
+          "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
+          "path": "research/workers/personnel_mixture_audit_20261022/README.md"
+        },
         {
           "text": "2026-10-22收尾：Lee/墙线职责、分条件人数过程与15个保存端点机制；新Pro closure另行验收",
           "path": "research/fusion/fusion_paper_closeout_20261022/README.md"
@@ -11717,7 +11733,7 @@
       "current_path": "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
       "source": "用户澄清保留多种合理分类；固定分类后排列组合研究不确定性，不要求质量提高",
       "adoption_status": "作为当前人员研究组织：先整合已有结果与端点，按共同支持和真实容量补比较；m4不设为上限",
-      "verification_status": "回读分类定义、最新登记/容量和历史大块/直接AC报告；检查合同与链接，未新增融合、评分或分类拟合",
+      "verification_status": "已接入逐面板/F01/n20独立重聚合及主线难度连接；随机人数曲线明确版本/范围，尚未新增融合",
       "availability": "本地文档与索引，由用户自行推送远端",
       "relationships": [
         "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
@@ -11725,7 +11741,28 @@
         "research/workers/personnel_exchange_closure_20261022/integration/coverage/COVERAGE_FINAL_ZH.md",
         "research/workers/personnel_exchange_adoption_followup_20261022/README.md",
         "research/workers/personnel_effective_exchange_conditions_20261022/expanded_blocks/analysis/FINAL_FINDINGS_ZH.md",
-        "research/workers/personnel_v3_20261021/integrated_report/report/人员分类与整体构成_整合报告_20261021.md"
+        "research/workers/personnel_v3_20261021/integrated_report/report/人员分类与整体构成_整合报告_20261021.md",
+        "research/workers/personnel_mixture_audit_20261022/README.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel_mixture_audit_20261022",
+      "title": "混合配比与构成内波动独立核验及主线难度连接",
+      "theme": "workers",
+      "type": "独立核验与来源补充包",
+      "date": "20261022",
+      "source_path": "research/workers/personnel_mixture_audit_20261022",
+      "current_path": "research/workers/personnel_mixture_audit_20261022",
+      "source": "用户补充Manual/Semi完整response ZIP；已有F01成员及n20事件/楼表",
+      "adoption_status": "分类按结构、质量、时间、失败和难度分别采用；共同域比较已完成，随机人数曲线先复用再补缺口",
+      "verification_status": "55214逐面板方差与218294预测误差重聚合，440综合方差复得；1874 F01成员集合、875 QTD方向事件和112楼级指标复核；未重拟合或重融合",
+      "availability": "本地main；由用户自行推送",
+      "relationships": [
+        "research/workers/personnel_mixture_audit_20261022/README.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "tools/thesis_main/analysis/audit_personnel_mixture_20261022.py",
+        "tools/thesis_main/analysis/audit_personnel_n20_mixture_20261022.py",
+        "tests/test_personnel_mixture_audit_20261022.py"
       ]
     }
   ]

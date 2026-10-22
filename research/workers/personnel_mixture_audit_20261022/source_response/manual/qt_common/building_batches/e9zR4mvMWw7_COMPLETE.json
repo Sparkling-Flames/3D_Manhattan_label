@@ -1,0 +1,132 @@
+{
+  "code_sha256": "20d6e3e7bff7bbff21cb703915557d6c364050a2141370de8767d79a613088aa",
+  "execution_engine_sha256": "378e6cedf889b10b49e3762161a3aaad1cdf8f893eedc9c1349b5fb038011852",
+  "execution_engine": "grouped_exact_masks_full_gram_multiple_rhs",
+  "support": {
+    "condition": "manual",
+    "domain": "qt_common",
+    "building": "e9zR4mvMWw7",
+    "valid_target_rows": 6468,
+    "target_panels": 7,
+    "all_target_rows": 11088,
+    "valid_train_rows": 162750,
+    "known_workers": 57
+  },
+  "has_results": true,
+  "execution": {
+    "seconds": 22.345093265001196,
+    "has_results": true,
+    "outcome_count": 22,
+    "mask_groups": 7,
+    "models": 26,
+    "features": 372,
+    "masks": [
+      {
+        "mask_id": 0,
+        "outcomes": [
+          "B8L2",
+          "D10",
+          "IoU3D100",
+          "Hmean",
+          "Hcenter"
+        ],
+        "skipped": false,
+        "train_rows": 161603,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 1,
+        "outcomes": [
+          "failure",
+          "nodes"
+        ],
+        "skipped": false,
+        "train_rows": 162750,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 2,
+        "outcomes": [
+          "fusion_turn_n",
+          "fusion_short_turn_edges",
+          "fusion_redundancy_n",
+          "ref_node_recall_9",
+          "ref_edge_recall_9"
+        ],
+        "skipped": false,
+        "train_rows": 162338,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 3,
+        "outcomes": [
+          "log_geometry_area"
+        ],
+        "skipped": false,
+        "train_rows": 161994,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 4,
+        "outcomes": [
+          "height_mean_h",
+          "top_y_mean_px",
+          "bottom_y_mean_px"
+        ],
+        "skipped": false,
+        "train_rows": 162334,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 5,
+        "outcomes": [
+          "iou_2d",
+          "S_bottom_deg",
+          "dir",
+          "omission",
+          "extension"
+        ],
+        "skipped": false,
+        "train_rows": 161998,
+        "target_rows": 6468,
+        "train_buildings": 21,
+        "all_features": 372,
+        "active_features": 372,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 6,
+        "outcomes": [
+          "log_source_time"
+        ],
+        "skipped": false,
+        "train_rows": 111422,
+        "target_rows": 5544,
+        "train_buildings": 20,
+        "all_features": 372,
+        "active_features": 304,
+        "original_scalar_rhs_roundoff_fallback": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "response": [
+    {
+      "condition": "manual",
+      "domain": "geometry_common",
+      "decomposition_rows": 19924,
+      "prediction_rows": 69734,
+      "max_summary_difference": 1.4210854715202004e-14
+    },
+    {
+      "condition": "manual",
+      "domain": "qt_common",
+      "decomposition_rows": 24594,
+      "prediction_rows": 106574,
+      "max_summary_difference": 1.4210854715202004e-14
+    },
+    {
+      "condition": "semi",
+      "domain": "geometry_common",
+      "decomposition_rows": 5236,
+      "prediction_rows": 18326,
+      "max_summary_difference": 7.105427357601002e-15
+    },
+    {
+      "condition": "semi",
+      "domain": "qt_common",
+      "decomposition_rows": 5460,
+      "prediction_rows": 23660,
+      "max_summary_difference": 7.105427357601002e-15
+    }
+  ],
+  "f01": {
+    "member_rows": 1874,
+    "configurations": 37,
+    "images": 14,
+    "buildings": 11,
+    "failure_rows": 7,
+    "max_curve_difference": 9.094947017729282e-13,
+    "extreme_contrasts": [
+      {
+        "stratum": "all",
+        "images": 12,
+        "buildings": 9,
+        "delta_Q": 0.07945666747252231,
+        "delta_D10": -0.03203311503393794,
+        "time_percent": -16.624346932499687,
+        "failure_delta_pp": -0.3086419753086421,
+        "time_decreasing_images": 12,
+        "quality_increasing_images": 7
+      },
+      {
+        "stratum": "困难",
+        "images": 5,
+        "buildings": 5,
+        "delta_Q": 0.6034426950496922,
+        "delta_D10": 0.16047903235709243,
+        "time_percent": -11.075156186509686,
+        "failure_delta_pp": -1.1111111111111116,
+        "time_decreasing_images": 5,
+        "quality_increasing_images": 3
+      },
+      {
+        "stratum": "简单",
+        "images": 7,
+        "buildings": 7,
+        "delta_Q": -0.025587180508651386,
+        "delta_D10": -0.026050932210389583,
+        "time_percent": -19.64339817733431,
+        "failure_delta_pp": 0.0,
+        "time_decreasing_images": 7,
+        "quality_increasing_images": 4
+      }
+    ],
+    "label_assignment_refitted": false,
+    "score_recomputed": false
+  },
+  "scope": "saved_panel_reaggregation_and_F01_member_reaggregation",
+  "no_native_fusion_or_model_refit": true,
+  "difficulty_link": {
+    "panels": 336,
+    "images": 58,
+    "label_mismatches": 0,
+    "doorway_panels": 0,
+    "oos_panels": 0,
+    "reference_identity_note": "current difficulty target attached; source panel table does not declare endpoint reference"
+  },
+  "integrated_decomposition_rows_verified": 440
+}

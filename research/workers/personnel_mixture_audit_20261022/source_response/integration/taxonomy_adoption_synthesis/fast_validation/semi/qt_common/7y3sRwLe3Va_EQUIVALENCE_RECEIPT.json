@@ -1,0 +1,982 @@
+{
+  "status": "equivalent_within_tolerance",
+  "condition": "semi",
+  "domain": "qt_common",
+  "building": "7y3sRwLe3Va",
+  "absolute_tolerance": 1e-08,
+  "original_code_sha256": "20d6e3e7bff7bbff21cb703915557d6c364050a2141370de8767d79a613088aa",
+  "execution_engine_sha256": "378e6cedf889b10b49e3762161a3aaad1cdf8f893eedc9c1349b5fb038011852",
+  "support": {
+    "condition": "semi",
+    "domain": "qt_common",
+    "building": "7y3sRwLe3Va",
+    "valid_target_rows": 7392,
+    "target_panels": 8,
+    "all_target_rows": 8316,
+    "valid_train_rows": 45584,
+    "known_workers": 54
+  },
+  "tables": {
+    "PREDICTION": {
+      "rows": 4524,
+      "columns": 19,
+      "max_abs_error": 5.675246939063072e-10,
+      "columns_checked": [
+        {
+          "column": "panel_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "pool_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "image",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "difficulty",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "source_domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "n",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "model",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "mse",
+          "max_abs_error": 1.7763568394002505e-15,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "baseline_mse",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "response_r2",
+          "max_abs_error": 5.675246939063072e-10,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "mae",
+          "max_abs_error": 6.106226635438361e-16,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_buildings",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "active_features",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "10142fdaa3a1b631ee70a54e1e927e617b3886ee72ecb6d85857ac05e41f9850",
+      "accelerated_sha256": "f6f524ab526d0292bdffea0f82cd5ed93b90c8f1b47cfff17ad00fd9da39ef92"
+    },
+    "DECOMPOSITION": {
+      "rows": 1044,
+      "columns": 23,
+      "max_abs_error": 0.0,
+      "columns_checked": [
+        {
+          "column": "panel_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "pool_id",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "image",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "difficulty",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "source_domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "n",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "method",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "valid_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "substitutable_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "single_member_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "members_in_substitutable_configurations",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "total_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "within_configuration_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "between_configuration_variance",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "between_share",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "degenerate_no_total_variation",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "complete_finite_panel",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "e58d6afc17a1ea773d74a3a16437a35ffaf15b050e094d272fbfe33b416edc31",
+      "accelerated_sha256": "e58d6afc17a1ea773d74a3a16437a35ffaf15b050e094d272fbfe33b416edc31"
+    },
+    "MODELS": {
+      "rows": 572,
+      "columns": 10,
+      "max_abs_error": 4.433786671143025e-12,
+      "columns_checked": [
+        {
+          "column": "condition",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "domain",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "heldout_building",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "outcome",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "model",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "ridge",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "predictors",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "coefficients",
+          "max_abs_error": 4.433786671143025e-12,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_teams",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        },
+        {
+          "column": "train_buildings",
+          "max_abs_error": 0.0,
+          "equal_within_tolerance": true
+        }
+      ],
+      "original_sha256": "00bf67467de5f43f5edb79ee64ed63820ccb9e4a1398bfc7a8433a2c303a8468",
+      "accelerated_sha256": "357d4d74d76b84e538314232c5dbcebf4cb910e08b44dc2effa057ad2c009d35"
+    }
+  },
+  "execution": {
+    "seconds": 7.054880812000192,
+    "has_results": true,
+    "outcome_count": 22,
+    "mask_groups": 4,
+    "models": 26,
+    "features": 278,
+    "masks": [
+      {
+        "mask_id": 0,
+        "outcomes": [
+          "B8L2",
+          "D10",
+          "fusion_turn_n",
+          "fusion_short_turn_edges",
+          "fusion_redundancy_n",
+          "iou_2d",
+          "IoU3D100",
+          "S_bottom_deg",
+          "dir",
+          "Hmean",
+          "Hcenter",
+          "omission",
+          "extension",
+          "ref_node_recall_9",
+          "ref_edge_recall_9"
+        ],
+        "skipped": false,
+        "train_rows": 43573,
+        "target_rows": 7392,
+        "train_buildings": 10,
+        "all_features": 278,
+        "active_features": 278,
+        "original_scalar_rhs_roundoff_fallback": [
+          {
+            "model": "old_coarse",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "old_coarse",
+            "outcome": "D10"
+          },
+          {
+            "model": "old_coarse",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "old_fine",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "old_fine",
+            "outcome": "D10"
+          },
+          {
+            "model": "old_fine",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_coarse",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "new_coarse",
+            "outcome": "D10"
+          },
+          {
+            "model": "new_coarse",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "D10"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_fine",
+            "outcome": "dir"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "D10"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "structure_mean",
+            "outcome": "extension"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "D10"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "dir"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "extension"
+          },
+          {
+            "model": "behavior_same_fields_mean",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "behavior_same_fields_mean",
+            "outcome": "D10"
+          },
+          {
+            "model": "behavior_same_fields_mean",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "behavior_same_fields_mean",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "D10"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "behavior_same_fields_moments",
+            "outcome": "dir"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "behavior_same_fields_quadratic",
+            "outcome": "extension"
+          },
+          {
+            "model": "old_coarse_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "old_coarse_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "old_coarse_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "old_fine_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "old_fine_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "old_fine_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "extension"
+          },
+          {
+            "model": "QT",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "QT",
+            "outcome": "D10"
+          },
+          {
+            "model": "QT",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "QT",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "QT",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "QT",
+            "outcome": "dir"
+          },
+          {
+            "model": "QT",
+            "outcome": "extension"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "D10"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "dir"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "extension"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "D10"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "dir"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "extension"
+          },
+          {
+            "model": "joint_coarse",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_coarse",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_coarse",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_coarse",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_fine",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_fine",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_fine",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_fine",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_fine",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_continuous_QT",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_same_fields_mean",
+            "outcome": "extension"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_same_fields_moments",
+            "outcome": "extension"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "extension"
+          },
+          {
+            "model": "joint_coarse_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_coarse_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_coarse_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_coarse_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_coarse_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "extension"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "B8L2"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "D10"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "iou_2d"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "IoU3D100"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "S_bottom_deg"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "dir"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "extension"
+          }
+        ]
+      },
+      {
+        "mask_id": 1,
+        "outcomes": [
+          "failure",
+          "nodes"
+        ],
+        "skipped": false,
+        "train_rows": 45584,
+        "target_rows": 7392,
+        "train_buildings": 10,
+        "all_features": 278,
+        "active_features": 278,
+        "original_scalar_rhs_roundoff_fallback": []
+      },
+      {
+        "mask_id": 2,
+        "outcomes": [
+          "log_geometry_area",
+          "height_mean_h",
+          "top_y_mean_px",
+          "bottom_y_mean_px"
+        ],
+        "skipped": false,
+        "train_rows": 43572,
+        "target_rows": 7392,
+        "train_buildings": 10,
+        "all_features": 278,
+        "active_features": 278,
+        "original_scalar_rhs_roundoff_fallback": [
+          {
+            "model": "structure_mean",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "structure_moments",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "new_coarse_quadratic",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "new_fine_quadratic",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "QT",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "QT_structure",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "QT_new_fine",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "QT_quadratic",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "joint_fine_quadratic",
+            "outcome": "log_geometry_area"
+          },
+          {
+            "model": "joint_same_fields_quadratic",
+            "outcome": "log_geometry_area"
+          }
+        ]
+      },
+      {
+        "mask_id": 3,
+        "outcomes": [
+          "log_source_time"
+        ],
+        "skipped": false,
+        "train_rows": 38808,
+        "target_rows": 5544,
+        "train_buildings": 10,
+        "all_features": 278,
+        "active_features": 276,
+        "original_scalar_rhs_roundoff_fallback": []
+      }
+    ]
+  },
+  "total_seconds": 19.322140349999245,
+  "fusion_calls": 0,
+  "scoring_calls": 0,
+  "reference_outputs_modified": false
+}
