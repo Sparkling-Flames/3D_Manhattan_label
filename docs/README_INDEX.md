@@ -29,6 +29,7 @@
 
 - 2026-10-21接续：[校正后的人员分类研究包](../research/workers/personnel_taxonomy_20261021/README.md)、[研究台分类模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=taxonomy)与[条件及局部机制模块](../research/statistics/research_explorer_v1_r2_20261017/index.html#module=mechanisms)。Manual粗类为工作分类；Semi尺度组与A2关系轴单列。原下载包保留，页面接入与验收范围见研究台README。
 - 2026-10-22新增[人员分类与构成v3补充包](../research/workers/personnel_v3_20261021/README.md)：包含实际选择用途、F01完整配比、jtc-28机制、整合报告和楼外证据；来源及排除项见包内清单。
+- **2026-10-23 Manual/Semi完整响应面板：** [结果与恢复说明](../research/workers/personnel_useful_taxonomy_v3_20261021/response/README.md)。两个原包的逐面板预测、分解、拟合和支持材料已按原目的地归档；只恢复已有结果，没有重跑分析。
 - 2026-10-22人员有效换类续研：[专题包与复现输入](../research/workers/personnel_effective_exchange_conditions_20261022/README.md)。核心结果按清单归档，850项冻结小输入已展开；完整事件分片与独立端点仍保持单独交付边界。
 
 - 2026-10-20总览入口（状态已续至10/21）：[人员标法分类、换人换类与整体进度](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。人员分类、画像、组合效益三线分别记录；Manual/Semi分开。新分类与画像/组合Pro均已返回，最新独立审查见上方10/21入口。下方旧阶段状态保留轮次。 研究台接续见[十模块离线入口](../research/statistics/research_explorer_v1_r2_20261017/index.html)，展示采用状态以各轮回执为准。

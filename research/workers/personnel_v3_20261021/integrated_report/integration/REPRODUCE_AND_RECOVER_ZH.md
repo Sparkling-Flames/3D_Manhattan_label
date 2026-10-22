@@ -35,6 +35,8 @@
 
 原生批次 ZIP 的首级目录为 `batches/`，应解压到本轮 `composition/` 目录。分类与用途包的首级为 `taxonomy/`、`utility/`，应解压到本轮根目录；Semi响应包首级直接为 `semi/`，应解压到本轮 `response/`，Manual响应包已含 `response/` 前缀，应解压到本轮根。核心代码包以 `research/` 开头，解压到仓库根目录。逐包目的目录另存于 `PACKAGE_RESTORE_DESTINATIONS.csv`。较早冻结检查点保留阶段身份，不要覆盖后来已完成的结果；优先恢复最终分类/用途包和原生完成批次，再解压核心代码。然后从仓库根目录执行：
 
+截至 2026-10-23，Manual 与 Semi 的完整成员面板响应包已按上述目的地恢复至 `research/workers/personnel_useful_taxonomy_v3_20261021/`；阅读其结果和校验范围见 [`response/README.md`](../../../personnel_useful_taxonomy_v3_20261021/response/README.md)。
+
 ```bash
 python3 research/workers/personnel_useful_taxonomy_v3_20261021/integration/restore_v3_runtime_from_tables.py \
   --batch-dir research/workers/personnel_useful_taxonomy_v3_20261021/composition/batches/batch_017 \

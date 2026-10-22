@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261023_v36_mixture_comparison_acceptance",
+  "catalog_version": "research_catalog_20261023_v37_personnel_response_archive",
   "inventory_date": "2026-10-23",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -11817,6 +11817,24 @@
         "tools/thesis_main/analysis/audit_personnel_mixture_comparison_20261023.py",
         "tests/test_personnel_mixture_legacy_failure_20261023.py",
         "tests/test_personnel_mixture_storage_20261023.py"
+      ]
+    },
+    {
+      "id": "MAT-personnel_response_panels_20261021",
+      "title": "Manual / Semi 完整成员面板响应与分解结果",
+      "theme": "workers",
+      "type": "研究结果、复现代码与支持证据",
+      "date": "20261021",
+      "source_path": "HOHONET_v3_Manual_粗细类与连续特征完整面板结果_20261021.zip; HOHONET_v3_Semi_粗细类与连续特征完整面板结果_20261021.zip",
+      "current_path": "research/workers/personnel_useful_taxonomy_v3_20261021/response/README.md",
+      "source": "用户提供的Manual/Semi完整面板交付；真实v2研究数据，来源索引仅使用仓库相对路径。",
+      "adoption_status": "作为已有人员分类响应研究的逐面板结果与方法对照证据；不改变类别、选队规则或Manual/Semi用途边界。",
+      "verification_status": "两包成员CRC通过；MANUAL清单73项、SEMI清单21项的字节数与SHA-256逐项匹配；未重跑预测、融合或评分。",
+      "availability": "已归档至本地main，本轮推送后核验远端状态。",
+      "relationships": [
+        "research/workers/personnel_useful_taxonomy_v3_20261021/response/README.md",
+        "research/workers/personnel_v3_20261021/integrated_report/report/人员分类与整体构成_整合报告_20261021.md",
+        "research/workers/personnel_mixture_audit_20261022/README.md"
       ]
     }
   ]
