@@ -1,0 +1,35 @@
+{
+  "input": "research/workers/personnel_mixture_comparison_20261022/inputs/CLOSURE_ENDPOINT_EXPRESSIONS.csv.gz",
+  "input_sha256": "193ed9bd666a6eb10dc24c91a5f38a229e2e34fce760393540a8d0ec66f81153",
+  "endpoint_keys": 101092,
+  "fields": [
+    "fusion_turn_n",
+    "fusion_short_turn_edges",
+    "fusion_redundancy_n"
+  ],
+  "new_fusion_calls": 0,
+  "quality_or_labels_changed": false,
+  "exact_geometry_rule": "inherited frozen expression routine: near-collinear <=5deg; short edges <4% perimeter; corners-minus-redundancy turns",
+  "batches": [
+    {
+      "batch": "manual_joint_A",
+      "events": 81221,
+      "known_common_turn_events": 79456
+    },
+    {
+      "batch": "manual_joint_B",
+      "events": 21000,
+      "known_common_turn_events": 19755
+    },
+    {
+      "batch": "manual_structure",
+      "events": 29928,
+      "known_common_turn_events": 28969
+    },
+    {
+      "batch": "semi_joint",
+      "events": 13882,
+      "known_common_turn_events": 13812
+    }
+  ]
+}

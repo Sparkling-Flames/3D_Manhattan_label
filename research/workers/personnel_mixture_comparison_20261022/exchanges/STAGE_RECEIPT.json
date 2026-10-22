@@ -1,0 +1,43 @@
+{
+  "source_commit": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "underlying_data_version": "real_v2",
+  "endpoint_file": "research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz",
+  "endpoint_sha256": "98a887740504c871cd4a7fe08b427da35ad040b692145cd01e73dbbb7ddd5db3",
+  "endpoint_rows": 101092,
+  "new_fusion_calls": 0,
+  "new_scoring_calls": 0,
+  "batches": {
+    "manual_joint_A": {
+      "source": "research/workers/personnel_exchange_closure_20261022/manual_joint/EVENTS_REGISTERED.csv.gz",
+      "sha256": "6b636134fbc27b473ec5e1f70f9f27537544ebde36381741bb3f7a8af7e933ea",
+      "registered_rows": 81221,
+      "physical_ABC": 81221,
+      "conditions": 18,
+      "status": "saved"
+    },
+    "manual_joint_B": {
+      "source": "research/workers/personnel_exchange_closure_20261022/manual_joint/phase_b_highq_slower/EVENTS_REGISTERED.csv.gz",
+      "sha256": "a2c873427aa446f6c6b10b3dc9556f151fc6c80a356585963dd18d82bd018448",
+      "registered_rows": 21000,
+      "physical_ABC": 21000,
+      "conditions": 1,
+      "status": "saved"
+    },
+    "manual_structure": {
+      "source": "research/workers/personnel_exchange_closure_20261022/structure/ALL_EVENTS_REGISTERED.csv.gz",
+      "sha256": "055502ded6416b1c19be111b0674b651c38b559ccd83acc0a920cfd9593d1174",
+      "registered_rows": 29928,
+      "physical_ABC": 29082,
+      "conditions": 39,
+      "status": "saved"
+    },
+    "semi_joint": {
+      "source": "research/workers/personnel_exchange_closure_20261022/semi/EVENTS_REGISTERED_ALL.csv.gz",
+      "sha256": "fb24e117c06ff8d84cec824335883078039781e91b7b76561cc31f330d7387ea",
+      "registered_rows": 13882,
+      "physical_ABC": 6941,
+      "conditions": 27,
+      "status": "saved"
+    }
+  }
+}

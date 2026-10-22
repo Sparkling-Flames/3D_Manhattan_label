@@ -1,0 +1,49 @@
+{
+  "stage": "complete_numeric_analysis",
+  "data_version": "real_v2",
+  "new_fusion": 0,
+  "inputs": [
+    {
+      "path": "research/workers/personnel_v3_20261021/raw_answer_evidence/taxonomy/BEHAVIOR_RECORDS.csv.gz",
+      "bytes": 911307,
+      "sha256": "2379aeca3757c1556677307e2101ed9a9d39c8c4695819ea46368eded1807f01"
+    },
+    {
+      "path": "research/workers/personnel_v3_20261021/raw_answer_evidence/taxonomy/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "bytes": 326510,
+      "sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21"
+    },
+    {
+      "path": "research/workers/personnel_v3_20261021/raw_answer_evidence/taxonomy/OUTER_CLASS_ROLE_MAP.csv.gz",
+      "bytes": 58665,
+      "sha256": "65816c31278b7a97366039dbe7752348bad491995c817b0145fe84056fb95948"
+    },
+    {
+      "path": "research/workers/personnel_profiles_composition_20261020/source/tables/profiles/record_index.csv.gz",
+      "bytes": 579610,
+      "sha256": "196432d2338ab175f9b680bed3360e4b64662fd7d6475b07778e3b6827a0eba6"
+    },
+    {
+      "path": "research/difficulty/difficulty_mechanisms_v2_20261020/record_conditions.csv.gz",
+      "bytes": 1136425,
+      "sha256": "8aa5bc743e05ea2e5e6c2127bad116781d6d4ae7a35e884f861acaef9d749e48"
+    },
+    {
+      "path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/image_scope_support.csv",
+      "bytes": 56813,
+      "sha256": "f73a833e9012869b99d3a43e13ecb9cfbf8e674fcf73005931e485621522f613"
+    }
+  ],
+  "git_read_commit": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "parameters": {
+    "role_min_workers_per_side": 2,
+    "nearQ_max_absolute_historical_peer_Q_difference": 3,
+    "min_historical_time_ratio": 1.5,
+    "time_pairs_same_source": true,
+    "reference_self_occlusion": "frozen geometry H>0; not RGB obstruction",
+    "reference_more_or_less_turns": "expression relation, not semantic correctness",
+    "role_alignment": "existing outer-fold extreme class centroids; no class-number pooling",
+    "primary": "ordinary, valid behavioral evidence, same current target, non-OOS; Q keeps qualification",
+    "weighting": "member pairs -> equal image -> equal building; counts never independent sample claims"
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261022_v35_integrated_research_presentation",
-  "inventory_date": "2026-10-22",
+  "catalog_version": "research_catalog_20261023_v36_mixture_comparison_acceptance",
+  "inventory_date": "2026-10-23",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "人员混合构成已验收：四包完整配比/成员/难度与大块比较，旧n20失败修正",
+          "path": "research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md"
+        },
         {
           "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
           "path": "research/workers/personnel_mixture_audit_20261022/README.md"
@@ -385,6 +389,10 @@
       "description": "多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "人员混合构成已验收：四包完整配比/成员/难度与大块比较，旧n20失败修正",
+          "path": "research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md"
+        },
         {
           "text": "混合构成独立核验：逐面板/F01/QTD重聚合；各分类用途、难度连接及随机人数曲线复用",
           "path": "research/workers/personnel_mixture_audit_20261022/README.md"
@@ -11652,8 +11660,8 @@
       "source_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
       "current_path": "docs/thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md",
       "source": "用户要求继续实质研究并整合最新成果；本地整理后由用户推送main",
-      "adoption_status": "对应Pro已返回；任务正文保留历史，当前采用见personnel_exchange_adoption_followup_20261022",
-      "verification_status": "are-you-sure自检后明确继续研究与文件整合并行；只做文档和引用核查，未新增实验",
+      "adoption_status": "本轮任务已执行、四包返回并完成本地重点验收；保留原任务，不重复发送",
+      "verification_status": "原任务与G1—G7有限范围成果对齐，失败统计修正见本地验收",
       "availability": "本地main整理；由用户自行推送远端",
       "relationships": [
         "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
@@ -11726,15 +11734,15 @@
     },
     {
       "id": "MAT-personnel_composition_uncertainty_20261022",
-      "title": "多套人员分类与构成不确定性：研究组织、替换规模和比较缺口",
+      "title": "人员分类与混合构成：当前主报告、完整比较与采用",
       "theme": "workers",
       "type": "当前研究解释与比较清单",
       "date": "20261022",
       "source_path": "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
       "current_path": "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
       "source": "用户澄清保留多种合理分类；固定分类后排列组合研究不确定性，不要求质量提高",
-      "adoption_status": "作为当前人员研究组织：先整合已有结果与端点，按共同支持和真实容量补比较；m4不设为上限",
-      "verification_status": "已接入逐面板/F01/n20独立重聚合及主线难度连接；随机人数曲线明确版本/范围，尚未新增融合",
+      "adoption_status": "当前人员统一叙述入口；四套工作分类按用途采用，G1—G7有限范围完成，随机人数过程独立后续",
+      "verification_status": "351项交付存在/大小、336完整面板、13406格Q/D10/转折分布、严格ABC/直接AC、201难度条件独立核验；旧n20失败已修正",
       "availability": "本地文档与索引，由用户自行推送远端",
       "relationships": [
         "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
@@ -11743,7 +11751,8 @@
         "research/workers/personnel_exchange_adoption_followup_20261022/README.md",
         "research/workers/personnel_effective_exchange_conditions_20261022/expanded_blocks/analysis/FINAL_FINDINGS_ZH.md",
         "research/workers/personnel_v3_20261021/integrated_report/report/人员分类与整体构成_整合报告_20261021.md",
-        "research/workers/personnel_mixture_audit_20261022/README.md"
+        "research/workers/personnel_mixture_audit_20261022/README.md",
+        "research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md"
       ]
     },
     {
@@ -11775,13 +11784,38 @@
       "source_path": "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
       "current_path": "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
       "source": "各专题已归档成果及统筹文档核对；历史采用原文保留",
-      "adoption_status": "当前跨专题解释；新增人员分类续研中，其余既有成果交研究台接入",
+      "adoption_status": "当前跨专题解释；人员分类/混合构成已重点验收，其展示仍暂缓，其余既有成果交研究台接入",
       "verification_status": "核对专题当前说明、支持与链接；不冒称本轮全量原数据复算",
       "availability": "本地main，用户自行推送",
       "relationships": [
         "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
         "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
         "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel_mixture_comparison_20261022",
+      "title": "四分类完整混合配比、成员变化与难度研究及本地独立验收",
+      "theme": "workers",
+      "type": "研究结果、复现代码与独立修正",
+      "date": "20261023",
+      "source_path": "research/workers/personnel_mixture_comparison_20261022",
+      "current_path": "research/workers/personnel_mixture_comparison_20261022",
+      "source": "用户提供四个最终阶段ZIP；Pro读取ef148c82d，真人v2；源报告、清单及修复前原表保留",
+      "adoption_status": "分类、有限混合构成、定向变化和难度条件可按当前支持范围收尾；研究台人员模块仍暂缓",
+      "verification_status": "351项存在/大小；336完整12选6面板、13406配比分布、146031严格ABC成员与Q/D10、2056AC、37788难度指标及17316配对汇总核验；271331旧n20事件失败差修复36/76条件；不称全链拟合/融合重跑",
+      "availability": "本地main，用户自行推送；两大表原gzip字节分块，restore_large_tables.py恢复",
+      "relationships": [
+        "research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md",
+        "research/workers/personnel_mixture_comparison_20261022/LOCAL_SOURCE_FILES.csv",
+        "research/workers/personnel_mixture_comparison_20261022/LARGE_TABLE_STORAGE.json",
+        "research/workers/personnel_mixture_comparison_20261022/restore_large_tables.py",
+        "research/workers/personnel_mixture_comparison_20261022/local_review_20261023/INDEPENDENT_CHECKS.json",
+        "research/workers/personnel_mixture_comparison_20261022/local_review_20261023/LEGACY_FAILURE_FIX.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "tools/thesis_main/analysis/audit_personnel_mixture_comparison_20261023.py",
+        "tests/test_personnel_mixture_legacy_failure_20261023.py",
+        "tests/test_personnel_mixture_storage_20261023.py"
       ]
     }
   ]

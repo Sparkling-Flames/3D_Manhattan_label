@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "data": "real_v2",
+  "fix": "C_failure - B_failure on all events; quality mask retained for quality/geometry/stability",
+  "hierarchy": "event mean within image; image mean within building; equal building mean within condition",
+  "failure_definition": "not complete_evaluable, inherited from the original endpoint evaluator",
+  "event_counts": {
+    "rows": 271331,
+    "all_scored": 266373,
+    "not_all_scored": 4958,
+    "net_failure_old_missing": 4958,
+    "net_failure_new_missing": 0,
+    "nonzero_event_failure_difference": 2489,
+    "A_failure": 2532,
+    "B_failure": 1705,
+    "C_failure": 1506
+  },
+  "table_checks": [
+    {
+      "file": "EVENT_OUTCOMES.csv.gz",
+      "rows": 271331,
+      "changed_failure_rows": 4958,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 0.0,
+      "max_failure_identity_error": 0.0
+    },
+    {
+      "file": "IMAGE_M_R_COMPARISON.csv.gz",
+      "rows": 12131,
+      "changed_failure_rows": 388,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 0.0,
+      "max_failure_identity_error": 5.551115123125783e-17
+    },
+    {
+      "file": "BUILDING_M_R_COMPARISON.csv.gz",
+      "rows": 4668,
+      "changed_failure_rows": 359,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 0.0,
+      "max_failure_identity_error": 2.7755575615628914e-17
+    },
+    {
+      "file": "PARENT_FIXED_M_RESPONSE.csv",
+      "rows": 76,
+      "changed_failure_rows": 36,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 1.7763568394002505e-15,
+      "max_failure_identity_error": 1.2468324983583301e-17
+    },
+    {
+      "file": "IMAGE_PARENT_FIXED_M_RESPONSE.csv.gz",
+      "rows": 2500,
+      "changed_failure_rows": 93,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 0.0,
+      "max_failure_identity_error": 5.551115123125783e-17
+    },
+    {
+      "file": "BUILDING_PARENT_FIXED_M_RESPONSE.csv.gz",
+      "rows": 721,
+      "changed_failure_rows": 82,
+      "other_columns_unchanged_within_1e12": true,
+      "max_other_numeric_difference": 0.0,
+      "max_failure_identity_error": 2.7755575615628914e-17
+    }
+  ],
+  "independent_condition_reaggregation_max_error": 9.367506770274758e-17,
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_personnel_mixture_legacy_failure_20261023.py -q",
+    "passed": 2
+  },
+  "not_rerun": [
+    "native fusion",
+    "raw geometry scoring",
+    "classification fitting",
+    "all historical wide shard ingestion"
+  ],
+  "new_schema_fields": false
+}

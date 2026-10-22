@@ -1,0 +1,52 @@
+{
+  "status": "complete",
+  "source_main": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "underlying_data": "true_v2",
+  "endpoint_calls": 0,
+  "panels": 336,
+  "unique_teams": 310458,
+  "panel_team_links": 310464,
+  "configuration_rows": 13406,
+  "classification_team_links": 941248,
+  "design_source": "inherited_exact_member_files",
+  "source_labels_sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21",
+  "source_panels_sha256": "c03694a6a78b4544b3c4bcb85b439cc0ddd26553cc75d696ab68f1c0639ec57a",
+  "files": [
+    {
+      "path": "PANEL_CONFIGURATION_CENSUS.csv.gz",
+      "rows": 13406,
+      "columns": 28,
+      "bytes": 541002,
+      "sha256": "4b967554a0bcb1fb40e6591b10b77f5aa4b0a67f485b7d4a41b334c1355db861"
+    },
+    {
+      "path": "PANEL_SUPPORT.csv",
+      "rows": 1344,
+      "columns": 22,
+      "bytes": 291527,
+      "sha256": "f0789f1569bca0e80d0f2ef37c52233098ac849990e5b94d31149b2b2809d2cd"
+    },
+    {
+      "path": "TEAM_CONFIGURATION_LINKS.csv.gz",
+      "rows": 941248,
+      "columns": 6,
+      "bytes": 13164045,
+      "sha256": "f650768266e7a1db78509ac3111c5228b6109450f1888f7ba48f0f366f1f65de"
+    },
+    {
+      "path": "DOMAIN_CONFIGURATION_CENSUS.csv.gz",
+      "rows": 225559,
+      "columns": 17,
+      "bytes": 5883963,
+      "sha256": "4051e4bc644ae787abf137eeb8c328489e7c3d8adc9422a3b964424f4e8e9e74"
+    },
+    {
+      "path": "DOMAIN_COVERAGE.csv",
+      "rows": 1236,
+      "columns": 18,
+      "bytes": 185591,
+      "sha256": "89df0ab116c9276ab9562c1fd4bdf1687c055bc935b01a6f6ad35a21df4ebe01"
+    }
+  ],
+  "denominator_note": "Methods/tiers/source domains overlap; sums across them are accounting totals, not disjoint global team universes."
+}

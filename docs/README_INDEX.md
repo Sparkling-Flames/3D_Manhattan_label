@@ -1,3 +1,5 @@
+- **2026-10-23人员混合构成验收：** [统一主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)与[四包归档/独立核验](../research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md)。完整配比、成员变化、大块AC和难度结果接齐；修复旧n20失败统计，原表保留。新增一份analysis审计、一份大表恢复工具和两份定向测试；两张大表按原gzip字节分块。未改变数据、参考、资格、评分或融合合同；分类展示暂缓。
+
 # HOHONET 文档入口
 
 **全研究汇报入口：** [各专题发现与证据链](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)，[研究台当前接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)，[指标与名词释义](thesis_main/CONTEXT.md)。现有非分类成果开始接入，新增人员分类暂缓。

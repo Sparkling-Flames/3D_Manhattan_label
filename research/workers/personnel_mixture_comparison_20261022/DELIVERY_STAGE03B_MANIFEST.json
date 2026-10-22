@@ -1,0 +1,305 @@
+{
+  "package": "STAGE03B",
+  "source_commit": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "bottom_data": "real_v2",
+  "version_note": "v3 in historical package names is research round, not a different dataset",
+  "new_fusion_calls": 0,
+  "coverage": {
+    "finite_panels": 336,
+    "teams_per_panel": 924,
+    "unique_saved_endpoints": 310458,
+    "unordered_panel_pair_exposures_before_label_masks": 143279136,
+    "actual_m": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "conditions": [
+      "Manual",
+      "Semi"
+    ],
+    "classification_views": [
+      "coarse",
+      "fine_all_changes",
+      "fine_parent_fixed"
+    ],
+    "fine_parent_stratification_version": 2,
+    "contents": "all available n/m/metric summaries, exact D/m and parent-vector background strata in complete batches, panel/image/building results, pair and label coverage, m/r response, code/readme and 12-row Chinese selected table",
+    "not_included": "143 million explicit repeated pair rows; regenerate deterministically from exact panel members and saved endpoints in configurations package; no full-pool exhaustion claim"
+  },
+  "dependencies": [
+    "research/workers/personnel_mixture_comparison_20261022/configurations/PANELS_USED.csv",
+    "research/workers/personnel_mixture_comparison_20261022/configurations/TEAM_MEMBERS.csv.gz and PANEL_TEAMS.csv.gz",
+    "research/workers/personnel_mixture_comparison_20261022/configurations/TEAM_CONFIGURATION_LINKS.csv.gz and PANEL_CONFIGURATION_CENSUS.csv.gz",
+    "research/workers/personnel_mixture_comparison_20261022/configurations/ENDPOINT_OUTCOMES_manual.csv.gz and ENDPOINT_OUTCOMES_semi.csv.gz"
+  ],
+  "packaged_file_count_excluding_manifest": 51,
+  "uncompressed_member_bytes_excluding_manifest": 185859668,
+  "excluded": [
+    "*.tmp",
+    "*.pyc",
+    "*.pyo",
+    "__pycache__",
+    ".cache"
+  ],
+  "members": [
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/compare_finite_panel_pairs.py",
+      "bytes": 14390,
+      "sha256": "9a06d528626ae7d97cb300ac4f45ce16eba9f5a864357d7a9e3d5cda583ae2f1"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/FINITE_PAIR_SELECTED_ZH.csv",
+      "bytes": 6142,
+      "sha256": "a526a162c8993cb1e5a62ce11bceaa86297a1d6a95f786b36767512fe8922f29"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/FINITE_PAIR_SELECTED_ZH.md",
+      "bytes": 3892,
+      "sha256": "a5c69a79a3ab09fd13fade30bb0d2aa486c82c231f6a002429af32e6fd721d3c"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/README.md",
+      "bytes": 7519,
+      "sha256": "be4b0ae12e582b1fd4839be08c1ca150958dc97afd88fac3946408d0767318f5"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_010.csv.gz",
+      "bytes": 4858427,
+      "sha256": "fc2e2a00ef0ec3a0cacfcf943b0f4d74992768ebc80ebc535f5c3a202fb5e501"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_020.csv.gz",
+      "bytes": 5678240,
+      "sha256": "7921a15866eca2ac8f4d32697a6fa1080d34404b56f5dd0285db4b42f2dbe38b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_030.csv.gz",
+      "bytes": 5102154,
+      "sha256": "33df39f805f21d7ef749d999f53709a7d6296d87b0c10c6ff38eb81b0c3235c2"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_040.csv.gz",
+      "bytes": 6960723,
+      "sha256": "17ae6bec8ffbdd43dd69818d053f72c32e218cdc7a3c69307dd20c75b057c242"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_050.csv.gz",
+      "bytes": 4735237,
+      "sha256": "a6125bd84a3fbe0044589405f6e5047b53e7bc70a54d9a21f82b3dbb2764edb3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_060.csv.gz",
+      "bytes": 6588906,
+      "sha256": "df450a8b948734d65e8680281912d5f42702acfd8ce5ec864305d9639e4c7079"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_070.csv.gz",
+      "bytes": 6474154,
+      "sha256": "e72e4887ed5b99c0ec1dd36242827deaacfaf2b3c4476590f5f605fcb77f2f5f"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_080.csv.gz",
+      "bytes": 4870324,
+      "sha256": "376b79b3acab2941068fbbea529d56ef1bad629203eff52819abd6e7086ef5d9"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_090.csv.gz",
+      "bytes": 5033762,
+      "sha256": "8492bb9919a22fed7127281bdf43eedad1ab79b6546ef8b4171476dba7a86bb3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_100.csv.gz",
+      "bytes": 7057164,
+      "sha256": "4cbbb9fffc1805225cceb169c628c595c509df7bc8adba8e9edd1c70150945c3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_110.csv.gz",
+      "bytes": 4788460,
+      "sha256": "e431811c8c90d739215fee690e39957fb261314706e8521da1915e281653a067"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_120.csv.gz",
+      "bytes": 6639968,
+      "sha256": "2b54a52ba36a2714207151c77fa8caf4a2499a3e00bd41ab98a82244a9eb5dea"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_130.csv.gz",
+      "bytes": 6861974,
+      "sha256": "4c55294f8ba0cf5fb61f697c2ed66edfded2740f0605e2ae237da321779191c0"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_140.csv.gz",
+      "bytes": 6783748,
+      "sha256": "a7bd443e13e128da7ee172ce8c3013c4eb130805242ff5d0667b9f6c849a270b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_150.csv.gz",
+      "bytes": 5893883,
+      "sha256": "f2736e438b11a471e2b88c3bd604d89b68420d31da15936ffe24de44bfb052a6"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_160.csv.gz",
+      "bytes": 6632527,
+      "sha256": "495de93e6ec8ed38ca8400c57347fb663d7c808f5da103dc403fa652d42b645d"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_170.csv.gz",
+      "bytes": 3049114,
+      "sha256": "f70f6e97cc85d85b3d16dd2bf888bf4a7ae0980da3e40f9962a3879b4a3797cf"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_180.csv.gz",
+      "bytes": 4659478,
+      "sha256": "2451a1e56ac3619427edabe5235081e196cf1d644fb7f25150d06aaf1830b49f"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_190.csv.gz",
+      "bytes": 3419804,
+      "sha256": "5e318fd9540c7c69772c86b984c4b6c86f3545622f035dfc2186c682f7e4bbdb"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_200.csv.gz",
+      "bytes": 6129228,
+      "sha256": "1bae2ccc0d82d27717f5c42595ab45f83ec0810ac3ea21d7123596d594a53561"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_210.csv.gz",
+      "bytes": 5382605,
+      "sha256": "6644bf4dc3cd9744ed2c409ec422e2d9d0f2f673c24e3766ef2185840144b4ae"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_220.csv.gz",
+      "bytes": 7060466,
+      "sha256": "6f311735652616bd037ea3c9195c64f2a2ca7490073ddde42e289305dce3e9a5"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_230.csv.gz",
+      "bytes": 6605384,
+      "sha256": "435c30d8d870bba9c835e9eb4ff8d80328f7ce8f2bd78f37c41ce7e8276f9be8"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BACKGROUND_STRATA_231.csv.gz",
+      "bytes": 761686,
+      "sha256": "341090a4d023c433b0c93c8954f96fd7e80b814e7a06ef339998bce421950528"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_BUILDING_COMPARISON.csv.gz",
+      "bytes": 1647887,
+      "sha256": "f74b0c74d2bae7a15f93ceab8367225240ade514c3bedf661c51e36865362042"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_IMAGE_COMPARISON.csv.gz",
+      "bytes": 2273453,
+      "sha256": "5a59f8088c4d808018ee1cdc2c1978527ee393d02f51ba1ad3d21e30430f6011"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_M_R_RESPONSE.csv.gz",
+      "bytes": 8396337,
+      "sha256": "94dd5dbd95fe152b728b40f509071e6b9eb5e2991102b4244e9df45fceff81b3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_PAIR_COVERAGE.csv.gz",
+      "bytes": 80433,
+      "sha256": "a4524c57d9fa3ea61bbcef564e20a2b0703763833f83d0729a8e0f0f2475a9ab"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_PANEL_MATCHED_PAIR_METRICS.csv.gz",
+      "bytes": 8639151,
+      "sha256": "df78ca8aa64a5492694dab10591bf2a9327302f66573fd0c31d8a2079aeb35d3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_RECEIPT.json",
+      "bytes": 1208,
+      "sha256": "8c20f6a3a2a2d42a8b6804a5d2ebd05fe605d60921499019881638ffc8dd62ab"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/manual_SUMMARY.csv",
+      "bytes": 1185987,
+      "sha256": "a0c49fcf3b4502d67533c29678c120ac77d6ac9e0e6676ffdc5ba3ee5c8b23e0"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_010.csv.gz",
+      "bytes": 4822870,
+      "sha256": "8658cff07234cd206c009e9f4acb2f52f8916299d768f52a91ee4bf3745e900d"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_020.csv.gz",
+      "bytes": 4133831,
+      "sha256": "5faa088fb900d0803e5cf2e47c03171f43a155447bbb8934fbf5b21da4b28abb"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_030.csv.gz",
+      "bytes": 2661048,
+      "sha256": "834d99ff677521f04b9c2c537db1f0e871ceb06c39c93f594806be6672956a30"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_040.csv.gz",
+      "bytes": 4956858,
+      "sha256": "64caab7857eb8c686fa3457ab03173fce41a2de3de6a5b83a13cd7b2d69d8c48"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_050.csv.gz",
+      "bytes": 1574140,
+      "sha256": "10beec37892c62734eede51b0b326ff6eddaf3c3db655f78efd346ef4e1e4233"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_070.csv.gz",
+      "bytes": 2372708,
+      "sha256": "328c23d47dbec91f587a6301879b0a4c0f15069a9404432e37cf121c38e700e5"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_080.csv.gz",
+      "bytes": 3037499,
+      "sha256": "5ceb9bcedbafe08ff8043dca9321260f33c4bcae9b3c093a9c88b8414d39f649"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BACKGROUND_STRATA_105.csv.gz",
+      "bytes": 1608787,
+      "sha256": "05ab9d6a54bfa3b778940a347eeea77a6889f4a43940cf03d4fe5ebdce645889"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_BUILDING_COMPARISON.csv.gz",
+      "bytes": 607158,
+      "sha256": "2d9314cb714d15899546b29d43258dc20f2c3fb7ca7c4025acb4d93b864f36aa"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_IMAGE_COMPARISON.csv.gz",
+      "bytes": 775698,
+      "sha256": "1b7a7e15a156de7eaaccf3062f44132b02e2138e8b611b7e87193bdbc5f5a2da"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_M_R_RESPONSE.csv.gz",
+      "bytes": 2139861,
+      "sha256": "7da9660b3c8ca4fadc62d4072a4a6df1f52fbd6887e0b903bc870b4343a18810"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_PAIR_COVERAGE.csv.gz",
+      "bytes": 24288,
+      "sha256": "2fa83cf983ffa87523cd05fb331293e97365d925dbc595384306f7e03d79aa32"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_PANEL_MATCHED_PAIR_METRICS.csv.gz",
+      "bytes": 2200010,
+      "sha256": "b1f4cec8153be2057aa1e0b6bee14296aaa4bc41ac66ebd217939ad93cbdb268"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_RECEIPT.json",
+      "bytes": 1208,
+      "sha256": "82615d0bb7215c355f44c579469bd0348d7b90dfa2997d62566350ace7db5738"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/finite_pair_comparison/semi_SUMMARY.csv",
+      "bytes": 651921,
+      "sha256": "837408cb9497d55a9b465145bbdd3999ee6360476e652cbbff45bbccefaa644c"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/make_selected_pair_table.py",
+      "bytes": 7968,
+      "sha256": "8bb43d4917ce0f30045897db8904b9739921ca4c8e1b279cf3f682f29c2d05ff"
+    }
+  ]
+}

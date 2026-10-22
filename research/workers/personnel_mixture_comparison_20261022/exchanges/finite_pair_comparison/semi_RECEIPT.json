@@ -1,0 +1,15 @@
+{
+  "panels_evaluated": 105,
+  "unordered_pair_exposures_before_label_masks": 44774730,
+  "new_fusion_calls": 0,
+  "design": "complete unordered pairs within each saved 12-choose-6 panel, exact intersection/background matched",
+  "unknown_labels": "omitted explicitly by existing configuration links; all known-label pairs enumerated",
+  "independence": "pairs reuse endpoints; images/buildings are support; no pair-count significance tests",
+  "aggregation": "within exact D and m separate same/changed pair means -> matched D equal -> panel -> image -> building equal",
+  "pair_orientation": "unordered absolute differences, no artificial signed effect from lexicographic order",
+  "fine_increment": "fine_parent_fixed holds the identical full coarse count vector across same/different fine-vector ensembles, within exact D and m",
+  "fine_parent_stratification_version": 2,
+  "background_details": "BACKGROUND_STRATA shards preserve every D/m (and coarse vector for fine increment) with all pair counts and core quality/time/structure differences; variable mask is decoded against PANELS_USED.variable_workers",
+  "data_version": "real_v2",
+  "source_commit": "ef148c82df18582228b2d23837faa2659e79eba7"
+}

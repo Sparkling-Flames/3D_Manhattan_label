@@ -1,0 +1,433 @@
+{
+  "package": "STAGE03A",
+  "source_commit": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "bottom_data": "real_v2",
+  "version_note": "v3 in historical package names is research round, not a different dataset",
+  "new_fusion_calls": 0,
+  "coverage": {
+    "strict_ABC_registered_rows": 146031,
+    "strict_ABC_unique_physical_triples": 138244,
+    "strict_ABC_conditions": 85,
+    "strict_ABC_batches": [
+      "manual_joint_A",
+      "manual_joint_B",
+      "manual_structure",
+      "semi_joint"
+    ],
+    "strict_ABC_used_unique_endpoint_keys": 100530,
+    "legacy_n20_rows": 271331,
+    "legacy_manual_rows": 269814,
+    "legacy_semi_rows": 1517,
+    "legacy_source_shards": 165,
+    "legacy_fine_parent_m_conditions": 76,
+    "contents": "exact A/B/C/D/X/Y/Z + scalar contrasts and quality/time/structure expressions, all directions and registered scales, global/image/building/background aggregates, full failure/negative/null rows, code/readme/receipts and historical reuse indices",
+    "finite_pair_statistics": "in STAGE03B, not duplicated here",
+    "gzip_integrity": "existing GZIP_INTEGRITY_CHECK.json reports 89 complete streams, no errors; packaging does not rerun research"
+  },
+  "dependencies": [
+    "research/workers/personnel_mixture_comparison_20261022/inputs/CLOSURE_ENDPOINT_EXPRESSIONS.csv.gz and its source manifest (root-managed input package)",
+    "frozen source labels, registration requests and closure endpoint archives referenced by exact file/row keys in each README",
+    "legacy_n20/SOURCE_SHARDS.csv references restored historical source shards; exact narrow event links and outcomes are included here"
+  ],
+  "packaged_file_count_excluding_manifest": 78,
+  "uncompressed_member_bytes_excluding_manifest": 355757323,
+  "excluded": [
+    "*.tmp",
+    "*.pyc",
+    "*.pyo",
+    "__pycache__",
+    ".cache"
+  ],
+  "members": [
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_BACKGROUND_EFFECTS.csv.gz",
+      "bytes": 7829290,
+      "sha256": "4dc523b757fcb556b911a34dab5b10fbd21001f9b3e7872982a0d433c261aeba"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_BUILDING_EFFECTS.csv.gz",
+      "bytes": 718318,
+      "sha256": "ddaac086ad80103688a8f52754f346f1d54a143945d9ccf7d6897088ef941eda"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_CONDITIONS.csv",
+      "bytes": 309114,
+      "sha256": "ff24e433445bd62da75bb6c72adc1c4f9029dccca8ed534a6430c4a60f6c56b2"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_CONDITIONS_SELECTION_REASONS.csv",
+      "bytes": 34585,
+      "sha256": "f35a19ddc87cf7d2a46c8aeb5d7568a57c67f3e9512585ed0cc47635e9325df2"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_CONDITION_METRICS.csv.gz",
+      "bytes": 779184,
+      "sha256": "fe5463c18b5d1b536b2374c594bca87af145c92a9fd7b03804ee568332379b7b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_FEASIBLE_CAPACITY_AND_REGISTRATION.csv.gz",
+      "bytes": 101659,
+      "sha256": "7ddf7966a04019d66ec7cab271231dfaddc9b6358b774e409c1160d452cb691d"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/ALL_IMAGE_EFFECTS.csv.gz",
+      "bytes": 2385888,
+      "sha256": "c7d26ba45e48c073a7fb35160a73e187536067ac059081a5072249d994a5ae59"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/COMMON_QT_CONDITIONS.csv",
+      "bytes": 40849,
+      "sha256": "375ed1c6474dbda3eccbed1666fb60cbe6599de879b7e5dbbef29f76ee0a50ba"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/EXPRESSION_SUPPLEMENT_RECEIPT.json",
+      "bytes": 987,
+      "sha256": "9229f1dc90eba29d29a374c2492a5520afad38892602050aadddbb7be1c33588"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/FILE_INDEX.csv",
+      "bytes": 6577,
+      "sha256": "5ebe59ae4722e75583e2d0f9ebbd3dce254f7420293350762249c7b720486b33"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/GZIP_INTEGRITY_CHECK.json",
+      "bytes": 13398,
+      "sha256": "47fdedef63bbdefae9f2177c3af69567cc28e24e8054969df97773189649c268"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/HISTORICAL_METHOD_COMPARISON_INDEX.csv",
+      "bytes": 2396,
+      "sha256": "c3381f274b84a6267c21d08e320db51fb6c489711f102c0fb2c0a66da7409a78"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/METRIC_CONTRACT.json",
+      "bytes": 1320,
+      "sha256": "9fc112eaa2376e805b2b2a62dc2722632f63f5adf2c356a20b6f747cf0e4ec95"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/PRACTICAL_CHANGE_IMAGE_BUILDING_COUNTS.csv",
+      "bytes": 29813,
+      "sha256": "44a651ce42631882d9348643d29a07c82296d09d10296a1d8df1db655cba54dd"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/README.md",
+      "bytes": 7511,
+      "sha256": "cb57cd23ed93b34d9d3837f9c7430aaaaff7fbd840117abf678f59c60da158d8"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/REUSED_CROSS_CONDITION_SAME_SUPPORT.csv",
+      "bytes": 29401,
+      "sha256": "83660734e8f59335f1994fefa6b46a8f85640d836520b9e45c2e455d0a36afb6"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/STAGE_RECEIPT.json",
+      "bytes": 1773,
+      "sha256": "8078078dbe597d68a0415658b3db3e81c13627c2c69c31d3de81efd5b7e9d7b7"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/STRICT_ABC_GLOBAL_EXPOSURE.json",
+      "bytes": 354,
+      "sha256": "7274a9a2d72ff728fd97f4bd26b0a3ebeef5e71fbad9a0b804bfc405b8aa0223"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/TARGET_AND_SOURCE_MEMBER_VARIATION.csv",
+      "bytes": 19700,
+      "sha256": "7a6c6ff3eff3bb3e3ec367d7676adf8bc7b7d446e6c8033cc8952d4716ccc749"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/add_expression_supplement.py",
+      "bytes": 5736,
+      "sha256": "7fc0b355aaa3bff378b83d5d58f177ebef5b7f0d4bf73667c476a7cd09010741"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/build_reuse_index.py",
+      "bytes": 3298,
+      "sha256": "2b8a0e2777b7dab27324009271b57c7713db70f119beba7af1fae893b3a08591"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/compare_finite_panel_pairs.py",
+      "bytes": 14390,
+      "sha256": "9a06d528626ae7d97cb300ac4f45ce16eba9f5a864357d7a9e3d5cda583ae2f1"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/compare_legacy_n20.py",
+      "bytes": 9551,
+      "sha256": "b0e0d60c7a63556a0021d780dea31b06bb6db0ed3cfe18fdecfaab2cd3f9b8f3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/compare_saved_exchanges.py",
+      "bytes": 20945,
+      "sha256": "ed45fd0a1bb451eb393e4f1a03d1be71b3b6c10fab275599c54731927e46d447"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/complete_comparison_products.py",
+      "bytes": 6271,
+      "sha256": "b9dc0b35b7b90b1fdf22ead98cf2e6dbf3ec27752d386be3c44977ede0417212"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/BUILDING_M_R_COMPARISON.csv.gz",
+      "bytes": 2899142,
+      "sha256": "3be0220d62bf371e6bb574a07a685658f5f15c1175fb76228e776a83098c109b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/BUILDING_PARENT_FIXED_M_RESPONSE.csv.gz",
+      "bytes": 477350,
+      "sha256": "0ed3188a504a0d6195d9e30e12c2f6bdfc01366db73b7f297cbb4ab9eb6ded3f"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/EVENT_OUTCOMES.csv.gz",
+      "bytes": 129661430,
+      "sha256": "86793061f88487c0df980ab9998266837d0f33ca822db8b8141c9a32ba292502"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/EXACT_EVENT_LINKS.csv.gz",
+      "bytes": 35847791,
+      "sha256": "70985097b858627472ab65e5370a690142b78cf20b749eb5c048153c33a011ac"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/IMAGE_M_R_COMPARISON.csv.gz",
+      "bytes": 7487774,
+      "sha256": "5dcaca0352651dbdf12144fd5d0c660cda84d34b90123e3cff2dbc7f6db261f3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/IMAGE_PARENT_FIXED_M_RESPONSE.csv.gz",
+      "bytes": 1583577,
+      "sha256": "b83c8a39171c1a77bd7b15c3a208fca863b78f9575b55f0fd1e6d73ce9c8fad2"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/PARENT_FIXED_M_RESPONSE.csv",
+      "bytes": 132910,
+      "sha256": "05d2be16fa48451c9b070f6dd61fa796f0cbac9ba6235557173927ae6d966103"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/README.md",
+      "bytes": 3548,
+      "sha256": "c6a2d1f43b8cff6c86758b10545ef7a32b273b8fc7a223bce083b78ce8412c3e"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/RECEIPT.json",
+      "bytes": 554,
+      "sha256": "7cda13a1cec5d6efb33299bf6b1a297484bca074517c20fe0872e8b1d199e56b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/legacy_n20/SOURCE_SHARDS.csv",
+      "bytes": 11479,
+      "sha256": "c033c7bd48eca3d1fadfbda2c1b56eb84e7a60dea16050ff8f073d1630266247"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/make_selected_pair_table.py",
+      "bytes": 7968,
+      "sha256": "8bb43d4917ce0f30045897db8904b9739921ca4c8e1b279cf3f682f29c2d05ff"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/ALL_METRICS_DENOMINATORS.csv.gz",
+      "bytes": 203545,
+      "sha256": "6efe2496936dc638c1cb1eb7989711ba9f8cb8ad07b8210ed7c8ac8855a2b651"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/BACKGROUND_EFFECTS.csv.gz",
+      "bytes": 505946,
+      "sha256": "7482f1c1560e7001e85b35fc849da91462ddddca59a6a64ec068e16edfeb6472"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/BUILDING_EFFECTS.csv.gz",
+      "bytes": 153604,
+      "sha256": "6a8de44a85463ca4de412d6932b69c63f2eea7ef5f7c5e1f12bbba4a500b67f6"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/CLASS_PAIR_CELL_EFFECTS.csv.gz",
+      "bytes": 260532,
+      "sha256": "1e63acbe19cc39195ebbc4b1e0b2155223904f6b1d53df4f6948adbcd2832bc9"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/CONDITION_COMPARISON.csv",
+      "bytes": 74569,
+      "sha256": "c2008b3f853a8494c6689fa1c4b0abb2cd02f585a427472415428884f203faac"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/EVENT_EXPRESSION_SUPPLEMENT.csv.gz",
+      "bytes": 1467205,
+      "sha256": "553422ebf4fd8963573cb251595c5f402882833afbab009051f7b0d077d82b56"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/EVENT_OUTCOMES.csv.gz",
+      "bytes": 76620546,
+      "sha256": "600a3a18534c3966b107265d356d3c573f2506d9dc351b14073399a1a40c85b4"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/EXACT_EVENT_LINKS.csv.gz",
+      "bytes": 12418915,
+      "sha256": "746c34a31c1f11159bd18a29f140b17155bef4e2ceb1e94361a5e6c4761b4c24"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/FIXED_BACKGROUND_MEMBER_VARIATION.csv.gz",
+      "bytes": 57191,
+      "sha256": "0539848114aff5ee6c37d4103bc0f18d538329c8c3f37835250c0e3cc3b28223"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/IMAGE_EFFECTS.csv.gz",
+      "bytes": 204660,
+      "sha256": "75bbdeac2c3578ac7b610edb537d574b3f2e59682be590f39cd43e01a184079b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_A/README.md",
+      "bytes": 4824,
+      "sha256": "7f1f2226845e9ba03c6a45a24e91a90d36ccc68fd266b81ecfcf2431165dc779"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/ALL_METRICS_DENOMINATORS.csv.gz",
+      "bytes": 13550,
+      "sha256": "92b7ad2a01e1de5631d14277e2eecef718f9c6c96b96cda568f569085c81f630"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/BACKGROUND_EFFECTS.csv.gz",
+      "bytes": 46930,
+      "sha256": "2608cbcfc59ee76d6aeccfa96937741c894d3d21df4e0dcf00cc70c90cf2640b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/BUILDING_EFFECTS.csv.gz",
+      "bytes": 18566,
+      "sha256": "34a04407e7f5c612cbcac9c4cfb41da0493626f6f57fa8d82790956fd2d2014e"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/CLASS_PAIR_CELL_EFFECTS.csv.gz",
+      "bytes": 25110,
+      "sha256": "138914c4bdab6396173761918f4e009567e59582cb75b51fda502dc0397870c7"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/CONDITION_COMPARISON.csv",
+      "bytes": 10387,
+      "sha256": "42f2c16270e00b11c77b6de3e949a72b523ca64f2be2ce2b5d4a5b72f19ad3f7"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/EVENT_EXPRESSION_SUPPLEMENT.csv.gz",
+      "bytes": 388740,
+      "sha256": "ef9f3a333dafb5080ceff85642179cf76efb5043266cc233fb492723c88202c7"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/EVENT_OUTCOMES.csv.gz",
+      "bytes": 15647848,
+      "sha256": "1ee8a6808e71d62a484a488cfc83a069c02ed621e6999674a64a9c92a4812fb0"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/EXACT_EVENT_LINKS.csv.gz",
+      "bytes": 2110413,
+      "sha256": "ce712d47936c350355d613151bc989d0ed9ad5fd74212f27920c72b66fb41fb4"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/FIXED_BACKGROUND_MEMBER_VARIATION.csv.gz",
+      "bytes": 5835,
+      "sha256": "a326123e075ba50965971ecbc505aba707b2a86b1e4017a0cc0d7056763125d0"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_joint_B/IMAGE_EFFECTS.csv.gz",
+      "bytes": 24736,
+      "sha256": "b2292873be549b10bfdc9c99fe7e4d8bdec509d7b7e963d87a062b3a208eba3f"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/ALL_METRICS_DENOMINATORS.csv.gz",
+      "bytes": 431792,
+      "sha256": "15fa5b349f2ea0a011ed265fb1ea8cdcd15fd5bae13a917a2739c38e54006f9e"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/BACKGROUND_EFFECTS.csv.gz",
+      "bytes": 6854902,
+      "sha256": "1e695b0d671223fc456172ad1fd7c306cdd0f244ad592ace787b058d1ef3a03a"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/BUILDING_EFFECTS.csv.gz",
+      "bytes": 506357,
+      "sha256": "799e141e5887e6e7a0a9bf19560806b164a18c9eede0e41d10253c4f3e7211b9"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/CLASS_PAIR_CELL_EFFECTS.csv.gz",
+      "bytes": 2151199,
+      "sha256": "99ced3f79b23929f219713fdd82b4ae65b94df6b9d1a794efd86218402ca13f1"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/CONDITION_COMPARISON.csv",
+      "bytes": 153122,
+      "sha256": "75138ae1e53a9d89d226b197cc411cc23fbf1a2bc46800b3f0f2974356b8e99e"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/EVENT_EXPRESSION_SUPPLEMENT.csv.gz",
+      "bytes": 558664,
+      "sha256": "5ea0208abd0d24133b42a95aa25601203b156cefa3131a08b562e23d38f36ec7"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/EVENT_OUTCOMES.csv.gz",
+      "bytes": 24556900,
+      "sha256": "c413f0d2212162ce22e40cfd6a5c8b5144fc8f6dd580130a44d3039a6369728e"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/EXACT_EVENT_LINKS.csv.gz",
+      "bytes": 4490056,
+      "sha256": "df4a4b1225a17fa3875ae0eb0353455436b32484322924d8983fe07c4b600b1d"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/FIXED_BACKGROUND_MEMBER_VARIATION.csv.gz",
+      "bytes": 705510,
+      "sha256": "27184c9a54a0a2a2bfdc61ec0e7bdc0a9593cf04bec1d9d2c8e526c519840104"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/manual_structure/IMAGE_EFFECTS.csv.gz",
+      "bytes": 2106515,
+      "sha256": "d651f19b2713cef1b8774a6f81de2652aba36fb344ec9c9e7bb1cec0cf803580"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/package_stages.py",
+      "bytes": 7321,
+      "sha256": "c75c4c5b0a9a5d4fb943b89ca3b2ccb688b195275a47177bbcce4f27c4e80b8a"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/ALL_METRICS_DENOMINATORS.csv.gz",
+      "bytes": 134339,
+      "sha256": "c26b7a390cf98f51c0a3f639e302348471a6f03a9f49e805ed95bc8aad90b32b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/BACKGROUND_EFFECTS.csv.gz",
+      "bytes": 429051,
+      "sha256": "347ea90b88bdec5e32cbb2c623bd646badcd8020bf3121c9869c89e3bb3d913d"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/BUILDING_EFFECTS.csv.gz",
+      "bytes": 48110,
+      "sha256": "accb966b51db4d26746d55057d0bf57b5be184bfc0d0459e1555905a2d43d7e1"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/CLASS_PAIR_CELL_EFFECTS.csv.gz",
+      "bytes": 66164,
+      "sha256": "a3491957fd69cc8b802ac31862bec94435d945c31b0cde1e037f2be13db0818b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/CONDITION_COMPARISON.csv",
+      "bytes": 92144,
+      "sha256": "3ae06a6e95c02291bd628968f76809c8eb456b17272c2d47928bc366f615d9a3"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/EVENT_EXPRESSION_SUPPLEMENT.csv.gz",
+      "bytes": 264816,
+      "sha256": "a4667c6d291b2efcb90946ed53a3d19f22a31e204e71eaf578d8a2aad4c45726"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/EVENT_OUTCOMES.csv.gz",
+      "bytes": 9373234,
+      "sha256": "ff7f89c077633e6768957744c86eaef1d9aa6dbe075a13d929814e13b9e270be"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/EXACT_EVENT_LINKS.csv.gz",
+      "bytes": 1954108,
+      "sha256": "4868958c5eb8a448926a4c3585e6fcd6c3c26e1df6a4a344fd9c1019fce9746b"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/FIXED_BACKGROUND_MEMBER_VARIATION.csv.gz",
+      "bytes": 65757,
+      "sha256": "fea020595dd892039dfaf009c2a43ca2a7f3cde408a77bae3a8d1bcc778490f8"
+    },
+    {
+      "path": "research/workers/personnel_mixture_comparison_20261022/exchanges/semi_joint/IMAGE_EFFECTS.csv.gz",
+      "bytes": 57779,
+      "sha256": "567a2b4dc8598a6c2fdd6cf769f2956dd76d1d76dc667cfcbc02e34c81d9d1d4"
+    }
+  ]
+}

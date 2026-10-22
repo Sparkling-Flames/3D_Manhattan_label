@@ -1,0 +1,18 @@
+{
+  "same": "B-A",
+  "cross": "C-A",
+  "net": "C-B",
+  "symmetric": "C-(A+B)/2",
+  "within_abs": "abs(B-A)",
+  "cross_abs": "abs(C-A)",
+  "symmetric_cross_abs": "(abs(C-A)+abs(C-B))/2",
+  "abs_advantage": "symmetric_cross_abs-within_abs; larger means cross-class changes more, not better",
+  "quality_denominator": "Each metric observed at A,B,C AND all three Q available; failures preserved separately.",
+  "geometric_distance_denominator": "Three complete endpoints; centroid and floor-area change, not reference error.",
+  "time": "sum of existing per-response recorded seconds; all n known; same single time_source_kinds at A/B/C; log ratios aggregated then expm1; not newly measured production elapsed time",
+  "weighting": "unique oriented ABC -> exact D -> fold-local source/target pair -> image -> building equal",
+  "mirror_rows": "Semi A/B mirrors retained as orientations; physical counts and unique endpoints supplied; symmetric metric orientation-invariant",
+  "unknown_variability": "Less than two scored source/target teams within fixed D => SD/range NA, not zero",
+  "selection": "All saved closure directions and scales retained; class IDs joined only within target-building-excluded folds.",
+  "failure": "1 - complete_evaluable; raw unique endpoint counts and event-referenced rates both supplied."
+}

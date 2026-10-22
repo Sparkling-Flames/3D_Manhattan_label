@@ -1,0 +1,116 @@
+{
+  "checks": [
+    {
+      "check": "author_manifest_presence_and_bytes",
+      "status": "passed",
+      "files": 351,
+      "hashes_recomputed": false
+    },
+    {
+      "check": "complete_12_choose_6_panels",
+      "status": "passed",
+      "panels": 336,
+      "links": 310464,
+      "unique_teams": 310458
+    },
+    {
+      "check": "configuration_distributions_manual",
+      "status": "passed",
+      "cells": 10094,
+      "metrics": [
+        "B8L2",
+        "D10",
+        "fusion_turn_n"
+      ],
+      "all_failure_denominators": true
+    },
+    {
+      "check": "configuration_distributions_semi",
+      "status": "passed",
+      "cells": 3312,
+      "metrics": [
+        "B8L2",
+        "D10",
+        "fusion_turn_n"
+      ],
+      "all_failure_denominators": true
+    },
+    {
+      "check": "finite_pair_summary_manual",
+      "status": "passed",
+      "rows": 11232,
+      "starts_from": "panel means",
+      "aggregation": "image then building equal"
+    },
+    {
+      "check": "finite_pair_summary_semi",
+      "status": "passed",
+      "rows": 6084,
+      "starts_from": "panel means",
+      "aggregation": "image then building equal"
+    },
+    {
+      "check": "finite_one_panel_raw_pairs",
+      "status": "passed",
+      "panel": "2t7WUuJeko7-13__manual__ec0d05ae55__v1__n20",
+      "pairs": 426426,
+      "method": "V3_JOINT_QT",
+      "metric": "abs_B8L2"
+    },
+    {
+      "check": "difficulty_all_metrics",
+      "status": "passed",
+      "rows": 37788,
+      "conditions": 201,
+      "starts_from": "delivered image effects and current mainline difficulty"
+    },
+    {
+      "check": "strict_events_manual_joint_A",
+      "status": "passed",
+      "rows": 81221,
+      "members_and_Q_D10": true
+    },
+    {
+      "check": "strict_events_manual_joint_B",
+      "status": "passed",
+      "rows": 21000,
+      "members_and_Q_D10": true
+    },
+    {
+      "check": "strict_events_manual_structure",
+      "status": "passed",
+      "rows": 29928,
+      "members_and_Q_D10": true
+    },
+    {
+      "check": "strict_events_semi_joint",
+      "status": "passed",
+      "rows": 13882,
+      "members_and_Q_D10": true
+    },
+    {
+      "check": "7y13_background_paths",
+      "status": "passed",
+      "rows": 924,
+      "mean": 8.808038747168315,
+      "median": 0.23392733111963793,
+      "positive": 787,
+      "negative": 137,
+      "strict_total": 146031
+    },
+    {
+      "check": "direct_AC_members_and_deltas",
+      "status": "passed",
+      "events": 2056,
+      "m_min": 4,
+      "m_max": 20
+    }
+  ],
+  "not_checked": [
+    "all native fusion",
+    "raw-coordinate rescoring",
+    "classification refitting",
+    "all 143279136 pair reconstruction",
+    "hashes"
+  ]
+}

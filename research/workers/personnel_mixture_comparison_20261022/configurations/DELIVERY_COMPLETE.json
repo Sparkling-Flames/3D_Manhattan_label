@@ -1,0 +1,50 @@
+{
+  "status": "complete",
+  "source_main": "ef148c82df18582228b2d23837faa2659e79eba7",
+  "underlying_data": "true_v2",
+  "source_endpoint_batches": 17,
+  "unique_inherited_endpoints": 310458,
+  "new_fusion_calls": 0,
+  "conditional_member_panels": 336,
+  "per_panel_registered_member_sets": 924,
+  "label_supported_configuration_cells": 13406,
+  "metric_distribution_rows": 616676,
+  "team_method_tier_panel_links": 941248,
+  "full_actual_CSV_read_to_EOF": true,
+  "gzip_footer_and_ragged_rows_checked": true,
+  "exact_key_table_row_counts": {
+    "TEAM_MEMBERS.csv.gz": 310458,
+    "PANEL_TEAMS.csv.gz": 310464,
+    "LOBO_LABELS_USED.csv.gz": 5456,
+    "PANEL_CONFIGURATION_CENSUS.csv.gz": 13406,
+    "TEAM_CONFIGURATION_LINKS.csv.gz": 941248,
+    "CONFIGURATION_OVERVIEW_manual.csv.gz": 10094,
+    "CONFIGURATION_OVERVIEW_semi.csv.gz": 3312,
+    "CONFIGURATION_DISTRIBUTIONS_manual.csv.gz": 464324,
+    "CONFIGURATION_DISTRIBUTIONS_semi.csv.gz": 152352,
+    "ENDPOINT_OUTCOMES_manual.csv.gz": 213442,
+    "ENDPOINT_OUTCOMES_semi.csv.gz": 97016,
+    "CASE_7y13_BACKGROUND_ADDITION_PAIRS.csv.gz": 924
+  },
+  "singleton_dispersion_not_estimated": true,
+  "time_sources_separate": true,
+  "source_domain_full_member_enumeration_claim": false,
+  "file_index": {
+    "path": "FILE_INDEX.csv",
+    "rows": 71,
+    "columns": 7,
+    "bytes": 12214,
+    "sha256": "11ca10c6a25c973363ca4e95e207c971b88f84a433cdb49bd3efb4f5c0aa8c85"
+  },
+  "python": "3.12.14",
+  "versions": {
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.8"
+  },
+  "code_sha256": {
+    "build_configuration_distributions.py": "96ec1e860088524dd63ad5539ab3fe78e19513bc4c2f58a026000734caebd9da",
+    "summarize_and_render.py": "5ff4ad9b871626b241069ef9996718031606c997cce148fd3f6da2efd2f380db",
+    "finalize_files.py": "eafe2f5e126a4e2590b31df5a201ce749f0190d09c50ae187bed62016e8b8f86"
+  }
+}
