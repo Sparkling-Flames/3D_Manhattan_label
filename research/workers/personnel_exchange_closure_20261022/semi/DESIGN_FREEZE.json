@@ -1,0 +1,55 @@
+{
+  "all_global_member_combinations_exhaustive": false,
+  "background_paths": 3,
+  "buildings": 5,
+  "cache_sources": [
+    {
+      "file": "research/workers/personnel_effective_exchange_conditions_20261022/joint_exchange/ALL_USED_ENDPOINT_SCALARS.csv.gz",
+      "keys": 44328,
+      "sha256": "978d309d32b29d226b49c4aa7ae6205d77356d0c0cc456ed7030798b6808e822"
+    }
+  ],
+  "cached_teams": 43,
+  "cells": 69,
+  "complete_ordered_ABC_limit": 1000,
+  "evaluation_condition": "semi",
+  "events": 13000,
+  "events_sha256": "98b3a30d0328510a648e2d9f3c7328cb315d4a80dada89f5c98471a32604d62b",
+  "include_largest_feasible_n": true,
+  "input_condition": "semi",
+  "label_file": "research/workers/personnel_useful_taxonomy_v3_20261021/taxonomy/ALL_METHOD_LABELS_LOBO.csv.gz",
+  "label_sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21",
+  "m_candidates": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "method": "V3_JOINT_QT",
+  "min_balanced_reservoirs": 2,
+  "n_anchors": [
+    10,
+    12,
+    14,
+    16
+  ],
+  "native_calls": 0,
+  "orientation_warning": "Both orientations are algebraic mirror records, not independent replicates. Signed B-A averages cancel by design.",
+  "panel_file": "research/workers/personnel_useful_taxonomy_v3_20261021/composition/PANELS.csv",
+  "panel_sha256": "c03694a6a78b4544b3c4bcb85b439cc0ddd26553cc75d696ab68f1c0639ec57a",
+  "physical_triples": 6500,
+  "pools": 7,
+  "qt_control_records": 445,
+  "qt_distinct_teams": 386,
+  "registered_training_direction": "q_up__faster",
+  "request_sha256": "c1e91349deb8af67783ccce5da8b08dd28fbc5de3af1520318229c65718cf934",
+  "requested_new_endpoints": 12143,
+  "research_round": "20261022_closure",
+  "seed": "semi-closure-v2-data-20261022-source-partitions-v1",
+  "source_partition_scope": "all ordered X/Y partitions within selected 2m source union; retain both A/B orientations",
+  "stage": "before_new_target_endpoint_evaluation",
+  "target_building_excluded": true,
+  "target_endpoint_outcomes_used": false,
+  "underlying_data": "real_v2",
+  "unique_teams": 12186
+}

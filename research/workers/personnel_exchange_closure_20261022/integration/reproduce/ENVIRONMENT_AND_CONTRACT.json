@@ -1,0 +1,52 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "libraries": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "shapely": "2.1.2",
+    "scikit-learn": "1.8.0",
+    "matplotlib": "3.10.8",
+    "Pillow": "12.3.0",
+    "tqdm": "not installed",
+    "imageio": "not installed"
+  },
+  "threads": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "repository_main_and_PR23_merge_commit": "8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235",
+  "prior_v3_source_main_commit": "324dba44d0a82d9d64a62965f2e549ee05165417",
+  "snapshot_contract": {
+    "N1_applied": false,
+    "conversion": "fields renamed only; final geometry, top/bottom binding and declared ring used byte-for-byte as values; no prepare_record or raw export reload",
+    "data_release": "v2",
+    "evidence_path": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+    "evidence_sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "fusion_gap": 7.5,
+    "git_commit": "82c6164b0d4630de5316199c92aa405930973168",
+    "schema": "v2_real_fusion_inputs_v1"
+  },
+  "working_fusion_gap": 7.5,
+  "score_archive_members": [
+    "configs/WQ_LS08_UNCHANGED.json",
+    "engine/audit_geometry.py",
+    "engine/centered_height.py",
+    "engine/evaluate_geometry.py",
+    "engine/geometric_components.py",
+    "engine/height_revision.py",
+    "engine/prepare_inputs.py",
+    "engine/score.py",
+    "engine/strict_geometry.py",
+    "engine/traditional_metrics.py",
+    "engine/vendor/eval_layout.py",
+    "engine/vendor/post_proc.py",
+    "src/quality.py"
+  ],
+  "native_fusion_calls": 0,
+  "quality_scoring_calls": 0,
+  "path_discovery": "actual setup_engine imports plus explicit study-code/input paths; no whole-repository scan",
+  "note": "Archive/file hashes are the exact execution identity. v3 names identify a research round; underlying data are v2."
+}

@@ -1,0 +1,731 @@
+{
+  "status": "complete",
+  "mode": "check_only",
+  "native_fusion_calls": 0,
+  "quality_scoring_calls": 0,
+  "underlying_data_version": "v2",
+  "request_batches": 36,
+  "requested_references": 101093,
+  "unique_requested_keys": 101090,
+  "union_unique_keys": 101092,
+  "supplemental_legacy_keys": [
+    "7y3sRwLe3Va-13__semi__5b6c87b5f3__09d8b188a17a42aab325",
+    "q9vSo1VnCiC-15__semi__6d5ae69ee8__3d2e0a7d6b0586d21e28"
+  ],
+  "missing_scalar_keys": 0,
+  "missing_geometry_keys": 0,
+  "failure_states_preserved": true,
+  "exact_membership_preserved": true,
+  "union_states": {
+    "complete_conditional": 100304,
+    "below_four": 485,
+    "no_connection": 258,
+    "invalid_floor": 45
+  },
+  "sources": [
+    {
+      "path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz",
+      "bytes": 32646904,
+      "sha256": "98a887740504c871cd4a7fe08b427da35ad040b692145cd01e73dbbb7ddd5db3"
+    },
+    {
+      "path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz",
+      "bytes": 16603076,
+      "sha256": "6e70429b642f1451471d8f1879e8349a75fd7fd27d5415d46217d1f06258fff6"
+    }
+  ],
+  "requests": [
+    {
+      "batch_id": "jointb_001",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/jointb_001/REQUESTS.csv.gz",
+      "rows": 3400,
+      "sha256": "b831ac90055ecab1bfece6977723d0aa08e263aaaaa9ba005a4c309cbc12e334"
+    },
+    {
+      "batch_id": "manual_001",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_001/REQUESTS.csv.gz",
+      "rows": 3489,
+      "sha256": "cd206d6ff870c4e070f9ce14ddab0b83d23dfdaaef23e8d9c3e0482afe781b3c"
+    },
+    {
+      "batch_id": "manual_002",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_002/REQUESTS.csv.gz",
+      "rows": 1656,
+      "sha256": "d13df6c2c6b22a7d022a50850280520d0ff52a06c18e1803b196415fdb8aff43"
+    },
+    {
+      "batch_id": "manual_003",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_003/REQUESTS.csv.gz",
+      "rows": 3358,
+      "sha256": "58d522a6e1820eec1c5ed4d2f29bde7944094ee572c3b96ba89715e232acbfe3"
+    },
+    {
+      "batch_id": "manual_004",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_004/REQUESTS.csv.gz",
+      "rows": 2802,
+      "sha256": "19d85de9e7e9cc524b814cae6afb4e067f358c215b5914f361fe7eebbd2bec8c"
+    },
+    {
+      "batch_id": "manual_005",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_005/REQUESTS.csv.gz",
+      "rows": 3066,
+      "sha256": "7aa251e974bc2c63136e38adf3519ad93c2ee7f1e738bcca8b86b21e2012dd98"
+    },
+    {
+      "batch_id": "manual_006",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_006/REQUESTS.csv.gz",
+      "rows": 639,
+      "sha256": "9c450efbf817b4d915cd33ee103dce7573ee305e994225dd0a86d072aa2d704a"
+    },
+    {
+      "batch_id": "manual_007",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_007/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "e83b2caedcbe6ac93a9ccdcd755897ec663d54f4cd8c4dfa4caa3ac90c707e8e"
+    },
+    {
+      "batch_id": "manual_008",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_008/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "a3960da75e1e8dddc38168657490af4cae32156c7e981b49f80f8d35a3eaca7e"
+    },
+    {
+      "batch_id": "manual_009",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_009/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "d7d0138000a3066534c8eff57d98110277bc1f4430cc801cfd7093b6d753ab2f"
+    },
+    {
+      "batch_id": "manual_010",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_010/REQUESTS.csv.gz",
+      "rows": 538,
+      "sha256": "c2ebe18b0f9749976cae22e61f1a65b40866bc699daed793d101b0950b76900b"
+    },
+    {
+      "batch_id": "manual_011",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_011/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "d4712365b2dc5171d24fdacd6578939e434668d92efcf2a55ea3e4a05acb3d61"
+    },
+    {
+      "batch_id": "manual_012",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_012/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "5bf1cb7630b55fdc300aa2847f236ed2f55bcdc7ebdbc943f6c1791c57a24205"
+    },
+    {
+      "batch_id": "manual_013",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_013/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "fa399693918fdde99b343d78540f656c3aaa040aaf01d0a8ea09c67e07ea392b"
+    },
+    {
+      "batch_id": "manual_014",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_014/REQUESTS.csv.gz",
+      "rows": 28,
+      "sha256": "b27b73e986eb126e3a4db1f0af78c4abd288072d6e84de2f8289ea70980c0e83"
+    },
+    {
+      "batch_id": "manual_015",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_015/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "29bd8fd773c2f8b73f07ebc3243cbc2bd8cb23cfe7653356d33ef8a1649104f9"
+    },
+    {
+      "batch_id": "manual_016",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_016/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "8c7c0e54ea08e58e5fbec32bb34f4515553d2497e7aced0771d97633cfeed199"
+    },
+    {
+      "batch_id": "manual_017",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_017/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "5ef6638189ceb4cf1a630fb144f3ab4508635e18974fcc49d6bc622c6db35d59"
+    },
+    {
+      "batch_id": "manual_018",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/manual_018/REQUESTS.csv.gz",
+      "rows": 38,
+      "sha256": "3bc794b7648efefe16f4879780f8af16d1277c56a5d2607cd8e4a5774ea9357b"
+    },
+    {
+      "batch_id": "mpath_001",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/mpath_001/REQUESTS.csv.gz",
+      "rows": 1421,
+      "sha256": "f3b3e092e0bb3390076c7e6839680d2d0484a21ee4159d45f7f72f03a35be2a1"
+    },
+    {
+      "batch_id": "semi_001",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/semi_001/REQUESTS.csv.gz",
+      "rows": 2621,
+      "sha256": "1fd1f524caf050e6ef23d9881de524e5e3d858e4cf090c30dc5dbd003eb574c8"
+    },
+    {
+      "batch_id": "semi_002",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/semi_002/REQUESTS.csv.gz",
+      "rows": 3500,
+      "sha256": "3c7c2318785947b905e1ddf39102285bd3de3d27f1132bd15aabd3ad178f0750"
+    },
+    {
+      "batch_id": "semi_003",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/semi_003/REQUESTS.csv.gz",
+      "rows": 2793,
+      "sha256": "c07c917733521a68af18446caa2cc658835f597afa732b760d711e8a125277df"
+    },
+    {
+      "batch_id": "semi_004",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/semi_004/REQUESTS.csv.gz",
+      "rows": 2109,
+      "sha256": "bdab6f68b9d2792c7d4262bb26abbbfef70b9092ad12561d7f69a294dfd35eaf"
+    },
+    {
+      "batch_id": "semi_005",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/semi_005/REQUESTS.csv.gz",
+      "rows": 2752,
+      "sha256": "aeca9a11b543255b451b76cf8caac7cd4991f7702bead29d2c8184b5f437e737"
+    },
+    {
+      "batch_id": "structure_001",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_001/REQUESTS.csv.gz",
+      "rows": 3327,
+      "sha256": "e6a2076e3316eb9f6aceb3811f4347b21c0815e4d49256765ab23901528befc5"
+    },
+    {
+      "batch_id": "structure_002",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_002/REQUESTS.csv.gz",
+      "rows": 3324,
+      "sha256": "2721639fe7ea1dc47cae27164bc90c04ff54858eaaf5faf996acc1333a6daa72"
+    },
+    {
+      "batch_id": "structure_003",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_003/REQUESTS.csv.gz",
+      "rows": 3470,
+      "sha256": "2a9240620eee6449e17e7a750e4dd426df83bf3aef26203dc57e9c6239aeac0b"
+    },
+    {
+      "batch_id": "structure_004",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_004/REQUESTS.csv.gz",
+      "rows": 3477,
+      "sha256": "93e89c5bf34016e3a5ac7d0c4356c9d78c7a14c4058c58afbf143a4fa122066b"
+    },
+    {
+      "batch_id": "structure_005",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_005/REQUESTS.csv.gz",
+      "rows": 3432,
+      "sha256": "a74b56df9a5f4cfbaa0ab9befdbbe252ff06a22f401614dc40b133eae043eb8a"
+    },
+    {
+      "batch_id": "structure_006",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_006/REQUESTS.csv.gz",
+      "rows": 3404,
+      "sha256": "bd6e84f3ede0fea7e0384b83977491d5b3a9cc7a10d580ad5710d162f94a6ba7"
+    },
+    {
+      "batch_id": "structure_007",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_007/REQUESTS.csv.gz",
+      "rows": 3229,
+      "sha256": "19ae5e678fffbff2ac793196cca72c9127a9c8ae1c29ee413b4578ffab2670d1"
+    },
+    {
+      "batch_id": "structure_008",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_008/REQUESTS.csv.gz",
+      "rows": 3481,
+      "sha256": "77329736ee4cae6def8c95ef44f66b63ed9fbd8c190f23b240eeafea80f1ffa4"
+    },
+    {
+      "batch_id": "structure_009",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_009/REQUESTS.csv.gz",
+      "rows": 3241,
+      "sha256": "b22e446f2ac4e8c539137c1e4f6a7e3aa1056e7103f5c58b6264d8950deac5f0"
+    },
+    {
+      "batch_id": "structure_010",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_010/REQUESTS.csv.gz",
+      "rows": 3470,
+      "sha256": "b8ef491848b04c505d8888d18d379e4506d4f593161a21842a9ba27413624a80"
+    },
+    {
+      "batch_id": "structure_011",
+      "request_path": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_exchange_closure_20261022/native/batches/structure_011/REQUESTS.csv.gz",
+      "rows": 1528,
+      "sha256": "310f298e415673ae00a2634761016d0ec90088bb104fcd9ed73659ac2e7a4c99"
+    }
+  ],
+  "batches": [
+    {
+      "batch_id": "jointb_001",
+      "required": 3400,
+      "exported": 3400,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3317,
+        "below_four": 71,
+        "no_connection": 12
+      },
+      "complete_evaluable": 3317,
+      "failure_or_not_complete": 83,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_001",
+      "required": 3489,
+      "exported": 3489,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3463,
+        "invalid_floor": 26
+      },
+      "complete_evaluable": 3463,
+      "failure_or_not_complete": 26,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_002",
+      "required": 1656,
+      "exported": 1656,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 1592,
+        "below_four": 64
+      },
+      "complete_evaluable": 1592,
+      "failure_or_not_complete": 64,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_003",
+      "required": 3358,
+      "exported": 3358,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3358
+      },
+      "complete_evaluable": 3358,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_004",
+      "required": 2802,
+      "exported": 2802,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2802
+      },
+      "complete_evaluable": 2802,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_005",
+      "required": 3066,
+      "exported": 3066,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3066
+      },
+      "complete_evaluable": 3066,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_006",
+      "required": 639,
+      "exported": 639,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 639
+      },
+      "complete_evaluable": 639,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_007",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_008",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_009",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_010",
+      "required": 538,
+      "exported": 538,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 517,
+        "below_four": 19,
+        "no_connection": 2
+      },
+      "complete_evaluable": 517,
+      "failure_or_not_complete": 21,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_011",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_012",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_013",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_014",
+      "required": 28,
+      "exported": 28,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 28
+      },
+      "complete_evaluable": 28,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_015",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3484,
+        "no_connection": 16
+      },
+      "complete_evaluable": 3484,
+      "failure_or_not_complete": 16,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_016",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3483,
+        "no_connection": 17
+      },
+      "complete_evaluable": 3483,
+      "failure_or_not_complete": 17,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_017",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3484,
+        "no_connection": 16
+      },
+      "complete_evaluable": 3484,
+      "failure_or_not_complete": 16,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "manual_018",
+      "required": 38,
+      "exported": 38,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 38
+      },
+      "complete_evaluable": 38,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "mpath_001",
+      "required": 1421,
+      "exported": 1421,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 1393,
+        "no_connection": 8,
+        "below_four": 20
+      },
+      "complete_evaluable": 1393,
+      "failure_or_not_complete": 28,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "semi_001",
+      "required": 2621,
+      "exported": 2621,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2621
+      },
+      "complete_evaluable": 2621,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "semi_002",
+      "required": 3500,
+      "exported": 3500,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3500
+      },
+      "complete_evaluable": 3500,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "semi_003",
+      "required": 2793,
+      "exported": 2793,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2793
+      },
+      "complete_evaluable": 2793,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "semi_004",
+      "required": 2109,
+      "exported": 2109,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2096,
+        "no_connection": 6,
+        "below_four": 7
+      },
+      "complete_evaluable": 2096,
+      "failure_or_not_complete": 13,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "semi_005",
+      "required": 2752,
+      "exported": 2752,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2728,
+        "no_connection": 24
+      },
+      "complete_evaluable": 2728,
+      "failure_or_not_complete": 24,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_001",
+      "required": 3327,
+      "exported": 3327,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3325,
+        "no_connection": 2
+      },
+      "complete_evaluable": 3325,
+      "failure_or_not_complete": 2,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_002",
+      "required": 3324,
+      "exported": 3324,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3245,
+        "invalid_floor": 19,
+        "no_connection": 60
+      },
+      "complete_evaluable": 3245,
+      "failure_or_not_complete": 79,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_003",
+      "required": 3470,
+      "exported": 3470,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3314,
+        "below_four": 148,
+        "no_connection": 8
+      },
+      "complete_evaluable": 3314,
+      "failure_or_not_complete": 156,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_004",
+      "required": 3477,
+      "exported": 3477,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3461,
+        "no_connection": 15,
+        "below_four": 1
+      },
+      "complete_evaluable": 3461,
+      "failure_or_not_complete": 16,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_005",
+      "required": 3432,
+      "exported": 3432,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3410,
+        "no_connection": 22
+      },
+      "complete_evaluable": 3410,
+      "failure_or_not_complete": 22,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_006",
+      "required": 3404,
+      "exported": 3404,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3403,
+        "no_connection": 1
+      },
+      "complete_evaluable": 3403,
+      "failure_or_not_complete": 1,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_007",
+      "required": 3229,
+      "exported": 3229,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3221,
+        "no_connection": 8
+      },
+      "complete_evaluable": 3221,
+      "failure_or_not_complete": 8,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_008",
+      "required": 3481,
+      "exported": 3481,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3469,
+        "no_connection": 12
+      },
+      "complete_evaluable": 3469,
+      "failure_or_not_complete": 12,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_009",
+      "required": 3241,
+      "exported": 3241,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3217,
+        "no_connection": 24
+      },
+      "complete_evaluable": 3217,
+      "failure_or_not_complete": 24,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_010",
+      "required": 3470,
+      "exported": 3470,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 3312,
+        "below_four": 155,
+        "no_connection": 3
+      },
+      "complete_evaluable": 3312,
+      "failure_or_not_complete": 158,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "structure_011",
+      "required": 1528,
+      "exported": 1528,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 1526,
+        "no_connection": 2
+      },
+      "complete_evaluable": 1526,
+      "failure_or_not_complete": 2,
+      "status": "checked_only"
+    },
+    {
+      "batch_id": "restored_delivery_extras",
+      "required": 2,
+      "exported": 2,
+      "missing": 0,
+      "states": {
+        "complete_conditional": 2
+      },
+      "complete_evaluable": 2,
+      "failure_or_not_complete": 0,
+      "status": "checked_only"
+    }
+  ],
+  "compression_note": "Restored compressed bytes may differ; rows and decimal text are copied without numerical conversion."
+}

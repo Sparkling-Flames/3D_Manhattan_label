@@ -1,0 +1,61 @@
+{
+  "status": "complete",
+  "underlying_data_version": "v2",
+  "condition": "Semi",
+  "classification": "inherited own-condition V3_JOINT_QT, outside-building labels",
+  "events": 13882,
+  "event_columns": 539,
+  "event_ids_unique": true,
+  "registered_members_and_teams_preserved": true,
+  "controls": 886,
+  "necessary_unique_endpoints": 13777,
+  "central_endpoints": 13775,
+  "central_new": 13724,
+  "central_reused": 51,
+  "extra_prior_reused": 2,
+  "actual_total_reused": 53,
+  "initial_registry_known_cache_hits": 45,
+  "initial_requested_new": 13732,
+  "events_sha256": "657a99379b24b1aef04318cc26ac83d51235143c15087833f2249ba24a0964f8",
+  "events_bytes": 21172134,
+  "controls_sha256": "065543984ae385d54cff398b724da366dd39d02f4f6ec6e4d4e0c23c618f2803",
+  "file_index_sha256": "85451fd01042c8622ed0d26a0c073b4679f145840d21a72ffa2d94f2f61ac8d9",
+  "indexed_files": 77,
+  "main_oriented_events": 13000,
+  "main_physical_ABC": 6500,
+  "completion_oriented_events": 882,
+  "completion_physical_ABC": 441,
+  "all_class_configurations": 631,
+  "registered_class_configurations": 631,
+  "complete_full_member_background_cells": 8,
+  "theoretical_ordered_ABC": 7081487700,
+  "all_member_combinations_exhaustive": false,
+  "mechanism_receipt": {
+    "cases": [
+      {
+        "arms": 3,
+        "case_id": "semi_pure_efficiency",
+        "event_id": "b3ea1be32dde2004e09bb43f",
+        "geometry_equal_to_saved_endpoint": true,
+        "qt_control_id": null,
+        "score_calls": 0,
+        "sha256": "8f174e22248beb5452f0b284923aec1034564f495a630898ade51fddf3f229fa",
+        "state_replays": 3
+      },
+      {
+        "arms": 4,
+        "case_id": "semi_member_loss_qt_repair",
+        "event_id": "6b08426576f01bdfebc4009c",
+        "geometry_equal_to_saved_endpoint": true,
+        "qt_control_id": "aa5276f319b87e6c1c113f28",
+        "score_calls": 0,
+        "sha256": "d3a1bbe86c2ab72fc16dea6c15106868d15dac29b5edf6ba7d5e6b4ae4212ca3",
+        "state_replays": 4
+      }
+    ],
+    "score_calls": 0,
+    "selection": "post_result_explanation",
+    "total_state_replays": 7
+  },
+  "packaging_note": "Shared central endpoints and exact two prior compact rows required; no duplicate full old cache or originals. completed_pools are recovery checkpoints, merged complete table is canonical."
+}

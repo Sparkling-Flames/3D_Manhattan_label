@@ -22,28 +22,29 @@
 
 新增背景3276端点的成员、标量/几何键及引用一致；3220可评分端点的B8L2/D10从保存五分项重算，最大误差5.69×10⁻¹⁴。56端点不可评，42个少于四节点仍保留部分诊断分项，不能把部分诊断当完整Q。1092事件实际三块各7人、共同背景13人、78锚点全部14种背景及所用楼外标签均核对。
 
-## 已收到什么、尚缺什么
+## 已收到什么、完整端点补核
 
 最新ZIP为32,312,047字节，187个文件；作者`PACKAGE_CONTENTS.csv`登记184项，另3项是清单、链接回执及包根README。全部成员读取，184项路径/大小核对；未新增SHA。原始包与用户下载文件保留，包根README放入本专题，映射见[接收记录](LOCAL_RECEIPT.json)。`main_snapshot/`是作者读取时的旧入口快照，不覆盖仓库当前文档。
 
 本包含新增背景完整事件/端点、固定A路径和Q/T小表。Semi收到的`NEW_MAIN_EVENT_LINKS.csv.gz`为主扩展13000行/6500个物理ABC，足够核对上表14格与315例；不是作者另行下载的全部13882行。
 
-**Manual两条n20/m4主推荐：** 作者汇总为+3.141934Q/−1.564664%时间与+4.707316Q/+7.164968%时间。用户转述Dot已从完整事件独立复算，包括22/27与29/39背景正向；本地目前收到的是对应汇总与部分事件关联，尚未取得全部旧端点/事件，故不将Dot实核写成本线程已做。相应7/5、20/14图/楼支持均从原表保留。
+**Manual两条n20/m4主推荐已本地独立复得：** 从冻结请求联结完整端点，重算+3.141934Q/−1.564664%时间与+4.707316Q/+7.164968%时间，22/27与29/39可评背景正向；对应6/7图、5/5楼和16/20图、10/14楼正向。逐分项、失败分母和C−A/B−A另列在[完整端点验收](../personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。本线程结果与用户转述Dot一致，现已无需只引用外部审查。
 
-本地尚缺上一轮`HOHONET_20261022_报告标签关键表与代码.zip`及101092端点的标量、几何、来源三表；已向用户请求补件。四份旧完整事件与完整策略也是单独下载项，不能因作者文件索引列出就称本地已经归档。完整缺件定位见[原文件映射](DOWNLOAD_MAP.csv)，当前归档不冒称所有分析脚本均可从头独立运行。
+上一轮报告代码ZIP和101092端点的标量、几何、来源三表现已全部接收，共424个来源文件。100304可评端点从保存五分项重算B8L2/D10通过，788个不可评端点完整保留；146031条冻结事件的三队成员、背景和实际换人数全部核对，包括13882条Semi登记事件。四份完整事件及完整策略派生大表仍未作为原件归档，但本次主要验收不再依赖下载它们；可从已收请求和端点重建。原文件定位见[映射](DOWNLOAD_MAP.csv)，当前归档不冒称所有作者分析脚本均已从头运行。
 
 ## 两处交付问题
 
 1. **背景读取已修复。** `structure_followup/analyze_background_gradient.py`原先优先选只有回执的六个批次目录，漏掉同目录完整合并表。现优先使用成对合并表，否则要求每个已完成批次含两张端点表；两个定向测试通过。只修读取，不改保存结果或科学公式。原文件版本可由用户ZIP恢复，作者源清单中的SHA不作为修订脚本的校验值。
-2. **两个历史Semi端点的几何元数据待补件修复。** Dot报告其成员和几何齐全、部分自描述字段缺失；本地未取得101092全集，当前不能定位和改写。缺件到位后，仅按同team_key的标量/来源补可确定字段，记录修复，不当作新融合失败。
+2. **两个历史Semi端点元数据已补齐。** 已定位7y-13与q9v-15两个旧控制端点，按同team_key标量补入每行7字段，共14个单元格；全部几何和其它原有值逐行核对不变，导出脚本同步修正。详见[修补记录](../personnel_exchange_closure_20261022/delivery/received_core_20261022/GEOMETRY_METADATA_REPAIRS.csv)。这不是新融合失败。
 
-修复1的函数测试不等于原分析全流程已重跑；旧代码/输入依赖仍按上一节说明。已复得关键结果可先采用，交付补件与阶段科研收尾分别跟踪。
+两个修复共3项定向测试通过。函数测试和独立重建不等于作者全分析流程已重跑；原脚本依赖批次恢复或完整派生事件的部分仍按复现说明处理。现有关键结果足以采用，不再以这四项补件为待办。
 
 ## 本地复核入口
 
 ```powershell
 .venv\Scripts\python.exe -X utf8 -m tools.thesis_main.analysis.audit_personnel_adoption_20261022 --output research/workers/personnel_exchange_adoption_followup_20261022/audit/LOCAL_INDEPENDENT_CHECK.json
-.venv\Scripts\python.exe -m pytest -q tests/test_personnel_adoption_background_20261022.py
+.venv\Scripts\python.exe -X utf8 -m tools.thesis_main.analysis.audit_personnel_closure_endpoints_20261022
+.venv\Scripts\python.exe -m pytest -q tests/test_personnel_adoption_background_20261022.py tests/test_personnel_closure_metadata_20261022.py
 ```
 
-[复核结果](audit/LOCAL_INDEPENDENT_CHECK.json)按背景端点、事件、配对、固定A、QT、Semi分别记实际支持与重算量；计数不是独立样本量，`not_run`保存未执行层次。[Pro报告](人员分类与换类_采用结论与实质续研.md)和[作者回复](AUTHOR_RESPONSE_20261022.txt)是来源证据。本地没有重跑原生融合、从原答构建特征、分类全链拟合或人工语义裁决；没有修改GT、正式资格、评分合同或融合方法。
+[旧全集与Manual复核](audit/LOCAL_ENDPOINT_AND_MANUAL_CHECK.json)和[新增研究复核](audit/LOCAL_INDEPENDENT_CHECK.json)按背景端点、事件、配对、固定A、QT、Semi分别记实际支持与重算量；计数不是独立样本量，`not_run`保存未执行层次。[Pro报告](人员分类与换类_采用结论与实质续研.md)和[作者回复](AUTHOR_RESPONSE_20261022.txt)是来源证据。本地没有重跑原生融合、从原答构建特征、分类全链拟合或人工语义裁决；没有修改GT、正式资格、评分合同或融合方法。

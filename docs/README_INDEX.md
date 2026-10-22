@@ -1,6 +1,6 @@
 # HOHONET 文档入口
 
-- **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件已归档，固定A、背景梯度、Semi衔接及QT选择已核；背景读取已修复，旧全集补件与Semi元数据另跟踪。
+- **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。
 
 - **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。本地main整理完成后由用户推送；用户已说明Pro正在续研，任务书保留为边研究边保存整合的依据，不另做接续包。
 

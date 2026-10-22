@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "data_release": "real_v2",
+  "classification_refit": false,
+  "registered_events": 29928,
+  "completed_events": 29928,
+  "required_unique_endpoints": 36804,
+  "available_unique_endpoints": 36804,
+  "missing_endpoints": 0,
+  "new_native_calls_in_agent": 0,
+  "central_native_execution": "parent study unified frozen evaluator",
+  "main_n20_images": 120,
+  "main_n20_buildings": 16,
+  "recommended_conditions": [
+    "n20/m4 usual expression to more turns",
+    "n20/m7 same direction",
+    "n20/m7 with no more than 4 more-turn members in D of 13"
+  ],
+  "main_pairwise_net_Q": {
+    "m4": 1.655348,
+    "m7": 3.185268
+  },
+  "main_common_ABC_net_Q": {
+    "m4": 1.69023,
+    "m7": 3.141259
+  },
+  "fixed_A_m4_to_7_increment_cross_Q": 1.336961,
+  "fixed_A_m4_to_7_increment_net_Q": 1.294333,
+  "completion_sha256": "b188be780d34c397ef18cf8b6605f393a75e4998d72cc5898e8d29e91510556c",
+  "event_sha256": "972d392dd4b299cdd997647d747882ebc3527198fe549550d9dfc4275d79b3b4",
+  "delivery_index": "DELIVERY_INDEX.csv",
+  "files_indexed": 78,
+  "core_bytes": 73496159,
+  "optional_bytes": 43555466,
+  "excluded_checkpoints": [
+    "registered_pools/",
+    "results/pools/",
+    "__pycache__/"
+  ],
+  "limitations": "All selected ABC-feasible count vectors covered; concrete member and D combinations not exhausted; internal v2 evaluation; no new external blind data."
+}

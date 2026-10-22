@@ -1,0 +1,14 @@
+{
+  "bytes": 283746144,
+  "complete_event_tables_retained": true,
+  "duplicate_checkpoint_folders_excluded_from_compact_index": [
+    "results",
+    "registration_batches",
+    "phase_b_highq_slower/results"
+  ],
+  "files": 128,
+  "note": "Checkpoint folders remain available for incremental restoration. Compact delivery need not duplicate them when the complete table is provided. Root delivery may shard large complete tables with its own checksummed manifest.",
+  "phase_A_registered_events": 81221,
+  "phase_B_registered_events": 21000,
+  "policy_rows": 79584
+}

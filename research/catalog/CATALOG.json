@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v31_personnel_adoption_followup",
+  "catalog_version": "research_catalog_20261022_v32_personnel_endpoints_received",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -10,7 +10,7 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
-          "text": "最新人员续研已返回：固定A、背景、Semi衔接与QT复核，阶段采用及交付补件",
+          "text": "最新人员续研已返回：固定A、背景、Semi、QT及旧101092端点复核，阶段采用与交付修复",
           "path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md"
         },
         {
@@ -374,7 +374,7 @@
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
         {
-          "text": "最新人员续研已返回：固定A、背景、Semi衔接与QT复核，阶段采用及交付补件",
+          "text": "最新人员续研已返回：固定A、背景、Semi、QT及旧101092端点复核，阶段采用与交付修复",
           "path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md"
         },
         {
@@ -11598,14 +11598,14 @@
     },
     {
       "id": "MAT-personnel_received_stage01_manual001_20261022",
-      "title": "本次阶段01与首批Manual端点：最终研究未验收",
+      "title": "阶段01与首批Manual端点：历史接收快照",
       "theme": "workers",
       "type": "阶段计划、既有分类基线与首批端点接收",
       "date": "20261022",
       "source_path": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md",
       "current_path": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md",
       "source": "用户此次实际返回的阶段01 Markdown、公开分类基线ZIP与manual_001 ZIP；与此前123文件案例来源分开",
-      "adoption_status": "仅确认阶段01、既有ALL基线和首批Manual端点已接收；不采用43条件或146031事件等最终完成声明",
+      "adoption_status": "本条保留首批接收时的验收范围；后续43条件核心包和101092端点已补齐，见LOCAL_ACCEPTANCE.md",
       "verification_status": "基线6文件中5份与已有taxonomy相同，248行ALL且无LOBO；REQUESTS/SCALARS/GEOMETRY各3489唯一一致团队、3图3楼、3463可评及26 invalid_floor；没有精确ABC事件关联，未重新融合或验收最终研究",
       "availability": "已纳入本地main；原下载文件保留，远端由用户自行推送",
       "relationships": [
@@ -11641,7 +11641,7 @@
       "source_path": "research/workers/personnel_exchange_closure_20261022/AUTHOR_COMPLETION_MESSAGE_20261022.txt",
       "current_path": "research/workers/personnel_exchange_closure_20261022/AUTHOR_COMPLETION_MESSAGE_20261022.txt",
       "source": "用户粘贴的本轮Pro完成说明原文",
-      "adoption_status": "仅保存报告来源；最终43条件及完整事件/端点尚未接收，不能作为独立验收",
+      "adoption_status": "作者完成声明保留原文；后续43条件表与101092端点已收到并独立核查主要结论，见LOCAL_ACCEPTANCE.md",
       "verification_status": "原文本逐字节保存；其中sandbox链接未据此认定为可下载文件，未复算报告数值",
       "availability": "本地main整理；由用户自行推送远端",
       "relationships": [
@@ -11658,14 +11658,40 @@
       "source_path": "HOHONET_人员分类换类_本轮实质续研与采用_20261022.zip",
       "current_path": "research/workers/personnel_exchange_adoption_followup_20261022/README.md",
       "source": "用户提供Pro最新32.3MB ZIP及完成说明；Dot审查为用户转述外部证据",
-      "adoption_status": "保留分类解释、变化区分、定向升质与质量时间取舍；背景硬阈值改为边际补充规律；旧全集交付待补",
-      "verification_status": "187文件读取，184清单路径/大小核对；1092ABC和3276端点、3220可评分端点公式、1448配对、固定A路径、19896成员一致、104储备312选择、13000行Semi主扩展已核；未全量原生融合/重新拟合",
+      "adoption_status": "保留分类解释、变化区分、定向升质与质量时间取舍；背景硬阈值改为边际补充规律；旧全集已补核，主要验收无需补件",
+      "verification_status": "187文件读取，184清单路径/大小核对；1092ABC和3276端点、3220可评分端点公式、1448配对、固定A路径、19896成员一致、104储备312选择、13000行Semi主扩展已核；未全量原生融合/重新拟合；随后101092旧端点及146031冻结事件成员核对、Manual两方向重建通过，两项交付问题已修",
       "availability": "本地归档，远端由用户自行推送",
       "relationships": [
         "research/workers/personnel_exchange_adoption_followup_20261022/audit/LOCAL_INDEPENDENT_CHECK.json",
         "tools/thesis_main/analysis/audit_personnel_adoption_20261022.py",
         "tests/test_personnel_adoption_background_20261022.py",
-        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "MAT-personnel_closure_endpoint_delivery_20261022",
+      "title": "43条件续研完整端点：补件、Manual复核与Semi元数据修复",
+      "theme": "workers",
+      "type": "来源归档、完整端点及独立核查",
+      "date": "20261022",
+      "source_path": "HOHONET_20261022_报告标签关键表与代码.zip及三张端点CSV.gz",
+      "current_path": "research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md",
+      "source": "用户补充四项下载，原件保留；底层真实v2",
+      "adoption_status": "Manual n20/m4两条主方向采用，结合失败与时间取舍；多数趋势不要求所有背景成立",
+      "verification_status": "421个ZIP成员、419清单路径/大小核对；101092端点身份与100304评分公式、146031冻结事件成员核对；Manual主方向独立重建；2条Semi共14单元格修补，3测试通过",
+      "availability": "本地归档及提交，远端由用户自行推送",
+      "relationships": [
+        "research/workers/personnel_exchange_closure_20261022/delivery/received_core_20261022/RECEIVED_MEMBERS.csv",
+        "research/workers/personnel_exchange_closure_20261022/delivery/received_core_20261022/LOCAL_RECEIPT.json",
+        "research/workers/personnel_exchange_closure_20261022/delivery/received_core_20261022/GEOMETRY_METADATA_REPAIRS.csv",
+        "research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz",
+        "research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz",
+        "research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ENDPOINT_SOURCE_INDEX.csv.gz",
+        "research/workers/personnel_exchange_closure_20261022/build_endpoint_delivery.py",
+        "research/workers/personnel_exchange_adoption_followup_20261022/audit/LOCAL_ENDPOINT_AND_MANUAL_CHECK.json",
+        "tools/thesis_main/analysis/audit_personnel_closure_endpoints_20261022.py",
+        "tests/test_personnel_closure_metadata_20261022.py"
       ]
     }
   ]

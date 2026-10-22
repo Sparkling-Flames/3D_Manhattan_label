@@ -1,0 +1,139 @@
+{
+  "status": "frozen_before_target_endpoint_evaluation",
+  "data_release": "real_v2",
+  "research_round": "closure_20261022",
+  "seed": "HOHONET-real-v2-structure-large-team-closure-20261022-v1",
+  "source_main": "8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235",
+  "previous_findings_retained": "old exact TURN/K3 E2→E3 n10/m7; not recomputed by this registration",
+  "labels": "unchanged original LOBO V3_BEHAVIOR; same raw class numbers never assumed comparable across buildings; exact training roles used",
+  "selected_directions": [
+    "TURN/K3/E2→TURN/K3/E3",
+    "TURN/K3/E3→TURN/K3/E2"
+  ],
+  "main_n": 20,
+  "requested_m": "4,7 and largest feasible m>=4; deduplicated per cell",
+  "configuration_policy": "Every feasible n20 pure-block background class-count vector for each selected direction/domain/n/m; not all n20 unconstrained vectors or all concrete teams.",
+  "member_policy": "Six distinct deep backgrounds per all-formal cell if available, 4 disjoint unordered source pairs and 4 target blocks. Additional count vectors get one pair and one target. Hash candidate pools are greedily balanced for member appearances.",
+  "orientation": "One frozen random A/B orientation per unordered source pair. No mirrored events added.",
+  "linked_n": "Two actual n20 deep backgrounds per m4/m7 cell; identical X/Y/Z; D nested across supported 12/16/20/21/24/max n. n20 endpoints reused.",
+  "time_supplement": "new-origin-only n20/m4, all feasible count vectors; two deep backgrounds; separate from all-formal effects",
+  "interpretation": "Internal v2 checks on outcome-independent newly selected teams/backgrounds; not a new external blind dataset.",
+  "eligibility": "ordinary_manual formal frozen pool only; doorway/special scope not pooled into primary estimates",
+  "unique_endpoint_requests": 35383,
+  "registered_events": 28908,
+  "unique_physical_triples": 28370,
+  "selected_images": 120,
+  "selected_buildings": 16,
+  "selected_n_values": [
+    12,
+    16,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "selected_m_values": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "n20_available_cells": 418,
+  "n20_registered_backgrounds": 3796,
+  "n20_feasible_count_vectors": 3073,
+  "n20_registered_count_vectors": 3073,
+  "native_calls": 0,
+  "inputs": [
+    {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+    },
+    {
+      "path": "research/workers/personnel_useful_taxonomy_v3_20261021/taxonomy/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "sha256": "ec1e3d51d183d666f13775b19918d23db344e5ff5a14bb75cb8beab7b548db21"
+    },
+    {
+      "path": "research/workers/personnel_effective_exchange_conditions_20261022/screening/CLASS_TRAINING_ROLE_MAP.csv.gz",
+      "sha256": "1d04f807cd301397687d5eb9161c6710c71a3f433e3ec01ecab3fb7bd4983b33"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "EVENTS_REGISTERED.csv.gz",
+      "rows": 28908,
+      "sha256": "4d265e76b46f02af22387323b818f3dd75873d33f716cdddeadbfe07920cdf52",
+      "bytes": 3376606
+    },
+    {
+      "path": "ENDPOINT_REQUESTS.csv.gz",
+      "rows": 35383,
+      "sha256": "f2cfd8c07c36c095df6c39923b4bb49da061d3f94555096b304b28682d044330",
+      "bytes": 970035
+    },
+    {
+      "path": "CAPACITY_AND_COVERAGE.csv.gz",
+      "rows": 875,
+      "sha256": "1bc49a370af6cc4be2ae53a5e70cd7060eb9b168150a8fcdad64e2923440616e",
+      "bytes": 32444
+    },
+    {
+      "path": "BACKGROUND_PANELS.csv.gz",
+      "rows": 3796,
+      "sha256": "8f481dd5e5271f3e5a0580212be9642d5f52af28dfa491451894a3097db2a7cb",
+      "bytes": 202265
+    },
+    {
+      "path": "COUNT_VECTOR_COVERAGE.csv.gz",
+      "rows": 3073,
+      "sha256": "c7102a364ce6c729839857ba5458b95f115cfb87ba6161cc01ecab2820872d74",
+      "bytes": 38514
+    },
+    {
+      "path": "MEMBER_BLOCK_INCLUSION.csv.gz",
+      "rows": 66518,
+      "sha256": "db5ca159aafaa4123a35f7b2f509463b6d416ae83bc2791b308d0fbe823ab4ff",
+      "bytes": 332279
+    },
+    {
+      "path": "LINKED_N_PATHS.csv.gz",
+      "rows": 538,
+      "sha256": "87982ec92624e1b2a3c374c444a68ec57bb5edbad286a98c23a6186d44e98bb2",
+      "bytes": 48818
+    },
+    {
+      "path": "OTHER_FOLD_FAMILIES_NOT_REGISTERED.csv",
+      "rows": 44,
+      "sha256": "ba39ea0ac3ec1102941d7c751709cfbc3671aaacbfa0a8fbbb455c603ca7a2f9",
+      "bytes": 4624
+    },
+    {
+      "path": "POOL_PARTS.csv",
+      "rows": 120,
+      "sha256": "2da94c3d688579658427c140016d4df54fff8d695c05d880eea3d30813ba199b",
+      "bytes": 14418
+    },
+    {
+      "path": "CLASS_LABELS_REUSED.csv.gz",
+      "rows": 992,
+      "sha256": "43131d207cdf5b115cebd26e0bb207f6a247d5e1af32306ebc47c9f5be19bb6b",
+      "bytes": 66774
+    },
+    {
+      "path": "CLASS_ROLES_REUSED.csv",
+      "rows": 48,
+      "sha256": "99fd8a8513ceca8f17b1976bfcbbfb8c2438afe45b9b93d6f9d3298df6ca34bd",
+      "bytes": 20112
+    },
+    {
+      "path": "REGISTERED_SUPPORT.csv",
+      "rows": 32,
+      "sha256": "8474ad078a7f620e48fe39ddcaf13237b10322567a73386ab09986b95bcba6e1",
+      "bytes": 1672
+    }
+  ],
+  "script_sha256": "2e16f995a7eb2668db410c2ef65aab778718a3533d9dd36371dc84e222d36554"
+}

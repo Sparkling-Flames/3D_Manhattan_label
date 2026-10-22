@@ -1,0 +1,126 @@
+{
+  "status": "complete_for_available_event_table",
+  "events": 29928,
+  "event_source_sha256": "972d392dd4b299cdd997647d747882ebc3527198fe549550d9dfc4275d79b3b4",
+  "analysis_script_sha256": "391304fdb93d360f8e42aa55ef81dbf9b712292b724924320da5a3e4a42fcd01",
+  "main_aggregation": "events within exact D; D within feasible background-count vector; vectors within image; images within building; buildings equally",
+  "metric_denominators": "every long metric row retains event/panel/image/building n; failed fusion stays in A/B/C failure denominators",
+  "replicated_n20_physical_events": "linked_n n20 explicitly reuses main_n20 endpoints; groups never pooled as independent evidence",
+  "time": "same provenance kind for all ABC; all n participants time known and sum positive; inventory recorded seconds only, not newly observed production duration",
+  "outputs": [
+    {
+      "path": "analysis/PAIR_LOCAL_COMPONENTS_COMMON.csv.gz",
+      "rows": 29928,
+      "sha256": "6243e2f6860f14bb95fa2f64a5723e99b4a4d3b9ed5d9b92515b7aab2ca5941f",
+      "bytes": 9624834
+    },
+    {
+      "path": "analysis/PANEL_EFFECTS.csv.gz",
+      "rows": 7632,
+      "sha256": "0bd7d3ab1d6f38e1c34c6c68719f3645b24730ff3865824e994e769a470a8f5b",
+      "bytes": 16323193
+    },
+    {
+      "path": "analysis/COUNT_STRATUM_EFFECTS.csv.gz",
+      "rows": 6164,
+      "sha256": "b9f96ae03774729c3d41e89a00aebf9fdb07b8b5bb2ccbd24da6fd008cef2c29",
+      "bytes": 13171356
+    },
+    {
+      "path": "analysis/IMAGE_EFFECTS.csv.gz",
+      "rows": 2336,
+      "sha256": "bf4c0c0c1a52b998de751224d7ff4301effdb5482c309422fce1c26cb659d1ca",
+      "bytes": 5400201
+    },
+    {
+      "path": "analysis/BUILDING_EFFECTS.csv.gz",
+      "rows": 490,
+      "sha256": "3b24674cd53e976f9d56dbfc87058de228620b6699a7faa353027b10bb1efe71",
+      "bytes": 1287841
+    },
+    {
+      "path": "analysis/CONDITION_METRICS_LONG.csv.gz",
+      "rows": 17417,
+      "sha256": "1a4f34803cf250afcd9c243fb55baf2a2f0163efbe92d5f5b9af4c9aecbf1bde",
+      "bytes": 601264
+    },
+    {
+      "path": "analysis/EFFECTIVE_CONDITIONS.csv",
+      "rows": 39,
+      "sha256": "9bd346c0f936cd3788914b87085d3ebbaca098af01cc2609fafff69bc8f4b5a4",
+      "bytes": 128870
+    },
+    {
+      "path": "analysis/DIFFICULTY_CONDITIONS.csv",
+      "rows": 111,
+      "sha256": "c7c8eaa061fd1a3077f284cab83191f9880514a35d2c4de5442fd370be10b563",
+      "bytes": 316199
+    },
+    {
+      "path": "analysis/BACKGROUND_CONDITIONS.csv",
+      "rows": 80,
+      "sha256": "1299d621e85516962ec23f9c123503b5913fd0056a8fefcaf263f16a12815575",
+      "bytes": 229014
+    },
+    {
+      "path": "analysis/MEMBER_BACKGROUND_CHECK_PARTITIONS.csv",
+      "rows": 47,
+      "sha256": "b21630986ac34e7efe144c529888a4c6944c4178426718eba46713daf0902638",
+      "bytes": 153085
+    },
+    {
+      "path": "analysis/MEMBER_BACKGROUND_ROBUSTNESS.csv",
+      "rows": 351,
+      "sha256": "9ff1335006497c3444096bbb97f26a24afc7fab4e6c19082d5eb102e440463e6",
+      "bytes": 63368
+    },
+    {
+      "path": "analysis/CONCRETE_BLOCK_DIVERSITY.csv",
+      "rows": 418,
+      "sha256": "5002e891bc1f3473e186da9e0bba01cb71e1b4e7486a0e2bbcfe67922fd1a209",
+      "bytes": 61290
+    },
+    {
+      "path": "analysis/POSTHOC_Q_SOURCE_CHECKS.csv",
+      "rows": 84,
+      "sha256": "6f05b15638a0c661fba6b6f509a3fbddd3b04857885c9bc532ced93f514252cb",
+      "bytes": 240482
+    },
+    {
+      "path": "analysis/TIME_QUALITY_COMMON_SUPPORT.csv",
+      "rows": 22,
+      "sha256": "f923a5d71888f94f0fd788810aa468dfedc0a58a48f9923248e8ed77dddf2644",
+      "bytes": 76421
+    },
+    {
+      "path": "analysis/LINKED_N_CHANGES.csv.gz",
+      "rows": 2278,
+      "sha256": "a46abe3b87b2473adcd6f8d60c80f1b34442c653f12d81f90675d6c1dd601941",
+      "bytes": 526797
+    },
+    {
+      "path": "analysis/LINKED_N_SUMMARY.csv",
+      "rows": 21,
+      "sha256": "70ec214a8ee155ba0cb0ba4e1945c265ff13fe3fc9de5df8440e734da7ddb040",
+      "bytes": 10666
+    },
+    {
+      "path": "analysis/LINKED_M_CHANGES.csv.gz",
+      "rows": 962,
+      "sha256": "87f4869912222bf94bb32ce0b6095adaa48c363ae9655bd466fd7f99892d2541",
+      "bytes": 761896
+    },
+    {
+      "path": "analysis/LINKED_M_SUMMARY.csv",
+      "rows": 8,
+      "sha256": "f68032122accd2cc8f88535190b06da319d86f5fb3c51e48be55987316a9d086",
+      "bytes": 27764
+    },
+    {
+      "path": "analysis/MECHANISM_CANDIDATES.csv.gz",
+      "rows": 39,
+      "sha256": "8401ab1310b38caf4ba69c76234983173dc3789855e8057dad8b1d36b7e9a4d9",
+      "bytes": 106875
+    }
+  ]
+}

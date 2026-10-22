@@ -1,0 +1,36 @@
+{
+  "all_data_input": "research/workers/personnel_v3_20261021/raw_answer_evidence/taxonomy/ALL_METHOD_LABELS_ALL_DATA.csv",
+  "all_data_sha256": "59e9d965bc2a336f2bf69e9ab501f2ccd22b5ade2ab7c4b4689907b39f8a2aa2",
+  "auxiliary_input": "research/workers/personnel_global_composition_20261021/multivariate/continuous_features_lobo.csv.gz",
+  "auxiliary_sha256": "1c65d2c5650bfa4453efc73547073fd62e3d4ba2fa0219646e0d31538aa11d62",
+  "outputs": [
+    {
+      "path": "CLASS_LABELS_ALL_DATA_DESCRIPTION.csv",
+      "rows": 62,
+      "sha256": "1290403135c75d12732a1f75560e7c814b4c950869c1124a5f988e1650d1c532",
+      "bytes": 33227
+    },
+    {
+      "path": "CLASS_DESCRIPTION_CENTERS.csv",
+      "rows": 4,
+      "sha256": "3dade48f6ab10a8c7f07c450dac4b631b9e964f32c285e9c5b2da121470c6625",
+      "bytes": 4385
+    },
+    {
+      "path": "LOBO_ROLE_CENTER_RANGE.csv",
+      "rows": 3,
+      "sha256": "aac9e3b8552725fdf9a8de7b50ddddbf9c756c47583e0f41e02b90439b60bd4c",
+      "bytes": 1434
+    },
+    {
+      "path": "SCOPE_NOT_IN_PRIMARY.csv",
+      "rows": 19,
+      "sha256": "5eb9e7aed1be470703f28ae25e2c19b11ee72e1a85e0ef612b4ac288a99576cf",
+      "bytes": 8728
+    }
+  ],
+  "feature_definition": "Raw expression minus same-image/reference peer median, first averaged per training building then equally over buildings; effective turns exclude near-straight <=5 degree nodes; short edges require local turns and relative perimeter <4%.",
+  "semantics": "More/fewer expression is not a correctness judgement; necessary structure, reference-omitted detail, scope, redundancy and error are separated by local evidence.",
+  "unknown": "Missing opportunity is not imputed to zero. Auxiliary domain means require their prior support flag.",
+  "cross_condition": "Semi auxiliary fields are clearly auxiliary histories; all fusion outcomes in this directory are Manual."
+}

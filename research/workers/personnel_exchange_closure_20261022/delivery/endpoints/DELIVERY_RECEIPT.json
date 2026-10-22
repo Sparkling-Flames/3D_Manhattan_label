@@ -1,0 +1,551 @@
+{
+  "status": "complete",
+  "underlying_data_version": "v2",
+  "required_unique_endpoints": 101092,
+  "unique_new_native": 101031,
+  "unique_reused_prior": 61,
+  "central_registered_references": 101093,
+  "extra_legacy_QT_controls": 2,
+  "exact_geometry_and_key_alignment": true,
+  "no_fusion_or_scoring_in_this_step": true,
+  "files": [
+    {
+      "kind": "SCALARS",
+      "path": "delivery/endpoints/ALL_REQUIRED_ENDPOINT_SCALARS.csv.gz",
+      "rows": 101092,
+      "columns": 107,
+      "bytes": 32646904,
+      "sha256": "98a887740504c871cd4a7fe08b427da35ad040b692145cd01e73dbbb7ddd5db3",
+      "states": {
+        "complete_conditional": 100304,
+        "below_four": 485,
+        "no_connection": 258,
+        "invalid_floor": 45
+      }
+    },
+    {
+      "kind": "GEOMETRY",
+      "path": "delivery/endpoints/ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz",
+      "rows": 101092,
+      "columns": 11,
+      "bytes": 16603076,
+      "sha256": "6e70429b642f1451471d8f1879e8349a75fd7fd27d5415d46217d1f06258fff6",
+      "states": {}
+    }
+  ],
+  "batches": [
+    {
+      "batch": "jointb_001",
+      "requested": 3400,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/jointb_001/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/jointb_001/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3398,
+        "reused_exact_prior_team_closure_20261022": 2
+      },
+      "states": {
+        "below_four": 71,
+        "complete_conditional": 3317,
+        "no_connection": 12
+      }
+    },
+    {
+      "batch": "manual_001",
+      "requested": 3489,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_001/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_001/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3489
+      },
+      "states": {
+        "complete_conditional": 3463,
+        "invalid_floor": 26
+      }
+    },
+    {
+      "batch": "manual_002",
+      "requested": 1656,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_002/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_002/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 1656
+      },
+      "states": {
+        "below_four": 64,
+        "complete_conditional": 1592
+      }
+    },
+    {
+      "batch": "manual_003",
+      "requested": 3358,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_003/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_003/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3357,
+        "reused_exact_prior_team_closure_20261022": 1
+      },
+      "states": {
+        "complete_conditional": 3358
+      }
+    },
+    {
+      "batch": "manual_004",
+      "requested": 2802,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_004/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_004/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 2802
+      },
+      "states": {
+        "complete_conditional": 2802
+      }
+    },
+    {
+      "batch": "manual_005",
+      "requested": 3066,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_005/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_005/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3066
+      },
+      "states": {
+        "complete_conditional": 3066
+      }
+    },
+    {
+      "batch": "manual_006",
+      "requested": 639,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_006/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_006/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 639
+      },
+      "states": {
+        "complete_conditional": 639
+      }
+    },
+    {
+      "batch": "manual_007",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_007/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_007/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_008",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_008/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_008/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_009",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_009/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_009/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_010",
+      "requested": 538,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_010/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_010/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 538
+      },
+      "states": {
+        "below_four": 19,
+        "complete_conditional": 517,
+        "no_connection": 2
+      }
+    },
+    {
+      "batch": "manual_011",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_011/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_011/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_012",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_012/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_012/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_013",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_013/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_013/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "manual_014",
+      "requested": 28,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_014/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_014/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 28
+      },
+      "states": {
+        "complete_conditional": 28
+      }
+    },
+    {
+      "batch": "manual_015",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_015/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_015/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3484,
+        "no_connection": 16
+      }
+    },
+    {
+      "batch": "manual_016",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_016/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_016/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3483,
+        "no_connection": 17
+      }
+    },
+    {
+      "batch": "manual_017",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_017/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_017/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3500
+      },
+      "states": {
+        "complete_conditional": 3484,
+        "no_connection": 16
+      }
+    },
+    {
+      "batch": "manual_018",
+      "requested": 38,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_018/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_018/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 38
+      },
+      "states": {
+        "complete_conditional": 38
+      }
+    },
+    {
+      "batch": "mpath_001",
+      "requested": 1421,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/mpath_001/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/mpath_001/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 1421
+      },
+      "states": {
+        "below_four": 20,
+        "complete_conditional": 1393,
+        "no_connection": 8
+      }
+    },
+    {
+      "batch": "semi_001",
+      "requested": 2621,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_001/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_001/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 2608,
+        "reused_exact_prior_team_closure_20261022": 13
+      },
+      "states": {
+        "complete_conditional": 2621
+      }
+    },
+    {
+      "batch": "semi_002",
+      "requested": 3500,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_002/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_002/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3478,
+        "reused_exact_prior_team_closure_20261022": 22
+      },
+      "states": {
+        "complete_conditional": 3500
+      }
+    },
+    {
+      "batch": "semi_003",
+      "requested": 2793,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_003/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_003/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 2789,
+        "reused_exact_prior_team_closure_20261022": 4
+      },
+      "states": {
+        "complete_conditional": 2793
+      }
+    },
+    {
+      "batch": "semi_004",
+      "requested": 2109,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_004/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_004/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 2107,
+        "reused_exact_prior_team_closure_20261022": 2
+      },
+      "states": {
+        "below_four": 7,
+        "complete_conditional": 2096,
+        "no_connection": 6
+      }
+    },
+    {
+      "batch": "semi_005",
+      "requested": 2752,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_005/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/semi_005/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 2742,
+        "reused_exact_prior_team_closure_20261022": 10
+      },
+      "states": {
+        "complete_conditional": 2728,
+        "no_connection": 24
+      }
+    },
+    {
+      "batch": "structure_001",
+      "requested": 3327,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_001/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_001/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3325,
+        "reused_exact_prior_team_closure_20261022": 2
+      },
+      "states": {
+        "complete_conditional": 3325,
+        "no_connection": 2
+      }
+    },
+    {
+      "batch": "structure_002",
+      "requested": 3324,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_002/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_002/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3324
+      },
+      "states": {
+        "complete_conditional": 3245,
+        "invalid_floor": 19,
+        "no_connection": 60
+      }
+    },
+    {
+      "batch": "structure_003",
+      "requested": 3470,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_003/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_003/ENDPOINT_GEOMETRY.csv.gz",
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3470
+      },
+      "states": {
+        "below_four": 148,
+        "complete_conditional": 3314,
+        "no_connection": 8
+      }
+    },
+    {
+      "batch": "structure_004",
+      "requested": 3477,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_004/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_004/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3177,
+        "new_team_for_exchange_conditions_20261022_on_real_v2": 300
+      },
+      "states": {
+        "below_four": 1,
+        "complete_conditional": 3461,
+        "no_connection": 15
+      }
+    },
+    {
+      "batch": "structure_005",
+      "requested": 3432,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_005/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_005/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3432
+      },
+      "states": {
+        "complete_conditional": 3410,
+        "no_connection": 22
+      }
+    },
+    {
+      "batch": "structure_006",
+      "requested": 3404,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_006/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_006/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3404
+      },
+      "states": {
+        "complete_conditional": 3403,
+        "no_connection": 1
+      }
+    },
+    {
+      "batch": "structure_007",
+      "requested": 3229,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_007/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_007/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3227,
+        "reused_exact_prior_team_closure_20261022": 2
+      },
+      "states": {
+        "complete_conditional": 3221,
+        "no_connection": 8
+      }
+    },
+    {
+      "batch": "structure_008",
+      "requested": 3481,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_008/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_008/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3481
+      },
+      "states": {
+        "complete_conditional": 3469,
+        "no_connection": 12
+      }
+    },
+    {
+      "batch": "structure_009",
+      "requested": 3241,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_009/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_009/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3238,
+        "reused_exact_prior_team_closure_20261022": 3
+      },
+      "states": {
+        "complete_conditional": 3217,
+        "no_connection": 24
+      }
+    },
+    {
+      "batch": "structure_010",
+      "requested": 3470,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_010/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_010/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 3470
+      },
+      "states": {
+        "below_four": 155,
+        "complete_conditional": 3312,
+        "no_connection": 3
+      }
+    },
+    {
+      "batch": "structure_011",
+      "requested": 1528,
+      "scalars": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_011/ENDPOINT_SCALARS.csv.gz",
+      "geometry": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_011/ENDPOINT_GEOMETRY.csv.gz",
+      "immutable_final_checkpoints": true,
+      "origins": {
+        "new_native_closure_20261022_real_v2": 1528
+      },
+      "states": {
+        "complete_conditional": 1526,
+        "no_connection": 2
+      }
+    }
+  ],
+  "duplicate_references": [
+    {
+      "kind": "SCALARS",
+      "team_key": "b8cTxDM8gDG-17__manual__64a912ca10__7834f34dc1d2e191301f",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_004/ENDPOINT_SCALARS.csv.gz"
+    },
+    {
+      "kind": "SCALARS",
+      "team_key": "7y3sRwLe3Va-21__manual__d48c756085__3f21cc0ec3e19c75afa0",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_001/ENDPOINT_SCALARS.csv.gz"
+    },
+    {
+      "kind": "SCALARS",
+      "team_key": "b8cTxDM8gDG-17__manual__64a912ca10__aa6ecfaa3390da720acf",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_004/ENDPOINT_SCALARS.csv.gz"
+    },
+    {
+      "kind": "GEOMETRY",
+      "team_key": "b8cTxDM8gDG-17__manual__64a912ca10__7834f34dc1d2e191301f",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/manual_004/ENDPOINT_GEOMETRY.csv.gz"
+    },
+    {
+      "kind": "GEOMETRY",
+      "team_key": "7y3sRwLe3Va-21__manual__d48c756085__3f21cc0ec3e19c75afa0",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_001/ENDPOINT_GEOMETRY.csv.gz"
+    },
+    {
+      "kind": "GEOMETRY",
+      "team_key": "b8cTxDM8gDG-17__manual__64a912ca10__aa6ecfaa3390da720acf",
+      "duplicate_source": "research/workers/personnel_exchange_closure_20261022/native/batches/structure_004/ENDPOINT_GEOMETRY.csv.gz"
+    }
+  ]
+}
