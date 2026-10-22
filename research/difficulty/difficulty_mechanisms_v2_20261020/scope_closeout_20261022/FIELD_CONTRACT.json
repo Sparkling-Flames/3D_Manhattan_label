@@ -1,0 +1,51 @@
+{
+  "schema": "difficulty_scope_closeout_v2_20261022_r1",
+  "inputs": {
+    "primary": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+    "fixed6": "research/difficulty/difficulty_mechanisms_v2_20261020/image_mechanisms.csv",
+    "speed": "research/difficulty/speed_difficulty_mechanisms_20261021/common_image_effects.csv"
+  },
+  "record_scope_support": {
+    "primary_key": "object_id",
+    "layer": "OOS has priority in layer label; is_oos and is_doorway both retained so overlapping flags are not lost; non_oos_non_doorway includes special uses and does not certify ordinary scene",
+    "relation": "same_target / different_target for two known exact identities; missing_identity if either absent; not a semantic boundary equivalence test",
+    "target_id": "image_evidence.difficulty_record.target_version, preserving per-image adopted task",
+    "reference_full_available": "Primary record flag; not automatically derived from legacy top_boundary_pending",
+    "payload_full_available": "Reference evidence flag; blank for unavailable payload rather than false",
+    "quality_usable": "Inherited only; no restoration when full reference exists",
+    "legacy_top_boundary_pending": "Historical difficulty metadata, not a current reference gate; unknown preserved"
+  },
+  "scope_compatibility": {
+    "rows": "Group by layer, doorway flag, condition, target relation, inherited quality use and both full-reference flags",
+    "counts": "Record counts partition inventory; image counts can overlap across groups and are not summed as a new image denominator"
+  },
+  "image_scope_support": {
+    "primary_key": "image_id",
+    "target_full_status": "Current target observed in inventory: available / unavailable / mixed / unknown; not_bound_in_inventory when no same-target record",
+    "assigned_reference_count": "Distinct nonmissing reference_id observed on this image; different target is not automatically an error",
+    "current_target_quality_records": "Count of inherited quality_usable among exact same-target records; complete reference is necessary but not sufficient",
+    "legacy_top_boundary_pending": "Only explicit true is counted in the historical 41-image panel; not a fresh ceiling judgement"
+  },
+  "majority_support": {
+    "fixed6_simplification": "Same ordinary Manual fixed-6 panel as original analysis; direction counts use image's person simplification fraction minus 0.5; positive means more than half simplified",
+    "highQ_common_speed": "Saved highQ 4F1S-minus-5S within-image mean Q difference across original member draws; negative means loss",
+    "images_observed": "Nonmissing image outcomes only; missing never classified nonnegative or zero",
+    "median_original_value": "Original per-image simplification fraction or Q difference median, not building-equal mean",
+    "inferential_boundary": "Direction counts and image/building equal averages answer different questions; repeated members and draws are not independent populations"
+  },
+  "archive": {
+    "source": "Read-only user-provided HOHONET_personnel_research_20261020.zip",
+    "preserved": "Two fixed named missing difficulty CSVs compressed without changing bytes; five existing topic members compared byte-for-byte and not duplicated",
+    "identity": "ZIP member names and byte lengths, no file hashing, no Downloads path exposed in report/index",
+    "adoption": "Archived original summaries keep original supports; history pair source has five pairs per panel but actual replacement result uses only the four replaced pairs"
+  },
+  "unchanged": [
+    "No difficulty regrading",
+    "No semantic RGB visibility adjudication",
+    "No reference/point/eligibility/score/fusion change",
+    "Manual/Semi outcomes separate",
+    "No forced score for missing/OOS cases",
+    "No new classification or difficulty total score"
+  ],
+  "verification": "Two pure boundary tests plus current-source denominator and archive byte equality checks; no all-team fusion or all-library rerun"
+}
