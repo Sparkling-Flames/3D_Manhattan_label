@@ -1,6 +1,6 @@
 # HOHONET 文档入口
 
-- **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。本地main整理完成后由用户推送；任务书让Pro边研究边保存整合，未代发，不另做接续包。
+- **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。本地main整理完成后由用户推送；用户已说明Pro正在续研，任务书保留为边研究边保存整合的依据，不另做接续包。
 
 - **2026-10-22本地收尾与来源归档：** [Downloads清点与四类归档入口](../research/statistics/downloads_research_audit_20261022/README.md)、[难度与范围支持](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项与参考资格](../research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)。按现有v2及冻结方法接续，未改评分/融合；本轮提交仅整合本地main，来源归档不代表全量科学复算。
 

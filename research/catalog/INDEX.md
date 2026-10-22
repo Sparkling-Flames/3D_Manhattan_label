@@ -1,6 +1,6 @@
 # HOHONET 研究资料总目录
 
-目录版本：research_catalog_20261022_v29_pro_continue_and_integrate；盘点日期：2026-10-22。
+目录版本：research_catalog_20261022_v30_document_status_alignment；盘点日期：2026-10-22。
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
 

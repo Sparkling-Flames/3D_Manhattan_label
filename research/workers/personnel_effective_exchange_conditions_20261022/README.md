@@ -2,6 +2,8 @@
 
 底层真实 v2，研究轮次 20261022。归档基线为 main 5169fa3；不改资格、GT、融合或评分。
 
+**阶段识别：** 本包是已核的前轮53条件研究。Pro正在继续的closure轮报告43条件，实际只收到阶段01、基线和首批端点；其新数值不覆盖本包结果，当前状态见[人员总记录](../../../docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。
+
 ## 先读
 - [统一结果链：53 条条件](audit/PERSONNEL_UNIFIED_RESULT_ZH.csv)：分类依据—成员名单—实际标法—替换条件—效果，按具体支持范围采用。
 - [目标建筑外类别成员账](audit/PERSONNEL_TARGET_CLASS_MEMBERS_ZH.csv)；[实际背景/候选成员](audit/PERSONNEL_REGISTERED_PANEL_MEMBERS.csv)。ALL 名单描述与楼外评价名单不混用。

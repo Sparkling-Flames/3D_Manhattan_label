@@ -2,6 +2,12 @@
 
 本次按用户三步要求整理已有 Pro 返回和仓库基线，不新增正式分类、投票资格、GT 或评分参数。定稿指本轮成果及采用边界归档，不意味着所有研究问题已解决。
 
+## 当前采用范围（2026-10-22文档更新）
+
+本页人员数值来自前轮`personnel_effective_exchange_conditions_20261022`的53条件研究；新`personnel_exchange_closure_20261022`的43条件仍按作者报告与实际接收分别记录，Pro正在续研和整合，见[人员当前状态](../../../docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md)。本页不代表所有研究已经结束。
+
+各专题最新解释入口：[人员画像与可靠性](../../workers/personnel_profiles_composition_20261020/PROFILE_FINDINGS.md)、[难度与范围](../../difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项](../../quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)、[融合与人数](../../fusion/fusion_paper_closeout_20261022/README.md)、[同房用途](../../same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md)。
+
 ## 一、人员结果链
 [53条件统一表](../../workers/personnel_effective_exchange_conditions_20261022/audit/PERSONNEL_UNIFIED_RESULT_ZH.csv)逐项连接形成依据、人员、标法、替换条件和结果；[目标楼成员表](../../workers/personnel_effective_exchange_conditions_20261022/audit/PERSONNEL_TARGET_CLASS_MEMBERS_ZH.csv)避免跨折类号拼接。
 
@@ -27,4 +33,4 @@
 G015-11继续采用用户裁定：理论上应保留细节，但质量评价以现GT作为正确参考，不更改GT或把语义争议变为评分修订。
 
 ## 四、研究台与复现范围
-[离线研究收束页](../research_explorer_v1_r2_20261017/research-closeout.html)接统一结果表及来源链，既有模块全部保留。页面只读数据，不运行研究计算，不更换研究台原冻结数据。全部扩大统计的面板到汇总已核；未重跑部分明确保留原作者身份。PR不自动合并。
+[离线研究收束页](../research_explorer_v1_r2_20261017/research-closeout.html)接统一结果表及来源链，既有模块全部保留。页面只读数据，不运行研究计算，不更换研究台原冻结数据。全部扩大统计的面板到汇总已核；未重跑部分明确保留原作者身份。现有收束页随PR #23已进入main；本轮研究台新开发暂缓，浏览器视觉验收仍未完成。
