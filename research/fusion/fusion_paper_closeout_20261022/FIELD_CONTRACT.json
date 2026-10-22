@@ -1,0 +1,41 @@
+{
+  "schema": "fusion_paper_closeout_20261022_v1",
+  "baseline": "3f74c12ad",
+  "scope": "只读现存15个v2端点及v1保存的8→16主表，整理说明和小表；不新增脚本、不融合、不评分、不改分类或资格",
+  "sources": [
+    "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+    "research/workers/personnel_effective_exchange_conditions_20261022/mechanisms/positive_cases",
+    "research/workers/personnel_effective_exchange_conditions_20261022/mechanisms/b6_47_failure",
+    "research/fusion/wall_consensus_v1_process_20261017/random_8to16_main_strict_V.csv",
+    "research/fusion/fusion_mechanism_followup_20261021/MECHANISM_CHAINS.json",
+    "research/fusion/fusion_change_mechanisms_20261020/COVERAGE.json",
+    "analysis_results/worker_count_composition_20261006/summary.csv",
+    "analysis_results/lee_expanded_20261003/REPORT.md",
+    "research/fusion/wall_consensus_v1_process_20261017/random_matched_changes_main.csv"
+  ],
+  "tables": {
+    "ENDPOINT_ALIGNMENT.csv": "每行一个既有端点。case_id+arm定位案例，team_key定位具体人员。member_workers保留全N人员；selected_supports是所有达票组的支持人数，不等于全体物理角表达。score_status为既有冻结状态，invalid_floor的Q保持空，不填0。reference_id沿用源绑定。",
+    "COUNT_PANEL_BY_CONDITION.csv": "数据v1保存主表固定8→16，按Manual/Semi及ordinary/doorway_conditional分别整理，只取有共同有效V对和成对质量的图片；Q为原同路径差，V为原严格共同对差，图等权。三行面板27/17/4图，不拼为同一条件的均值。"
+  },
+  "units": {
+    "B8L2": "既有主评分点，0—100，未重算",
+    "D10": "同输入方向尺度敏感性分数，不是新算法",
+    "iou_2d": "底面IoU，0—1，失败保留空",
+    "source_time_seconds": "源记录秒数之和，不是本轮新测量或实际并行历时",
+    "threshold": "ceil(N/2)，全N MV50，偶数半票保留",
+    "coordinates": "1024×512已处理ERP，上下共享x，点对及原环沿用",
+    "V": "v1墙线固定共同有效团队对底面1−IoU，与Lee并集归一化对称差分开"
+  },
+  "json": {
+    "CHECKS.json": "保存端点的成员/组票/门槛、既有分数和失败缺失状态定向核对，以及v1主表分条件图片等权汇总；不声称新重放融合、评分或新Pro closure验收。"
+  },
+  "method_status": {
+    "production": "周期环匹配，gap7.5，当前集合相容分组，全N MV50，全来源中位数，完整来源投影环或人工排序",
+    "human_control": "q9只移动已审来源归属，保留输入/分母/门槛/估计规则，非自动结果",
+    "candidate": "锁定已达票组救回相容多数；保留正反例，未生产采用",
+    "Lee": "BEV区域投票，输出底面，无顶部端点"
+  },
+  "version_boundary": "v1人数统计与v2新机制分别标识；旧快照失败不写成当前待办。门洞和OOS未纳入15端点普通Manual例证，Semi初始化另列；不移植效果。",
+  "catalog_sync": "只提交本主题及专属脚本测试，统一目录和全局研究模型由整合线程合并",
+  "source_case_base": "8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235"
+}

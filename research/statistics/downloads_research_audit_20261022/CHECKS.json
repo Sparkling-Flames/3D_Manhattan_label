@@ -87,8 +87,49 @@
   "sha_computed": false,
   "fusion_scoring_recomputed": false,
   "baseline_commit": "8bfd3e476bd5ae6edc1424e2c8ea07dd2f69a235",
-  "publication_status": "blocked_by_automatic_approval_not_pushed",
+  "publication_status": "integrated_local_main_only",
   "zip_packages_currently_present": 37,
   "source_availability_change": "SOURCE_AVAILABILITY_CHANGE.json",
-  "publication_status_file": "PUBLICATION_STATUS.json"
+  "publication_status_file": "PUBLICATION_STATUS.json",
+  "local_main_commit_including_archive": "3f74c12ad2481f283d82f25f0efc3b0f2299739a",
+  "user_selected_destination": "local_main_only",
+  "baseline_reconciliation": {
+    "baseline_commit": "b5c6c38e2695d7edbdcd129337321498e67360d5",
+    "mapping_file": "BASELINE_IDENTICAL_FILE_MAP.csv",
+    "comparison_method": "direct_bytes_no_SHA",
+    "confirmed_identical_files": 1083,
+    "confirmed_identical_bytes": 74986784,
+    "source_archive_copies_retained": true,
+    "retention_reason": "Preserve source-relative dependencies and original delivery identity; existing_path identifies the already tracked copy.",
+    "remaining_not_matched_identical_files": 533,
+    "remaining_not_matched_identical_bytes": 116592765,
+    "increment_scope": "Archive total minus confirmed byte-identical files at original member paths in this baseline; remaining files are not asserted to be globally unique or new scientific evidence."
+  },
+  "latest_closure_delivery": {
+    "checked_date": "2026-10-22",
+    "user_correction": "Downloads中包均为此前文件；此前30MB案例包不是此次Pro返回。此次实际返回仅以下三份文件，尚未取得。",
+    "current_return_user_identified_files": [
+      "阶段01_接续依据与实验范围.md",
+      "HOHONET_公开分类基线_当前main.zip",
+      "HOHONET_新端点_manual_001.zip"
+    ],
+    "current_return_locally_received_files": [],
+    "current_return_status": "three_user_reported_files_not_yet_received",
+    "existing_case_zip": "HOHONET_20261022_实际原图叠图与票账案例.zip",
+    "existing_case_zip_bytes": 30367102,
+    "existing_case_zip_members": 123,
+    "existing_case_zip_role": "prior_download_source_case_stage_unconfirmed_not_current_return",
+    "package_internal_topic_path": "research/workers/personnel_exchange_closure_20261022",
+    "package_path_is_not_evidence_of_current_stage": true,
+    "prior_case_local_archive_entry": "research/workers/personnel_exchange_closure_20261022/README_RECEIVED.md",
+    "prior_case_local_archive_file_count": 123,
+    "prior_case_local_archive_bytes": 31155793,
+    "prior_case_local_archive_member_map": "research/workers/personnel_exchange_closure_20261022/delivery/received_case_zip/RECEIVED_MEMBERS.csv",
+    "prior_case_files_extracted_before_user_correction": true,
+    "source_files_preserved": true,
+    "package_code_executed": false,
+    "full_report_43_conditions_events_endpoints_received": false,
+    "current_overall_and_mechanism_delivery_not_independently_verified": true,
+    "next_minimum_delivery": "Receive and inspect the three user-identified files, then determine actual phase and remaining deliverables; do not infer completion from pasted sandbox links or prior Downloads."
+  }
 }

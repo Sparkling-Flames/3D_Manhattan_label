@@ -1,0 +1,121 @@
+{
+  "schema": "fusion_paper_closeout_checks_v1",
+  "written_on": "2026-10-22",
+  "local_main_base": "3f74c12ad",
+  "archived_case_base": "8bfd3e476",
+  "existing_case_files": 5,
+  "existing_endpoints": 15,
+  "groups_checked": 129,
+  "invalid_floor": 2,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "source_points_or_qualification_changed": false,
+  "new_pro_closure_adopted": false,
+  "wc2_bottom_median_check": [
+    {
+      "arm": "A",
+      "feature_id": "node_000",
+      "bottom_y": 318.114187816034,
+      "middle_ranks": [
+        [
+          318.0612078898,
+          "W110"
+        ],
+        [
+          318.16716774226796,
+          "W100"
+        ]
+      ]
+    },
+    {
+      "arm": "B",
+      "feature_id": "node_000",
+      "bottom_y": 318.4033036989472,
+      "middle_ranks": [
+        [
+          318.34943425886865,
+          "W118"
+        ],
+        [
+          318.45717313902577,
+          "W124"
+        ]
+      ]
+    },
+    {
+      "arm": "C",
+      "feature_id": "node_000",
+      "bottom_y": 319.53689748992355,
+      "middle_ranks": [
+        [
+          319.36762525565223,
+          "W115"
+        ],
+        [
+          319.70616972419487,
+          "W131"
+        ]
+      ]
+    }
+  ],
+  "v1_by_condition": [
+    {
+      "data_release": "v1",
+      "condition": "manual",
+      "layer": "doorway_conditional",
+      "k_from": 8,
+      "k_to": 16,
+      "images": 4,
+      "buildings": 2,
+      "quality_improved": 0,
+      "quality_decreased": 4,
+      "B8L2_mean_change": -12.047153813160248,
+      "D10_mean_change": -11.951035172501436,
+      "V_from": 0.18535837065902935,
+      "V_to": 0.1119892021811412,
+      "V_decreased": 4,
+      "V_increased": 0,
+      "weighting": "image_equal",
+      "source": "research/fusion/wall_consensus_v1_process_20261017/random_matched_changes_main.csv"
+    },
+    {
+      "data_release": "v1",
+      "condition": "manual",
+      "layer": "ordinary",
+      "k_from": 8,
+      "k_to": 16,
+      "images": 27,
+      "buildings": 11,
+      "quality_improved": 18,
+      "quality_decreased": 9,
+      "B8L2_mean_change": 0.2729733625988378,
+      "D10_mean_change": 0.19994629340501685,
+      "V_from": 0.07749932868453238,
+      "V_to": 0.054598781033527784,
+      "V_decreased": 26,
+      "V_increased": 1,
+      "weighting": "image_equal",
+      "source": "research/fusion/wall_consensus_v1_process_20261017/random_matched_changes_main.csv"
+    },
+    {
+      "data_release": "v1",
+      "condition": "semi",
+      "layer": "ordinary",
+      "k_from": 8,
+      "k_to": 16,
+      "images": 17,
+      "buildings": 10,
+      "quality_improved": 5,
+      "quality_decreased": 12,
+      "B8L2_mean_change": -0.6579988002301594,
+      "D10_mean_change": -0.5461017984203048,
+      "V_from": 0.023872113979979084,
+      "V_to": 0.004928455783225332,
+      "V_decreased": 17,
+      "V_increased": 0,
+      "weighting": "image_equal",
+      "source": "research/fusion/wall_consensus_v1_process_20261017/random_matched_changes_main.csv"
+    }
+  ],
+  "validation_scope": "saved endpoint counts/votes/thresholds/failure NA; wc2 displayed median; zs same blocks plus W125; stored v1 matched interval aggregation; not full fusion replay"
+}

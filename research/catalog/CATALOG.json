@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v25_exchange_inputs_archive",
+  "catalog_version": "research_catalog_20261022_v27_prior_case_source_boundary",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -190,6 +190,10 @@
       "page_path": "docs/thesis_main/topics/quality/README.md",
       "current_basis": [
         {
+          "text": "2026-10-22收尾：整体分、质量分项与局部几何并列；GT暂停和个人排除分开",
+          "path": "research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md"
+        },
+        {
           "text": "当前分析文件直接可用：评分引擎源码目录、PR19普通CSV与历史ZIP盘点",
           "path": "research/statistics/archive_layout_20261021/README.md"
         },
@@ -242,6 +246,10 @@
       ],
       "source_evidence": [
         {
+          "text": "历史质量候选源码归档；不改变当前评分采用",
+          "path": "research/quality/download_source_archive_20261022/README.md"
+        },
+        {
           "text": "三路线24例原始评论、固定几何与逐例解释",
           "path": "research/quality/quality_three_routes_feedback_20261016/CASE_REVIEW.md"
         },
@@ -279,6 +287,10 @@
       "description": "固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。",
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22收尾：多数人员/图片分母、目标范围与参考资格、两份缺失源表",
+          "path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md"
+        },
         {
           "text": "2026-10-21：快慢组合的短边与结构条件机制；接收共同77图的条件性发现，保留人工难度标签",
           "path": "research/difficulty/speed_difficulty_mechanisms_20261021/README.md"
@@ -461,12 +473,24 @@
       ],
       "source_evidence": [
         {
+          "text": "历史人员资料与旧阶段完整事件；v1和底层v2研究轮次隔离",
+          "path": "research/workers/download_source_archive_20261022/README.md"
+        },
+        {
+          "text": "有效换类代码、设计和native/cross完整事件来源；扩展分片及端点依赖仍分列",
+          "path": "research/workers/personnel_effective_exchange_conditions_20261022/source_archive_20261022/README_ARCHIVE.md"
+        },
+        {
           "text": "人员研究原意",
           "path": "docs/thesis_main/topics/workers/人员粗分类原意与既有证据_20261003.md"
         },
         {
           "text": "WQ人员研究包",
           "path": "research/workers/worker_wq_integration_20261015/README.md"
+        },
+        {
+          "text": "此前下载的123文件案例来源：阶段待核，非此次Pro交付，不能证明本次研究已验收",
+          "path": "research/workers/personnel_exchange_closure_20261022/README_RECEIVED.md"
         }
       ],
       "open_questions": [
@@ -483,6 +507,10 @@
       "description": "Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。",
       "page_path": "docs/thesis_main/topics/fusion/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22收尾：Lee/墙线职责、分条件人数过程与15个保存端点机制；新Pro closure另行验收",
+          "path": "research/fusion/fusion_paper_closeout_20261022/README.md"
+        },
         {
           "text": "2026-10-21：成员贡献与自动对应候选的有限机制研究；机制接收；候选有Semi重复输出失败，不替换现用算法",
           "path": "research/fusion/fusion_mechanism_followup_20261021/README.md"
@@ -552,6 +580,10 @@
       "description": "同房直接关系证据、共同人员、质量/融合曲线和迁移比较。",
       "page_path": "docs/thesis_main/topics/same_room/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22用途收尾：同房平均Q、个人相似性、选队及历史成本分别采用",
+          "path": "research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md"
+        },
         {
           "text": "同房五包关键成果与独立核验：均值、人员差异、替换选队及停止成本；省略可重建中间表",
           "path": "research/same_room/same_room_profile_return_review_20261021/README.md"
@@ -633,6 +665,10 @@
       "description": "各批次覆盖、分母、分层结果、表格、图表与扩展复算。",
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
+        {
+          "text": "2026-10-22下载来源归档：1616份选入源文件、七份完整事件流及明确依赖缺口；归档不等于复算",
+          "path": "research/statistics/downloads_research_audit_20261022/README.md"
+        },
         {
           "text": "2026-10-21：六线程验收与六站人工总览；当前人工查看入口，分类、画像与组合分开",
           "path": "research/statistics/review_progress_20261021/README.md"
@@ -11057,7 +11093,9 @@
       "availability": "本地成果；Git提交由用户处理",
       "relationships": [
         "tools/thesis_main/analysis/difficulty_mechanisms_v2_20261020.py",
-        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/FIELD_CONTRACT.json"
       ]
     },
     {
@@ -11267,7 +11305,11 @@
       "availability": "本地成果；Git提交由用户处理",
       "relationships": [
         "research/difficulty/speed_difficulty_mechanisms_20261021/README.md",
-        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/MANIFEST.json",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/difficulty_summary.csv.gz",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/speed_n5_historical_difficulty_pairs.csv.gz",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/majority_support.csv"
       ]
     },
     {
@@ -11280,11 +11322,15 @@
       "current_path": "research/quality/v2_profile_combo_quality_20261021",
       "source": "用户授权的六线程接续与统筹验收",
       "adoption_status": "接收诊断成果，B8L2/D10与N1状态不变",
-      "verification_status": "统筹从v2逐份数据复核106共同图均值、P10及低分数，与表一致",
-      "availability": "本地成果；Git提交由用户处理",
+      "verification_status": "统筹从v2逐份数据复核106共同图均值、P10及低分数，与表一致；2026-10-22专题回读10439份计算/资格、13组冻结分数及1个失败端点，未重跑全库",
+      "availability": "既有成果及PR24质量收尾已整合本地main；公开main未同步本轮收尾",
       "relationships": [
         "research/quality/v2_profile_combo_quality_20261021/README.md",
-        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md",
+        "research/quality/v2_profile_combo_quality_20261021/LATEST_CASE_COMPONENTS.csv",
+        "research/quality/v2_profile_combo_quality_20261021/REFERENCE_COUNTS.json",
+        "research/quality/v2_profile_combo_quality_20261021/closeout_20261022.py"
       ]
     },
     {
@@ -11297,11 +11343,17 @@
       "current_path": "research/fusion/fusion_mechanism_followup_20261021",
       "source": "用户授权的六线程接续与统筹验收",
       "adoption_status": "机制接收；候选有Semi重复输出失败，不替换现用算法",
-      "verification_status": "阅读候选代码和保存正反例、查看jtc叠图；5项针对性测试通过，统筹未重放32队",
+      "verification_status": "阅读候选代码和保存正反例、查看jtc叠图；5项针对性测试通过，统筹未重放32队；2026-10-22专题对齐15个保存端点及v1人数分层，未新增融合或采用新Pro closure数值",
       "availability": "本地成果；Git提交由用户处理",
       "relationships": [
         "research/fusion/fusion_mechanism_followup_20261021/README.md",
-        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+        "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md",
+        "research/fusion/fusion_paper_closeout_20261022/README.md",
+        "research/fusion/fusion_paper_closeout_20261022/ENDPOINT_ALIGNMENT.csv",
+        "research/fusion/fusion_paper_closeout_20261022/COUNT_PANEL_BY_CONDITION.csv",
+        "research/fusion/fusion_paper_closeout_20261022/FIELD_CONTRACT.json",
+        "research/fusion/fusion_paper_closeout_20261022/CHECKS.json",
+        "research/fusion/fusion_paper_closeout_20261022/HANDOFF.md"
       ]
     },
     {
@@ -11382,11 +11434,13 @@
       "current_path": "research/same_room/same_room_profile_return_review_20261021/README.md",
       "source": "五个已返回 Pro 包；普通文件精简交付",
       "adoption_status": "条件采用同房均值、人员差异、选队和成本证据；不替代最新人员分类总目标",
-      "verification_status": "交付文件核验及三项直接读取测试通过；原生重放与保存证据边界见 README",
+      "verification_status": "交付文件核验及三项直接读取测试通过；原生重放与保存证据边界见 README；2026-10-22用途收尾回读建筑方向与分母，不重跑模型或融合",
       "availability": "核心报告、代码、图表和支持表直接可读；完整中间库需原包或重建",
       "relationships": [
         "research/same_room/same_room_profile_return_review_20261021/DELIVERY_SELECTION.json",
-        "research/same_room/same_room_profile_return_review_20261021/audit/DIRECT_SUMMARY_REPRODUCTION.json"
+        "research/same_room/same_room_profile_return_review_20261021/audit/DIRECT_SUMMARY_REPRODUCTION.json",
+        "research/same_room/same_room_acceptance_20261022/SAME_ROOM_ACCEPTANCE.md",
+        "research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md"
       ]
     },
     {
@@ -11424,6 +11478,114 @@
         "research/workers/personnel_effective_exchange_conditions_20261022/delivery/CORE_PACKAGE_RECEIPT.json",
         "research/workers/personnel_effective_exchange_conditions_20261022/delivery/SMALL_ANALYSIS_INPUTS_RECEIPT.json",
         "docs/thesis_main/人员标法分类与换类研究_总体进度_20261020.md"
+      ]
+    },
+    {
+      "id": "MAT-downloads_research_source_audit_20261022",
+      "title": "Downloads研究材料清点与依赖缺口",
+      "theme": "statistics",
+      "type": "来源归档与收尾说明",
+      "date": "20261022",
+      "source_path": "research/statistics/downloads_research_audit_20261022/README.md",
+      "current_path": "research/statistics/downloads_research_audit_20261022/README.md",
+      "source": "用户授权的专题收尾及Downloads来源归档",
+      "adoption_status": "来源清点；不替代科学复算或采用全部作者结论",
+      "verification_status": "清点/字节归档/事件读取核验；未重算评分、融合或研究效应",
+      "availability": "已整合本地main，尚未同步公开main",
+      "relationships": [
+        "research/statistics/downloads_research_audit_20261022/CHECKS.json",
+        "research/statistics/downloads_research_audit_20261022/DEPENDENCY_MAP.csv",
+        "research/statistics/downloads_research_audit_20261022/EVENT_STREAM_INVENTORY.csv"
+      ]
+    },
+    {
+      "id": "MAT-effective_exchange_source_archive_20261022",
+      "title": "有效换类研究代码、设计与完整事件来源",
+      "theme": "workers",
+      "type": "来源归档与收尾说明",
+      "date": "20261022",
+      "source_path": "research/workers/personnel_effective_exchange_conditions_20261022/source_archive_20261022/README_ARCHIVE.md",
+      "current_path": "research/workers/personnel_effective_exchange_conditions_20261022/source_archive_20261022/README_ARCHIVE.md",
+      "source": "用户授权的专题收尾及Downloads来源归档",
+      "adoption_status": "当前effective_exchange来源补齐；底层v2，Manual/Semi分别保留",
+      "verification_status": "核心来源与四份native/cross事件已归档；扩展分片及独立端点依赖未齐",
+      "availability": "已整合本地main，尚未同步公开main",
+      "relationships": [
+        "research/statistics/downloads_research_audit_20261022/README.md",
+        "research/workers/personnel_effective_exchange_conditions_20261022/README.md"
+      ]
+    },
+    {
+      "id": "MAT-historical_worker_download_sources_20261022",
+      "title": "历史人员代码与v3研究阶段事件来源",
+      "theme": "workers",
+      "type": "来源归档与收尾说明",
+      "date": "20261022",
+      "source_path": "research/workers/download_source_archive_20261022/README.md",
+      "current_path": "research/workers/download_source_archive_20261022/README.md",
+      "source": "用户授权的专题收尾及Downloads来源归档",
+      "adoption_status": "历史v1与底层v2的v3研究轮次隔离；不覆盖现行修订",
+      "verification_status": "七份完整事件流之一组历史来源；只读字段/计数，不重聚合效应",
+      "availability": "已整合本地main，尚未同步公开main",
+      "relationships": [
+        "research/statistics/downloads_research_audit_20261022/EVENT_STREAM_INVENTORY.csv",
+        "research/workers/personnel_v3_20261021/README.md"
+      ]
+    },
+    {
+      "id": "MAT-historical_quality_download_sources_20261022",
+      "title": "历史质量候选方法来源归档",
+      "theme": "quality",
+      "type": "来源归档与收尾说明",
+      "date": "20261022",
+      "source_path": "research/quality/download_source_archive_20261022/README.md",
+      "current_path": "research/quality/download_source_archive_20261022/README.md",
+      "source": "用户授权的专题收尾及Downloads来源归档",
+      "adoption_status": "历史候选来源；不改变B8L2/D10采用身份或引入新总分",
+      "verification_status": "来源归档与代码语法检查；未执行候选模型科学复算",
+      "availability": "已整合本地main，尚未同步公开main",
+      "relationships": [
+        "research/statistics/downloads_research_audit_20261022/README.md",
+        "research/quality/quality_three_model_review_20261017/RECORD.md"
+      ]
+    },
+    {
+      "id": "MAT-difficulty_scope_closeout_20261022",
+      "title": "难度多数支持与目标范围资格收尾",
+      "theme": "difficulty",
+      "type": "来源归档与收尾说明",
+      "date": "20261022",
+      "source_path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md",
+      "current_path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md",
+      "source": "用户授权的专题收尾及Downloads来源归档",
+      "adoption_status": "采用已有条件规律及明确分母；不改难度、参考或质量资格",
+      "verification_status": "回读v2范围支持、补多数方向计数及2项定向测试；两源表解压后与ZIP成员一致",
+      "availability": "已整合本地main，尚未同步公开main",
+      "relationships": [
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/FIELD_CONTRACT.json",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/majority_support.csv",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/COVERAGE.json",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/MANIFEST.json",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/difficulty_summary.csv.gz",
+        "research/difficulty/speed_difficulty_mechanisms_20261021/source_archive_20261022/speed_n5_historical_difficulty_pairs.csv.gz",
+        "tools/thesis_main/analysis/difficulty_scope_closeout_20261022.py",
+        "tests/test_difficulty_scope_closeout_20261022.py"
+      ]
+    },
+    {
+      "id": "MAT-personnel_prior_case_sources_stage_unconfirmed_20261022",
+      "title": "既有人员换类案例来源：阶段归属待核",
+      "theme": "workers",
+      "type": "既有来源案例归档",
+      "date": "20261022",
+      "source_path": "HOHONET_20261022_实际原图叠图与票账案例.zip",
+      "current_path": "research/workers/personnel_exchange_closure_20261022/README_RECEIVED.md",
+      "source": "用户明确Downloads案例ZIP为此前文件，非此次Pro返回",
+      "adoption_status": "仅保留此前案例来源；阶段待核，不作为此次人员主线收尾或新结果验收",
+      "verification_status": "123个来源文件安全展开、长度与路径映射检查；未执行代码或复算研究结论",
+      "availability": "本地已保存待统筹提交；未公开推送",
+      "relationships": [
+        "research/workers/personnel_exchange_closure_20261022/delivery/received_case_zip/RECEIVED_MEMBERS.csv"
       ]
     }
   ]

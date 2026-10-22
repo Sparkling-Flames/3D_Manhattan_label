@@ -1,5 +1,7 @@
 # HOHONET 文档入口
 
+- **2026-10-22本地收尾与来源归档：** [Downloads清点与四类归档入口](../research/statistics/downloads_research_audit_20261022/README.md)、[难度与范围支持](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项与参考资格](../research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)。按现有v2及冻结方法接续，未改评分/融合；本轮提交仅整合本地main，来源归档不代表全量科学复算。
+
 - 2026-10-21整体构成续研审查：[人员总记录](thesis_main/人员标法分类与换类研究_总体进度_20261020.md)与[五包归档入口](../research/workers/personnel_composition_n20_20261021/README.md)。QTD为效率辅助分类，M细类质量控制证据收紧；两阶段核验及52行覆盖边界已整理，尚未接入研究台。
 - **整体研究主文档：** [研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)。统一人员、图片、质量、融合、人数/组合及同房关系；盲信、个人筛除、scope和难度继续保留独立用途。
 - **当前进度及接入任务：** [各部分整合记录](thesis_main/四线程成果与论文主线核对_20261015.md)，含主题证据、采用/待办及研究台状态；新分类两处修正与表格接入已完成。[同房续研及独立审查](thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)第10节区分Pro报告与Dot PR；第11—12节重点补足均值/个人质量相似性，保留结构、选队与停止，附整合上轮包的Pro任务。

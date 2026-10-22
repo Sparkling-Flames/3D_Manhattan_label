@@ -1,14 +1,37 @@
 {
-  "state": "blocked_by_automatic_approval_not_pushed",
+  "state": "integrated_local_main_only",
   "repository": "Sparkling-Flames/3D_Manhattan_label",
   "repository_visibility": "public",
-  "branch": "codex/downloads-research-archive-20261022",
+  "branch": "main",
   "local_source_files": 1616,
   "local_source_bytes": 191579549,
-  "request": "push_task_branch_and_create_PR",
-  "review_reason": "Public upload of this concrete research dataset requires explicit confirmation; task-level organization/PR authorization was not accepted as sufficient",
+  "request": "keep_in_local_main_only",
+  "review_reason": "Historical public-upload refusal is retained below; public publication is no longer the requested task.",
   "workaround_attempted": false,
   "push_executed": false,
   "PR_created": false,
-  "required_next_action": "human_approval_for_this_concrete_public_upload"
+  "required_next_action": "none_for_local_archive_publication",
+  "source_branch": "codex/downloads-research-archive-20261022",
+  "local_main_commit_including_archive": "3f74c12ad2481f283d82f25f0efc3b0f2299739a",
+  "user_decision": "2026-10-22: 提交本地main即可；不公开推送。",
+  "historical_public_upload_attempt": {
+    "state": "blocked_by_automatic_approval_not_pushed",
+    "request": "push_task_branch_and_create_PR",
+    "review_reason": "Public upload of this concrete research dataset requires explicit confirmation; task-level organization/PR authorization was not accepted as sufficient",
+    "workaround_attempted": false,
+    "push_executed": false,
+    "PR_created": false
+  },
+  "baseline_reconciliation": {
+    "baseline_commit": "b5c6c38e2695d7edbdcd129337321498e67360d5",
+    "mapping_file": "BASELINE_IDENTICAL_FILE_MAP.csv",
+    "comparison_method": "direct_bytes_no_SHA",
+    "confirmed_identical_files": 1083,
+    "confirmed_identical_bytes": 74986784,
+    "source_archive_copies_retained": true,
+    "retention_reason": "Preserve source-relative dependencies and original delivery identity; existing_path identifies the already tracked copy.",
+    "remaining_not_matched_identical_files": 533,
+    "remaining_not_matched_identical_bytes": 116592765,
+    "increment_scope": "Archive total minus confirmed byte-identical files at original member paths in this baseline; remaining files are not asserted to be globally unique or new scientific evidence."
+  }
 }
