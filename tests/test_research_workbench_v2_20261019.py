@@ -1,5 +1,6 @@
 import pytest
 import json
+import csv
 from pathlib import Path
 import pandas as pd
 from tools.thesis_main.analysis import build_research_workbench_v2_20261019 as builder
@@ -104,6 +105,20 @@ def test_real_integration_manifest_matches_sources():
     tabs = [tid for group in builder.EXTRA_MODULE_TABS.values() for _, tid in group]
     assert len(tabs) == len(set(tabs)) == 17
     assert set(tabs) == set(declared_ids) | multiview_ids
+
+
+def test_briefing_tables_match_frozen_sources():
+    manifest = builder.read(builder.BRIEFING)
+    assert manifest['schema'] == 'research_briefing_tables_v1'
+    assert manifest['data_release'] == 'v2'
+    ids = [spec['id'] for spec in manifest['tables']]
+    assert len(ids) == len(set(ids)) == 14
+    assert {tid for tabs in builder.BRIEFING_MODULE_TABS.values() for _, tid in tabs} == set(ids)
+    for spec in manifest['tables']:
+        with (builder.ROOT / spec['source']).open(encoding='utf-8-sig', newline='') as source:
+            rows = csv.reader(source)
+            assert next(rows) == spec['columns'], spec['id']
+            assert sum(1 for _ in rows) == spec['rows'], spec['id']
 
 
 def test_find_photo_normalizes_windows_relative_path(tmp_path):

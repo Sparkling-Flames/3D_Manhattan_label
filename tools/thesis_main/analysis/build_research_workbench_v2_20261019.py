@@ -22,6 +22,7 @@ MULTIVIEW = ROOT / 'research/same_room/same_room_multiview_20261020'
 TAXONOMY = ROOT / 'research/workers/personnel_taxonomy_20261021'
 MECHANISMS = PAGE / 'MECHANISM_INTERFACE_20261021.json'
 SAME_ROOM_REVIEW = PAGE / 'SAME_ROOM_REVIEW_INTERFACE_20261021.json'
+BRIEFING = PAGE / 'BRIEFING_TABLES_20261023.json'
 MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
                     'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
                     'background_buildings.csv']
@@ -43,6 +44,21 @@ EXTRA_MODULE_TABS = {
                ('独立重抽样区间', 'fusion__audit_bootstrap'),
                ('失败与分母', 'fusion__audit_failure_denominators'),
                ('F01效率重聚合', 'fusion__audit_f01_time')],
+}
+BRIEFING_MODULE_TABS = {
+    'quality': [('局部质量案例', 'quality__case_rows'), ('原分项与参考', 'quality__latest_case_components')],
+    'conditions': [('固定结构复杂度', 'difficulty__fixed_complexity_summary'),
+                   ('同人固定六转折', 'difficulty__person_fixed6_conditions'),
+                   ('人员多数支持', 'difficulty__majority_support'),
+                   ('逐图范围支持', 'difficulty__image_scope_support')],
+    'workers': [('连续人员画像', 'profiles__continuous'),
+                ('同支持人员对', 'profiles__selected_common_pairs')],
+    'fusion': [('机制端点对齐', 'fusion_closeout__endpoint_alignment'),
+               ('历史人数条件', 'fusion_closeout__count_panel_by_condition')],
+    'same_room': [('同房均值对照', 'same_room_pro__direct_mean_summary'),
+                  ('选队策略结果', 'same_room_pro__policy_summary'),
+                  ('人数停止结果', 'same_room_pro__stopping_summary'),
+                  ('源历史获取成本', 'same_room_pro__source_acquisition_summary')],
 }
 
 
@@ -670,10 +686,19 @@ def build():
         if len(review[spec['id']]) != spec['rows']:
             raise ValueError('same-room review row count drift: ' + spec['id'])
     tables.update(review)
+    briefing_interface = read(BRIEFING)
+    if briefing_interface['schema'] != 'research_briefing_tables_v1' or briefing_interface['data_release'] != 'v2':
+        raise ValueError('research briefing display interface drift')
+    briefing, briefing_provenance = load_declared_tables(briefing_interface)
+    for spec in briefing_interface['tables']:
+        if len(briefing[spec['id']]) != spec['rows']:
+            raise ValueError('research briefing row count drift: ' + spec['id'])
+    tables.update(briefing)
     source_map = dict(extra_provenance)
     source_map.update(taxonomy_provenance)
     source_map.update(mechanism_provenance)
     source_map.update(review_provenance)
+    source_map.update(briefing_provenance)
     source_map.update({f'same_room_multiview__{Path(f).stem}':
                        f'{MULTIVIEW.relative_to(ROOT).as_posix()}/{f}' for f in MULTIVIEW_TABLES})
     metadata = [display_table(PAGE/'v2-data', name, rows,
@@ -734,8 +759,11 @@ def build():
         raise ValueError('missing same-room review tables: ' + ', '.join(review_missing))
     for module, tabs in EXTRA_MODULE_TABS.items():
         modules[module].extend(tabs)
+    for module, tabs in BRIEFING_MODULE_TABS.items():
+        modules.setdefault(module, []).extend(tabs)
     modules={key:[tab for tab in tabs if tab[1] in tables] for key,tabs in modules.items()}
-    missing = [tid for tabs in EXTRA_MODULE_TABS.values() for _, tid in tabs if tid not in tables]
+    missing = [tid for tabs in (*EXTRA_MODULE_TABS.values(), *BRIEFING_MODULE_TABS.values())
+               for _, tid in tabs if tid not in tables]
     if missing:
         raise ValueError('missing display tables: ' + ', '.join(missing))
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
@@ -757,65 +785,60 @@ def build():
     pack_comparisons(evidence, resources)
     pack_research_evidence(evidence, resources)
     pack_personnel_results(evidence, resources)
-    sections = [dict(title='v2 实际覆盖',finding=f"{summary['raw_records']}份库存，{summary['quality_records']}份主质量可用。",
-               support='逐作答ID合并；诊断、正式质量、来源时间与同目标时间分别保留。',counterexample='人数增加不代表所有图均有35份正式质量。',
-               tables=[dict(id='quality__shared_records',label='全部作答与证据')]),
-               dict(title='人员分类、画像与组合效益',finding='Manual M0/M1作为结构表达工作分类；Semi SP_LOW为条件性尺度组，A2为独立原答关系分区。',
-               support='分类页可查成员、楼外表达、Q/T、局部机会和精确换人团队；画像与组合效益继续按各自条件和来源查看。',
-               counterexample='Manual M0→M1换入成员历史Q更高，尚未证明标法的独立净收益；同类人员并非普遍可互换。',
-               tables=[dict(id='taxonomy__recommended_labels',label='分类成员'),dict(id='taxonomy__summary',label='换类与同类换人')]),
-               dict(title='v1 与 v2 分开',finding='v1 已有的融合过程、9°/12°分簇与替换实验保留在 v1 入口。',
-               support='v2分簇、组合与替换已有独立研究包；本页过程几何仍按各入口的实际接入状态解释。',
-               counterexample='旧路径记录数量不是 v2 独立样本数，也不是 v2 实测融合结果。',tables=[]),
-               dict(title='v2同房条件预测',finding='首轮Q/T预测与源视角人数实验已接入同房模块。',
-               support='OOS排除、门洞单列；已知源视角评价下留建筑预测，人员分类暂不接入。',
-               counterexample='尚无确认异房匹配对照；不同预测面板不能直接比较优劣。',
-               tables=[dict(id='same_room_prediction__prediction_summary',label='预测汇总与人数曲线')])]
-    sections.extend([
-        dict(title='人员类别接续（Rnew2 / F01）',
-             finding='Rnew2 21/14 两类的换 5 人方向平均 +6.652 B8L2（24/29 图、6/6 建筑同向，bootstrap CI [2.32, 11.86]）；F01 快 12/慢 11 的净 Q ≈ 0（−0.029），来源时间几何比 0.375。',
-             support='Rnew2：29图/6栋、35名新人；F01：高Q23人（8旧/15新），各自评估面板分开。17,726队原生重融合与1,819事件独立复算通过。',
-             counterexample='同构成/跨构成主相近率 47.74%/44.76%，差 2.98 个百分点且 CI 跨 0；固定类型各方法最多 1/21 建筑达标；不能称同类任意换人曲线不变。',
-             tables=[dict(id='workers__working_labels_60', label='人员工作标签'),
-                     dict(id='fusion__audit_bootstrap', label='独立重抽样区间'),
-                     dict(id='fusion__audit_f01_time', label='F01效率重聚合')]),
-        dict(title='类别块构成与角点证据',
-             finding='跨类/同类 BEV 角点均距：G 1.49 倍、R 2.27 倍。',
-             support='451 对照 / 1,353 队 / 66 图 / 12 栋；只读展示冻结类别块与对应角点证据。',
-             counterexample='均值差受尾部事件驱动、并非多数事件都明显分开。',
-             tables=[dict(id='fusion__composition_panel_building', label='类别块逐建筑'),
-                     dict(id='fusion__composition_corner_distances', label='对应角点距离'),
-                     dict(id='fusion__composition_corner_summary', label='对应角点汇总'),
-                     dict(id='fusion__composition_corner_panel', label='角点面板汇总')]),
-        dict(title='同房多视角重放',
-             finding='同房历史 MAE 4.80 vs 其他建筑 10.15；全组融合曲线 MAE 7.71 vs 随机单源 8.87。',
-             support='9 个关系组 / 44 图 / 7 栋；质量迁移与真实融合曲线使用各冻结面板。',
-             counterexample='G057 两视角掉点、G046/G178 低平台；未知同建筑关系不等于异房；人员类型尚未接入该面板。',
-             tables=[dict(id='same_room_multiview__mean_summary', label='多视角预测汇总'),
-                     dict(id='same_room_multiview__curve_summary', label='真实融合曲线汇总'),
-                     dict(id='same_room_multiview__replay_behavior', label='人数曲线行为')]),
-        dict(title='独立审查边界',
-             finding='17,726 核心队原生重融合一致。',
-             support='独立审查确认 32 字段与几何指纹一致；本次仅接入既有结果。',
-             counterexample='57 万任务未全部重跑、1,808 反向候选未全部重训、10 张重建表压缩 SHA 与历史记录不同。',
-             tables=[dict(id='fusion__audit_failure_denominators', label='失败与分母')]),
-    ])
-    sections.append(dict(
-        title='同房独立补算（2026-10-21）',
-        finding=('同预算建筑等权个人Q校准 MAE 12.3637→11.1447（6/7栋改善）；'
-                 '本人同房历史比同源他人多保留约0.096个角点、9°未匹配少1.10个百分点；'
-                 '共同完整支持上，源曲线 within-2 平均6.58人/Q88.59，固定7人为7人/Q87.43。'),
-        support=('校准：7栋/44图/55人；人数：6组/6栋、共同完整1,160/1,536条真实路径；'
-                 '源记录共124,924保存节点；Manual为主；'
-                 '独立补算；Pro 47.1MiB包未复现。'),
-        counterexample=('VFuaQ6m2Qom校准+0.362变差；目标Q<50被高估（25.72 vs 23.44）；'
-                        'within-2低尾80.10低于固定7的81.64、完整率98.44% vs 98.77%；'
-                        'G015理论结构未改GT；定位/范围不跨视角迁移。'),
-        tables=[dict(id='same_room_review__calibration_summary', label='质量校准汇总'),
-                dict(id='same_room_review__structure_summary', label='结构迁移汇总'),
-                dict(id='same_room_review__stopping_summary', label='人数选择汇总'),
-                dict(id='same_room_review__stopping_d10_summary', label='D10人数敏感性')]))
-    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections))
+    sections = [
+        dict(title='1 · 任务与真实数据',
+             finding=f"真人 v2 库存 {summary['raw_records']:,} 份；正式质量 {summary['quality_records']:,} 份，二者不是同一分母。",
+             example='从全景图选一个目标空间，叠加真实作答、参考与上下点；再看库存如何逐级进入评分。',
+             support='v2 真人库存；Manual、Semi、门洞、OOS与参考状态分开。',
+             counterexample='能计算几何不等于正式质量可用，图片、人员和作答数也不能相加。',
+             source='../../../research/statistics/v2_integrated_analysis_20261019/README.md',
+             tables=[dict(id='statistics__condition_summary',label='条件与分母'),
+                     dict(id='quality__shared_records',label='逐份证据')]),
+        dict(title='2 · 怎样判断一个布局',
+             finding='B8L2 同时看底面、方向和高度；同分或同节点数仍可能有不同局部结构。',
+             example='对照质量案例的原答、参考与分项，再切换 ERP／BEV／3D 核对位置。',
+             support='固定参考与正式资格下的 B8L2；D10 只改变方向容忍尺度。',
+             counterexample='分数不是正确概率；G015 继续按现有 GT 评价，不改参考。',
+             source='../../../research/quality/v2_profile_combo_quality_20261021/PAPER_RESULTS.md',
+             tables=[dict(id='quality__case_rows',label='同分异形案例'),
+                     dict(id='quality__latest_case_components',label='分项与参考')]),
+        dict(title='3 · 图片条件与人的响应',
+             finding='固定 6 个参考转折时，结构条件不同，简化表达明显不同。',
+             example='短边与几何自遮挡分别看；同人固定六转折对照说明表达变化。',
+             support='33 图固定复杂度；短边与自遮挡多数支持分别为 32/47 与 36/47 人。',
+             counterexample='建筑不等于房间，几何自遮挡不等于家具遮挡；三档难度不由单个阈值自动决定。',
+             source='../../../research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md',
+             tables=[dict(id='difficulty__fixed_complexity_summary',label='固定结构比较'),
+                     dict(id='difficulty__person_fixed6_conditions',label='同人对照'),
+                     dict(id='difficulty__image_scope_support',label='逐图范围支持')]),
+        dict(title='4 · 连续人员画像与可靠性',
+             finding='平均质量、低尾、记录时间和条件响应各回答不同问题，可靠性要带机会分母。',
+             example='W109／W112 总体 Q 接近，时间和难度响应却不同；Semi 确认错误与报告机会也分开。',
+             support='182 格已保存画像；匿名人员 ID；Manual 与 Semi 分层。',
+             counterexample='未修改预标注不自动等于盲信；范围机会覆盖不是全体 OOS 判断准确率。',
+             source='../../../research/workers/personnel_profiles_composition_20261020/PROFILE_FINDINGS.md',
+             tables=[dict(id='profiles__continuous',label='连续画像'),
+                     dict(id='profiles__selected_common_pairs',label='同支持人员对')]),
+        dict(title='5 · 共识机制与人数过程',
+             finding='对应、支持门槛、位置和连接都会改变最终结构；增人不保证质量单调提高。',
+             example='wc2 全票仍有定位差；zs 增人跨门槛；B6 连接失败。查看保存端点及历史人数面板。',
+             support='保存机制案例；v1 历史人数面板与 v2 机制各保留版本身份。',
+             counterexample='同人数换组稳定不等于接近参考；没有 v2 全池×难度统一人数曲线。',
+             source='../../../research/fusion/fusion_paper_closeout_20261022/README.md',
+             tables=[dict(id='fusion_closeout__endpoint_alignment',label='机制端点'),
+                     dict(id='fusion_closeout__count_panel_by_condition',label='历史人数条件')]),
+        dict(title='6 · 同房与选队用途',
+             finding='平均质量可跨视角预测；个人剩余差异、选队和历史获取成本须分别检验。',
+             example='先比较同房均值，再看楼外 Q 选队、坏尾和已有历史的停止规则。',
+             support='直接关系和已保存团队；房间关系按用户直接证据，选队／停止有各自支持集合。',
+             counterexample='同建筑未知关系不是异房；劳动比不是总交付时长，也不是新人员的无历史部署收益。',
+             source='../../../research/same_room/same_room_profile_return_review_20261021/README.md',
+             tables=[dict(id='same_room_pro__direct_mean_summary',label='同房均值'),
+                     dict(id='same_room_pro__policy_summary',label='选队结果'),
+                     dict(id='same_room_pro__stopping_summary',label='停止结果'),
+                     dict(id='same_room_pro__source_acquisition_summary',label='获取历史成本')]),
+    ]
+    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员分类与混合构成研究已验收；详细展示待接入。旧分类模块仅作阶段历史。'))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 
 
