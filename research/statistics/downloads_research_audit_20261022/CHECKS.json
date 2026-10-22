@@ -107,14 +107,18 @@
   },
   "latest_closure_delivery": {
     "checked_date": "2026-10-22",
-    "user_correction": "Downloads中包均为此前文件；此前30MB案例包不是此次Pro返回。此次实际返回仅以下三份文件，尚未取得。",
+    "user_correction": "Downloads此前包不是此次Pro返回；用户随后补齐此次三份实际文件，已只读核对。",
     "current_return_user_identified_files": [
       "阶段01_接续依据与实验范围.md",
       "HOHONET_公开分类基线_当前main.zip",
       "HOHONET_新端点_manual_001.zip"
     ],
-    "current_return_locally_received_files": [],
-    "current_return_status": "three_user_reported_files_not_yet_received",
+    "current_return_locally_received_files": [
+      "阶段01_接续依据与实验范围.md",
+      "HOHONET_公开分类基线_当前main.zip",
+      "HOHONET_新端点_manual_001.zip"
+    ],
+    "current_return_status": "stage01_existing_all_baseline_and_first_manual_endpoints_received_final_evidence_missing",
     "existing_case_zip": "HOHONET_20261022_实际原图叠图与票账案例.zip",
     "existing_case_zip_bytes": 30367102,
     "existing_case_zip_members": 123,
@@ -130,6 +134,15 @@
     "package_code_executed": false,
     "full_report_43_conditions_events_endpoints_received": false,
     "current_overall_and_mechanism_delivery_not_independently_verified": true,
-    "next_minimum_delivery": "Receive and inspect the three user-identified files, then determine actual phase and remaining deliverables; do not infer completion from pasted sandbox links or prior Downloads."
+    "next_minimum_delivery": "Recover final report, 43-condition table, image/building summaries, exact ABC event links and corresponding endpoint scalar index; do not rerun all research by default.",
+    "current_return_archive_entry": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md",
+    "current_manual_batch": {
+      "teams": 3489,
+      "images": 3,
+      "buildings": 3,
+      "evaluable": 3463,
+      "invalid_floor": 26,
+      "abc_event_mapping_available": false
+    }
   }
 }

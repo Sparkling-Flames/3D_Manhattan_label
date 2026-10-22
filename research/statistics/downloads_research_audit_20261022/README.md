@@ -69,10 +69,10 @@ BASELINE_IDENTICAL_FILE_MAP.csv逐项比较归档副本与b5c6c38e2提交中的�
 
 ## 本机既有案例包与本次Pro返回（用户澄清）
 
-用户于2026-10-22明确：Downloads里的包均为此前文件，本次Pro实际只返回“阶段01_接续依据与实验范围.md”“HOHONET_公开分类基线_当前main.zip”“HOHONET_新端点_manual_001.zip”。这三份本次文件尚未取得，应先读取其内容再判断阶段与完成度。
+用户于2026-10-22明确：Downloads里的包均为此前文件，本次Pro实际只返回“阶段01_接续依据与实验范围.md”“HOHONET_公开分类基线_当前main.zip”“HOHONET_新端点_manual_001.zip”。这三份本次文件随后已取得，见[实际首批交付](../../workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md)：阶段计划、既有ALL分类、3489个Manual端点；不含最终43条件表及精确ABC关联。
 
 本机既有HOHONET_20261022_实际原图叠图与票账案例.zip（30,367,102字节，123个成员）不是此次返回。它在用户澄清前已安全展开为[既有来源案例](../../workers/personnel_exchange_closure_20261022/README_RECEIVED.md)，保留原件。包内路径虽然名为personnel_exchange_closure_20261022，仅能确认来源目录，不能据此认定本次研究阶段或交付完成；阶段归属待核。
 
 这些既有案例不作为本次总体报告、43条件表、新事件、端点或机制研究已交付的证据。也不能用旧native/cross事件代替本次数据，或用粘贴回复中的sandbox链接证明文件实际下载及长期保存。本次总体与机制结论仍未独立验收。
 
-123份既有案例与首次38个ZIP、1616份来源副本分开计数；没有执行包内代码或改写任何来源文件。当前交付识别与后续所需材料以CHECKS.json的latest_closure_delivery为准，先取得用户明确的三份文件再决定补件。
+123份既有案例与首次38个ZIP、1616份来源副本分开计数；没有执行包内代码或改写任何来源文件。当前交付识别与后续所需材料以CHECKS.json的latest_closure_delivery为准，三份实际文件已核，后续补最终结果表、精确事件关联和端点批次索引。

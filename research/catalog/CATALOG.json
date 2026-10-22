@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261022_v27_prior_case_source_boundary",
+  "catalog_version": "research_catalog_20261022_v28_stage01_manual001_received",
   "inventory_date": "2026-10-22",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -472,6 +472,10 @@
         }
       ],
       "source_evidence": [
+        {
+          "text": "本次实际收到阶段01、公开ALL基线与首批3489个Manual端点；缺ABC事件关联，最终研究尚未验收",
+          "path": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md"
+        },
         {
           "text": "历史人员资料与旧阶段完整事件；v1和底层v2研究轮次隔离",
           "path": "research/workers/download_source_archive_20261022/README.md"
@@ -11586,6 +11590,22 @@
       "availability": "本地已保存待统筹提交；未公开推送",
       "relationships": [
         "research/workers/personnel_exchange_closure_20261022/delivery/received_case_zip/RECEIVED_MEMBERS.csv"
+      ]
+    },
+    {
+      "id": "MAT-personnel_received_stage01_manual001_20261022",
+      "title": "本次阶段01与首批Manual端点：最终研究未验收",
+      "theme": "workers",
+      "type": "阶段计划、既有分类基线与首批端点接收",
+      "date": "20261022",
+      "source_path": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md",
+      "current_path": "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/README.md",
+      "source": "用户此次实际返回的阶段01 Markdown、公开分类基线ZIP与manual_001 ZIP；与此前123文件案例来源分开",
+      "adoption_status": "仅确认阶段01、既有ALL基线和首批Manual端点已接收；不采用43条件或146031事件等最终完成声明",
+      "verification_status": "基线6文件中5份与已有taxonomy相同，248行ALL且无LOBO；REQUESTS/SCALARS/GEOMETRY各3489唯一一致团队、3图3楼、3463可评及26 invalid_floor；没有精确ABC事件关联，未重新融合或验收最终研究",
+      "availability": "本地已保存待统筹提交；原下载文件保留，未公开推送",
+      "relationships": [
+        "research/workers/personnel_exchange_closure_20261022/received_stage01_manual001_20261022/RECEIPT.json"
       ]
     }
   ]

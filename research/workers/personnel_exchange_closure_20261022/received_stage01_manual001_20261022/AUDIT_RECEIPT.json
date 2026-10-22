@@ -1,0 +1,30 @@
+{
+  "schema": "received_manual001_endpoint_audit_v1",
+  "data_version": "v2",
+  "source_batch": "manual_001",
+  "teams": 3489,
+  "images": 3,
+  "buildings": 3,
+  "condition": "ordinary_manual",
+  "evaluable": 3463,
+  "invalid_floor": 26,
+  "n_counts": {
+    "19": 775,
+    "20": 2448,
+    "21": 266
+  },
+  "request_scalar_geometry_keys_and_members_agree": true,
+  "minimum_support_ceil_n_over_2": true,
+  "scores_recomputed": 6926,
+  "score_max_abs_error": 1.42e-14,
+  "floor_ious_recomputed": 3463,
+  "floor_iou_max_abs_error": 1.89e-15,
+  "pool_member_source_records": 105,
+  "time_sums_and_maxima_match": true,
+  "individual_q_summary_max_abs_error": 2.84e-14,
+  "abc_mapping_received": false,
+  "full_fusion_replayed": false,
+  "final_research_verified": false,
+  "sha_computed": false,
+  "verification": "Independent subagent read-only stream checks, no author code execution; formula and saved-footprint IoU recomputation."
+}
