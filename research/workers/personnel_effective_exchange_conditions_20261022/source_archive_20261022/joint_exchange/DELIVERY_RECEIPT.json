@@ -1,0 +1,59 @@
+{
+  "csv_files_eof_validated": 108,
+  "deduplicated_endpoints": 44328,
+  "event_files": [
+    {
+      "columns": 498,
+      "duplicate_primary_keys": 0,
+      "file": "CACHED_MANUAL_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 28843,
+      "sha256": "19bafd97b854f7ac1d5413abcacd69294ead6fd9d5af2356dc10c486b256ace0"
+    },
+    {
+      "columns": 498,
+      "duplicate_primary_keys": 0,
+      "file": "CACHED_SEMI_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 4432,
+      "sha256": "f56c178eb050fe1b935510886072d3ad9d52a1e2305c552b1db8c64d2872e1bc"
+    },
+    {
+      "columns": 492,
+      "duplicate_primary_keys": 0,
+      "file": "CROSS_MANUAL_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 9408,
+      "sha256": "e835773815c887cc19a12d74d65609f778a3a3e645ed50c79d6af672ccd2be29"
+    },
+    {
+      "columns": 492,
+      "duplicate_primary_keys": 0,
+      "file": "CROSS_SEMI_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 2989,
+      "sha256": "d10f51770e2aa69dc2828a8f2f92da6eb5854883025c9931d94568b2ab74aea6"
+    },
+    {
+      "columns": 499,
+      "duplicate_primary_keys": 0,
+      "file": "NATIVE_MANUAL_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 1244,
+      "sha256": "46d7a56f97aa24fd31f819f6c7c437d03ab1e3c66d595e561b49dd8f4ca9461a"
+    },
+    {
+      "columns": 499,
+      "duplicate_primary_keys": 0,
+      "file": "NATIVE_SEMI_EVENTS_COMPLETE.csv.gz",
+      "primary_key": "event_id",
+      "rows": 394,
+      "sha256": "be1ad798c9c09ef2885bcd6e53a9fd3bc8b196783fd75b54e67c2216f0d4705c"
+    }
+  ],
+  "excluded": "results per-pool working shards, duplicated endpoint subsets, all .tmp files, old whole-cache archives, environments and images",
+  "files": 158,
+  "manifest_sha256": "7ed1cfcd159fc0f9a32aa95825a05c2d04a2a96e8388eaeba8b11721b04ea866",
+  "status": "complete",
+  "total_bytes": 121160383
+}

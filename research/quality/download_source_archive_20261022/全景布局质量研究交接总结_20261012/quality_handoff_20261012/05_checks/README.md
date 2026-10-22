@@ -1,0 +1,11 @@
+# 检查资料说明
+
+verification_summary.json是dot在上一阶段完成的独立检查摘要，包含946行D、117候选分数的复算，以及完整性和14入口复现范围。它是已执行工作的记录，本次打包没有再次运行全部14入口。
+
+pro_fresh_reproduction_report.json来自Pro新增研究包，必须作为Pro的原始复现记录阅读，不能把文件作者混同为dot。
+
+independent_checks.py保留上一阶段dot脚本原文，其中使用当时目录；run_independent_checks.py为只将路径参数化并去掉固定输出路径的便携副本。需要用户另供两个ZIP合并解压后的quality_top_structure_research_20261012目录，以及numpy依赖；未在本交接包内重带整套原始几何。
+
+build_geometry_supplement.py是C01/C02几何生成与数值核对代码，--study-root参数指新增包的structure_height_preference_20261012。geometry_verification.json保存四份D、IoU、Hmean误差。test_geometry.cjs是对应状态和投影测试，已改为引用本包06_case_viewer；可用Node直接运行。输入原点和参考不变，不加入算法总分。
+
+几何辅助回执不覆盖原人工回执。其他审查者填写的文件还需明确其身份和协议，不能混入原用户的人工判断。

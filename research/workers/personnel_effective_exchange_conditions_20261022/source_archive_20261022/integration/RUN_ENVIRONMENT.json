@@ -1,0 +1,17 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "base_runtime_packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "shapely": "not_in_base_runtime_metadata; see frozen engine dependencies",
+    "matplotlib": "3.10.8",
+    "Pillow": "12.3.0"
+  },
+  "native_workers": 3,
+  "event_workers": 2,
+  "blas_threads_per_process": 1,
+  "requirements_note": "Actual base execution environment only; frozen local scoring code and engine dependencies are separately referenced, not inferred from this list."
+}

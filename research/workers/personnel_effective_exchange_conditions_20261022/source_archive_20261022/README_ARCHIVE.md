@@ -1,0 +1,20 @@
+# 有效换类条件：2026-10-22下载来源归档
+
+本目录选取CORE_RESEARCH_CODE_AND_SMALL_EVIDENCE与SMALL_ANALYSIS_INPUTS的普通文件，不把ZIP本身重复塞入Git。原作者相对层次、原始字节及失败/缺失状态保留；省去字体、重复图表PDF与临时日志。归档不是重新运行研究或确认正式人员类型。
+
+阅读入口：report/人员分类与有效换类条件_整合报告_20261022.md（独立下载的整合报告）；delivery/CORE_PACKAGE_GUIDE_ZH.md；integration/PERSONNEL_METHODS_AND_USES_ZH.md；expanded_blocks/analysis/FINAL_FINDINGS_ZH.md；joint_exchange的Manual/Semi各自报告；mechanisms/positive_cases与b6_47_failure的局部证据。
+
+底层真人数据v2。旧v3是研究轮次；新联合类别、旧Manual结构类别、A2关系轴及历史画像保留各自身份，不在归档中合为统一类型。原始处理点、环序、参考、成员、失败及时间口径未改。
+
+四份独立下载的native/cross完整事件已放入joint_exchange原文件名位置。external_inputs/ENDPOINT_KEY_INDEX.csv.gz是此前v3的端点键索引，不是本轮所有团队几何。目录中的作者MANIFEST/回执描述原交付，可能引用未选入的字体、未下载的端点表、分片或原工作路径；不是本归档的自包含承诺。
+
+主仓库旧依赖的路径映射：
+- personnel_global_composition_20261021代码 → research/workers/personnel_v3_20261021/repro/personnel_global_composition_20261021/
+- personnel_useful_taxonomy_v3_20261021代码 → research/workers/personnel_v3_20261021/repro/personnel_useful_taxonomy_v3_20261021/
+- 既有taxonomy标签/原答证据 → research/workers/personnel_v3_20261021/raw_answer_evidence/
+- n20续研 → research/workers/personnel_composition_n20_20261021/
+- 冻结真实输入仍由research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz提供。
+
+这些是人工可定位的归档映射，没有自动改写原代码或建立原路径软链接；旧入口不能直接假定按原工作区绝对路径可运行。完整依赖候选和真正未找到的输入见research/statistics/downloads_research_audit_20261022/DEPENDENCY_MAP.csv。当前可阅读标签、汇总和精选几何，不能宣称25份扩展事件和全部端点都已取得。
+
+图片依据既有Release及包内PHOTO_RECEIPT/extraction_manifest引用；未复制原图全集。中文重绘请显式指定现有字体；使用已存PNG不需要字体安装或本地HTTP。没有调用本包的run_native/评分、分型或聚合脚本。

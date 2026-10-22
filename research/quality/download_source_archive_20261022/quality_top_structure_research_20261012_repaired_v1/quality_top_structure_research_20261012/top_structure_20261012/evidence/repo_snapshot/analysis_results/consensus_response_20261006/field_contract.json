@@ -1,0 +1,15 @@
+{
+  "schema": "consensus_response_v2",
+  "source": "analysis_results\\worker_count_composition_20261006",
+  "pairwise_distances": "每图每条件不重复人员对；固定全员并集面积归一化，distance_h2为未归一化面积",
+  "individual_reference": "每份作答、每版参考；对称差/参考面积=遗漏+外扩，不是1-IoU",
+  "all_pool_summary": "全员终点，原/修参考及两规则分别列；R和单人误差重复用于同条件比较，非独立新样本",
+  "uniform_curves": "复用原实验uniform行；期望误差，不是每组结果的分位数",
+  "geometry": "57池两规则共114份全员底面；common10保留十图子集；按image+condition+method识别，无顶面输出",
+  "checks": {
+    "max_identity_error": 2.7755575615628914e-16,
+    "max_geometry_endpoint_error": 7.632783294297951e-16
+  },
+  "geometry_warnings": [],
+  "pool_n": 57
+}

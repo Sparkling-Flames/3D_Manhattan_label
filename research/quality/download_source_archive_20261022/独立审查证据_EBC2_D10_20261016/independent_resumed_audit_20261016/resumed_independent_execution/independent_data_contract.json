@@ -1,0 +1,144 @@
+{
+  "checks": {
+    "unique_pair_object_ids": true,
+    "pair_ids_exact_metadata": true,
+    "pair_ids_exact_eligible_ledger": true,
+    "ledger_3152_unique": true,
+    "all_row_contract_checks": true,
+    "package_FILE_HASHES_correct": true,
+    "registry_fixed_pairs_hash": true,
+    "D10_formula_matches": true,
+    "scores_primary_equal_B": true,
+    "scores_primary_equal_D10": true,
+    "scores_primary_equal_EBC2L2": true,
+    "invalid_controls_all_NA": true,
+    "doorway_disjoint_main": true,
+    "doorway_held": true,
+    "comments_verbatim": true
+  },
+  "failed_checks": [],
+  "per_row_pass_counts": {
+    "answer_hash": 891,
+    "reference_hash": 891,
+    "answer_points_hash": 891,
+    "reference_points_hash": 891,
+    "answer_from_erp": 891,
+    "reference_from_erp": 891,
+    "ref_catalog_points": 891,
+    "difficulty": 891,
+    "difficulty_version": 891,
+    "target_binding": 891,
+    "identity": 891,
+    "eligibility": 891
+  },
+  "row_issues": [],
+  "package_hash_errors": [],
+  "FILE_HASHES_entries": 167,
+  "statistics": {
+    "d10_delta": {
+      "mean": 1.6565632855123555,
+      "median": 0.9774262292882838,
+      "min": 1.316806219620048e-08,
+      "max": 6.261642290602396,
+      "gt5": 61,
+      "negative": 0,
+      "image_equal": 1.7417530044132303,
+      "leave_building_min": 1.5723200722992867,
+      "leave_building_max": 1.850975348945897
+    },
+    "difficulty_strata": [
+      {
+        "condition": "manual",
+        "difficulty": "中等",
+        "annotations": 89,
+        "images": 12,
+        "B8L2_original": 60.602213140760654,
+        "B8L2_s32_d10": 62.59915121392596,
+        "EBC2_L2": 71.80104692160742
+      },
+      {
+        "condition": "manual",
+        "difficulty": "困难",
+        "annotations": 120,
+        "images": 11,
+        "B8L2_original": 55.039255305143634,
+        "B8L2_s32_d10": 57.36470504181839,
+        "EBC2_L2": 66.40631004886178
+      },
+      {
+        "condition": "manual",
+        "difficulty": "简单",
+        "annotations": 619,
+        "images": 50,
+        "B8L2_original": 72.07386475289378,
+        "B8L2_s32_d10": 73.68716939642015,
+        "EBC2_L2": 78.19185095221823
+      },
+      {
+        "condition": "semi",
+        "difficulty": "简单",
+        "annotations": 63,
+        "images": 4,
+        "B8L2_original": 76.69771675528794,
+        "B8L2_s32_d10": 77.67435305081153,
+        "EBC2_L2": 80.18154279457606
+      }
+    ],
+    "changed_labels": {
+      "rows": 42,
+      "images": 6,
+      "old_new": "{('简单', '中等'): 42}"
+    },
+    "ordinal": {
+      "B8L2_original": {
+        "total": 201,
+        "inversions": 7,
+        "ties": 0
+      },
+      "B8L2_s32_d10": {
+        "total": 201,
+        "inversions": 6,
+        "ties": 0
+      },
+      "EBC2_L2": {
+        "total": 201,
+        "inversions": 18,
+        "ties": 0
+      },
+      "IoU3D100": {
+        "total": 201,
+        "inversions": 25,
+        "ties": 0
+      }
+    },
+    "scope": {
+      "rows": 891,
+      "images": 77,
+      "workers": 24,
+      "conditions": {
+        "manual": 828,
+        "semi": 63
+      },
+      "b_pure_parameters": 13,
+      "b_structural_variants": 2,
+      "controls": 172,
+      "valid_controls": 170,
+      "doorway_conditional": 32,
+      "doorway_images": 2,
+      "doorway_ring_confirmed": 16,
+      "source_pool_under3": 66,
+      "new_scope_changed_rows": 5,
+      "camera_outside": 2
+    }
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "scipy": "1.17.0",
+      "shapely": "2.1.2",
+      "pytest": "9.0.2"
+    }
+  }
+}

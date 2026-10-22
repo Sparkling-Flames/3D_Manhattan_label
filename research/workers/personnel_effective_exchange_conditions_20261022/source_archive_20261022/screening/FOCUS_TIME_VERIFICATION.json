@@ -1,0 +1,30 @@
+{
+  "all_available_arms_same_time_source": true,
+  "all_focus_time_members_known": true,
+  "all_percentages_independently_recomputed": true,
+  "endpoint_sum_field": "source_time_total_seconds",
+  "files": [
+    {
+      "EOF_verified": true,
+      "bytes": 56524,
+      "columns": 39,
+      "path": "FOCUS_TIME_SOURCE_AND_TOTALS.csv",
+      "rows": 52,
+      "sha256": "48829e03a9b237db2d986697a274f419a0eaca8b4ea7fa05f6fc6c2d521954c9"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 1650,
+      "columns": 17,
+      "path": "FOCUS_TIME_SUPPORT_SUMMARY.csv",
+      "rows": 7,
+      "sha256": "be88d31319968ba6c2becaaa4981a85c61a4dd3cbcaf30ab9e162bc873ee8038"
+    }
+  ],
+  "native_calls": 0,
+  "new_source_kind": "user_processed_reported_not_raw_log_replayed",
+  "not_wallclock_or_parallel_elapsed_time": true,
+  "raw_time_field": "source_active_time_seconds",
+  "source_table": "research/workers/personnel_profiles_composition_20261020/source/tables/profiles/record_index.csv.gz",
+  "status": "complete"
+}

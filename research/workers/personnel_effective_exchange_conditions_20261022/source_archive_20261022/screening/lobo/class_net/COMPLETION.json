@@ -1,0 +1,55 @@
+{
+  "all_conditions": 19278,
+  "best_condition_choices": 3622,
+  "best_conditions_without_heldout_opportunity": 2743,
+  "caveat": "Repeatedly explored data; target fusion results excluded for condition choice. No full nested personnel refit, external blind test or unseen-building claim.",
+  "eligible_conditions": 1785,
+  "files": [
+    {
+      "EOF_verified": true,
+      "bytes": 5981404,
+      "columns": 48,
+      "path": "lobo/class_net/ALL_TRAINING_FOLD_CANDIDATES.csv.gz",
+      "rows": 256970,
+      "sha256": "7d4f3716e89d75fb40e94b5acdba5803e782e712965ae1b88af9a50ae5d19538"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 960174,
+      "columns": 48,
+      "path": "lobo/class_net/SELECTED_CONDITION_HELDOUT_CHECKS.csv.gz",
+      "rows": 10378,
+      "sha256": "28fff6e36e844f71a3bc2e43a641fa0ab841668bc609b52a043363f321bf8758"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 1261698,
+      "columns": 48,
+      "path": "lobo/class_net/BEST_TRAIN_SELECTED_CONDITION.csv",
+      "rows": 3622,
+      "sha256": "1638d86548903117a0b33d26f608b1b2322e3dc05aa5a092f300764da91b33f3"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 117639,
+      "columns": 31,
+      "path": "lobo/class_net/HELDOUT_SUMMARY.csv",
+      "rows": 398,
+      "sha256": "b5ac3984ccd02204b21b3bdcfa7129f4c65da42346726029c21b56e60292feb4"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 441109,
+      "columns": 16,
+      "path": "lobo/class_net/NOT_EXPANDED_INSUFFICIENT_SUPPORT.csv.gz",
+      "rows": 17493,
+      "sha256": "9ec5fdee457ac4fb25480bcb49fd21286f4932a2737cc4a309cd95790a1c0719"
+    }
+  ],
+  "native_calls": 0,
+  "personnel_labels_refitted": false,
+  "selected_heldout_checks": 10378,
+  "status": "complete",
+  "training_fold_rows": 256970,
+  "view": "class_net"
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "case": "overlapping_backtrack_edges",
+    "expected": "reject",
+    "observed": "available",
+    "score": 69.74111198734533,
+    "reason": "Edges (v0,v1) and (v1,v2) overlap along x in [1,3], z=-2."
+  },
+  {
+    "case": "nonadjacent_vertex_touches_edge",
+    "expected": "reject",
+    "observed": "available",
+    "score": 10.986203577931972,
+    "reason": "Vertex v3=(0,-2) lies strictly inside nonadjacent edge (v0,v1)."
+  },
+  {
+    "case": "unpaired_xz",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "Input must use paired vertical top/bottom geometry"
+  },
+  {
+    "case": "floor_not_minus_one",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "Input must use floor y=-1 camera-height units; no implicit rescaling"
+  },
+  {
+    "case": "top_at_floor",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "Top at or below floor is outside the supported valid-ring domain"
+  },
+  {
+    "case": "nonfinite",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "Nonfinite geometry"
+  },
+  {
+    "case": "unequal_ring_counts",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "Paired top3d/bottom3d arrays must have shape [n>=3,3]"
+  },
+  {
+    "case": "duplicate_adjacent_vertex",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "duplicate_adjacent_vertex"
+  },
+  {
+    "case": "proper_crossing_bowtie",
+    "expected": "reject",
+    "observed": "rejected",
+    "error_type": "ValueError",
+    "reason": "zero_area"
+  },
+  {
+    "case": "valid_triangle",
+    "expected": "accept",
+    "observed": "available",
+    "score": 7.996149214557521,
+    "reason": "API explicitly permits n >= 3; project-specific minimum pairs belongs in integration."
+  },
+  {
+    "case": "valid_collinear_subdivision",
+    "expected": "accept",
+    "observed": "available",
+    "score": 100.0,
+    "reason": ""
+  }
+]

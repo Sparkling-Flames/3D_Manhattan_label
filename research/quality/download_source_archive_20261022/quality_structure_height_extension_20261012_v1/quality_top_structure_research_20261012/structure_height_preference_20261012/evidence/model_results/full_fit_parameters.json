@@ -1,0 +1,455 @@
+[
+  {
+    "method": "Q_v11",
+    "features": [
+      "1 - Q_v11/100"
+    ],
+    "params": [
+      -1.9209322944706528,
+      2.4789601320738996,
+      1.1379835811513392
+    ],
+    "coefficients": [
+      1.1379835811513392
+    ],
+    "thresholds": [
+      -1.9209322944706528,
+      0.5580278376032468
+    ],
+    "optimizer_success": true,
+    "iterations": 10,
+    "objective": 21.211393857637464,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.56389054215245
+  },
+  {
+    "method": "Q_floor_iou",
+    "features": [
+      "1 - Q_floor_iou/100"
+    ],
+    "params": [
+      -2.2828497560027,
+      2.4151731709758595,
+      0.6113695225093344
+    ],
+    "coefficients": [
+      0.6113695225093344
+    ],
+    "thresholds": [
+      -2.2828497560027,
+      0.13232341497315936
+    ],
+    "optimizer_success": true,
+    "iterations": 8,
+    "objective": 21.83631146809338,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 21.649425121566736
+  },
+  {
+    "method": "Q_official_iou3d",
+    "features": [
+      "1 - Q_official_iou3d/100"
+    ],
+    "params": [
+      -2.261155008163912,
+      2.413340823721974,
+      0.583910823023699
+    ],
+    "coefficients": [
+      0.583910823023699
+    ],
+    "thresholds": [
+      -2.261155008163912,
+      0.1521858155580622
+    ],
+    "optimizer_success": true,
+    "iterations": 8,
+    "objective": 21.85712426564493,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 21.686648341022824
+  },
+  {
+    "method": "Q_no_topS",
+    "features": [
+      "1 - Q_no_topS/100"
+    ],
+    "params": [
+      -1.9981074587592602,
+      2.4914100909070176,
+      1.3425025829645234
+    ],
+    "coefficients": [
+      1.3425025829645234
+    ],
+    "thresholds": [
+      -1.9981074587592602,
+      0.4933026321477574
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.973377235782834,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.072220643149628
+  },
+  {
+    "method": "Q_IHC_h050",
+    "features": [
+      "1 - Q_IHC_h050/100"
+    ],
+    "params": [
+      -2.178492030313139,
+      2.435625926048537,
+      0.8974643301805604
+    ],
+    "coefficients": [
+      0.8974643301805604
+    ],
+    "thresholds": [
+      -2.178492030313139,
+      0.2571338957353979
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 21.595961087220093,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 21.193239975246872
+  },
+  {
+    "method": "Q_quarter_topS",
+    "features": [
+      "1 - Q_quarter_topS/100"
+    ],
+    "params": [
+      -1.969836877251812,
+      2.480480927282426,
+      1.227581898140963
+    ],
+    "coefficients": [
+      1.227581898140963
+    ],
+    "thresholds": [
+      -1.969836877251812,
+      0.510644050030614
+    ],
+    "optimizer_success": true,
+    "iterations": 10,
+    "objective": 21.13527871174769,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.381800053426005
+  },
+  {
+    "method": "Q_top_1_16",
+    "features": [
+      "1 - Q_top_1_16/100"
+    ],
+    "params": [
+      -1.9874764675779406,
+      2.4868346719204437,
+      1.3050307553109686
+    ],
+    "coefficients": [
+      1.3050307553109686
+    ],
+    "thresholds": [
+      -1.9874764675779406,
+      0.4993582043425031
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 21.034168162806854,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.182615526653095
+  },
+  {
+    "method": "Q_max_old",
+    "features": [
+      "1 - Q_max_old/100"
+    ],
+    "params": [
+      -1.9369760894131096,
+      2.475330412441434,
+      1.1158178972142947
+    ],
+    "coefficients": [
+      1.1158178972142947
+    ],
+    "thresholds": [
+      -1.9369760894131096,
+      0.5383543230283243
+    ],
+    "optimizer_success": true,
+    "iterations": 10,
+    "objective": 21.2458546243162,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.623329834444334
+  },
+  {
+    "method": "Q_max_quarter",
+    "features": [
+      "1 - Q_max_quarter/100"
+    ],
+    "params": [
+      -1.9830145999041993,
+      2.4793560974483992,
+      1.2262729836807191
+    ],
+    "coefficients": [
+      1.2262729836807191
+    ],
+    "thresholds": [
+      -1.9830145999041993,
+      0.4963414975442
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 21.14018658232121,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.388313867068604
+  },
+  {
+    "method": "Q_no_top_stage13",
+    "features": [
+      "1 - Q_no_top_stage13/100"
+    ],
+    "params": [
+      -1.9362526011156445,
+      2.516479774156546,
+      1.4765326790992293
+    ],
+    "coefficients": [
+      1.4765326790992293
+    ],
+    "thresholds": [
+      -1.9362526011156445,
+      0.5802271730409014
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.70703541485394,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 19.616961038629967
+  },
+  {
+    "method": "Q_top_1_16_stage13",
+    "features": [
+      "1 - Q_top_1_16_stage13/100"
+    ],
+    "params": [
+      -1.9241272120020332,
+      2.5115289544984485,
+      1.441027328669573
+    ],
+    "coefficients": [
+      1.441027328669573
+    ],
+    "thresholds": [
+      -1.9241272120020332,
+      0.5874017424964153
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.7738913743807,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 19.735611493394416
+  },
+  {
+    "method": "Q_split_equal",
+    "features": [
+      "1 - Q_split_equal/100"
+    ],
+    "params": [
+      -1.997381231608087,
+      2.491832150665691,
+      1.3452762071342819
+    ],
+    "coefficients": [
+      1.3452762071342819
+    ],
+    "thresholds": [
+      -1.997381231608087,
+      0.4944509190576041
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.968647210517005,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 20.063763173776206
+  },
+  {
+    "method": "Q_split_local025",
+    "features": [
+      "1 - Q_split_local025/100"
+    ],
+    "params": [
+      -1.9663991085084584,
+      2.501933375414815,
+      1.4011752638767363
+    ],
+    "coefficients": [
+      1.4011752638767363
+    ],
+    "thresholds": [
+      -1.9663991085084584,
+      0.5355342669063565
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.86065896892103,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 19.879012908871008
+  },
+  {
+    "method": "Q_no_top_Xrms8",
+    "features": [
+      "1 - Q_no_top_Xrms8/100"
+    ],
+    "params": [
+      -1.9584843030986006,
+      2.504793291714974,
+      1.430750447525327
+    ],
+    "coefficients": [
+      1.430750447525327
+    ],
+    "thresholds": [
+      -1.9584843030986006,
+      0.5463089886163732
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.827494526091527,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 19.803971104544566
+  },
+  {
+    "method": "Q_no_top_Xmax8",
+    "features": [
+      "1 - Q_no_top_Xmax8/100"
+    ],
+    "params": [
+      -1.8975432065167563,
+      2.5272872179640595,
+      1.5586358174015822
+    ],
+    "coefficients": [
+      1.5586358174015822
+    ],
+    "thresholds": [
+      -1.8975432065167563,
+      0.6297440114473032
+    ],
+    "optimizer_success": true,
+    "iterations": 9,
+    "objective": 20.58258874555332,
+    "at_zero_boundary": [
+      false
+    ],
+    "training_nll": 19.36791593990977
+  },
+  {
+    "method": "geom4",
+    "features": [
+      "floor",
+      "direction",
+      "global_height",
+      "centered_height"
+    ],
+    "params": [
+      -1.8633328971180383,
+      2.7487669966917343,
+      0.48422406057196254,
+      2.1053067655349285,
+      0.00018071612673945743,
+      0.22630581044031334
+    ],
+    "coefficients": [
+      0.48422406057196254,
+      2.1053067655349285,
+      0.00018071612673945743,
+      0.22630581044031334
+    ],
+    "thresholds": [
+      -1.8633328971180383,
+      0.885434099573696
+    ],
+    "optimizer_success": true,
+    "iterations": 11,
+    "objective": 18.13997140315189,
+    "at_zero_boundary": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "training_nll": 15.780969467981235
+  },
+  {
+    "method": "geom5_top",
+    "features": [
+      "floor",
+      "direction",
+      "global_height",
+      "centered_height",
+      "top_boundary"
+    ],
+    "params": [
+      -1.8186195532150582,
+      2.75696356266108,
+      0.4871060561678232,
+      2.1045062840186213,
+      0.0,
+      0.22480241068497664,
+      0.22969233809969125
+    ],
+    "coefficients": [
+      0.4871060561678232,
+      2.1045062840186213,
+      0.0,
+      0.22480241068497664,
+      0.22969233809969125
+    ],
+    "thresholds": [
+      -1.8186195532150582,
+      0.9383440094460216
+    ],
+    "optimizer_success": true,
+    "iterations": 11,
+    "objective": 18.10602448549134,
+    "at_zero_boundary": [
+      false,
+      false,
+      true,
+      false,
+      false
+    ],
+    "training_nll": 15.72126763376098
+  }
+]

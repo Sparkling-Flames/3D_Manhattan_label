@@ -1,0 +1,17 @@
+# 下载来源清点字段合同
+
+本接口只描述来源归档，不建立分析资格或新评分。source_id为选定下载根目录下的相对定位，不含用户绝对目录；实际源路径仅保存在被Git忽略的LOCAL_SOURCES.csv。
+
+PACKAGE_INVENTORY：kind=zip/attachment；bytes为源文件实际大小，member_count/uncompressed_bytes来自ZIP目录。content_roots、content_evidence_file、content_heading来自包内结构/报告标题，用以识别研究身份；scientific_identity不把文件名v3解释成数据v3。
+
+MEMBER_LEDGER：未隐去的source_id+member_path定位原成员；导出路径隐去的行不声称该二键唯一；bytes为未压缩字节数；adopted_path是选入后的仓库路径，baseline_path可为普通文件或“archive.zip!/member”。archived_source_not_recomputed仅表示原字节选入；already_archived_identical表示候选经过字节比较；not_selected/not_copied/local_source_only_privacy_review明确保留原因。敏感原始导出路径不进入公开成员定位。
+
+DELIVERY_CATALOG：保留作者stage/category/file_name/topic_relative_path/scientific_identity/read_role/bytes等语义。剔除原local_path/download_link；archive_candidates按名称与声明大小定位，不证明来源版本内容一致。
+
+DEPENDENCY_MAP：requested_path为作者声明的原研究工作路径；resolved_candidates仅为声明大小一致的可用位置，未重新计算SHA。other_version_candidates同名但大小不同，不自动当成可替代版本；missing_in_checked_sources表示本轮检查范围未找到，不证明全机不存在，也不自动要求用户下载。现用大部分旧模块有归档路径映射，不能仅因原命名空间缺失判成代码缺件。
+
+EVENT_STREAM_INVENTORY：每文件独立的rows/event_ids/images/buildings/condition/columns与archive_path。不能跨表累加图片/人员，ABC包含两条件与多层，效果须分层。内容原样保留，不填补失败/缺失，不重算Q/T。
+
+PRIVACY_EXCLUSIONS只留源定位与命中类型，不包含实际私人字段值。LOCAL_SOURCES与未完成.pending只在本机定位/说明，不被称为已公开下载成果。CHECKS/VALIDATION明确本线程实际检查范围、基线和发布状态。
+
+源码库的语法检查与原始字节比对不是科学独立复算；任何包内“验证”回执均保留其原作者/阶段身份。全部资料沿原始研究数据/算法版本使用，Manual/Semi主效应、门洞、GT暂停、排除原因和来源时间语义不因归档而合并。

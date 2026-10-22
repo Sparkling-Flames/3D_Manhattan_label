@@ -1,0 +1,27 @@
+{
+  "study": "top_structure_quality_review_20261012",
+  "case_selection": "Five required exposed development annotations, S034 for mixed local height, and T07 selected after candidate sensitivity for raw-input diagnosis; no new labels are imputed.",
+  "coordinate_domain": [1024, 512],
+  "color_reference": "#0FA568",
+  "color_current_before": "#E59A18",
+  "color_processed": "#006ACC",
+  "projection_3d": "orthographic",
+  "camera_views_degrees": [[24, -48], [24, 42]],
+  "cases": [
+    {"blind_id": "B01", "case_id": "T22", "record_id": "R02015", "scale_group": "same_corridor", "crops": [[210, 200, 308, 315], [610, 130, 700, 405]]},
+    {"blind_id": "B02", "case_id": "T09", "record_id": "R00637", "scale_group": "same_corridor", "crops": [[210, 200, 308, 315], [610, 130, 700, 405]]},
+    {"blind_id": "B03", "case_id": "S071", "record_id": "R00272", "scale_group": "B03", "crops": [[90, 160, 165, 310], [290, 155, 375, 320]]},
+    {"blind_id": "B04", "case_id": "S107", "record_id": "R00991", "scale_group": "B04", "crops": [[420, 115, 515, 225], [420, 295, 515, 390]]},
+    {"blind_id": "B05", "case_id": "T20", "record_id": "R00397", "scale_group": "B05", "crops": [[65, 165, 145, 245], [65, 285, 145, 365]]},
+    {"blind_id": "B06", "case_id": "S034", "record_id": "R00418", "scale_group": "B06", "crops": [[95, 160, 190, 275], [835, 160, 930, 275]]},
+    {"blind_id": "B07", "case_id": "T07", "record_id": "R00678", "scale_group": "B07", "crops": [[880, 125, 965, 205], [880, 300, 965, 380]]}
+  ],
+  "selection_limits": {
+    "not_random_sample": true,
+    "not_independent_blinded_validation": true,
+    "existing_reference_only": true,
+    "no_new_annotation_pairing_or_order": true,
+    "no_unshared_x_3d_inference": true,
+    "blind_output_has_no_scores_or_expected_answers": true
+  }
+}

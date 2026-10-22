@@ -1,0 +1,534 @@
+{
+  "schema": "quality_model_registry_20261016_resumed_v1",
+  "repository_commit": "6fb0f7a88078bbf57a17d955e044fac2ec8943c7",
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+  "cohort": "approved891_revalidated_v6_not_all3152",
+  "fixed_pairs_sha256": "e89168b329a2d7da8d7979c10d97519560d16558c00c1c6afbb0fa6d9729f88e",
+  "baseline_formula_code_sha256": "7acb3bc28e4153bb25ff7e6925a8d7cea8160754e67a5475bde6a6335bee725f",
+  "baseline_source_code_sha256": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165",
+  "new_code_sha256": "fe3ad988461997649cc192fe36ad11b013b54b0334217eb12cf93dec77f33ace",
+  "baseline_geometry_files": {
+    "vendor/frozen/configs/ADOPTION_RECOMMENDATION.json": "57db871364ba2c4846841ee3230f2b2fc0305e91efffe7f36eb526f42d1059fb",
+    "vendor/frozen/configs/WQ_LS08_UNCHANGED.json": "ad351cc6dfc3a413a2a3e237d6f38b4d4d3453f5c0ef7e727028e10c6e9f935a",
+    "vendor/frozen/engine/audit_geometry.py": "16529585777eb283097c26fcd90cc3a6342e79018ede10166f93f68199063c34",
+    "vendor/frozen/engine/centered_height.py": "67525ee9976a73197e86dda0eea628ee08dc3d7bb63540123aeb77124d64500d",
+    "vendor/frozen/engine/evaluate_geometry.py": "3489641e21db4d5c76156d73372b940e22f35efb28af9a4ebdf690fa721615cb",
+    "vendor/frozen/engine/geometric_components.py": "717c4348c8a32dca36ef1ae36c8c93211b038d969ee2a0733140bd6c3e257847",
+    "vendor/frozen/engine/height_revision.py": "c16a056d3772e4c63cc15edfbad8c6132f3f441eb450119a9640ed635bd01c6b",
+    "vendor/frozen/engine/prepare_inputs.py": "7f56d92495429a55231b2e9a1841e27a575eeac510103be90fa6f8de6db1d805",
+    "vendor/frozen/engine/score.py": "4c9806ed37cff1f6e0c56de1323a4ce91eea812b21ee38a427092aa68dec8d8b",
+    "vendor/frozen/engine/strict_geometry.py": "c884bf248a84aec6cdc1d72ef1e562ee10bab95f92fee80c0dab25d358752bbc",
+    "vendor/frozen/engine/traditional_metrics.py": "24b47f2147ce5f5d6f9d090b7ded6f41f1d48fa4df275ad8aedad00c8ba42a2c",
+    "vendor/frozen/src/quality.py": "7a49329b62bdbc664ee1a980a2257bde060c8e503d4985c6985098481f3c2828"
+  },
+  "models": [
+    {
+      "id": "B8L2_original",
+      "parameters": {
+        "name": "B8L2_original",
+        "sb2": 32,
+        "direction_scale": 8,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "unchanged mainline",
+      "parameter_sha256": "28ec7b78d3c63247898fe7b5aaa910e8fda7d379ac79cf430a5ccd02094923b7"
+    },
+    {
+      "id": "B8L2_s32_d10",
+      "parameters": {
+        "name": "B8L2_s32_d10",
+        "sb2": 32,
+        "direction_scale": 10,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "preferred mild parameter sensitivity; not a proved universal upgrade",
+      "parameter_sha256": "c9f59a6b4eaf6de6122578d9d273d2f2286c244f1ed1027f701e3b1c4e709ac3"
+    },
+    {
+      "id": "B8L2_s32_d12",
+      "parameters": {
+        "name": "B8L2_s32_d12",
+        "sb2": 32,
+        "direction_scale": 12,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "d8a3bcd8bb3df7f9497762799d9f12600a7aa53fbd646e505057e4c028118807"
+    },
+    {
+      "id": "B8L2_s50_d8",
+      "parameters": {
+        "name": "B8L2_s50_d8",
+        "sb2": 50,
+        "direction_scale": 8,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "f33905504b410f58be2c04196f883520d155eae37a1c5da3749ecefec884a8ed"
+    },
+    {
+      "id": "B8L2_s50_d10",
+      "parameters": {
+        "name": "B8L2_s50_d10",
+        "sb2": 50,
+        "direction_scale": 10,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "80bb140a3810cd348e14f07c94ca1e18af133fbe1329818820e9949881f0954b"
+    },
+    {
+      "id": "B8L2_s50_d12",
+      "parameters": {
+        "name": "B8L2_s50_d12",
+        "sb2": 50,
+        "direction_scale": 12,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "9479641e85a1e64b65f7297dd6d8a49079086e4a3d1f04ed243fb3ef91c531fc"
+    },
+    {
+      "id": "B8L2_s72_d8",
+      "parameters": {
+        "name": "B8L2_s72_d8",
+        "sb2": 72,
+        "direction_scale": 8,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "4797a063667926a139e523bf2eb1b979a2bb312f31b68de2f6be5615c39b9657"
+    },
+    {
+      "id": "B8L2_s72_d10",
+      "parameters": {
+        "name": "B8L2_s72_d10",
+        "sb2": 72,
+        "direction_scale": 10,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "c1080395bdca288bb78bf7f3bb439ae0f5371f4a971a9eb458b990fda6ea25e7"
+    },
+    {
+      "id": "B8L2_s72_d12",
+      "parameters": {
+        "name": "B8L2_s72_d12",
+        "sb2": 72,
+        "direction_scale": 12,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "8201a8aa2d28b029b879fec6758fa37bc6740b6b451bca185fef28816deb7946"
+    },
+    {
+      "id": "B8L2_cap1",
+      "parameters": {
+        "name": "B8L2_cap1",
+        "sb2": 32.0,
+        "direction_scale": 8.0,
+        "direction_cap": 1.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "9924cb2804ad3b77283610c798d7c2adf2a28677be3ccad83fa6ee1642667e42"
+    },
+    {
+      "id": "B8L2_cap2",
+      "parameters": {
+        "name": "B8L2_cap2",
+        "sb2": 32.0,
+        "direction_scale": 8.0,
+        "direction_cap": 2.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "c021fe9cadf6ff6165b7aba125fdbaa19fe03c813ec24701da17f9824f10959f"
+    },
+    {
+      "id": "B8L2_height_strict",
+      "parameters": {
+        "name": "B8L2_height_strict",
+        "sb2": 32.0,
+        "direction_scale": 8.0,
+        "direction_cap": 1.5,
+        "mean_scale": 0.6,
+        "local_scale": 0.2,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "ce042ce3335233721b4e1aa36c68a727e51bd314f289e5e06d830f5af204ed07"
+    },
+    {
+      "id": "B8L2_height_soft",
+      "parameters": {
+        "name": "B8L2_height_soft",
+        "sb2": 32.0,
+        "direction_scale": 8.0,
+        "direction_cap": 1.5,
+        "mean_scale": 1.0,
+        "local_scale": 0.3,
+        "sb_free": 0.0,
+        "direction_free": 0.0,
+        "family": "parameter_only"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "f27c08459f532cfe1fadf906ad225682f543e89ac25197b44054e57d7ad7f300"
+    },
+    {
+      "id": "B8L2_deadband",
+      "parameters": {
+        "name": "B8L2_deadband",
+        "sb2": 32.0,
+        "direction_scale": 8.0,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.5,
+        "direction_free": 2.0,
+        "family": "structural_loss_variant"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "e99ac6cf4a6541a9006edafbf39eafd584d5992f1ed6b3fc43a4a761f9fbdc1e"
+    },
+    {
+      "id": "B8L2_s50_d10_deadband",
+      "parameters": {
+        "name": "B8L2_s50_d10_deadband",
+        "sb2": 50,
+        "direction_scale": 10,
+        "direction_cap": 1.5,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "sb_free": 0.5,
+        "direction_free": 2.0,
+        "family": "structural_loss_variant"
+      },
+      "role": "fully reported development comparison",
+      "parameter_sha256": "620803e443c9fed95ca39819e9b46494daa78c3cd0283abd4bdc0848bbf2d0df"
+    },
+    {
+      "id": "EBC2_sum",
+      "measurement": "length-weighted bidirectional oriented envelope boundary coverage + BEV area + perimeter-centred height",
+      "parameters": {
+        "position_free_over_sqrt_reference_area": 0.01,
+        "position_scale_over_sqrt_reference_area": 0.1,
+        "normal_free_deg": 5,
+        "normal_scale_deg": 25,
+        "tangent_window_over_sqrt_reference_area": 0.02,
+        "integration_step_over_sqrt_reference_area": 0.0025,
+        "mean_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "area_weight": 1,
+        "boundary_weight": 1,
+        "pool": "sum"
+      },
+      "role": "same-measurement combination ablation",
+      "parameter_sha256": "48dff4f7b0c19cb3084ec99d3a60d7443c042bfa734cffea7f692a60435feb14"
+    },
+    {
+      "id": "EBC2_L2",
+      "measurement": "length-weighted bidirectional oriented envelope boundary coverage + BEV area + perimeter-centred height",
+      "parameters": {
+        "position_free_over_sqrt_reference_area": 0.01,
+        "position_scale_over_sqrt_reference_area": 0.1,
+        "normal_free_deg": 5,
+        "normal_scale_deg": 25,
+        "tangent_window_over_sqrt_reference_area": 0.02,
+        "integration_step_over_sqrt_reference_area": 0.0025,
+        "mean_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "area_weight": 1,
+        "boundary_weight": 1,
+        "pool": "L2"
+      },
+      "role": "complete competing research model, not adopted production",
+      "parameter_sha256": "1d184a658db0e887fa88900dc2c819765081a67d42b91bb6a4fac34815eaf092"
+    },
+    {
+      "id": "IoU3D100",
+      "parameters": {
+        "definition": "common floor, vertex-mean-height prism intersection-over-union times100",
+        "full_nonplanar_volume_iou": false
+      },
+      "role": "fixed same-reference baseline",
+      "parameter_sha256": "e8146bced18a21dba551e1943b8d16f8bfc7fcca5fc436b8265e1731bb924793"
+    },
+    {
+      "id": "EBC1_sum",
+      "parameters": {
+        "version": "EBC1_working_20261016",
+        "position_free_h": 0.03,
+        "position_scale_h": 0.3,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_h": 0.08,
+        "step_h": 0.02,
+        "boundary_weight": 1.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "max_samples": 40000,
+        "pool": "sum"
+      },
+      "role": "development, fixed-camera-height-distance-scale; not recommended",
+      "parameter_sha256": "096402704863165870d6b230b240fafb0d818e3d9647c85e6ace130f72f254df"
+    },
+    {
+      "id": "EBC1_L2",
+      "parameters": {
+        "version": "EBC1_working_20261016",
+        "position_free_h": 0.03,
+        "position_scale_h": 0.3,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_h": 0.08,
+        "step_h": 0.02,
+        "boundary_weight": 1.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "max_samples": 40000,
+        "pool": "l2"
+      },
+      "role": "pooling ablation of same fixed-scale measurement",
+      "parameter_sha256": "ff59715b275a4eefdc3b5a3999071cf86ac2ecb448a2322232b6db02ef85659e"
+    },
+    {
+      "id": "EBC1_strict",
+      "parameters": {
+        "version": "EBC1_strict",
+        "position_free_h": 0.02,
+        "position_scale_h": 0.15,
+        "normal_free_deg": 3.0,
+        "normal_scale_deg": 15.0,
+        "tangent_window_h": 0.06,
+        "step_h": 0.02,
+        "boundary_weight": 1.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "max_samples": 40000,
+        "pool": "sum"
+      },
+      "role": "development, fixed-camera-height-distance-scale; not recommended",
+      "parameter_sha256": "e404ff0e8964b66bcd17245ed1c0d12a186eb02b43d277d27a573c3737ec80b5"
+    },
+    {
+      "id": "EBC1_soft",
+      "parameters": {
+        "version": "EBC1_soft",
+        "position_free_h": 0.05,
+        "position_scale_h": 0.5,
+        "normal_free_deg": 7.0,
+        "normal_scale_deg": 35.0,
+        "tangent_window_h": 0.12,
+        "step_h": 0.02,
+        "boundary_weight": 1.0,
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "max_samples": 40000,
+        "pool": "sum"
+      },
+      "role": "development, fixed-camera-height-distance-scale; not recommended",
+      "parameter_sha256": "3f73de20f158004061d337cc5afe5d32d6b4b79eb650149ed21c87535161823a"
+    },
+    {
+      "id": "EBC2_side075",
+      "parameters": {
+        "version": "EBC2_side075",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.075,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 1.0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "one-factor measurement sensitivity, same SUM combination",
+      "parameter_sha256": "1bb8dd94bd95739fc1c35e4975f0901c0f3590a93f3ac3d9974205a344301f0a"
+    },
+    {
+      "id": "EBC2_side15",
+      "parameters": {
+        "version": "EBC2_side15",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.15,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 1.0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "one-factor measurement sensitivity, same SUM combination",
+      "parameter_sha256": "8e496a184f5dbdffc43a740c40e2e395e36cef5a3a95c2902c32290ddadefe29"
+    },
+    {
+      "id": "EBC2_angle20",
+      "parameters": {
+        "version": "EBC2_angle20",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 20.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 1.0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "one-factor measurement sensitivity, same SUM combination",
+      "parameter_sha256": "7b0db86209a5e448d7d4ee197ca1640b3493d1082f09457c86187640adc93ed4"
+    },
+    {
+      "id": "EBC2_angle35",
+      "parameters": {
+        "version": "EBC2_angle35",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 35.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 1.0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "one-factor measurement sensitivity, same SUM combination",
+      "parameter_sha256": "0065c0604f0e976b424c6fd5d4f77938a08beea815e5d3f452d7503f30ea1a36"
+    },
+    {
+      "id": "EBC2_no_normals_sum",
+      "parameters": {
+        "version": "EBC2_reference_scale_20261016",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 1.0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25,
+        "normal_cost_enabled": false
+      },
+      "role": "explicit ablation; not an independent model-selection win",
+      "parameter_sha256": "48d874b83206dffce806facd3a639fc88e2fde7c6027ab2df90c46dc53dfe4b9"
+    },
+    {
+      "id": "EBC2_area_height",
+      "parameters": {
+        "version": "EBC2_reference_scale_20261016",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 0,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "explicit ablation; not an independent model-selection win",
+      "parameter_sha256": "5851541efef39b981585362333cad6fd0be3ce9393d7acf5c42e9d2f8acb14c8"
+    },
+    {
+      "id": "EBC2_half_boundary",
+      "parameters": {
+        "version": "EBC2_reference_scale_20261016",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 0.5,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "explicit ablation; not an independent model-selection win",
+      "parameter_sha256": "bc021f3f531c94040ea663b481b600525d9d9931e08d279a0b1886d9b0d4c678"
+    },
+    {
+      "id": "EBC2_double_boundary",
+      "parameters": {
+        "version": "EBC2_reference_scale_20261016",
+        "position_free_side": 0.01,
+        "position_scale_side": 0.1,
+        "normal_free_deg": 5.0,
+        "normal_scale_deg": 25.0,
+        "tangent_window_side": 0.02,
+        "step_side": 0.0025,
+        "boundary_weight": 2,
+        "pool": "sum",
+        "mean_scale": 0.8,
+        "local_scale": 0.25
+      },
+      "role": "explicit ablation; not an independent model-selection win",
+      "parameter_sha256": "b5cc6b86660d8a680bb9847e057816320f4cc424d72bcfa47288b8e40f824796"
+    }
+  ]
+}

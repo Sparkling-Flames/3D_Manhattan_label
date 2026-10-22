@@ -1,0 +1,21 @@
+{
+  "written_utc": "2026-10-11T17:16:51.355440+00:00",
+  "status": "adaptive mechanism diagnosis after initial geom4/geom5 fits; no refit of geometric candidate parameters",
+  "reason": "Initial four-feature model has a dominant D coefficient and nearly zero Hmean coefficient. Need test whether most predictive gain is from D alone, and expose physical extrapolation failure; neither justifies deleting height mechanisms.",
+  "additional_scalar_models": "All15 newly frozen mechanistic scores get exactly the existing three-category ordinal likelihood, nonnegative slope, lambda1, two cutpoints and leave-development-building-out protocol.",
+  "ablations": {
+    "D_only": [
+      "D^2/(D^2+25)"
+    ],
+    "geometry2": [
+      "1-IoU2D",
+      "D^2/(D^2+25)"
+    ]
+  },
+  "initial_models_and_hyperparameters_unchanged": true,
+  "hyperparameter_search": 0,
+  "source_scores_sha256": "d9cddc0bacb7008569277dc7a568073d8d23b2663076a293ee2c47e4916d0bd9",
+  "candidate_config_sha256": "3f1ad14de9fb162c548a75d357c612eac3e4b207c5a32cd13e107fd99674a0d8",
+  "additional_diagnostic": "Evaluate fixed initial geom4/geom5 parameters on existing and new controlled geometry, retaining the controls no-human-grade status. No model or scale adjustment after these checks.",
+  "limitation": "A structured D-only diagnostic omits regular but wrong scope/structure and height; predictive agreement in selected old24 cannot make it a complete quality metric."
+}

@@ -1,0 +1,178 @@
+{
+  "saved_before_new_scoring": "2026-10-16T08:53:33.916993+00:00",
+  "role": "finite prespecified grid, report all; no independent validation claimed",
+  "core_grid": "3 boundary denominator values × 3 direction scales, same cap and heights",
+  "configs": [
+    {
+      "name": "B8L2_original",
+      "sb2": 32,
+      "direction_scale": 8,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s32_d10",
+      "sb2": 32,
+      "direction_scale": 10,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s32_d12",
+      "sb2": 32,
+      "direction_scale": 12,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s50_d8",
+      "sb2": 50,
+      "direction_scale": 8,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s50_d10",
+      "sb2": 50,
+      "direction_scale": 10,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s50_d12",
+      "sb2": 50,
+      "direction_scale": 12,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s72_d8",
+      "sb2": 72,
+      "direction_scale": 8,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s72_d10",
+      "sb2": 72,
+      "direction_scale": 10,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_s72_d12",
+      "sb2": 72,
+      "direction_scale": 12,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_cap1",
+      "sb2": 32.0,
+      "direction_scale": 8.0,
+      "direction_cap": 1.0,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_cap2",
+      "sb2": 32.0,
+      "direction_scale": 8.0,
+      "direction_cap": 2.0,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_height_strict",
+      "sb2": 32.0,
+      "direction_scale": 8.0,
+      "direction_cap": 1.5,
+      "mean_scale": 0.6,
+      "local_scale": 0.2,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_height_soft",
+      "sb2": 32.0,
+      "direction_scale": 8.0,
+      "direction_cap": 1.5,
+      "mean_scale": 1.0,
+      "local_scale": 0.3,
+      "sb_free": 0.0,
+      "direction_free": 0.0,
+      "family": "parameter_only"
+    },
+    {
+      "name": "B8L2_deadband",
+      "sb2": 32.0,
+      "direction_scale": 8.0,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.5,
+      "direction_free": 2.0,
+      "family": "structural_loss_variant"
+    },
+    {
+      "name": "B8L2_s50_d10_deadband",
+      "sb2": 50,
+      "direction_scale": 10,
+      "direction_cap": 1.5,
+      "mean_scale": 0.8,
+      "local_scale": 0.25,
+      "sb_free": 0.5,
+      "direction_free": 2.0,
+      "family": "structural_loss_variant"
+    }
+  ],
+  "comparison_sequence": [
+    "ordinary development",
+    "eligible doorway descriptive check; no per-image parameters",
+    "ordinary regression"
+  ],
+  "selection_rule": "geometric controls, specific comments, adverse cases, and stability jointly; image-equal difficulty trend auxiliary only, never in score function"
+}

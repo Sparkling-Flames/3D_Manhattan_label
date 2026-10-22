@@ -1,0 +1,103 @@
+{
+  "study": "personnel_effective_exchange_conditions_20261022",
+  "underlying_data": "v2",
+  "previous_study": "v3 is a study version, not a newer data version",
+  "input": "/workspace/scratch/fe955c3c772c/HOHONET/research/workers/personnel_useful_taxonomy_v3_20261021/taxonomy/BEHAVIOR_RECORDS.csv.gz",
+  "input_sha256": "2379aeca3757c1556677307e2101ed9a9d39c8c4695819ea46368eded1807f01",
+  "methods": {
+    "XCOND_GEOM": {
+      "domains": [
+        "E",
+        "R",
+        "G"
+      ],
+      "support": "both_geometry_supported",
+      "objective": "geometry"
+    },
+    "XCOND_GEOM_QT": {
+      "domains": [
+        "E",
+        "R",
+        "G",
+        "Q",
+        "T"
+      ],
+      "support": "both_qt_supported",
+      "objective": "geometry_QT"
+    },
+    "XCOND_PAIRED": {
+      "domains": [
+        "PE",
+        "PR",
+        "PG"
+      ],
+      "support": "paired_supported",
+      "objective": "paired_geometry"
+    }
+  },
+  "domain_fields": {
+    "E": [
+      "m_turn_history",
+      "m_short_history",
+      "s_turn_history",
+      "s_short_history"
+    ],
+    "R": [
+      "m_redundancy_history",
+      "s_redundancy_history"
+    ],
+    "G": [
+      "m_area_history",
+      "m_height_history",
+      "s_area_history",
+      "s_height_history"
+    ],
+    "Q": [
+      "m_q_history",
+      "m_q_downside",
+      "s_q_history",
+      "s_q_downside"
+    ],
+    "T": [
+      "m_t_history",
+      "s_t_history"
+    ],
+    "PE": [
+      "pair_common_turn_history",
+      "pair_delta_turn_history",
+      "pair_common_short_history",
+      "pair_delta_short_history"
+    ],
+    "PR": [
+      "pair_common_redundancy_history",
+      "pair_delta_redundancy_history"
+    ],
+    "PG": [
+      "pair_common_area_history",
+      "pair_delta_area_history",
+      "pair_common_height_history",
+      "pair_delta_height_history"
+    ]
+  },
+  "preprocessing": "unchanged v3 expressions: non-collinear turns, short edges, redundant near-collinear nodes, log floor area and height; peer residuals remain frozen",
+  "cross_condition": "same worker Manual and Semi histories jointly enter each family; target building excluded from BOTH conditions, including paired differences",
+  "paired": "same worker/image/reference/origin; pairwise per-condition medians among paired workers; common=(M+S)/2 and contrast=S-M; raw differences retained. Not a randomized causal condition effect.",
+  "opportunity_gates": {
+    "geometry_each_condition": "at least 12 images and 4 buildings, all 5 geometry fields observed",
+    "Q_each_condition": "Manual >=8 images, Semi >=4 images; >=3 buildings; original quality eligibility",
+    "T_each_condition": ">=6 images and 3 buildings; log seconds centered within image/origin/time_source_kind",
+    "paired": ">=6 same-image-reference pairs and >=3 buildings; no requirement for unpaired history; mostly new-source support"
+  },
+  "standardization": "within training roster median/IQR, SD fallback, clip ±3; equal total weight per domain and equal weight per field inside domain",
+  "clustering": "Ward, every K=2..floor(n_supported/3), capacity min3; no fixed 3/8-class limit",
+  "selection": "each family selected separately: nested leave-building-out raw reconstruction, capacity in >=80% inner buildings and mean inner label ARI>=.50; minimum reconstruction loss; coarsest paired one-SE cut with ARI no more than .05 below fine",
+  "objective": "geometry E/R/G equally; combined E/R/G/Q/T equally; conditions equal after condition-specific building averaging. Paired family selects on paired opportunity records only.",
+  "exploratory_fallback": "if no candidate passes stability but has nested capacity, explicitly mark failed_stability; if even nested capacity fails, keep an outer-capacity cut explicitly marked failed_nested_capacity; no cut with outer min3 gives all unknown. No gate is silently changed.",
+  "exclusions": "doorway and special conditional not fit; original behavior-eligible historical removals/GT pauses may inform geometry but never restore Q/voting eligibility",
+  "scope_note": "project_sources/01-scope-.md is ambiguity interpretation only; no frozen scope/reference/qualification changes",
+  "missing": "feature absence stays NaN; support counts may be zero; no absent opportunity coded as observed behavior 0",
+  "team_endpoints_seen": false,
+  "external_blind_validation": false,
+  "prior_inventory_repeatedly_explored": true,
+  "outputs": "ALL descriptive and LOBO evaluation labels separate; same joint labels listed separately for Manual/Semi evaluation; do not pool endpoints"
+}

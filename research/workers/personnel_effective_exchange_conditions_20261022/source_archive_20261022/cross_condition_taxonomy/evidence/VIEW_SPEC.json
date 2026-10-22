@@ -1,0 +1,42 @@
+[
+  {
+    "case_id": "CROSS_7y13_same_Joint_class_different_scale",
+    "code": "7y3sRwLe3Va-13",
+    "method": "XCOND_GEOM_QT",
+    "workers": [
+      "W105",
+      "W119",
+      "W104"
+    ],
+    "titles": [
+      "W105：两条件4转折，范围与高度改变",
+      "W119：同一联合类，面积接近而高度摘要改变",
+      "W104：另一联合类，变化较小"
+    ],
+    "image": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+    "photo_folder": "originals_7y13",
+    "reference_case": "fusion_7y13/cases/V3_7y13_positive_n12_m4.json.gz",
+    "title": "同一人的Manual与Semi终稿：联合类中的方向与成员差异",
+    "note": "事后解释案例；使用7y楼外联合标签。两种条件均为真实终稿，不能据此推断编辑过程。"
+  },
+  {
+    "case_id": "CROSS_wc2_56_paired_class_counterexample",
+    "code": "wc2JMjhGNzB-56",
+    "method": "XCOND_PAIRED",
+    "workers": [
+      "W113",
+      "W130",
+      "W133"
+    ],
+    "titles": [
+      "W113：配对类X1，4→8个非共线转折",
+      "W130：同配对类X1，4→4个转折",
+      "W133：配对类X2，6对点中有1近共线点"
+    ],
+    "image": "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+    "photo_folder": "originals",
+    "reference_case": "cases/V3_RAW_wc2_56_SEMI.json.gz",
+    "title": "成员稳定的配对类不等于每图条件响应相同：实际正反原答",
+    "note": "事后解释案例；使用wc2楼外配对标签。可见开口涉及范围选择，新增转折不自动判错；新批缺精确初始化。"
+  }
+]

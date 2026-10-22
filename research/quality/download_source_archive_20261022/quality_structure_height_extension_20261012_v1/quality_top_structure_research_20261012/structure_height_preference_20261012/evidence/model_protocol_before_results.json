@@ -1,0 +1,55 @@
+{
+  "schema": "monotone_ordinal_development_probe_v1",
+  "written_utc": "2026-10-11T17:10:00.894411+00:00",
+  "status": "fixed_before_new_model_fits",
+  "training_labels": "Only old24 original 0/1/2 ordinal responses; no new severe, pending or unreviewed labels in fitting.",
+  "qualification": "Explicit a7ff exposure registry plus original frozen holdout, existing scope/reference gates; no split changes.",
+  "purpose": "Small model feasibility/identifiability probe, not a required replacement quality formula and not independent validation.",
+  "input_features": {
+    "floor": "1 - floor_iou",
+    "direction": "D^2/(D^2+5deg^2)",
+    "global_height": "Hmean^2/(Hmean^2+0.5^2)",
+    "centered_height": "Hcenter^2/(Hcenter^2+0.25^2)",
+    "top_boundary": "S_top_deg^2/(S_top_deg^2+32)"
+  },
+  "model_feature_sets": {
+    "geom4": [
+      "floor",
+      "direction",
+      "global_height",
+      "centered_height"
+    ],
+    "geom5_top": [
+      "floor",
+      "direction",
+      "global_height",
+      "centered_height",
+      "top_boundary"
+    ]
+  },
+  "baseline_features": "Each of the 15 previous scalar candidates receives its own one-input ordinal model using error=1-Q/100.",
+  "likelihood": "Three ordered categories: P(Y<=k)=sigmoid(theta_k-X beta), theta_0 < theta_1, beta>=0.",
+  "objective": "sum negative log likelihood + (1/2)*lambda*sum(beta^2)",
+  "fixed_lambda": 1.0,
+  "hyperparameter_search_budget": 0,
+  "feature_scaling_learned": false,
+  "threshold_and_slope_fit_for_each_scalar": true,
+  "fitting": "Deterministic bounded L-BFGS-B from beta=0.1 and smoothed category-frequency cutpoints; analytic gradients.",
+  "evaluation": "Leave one original development building out; 11 folds over 24 selected observations. Candidate formulas were explored on this development set, so this is a grouped diagnostic, not a clean validation experiment.",
+  "outcomes": [
+    "held development negative log likelihood",
+    "held median-category absolute grade-step loss",
+    "per-building/per-case prediction and likelihood differences",
+    "nonnegative coefficient ranges and zero coefficients",
+    "full-fit ranking described separately from cross-fitted diagnostics"
+  ],
+  "sensitivity": "Repeat fits after removing T20; full-fit one-neighbor-grade changes for each old24 response within original three categories. No scenario frequencies are probabilities; no individual confidence is invented.",
+  "boundary_notes": [
+    "Hcenter is not an orthogonal variance component across differing footprints.",
+    "Features overlap; nonnegative fitted weights do not prove causal independent quality dimensions.",
+    "No known severe fourth category exists in this training protocol; no severe threshold is learned.",
+    "No person effect or repeated-label causal variance component is fitted.",
+    "Equal data and zero hyperparameter search do not mean equal parameter counts: scalar=3, geom4=6, geom5=7."
+  ],
+  "source_scores_sha256": "0572204cf6241859274a5c1868793714af13b1e460ccdc3b25be7357c43658cf"
+}

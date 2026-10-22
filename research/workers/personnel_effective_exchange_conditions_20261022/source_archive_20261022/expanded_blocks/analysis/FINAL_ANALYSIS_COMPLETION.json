@@ -1,0 +1,74 @@
+{
+  "base_data_version": "v2",
+  "complete_buildings": 22,
+  "complete_cells": 253,
+  "complete_events": 390208,
+  "complete_images": 157,
+  "complete_panels": 494,
+  "files": [
+    {
+      "EOF_verified": true,
+      "bytes": 4442696,
+      "columns": 25,
+      "path": "FINAL_ALL_COMPONENT_SUMMARY.csv.gz",
+      "rows": 138562,
+      "sha256": "d8c83fb9ba984c3ff4f0e830b00f92ff5a936dc9d8b3d23ebecdfd2db5654bc2"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 685633,
+      "columns": 48,
+      "path": "FINAL_CORE_SUMMARY.csv.gz",
+      "rows": 11704,
+      "sha256": "5afcdec403d29c3abada61f9e0d47e270efd3a72bdece40d80be8f721a566776"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 11658,
+      "columns": 24,
+      "path": "FINAL_COVERAGE.csv.gz",
+      "rows": 386,
+      "sha256": "f427b63b27077d147b9ecaee14c8d5b2f0f714f9ef8d8e5083e5c8cf8fc7b908"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 5334044,
+      "columns": 377,
+      "path": "FINAL_IMAGE_MEANS.csv.gz",
+      "rows": 4036,
+      "sha256": "dbfb9bcec1a4f48cd886fbdbc7eb26a8cd4a06bdb92855dde3e6ecd4c3230128"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 2699528,
+      "columns": 376,
+      "path": "FINAL_BUILDING_MEANS.csv.gz",
+      "rows": 1844,
+      "sha256": "83683af9846df0c3f5c43bfe949a316e95e9f50731c42a1ea246966380b175a5"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 125236,
+      "columns": 49,
+      "path": "FINAL_HISTORY_MATCHED_CORE_SUMMARY.csv.gz",
+      "rows": 2238,
+      "sha256": "cdb9d36a77db21316b17ea3f34facc1e8a29533c5a2dbdd2f1bae03da1cfa24b"
+    }
+  ],
+  "input_registration_sha256": "f19d2a0e589d61b0cece2444a9932ab19ac43fc83264ba25af6d811184249feb",
+  "matching": "ABC same actual background, n and m; parent fixed for old M fine",
+  "member_panel_sha256": "403b57562906268677927aa46c4ec824c5a20c90538c32deaf4d300bd24dcb72",
+  "native_calls": 0,
+  "partial_is_not_final": false,
+  "pending_cells": 0,
+  "raw_component_event_medians": "provided only for same/cross B8L2 and matched absolute-change advantage; other medians are exact background/image/building medians",
+  "registered_cells": 253,
+  "registered_events": 390208,
+  "registered_panels": 494,
+  "scoring_calls": 0,
+  "seconds": 143.1005835533142,
+  "seed_cohort": "additional_images are additional to the old priority-seed image list, not claimed unseen data or new external buildings",
+  "source_member_space": "each registered finite paired-slot or full 2m-choose-m source space, target fixed-reservoir census; not full formal-pool combinations",
+  "status": "FINAL_COMPLETE",
+  "weighting": "actual common background -> image -> building, equal at each level"
+}

@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-11T17:21:20.574626+00:00",
+  "status": "Adaptive after inspecting basic controlled extreme-height scores, before computing log candidates. Original15 configurations untouched.",
+  "trigger": "Absolute relative mean-height difference approaches1 at near-zero height but diverges for arbitrarily high ceilings. This is not automatically a bug because a mixed score may retain floor credit. Compare an alternative symmetric multiplicative error, not a demanded zero-score limit.",
+  "definition": "abs(log(annotation_perimeter_mean_wall_height / reference_perimeter_mean_wall_height)); means obtained from frozen paired geometry or exact previously audited means, never guessed from abs(Hmean).",
+  "scale": 0.5,
+  "scale_interpretation": "Near ratio1 log error and abs(relative error) agree to first order. An isolated error ratio exp(±0.5)=1.64872 or0.60653 gives denominator loss1, not a human acceptability cutoff.",
+  "real_failure_checks": [
+    "T20 low roof may be penalized more, despite same near1 scale.",
+    "Any constant/nonflat perfectly copied GT has mean log error0.",
+    "Reference wrong or below-camera ceiling remains applicability issue; transformation does not resolve it."
+  ],
+  "candidates": [
+    {
+      "height_mean_scale": 0.5,
+      "height_center_scale": 0.25,
+      "top_weight": 0,
+      "direction_mode": "old_numerator",
+      "flat_mode": "old_numerator",
+      "height_combine": "sum",
+      "top_combine": "sum",
+      "name": "Q_hsplit_top0_logMean",
+      "purpose": "Adaptive geometric limit / multiplicative symmetry comparison; same local-near-equality scale .5, no fitted human threshold.",
+      "height_mean_representation": "absolute_log_ratio"
+    },
+    {
+      "height_mean_scale": 0.5,
+      "height_center_scale": 0.25,
+      "top_weight": 0.0,
+      "direction_mode": "bounded_denominator",
+      "flat_mode": "none",
+      "height_combine": "sum",
+      "top_combine": "sum",
+      "direction_scale_deg": 5.0,
+      "direction_cap": 1.0,
+      "name": "Q_dbounded1_hsplit_logMean",
+      "purpose": "Adaptive geometric limit / multiplicative symmetry comparison; same local-near-equality scale .5, no fitted human threshold.",
+      "height_mean_representation": "absolute_log_ratio"
+    }
+  ]
+}

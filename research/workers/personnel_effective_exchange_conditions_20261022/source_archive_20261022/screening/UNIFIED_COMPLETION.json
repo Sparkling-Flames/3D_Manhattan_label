@@ -1,0 +1,173 @@
+{
+  "data_version": "v2",
+  "duplicate_design_registrations": 367,
+  "files": [
+    {
+      "EOF_verified": true,
+      "bytes": 65219983,
+      "columns": 274,
+      "path": "event_parts/PANEL_manual_UNIFIED.csv.gz",
+      "rows": 51694,
+      "sha256": "8f845ebcd8f70a56ffe55ba7745f17092b1660b65494ebde0e62cceb65d82433"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 11846824,
+      "columns": 274,
+      "path": "event_parts/PANEL_semi_UNIFIED.csv.gz",
+      "rows": 13677,
+      "sha256": "ec92e710067bf9a7c8315f3ae20880bcffbd1b8abb5bff272ca52b3220720bce"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 16793506,
+      "columns": 274,
+      "path": "event_parts/LARGE_manual_UNIFIED.csv.gz",
+      "rows": 13135,
+      "sha256": "7996830e79b3af3c8c72dc0860efeaf63fcb0847a22f08de7a6c7ad97334d66f"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 2861564,
+      "columns": 274,
+      "path": "event_parts/LARGE_semi_UNIFIED.csv.gz",
+      "rows": 3109,
+      "sha256": "0a404ca2ff62b3edc32a67cf2ed813d22f01bc1ed2997794c3c694424ebebd07"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 1672943,
+      "columns": 274,
+      "path": "event_parts/PURE_manual_UNIFIED.csv.gz",
+      "rows": 1272,
+      "sha256": "47b8b79df2e3f0ba5e7e2d27512bbf92ba577f74a219f0865e16f6547e0920f0"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 658774,
+      "columns": 274,
+      "path": "event_parts/PURE_semi_UNIFIED.csv.gz",
+      "rows": 627,
+      "sha256": "aad324cda612a725963092bc0b6bb71dcd4a6f600e54931b365abc4536a525cb"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 965485,
+      "columns": 268,
+      "path": "event_parts/PURE_CROSS_manual_UNIFIED.csv.gz",
+      "rows": 1359,
+      "sha256": "078e25a2529bc0bc474c13f782b0b3ee28fc88a26b5bf4834b863913bb129967"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 389092,
+      "columns": 268,
+      "path": "event_parts/PURE_CROSS_semi_UNIFIED.csv.gz",
+      "rows": 697,
+      "sha256": "5a5d595e37ad74000725898dfff0c799cfa71f3ed2782f5ef2d56eed8bfa8b53"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 496227,
+      "columns": 275,
+      "path": "DUPLICATE_ANALYSIS_EVENT_PROVENANCE.csv.gz",
+      "rows": 734,
+      "sha256": "8a8ef5fc26ef517ecd49622e835296f5f88a2c311954aa0aaed66b7808f8b8d7"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 100886343,
+      "columns": 279,
+      "path": "EVENTS_UNIFIED.csv.gz",
+      "rows": 85203,
+      "sha256": "937142abbb51f5ea7319e58962d61edf85a0f7672ada32603911227d600fa92c"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 15923,
+      "columns": 19,
+      "path": "EVENT_COVERAGE.csv",
+      "rows": 163,
+      "sha256": "c3fc71bd42a6c50bf3d58420273dd0c8e81a8dd5e4913dbd96e23267154dc4b0"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 20119,
+      "columns": 4,
+      "path": "METRIC_AVAILABILITY_AND_SIGNS.csv",
+      "rows": 194,
+      "sha256": "eca2de74565b4aa526df950c7c453816081f522f4716696a42f9766bb5f3b81c"
+    }
+  ],
+  "native_calls": 0,
+  "prior_expected_by_stage": {
+    "LARGE": 16244,
+    "PANEL": 65371,
+    "PURE": 1899,
+    "PURE_CROSS": 2056
+  },
+  "protocol_sha256": "c9bc823ae9e5e053c783f3ffec2d10a56454080241ff791538b50067d3ec8ef6",
+  "registered_old_event_rows": 85570,
+  "role_input_sha256": "1d04f807cd301397687d5eb9161c6710c71a3f433e3ec01ecab3fb7bd4983b33",
+  "seconds": 96.66347122192383,
+  "sources": [
+    {
+      "condition": "manual",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PANEL_MANUAL_COMPLETE_EVENTS.csv.gz",
+      "rows": 51694,
+      "sha256": "4f45f144760f433f605782be5a597653d6e005bd8ca98fa6cfa542d59de97b67",
+      "stage": "PANEL"
+    },
+    {
+      "condition": "semi",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PANEL_SEMI_COMPLETE_EVENTS.csv.gz",
+      "rows": 13677,
+      "sha256": "6a9e8efe11ce031c6da61c7c65da898c517da064a405d04e9070dd787fe16e43",
+      "stage": "PANEL"
+    },
+    {
+      "condition": "manual",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/LARGE_MANUAL_COMPLETE_EVENTS.csv.gz",
+      "rows": 13135,
+      "sha256": "986f719c2d391931844b20323123206814ac6cf8500cc14de2f6944d581de940",
+      "stage": "LARGE"
+    },
+    {
+      "condition": "semi",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/LARGE_SEMI_COMPLETE_EVENTS.csv.gz",
+      "rows": 3109,
+      "sha256": "30970274f2358e60d0fdeaf0d067a50e325f8e3f6b471d030e65bd14b4cb8e88",
+      "stage": "LARGE"
+    },
+    {
+      "condition": "manual",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PURE_MANUAL_COMPLETE_EVENTS.csv.gz",
+      "rows": 1272,
+      "sha256": "97340a06bbdf3f4784f42f3f0bcbeda8ab6960cee988d09005acfb1c27d933bc",
+      "stage": "PURE"
+    },
+    {
+      "condition": "semi",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PURE_SEMI_COMPLETE_EVENTS.csv.gz",
+      "rows": 627,
+      "sha256": "bee4fad8426b00628ad2a8f51c402a1104c05c4410c3b99207b30ffbd72ff916",
+      "stage": "PURE"
+    },
+    {
+      "condition": "manual",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PURE_CROSS_MANUAL_COMPLETE_EVENTS.csv.gz",
+      "rows": 1359,
+      "sha256": "710f4932b692509b103f29fb63ff57a3b6034dc96026c9402035a693038a5006",
+      "stage": "PURE_CROSS"
+    },
+    {
+      "condition": "semi",
+      "path": "personnel_useful_taxonomy_v3_20261021/composition/matched/PURE_CROSS_SEMI_COMPLETE_EVENTS.csv.gz",
+      "rows": 697,
+      "sha256": "5c614a1ffaa305421f755b0d125f7e329cb4600b5170c3e9b6c088088f08b228",
+      "stage": "PURE_CROSS"
+    }
+  ],
+  "status": "complete",
+  "unique_analysis_events": 85203
+}
