@@ -1,0 +1,31 @@
+{
+  "underlying_data_version": "v2",
+  "research_round": "effective_exchange_conditions_20261022",
+  "expansion_complete": true,
+  "expanded_cells_complete": 253,
+  "expanded_cells_registered": 253,
+  "expanded_events_complete": 390208,
+  "expanded_events_registered": 390208,
+  "joint_registered_events": 47310,
+  "new_registered_event_ids": 437518,
+  "duplicate_event_ids_between_new_studies": 0,
+  "new_study_physical_triples_union": 239496,
+  "physical_triples_overlap_between_new_studies": 0,
+  "necessary_endpoint_union": 179197,
+  "endpoint_overlap_between_new_studies": 0,
+  "completed_native_batches": 28,
+  "new_native_endpoints": 139696,
+  "exact_cached_endpoints_in_native_batches": 17,
+  "resumed_endpoints_in_execution_log": 0,
+  "summed_batch_wall_seconds": 2922.0288202459706,
+  "new_native_per_summed_batch_wall_second": 47.80787890662922,
+  "throughput_note": "Measured executor wall time of sequential batches with up to 3 pool workers; not production annotation time.",
+  "not_all_full_pool_member_combinations": true,
+  "not_all_orders_expanded": true,
+  "full_space_denominator_sources": [
+    "expanded_blocks/EXACT_FULL_SPACE_LEDGER.csv.gz",
+    "expanded_blocks/analysis/CANONICAL_CONFIGURATION_MEMBER_COVERAGE.csv.gz",
+    "joint_exchange/OPPORTUNITY_COMPLETION.csv"
+  ],
+  "aggregation_unit": "background then image then building, separately by condition and layer"
+}

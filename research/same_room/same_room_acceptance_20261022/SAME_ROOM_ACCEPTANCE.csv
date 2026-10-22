@@ -1,0 +1,9 @@
+﻿id,问题,归档结论,主要数值,支持范围,本次实核,源表相对路径,适用限制
+SR-MEAN,平均质量,同房源均值有效,MAE 5.081 vs 9.303,123对/64图/12栋/19组,本次明细重聚合,room_similarity/tables/direct_mean_prediction_values.csv.gz,不等于个体一致
+SR-PERSON,个人相似性,公共与稳定个人水平解释大部分相似,r .405 → .239 → .031,2581对/57人；末项2580,本次明细重聚合,personal_similarity/direct_pair_workers_with_class.csv.gz,不是普遍个人房间专长
+SR-PRED,个人预测,P+θ为强基线,最大历史MAE11.145；类别11.078,旧9组同支持；非全部64图,本次明细重聚合,personal_similarity/main_prediction_rows_wide.csv.gz,全直接对单源P+θ12.579
+SR-SWAP,替换,机制保留；类别不保证均值收益,随机M0→M1+4.993；Q匹配−2.339,5人换1人；实际成员固定跨视角,本次明细重聚合,native_teams/SWAP_EVENTS.csv.gz,C−B不是C−A；匹配不同支持
+SR-TEAM,选队,楼外Q为强基线,92.958 vs 源Q89.280,64图12栋5人,本次逐图聚合,native_teams/POLICY_BY_IMAGE.csv.gz,预测排序不等于融合效益
+SR-TIME,效率,Q/T有条件节省但有坏尾,Q93.471；劳动比.787；损失>5为8.57%,新同语义62图11栋5人,本次逐图聚合,native_teams/POLICY_BY_IMAGE.csv.gz,劳动比为几何平均；非项目总工时
+SR-STOP,停止,限已有历史；非一般从零省时,tol2 Q87.764；人数7.357；从零劳动2.395倍,6共同池24图；4可计时组,继承先前核验；本次未重跑,prior_integration/stopping_summary.csv,几何稳定可能稳定错位
+SR-STRUCT,结构,局部票与定位证据分别保留,G117正例/G015反例/G205全票位置变,精确成员与原GT,继承先前核验；本次未重跑,CASE_INDEX.csv,不能以角点数或全票替代质量

@@ -1,0 +1,215 @@
+{
+  "data_version": "v2",
+  "discovery_note": "Inherited candidates and broad-screen discoveries are explicitly marked; no new blind-test claim.",
+  "files": [
+    {
+      "EOF_verified": true,
+      "bytes": 11207,
+      "columns": 17,
+      "path": "FOCUS_DEFINITIONS_AND_OPPORTUNITIES.csv",
+      "rows": 44,
+      "sha256": "99867c6ab015a9b136562fecbaf2f6f658aa70365a5f78f37660c3a22fba3015"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 9559,
+      "columns": 33,
+      "path": "FOCUS_CONDITION_SUPPORT.csv",
+      "rows": 27,
+      "sha256": "eab6f715c8e5e618836ef6cad48131f0a4910b4e30a2f604d218953afdcaa947"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 158102,
+      "columns": 24,
+      "path": "FOCUS_ALL_COMPONENT_METRICS.csv.gz",
+      "rows": 3159,
+      "sha256": "7037142223781abe62771183407362952acd98ca694410de6cb5999036656c09"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 94511,
+      "columns": 163,
+      "path": "FOCUS_BUILDING_COMPONENTS.csv.gz",
+      "rows": 130,
+      "sha256": "f62a801d6aa917aec73ebb1fddeb77a20251694e250350548c72001d43f21de3"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 110079,
+      "columns": 164,
+      "path": "FOCUS_IMAGE_COMPONENTS.csv.gz",
+      "rows": 149,
+      "sha256": "76ecde2e9ea587b16a778589fa5a18df259c010e5b6f48431a76e17bbc708177"
+    },
+    {
+      "EOF_verified": true,
+      "bytes": 11337,
+      "columns": 6,
+      "path": "FOCUS_EVENT_MEMBERSHIP.csv.gz",
+      "rows": 361,
+      "sha256": "618b0ceb413b156bc1aa3616ee360abaa96222ee64693d84642aaa93450e5404"
+    }
+  ],
+  "focus_definitions": [
+    {
+      "basis": "any",
+      "condition": "manual",
+      "direction": "",
+      "focus_id": "A2_manual_n17m9",
+      "m": 9,
+      "method_id": "A2_relation",
+      "n": 17,
+      "selection_identity": "inherited_prior_candidate",
+      "source_domain": "all_formal",
+      "tier": "single",
+      "use": "same-composition stability / cross-composition risk"
+    },
+    {
+      "basis": "raw",
+      "condition": "manual",
+      "direction": "M01:5 -> M00:5",
+      "focus_id": "M_fine_n10m5_M01_to_M00",
+      "m": 5,
+      "method_id": "M_structure",
+      "n": 10,
+      "selection_identity": "inherited_prior_candidate",
+      "source_domain": "all_formal",
+      "tier": "fine",
+      "use": "parent-fixed fine-class stability; limited original building support"
+    },
+    {
+      "basis": "raw",
+      "condition": "manual",
+      "direction": "M01:6 -> M00:6",
+      "focus_id": "M_fine_n10m6_M01_to_M00",
+      "m": 6,
+      "method_id": "M_structure",
+      "n": 10,
+      "selection_identity": "inherited_prior_candidate",
+      "source_domain": "all_formal",
+      "tier": "fine",
+      "use": "parent-fixed fine-class stability / quality loss direction"
+    },
+    {
+      "basis": "any",
+      "condition": "manual",
+      "direction": "",
+      "focus_id": "BEHAVIOR_manual_n10m7_all_roles",
+      "m": 7,
+      "method_id": "V3_BEHAVIOR",
+      "n": 10,
+      "selection_identity": "inherited_prior_candidate",
+      "source_domain": "all_formal",
+      "tier": "coarse",
+      "use": "broad observed candidate; folds and directions still separated in exact tables"
+    },
+    {
+      "basis": "role",
+      "condition": "manual",
+      "direction": "TURN/K3/E2:7 -> TURN/K3/E3:7",
+      "focus_id": "BEHAVIOR_TURN3_E2_to_E3_n10m7",
+      "m": 7,
+      "method_id": "V3_BEHAVIOR",
+      "n": 10,
+      "selection_identity": "training-role refinement of inherited candidate",
+      "source_domain": "all_formal",
+      "tier": "coarse",
+      "use": "increased historical turn/detail expression"
+    },
+    {
+      "basis": "role",
+      "condition": "manual",
+      "direction": "CQT/K5/C2,Q1,T2:7 -> CQT/K5/C5,Q5,T4:7",
+      "focus_id": "JOINT_CQT5_C2Q1T2_to_C5Q5T4_n10m7",
+      "m": 7,
+      "method_id": "V3_JOINT_QT",
+      "n": 10,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "all_formal",
+      "tier": "coarse",
+      "use": "joint structural/Q/T quality and shape response"
+    },
+    {
+      "basis": "role",
+      "condition": "manual",
+      "direction": "CQT/K5/C2,Q1,T2:7 -> CQT/K5/C5,Q5,T4:7",
+      "focus_id": "JOINT_CQT5_C2Q1T2_to_C5Q5T4_n20m7",
+      "m": 7,
+      "method_id": "V3_JOINT_QT",
+      "n": 20,
+      "selection_identity": "same-direction larger-team comparison",
+      "source_domain": "all_formal",
+      "tier": "coarse",
+      "use": "test attenuation at a larger team size"
+    },
+    {
+      "basis": "raw",
+      "condition": "semi",
+      "direction": "SP_OTHER:4 -> SP_LOW:1|SP_OTHER:3",
+      "focus_id": "SP_semi_coarse_n12m4_add_LOW_seat",
+      "m": 4,
+      "method_id": "SP_scale",
+      "n": 12,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "all_formal",
+      "tier": "coarse",
+      "use": "scale-related stability / failure and quality risk"
+    },
+    {
+      "basis": "raw",
+      "condition": "semi",
+      "direction": "SP_T:4 -> SP_A:1|SP_T:3",
+      "focus_id": "SP_semi_fine_n12m4_add_A_seat_parent_fixed",
+      "m": 4,
+      "method_id": "SP_scale",
+      "n": 12,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "all_formal",
+      "tier": "fine",
+      "use": "additional parent-fixed scale distinction"
+    },
+    {
+      "basis": "raw",
+      "condition": "semi",
+      "direction": "QL.1:4 -> QL.2:4",
+      "focus_id": "MV_semi_fine_n10m4_QL1_to_QL2",
+      "m": 4,
+      "method_id": "MV_QTScopeSemi_semi_new",
+      "n": 10,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "all_formal_labelled",
+      "tier": "fine",
+      "use": "conditional quality change within low-Q parent"
+    },
+    {
+      "basis": "raw",
+      "condition": "manual",
+      "direction": "QL.2:5 -> QL.1:5",
+      "focus_id": "MV_manual_fine_n10m5_QL2_to_QL1",
+      "m": 5,
+      "method_id": "MV_QTD_manual_new",
+      "n": 10,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "all_formal_labelled",
+      "tier": "fine",
+      "use": "recorded-time reduction with limited average Q cost"
+    },
+    {
+      "basis": "raw",
+      "condition": "manual",
+      "direction": "C02:4 -> C01:4",
+      "focus_id": "F01_manual_n10m4_C02_to_C01",
+      "m": 4,
+      "method_id": "F01",
+      "n": 10,
+      "selection_identity": "selected by uniform broad screen on explored outcomes",
+      "source_domain": "new_only_labelled",
+      "tier": "coarse",
+      "use": "high-Q-domain recorded-time tradeoff; AC-only if same-class arm unavailable"
+    }
+  ],
+  "inference": "Building bootstrap intervals describe repeated explored evidence; no multiple-comparison or external-validation claim.",
+  "native_calls": 0,
+  "status": "complete"
+}

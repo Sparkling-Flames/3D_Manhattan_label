@@ -1,0 +1,11 @@
+const test=require('node:test'), assert=require('node:assert/strict'), fs=require('node:fs'),vm=require('node:vm');
+const core=require('./research-closeout-core.js');
+const ctx={window:{}};vm.runInNewContext(fs.readFileSync(__dirname+'/research-closeout-data.js','utf8'),ctx);
+const data=ctx.window.RESEARCH_CLOSEOUT_DATA;
+test('合同、唯一ID与全部归档记录',()=>{assert.equal(core.normalize(data),data);assert.equal(data.personnel.length,53);assert.equal(data.members.length,2772);assert.equal(data.sameRoom.length,8);assert.throws(()=>core.normalize({...data,schemaVersion:2}));assert.throws(()=>core.normalize({...data,personnel:[data.personnel[0],data.personnel[0]]}));});
+test('未知不填零且真零保留',()=>{for(const v of ['',null,undefined,' ','未知'])assert.equal(core.numeric(v),null);assert.equal(core.numeric('0'),0);assert.equal(core.numeric('-2.3'),-2.3);});
+test('Manual/Semi隔离，搜索不改原始数据',()=>{const n=data.personnel.length;assert.ok(core.filterPersonnel(data.personnel,'manual','').every(r=>r['作答条件']==='manual'));assert.equal(core.filterPersonnel(data.personnel,'semi','___unknown___').length,0);assert.equal(data.personnel.length,n);});
+test('成员需完整方法条件目标楼，不跨楼按类号拼接',()=>{const r=data.members[0];assert.equal(core.matchingMembers(data.members,r.method,r.condition,'').length,0);const rows=core.matchingMembers(data.members,r.method,r.condition,r.heldout_building);assert.ok(rows.length>0);assert.ok(rows.every(x=>x.heldout_building===r.heldout_building&&x.condition===r.condition));assert.equal(rows[0].members,r.members);});
+test('停止/结构不升级为本轮复算，均值/个人两条独立',()=>{for(const id of ['SR-STOP','SR-STRUCT'])assert.match(data.sameRoom.find(r=>r.id===id)['本次实核'],/未重跑/);assert.ok(data.sameRoom.find(r=>r.id==='SR-MEAN'));assert.ok(data.sameRoom.find(r=>r.id==='SR-PERSON'));});
+test('来源、分母与核验链不能省略',()=>{for(const r of data.personnel)for(const k of ['分类依据','分类与验证隔离','核验层级','精确来源选择器','失败分母单位'])assert.ok(r[k],`${r['条件ID']} ${k}`);});
+test('本页不需要fetch或服务，原入口新增链接',()=>{const page=fs.readFileSync(__dirname+'/research-closeout.html','utf8');for(const m of page.matchAll(/(?:src|href)="(research-closeout[^"#]*)"/g))assert.ok(fs.existsSync(__dirname+'/'+m[1]));assert.ok(!/fetch\s*\(/.test(fs.readFileSync(__dirname+'/research-closeout.js','utf8')));assert.match(fs.readFileSync(__dirname+'/index.html','utf8'),/href="research-closeout.html"/);});

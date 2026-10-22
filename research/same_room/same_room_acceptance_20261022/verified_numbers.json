@@ -1,0 +1,123 @@
+{
+  "scope": {
+    "pairs": 123,
+    "images": 64,
+    "buildings": 12,
+    "groups": 19
+  },
+  "room_gaps_pair": {
+    "actual_abs_gap": 6.810230657953298,
+    "common_abs_gap": 7.238037576404666
+  },
+  "room_gaps_building": {
+    "actual_abs_gap": 4.91915317613764,
+    "common_abs_gap": 5.559460823975939
+  },
+  "mean_prediction": {
+    "external_image_mean": 9.303136999711414,
+    "outside_peer_roster_mean": 9.569725591110267,
+    "source_mean": 5.0808497464090125,
+    "peer_adjusted_source": 5.131017099788378
+  },
+  "person_scope": {
+    "rows": 2581,
+    "people": 57
+  },
+  "corr": {
+    "Q": 0.4053789233191744,
+    "relative": 0.23918108684538522,
+    "surprise": 0.031402298165090325
+  },
+  "residual_identity_error": 1.00000000458067e-06,
+  "personal_prediction": {
+    "single_direct_single": {
+      "external_abs": 15.291615956681333,
+      "own_source": 15.80801427814599,
+      "public_external": 12.57936517600063,
+      "public_external_halfown": 13.296996914299166,
+      "public_external_halfclass": 12.654516753625906
+    },
+    "single_matched_single": {
+      "external_abs": 15.402337142553842,
+      "own_source": 14.018365361177846,
+      "public_external": 11.359584102862815,
+      "public_external_halfown": 11.776233133573948,
+      "public_external_halfclass": 11.328010299738875
+    },
+    "majority_minimum_majority": {
+      "external_abs": 15.402337142553842,
+      "own_source": 12.494620730431675,
+      "public_external": 11.169613576502647,
+      "public_external_halfown": 11.218350762584718,
+      "public_external_halfclass": 11.103589947751882
+    },
+    "majority_maximum_history": {
+      "external_abs": 15.402337142553842,
+      "own_source": 12.3636590362412,
+      "public_external": 11.144708832851213,
+      "public_external_halfown": 11.166479442824384,
+      "public_external_halfclass": 11.078159796308496
+    }
+  },
+  "events": {
+    "rows": 7032,
+    "unique_event": 7032,
+    "net_definition_max_error": 2.886579864025407e-14
+  },
+  "swap": {
+    "capacity_random|M0|M1": 4.99346110765203,
+    "capacity_random|M1|M0": -4.685542582839781,
+    "outside_Q_gap_le3|M0|M1": -2.3386990819554616,
+    "outside_Q_gap_le3|M1|M0": 0.5035424995796828
+  },
+  "matched": {
+    "all_unknown|actual": 8.840282377194088,
+    "all_unknown|triple": 9.000316374531103,
+    "same_class|actual": 3.049891116562663,
+    "same_class|triple": 2.054422078286824,
+    "strict_class_turns_hidden|actual": 2.346901382137857,
+    "strict_class_turns_hidden|triple": 2.2391068049003118
+  },
+  "team": {
+    "all|outside_Q": {
+      "B8L2": 92.95761665000856,
+      "loss_over5": 0.0,
+      "log_activity_ratio": 0.0
+    },
+    "all|source_Q": {
+      "B8L2": 89.27981259401882,
+      "loss_over5": 0.20052083333333337,
+      "log_activity_ratio": -0.10242528156595475
+    },
+    "new|outside_Q": {
+      "B8L2": 93.69111518535519,
+      "loss_over5": 0.0,
+      "log_activity_ratio": 0.0
+    },
+    "new|source_Q": {
+      "B8L2": 89.40146787029184,
+      "loss_over5": 0.26629689754689756,
+      "log_activity_ratio": -0.07549941816419851
+    },
+    "new_timed_history|outside_Q": {
+      "B8L2": 93.69111518535519,
+      "loss_over5": 0.0,
+      "log_activity_ratio": 0.0
+    },
+    "new_timed_history|outside_Q_outside_T_fast": {
+      "B8L2": 93.47060898798856,
+      "loss_over5": 0.08569023569023569,
+      "log_activity_ratio": -0.2391260019155438
+    },
+    "new_timed_history|outside_Q_source_T_fast": {
+      "B8L2": 92.84455192122988,
+      "loss_over5": 0.07692099567099565,
+      "log_activity_ratio": -0.20193559597828087
+    },
+    "new_timed_history|source_Q": {
+      "B8L2": 89.40146787029184,
+      "loss_over5": 0.26629689754689756,
+      "log_activity_ratio": -0.07549941816419851
+    }
+  }
+}
