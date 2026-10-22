@@ -1,5 +1,13 @@
 # 研究分析交付入口
 
+## 2026-10-22：人员定稿、同房验收与统一接入
+
+- [统一结论与证据边界](research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)
+- [人员53条件结果链及关键代码/图表](research/workers/personnel_effective_exchange_conditions_20261022/README.md)
+- [同房平均与个人相似性验收](research/same_room/same_room_acceptance_20261022/SAME_ROOM_ACCEPTANCE.md)
+- [离线研究收束页](research/statistics/research_explorer_v1_r2_20261017/research-closeout.html)
+
+
 ## 2026-10-21：同房独立补算与研究台接入
 
 - [独立补算源包](research/same_room/same_room_independent_followup_20261021/README.md)：固定PR #19头，校准、结构和人数选择结果原样保留。
@@ -34,4 +42,5 @@
 [完整报告](analysis_results/preflight_20260906_v2/REPORT_ZH.md)、[文献及算法模拟](analysis_results/preflight_20260906_v2/REFERENCES_AND_SIMULATION.md)、[案例卡](analysis_results/preflight_20260906_v2/cases/CASE_CARDS.md)、[原始交付与复现说明](analysis_results/preflight_20260906_v2/DELIVERY_AND_REPRODUCTION.md)。
 
 旧材料中的前置任务、人数缺口、SHA/ZIP和远端读回要求仅属于当时的交付，不再规定当前研究顺序或触发上传。结果、代码与来源仍可从[历史目录](analysis_results/preflight_20260906_v2/)追溯。
+
 

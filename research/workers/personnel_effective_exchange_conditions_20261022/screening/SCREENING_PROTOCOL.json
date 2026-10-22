@@ -1,0 +1,55 @@
+{
+  "all_metrics_sign": "cross_* is C-A; same_* is B-A. Greater omission/extension is worse. Geometry difference advantage=cross distance-within distance. Expression count change is not correctness.",
+  "crossfold_role_alignment": "new methods: selected family + actual tier K + per-domain training-centroid rank; fine role also includes parent role. Ties/collisions retained explicitly. Legacy fixed IDs preserved with archived training identity.",
+  "data_version": "v2",
+  "deduplication": "same oriented actual endpoints + method/tier + actual source/domain + n/m + actual parent status once; stage/design provenance kept",
+  "exact_conditions": [
+    "event_mode ABC vs AC-only",
+    "condition",
+    "method_id",
+    "tier",
+    "source_domain",
+    "role-aligned exact outgoing and incoming class-count vectors",
+    "n",
+    "actual m",
+    "actual parent-fixed indicator"
+  ],
+  "failure_policy": "every registered event retained; success-Q denominators, all-result failure denominators and failure-or->10-loss denominators separate",
+  "inherited_candidates": [
+    "A2 manual n17 m9",
+    "M fine parent-fixed M01->M00 n10 m5 or m6 separately",
+    "V3_BEHAVIOR manual n10 m7"
+  ],
+  "inherited_candidates_already_selected_from_prior_explored_results": true,
+  "internal_LOBO": "For a held-out building, candidate effects and selection criteria use fusion outcomes only from other buildings; evaluate the selected candidate on held-out-building events. Existing frozen personnel LOBO labels are reused, not double-excluded refits.",
+  "limited_support": "2-3 buildings or otherwise insufficient support retained as provisional, not discarded",
+  "native_fusion_calls": 0,
+  "outcomes_used_for_role_alignment": false,
+  "prior_round_directory": "personnel_useful_taxonomy_v3_20261021",
+  "prior_round_v3_is_data_version": false,
+  "round": "personnel_effective_exchange_conditions_20261022",
+  "selection": "purpose-specific positive effect plus support plus majority; null/adverse and every not-selected reason exported; no p-value gate",
+  "status": "frozen_before_uniform_full_event_screen",
+  "supplementary_views": [
+    "net class-seat direction, with unchanged class exchanges removed",
+    "actual incoming-minus-outgoing historical axis sign, explicitly not an exact class direction",
+    "difficulty conditional summaries"
+  ],
+  "thresholds": {
+    "efficiency_mean_recorded_time_pct": -10.0,
+    "efficiency_same_time_support_mean_Q_min": -2.0,
+    "geometry_mean_floor_or_prism_difference_advantage": 0.003,
+    "min_building_same_direction_fraction": 0.6,
+    "min_buildings": 4,
+    "min_images": 4,
+    "quality_mean_B8L2_change": 1.0,
+    "quality_median_positive": true,
+    "stability_mean_abs_Q_advantage": 0.5,
+    "stability_median_positive": true,
+    "structure_mean_reference_recall_change": 0.02,
+    "structure_min_positive_buildings": 3
+  },
+  "time_qualification": "sum recorded seconds only when all team-member times are known and source-compatible; missing/heterogeneous source totals remain unavailable for time conclusions.",
+  "validation_limit": "Data have been repeatedly explored. Internal outcome-exclusion checks are not external blind validation; old frozen label inputs can contain other-fold history from the evaluation building.",
+  "weighting": "within actual common background, then image, then building; event-weighted means and medians also provided"
+}
