@@ -3,6 +3,8 @@
 - **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。
 # HOHONET 项目地图
 
+- **2026-10-22人员研究解释与比较清单：** [多套分类与构成不确定性](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。新增专题解释文档，连接现有分类、端点和大块/直接AC证据；无数据、工具或历史来源迁移。
+
 - **2026-10-22下一轮Pro：** [有效换类续研与已有产物整合](thesis_main/Pro下一轮_有效换类续研与已有产物整合_20261022.md)。仅新增任务书与作者回复来源记录；复用已有专题目录和研究代码，本地main由用户自行推送。
 
 - **2026-10-22本地收尾与来源归档：** [Downloads清点与四类归档入口](../research/statistics/downloads_research_audit_20261022/README.md)、[难度与范围支持](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/README.md)、[质量分项与参考资格](../research/quality/v2_profile_combo_quality_20261021/CLOSEOUT_20261022.md)。按现有v2及冻结方法接续，未改评分/融合；本轮提交仅整合本地main，来源归档不代表全量科学复算。
