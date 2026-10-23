@@ -1,0 +1,52 @@
+{
+  "event_id": "ABC_0e2d9ba183c4f886c588",
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "new_labels": 0,
+  "views": 2,
+  "endpoints": 6,
+  "identity_groups": 48,
+  "identity_members": 340,
+  "median_coordinates": 192,
+  "direct_median_matches": 192,
+  "ring_edges": 28,
+  "raw_answers": 46,
+  "erp": "3D sampled edges inverse-projected with seam breaks",
+  "bev_units": "camera height h",
+  "cross_view_geometry_registration": false,
+  "case_selection": "read CASE_SELECTION.json; exploratory, not independent validation",
+  "figure_visual_inspection": "completed: two actual Release images and all six final PNG scientific figures viewed; references, member overlays, local windows and units inspected",
+  "inspected_figure_files": [
+    {
+      "file": "figures/ALL_MEMBERS_RAW_BEV.png",
+      "sha256": "89ad950bf23448241d398f3c789f4d926fd6cae40d544d60cf4af6186575d196"
+    },
+    {
+      "file": "figures/CASE_OVERVIEW_ERP_BEV.png",
+      "sha256": "8160ec9a942490a3271478188099d3738351d59838489e0da4c68a9bb16717f0"
+    },
+    {
+      "file": "figures/EXTRA_TURN_IDENTITY_DETAIL.png",
+      "sha256": "5f2339b8bd4204da839ffbbca449c969b5ac6b12d4af99064bb602308e97ad73"
+    },
+    {
+      "file": "figures/IDENTITY_SUPPORT.png",
+      "sha256": "5ea7f81fb428d91a58bd132d2cc26c54f67fc0ab77f8244fc0d21360abd7467a"
+    },
+    {
+      "file": "figures/LOCAL_BEV_CONNECTIVITY.png",
+      "sha256": "1f1fd29ded7e39a6f89f4e3247f04e7f95c2811b0455f77c87bb4541fddd9c1a"
+    },
+    {
+      "file": "figures/LOCAL_RAW_FUSION_REFERENCE.png",
+      "sha256": "2b0c1261e1032df1884148cf366100472c0fcca0c555f4efdcc41d8b665d2c42"
+    }
+  ],
+  "scientific_display_checks": [
+    "A blue / B orange / C green / reference black-white",
+    "ERP edges sampled in 3D and inverse projected, not straight corner chords",
+    "BEV in camera height h, separate camera coordinate frames",
+    "node IDs remain team-local",
+    "ineligible labor and unequal-corner comparisons remain missing"
+  ]
+}

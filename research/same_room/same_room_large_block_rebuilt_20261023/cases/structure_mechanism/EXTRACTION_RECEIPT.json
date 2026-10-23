@@ -1,0 +1,136 @@
+{
+  "event_id": "ABC_0e2d9ba183c4f886c588",
+  "operation": "extract_already_existing_exact_native_case_not_replay",
+  "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+  "design_version": "same_room_strict_abc_rebuilt_20261023_v1",
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "new_labels": 0,
+  "views": 2,
+  "endpoints": 6,
+  "full_state_count": 6,
+  "frozen_records": 70,
+  "geometry_lines_copied_byte_exact": true,
+  "dependencies": [
+    {
+      "path": "design/STRICT_ABC_EVENTS.csv.gz",
+      "sha256": "d753db4d2f863fb5144ffcb215780951a97ba3c3bd57002852b93657fd35fc05",
+      "purpose": "new_registered_exact_design"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00001.receipt.json",
+      "sha256": "2b081dc34fdea1ff83a091e2d9ca6aba8e6418714142651462607c55908fff9a",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00001.scalars.csv.gz",
+      "sha256": "6bba21cee124e138f1b0f7059794c493578e28e5654147c913d0781a1341fe02",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00001.geometry_state.jsonl.gz",
+      "sha256": "5be1d09f6ed3a964eca6c1c3e8088620c6e4be999318920f0e54db8c1e222b5f",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00002.receipt.json",
+      "sha256": "3911e75617893bd3a9ae9cde0662b013ed481b6ee55dfb2724f06b2fbf7a9732",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00002.scalars.csv.gz",
+      "sha256": "9efe6573d4462f16fbaf62af16ddc1a50bdae8da7b98bed9196862abcf5e1758",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00002.geometry_state.jsonl.gz",
+      "sha256": "d6953780241db6438d9060d36302a2b1314ab101e18429eaf81d2ab046510735",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00011.receipt.json",
+      "sha256": "55a133e894b1ce6cdd2edfab0b809dc58cde55cc349ba4f2fce83d4d3501ef4a",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00011.scalars.csv.gz",
+      "sha256": "77a654a4c5b517f73f87a60a9ba6666020de9b444396dfea60080acb6e337e33",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-09__manual__16e55b5482/part_00011.geometry_state.jsonl.gz",
+      "sha256": "b2506df476cac5bb4fa93016f64e8a4a3cb4d16f572c812733f0692713d3f8aa",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00001.receipt.json",
+      "sha256": "e5b68d142534196e3a88f178350edcac11e3e5df66353aab1103920c4cedc608",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00001.scalars.csv.gz",
+      "sha256": "71bfd228817cca608eb2b618308baee19eb2cb25bb5382ce821d411709e904c8",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00001.geometry_state.jsonl.gz",
+      "sha256": "4e52c393238fac30deec595b3dd2131d77df3917d8b2d9b5c49d4ab1b0003bc8",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00002.receipt.json",
+      "sha256": "fe447ab63a50257d0f1249f65aa6f6f42fdff1d5e21a5d6d99f9e9934e6d67bb",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00002.scalars.csv.gz",
+      "sha256": "6e75d9a2f4e4bd4581eef6f39aa2d8b9ade90b5f460885179b2c71def7b0c247",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00002.geometry_state.jsonl.gz",
+      "sha256": "85c1a0e69b3af8b8ce172a30314fc04f0363c39aabf50d593f713f1351d6abbe",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00010.receipt.json",
+      "sha256": "71bdb9dafaab10963aae8edf6ecbd39b9986dde2e674132c2d3ec1db95ade718",
+      "purpose": "native_part_receipt"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00010.scalars.csv.gz",
+      "sha256": "0b11f5d57db262cd985a86e822a2a59d48aedd48cebbe5ab0aa5a05c22d43c29",
+      "purpose": "native_scalars"
+    },
+    {
+      "path": "native_endpoints/parts/uNb9QFRL6hY-20__manual__4564c265d6/part_00010.geometry_state.jsonl.gz",
+      "sha256": "df5ab9e3abf187ecc00df4664963f738a9c8bd65c45d86acd0eb31374f35b9b1",
+      "purpose": "native_geometry_fullstates"
+    },
+    {
+      "path": "engine/frozen_repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+      "purpose": "frozen_raw_and_reference_snapshot"
+    },
+    {
+      "path": "population_stability/inputs/RECORD_TIME_SOURCE_INDEX.csv.gz",
+      "sha256": "05aac3ddc633bce45a6db5e43a9f08f46c35a7de3c2b4b4334079dbd78f8163f",
+      "purpose": "recorded_time_source_index"
+    },
+    {
+      "path": "design/CLASS_ROLES_AND_MEMBERS.csv",
+      "sha256": "87f10f710a00e3c628bde1bd3b268ec647aaa30c3e2698d2601fe6510efcfe9c",
+      "purpose": "frozen_LOBO_roles"
+    },
+    {
+      "path": "results/EVENT_Q_STRUCTURE_EFFECTS.csv.gz",
+      "sha256": "ab2961a6a1d6d1fc3884797a7cd1d285a36ee599e65522dcf899fead33e30a26",
+      "purpose": "EXACT_EVENT_EFFECTS.csv.gz"
+    },
+    {
+      "path": "geometry/EVENT_GEOMETRY_RESULTS.csv.gz",
+      "sha256": "a2ff910850ae88effbbfc438e904284e5180c6c201b0efa6c21554f16525df34",
+      "purpose": "SIX_GEOMETRY_COMPARISONS.csv.gz"
+    }
+  ]
+}

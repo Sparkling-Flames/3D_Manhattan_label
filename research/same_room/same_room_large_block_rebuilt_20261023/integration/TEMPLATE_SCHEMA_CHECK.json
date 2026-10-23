@@ -1,0 +1,329 @@
+{
+  "status": "schema_contract_only_not_formal_result_values",
+  "evidence_rows": 19,
+  "all_report_fields_resolved": true,
+  "unresolved_report_fields": [],
+  "personnel_insert_bindings": [
+    {
+      "placeholder": "完成_事件数",
+      "source": "results/EVENT_JOIN_RECEIPT.json",
+      "field": "events",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "完成_端点数",
+      "source": "results/EVENT_JOIN_RECEIPT.json",
+      "field": "unique_endpoints",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "buildings",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_m最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_m最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_n最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_n最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_同类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_within",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_跨类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_cross",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_额外幅度_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_额外幅度_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "building_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_全层_正向图对比例",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "positive_Q_extra_pair_fraction",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "buildings",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_m最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_m最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_n最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_n最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_同类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_within",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_跨类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_cross",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_额外幅度_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_额外幅度_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "building_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_正向图对比例",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "positive_Q_extra_pair_fraction",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "buildings",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_m最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_m最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "m_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_n最小",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_min",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_n最大",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "n_max",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_同类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_within",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_跨类幅度",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_cross",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_额外幅度_图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "pair_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_额外幅度_建筑",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "building_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_少半_正向图对比例",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "positive_Q_extra_pair_fraction",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_混合_图对",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_混合_建筑",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "buildings",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_混合_额外幅度_图对",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "pair_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_混合_正向图对比例",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "positive_Q_extra_pair_fraction",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_少半_图对",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_少半_建筑",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "buildings",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_少半_额外幅度_图对",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "pair_equal__B8L2_extra",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "删uNb_少半_正向图对比例",
+      "source": "results/EXCLUDE_UNB_SPECIFIC.csv",
+      "field": "positive_Q_extra_pair_fraction",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_共同Q事件",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "common6_Q_events",
+      "schema_verified": true,
+      "formal_file_present": true
+    },
+    {
+      "placeholder": "结构_混合_Q图对",
+      "source": "results/OVERALL_CONDITIONS.csv",
+      "field": "Q_pairs",
+      "schema_verified": true,
+      "formal_file_present": true
+    }
+  ],
+  "all_personnel_fields_resolved": true,
+  "pending_formal_files": [],
+  "no_sample_effect_values_used": true,
+  "formal_output_paths_checked_against": "analysis/run_saved_analysis.py",
+  "empty_technical_exclusion_schema": "One-building smoke input cannot have leave-one-building rows; its shared overall_row schema supplies the production columns. No effect value is inferred.",
+  "new_fusion_calls": 0
+}

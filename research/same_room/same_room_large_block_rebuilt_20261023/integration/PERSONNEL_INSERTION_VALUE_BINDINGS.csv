@@ -1,0 +1,46 @@
+placeholder,source_file,row_filters_json,column_or_json_key,display_format,status
+完成_事件数,results/EVENT_JOIN_RECEIPT.json,{},events,integer,bind_only_after_complete_formal_results
+完成_端点数,results/EVENT_JOIN_RECEIPT.json,{},unique_endpoints,integer,bind_only_after_complete_formal_results
+结构_全层_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",pairs,integer,bind_only_after_complete_formal_results
+结构_全层_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",buildings,integer,bind_only_after_complete_formal_results
+结构_全层_m最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",m_min,integer,bind_only_after_complete_formal_results
+结构_全层_m最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",m_max,integer,bind_only_after_complete_formal_results
+结构_全层_n最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",n_min,integer,bind_only_after_complete_formal_results
+结构_全层_n最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",n_max,integer,bind_only_after_complete_formal_results
+结构_全层_同类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",pair_equal__B8L2_within,0.000,bind_only_after_complete_formal_results
+结构_全层_跨类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",pair_equal__B8L2_cross,0.000,bind_only_after_complete_formal_results
+结构_全层_额外幅度_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",pair_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_全层_额外幅度_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",building_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_全层_正向图对比例,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_all""}",positive_Q_extra_pair_fraction,percent_2dp,bind_only_after_complete_formal_results
+结构_混合_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pairs,integer,bind_only_after_complete_formal_results
+结构_混合_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",buildings,integer,bind_only_after_complete_formal_results
+结构_混合_m最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",m_min,integer,bind_only_after_complete_formal_results
+结构_混合_m最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",m_max,integer,bind_only_after_complete_formal_results
+结构_混合_n最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",n_min,integer,bind_only_after_complete_formal_results
+结构_混合_n最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",n_max,integer,bind_only_after_complete_formal_results
+结构_混合_同类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pair_equal__B8L2_within,0.000,bind_only_after_complete_formal_results
+结构_混合_跨类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pair_equal__B8L2_cross,0.000,bind_only_after_complete_formal_results
+结构_混合_额外幅度_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pair_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_混合_额外幅度_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",building_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_混合_正向图对比例,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",positive_Q_extra_pair_fraction,percent_2dp,bind_only_after_complete_formal_results
+结构_少半_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pairs,integer,bind_only_after_complete_formal_results
+结构_少半_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",buildings,integer,bind_only_after_complete_formal_results
+结构_少半_m最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",m_min,integer,bind_only_after_complete_formal_results
+结构_少半_m最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",m_max,integer,bind_only_after_complete_formal_results
+结构_少半_n最小,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",n_min,integer,bind_only_after_complete_formal_results
+结构_少半_n最大,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",n_max,integer,bind_only_after_complete_formal_results
+结构_少半_同类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pair_equal__B8L2_within,0.000,bind_only_after_complete_formal_results
+结构_少半_跨类幅度,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pair_equal__B8L2_cross,0.000,bind_only_after_complete_formal_results
+结构_少半_额外幅度_图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pair_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_少半_额外幅度_建筑,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",building_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+结构_少半_正向图对比例,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",positive_Q_extra_pair_fraction,percent_2dp,bind_only_after_complete_formal_results
+删uNb_混合_图对,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pairs,integer,bind_only_after_complete_formal_results
+删uNb_混合_建筑,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",buildings,integer,bind_only_after_complete_formal_results
+删uNb_混合_额外幅度_图对,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",pair_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+删uNb_混合_正向图对比例,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",positive_Q_extra_pair_fraction,percent_2dp,bind_only_after_complete_formal_results
+删uNb_少半_图对,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pairs,integer,bind_only_after_complete_formal_results
+删uNb_少半_建筑,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",buildings,integer,bind_only_after_complete_formal_results
+删uNb_少半_额外幅度_图对,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",pair_equal__B8L2_extra,0.000,bind_only_after_complete_formal_results
+删uNb_少半_正向图对比例,results/EXCLUDE_UNB_SPECIFIC.csv,"{""condition"": ""manual"", ""excluded_building"": ""uNb9QFRL6hY"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed_less_half""}",positive_Q_extra_pair_fraction,percent_2dp,bind_only_after_complete_formal_results
+结构_混合_共同Q事件,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",common6_Q_events,integer,bind_only_after_complete_formal_results
+结构_混合_Q图对,results/OVERALL_CONDITIONS.csv,"{""condition"": ""manual"", ""method"": ""V3_BEHAVIOR"", ""subset"": ""ordinary_mixed""}",Q_pairs,integer,bind_only_after_complete_formal_results

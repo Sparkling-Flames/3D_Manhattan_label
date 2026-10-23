@@ -1,0 +1,50 @@
+{
+  "status": "actual_used_inputs_use_anonymous_worker_ids",
+  "sources": [
+    {
+      "path": "design/inputs/CURRENT_MANUAL_LABELS_LOBO.csv",
+      "sha256": "6b9c00f2c84fa6e1463de23503e9a9a81b3e8271ae14dc648c1a7182c1f7926a",
+      "identity_field": "worker_id",
+      "real_name_field_present": false
+    },
+    {
+      "path": "design/FROZEN_COMMON_CLASS_MEMBERS.csv.gz",
+      "sha256": "1844c0552c8c516834e4a61343dd5b629fc12ccf44508e3e6f73f0b85985ee31",
+      "identity_field": "worker_id",
+      "real_name_field_present": false
+    },
+    {
+      "path": "design/CLASS_ROLES_AND_MEMBERS.csv",
+      "sha256": "87f10f710a00e3c628bde1bd3b268ec647aaa30c3e2698d2601fe6510efcfe9c",
+      "identity_field": "members",
+      "real_name_field_present": false
+    },
+    {
+      "path": "research/workers/personnel_profiles_composition_20261020/tables/profiles.csv",
+      "commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+      "git_blob": "482baff831d17d340ee14d5a4d13aa924b3b50da",
+      "inspected": "header and first two records",
+      "identity_field": "worker_id",
+      "real_name_field_present": false
+    },
+    {
+      "path": "research/workers/personnel_taxonomy_20261021/labels/manual_labels.csv",
+      "commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+      "git_blob": "73ca4226c9f29f9d53bc1ad493dfc90deb6855c3",
+      "inspected": "header and first two records",
+      "identity_field": "worker_id",
+      "real_name_field_present": false
+    },
+    {
+      "path": "tools/thesis_main/analysis/worker_identity.py",
+      "commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+      "git_blob": "ea5c2e2c8ad57413670831135491e4e31d4746fe",
+      "inspected": "complete code",
+      "identity_rule": "W-prefixed/padded number -> canonical numeric ID; no name map"
+    }
+  ],
+  "frozen_snapshot_identity": "worker and worker_id are Wxxx; object_id links exact annotation rather than a person name",
+  "report_text": "本轮实际使用的楼外标签、画像表和冻结原答使用匿名人员编号 Wxxx，没有可用于本次表格的姓名字段；沿用编号，不另造姓名。",
+  "scope": "Checked the active input contracts and cited label/profile headers; not a claim that no external private name mapping could exist.",
+  "member_union_rule": "Coverage union per fold/direction is not one actual simultaneous team; event_id joins exact D/X/Y/Z."
+}

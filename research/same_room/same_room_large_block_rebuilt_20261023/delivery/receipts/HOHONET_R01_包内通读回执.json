@@ -1,0 +1,1346 @@
+{
+  "zip": "deliverables/HOHONET_rebuilt_20261023/HOHONET_R01_冻结精确ABC设计与执行代码.zip",
+  "bytes": 25831011,
+  "sha256": "ab9ba4fcf4b99263c48036b6e78a5aeb79b6f5ea232227ae5f84108e879ca5de",
+  "members": [
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/R01_README_ZH.md",
+      "bytes": 1401
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/CAPACITY_CONFIGURATIONS.csv",
+      "bytes": 1413220,
+      "rows": 2825,
+      "fields": [
+        "direction_id",
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "groups",
+        "ordinary_comparable",
+        "scope_comparable",
+        "image_a",
+        "image_b",
+        "source_class",
+        "target_class",
+        "source_role",
+        "target_role",
+        "source_role_key",
+        "target_role_key",
+        "source_n",
+        "target_n",
+        "common_n",
+        "known_common_n",
+        "unknown_members",
+        "strict_m_max",
+        "has_m_gt4",
+        "capacity_reason",
+        "source_members",
+        "target_members",
+        "config_id",
+        "m",
+        "n",
+        "D_n",
+        "m_over_n",
+        "finite_event_space",
+        "enumerate_all"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/CAPACITY_DIRECTIONS.csv",
+      "bytes": 1464452,
+      "rows": 3254,
+      "fields": [
+        "direction_id",
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "groups",
+        "ordinary_comparable",
+        "scope_comparable",
+        "image_a",
+        "image_b",
+        "source_class",
+        "target_class",
+        "source_role",
+        "target_role",
+        "source_role_key",
+        "target_role_key",
+        "source_n",
+        "target_n",
+        "common_n",
+        "known_common_n",
+        "unknown_members",
+        "strict_m_max",
+        "has_m_gt4",
+        "capacity_reason",
+        "source_members",
+        "target_members"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/CLASS_ROLES_AND_MEMBERS.csv",
+      "bytes": 94450,
+      "rows": 182,
+      "fields": [
+        "method",
+        "condition",
+        "heldout_building",
+        "tier",
+        "class_id",
+        "selected_family",
+        "parent_class",
+        "members",
+        "people",
+        "history_images_min",
+        "history_buildings_min",
+        "history_records_sum",
+        "turn_history_mean",
+        "short_history_mean",
+        "redundancy_history_mean",
+        "area_history_mean",
+        "height_history_mean",
+        "simple_turn_history_mean",
+        "complex_turn_history_mean",
+        "complex_short_history_mean",
+        "q_history_mean",
+        "q_downside_mean",
+        "t_history_mean",
+        "turn_history_rank_in_fold",
+        "complex_turn_history_rank_in_fold",
+        "redundancy_history_rank_in_fold",
+        "q_history_rank_in_fold",
+        "t_history_rank_in_fold",
+        "role_zh",
+        "role_alignment_key",
+        "turn_center_order",
+        "q_center_order",
+        "role_definition",
+        "class_fold_key"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/CONFIGURATION_COVERAGE.csv",
+      "bytes": 1635090,
+      "rows": 2825,
+      "fields": [
+        "direction_id",
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "groups",
+        "ordinary_comparable",
+        "scope_comparable",
+        "image_a",
+        "image_b",
+        "source_class",
+        "target_class",
+        "source_role",
+        "target_role",
+        "source_role_key",
+        "target_role_key",
+        "source_n",
+        "target_n",
+        "common_n",
+        "known_common_n",
+        "unknown_members",
+        "strict_m_max",
+        "has_m_gt4",
+        "capacity_reason",
+        "source_members",
+        "target_members",
+        "config_id",
+        "m",
+        "n",
+        "D_n",
+        "m_over_n",
+        "finite_event_space",
+        "enumerate_all",
+        "selected_unique_events",
+        "fraction_finite_space",
+        "coverage_scheme",
+        "unique_anchor_ids",
+        "D_unique_workers",
+        "X_unique_workers",
+        "Y_unique_workers",
+        "Z_unique_workers"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/DESIGN_MANIFEST.json",
+      "bytes": 6735,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/DESIGN_PATH_LINKS.csv.gz",
+      "bytes": 1400351,
+      "rows": 67800,
+      "fields": [
+        "event_id",
+        "config_id",
+        "direction_id",
+        "pair_key",
+        "method",
+        "anchor_id",
+        "background_order",
+        "background_path_id",
+        "m",
+        "n",
+        "D_n",
+        "nominal_A_role",
+        "origin"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/DESIGN_PLAN_ZH.md",
+      "bytes": 4641
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/DESIGN_SUPPORT_SUMMARY.csv",
+      "bytes": 279,
+      "rows": 4,
+      "fields": [
+        "method",
+        "ordinary_comparable",
+        "pairs",
+        "buildings",
+        "directions",
+        "configurations",
+        "m_min",
+        "m_max",
+        "n_min",
+        "n_max",
+        "events"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/ENDPOINT_REQUESTS.csv.gz",
+      "bytes": 9292049,
+      "rows": 311333,
+      "fields": [
+        "pool_id",
+        "team_key",
+        "n",
+        "member_workers",
+        "member_object_ids",
+        "design_version",
+        "input_commit"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/FIXED_A_SCALE_PATHS.csv.gz",
+      "bytes": 514072,
+      "rows": 17784,
+      "fields": [
+        "fixed_A_path_id",
+        "event_id",
+        "pair_key",
+        "method",
+        "direction_id",
+        "anchor_id",
+        "n",
+        "m",
+        "nominal_A_role",
+        "fixed_A_members",
+        "nominal_X_members",
+        "background_order"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/FROZEN_COMMON_CLASS_MEMBERS.csv.gz",
+      "bytes": 142107,
+      "rows": 6252,
+      "fields": [
+        "design_version",
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "worker_id",
+        "class_id",
+        "role_zh",
+        "role_alignment_key",
+        "object_id_a",
+        "object_id_b",
+        "pool_id_a",
+        "pool_id_b",
+        "q_history",
+        "t_history",
+        "turn_history",
+        "short_history",
+        "complex_turn_history",
+        "redundancy_history",
+        "allowed_block"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/FULL_READ_RECEIPT.json",
+      "bytes": 1490,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/INPUT_COMMON_POOL_CHECKS.csv",
+      "bytes": 30083,
+      "rows": 310,
+      "fields": [
+        "pair_key",
+        "method",
+        "common_n",
+        "known_common_n",
+        "unknown_n",
+        "formal_intersection_exact"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/INPUT_INDEX.csv",
+      "bytes": 1825,
+      "rows": 9,
+      "fields": [
+        "path",
+        "bytes",
+        "sha256",
+        "input_commit"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/LEGALITY_RECEIPT.json",
+      "bytes": 590,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/MEMBER_COVERAGE.csv.gz",
+      "bytes": 636954,
+      "rows": 153266,
+      "fields": [
+        "config_id",
+        "pair_key",
+        "method",
+        "building",
+        "source_class",
+        "target_class",
+        "m",
+        "n",
+        "block",
+        "worker_id",
+        "events_containing",
+        "events_denominator"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/ROLE_DIRECTION_SUPPORT.csv",
+      "bytes": 4056,
+      "rows": 33,
+      "fields": [
+        "method",
+        "ordinary_comparable",
+        "source_role_key",
+        "target_role_key",
+        "pairs",
+        "buildings",
+        "events",
+        "configurations",
+        "m_min",
+        "m_max",
+        "n_min",
+        "n_max"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/SEMI_SUPPORT_CAPACITY.csv",
+      "bytes": 245,
+      "rows": 2,
+      "fields": [
+        "image_a",
+        "image_b",
+        "method",
+        "common_n",
+        "known_n",
+        "counts",
+        "m_max",
+        "groups",
+        "scope_comparable"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/STRICT_ABC_EVENTS.csv.gz",
+      "bytes": 10617079,
+      "rows": 62676,
+      "fields": [
+        "event_id",
+        "design_version",
+        "input_commit",
+        "relation_version",
+        "config_id",
+        "direction_id",
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "image_a",
+        "image_b",
+        "image_id_a",
+        "image_id_b",
+        "pool_id_a",
+        "pool_id_b",
+        "reference_id_a",
+        "reference_id_b",
+        "groups",
+        "ordinary_comparable",
+        "scope_comparable",
+        "relation_tier",
+        "layer_a",
+        "layer_b",
+        "difficulty_a",
+        "difficulty_b",
+        "selected_family",
+        "source_class",
+        "target_class",
+        "source_role",
+        "target_role",
+        "source_role_key",
+        "target_role_key",
+        "source_class_fold_key",
+        "target_class_fold_key",
+        "m",
+        "n",
+        "D_n",
+        "m_over_n",
+        "D_members",
+        "X_members",
+        "Y_members",
+        "Z_members",
+        "A_members",
+        "B_members",
+        "C_members",
+        "source_n",
+        "target_n",
+        "common_n",
+        "known_common_n",
+        "unknown_members",
+        "D_unknown_n",
+        "D_class_counts",
+        "anchor_id",
+        "background_order",
+        "path_id",
+        "first_origin",
+        "finite_event_space",
+        "event_weight_within_config",
+        "canonical_xy_order",
+        "complete_enumeration_config",
+        "q_D",
+        "q_D_known_n",
+        "q_D_full_known",
+        "t_D",
+        "t_D_known_n",
+        "t_D_full_known",
+        "q_X",
+        "q_X_known_n",
+        "q_X_full_known",
+        "t_X",
+        "t_X_known_n",
+        "t_X_full_known",
+        "q_Y",
+        "q_Y_known_n",
+        "q_Y_full_known",
+        "t_Y",
+        "t_Y_known_n",
+        "t_Y_full_known",
+        "q_Z",
+        "q_Z_known_n",
+        "q_Z_full_known",
+        "t_Z",
+        "t_Z_known_n",
+        "t_Z_full_known",
+        "three_blocks_q_full_known",
+        "three_blocks_t_full_known",
+        "block_history_semantics",
+        "team_A_a",
+        "team_key_A_a",
+        "team_B_a",
+        "team_key_B_a",
+        "team_C_a",
+        "team_key_C_a",
+        "team_A_b",
+        "team_key_A_b",
+        "team_B_b",
+        "team_key_B_b",
+        "team_C_b",
+        "team_key_C_b"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/code/build_strict_abc_design.py",
+      "bytes": 23997
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "bytes": 326510,
+      "rows": 5456,
+      "fields": [
+        "worker_id",
+        "turn_history",
+        "short_history",
+        "redundancy_history",
+        "area_history",
+        "height_history",
+        "simple_turn_history",
+        "complex_turn_history",
+        "complex_short_history",
+        "n_records",
+        "n_images",
+        "n_buildings",
+        "origin",
+        "n_quality_usable",
+        "n_independent_vote_eligible",
+        "simple_images",
+        "simple_buildings",
+        "complex_images",
+        "complex_buildings",
+        "base_supported",
+        "context_supported",
+        "condition",
+        "method",
+        "heldout_building",
+        "selected_family",
+        "coarse_label",
+        "fine_label",
+        "known",
+        "missing_reason",
+        "coarse_k",
+        "fine_k",
+        "label_stage",
+        "q_history",
+        "q_images",
+        "q_buildings",
+        "q_downside",
+        "t_history",
+        "t_images",
+        "t_buildings",
+        "qt_supported"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/CROSS_MODULE_RELATIONS.json",
+      "bytes": 1440,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/CURRENT_MANUAL_FOLD_CENTERS.csv",
+      "bytes": 125330,
+      "rows": 371,
+      "fields": [
+        "method",
+        "condition",
+        "heldout_building",
+        "tier",
+        "class_id",
+        "selected_family",
+        "parent_class",
+        "members",
+        "people",
+        "history_images_min",
+        "history_buildings_min",
+        "history_records_sum",
+        "turn_history_mean",
+        "short_history_mean",
+        "redundancy_history_mean",
+        "area_history_mean",
+        "height_history_mean",
+        "simple_turn_history_mean",
+        "complex_turn_history_mean",
+        "complex_short_history_mean",
+        "q_history_mean",
+        "q_downside_mean",
+        "t_history_mean",
+        "turn_history_rank_in_fold",
+        "complex_turn_history_rank_in_fold",
+        "redundancy_history_rank_in_fold",
+        "q_history_rank_in_fold",
+        "t_history_rank_in_fold"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/CURRENT_MANUAL_LABELS_LOBO.csv",
+      "bytes": 903736,
+      "rows": 2728,
+      "fields": [
+        "worker_id",
+        "turn_history",
+        "short_history",
+        "redundancy_history",
+        "area_history",
+        "height_history",
+        "simple_turn_history",
+        "complex_turn_history",
+        "complex_short_history",
+        "n_records",
+        "n_images",
+        "n_buildings",
+        "origin",
+        "n_quality_usable",
+        "n_independent_vote_eligible",
+        "simple_images",
+        "simple_buildings",
+        "complex_images",
+        "complex_buildings",
+        "base_supported",
+        "context_supported",
+        "condition",
+        "method",
+        "heldout_building",
+        "selected_family",
+        "coarse_label",
+        "fine_label",
+        "known",
+        "missing_reason",
+        "coarse_k",
+        "fine_k",
+        "label_stage",
+        "q_history",
+        "q_images",
+        "q_buildings",
+        "q_downside",
+        "t_history",
+        "t_images",
+        "t_buildings",
+        "qt_supported"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/DIRECT_PAIR_CLASS_MEMBERS.csv",
+      "bytes": 395669,
+      "rows": 1119,
+      "fields": [
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "image_a",
+        "image_b",
+        "groups",
+        "ordinary_comparable",
+        "class_id",
+        "n_common",
+        "members",
+        "selected_family",
+        "turn_center_order",
+        "turn_history_mean",
+        "short_history_mean",
+        "complex_turn_history_mean",
+        "complex_short_history_mean",
+        "redundancy_history_mean",
+        "area_history_mean",
+        "height_history_mean",
+        "q_history_mean",
+        "q_downside_mean",
+        "t_history_mean"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/DIRECT_PAIR_CURRENT_CLASS_CAPACITY.csv",
+      "bytes": 250816,
+      "rows": 310,
+      "fields": [
+        "pair_key",
+        "method",
+        "condition",
+        "building",
+        "image_a",
+        "image_b",
+        "image_id_a",
+        "image_id_b",
+        "pool_id_a",
+        "pool_id_b",
+        "reference_id_a",
+        "reference_id_b",
+        "groups",
+        "physical_adopted",
+        "scope_comparable",
+        "substantive_conflict",
+        "oos_pending",
+        "relation_tier",
+        "layer_a",
+        "layer_b",
+        "difficulty_a",
+        "difficulty_b",
+        "pool_n_a",
+        "pool_n_b",
+        "common_n",
+        "known_common_n",
+        "unknown_common_n",
+        "n_available_classes",
+        "n_classes_with_ge2",
+        "selected_family",
+        "coarse_k",
+        "fine_k",
+        "class_counts",
+        "common_members",
+        "unknown_members",
+        "ordinary_comparable"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/FOLD_CLASS_DEFINITIONS.csv",
+      "bytes": 247250,
+      "rows": 720,
+      "fields": [
+        "method",
+        "condition",
+        "heldout_building",
+        "tier",
+        "class_id",
+        "selected_family",
+        "parent_class",
+        "members",
+        "people",
+        "history_images_min",
+        "history_buildings_min",
+        "history_records_sum",
+        "turn_history_mean",
+        "short_history_mean",
+        "redundancy_history_mean",
+        "area_history_mean",
+        "height_history_mean",
+        "simple_turn_history_mean",
+        "complex_turn_history_mean",
+        "complex_short_history_mean",
+        "q_history_mean",
+        "q_downside_mean",
+        "t_history_mean",
+        "turn_history_rank_in_fold",
+        "complex_turn_history_rank_in_fold",
+        "redundancy_history_rank_in_fold",
+        "q_history_rank_in_fold",
+        "t_history_rank_in_fold"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/design/inputs/relations.json",
+      "bytes": 1874246,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/ENGINE_CONTRACT_ZH.md",
+      "bytes": 7346
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/INHERITED_ENGINE_INPUT_INDEX.json",
+      "bytes": 30088,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/RECOVERED_ENGINE_INPUTS.json",
+      "bytes": 52680,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/RUNTIME_SOURCE_MANIFEST.json",
+      "bytes": 35565,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/check_smoke_compatibility.py",
+      "bytes": 1818
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/compare_event_geometry.py",
+      "bytes": 12351
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/lib/__init__.py",
+      "bytes": 21
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/lib/misc/__init__.py",
+      "bytes": 0
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/lib/misc/panostretch.py",
+      "bytes": 5688
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/same_room/same_room_current_classes_v2_20261023/code/engine/new_team_engine.py",
+      "bytes": 10009
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip",
+      "bytes": 42773
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py",
+      "bytes": 4505
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_global_composition_20261021/composition/global_study.py",
+      "bytes": 14132
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_global_composition_20261021/composition/run_endpoints.py",
+      "bytes": 16808
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_interchangeability_20261020/analysis/composition/fusion_runner.py",
+      "bytes": 8302
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_interchangeability_20261020/analysis/composition/geometry_diagnostics.py",
+      "bytes": 12714
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_interchangeability_20261020/analysis/composition/summarize_grid.py",
+      "bytes": 37632
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_interchangeability_followup_20261020/audit_corner/corner_distance.py",
+      "bytes": 5213
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_population_curves_v2_20261023/code/run_prefix_endpoints.py",
+      "bytes": 16200
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/personnel_profiles_composition_20261020/source/tables/profiles/record_index.csv.gz",
+      "bytes": 579610,
+      "rows": 9217,
+      "fields": [
+        "object_id",
+        "worker_id",
+        "condition",
+        "origin",
+        "image_id",
+        "image_code",
+        "building_id",
+        "panel",
+        "Q_panel",
+        "quality_use",
+        "quality_usable",
+        "task_key",
+        "time_task_key",
+        "chosen_target_id",
+        "reference_id",
+        "reference_version",
+        "cleaning_disposition",
+        "source_pool_eligible",
+        "pool_analysis_eligible",
+        "independent_vote_eligible",
+        "image_quality_gate",
+        "quality_exclusion_reasons",
+        "scope_response",
+        "scope_opportunity",
+        "scope_correct",
+        "difficulty_class",
+        "difficulty_reference_match",
+        "scene",
+        "doorway_status",
+        "B8L2",
+        "D10",
+        "B8L2_peer_recomputed",
+        "B8L2_rank_recomputed",
+        "source_active_time_seconds",
+        "target_matched_time_seconds",
+        "time_source_kind",
+        "log_time_peer_recomputed"
+      ]
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "bytes": 1464097,
+      "json_eof": true
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/fusion_engine.py",
+      "bytes": 16075
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/pool_io.py",
+      "bytes": 9054
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/label_studio/__init__.py",
+      "bytes": 46
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/label_studio/panorama_studio/build.py",
+      "bytes": 9914
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/label_studio/panorama_studio/geometry.py",
+      "bytes": 15927
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/__init__.py",
+      "bytes": 29
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/__init__.py",
+      "bytes": 46
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/active_log_utils.py",
+      "bytes": 8974
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/analyze_new_manual_20260921.py",
+      "bytes": 17079
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/analyze_worker_behavior_mixture_exploratory.py",
+      "bytes": 37344
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_annotation_reanalysis_claims_20260905.py",
+      "bytes": 15497
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_annotation_research_data_20260905.py",
+      "bytes": 98718
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_building_convergence_20260908.py",
+      "bytes": 24369
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_collection_plan_20260921.py",
+      "bytes": 20978
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_rq1_corrections_20260826.py",
+      "bytes": 41586
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_supervisor_gt_sensitivity_20260922.py",
+      "bytes": 24921
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/audit_worker_manual_strata_exploratory.py",
+      "bytes": 36470
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_calculation_status_20261016.py",
+      "bytes": 5123
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_mainline_status_20261016.py",
+      "bytes": 11228
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_shared_descriptive_20261016.py",
+      "bytes": 2012
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_shared_snapshot_20261016.py",
+      "bytes": 24363
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_usage_coverage_20261016.py",
+      "bytes": 9600
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/b8l2_usage_snapshot_20261016.py",
+      "bytes": 17614
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/build_order_gt_screened_20260928.py",
+      "bytes": 16562
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/build_order_studio_20260926.py",
+      "bytes": 17831
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_numeric_research/common.py",
+      "bytes": 5917
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/__init__.py",
+      "bytes": 69
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/analysis_extensions.py",
+      "bytes": 6246
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/composition_sensitivity.py",
+      "bytes": 4196
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/diagnostics.py",
+      "bytes": 11866
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/extra_checks.py",
+      "bytes": 4212
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/history_analysis.py",
+      "bytes": 16327
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/local_points.py",
+      "bytes": 14571
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/pipeline.py",
+      "bytes": 18180
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/clustering_release/release.py",
+      "bytes": 13265
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/consensus_delivery_20261008.py",
+      "bytes": 17642
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/consensus_region_20260923.py",
+      "bytes": 10462
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/correspondence_expanded_20261007.py",
+      "bytes": 10834
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/correspondence_gap_20261007.py",
+      "bytes": 37912
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/current_annotation_context_20261017.py",
+      "bytes": 13273
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_inventory_20261015.py",
+      "bytes": 6530
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_pool_gate_20261015.py",
+      "bytes": 8452
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_reference_audit_20261015.py",
+      "bytes": 10694
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_same_room_20261015.py",
+      "bytes": 7873
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_statistics_20261015.py",
+      "bytes": 19119
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/descriptive_statistics_current_20261015.py",
+      "bytes": 16315
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/difficulty_coarse_closeout_20261014.py",
+      "bytes": 7538
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/difficulty_target_integration_20261015.py",
+      "bytes": 13680
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/difficulty_user_revision_20261015.py",
+      "bytes": 10522
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/direct_fusion_20261007.py",
+      "bytes": 27570
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/finalize_review_20260928.py",
+      "bytes": 51388
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/fit_worker_evidence_strata_20260908.py",
+      "bytes": 14886
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/fixed_identity_location_20261007.py",
+      "bytes": 14533
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/full_uncertainty/full_uncertainty_common.py",
+      "bytes": 26980
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/full_uncertainty/materialize_uncertainty_substrate.py",
+      "bytes": 102395
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/geometry_cluster_v2.py",
+      "bytes": 12130
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/geometry_consensus/__init__.py",
+      "bytes": 227
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/geometry_consensus/medoid.py",
+      "bytes": 2123
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/geometry_consensus/pairwise.py",
+      "bytes": 9425
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/geometry_consensus/representation.py",
+      "bytes": 14866
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/global_pair_consensus_20261004.py",
+      "bytes": 16545
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/gt_order_visibility_20261009.py",
+      "bytes": 13749
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/layout_metric_probe_20260926.py",
+      "bytes": 23343
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/layout_reliability_20261005/__init__.py",
+      "bytes": 84
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/layout_reliability_20261005/arc_consensus.py",
+      "bytes": 15404
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/layout_reliability_20261005/continuous_metrics.py",
+      "bytes": 9505
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/lee_tile_stage1_20261002.py",
+      "bytes": 18540
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/materialize_annotation_research_prework_statistics_20260905.py",
+      "bytes": 69470
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/materialize_historical_uncertainty_k_curves_20260829.py",
+      "bytes": 102512
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/materialize_model_gt_threshold_screen.py",
+      "bytes": 16095
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/materialize_paper_a_data_discovery.py",
+      "bytes": 43532
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/order_free_cluster_holdout_20260908.py",
+      "bytes": 17038
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/paired_split_research/release_review.py",
+      "bytes": 13423
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/paired_split_research/study.py",
+      "bytes": 18711
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/point_pattern_demo_20261003.py",
+      "bytes": 8893
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/point_route_panel_20261005.py",
+      "bytes": 21870
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/population_gap_20261007.py",
+      "bytes": 18469
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/preflight_data_20260906.py",
+      "bytes": 7286
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/preflight_statistics_20260906.py",
+      "bytes": 14326
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_b8l2_d10_20261017.py",
+      "bytes": 18089
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_core/__init__.py",
+      "bytes": 692
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_core/active_time.py",
+      "bytes": 24741
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_core/choice_parser.py",
+      "bytes": 13403
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_core/contracts.py",
+      "bytes": 338
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/quality_core/geometry_metrics.py",
+      "bytes": 33931
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/raw_difficulty_time_recompute_20260826.py",
+      "bytes": 15225
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/raw_rq1_recompute_20260826.py",
+      "bytes": 33383
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/receive_order_review_20260928.py",
+      "bytes": 20910
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/refine_review_20261008.py",
+      "bytes": 9287
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/region_mesh.py",
+      "bytes": 913
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/research_artifact_io.py",
+      "bytes": 779
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/research_round_20260929.py",
+      "bytes": 22515
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/review_reconciliation_audit_20260925.py",
+      "bytes": 17895
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/reviewed_manual_20260921.py",
+      "bytes": 13625
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/ring_correspondence_20261007.py",
+      "bytes": 21690
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/same_room_similarity_20261003.py",
+      "bytes": 11218
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/scope_difficulty_review_20261011.py",
+      "bytes": 11383
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/scope_quality_binding_20261016.py",
+      "bytes": 10930
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/scope_quality_scoring_20261016.py",
+      "bytes": 4187
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/scope_reference_reconstruction_20261016.py",
+      "bytes": 15848
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/shared_x_reanalysis_20260922.py",
+      "bytes": 31052
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/simulate_building_holdout_20260908.py",
+      "bytes": 21993
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/structural_consensus_20260926.py",
+      "bytes": 22376
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/union_branch_consensus_20260926.py",
+      "bytes": 13020
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/validate_worker_reuse_20260909.py",
+      "bytes": 40034
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/wall_consensus_b8l2_20261016.py",
+      "bytes": 21792
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/wall_consensus_population_20261014.py",
+      "bytes": 24164
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/wall_consensus_quality_20261015.py",
+      "bytes": 15973
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/wall_consensus_v1_process_20261017.py",
+      "bytes": 27821
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/worker_behavior_time_20260910.py",
+      "bytes": 30251
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/worker_classification_progress_20261014.py",
+      "bytes": 27750
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/worker_reference_feasibility_20260909.py",
+      "bytes": 25428
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/analysis/worker_wq_integration_20261015.py",
+      "bytes": 32857
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/data_prep/__init__.py",
+      "bytes": 59
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/data_prep/consolidate_research_input.py",
+      "bytes": 11385
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/data_prep/materialize_current_research_input.py",
+      "bytes": 12093
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/data_prep/prepare_confirmed_point_calculation_view_20260909.py",
+      "bytes": 12444
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/data_prep/project_public_research_20260929.py",
+      "bytes": 7532
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/tools/thesis_main/local_inputs.py",
+      "bytes": 1851
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/native_team_runner.py",
+      "bytes": 20459
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/requirements.txt",
+      "bytes": 152
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/engine/restore_frozen_sources.py",
+      "bytes": 1729
+    },
+    {
+      "path": "research/same_room/same_room_large_block_rebuilt_20261023/analysis/ANALYSIS_SPECIFICATION.md",
+      "bytes": 3524
+    }
+  ]
+}

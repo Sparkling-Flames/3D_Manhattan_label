@@ -1,0 +1,20 @@
+html { color: #17242b; background: #f4f6f8; }
+body { max-width: 1280px; margin: 2rem auto; padding: 2rem 3rem; background: white; font-family: "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; line-height: 1.8; font-size: 16px; }
+h1 { color: #173f57; line-height: 1.35; border-bottom: 3px solid #347da1; padding-bottom: 0.6rem; }
+h2 { margin-top: 2.4rem; color: #173f57; border-bottom: 1px solid #ccdbe2; }
+h3 { margin-top: 1.8rem; color: #285c72; }
+table { border-collapse: collapse; display: block; overflow-x: auto; margin: 1.1rem 0 1.5rem; font-size: 0.83rem; width: 100%; }
+th, td { border: 1px solid #cbd5db; padding: 0.45rem 0.6rem; vertical-align: top; }
+th { background: #edf4f7; }
+tr:nth-child(even) { background: #f8fafb; }
+img { max-width: 100%; height: auto; }
+figure { margin: 1.5rem 0; }
+figcaption { text-align: center; color: #526771; font-size: .9rem; }
+a { color: #146489; text-underline-offset: .15em; }
+code { background: #f1f4f6; font-size: .89em; overflow-wrap: anywhere; }
+pre { padding: 1rem; background: #f1f4f6; overflow: auto; }
+blockquote { border-left: 4px solid #6c9bb0; margin-left: 0; padding-left: 1rem; }
+#TOC { padding: 1rem 1.4rem; background: #f4f8fa; border: 1px solid #dae5ea; }
+#TOC ul { list-style-type: none; padding-left: 1.2rem; }
+@media(max-width: 750px) { body { margin: 0; padding: 1rem; } }
+@media print { body { padding: 0; background: white; } h2 { break-after: avoid; } table { font-size: 9pt; } a { color: inherit; } }

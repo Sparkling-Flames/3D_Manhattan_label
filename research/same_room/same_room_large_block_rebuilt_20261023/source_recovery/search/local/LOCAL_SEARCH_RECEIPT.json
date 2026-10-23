@@ -1,0 +1,51 @@
+{
+  "SEARCHED_LOCATIONS.csv": {
+    "rows": 2,
+    "fields": [
+      "location",
+      "route",
+      "result",
+      "scope_note"
+    ],
+    "read_to_eof": true
+  },
+  "ACTUAL_ORIGINALS.csv": {
+    "rows": 0,
+    "fields": [
+      "original_path",
+      "recovered_copy",
+      "bytes",
+      "sha256",
+      "source_container",
+      "source_member",
+      "evidence_stage",
+      "original_identity_reason"
+    ],
+    "read_to_eof": true
+  },
+  "ARCHIVE_MEMBER_HITS.csv": {
+    "rows": 2,
+    "fields": [
+      "archive",
+      "member",
+      "stage",
+      "is_original",
+      "reason"
+    ],
+    "read_to_eof": true
+  },
+  "ARCHIVES_INSPECTED.csv": {
+    "rows": 5,
+    "fields": [
+      "archive",
+      "bytes",
+      "sha256",
+      "members",
+      "stage",
+      "target_member_matches",
+      "nested_archives",
+      "new_large_block_original_found"
+    ],
+    "read_to_eof": true
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "event_id": "ABC_0e2d9ba183c4f886c588",
+  "comparison": "CA",
+  "case_category": "equal_turn_step_opposite_Q",
+  "selection": "exploratory outcome-selected mechanism illustration; first prioritize equal nonzero actual turn step with opposite Q and both abs Q > 2; prefer CA then CB then BA; choose widest distinct-pair direction/condition cell, then smallest event_id; never max Q",
+  "selection_is_independent_validation": false,
+  "event_count_is_not_independent_person_repeat": true,
+  "new_fusion": 0,
+  "new_labels": 0,
+  "effect_source": "results/EVENT_Q_STRUCTURE_EFFECTS.csv.gz",
+  "effect_source_sha256": "ab2961a6a1d6d1fc3884797a7cd1d285a36ee599e65522dcf899fead33e30a26",
+  "searched_manual_structure_ordinary_events": 29543,
+  "candidate_counts": [
+    {
+      "category": "equal_turn_step_opposite_Q",
+      "comparison": "CA",
+      "events": 182,
+      "physical_pairs": 20,
+      "buildings": 4
+    },
+    {
+      "category": "opposite_turn_step",
+      "comparison": "CA",
+      "events": 438,
+      "physical_pairs": 25,
+      "buildings": 4
+    },
+    {
+      "category": "equal_turn_step_opposite_Q",
+      "comparison": "CB",
+      "events": 192,
+      "physical_pairs": 18,
+      "buildings": 4
+    },
+    {
+      "category": "opposite_turn_step",
+      "comparison": "CB",
+      "events": 462,
+      "physical_pairs": 21,
+      "buildings": 4
+    },
+    {
+      "category": "equal_turn_step_opposite_Q",
+      "comparison": "BA",
+      "events": 145,
+      "physical_pairs": 18,
+      "buildings": 4
+    },
+    {
+      "category": "opposite_turn_step",
+      "comparison": "BA",
+      "events": 806,
+      "physical_pairs": 21,
+      "buildings": 4
+    }
+  ],
+  "selected_cell": {
+    "source_role_key": "TURN3:常规转折",
+    "target_role_key": "TURN3:较多转折",
+    "difficulty_pair": "简单 / 简单",
+    "ratio_band": "more_than_half",
+    "turn_delta_a": 1.0,
+    "physical_pairs": 4,
+    "buildings": 1,
+    "events": 10
+  },
+  "selected_effects": {
+    "Q_delta_a": 12.96628308122324,
+    "Q_delta_b": -3.859745774539192,
+    "turn_delta_a": 1.0,
+    "turn_delta_b": 1.0
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": "same_room_user_working_classification_20261016_v2",
+  "status": "frozen_for_same_room_and_statistics_consumers",
+  "frozen": true,
+  "supersedes": "v1 development delivery; v2 freezes restored original scope fields and comment exceptions",
+  "original_source": "analysis_results/final_review_summary_20260929/同房分类_原始完整记录.json",
+  "original_csv": "analysis_results/final_review_summary_20260929/同房原分组_完整分类.csv",
+  "relations": "research/same_room/relation_adoption_20261016/relations.json",
+  "original_groups": "research/same_room/relation_adoption_20261016/original_groups.json",
+  "candidate_adoption": "research/same_room/relation_adoption_20261016/candidate_adoption.json",
+  "rules": {
+    "review_status": "provenance only, never admission",
+    "physical": "positive existing group classification; explicit contrary comment/conflict retained",
+    "scopes": "original physical group and user-declared comparison subsets separate; comment repairs audited",
+    "difficulty": "retain original similarity/difference; not a comparison admission gate",
+    "quality": "actual shared quality_usable, own reference, same condition and common people required separately",
+    "time": "source/time-binding gates independent of quality and scope",
+    "closure": "only directly listed group members and explicitly merged group, no cross-group transitive closure"
+  }
+}
