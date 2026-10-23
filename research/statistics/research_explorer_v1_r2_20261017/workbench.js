@@ -6,11 +6,13 @@ const dataset=window.RESEARCH_DATASETS.find(d=>d.release===requestedRelease);
 const SNAPSHOT=dataset?.snapshot;
 const modules={
  overview:['汇报导览','按任务、测量、条件、人员、共识和用途阅读；每步可进入原表与几何。',[]],
+ case_story:['跨专题典型案例','从原图、每人完整标注和保存团队几何查看案例，同时保留总体支持与分母。',[]],
  evidence:['方法与证据','任务适配、质量测量与结构共识：从概念到真实保存案例；不在浏览时重新评分或融合。',[['任务与门洞',null],['质量度量',null],['融合机制',null],['研究支持',null]]],
  conditions:['难度与范围','固定参考结构、条件响应和逐图范围支持分开查看。',[]],
  images:['图片与空间','查看图片、目标空间、原图标注及参考；高级条件收在筛选面板。',[]],
  profiles:['人员画像 · 本轮','Q水平、低尾、时间与难度表现；Manual／Semi分开，审核机会独立解释。',[]],
- taxonomy:['人员分类 · 阶段历史','新分类与混合构成研究已验收，详细展示待接入；本模块保留旧阶段工作标签和原始分母。',[]],
+ personnel_main:['人员研究六步','分类、构成、难度、人数与真实机制；固定图和明细分开。',[]],
+ taxonomy:['人员分类 · 阶段历史','此模块保留旧阶段工作标签和原始分母；新研究见“人员研究六步”。',[]],
  mechanisms:['条件与局部机制 · 10/21','同图、同参考、精确成员和保存节点分别追溯；难度、质量、融合、同房结果各自保留支持与资格。',[]],
  workers:['画像明细与历史','原尺度Q与任务调整Q并列；Scope区分拒绝倾向、历史裁定结局与当前相容机会，不是全量正确率。',[
   ['连续画像与分组','workers__person_profiles_and_evidence'],['原尺度Q与低尾','workers__absolute_Q_training_profiles'],['楼外画像','workers__fold_person_profiles'],['难度与场景','difficulty__worker_strata'],['Scope裁定覆盖','workers__scope_worker_opportunities'],['历史Scope结局','workers__scope_outcome_counts'],['可靠性与排除','workers__record_evidence'],['门洞专项','workers__doorway_specialist_profiles']]],
@@ -56,7 +58,8 @@ const metricHints={
  source_k:['源历史人数 k：预测时已见过的源视角人员数。','这是源视角历史支持量，不是目标图融合团队人数。来源：同房预测合同。'],
  team_k:['融合团队人数 k：当前已纳入共识的真实成员数。','同 k 换组比较保持人数相同，但成员可能不同；不等于源历史人数。来源：融合人数合同。']
 };
-const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(key)}" aria-describedby="metricHint">?</button>`:'';
+const metricHintLabels={};
+const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(metricHintLabels[key]||key)}" aria-describedby="metricHint">?</button>`:'';
 let hintPopover=null,activeHint=null,hintPinned=false;
 function hideHint(){if(activeHint)activeHint.setAttribute('aria-expanded','false');activeHint=null;hintPinned=false;if(hintPopover)hintPopover.hidden=true;}
 function showHint(trigger,detailed){const content=metricHints[trigger.dataset.hint];if(!content||!hintPopover)return; if(activeHint&&activeHint!==trigger)activeHint.setAttribute('aria-expanded','false');activeHint=trigger;hintPinned=detailed;trigger.setAttribute('aria-expanded',String(detailed));hintPopover.textContent=detailed?content.join(' '):content[0];hintPopover.hidden=false;const rect=trigger.getBoundingClientRect(),width=hintPopover.offsetWidth,height=hintPopover.offsetHeight;hintPopover.style.left=Math.max(8,Math.min(rect.left,innerWidth-width-8))+'px';hintPopover.style.top=(rect.bottom+height+8<innerHeight?rect.bottom+6:Math.max(8,rect.top-height-6))+'px';}
@@ -183,6 +186,8 @@ async function render(){
  $('notice').innerHTML='';state.rows=[];state.meta=null;
  try{
   if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
+  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
+  if(state.module==='case_story'){await CaseStory.render($('content'),{release:dataset.release,assets,deepLink:new URLSearchParams(location.hash.slice(1)),imageDetail,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,isCurrent:()=>token===state.loadToken,navigate:patch=>route(patch)});return;}
   if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
   if(['patterns','multiview'].includes(state.module)){if(dataset.release!=='v2'){ $('content').textContent='该交互使用v2保存结果，请切换到v2。';return; }await ResearchComparison.render($('content'),{mode:state.module,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,snapshot:SNAPSHOT,release:dataset.release,deepLink:new URLSearchParams(location.hash.slice(1)),onNavigate:patch=>route(patch),onContext:context=>{if(context.blind)$('activeFilters').textContent='盲审模式 · 人员身份、类别与分数隐藏；实际上下文随反馈导出。';else activeContext();}});return;}
   if(state.module==='overview'){renderOverview();return;}
@@ -325,7 +330,7 @@ function renderOverview(){
  const cards=overview.sections.map((item,i)=>`<section class="panel briefing-step"><p class="eyebrow">${esc(item.title)}</p><h2>${esc(item.finding)}</h2><figure>${item.visual?`<a href="${esc(item.visual)}" target="_blank" rel="noopener"><img class="briefing-visual" src="${esc(item.visual)}" alt="${esc(item.visual_alt)}" loading="lazy"></a>`:''}<figcaption>${esc(item.example||'查看保存实例')} · 固定保存实例，不随明细筛选变化。</figcaption></figure><p class="scope-label"><strong>支持范围：</strong>${esc(item.support)}</p><p class="scope-label"><strong>例外：</strong>${esc(item.counterexample)}</p><div class="actions"><button data-module="${steps[i]||'data'}">查看实例与图表</button>${item.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div>${item.source?`<a class="briefing-source" href="${esc(item.source)}">来源与方法说明</a>`:''}</section>`).join('');
  $('content').innerHTML=`<div class="briefing-intro"><p class="eyebrow">六步汇报路径 · ${esc(dataset.release)} · ${esc(SNAPSHOT)}</p><h2>从真实作答走到共识与用途</h2><p>每步给出发现、实例、支持范围和例外。按钮进入同一研究台的原表和几何；导览本身是固定证据，不随明细筛选重新计算。</p><div class="actions"><button class="primary" data-module="images">从全景和原答开始</button><button data-module="data">进入数据浏览</button></div><p class="hint-glossary">同名符号依上下文：几何自遮挡 H ${hintButton('occlusion_h')} / 高度损失 H ${hintButton('height_loss_h')}；方向残差 D ${hintButton('direction_d')} / 共同背景 D ${hintButton('background_d')}；源历史人数 k ${hintButton('source_k')} / 融合团队人数 k ${hintButton('team_k')}。</p></div>`+
  metricCards([['作答库存',summary.raw_records,'份；包含非主质量记录'],['研究图片',summary.images,'张；不等于过程池数'],['当前质量可用',summary.quality_records,'份；各专题分母另列'],['保留人员',summary.retained_people,'人；不等于画像训练人数']])+
- `<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <a href="../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md">人员研究主报告</a>。历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
+ `<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <button data-module="case_story">直接查看跨专题案例的原答与保存融合</button> <button data-module="personnel_main">进入人员研究六步</button> · <a href="../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md">人员研究主报告</a>。历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
  state.rows=[];
 }
 function renderPlan(){const plans=assets.supplement_plan?.plans;
@@ -429,6 +434,11 @@ async function init(){
   [index,assets,overview]=await Promise.all([read(dataset.tablesIndex),read(dataset.resourcesIndex),read(dataset.overview)]);
   if(index.snapshot_id!==SNAPSHOT||assets.snapshot_id!==SNAPSHOT||overview.metadata?.snapshot_id!==SNAPSHOT||index.data_release!==dataset.release||assets.data_release!==dataset.release)throw Error('数据版本、消费索引、资源与概要快照不一致，停止混合加载。');
   if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对Q、同任务相对Q、时间与难度表现是探索性画像；Semi和scope各自保留机会分母。10-20人员工作标签仅为研究参照，不是生产分类。';modules.fusion[1]='v2组合人数支持、10-20类别块替换与角点证据；历史融合过程仍属v1入口。';}
+  if(dataset.release==='v2'){
+   const personnel=PersonnelMain.loadDocs(index);
+   modules.personnel_main[2]=personnel.api.groups.map(g=>[g.title,null]);
+   for(const term of personnel.glossary.terms){metricHints[term.id]=[term.short,[term.detail,term.unit&&`单位：${term.unit}`,term.denominator_or_support&&`支持/分母：${term.denominator_or_support}`,term.avoid_confusion&&`注意：${term.avoid_confusion}`].filter(Boolean).join(' ')];metricHintLabels[term.id]=term.label;}
+  }
   for(const image of assets.images){imageMap.set(image.image_id,image);imageMap.set(image.image_code,image);}
   const scores=await table('quality__shared_records');scoreMap=new Map(scores.map(r=>[r.object_id,r]));
   try{state.notes=JSON.parse(localStorage.getItem('research-workbench:'+SNAPSHOT)||'{}');}catch{state.notes={};}

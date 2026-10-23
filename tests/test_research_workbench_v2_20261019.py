@@ -121,6 +121,29 @@ def test_briefing_tables_match_frozen_sources():
             assert sum(1 for _ in rows) == spec['rows'], spec['id']
 
 
+def test_personnel_main_interface_is_complete_and_source_bound():
+    source = builder.PERSONNEL_MAIN
+    interface = builder.read(source / 'CONSUMER_INTERFACE.json')
+    figures = builder.read(source / 'FIGURE_MANIFEST.json')
+    glossary = builder.read(source / 'GLOSSARY.json')
+    ids = {term['id'] for term in glossary['terms']}
+    assert interface['data_release'] == 'v2'
+    assert interface['version'] == figures['version']
+    assert [g['id'] for g in interface['groups']] == [f'F{i}' for i in range(1, 7)]
+    assert len(figures['figures']) == 16 and len(glossary['terms']) == 68
+    for figure in figures['figures']:
+        assert set(figure['term_ids']) <= ids
+        assert (source / figure['image']).is_file()
+        assert (source / figure['vector']).is_file()
+        for path in figure['data_paths']:
+            assert (source / path).is_file()
+    for spec in interface['tables']:
+        with (builder.ROOT / spec['path']).open(encoding='utf-8-sig', newline='') as stream:
+            rows = csv.reader(stream)
+            assert next(rows) == spec['columns']
+            assert sum(1 for _ in rows) == spec['rows']
+
+
 def test_find_photo_normalizes_windows_relative_path(tmp_path):
     image = tmp_path / 'data' / 'mp3d_layout' / 'valid' / 'img' / 'W100.png'
     image.parent.mkdir(parents=True)

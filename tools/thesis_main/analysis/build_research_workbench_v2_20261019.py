@@ -1,6 +1,7 @@
 """将 v2 实际统计与最终几何接入已有离线研究台；不重评分或融合。"""
 import gzip
 import json
+import csv
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +24,10 @@ TAXONOMY = ROOT / 'research/workers/personnel_taxonomy_20261021'
 MECHANISMS = PAGE / 'MECHANISM_INTERFACE_20261021.json'
 SAME_ROOM_REVIEW = PAGE / 'SAME_ROOM_REVIEW_INTERFACE_20261021.json'
 BRIEFING = PAGE / 'BRIEFING_TABLES_20261023.json'
+PERSONNEL_MAIN = ROOT / 'research/workers/personnel_main_figures_v2_20261023'
+POPULATION_CASES = ROOT / 'research/workers/personnel_population_curves_v2_20261023/cases'
+SAME_ROOM_REBUILT = ROOT / 'research/same_room/same_room_large_block_rebuilt_20261023'
+DOORWAY_CASE = POPULATION_CASES / 'doorway_full_pool_20261024/CASE_DATA.json'
 MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
                     'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
                     'background_buildings.csv']
@@ -618,6 +623,123 @@ def pack_personnel_results(evidence, resources):
     return payload
 
 
+def pack_case_story(resources):
+    """只搬运已保存端点，按对象身份绑定当前离线原答。"""
+    image_index = {image['image_code']: image for image in resources['images']}
+    details = {}
+    cases = {}
+
+    def append(case_id, image, label, state, score, source):
+        candidate = state['candidate']
+        assignments = state['assignments']
+        if image not in details:
+            details[image] = read(PAGE / 'v2-resources' / image_index[image]['detail'])
+        answers = {answer['object_id']: answer for answer in details[image]['annotations']}
+        if (not candidate.get('points') or not candidate.get('footprint')
+                or any(a['id'] not in answers or answers[a['id']]['worker_id'] != a['worker'] for a in assignments)
+                or score.get('image') != image):
+            raise ValueError('case story geometry/identity drift: ' + case_id + ' ' + image + ' ' + label)
+        cases.setdefault(case_id, []).append(dict(image=image, label=label,
+            team_key=score['team_key'], reference_id=score['reference_id'],
+            members=[dict(worker_id=a['worker'], object_id=a['id']) for a in assignments],
+            points=candidate['points'], footprint=candidate['footprint'],
+            order_status=candidate.get('order_status'), ring_confirmed=candidate.get('ring_confirmed'),
+            B8L2=float(score['B8L2']) if score.get('B8L2') not in ('', None) else None,
+            D10=float(score['D10']) if score.get('D10') not in ('', None) else None,
+            score_status=score.get('score_status'), source=source))
+
+    for case_id, folder in [('g130', SAME_ROOM_REBUILT / 'engine/first_complete_event'),
+                            ('g172', SAME_ROOM_REBUILT / 'cases/structure_mechanism')]:
+        with gzip.open(folder / 'STRICT_ABC_EVENT.csv.gz', 'rt', encoding='utf-8-sig', newline='') as stream:
+            design = next(csv.DictReader(stream))
+        if case_id == 'g130':
+            state_files = sorted((folder / 'native/parts').rglob('*.geometry_state.jsonl.gz'))
+            score_path = folder / 'CASE_SIX_ENDPOINTS_READABLE.csv'
+        else:
+            state_files = [folder / 'SIX_TEAM_NATIVE_GEOMETRY.jsonl.gz']
+            score_path = folder / 'SIX_TEAM_NATIVE_SCALARS.csv.gz'
+        states = {}
+        for path in state_files:
+            with gzip.open(path, 'rt', encoding='utf-8') as stream:
+                for line in stream:
+                    item = json.loads(line)
+                    if item['team_key'] in states:
+                        raise ValueError('duplicate saved case team: ' + item['team_key'])
+                    states[item['team_key']] = item
+        opener = gzip.open if score_path.suffix == '.gz' else open
+        with opener(score_path, 'rt', encoding='utf-8-sig', newline='') as stream:
+            scores = {row['team_key']: row for row in csv.DictReader(stream)}
+        for view in 'ab':
+            image = design['image_' + view]
+            for arm in 'ABC':
+                key = design[f'team_key_{arm}_{view}']
+                item, score = states[key], scores[key]
+                if item['image'] != image or (score.get('reference_id') and item['reference_id'] != score['reference_id']):
+                    raise ValueError('saved case reference drift: ' + key)
+                score['reference_id'] = item['reference_id']
+                append(case_id, image, arm, item['full_state'], score,
+                       score_path.relative_to(ROOT).as_posix())
+        if len(cases[case_id]) != 6:
+            raise ValueError('incomplete saved ABC case: ' + case_id)
+
+    for case_id, image, selected_k in [('uw12', 'UwV83HsGsw3-12', (3, 4, 5, 6)),
+                                       ('b633', 'B6ByNegPMKs-33', (10, 20))]:
+        folder = POPULATION_CASES / image
+        packed = read(folder / 'CASE_GEOMETRY.json.gz')
+        with (folder / 'PATH_SCALARS.csv').open(encoding='utf-8-sig', newline='') as stream:
+            scores = {int(row['k']): row for row in csv.DictReader(stream)
+                      if row['path_id'] == packed['case']['path_id']}
+        for k in selected_k:
+            score = scores[k]
+            if score['image'] != image:
+                raise ValueError('saved population case image drift: ' + image)
+            append(case_id, image, f'n={k}', packed['states'][str(k)], score,
+                   (folder / 'PATH_SCALARS.csv').relative_to(ROOT).as_posix())
+    doorway = read(DOORWAY_CASE)
+    image = doorway['image']
+    if doorway['schema'] != 'doorway_saved_full_pool_case_v1' or image != '7y3sRwLe3Va-06':
+        raise ValueError('unexpected doorway case source')
+    detail = read(PAGE / 'v2-resources' / image_index[image]['detail'])
+    answers = {answer['object_id']: answer for answer in detail['annotations']}
+    people = {answer['worker_id']: answer['object_id'] for answer in doorway['annotations']}
+    if (len(people) != 32 or
+            doorway['reference']['target_id'] not in {ref['target_id'] for ref in detail['references']} or
+            any(a['object_id'] not in answers or answers[a['object_id']]['worker_id'] != a['worker_id']
+                or answers[a['object_id']]['points'] != a['points'] for a in doorway['annotations'])):
+        raise ValueError('doorway case identity/reference drift')
+    for endpoint in doorway['endpoints']:
+        geometry = endpoint['geometry']
+        has_geometry = geometry['points'] is not None and geometry['footprint'] is not None
+        has_score = endpoint['metrics']['B8L2'] is not None and endpoint['metrics']['D10'] is not None
+        any_main_score = any(endpoint['metrics'][key] is not None for key in ('B8L2', 'D10', 'IoU3D100'))
+        if (len(endpoint['members']) != endpoint['k'] or len(set(endpoint['members'])) != endpoint['k']
+                or any(worker not in people for worker in endpoint['members'])
+                or endpoint['score_status'] not in ('complete_conditional', 'no_connection', 'below_four')
+                or (endpoint['score_status'] == 'complete_conditional') != endpoint['complete_evaluable']
+                or (endpoint['score_status'] == 'complete_conditional' and not (has_geometry and has_score))
+                or (endpoint['score_status'] == 'no_connection' and
+                    (geometry['points'] is not None or geometry['footprint'] is not None or any_main_score))
+                or (endpoint['score_status'] == 'below_four' and
+                    (endpoint['nodes'] != 3 or not has_geometry or any_main_score))):
+            raise ValueError('doorway saved endpoint drift: ' + str(endpoint['k']))
+        cases.setdefault('doorway', []).append(dict(image=image, label=f"n={endpoint['k']}",
+            team_key=endpoint['team_key'], reference_id=doorway['reference']['target_id'],
+            members=[dict(worker_id=worker, object_id=people[worker]) for worker in endpoint['members']],
+            points=geometry['points'], footprint=geometry['footprint'],
+            order_status=geometry['order_status'], ring_confirmed=geometry['ring_confirmed'],
+            B8L2=endpoint['metrics']['B8L2'], D10=endpoint['metrics']['D10'],
+            IoU3D100=endpoint['metrics']['IoU3D100'], score_status=endpoint['score_status'],
+            nodes=endpoint['nodes'], minimum_support=endpoint['minimum_support'],
+            identity_groups_n=endpoint['identity_groups_n'], unselected_groups_n=endpoint['unselected_groups_n'],
+            selected_node_supports=endpoint['selected_node_supports'], reason=geometry['reason'],
+            source=DOORWAY_CASE.relative_to(ROOT).as_posix()))
+    if [team['label'] for team in cases['doorway']] != ['n=3', 'n=10', 'n=20', 'n=32']:
+        raise ValueError('incomplete doorway path')
+    write(PAGE / 'v2-resources/case_story.json', dict(schema='research_case_story_saved_v1',
+          data_release='v2', snapshot_id=SNAPSHOT, cases=cases))
+    return {key: len(value) for key, value in cases.items()}
+
+
 def build():
     source_tables = read(STATS / 'tables.json.gz')['tables']
     tables = {k:v for k,v in source_tables.items() if k!='quality__shared_records'}
@@ -694,11 +816,34 @@ def build():
         if len(briefing[spec['id']]) != spec['rows']:
             raise ValueError('research briefing row count drift: ' + spec['id'])
     tables.update(briefing)
+    personnel_interface = read(PERSONNEL_MAIN / 'CONSUMER_INTERFACE.json')
+    personnel_figures = read(PERSONNEL_MAIN / 'FIGURE_MANIFEST.json')
+    personnel_glossary = read(PERSONNEL_MAIN / 'GLOSSARY.json')
+    if (personnel_interface['data_release'] != 'v2'
+            or personnel_interface['version'] != personnel_figures['version']
+            or len(personnel_interface['groups']) != 6
+            or len(personnel_figures['figures']) != 16
+            or len(personnel_glossary['terms']) != 68):
+        raise ValueError('personnel main display interface drift')
+    personnel_specs = [dict(id='personnel_main__' + spec['id'], source=spec['path'],
+                            columns=spec['columns'], rows=spec['rows'])
+                       for spec in personnel_interface['tables']]
+    for source_id in ('mixture_example_members', 'mixture_example_fold_roles'):
+        spec = next(s for s in personnel_interface['detail_sources'] if s['id'] == source_id)
+        frame = pd.read_csv(ROOT / spec['path'], encoding='utf-8-sig')
+        personnel_specs.append(dict(id='personnel_main__' + source_id,
+                                    source=spec['path'], columns=list(frame.columns), rows=len(frame)))
+    personnel, personnel_provenance = load_declared_tables(dict(tables=personnel_specs))
+    for spec in personnel_specs:
+        if len(personnel[spec['id']]) != spec['rows']:
+            raise ValueError('personnel main row count drift: ' + spec['id'])
+    tables.update(personnel)
     source_map = dict(extra_provenance)
     source_map.update(taxonomy_provenance)
     source_map.update(mechanism_provenance)
     source_map.update(review_provenance)
     source_map.update(briefing_provenance)
+    source_map.update(personnel_provenance)
     source_map.update({f'same_room_multiview__{Path(f).stem}':
                        f'{MULTIVIEW.relative_to(ROOT).as_posix()}/{f}' for f in MULTIVIEW_TABLES})
     metadata = [display_table(PAGE/'v2-data', name, rows,
@@ -738,7 +883,7 @@ def build():
         'mechanisms':[(spec['group'] + ' · ' + spec['id'].split('__')[-1], spec['id'])
                       for spec in mechanism_interface['tables']],
         'quality':[('作答与几何分项','quality__shared_records'),('固定记录指标敏感性','statistics__fixed_record_metric_sensitivity')],
-        'fusion':[('待实验人员池支持','statistics__independent_pool_inventory'),('当前原答分歧','statistics__raw_disagreement_summary')],
+        'fusion':[('独立票人员池支持','statistics__independent_pool_inventory'),('当前原答分歧','statistics__raw_disagreement_summary')],
         'same_room':[(title, 'same_room_prediction__' + name) for title, name in [
                      ('v2预测与人数曲线','prediction_summary'),('逐建筑预测增益','prediction_gains'),
                      ('逐图对描述与资格','pair_descriptive'),('逐人逐次预测','predictions'),
@@ -769,6 +914,9 @@ def build():
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
           documents=[dict(path=spec['path'], content=read(ROOT / spec['path']))
                      for spec in review_interface['documents']] + [
+                     dict(path='personnel_main_interface', content=personnel_interface),
+                     dict(path='personnel_main_figures', content=personnel_figures),
+                     dict(path='personnel_main_glossary', content=personnel_glossary),
                      dict(path='research/statistics/v2_integrated_analysis_20261019/COVERAGE.json',content=coverage),
                      dict(path=SAME_ROOM.relative_to(ROOT).as_posix()+'/CONSUMER_INTERFACE.json',content=read(SAME_ROOM/'CONSUMER_INTERFACE.json')),
                      dict(path='research/statistics/v2_evidence_audit_20261019/COVERAGE.json',content=read(EVIDENCE/'COVERAGE.json'))]))
@@ -782,6 +930,9 @@ def build():
             row = by_object[annotation['object_id']]
             annotation['evidence'] = {k:row[k] for k in detail_fields}
         write(path,image)
+    pack_case_story(resources)
+    resources['case_story'] = 'case_story.json'
+    write(PAGE/'v2-resources/index.json', resources)
     pack_comparisons(evidence, resources)
     pack_research_evidence(evidence, resources)
     pack_personnel_results(evidence, resources)
@@ -831,7 +982,7 @@ def build():
              visual='../../../research/workers/personnel_effective_exchange_conditions_20261022/mechanisms/positive_cases/figures/E20261022_wc2_56_n20_m6/comparison.png',
              visual_alt='wc2 三队全票四角仍有定位和质量差异',
              support='保存机制案例；v1 历史人数面板与 v2 机制各保留版本身份。',
-             counterexample='同人数换组稳定不等于接近参考；没有 v2 全池×难度统一人数曲线。',
+             counterexample='同人数换组稳定不等于接近参考；固定 N≥20 池的 v2 自然人数曲线见人员研究第5步，各条件按实际覆盖解释。',
              source='../../../research/fusion/fusion_paper_closeout_20261022/README.md',
              tables=[dict(id='fusion_closeout__endpoint_alignment',label='机制端点'),
                      dict(id='fusion_closeout__count_panel_by_condition',label='历史人数条件')]),
@@ -848,7 +999,7 @@ def build():
                      dict(id='same_room_pro__stopping_summary',label='停止结果'),
                      dict(id='same_room_pro__source_acquisition_summary',label='获取历史成本')]),
     ]
-    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员分类与混合构成研究已验收；详细展示待接入。旧分类模块仅作阶段历史。'))
+    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员分类、混合构成与人数机制见“人员研究六步”；旧分类模块仅作阶段历史。'))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 
 

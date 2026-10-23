@@ -1,0 +1,8 @@
+claim_id,研究问题,主结果,敏感性与对照,支持范围,精确表与代码,采用判断
+PST01,自然前段是否受路径抽样左右,Manual三难度3→6均Q改善，路径/建筑重抽均正,两种重抽及图/楼等权,普通Manual N≥20：168图22楼,results/NATURAL_INTERVAL_STABILITY.csv; code/rebuild_path_stability.py,保留前段加人的用途
+PST02,困难后段是否平台,10→20图等权Q−0.216；P10+3.122；SD−2.714,Q两类范围跨零；楼等权建筑范围使P10/SD跨零,29图15楼/24自然路径每图,results/KEY_NATURAL_INTERVALS.csv; results/NATURAL_IMAGE_INTERVALS_REBUILT.csv,平台为小平均变化，不是完全不变
+PST03,Manual角色优先是否稳定,高Q+7.710，多转折+6.146,共同157图；完整配对路径和建筑重抽均正,157图22楼/8配对路径每图,results/KEY_POLICY_EARLY_EFFECTS.csv; results/ROLE_LABELS_BY_POOL.csv,采用前段策略，保留坏尾和失败
+PST04,Semi是否复制Manual,高Q−0.875、多转折−0.727,路径范围负，建筑范围跨零,21图11楼/8配对路径每图,results/KEY_POLICY_EARLY_EFFECTS.csv,不采用跨条件统一升质模型
+PST05,失败是否被可评Q掩盖,困难10/20有效667/696、674/696；策略保留全部尝试失败,Q共同可评，失败全分母,对应同一图/路径支持,results/NATURAL_IMAGE_CURVES_REBUILT.csv.gz; results/POLICY_IMAGE_K_REBUILT.csv.gz,均Q与失败并列
+PST06,恢复还是新研究,精确设计存续；原bootstrap不在,完整原始键连接；本轮新代码和seed,全404082前缀复算输入,inputs/INPUT_READ_RECEIPT.json; results/ANALYSIS_RECEIPT.json,固定设计重新实现分析；不冒称新大块ABC原件
+PST07,记录劳动是否同语义可比,补回7302原答来源；同队单一语义、双端同类来源后重抽,保留旧时间列并标口径；分来源表，旧88图成本未复核,Manual合法QT支持依策略与来源不同,TIME_SEMANTICS_CORRECTION_ZH.md; results/time_semantics/; code/fix_time_semantics.py,新时间结论使用同语义共同QT；全Q与失败不变

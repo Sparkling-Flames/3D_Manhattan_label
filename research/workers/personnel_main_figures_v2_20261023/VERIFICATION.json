@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "date": "2026-10-23",
+  "data_release": "v2",
+  "figures": 16,
+  "formats": [
+    "png",
+    "svg"
+  ],
+  "classified_worker_rows": 248,
+  "terms": 68,
+  "plot_tables": 22,
+  "mixture_example_views": 7,
+  "distinct_example_panels": 6,
+  "checks": [
+    "正式ALL名单、特征中心与原答对象提取断言",
+    "难度原答、配比与方向重聚合1058项断言",
+    "固定N>=20曲线与独立汇总对齐",
+    "失败分母及同一面板跨方法复用明确区分",
+    "词典ID、全部来源/资产路径及表字段合同",
+    "16图总览；分类、配比、换人、难度、人数、时间和机制主图放大检查"
+  ],
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_personnel_main_figures_20261023.py -q",
+    "passed": 2
+  },
+  "catalog": {
+    "materials": 662,
+    "algorithms": 11,
+    "snapshots": 22,
+    "status": "passed"
+  },
+  "broken_document_links": 0,
+  "new_fusion_calls": 0,
+  "new_scoring_calls": 0,
+  "new_classification_fits": 0,
+  "workbench_integration": {
+    "status": "completed",
+    "implementation_commit": "c67911f82",
+    "status_copy_commit": "4c4fbcd77",
+    "tables_added": 24,
+    "workbench_tables": 172,
+    "tests_passed": 9,
+    "browser_report": "研究台线程已检查Edge file导航、248行名单、细类筛选、人员画像下钻、图版/原表、hover/focus/click提示与390px窄屏；主线程另核入口代码及来源。",
+    "scope": "图版固定支持；名单/表格可筛选；未将全部原生几何转换为新的交互控件。"
+  }
+}

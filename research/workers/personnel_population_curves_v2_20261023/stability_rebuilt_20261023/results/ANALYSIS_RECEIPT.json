@@ -1,0 +1,103 @@
+{
+  "operation": "fixed_saved_design_new_bootstrap_implementation",
+  "source_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+  "new_fusion": 0,
+  "new_team_design": 0,
+  "new_member_orders": 0,
+  "new_scoring": 0,
+  "replicates": 2000,
+  "master_seed": 2026102307,
+  "natural_paths_per_main_pool": 24,
+  "paired_base_paths_per_main_pool": 8,
+  "natural_N20_pools": 210,
+  "natural_N20_buildings": 22,
+  "policy_pools_by_policy": {
+    "joint_fast_first": 202,
+    "joint_highq_first": 210,
+    "structure_dominant_first": 210,
+    "structure_moreturn_first": 205
+  },
+  "policy_common_four_pools": 197,
+  "natural_k": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "intervals": [
+    [
+      3,
+      6
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      10,
+      20
+    ],
+    [
+      3,
+      20
+    ]
+  ],
+  "policy_phase": "3<=k<=floor(N/2)",
+  "q_p10": "within_image_valid_path_quantile_numpy_linear",
+  "q_sd": "within_image_valid_path_sample_standard_deviation_ddof1",
+  "failure_denominator": "all_attempted_paths_k2_policy_defer_separate",
+  "quality_missing": "remain_nan_never_zero_score",
+  "strategy_quality_support": "natural_and_priority_both_scored_at_same_k",
+  "time": "legacy_known_n_only_columns_retained; authoritative_QT_uses_single_known_kind_per_team_and_same_kind_per_pair; see results/time_semantics/CORRECTION_RECEIPT.json",
+  "bootstrap_types": [
+    "whole_paths_within_each_fixed_image",
+    "whole_buildings_with_observed_paths_fixed"
+  ],
+  "interval_type": "pointwise_percentile_95_not_simultaneous_band",
+  "path_and_building_uncertainty_not_combined": true,
+  "completion_note": "Natural outputs completed first; identical-seed policy restart after vectorizing linear quantiles; no analysis rule or budget changed.",
+  "targeted_time_semantics_correction": {
+    "operation": "targeted_time_semantics_correction_fixed_existing_paths",
+    "new_fusion": 0,
+    "new_scoring": 0,
+    "new_paths": 0,
+    "source_snapshot": {
+      "path": "work/original_recovery_20261023/recompute/population_existing_originals/inputs/INPUT_SNAPSHOT.json.gz",
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+      "records": 7302,
+      "pools": 229
+    },
+    "original_time_rule": "known_n_equals_k_only; mixed_semantics_may_be_included",
+    "corrected_team_rule": "all_known_and_positive_total_and_one_known_semantic_kind",
+    "corrected_pair_rule": "both_teams_eligible_and_same_kind",
+    "quality_rule": "both_sides_scored_on_same_corrected_time_pair",
+    "master_seed": 2026102307,
+    "replicates": 2000,
+    "exact_prefix_rows": 404082,
+    "max_existing_vs_record_time_sum_error": 1.4551915228366852e-11,
+    "record_source_kinds": [
+      "inherited_v1_audited_source",
+      "user_processed_reported_not_raw_log_replayed"
+    ],
+    "early_policy_image_phases": 827,
+    "early_exact_pair_rows": 97576,
+    "original_Q_structure_path_estimates_unchanged": true,
+    "legacy_time_columns_retained_but_not_used_as_same_semantics_claim": true
+  }
+}

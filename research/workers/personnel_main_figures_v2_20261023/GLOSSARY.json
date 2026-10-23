@@ -1,0 +1,948 @@
+{
+  "version": "personnel_main_figures_terms_v2_20261023",
+  "language": "zh-CN",
+  "purpose": "研究汇报、主文图注及研究台可聚焦/点击的术语解释",
+  "data_release": "v2",
+  "display_rules": [
+    "单位、数据版本、Manual/Semi、图/楼/事件分母及支持域常驻，不全部藏进悬浮框。",
+    "short可作图侧提示；detail、denominator_or_support、avoid_confusion用于可键盘聚焦或点击的展开说明。",
+    "根据来源绑定具体id；同名旧指标不强制合并。"
+  ],
+  "terms": [
+    {
+      "id": "condition_manual",
+      "label": "Manual：从头人工标注",
+      "short": "人员从头完成布局标注；与Semi分开报告效果。",
+      "detail": "Manual是采集条件。研究在该条件的真实原答中重组成员、计算融合，再评价输出；类别可以来自Manual历史，也可以来自事先声明的跨条件历史。",
+      "unit": "采集条件",
+      "better_direction": "不排序",
+      "denominator_or_support": "只使用该图该条件内符合本实验资格的原答。",
+      "avoid_confusion": "Manual与Semi不是人员高低等级；不能直接合并两条件的质量与时间。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "condition_semi",
+      "label": "Semi：初始化后人工编辑",
+      "short": "人员以已有初始化为起点编辑；效果按Semi单列。",
+      "detail": "Semi保留初始化带来的行为背景。终稿分数、修改程度与是否识别初始化错误是不同问题；终稿较好不证明人员主动纠错。Manual＋Semi可共同形成候选类别，但换人、融合和时间效果分别评价。",
+      "unit": "采集条件",
+      "better_direction": "不排序",
+      "denominator_or_support": "Semi自身可用图片、人员、原答及时间支持。",
+      "avoid_confusion": "不把Manual的分类标签或效果直接当作Semi验证结果。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "data_v2",
+      "label": "真人数据v2",
+      "short": "本轮使用真实第二版标注数据，与研究方案轮次分开。",
+      "detail": "data v2标识当前真人标注数据版本。目录中的v3通常标识分类或分析方案的研究迭代，面板键__v1__/__v2__也可能只是候选面板编号。图表同时保留数据版本、方法版本和来源表。",
+      "unit": "版本",
+      "better_direction": "不排序",
+      "denominator_or_support": "采用所列冻结数据、参考与资格切片。",
+      "avoid_confusion": "不能把分类v3称为第三版真人数据，也不能把面板序号理解为新旧数据。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md"
+      ]
+    },
+    {
+      "id": "taxonomy_all",
+      "label": "ALL：整体描述名单",
+      "short": "用全部合格历史整理人员类别，方便介绍有哪些人。",
+      "detail": "ALL展示当前人员在某一分类方法下的整体分区及未知人员。它适合解释类别特征、显示名单；若据此比较现有图片，属于全数据描述，不能宣称目标建筑未参与建类。",
+      "unit": "名单/类别",
+      "better_direction": "不排序",
+      "denominator_or_support": "同一方法、条件、层级及ALL历史支持。",
+      "avoid_confusion": "ALL名单不是每张图可用的候选人数，也不能替代该图所属楼外折标签。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_lobo",
+      "label": "LOBO：楼外历史标签",
+      "short": "评价某栋楼时，用其它建筑的历史形成并固定类别。",
+      "detail": "留一建筑：排除目标建筑后形成结构、Q、T等特征，完成缩放、聚类及内部选型，再固定标签评价目标建筑。不同折可有不同类数、人员归属和编号；跨折依历史特征角色对齐。楼外标签用于配比、换人和人数过程，不只用于同房研究。",
+      "unit": "验证划分",
+      "better_direction": "不排序",
+      "denominator_or_support": "每个目标建筑对应一份冻结标签及其支持记录。",
+      "avoid_confusion": "这是未参与建类建筑上的检查；不是对从未见过的人员作效果保证。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_manual_structure",
+      "label": "Manual结构分类",
+      "short": "按历史转折与短转折表达区分人员，解释怎样标。",
+      "detail": "当前ALL方案选中TURN，主输入为同图中心化、再按建筑等权的有效转折与短边残差；形成明显简化、常规、较多转折三类。输入不直接含Q/T。楼外方法族V3_BEHAVIOR可能选择TURN2/3或其他结构家族，须显示实际折方案。",
+      "unit": "人员类别",
+      "better_direction": "不排序",
+      "denominator_or_support": "满足结构历史机会门槛的人员；未知人员单列。",
+      "avoid_confusion": "类名是相对历史表达；多转折不等于画得对，也不是Manual联合五类的父类。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_manual_joint",
+      "label": "Manual结构＋Q＋T分类",
+      "short": "同时组织结构表达、历史质量和记录时间的人员角色。",
+      "detail": "当前ALL方案为CQT五类，结合简单/复杂结构机会下的表达、相对历史Q及低尾、同来源相对对数时间。每域等权、域内分摊权重，稳健标准化后Ward聚类。它解释怎样搭配人员，与三类结构分组分别保留。",
+      "unit": "人员类别",
+      "better_direction": "不排序",
+      "denominator_or_support": "结构情境、质量及时间均达到本条件支持门槛的人员。",
+      "avoid_confusion": "这不是单纯五档Q，也不是Manual结构三类的细分；类别有效不要求必胜连续Q/T。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_semi_structure",
+      "label": "Semi结构分类",
+      "short": "把有效转折、短转折与同墙近共线分段分别识别。",
+      "detail": "当前ALL采用STRUCTURE，三粗四细：偏简化与常规同属一个粗类，另外区分近共线分段较多、较多转折。只把该ALL方案的粗细关系用于名单说明；楼外折以实际coarse_k/fine_k为准。",
+      "unit": "人员类别",
+      "better_direction": "不排序",
+      "denominator_or_support": "Semi自身有效历史与机会支持；未知单列。",
+      "avoid_confusion": "同墙分段多不是必要转折多；全数据的三粗四细不强行覆盖所有楼外折。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_semi_joint",
+      "label": "Semi自身结构＋Q＋T分类",
+      "short": "用Semi自身结构、质量和时间历史组织五类角色。",
+      "detail": "当前ALL采用EQT五类，输入为表达特征、Semi自身相对Q及低尾、时间。它可研究配比、类内换人和跨类替换；支持与效果须按Semi自身结果报告。",
+      "unit": "人员类别",
+      "better_direction": "不排序",
+      "denominator_or_support": "达到Semi结构与Q/T机会门槛的人员。",
+      "avoid_confusion": "它不是Manual＋Semi共同建类；与Manual联合方法同族也不等于同一人员分区。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_cross_condition",
+      "label": "Manual＋Semi共同建类",
+      "short": "可联合同一人的两种条件历史，再分别检验两条件效果。",
+      "detail": "跨条件方案保留两侧来源、机会和缺失；在目标建筑两侧均排除其历史。已有XCOND_GEOM、XCOND_GEOM_QT、XCOND_PAIRED等方案作为独立方法族保留。本次四套主图分别采用两条件自身分类。",
+      "unit": "分类输入方案",
+      "better_direction": "不排序",
+      "denominator_or_support": "共同建类支持与各评价条件的效果支持分别列明。",
+      "avoid_confusion": "跨条件联合与本条件结构＋Q＋T联合是两种不同的“联合”。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "taxonomy_family_role",
+      "label": "方法族与楼外角色",
+      "short": "跨楼比较按特征含义对齐，不把相同类号当同一类。",
+      "detail": "method、selected_family、类数、层级、heldout_building和角色共同确定一类。V3_BEHAVIOR中的结构JOINT可同时包含表达、冗余与尺度；它不同于V3_JOINT_QT。显示名单时必须保留这些字段。",
+      "unit": "类别身份",
+      "better_direction": "不排序",
+      "denominator_or_support": "当前方法和楼外折的历史中心及成员。",
+      "avoid_confusion": "M1、J5等编号不保证跨楼含义相同；旧分类M/QTD/SP/A2/F01也不能并为本轮四类。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "structure_context_c",
+      "label": "结构条件C：表达机会",
+      "short": "按同图人员转折中位数划分结构机会，用于分类特征。",
+      "detail": "本轮分类simple机会为同图有效转折中位数<6，complex为≥6。相应simple/complex_turn_history等描述人员在不同结构机会下的表达残差；这是CQT/CONTEXT内部结构条件。",
+      "unit": "结构机会分组",
+      "better_direction": "不排序",
+      "denominator_or_support": "同图×条件×参考×层内可比较人员的转折数。",
+      "avoid_confusion": "C不是人工图片难度D，也不是实验跨类队C；展示时写完整中文名。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md"
+      ]
+    },
+    {
+      "id": "difficulty_d",
+      "label": "人工图片难度D",
+      "short": "沿用主线已确认的简单、中等、困难条件分层。",
+      "detail": "难度来自采用的图片目标空间和人工判定记录，保留条件难度、场景层与未决状态。用它比较不同人员/配比在不同图片条件下的响应；不从结果Q高低反推难度。",
+      "unit": "图片条件",
+      "better_direction": "不排序",
+      "denominator_or_support": "对应冻结难度版本、目标空间及普通/门洞分层。",
+      "avoid_confusion": "难图不等于低Q；门洞、OOS、结构复杂C也不是人工难度的同义词。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "scope",
+      "label": "scope：标注目标范围",
+      "short": "说明本次布局要覆盖哪个空间，以及哪些参考可比较。",
+      "detail": "scope涉及任务目标、人员对适用范围的回答，以及有独立裁定时的回答正确性。目标范围与参考绑定是正式质量解释的前提；完整参考存在不自动授予质量资格。",
+      "unit": "范围/资格",
+      "better_direction": "不排序",
+      "denominator_or_support": "当前图片、目标空间、参考版本及原答用途资格。",
+      "avoid_confusion": "不能把OOS直接当个人scope回答真值；不同范围的Q不混为同一目标比较。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md"
+      ]
+    },
+    {
+      "id": "reference_gt",
+      "label": "GT／采用参考",
+      "short": "评分时使用的目标布局；它有版本和适用范围。",
+      "detail": "参考可以是原GT或已人工采用的新参考。评分表回答对该参考和质量标准的符合程度；既有GT错误、排除与待定状态持续保留，不因新统计结果更好看而改变。",
+      "unit": "参考布局",
+      "better_direction": "不排序",
+      "denominator_or_support": "图片＋目标空间＋reference_id/version。",
+      "avoid_confusion": "参考不是无条件的语义真理；局部结构正确性仍需对应和人工解释。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "pool_n_capital",
+      "label": "N：本图可用人员池人数",
+      "short": "这一张图、这一条件下实际可重组的合格人数。",
+      "detail": "N限定该图片人员池的容量。相同人员可能出现在多张图，跨图总名单人数不能替代某图N。自然人数曲线从此固定池无放回抽取进入顺序。",
+      "unit": "人",
+      "better_direction": "不排序",
+      "denominator_or_support": "pool_id绑定图片、条件、参考及资格。",
+      "avoid_confusion": "N不是独立图片数；同房实验共同池还要求两视角都有合格原答。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "team_n",
+      "label": "n：团队人数",
+      "short": "每个融合端点实际使用多少名不同的真实人员。",
+      "detail": "同一替换对照中的A/B/C保持相同n；成员集合不重复复制人员。不同背景设计可改变n，必须按真实团队键查询。",
+      "unit": "人",
+      "better_direction": "不排序",
+      "denominator_or_support": "精确member_workers集合大小。",
+      "avoid_confusion": "n大不自动升质；不要与全池N或替换块m混用。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "prefix_k",
+      "label": "k：当前前缀人数",
+      "short": "在一条进入顺序上，当前已有多少人参与融合。",
+      "detail": "每条顺序的前k名形成一个精确团队。四种角色优先只改变进入顺序和前段组成，满员k=N使用相同最终人员。某些历史预测表的k另有源端历史人数定义，不能套用此解释。",
+      "unit": "人",
+      "better_direction": "不排序",
+      "denominator_or_support": "pool_id/path_id/k/team_key。",
+      "avoid_confusion": "当前曲线k=2按源状态延后连接处理，空值不能视作真实零分。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "replacement_m",
+      "label": "m：实际替换人数",
+      "short": "从原队移出多少人，并换入相同数量的不同人员。",
+      "detail": "固定n的A与B替换m=|A\\B|=|B\\A|；严格ABC中X/Y/Z各m人，保留背景D有n−m人。m按实际成员算，不只看类别席位净变化。",
+      "unit": "人",
+      "better_direction": "不排序",
+      "denominator_or_support": "精确成员集合；严格ABC须三替换块均满足容量。",
+      "avoid_confusion": "同类换人也有m>0但类别净席位不变；m4不是研究的通用上限。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "replacement_ratio_r",
+      "label": "r=m/n：替换比例",
+      "short": "本次换掉了整队的多大一部分，便于跨人数理解规模。",
+      "detail": "同一m在不同n下代表不同规模；例如n20/m4为20%，n8/m4为一半。纯块r=1且背景D为空，混合队r<1。图表应同时显示n、m、r。",
+      "unit": "比例/百分比",
+      "better_direction": "不排序",
+      "denominator_or_support": "实际团队人数n和实际替换人数m。",
+      "avoid_confusion": "比例相同不代表同一背景；别把此r与相关系数r混用。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "background_d",
+      "label": "D：固定保留成员",
+      "short": "A、B、C三支队伍都保留的同一批实际人员。",
+      "detail": "严格ABC写成A=D∪X、B=D∪Y、C=D∪Z。比较中D保持实际成员不变；换块的改变叠加在这个背景上。只固定D的类别人数与固定D实际人员是不同强度的匹配。",
+      "unit": "成员集合/人",
+      "better_direction": "不排序",
+      "denominator_or_support": "事件表的D_workers及D_class_counts。",
+      "avoid_confusion": "D背景不等于人工难度D或方向残差D_dir；界面写“保留背景”。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "mixture_vector",
+      "label": "类别人数向量／混合配比",
+      "short": "用每一类的人数表示团队组成，并保留未知类人数。",
+      "detail": "配比向量如[简化0、常规15、较多转折5]表示20人队伍的完整类别人数。向量必须与方法、层级、楼外折及图片绑定；不同方法可给同一团队不同向量。",
+      "unit": "各类人数",
+      "better_direction": "不排序",
+      "denominator_or_support": "同一分类方法/层级/折；需要明确是否含未知人员。",
+      "avoid_confusion": "相同类号或相同百分比不保证跨折同义；不能忽略未知类使人数对不上。",
+      "source_paths": [
+        "research/workers/personnel_mixture_comparison_20261022/configurations/SCHEMA_AND_SCOPE.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "composition_cell",
+      "label": "配比格",
+      "short": "在固定图片、背景与候选池中，类别人数相同的一组队伍。",
+      "detail": "一个格收集同一面板、分类方法、粗细层级和完整类别向量下的所有已覆盖成员组合。报告成功质量分布、失败率、时间与具体团队数。单格只有一队时无法估计换成员波动。",
+      "unit": "格/团队数",
+      "better_direction": "不排序",
+      "denominator_or_support": "panel×method×tier×完整类别人数向量。",
+      "avoid_confusion": "格不是一支队；跨方法共享端点，不可把所有格内团队重复计为独立样本。",
+      "source_paths": [
+        "research/workers/personnel_mixture_comparison_20261022/configurations/SCHEMA_AND_SCOPE.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "within_cell_variability",
+      "label": "配比内成员波动",
+      "short": "类别人数不变，仅换具体成员时，融合结果有多分散。",
+      "detail": "同一配比格内，用Q分位数、样本SD、范围以及相应几何分布描述成员组合差异。它回答类别能否概括具体人的作用。小格支持不足时显示不可估，不以零代替。",
+      "unit": "随所画指标",
+      "better_direction": "更小表示更稳定，不等于更正确",
+      "denominator_or_support": "同一格内可用的不同成员集合；Q和几何各自有有效数。",
+      "avoid_confusion": "Q波动与几何V不是同一量；分位带不是均值置信区间。",
+      "source_paths": [
+        "research/workers/personnel_mixture_comparison_20261022/configurations/SCHEMA_AND_SCOPE.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "strict_abc",
+      "label": "严格ABC：匹配换人／换类",
+      "short": "三队共享固定背景，用同类换人作为跨类调整的对照。",
+      "detail": "A=D∪X，B=D∪Y，C=D∪Z；四块两两不相交，三队同n、三块同m。X/Y类别构成相同，Z改变构成。当前同房大块采用纯源类X/Y与纯目标类Z，两视角复用完全相同人员。",
+      "unit": "一个精确匹配事件",
+      "better_direction": "不排序",
+      "denominator_or_support": "主质量幅度需三队×两视角六端点共同可评分；普通单图ABC按三端点。",
+      "avoid_confusion": "不是任何三队都可称匹配；旧n20父内构成设计和新纯类块设计分别保留。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "direct_ac",
+      "label": "直接AC：原队与跨类队",
+      "short": "容量不够组成同类替换B时，仍可比较实际可行的大块变化。",
+      "detail": "直接A/C保持规定的原队、替换规模和背景，评价真实跨类调整。它补充纯块或大比例风险与机制；没有B时不能把全部差异解释为相对同类换人的增量。",
+      "unit": "直接替换事件",
+      "better_direction": "不排序",
+      "denominator_or_support": "A/C共同指标支持及全部尝试失败分母。",
+      "avoid_confusion": "不是不完整的无用实验；但不能冒称已控制同类成员变化。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/workers/personnel_mixture_comparison_20261022/direct_ac/README.md"
+      ]
+    },
+    {
+      "id": "signed_delta",
+      "label": "有符号变化Δ",
+      "short": "保留升降方向：例如ΔQ=换后Q−换前Q。",
+      "detail": "Q的正值表示评分提高，时间正值表示记录劳动增加；高度、位置和结构数的正值只表示变大，是否更合适需看参考和语义。分别显示C−A、C−B、B−A及指标单位。",
+      "unit": "原指标单位",
+      "better_direction": "依指标而定",
+      "denominator_or_support": "明确比较端点、共同可用支持和汇总层级。",
+      "avoid_confusion": "平均Δ接近0可能是正负抵消，不能据此说每次都不变。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "absolute_change",
+      "label": "绝对变化幅度",
+      "short": "只问结果改变有多大，升与降都作为变化计入。",
+      "detail": "例如|Q_B−Q_A|衡量同类换人的质量敏感度。幅度保留变化大小，舍去方向，所以应与有符号结果、正负比例及低尾并列阅读。",
+      "unit": "原指标单位",
+      "better_direction": "不排序：大表示更敏感",
+      "denominator_or_support": "同一对照的共同可评分端点。",
+      "avoid_confusion": "绝对变化大不是质量好；不是跨图片Q标准差，也不是因果解释比例。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "extra_symmetric_abc",
+      "label": "对称跨类额外幅度",
+      "short": "跨类调整的平均变化，比同类换人多出多少。",
+      "detail": "同类幅度within=|B−A|；跨类幅度cross=(|C−A|+|C−B|)/2；extra=cross−within。同房中先逐视角求值再平均，最后按配置、图对或建筑汇总。extra>0表示跨类更敏感，包含升质与降质。",
+      "unit": "原指标单位",
+      "better_direction": "正值支持跨类变化更大，不代表更优",
+      "denominator_or_support": "对应指标共同支持；同房Q主比较为六端点共同可评。",
+      "avoid_confusion": "不把extra当净升质C−B；不拿两种几何/质量支持的均值直接归因。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "extra_legacy_ac",
+      "label": "旧单端跨类额外幅度",
+      "short": "部分旧表用|C−A|减|B−A|，与新对称口径不同。",
+      "detail": "历史表的跨类幅度仅以原队A为基准，另有背景向量等权方式。新表增加对B的对称比较并调整层级汇总。保留来源身份，不覆盖旧值；跨版本比较需统一定义和支持后重聚合。",
+      "unit": "原指标单位",
+      "better_direction": "正值表示该旧定义下跨类变化更大",
+      "denominator_or_support": "只适用于标明旧单端口径的来源表。",
+      "avoid_confusion": "与对称extra同名但不同定义，不能混在一条趋势线或宣称数值差就是新实验效果。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/workers/personnel_mixture_comparison_20261022/exchanges/METRIC_CONTRACT.json"
+      ]
+    },
+    {
+      "id": "q_b8l2",
+      "label": "Q／B8L2：综合几何工作分",
+      "short": "把底面、方向和高度合成0—100分，越高越符合当前标准。",
+      "detail": "主分使用五个冻结输入I、Sb、dir、Hmean、Hcenter。底面损失与方向损失采用L2组合，高度损失另加。公式：Q=100I/{I+sqrt[(1−I+I·Sb²/32)²+(I·1.5dir²/(dir²+8²))²]+I[(Hmean/.8)²+(Hcenter/.25)²]}，I=0时Q=0。分数是几何工作尺度，不是正确概率。",
+      "unit": "分（0–100）",
+      "better_direction": "越高越接近当前参考与评分标准",
+      "denominator_or_support": "需五分项有限且满足冻结质量资格；失败不填0。",
+      "avoid_confusion": "不是五项固定百分比加权，不保证语义结构正确；Q均值旁必须显示可评分数和失败率。",
+      "source_paths": [
+        "research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/CONTEXT.md"
+      ]
+    },
+    {
+      "id": "q_d10",
+      "label": "D10：方向尺度对照分",
+      "short": "同一几何按10°方向尺度重算，检查主要结论是否依赖8°。",
+      "detail": "D10沿用B8L2的L2组合、其它参数和五分项，仅把方向分母8²换成10²。结果差表示评分对方向容忍尺度的敏感性，不能解释为队伍布局真的改善。",
+      "unit": "分（0–100）",
+      "better_direction": "越高越接近该对照标准",
+      "denominator_or_support": "与B8L2同几何、同参考、同资格的共同支持。",
+      "avoid_confusion": "D10不是十人团队，也不是把整个质量算法换成新数据版本。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "tools/thesis_main/analysis/quality_b8l2_d10_20261017.py"
+      ]
+    },
+    {
+      "id": "iou_floor_i",
+      "label": "I：底面区域IoU",
+      "short": "俯视底面与参考的交集占并集比例，反映空间范围重合。",
+      "detail": "I=面积(候选∩参考)/面积(候选∪参考)，0表示无区域重合，1表示区域重合。它评价区域而不是逐墙身份；IoU接近1也可能存在局部小结构差别或错误高度。",
+      "unit": "比例（0–1）",
+      "better_direction": "越高重合越多",
+      "denominator_or_support": "候选与参考底面都通过几何有效性检查。",
+      "avoid_confusion": "有的显示乘100为百分数；不要与两支团队间1−IoU的V混用。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip"
+      ]
+    },
+    {
+      "id": "bottom_sb",
+      "label": "Sb：底边球面角距",
+      "short": "候选与参考底边在全景视角下的位置差，单位为度。",
+      "detail": "冻结实现对底边进行球面双向距离测量，使用2048采样设置。比纯区域重合补充边界位置的偏差。它不是在人工认定的同名墙角间计算的语义正确率。",
+      "unit": "度",
+      "better_direction": "越小越接近参考",
+      "denominator_or_support": "候选与参考的有效底面，采用同一冻结球面采样实现。",
+      "avoid_confusion": "不同相机位置的数值不用于直接建立跨视角角点身份；不能读成米。",
+      "source_paths": [
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "direction_residual",
+      "label": "dir／D_dir：自身方向残差",
+      "short": "输出墙边偏离其自身最佳正交轴多少，单位为度。",
+      "detail": "在输出底面寻找自身最佳正交方向，再计算边线对该轴系的残差。它衡量几何规整程度，不以GT的房间朝向作为唯一比较轴。位置错误或结构缺失的四边形仍可能残差很小。",
+      "unit": "度",
+      "better_direction": "越小表示更符合自身正交轴，不必然更正确",
+      "denominator_or_support": "有效输出底面及冻结方向轴算法。",
+      "avoid_confusion": "D_dir不是背景D、人工难度D或旧面积差D_i。",
+      "source_paths": [
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "height_hmean",
+      "label": "Hmean：整体均高相对误差",
+      "short": "候选整体高度相对参考偏高或偏低多少，取绝对比例。",
+      "detail": "先沿底面周长对线性墙高积分得到均高μ，再计算|μ候选/μ参考−1|。高低方向已取绝对值；需要看有符号偏高/偏低时查height_mean_ratio−1。该均高采用边长权重。",
+      "unit": "无量纲相对误差",
+      "better_direction": "越小越接近参考均高",
+      "denominator_or_support": "候选和参考均有有效上下界，参考均高为正。",
+      "avoid_confusion": "不是米，也不是角点高度的简单平均；不要与3D代理使用的角点均高混为同一量。",
+      "source_paths": [
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "height_hcenter",
+      "label": "Hcenter：去均高后的局部高度残差",
+      "short": "先扣除整体高低差，再比较局部高度轮廓是否相符。",
+      "detail": "冻结centered_height实现临时平移候选顶界的高度轮廓以匹配参考均高，底面位置不动。沿两侧周长各采4096点，按最近底面位置取高度差，双向均方平均开方后除以参考均高；等距多解用最大平方残差。",
+      "unit": "无量纲相对RMS",
+      "better_direction": "越小表示该对应规则下局部高度更接近",
+      "denominator_or_support": "有效完整上下界，双向最近底面对应和冻结等距规则。",
+      "avoid_confusion": "center指均高中心化，不是房间中心点；临时平移只用于统计，不修改实际布局。",
+      "source_paths": [
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "iou3d_proxy",
+      "label": "IoU3D100：角点均高棱柱代理",
+      "short": "用底面和角点均高形成棱柱，再比较体积重合。",
+      "detail": "冻结传统指标以底面多边形和角点高度简单均值构造棱柱，三维IoU乘100展示。它有助于与传统评价对照，但不完整表达非平顶或局部竖向结构。",
+      "unit": "百分尺度（0–100）",
+      "better_direction": "越高代理体积重合越多",
+      "denominator_or_support": "完整有效几何；采用hohonet_iou3d_vertex_mean字段。",
+      "avoid_confusion": "不是一般三维空间的精确IoU，不与边长加权Hmean的高度定义混用。",
+      "source_paths": [
+        "research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "q_p10",
+      "label": "Q的P10：较差端质量",
+      "short": "当前同图同人数样本里，第10百分位的成功质量。",
+      "detail": "按该图该k的有效Q样本计算第10百分位，再按图或建筑汇总；约10%的有效观测不高于此值。它揭示较差成员组合端的表现，与Q均值共同读。",
+      "unit": "Q分",
+      "better_direction": "越高表示较差端质量更好",
+      "denominator_or_support": "该图该k可评分的路径样本；失败另报。",
+      "avoid_confusion": "不是最低分、10%错误率或损失超过5分的坏尾比例。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "q_sd",
+      "label": "Q标准差SD：质量波动",
+      "short": "相同图片和人数的有效Q分数有多分散，单位仍是分。",
+      "detail": "人数曲线采用样本标准差ddof=1，再先图后楼汇总。相同人数的顺序前缀保留路径抽样权重；有效样本不足2个时不可估。越小表示Q更集中，但可集中在较差水平。",
+      "unit": "Q分",
+      "better_direction": "越小表示评分更稳定，不等于质量更高",
+      "denominator_or_support": "同图、同k、同策略可评分路径；样本SD需至少2值。",
+      "avoid_confusion": "SD与P10、几何V分别描述不同方面；不能把低SD称接近GT。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "v_floor_population",
+      "label": "V_floor：同人数底面波动",
+      "short": "同图同人数换成员后，融合底面两两不重合的平均程度。",
+      "detail": "对同一pool、policy、k的完整有效底面，计算每对路径终点1−IoU并平均。不同顺序若得到同一成员集，保留其路径重复权重，该对贡献0。均值权重相当于所有有效路径的无序两两组合；几何失败留在尝试数但不进入距离。",
+      "unit": "无量纲（0–1）",
+      "better_direction": "越小底面越稳定，不代表更接近参考",
+      "denominator_or_support": "q条有效路径对应q(q−1)/2对；另列总路径、不同成员集、有效几何对数。",
+      "avoid_confusion": "V无需GT；满员只有同一成员集时0是设计恒等，不是成员互换验证。不可与旧算法归一不同的V直接拼接。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/geometry_variation.py",
+        "research/workers/personnel_population_curves_v2_20261023/code/summarize_geometric_variation.py"
+      ]
+    },
+    {
+      "id": "v_centroid_population",
+      "label": "V_centroid_h：同人数中心位移",
+      "short": "同图同人数不同融合底面的质心，相距多少相机高度。",
+      "detail": "使用与V_floor相同的路径配对和重复权重，对底面多边形质心计算欧氏距离后平均。描述整体定位的成员敏感性，单位h。",
+      "unit": "h（相机高度单位）",
+      "better_direction": "越小质心越稳定，不等于更准确",
+      "denominator_or_support": "同图同k有效完整底面路径对；不做跨视角坐标对齐。",
+      "avoid_confusion": "不是Q的Hcenter，也不是对参考中心的误差。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/geometry_variation.py"
+      ]
+    },
+    {
+      "id": "v_height_population",
+      "label": "V_height_h：同人数均高变化",
+      "short": "同图同人数两支团队的保存均高，相差多少相机高度。",
+      "detail": "在有效底面路径对中，另要求height_mean_h存在，计算两端均高绝对差。有效配对数量可能比V_floor少，单独保留字段分母。",
+      "unit": "h（相机高度单位）",
+      "better_direction": "越小均高越稳定",
+      "denominator_or_support": "V_height_h_valid_pairs；两端保存均高均可用。",
+      "avoid_confusion": "不是Hmean参考误差，也不能用底面配对数替代高度配对数。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/geometry_variation.py"
+      ]
+    },
+    {
+      "id": "bev",
+      "label": "BEV：底面俯视图",
+      "short": "从上方看布局的水平形状，用来显示范围和角点位置。",
+      "detail": "将布局投影到相机坐标的水平面，显示候选与参考或多个团队底面的差别。BEV是表示方式，不是单一指标；其上可计算区域IoU、角点距离、面积、质心等不同量。",
+      "unit": "随图上量",
+      "better_direction": "依具体指标",
+      "denominator_or_support": "同图同相机坐标；跨视角须另有合法对应才可对齐。",
+      "avoid_confusion": "BEV相近不能代表顶界或高度相近；图形不得自由缩放以制造吻合。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "camera_height_h",
+      "label": "h：相机高度单位",
+      "short": "以相机到地面的高度作为1，长度值不是直接的米数。",
+      "detail": "归一几何令地面距相机高度为1。距离0.1h表示相机高度的十分之一，面积用h²。没有该场景真实相机高度时不换算成米或平方米。",
+      "unit": "h；面积h²",
+      "better_direction": "不排序",
+      "denominator_or_support": "冻结相机归一坐标。",
+      "avoid_confusion": "h不是房间高度，Hmean/Hcenter已经是相对误差，不再标成h。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "corner_bev_distance",
+      "label": "BEV对应角点距离",
+      "short": "同图两支队伍的可对应角点在底面上相距多远。",
+      "detail": "冻结循环对应比较同角点数的两队，保留最优循环/反向匹配、对应歧义和状态；均距、最大距和P95分别保存。当前正式几何汇总按唯一合法对应支持读取。",
+      "unit": "h（相机高度单位）",
+      "better_direction": "越小表示两队更相似，不保证更正确",
+      "denominator_or_support": "同图两端完整几何、同角点数和所列对应资格。",
+      "avoid_confusion": "异数或对应失败不填0；这是两队差异，不是跨视角刚性对齐或GT误差。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "score_failure",
+      "label": "失败／不可评分",
+      "short": "一次尝试没得到指定指标的可用值，仍计入尝试分母。",
+      "detail": "无连接、节点不足、无效底面、完整几何不可用及按设计暂缓等保留各自状态。Q失败可仍有结构数或部分底面诊断。均分仅用有效Q；失败率用全部相应尝试，并报告新增失败与恢复评分。",
+      "unit": "次数/比例/百分点",
+      "better_direction": "失败率通常越低越好，原因需分列",
+      "denominator_or_support": "端点、事件或路径尝试分母必须明确，不能混用去重端点数与引用次数。",
+      "avoid_confusion": "缺失不等于0分；研究设计暂缓与真正输出失败可分别解释，不能删掉后只报告高均分。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py"
+      ]
+    },
+    {
+      "id": "turn_count",
+      "label": "有效转折数",
+      "short": "把同墙近共线分段去除后，布局有多少实际方向转折。",
+      "detail": "沿底面环计算节点转角，本轮分类/融合表达计数将转角≤5°的节点作为近共线分段，其余计为转折；与原始节点数共同保留。它是表达代理，不自动对应参考的必要转折。",
+      "unit": "个",
+      "better_direction": "不排序",
+      "denominator_or_support": "可计算底面/节点几何；不强制与Q共同可评。",
+      "avoid_confusion": "多转折可能是补结构，也可能是冗余折角或错结构，需看机制实例。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "short_turn_edges",
+      "label": "短转折边数",
+      "short": "周长占比小、两端确有转折的边，用于描述短细节表达。",
+      "detail": "本轮沿用边长/周长<4%且两端转角至少15°的短边计数，再在分类中同图中心化。它规避单纯点多即细致的解释，同时仍是几何表达代理。",
+      "unit": "条",
+      "better_direction": "不排序",
+      "denominator_or_support": "同一算法阈值与完整有效环；实际分项支持另列。",
+      "avoid_confusion": "不是绝对0.03h/0.05h短边诊断，也不保证这条细节在参考中必要。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "collinear_redundancy",
+      "label": "近共线分段节点",
+      "short": "转角不超过5°的同墙分段，单列而不当作真实转折。",
+      "detail": "这类节点增加原始点数，却未明显改变边界方向。Semi结构分类单独用redundancy_history描述相对倾向，避免与有效转折混合。",
+      "unit": "个/历史残差",
+      "better_direction": "不排序",
+      "denominator_or_support": "节点转角≤5°，记录机会与非零实例。",
+      "avoid_confusion": "“冗余”是几何计数名，不等于人员错误；同墙分段可能源于初始化或操作。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "recorded_time",
+      "label": "记录劳动时间T",
+      "short": "团队成员记录耗时之和，表示已观察的劳动量。",
+      "detail": "只有成员记录完整、总秒数为正且来源语义一致时提供团队时间。日志活动时间与任务报告秒数分开；用于对比须同时满足相关队伍的来源与可用支持。",
+      "unit": "人秒/总记录秒",
+      "better_direction": "较少表示较低记录劳动量",
+      "denominator_or_support": "同图同来源语义、所有成员时间齐全；Q/T结论另取质量共同支持。",
+      "avoid_confusion": "不是多人并行的交付时间、排队时间、工资成本或精确注意力投入。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/CONTEXT.md"
+      ]
+    },
+    {
+      "id": "time_history",
+      "label": "历史时间特征",
+      "short": "按同图、来源和时间语义调整后的相对对数耗时。",
+      "detail": "分类t_history将原始秒数取对数，在同图×origin×time_source_kind中中心化，再按建筑等权。负值表示在可比机会中相对更快；它不是该人每张图的固定秒数。",
+      "unit": "对数时间残差",
+      "better_direction": "较小表示相对更快，不代表更优秀",
+      "denominator_or_support": "有效原始时间、同源比较及历史机会门槛。",
+      "avoid_confusion": "不能将t_history直接求和成团队秒数，也不能由更快推断一定漏画。",
+      "source_paths": [
+        "research/workers/personnel_exchange_closure_20261022/classification/FIELD_GUIDE_ZH.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "time_ratio",
+      "label": "记录劳动比",
+      "short": "换后总记录时间除以对照时间，1表示相同劳动量。",
+      "detail": "先在精确事件/视角计算时间比，再按所列层级作算术汇总。比值1.10表示约多10%，0.80表示约少20%。time_logratio另列，不能把算术平均说成取log后还原。",
+      "unit": "比值/百分比变化",
+      "better_direction": "更小记录劳动更少，需同时看Q及失败",
+      "denominator_or_support": "两队或ABC六端点的时间共同域，具体表各自注明。",
+      "avoid_confusion": "不能把质量全域的收益与另一个小时间子集拼成“又快又好”。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "image_equal",
+      "label": "图等权／图对等权",
+      "short": "让每张图或每个物理图对在总体均值中占同样权重。",
+      "detail": "先在图内按已声明的配置、背景和成员规则汇总，再对图片平均；同房研究以直接物理图对为单位。不同图对可共享图片，不能因此当作相互独立。",
+      "unit": "汇总方式",
+      "better_direction": "不排序",
+      "denominator_or_support": "报告实际图/图对数和图内前置汇总规则。",
+      "avoid_confusion": "不是把所有事件直接平均；重复声明的同房关系不增加物理图对数。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "building_equal",
+      "label": "楼等权",
+      "short": "先算每栋楼的平均表现，再让各栋楼占同样权重。",
+      "detail": "楼等权减少图片多的建筑对总体数字的支配。图等权和楼等权回答不同集合的平均问题，两者都可用；区间还须注明是路径重抽还是整栋楼重抽。",
+      "unit": "汇总方式",
+      "better_direction": "不排序",
+      "denominator_or_support": "实际可用建筑数，建筑内按规定先汇总图片/图对。",
+      "avoid_confusion": "楼等权不自动让共享人员独立，也不保证换一栋新楼效果相同。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "same_room_direct",
+      "label": "同房直接关系",
+      "short": "采用用户既有房间分类中直接确认的跨视角关系。",
+      "detail": "同一物理房间的两个视角还需范围可比、参考资格与共同人员支持。直接图对单独计数，保留声明组；不因为同建筑或关系传递就创造新同房事实。",
+      "unit": "物理图对/声明组",
+      "better_direction": "不排序",
+      "denominator_or_support": "relation_version、scope_comparable及双方正式共同成员。",
+      "avoid_confusion": "同房不保证难度、可见结构、参考布局和人员质量作用都相同。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "crossview_response",
+      "label": "双端响应状态",
+      "short": "把两视角同向、反向、单边变化和都近零分别计数。",
+      "detail": "以Q变化绝对值严格>2分判为响应；两端同号且均响应为同向，两端异号为反向，仅一端响应为单边，其余双方近零。零阈值版本另保留。先选择双端响应后的同向比例属于条件比例。",
+      "unit": "事件比例",
+      "better_direction": "不排序",
+      "denominator_or_support": "所列有符号对照和共同六端点可评分支持。",
+      "avoid_confusion": "不能把大量零变化算成机制迁移成功，也不能把双端筛选同向率当只看源端的预测成功率。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "team_selection",
+      "label": "选队：选择最终成员",
+      "short": "从固定候选人员池里决定最终让哪一组人组成团队。",
+      "detail": "选队会改变最终团队的实际成员或配比。类别可以解释角色与组织容量，连续历史Q/T可以进一步挑具体人。评价需保持候选范围、人数、来源和目标楼外信息一致。",
+      "unit": "决策用途",
+      "better_direction": "依Q、时间、失败取舍",
+      "denominator_or_support": "相同候选范围和可用历史；目标质量不用于实际选员。",
+      "avoid_confusion": "分类有解释用途不代表它数值上必胜连续Q/T；它与进入顺序是不同实验。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "entry_order",
+      "label": "进入顺序：前段组成",
+      "short": "最终人员不变，比较谁先加入对中途共识的影响。",
+      "detail": "自然顺序为无放回排列；角色优先在对应自然顺序上稳定调整先后，使同角色内部次序保留。每个k重算前缀融合，比较前段Q、时间、失败与波动。满员成员和端点相同，最终差为0。",
+      "unit": "路径/k",
+      "better_direction": "依评价指标",
+      "denominator_or_support": "同一最终池、成对自然路径及其策略路径。",
+      "avoid_confusion": "不是改变最终配比；GT下更早达Q90是事后过程描述，不是无GT在线停标规则。",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "coverage_configurations",
+      "label": "完整配置与成员覆盖",
+      "short": "可行配比全覆盖，和每种具体人员组合全穷尽是两回事。",
+      "detail": "配置指定图片/图对、方法、类别方向、n、m和背景规则。有限12选6面板穷尽924个团队；同房大块穷尽合法n/m配置，小配置全枚举，大配置做均衡成员覆盖。报告各自空间与实际数。",
+      "unit": "配置数/团队数/事件数",
+      "better_direction": "不排序",
+      "denominator_or_support": "标明固定候选池与背景；列实际/理论配置、成员及不同端点数。",
+      "avoid_confusion": "不能把“完整配置”写成全库所有人组合和顺序穷尽；事件多不等于独立证据多。",
+      "source_paths": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md"
+      ]
+    },
+    {
+      "id": "distribution_band",
+      "label": "成员分位带",
+      "short": "显示具体成员组合结果分布，宽说明换人影响较大。",
+      "detail": "P10—P90或P05—P95是成员/路径观测分位范围，描述离散程度；中线可画中位数或均值，但需明确。每格有效数与失败率常驻显示。",
+      "unit": "所画指标单位",
+      "better_direction": "不排序",
+      "denominator_or_support": "同一格或同图同k的实际有效观测。",
+      "avoid_confusion": "分位带不是均值置信区间；不将宽分布误读为均值估计不精确的唯一原因。",
+      "source_paths": [
+        "research/workers/personnel_mixture_comparison_20261022/configurations/SCHEMA_AND_SCOPE.md",
+        "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py"
+      ]
+    },
+    {
+      "id": "bootstrap_interval",
+      "label": "重抽区间",
+      "short": "按整条路径或整栋楼重复抽样，观察统计量的变化范围。",
+      "detail": "路径重抽保留进入顺序内部各k的联系及策略配对；建筑重抽保留同楼全部图片和路径。两种区间针对不同重复来源，因此不必相同；注明次数、层级和统计量。",
+      "unit": "所画指标单位",
+      "better_direction": "不排序",
+      "denominator_or_support": "按来源所列路径/建筑支持重抽；不按几百万事件假定独立。",
+      "avoid_confusion": "区间跨零不是证明没有作用；区间不跨零也不代表每个人、每张图都同方向。",
+      "source_paths": [
+        "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
+        "research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/README_ZH.md"
+      ]
+    },
+    {
+      "id": "consensus_mv50",
+      "label": "共识票门槛MV50",
+      "short": "某个对应结构至少获得半数不同成员支持才保留。",
+      "detail": "票门槛随当前团队人数变化：需2×支持人数≥团队人数，20人至少10票，21人至少11票。身份对应、定位和连线也影响最终结果；增加人数可能同时增加支持与抬高门槛。",
+      "unit": "人数/票",
+      "better_direction": "不排序",
+      "denominator_or_support": "每个结构身份组的不同人员支持，不能同人重复计票。",
+      "avoid_confusion": "多数支持不是GT正确率；加人后失选也不能只归因某人画得差。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md"
+      ]
+    },
+    {
+      "id": "history_residual",
+      "label": "历史特征残差",
+      "short": "相对同图及同来源基准的个人偏离。",
+      "detail": "先在同图等可比条件内消除共同水平，再形成个人建筑等权历史。图示类中心是成员个人特征的平均；各列单位不同，不能直接比较柱长。",
+      "unit": "按特征分别为个、Q分或自然对数",
+      "better_direction": "描述方向，不统一排序",
+      "denominator_or_support": "每类有此历史特征的成员；缺失者不填0。",
+      "avoid_confusion": "不是原始绝对转折数、质量或分钟数。",
+      "source_paths": [
+        "research/workers/personnel_main_figures_v2_20261023/notes/CLASSIFICATION_README.md"
+      ]
+    },
+    {
+      "id": "q_history",
+      "label": "楼外历史Q特征",
+      "short": "从目标建筑以外的既有质量记录描述人员。",
+      "detail": "Q历史来自独立绑定的可用参考及记录，经同图基准处理和建筑汇总；ALL用于总体描述，目标建筑实验读取对应LOBO。当前图的融合升质没有直接用于这套标签的拟合输入。",
+      "unit": "Q分残差",
+      "better_direction": "正值表示相对历史基准更高",
+      "denominator_or_support": "该人可用的楼外图片、建筑和质量记录。",
+      "avoid_confusion": "不是目标图实际表现保证，也不是新人员的能力真值。",
+      "source_paths": [
+        "research/workers/personnel_main_figures_v2_20261023/notes/CLASSIFICATION_README.md"
+      ]
+    },
+    {
+      "id": "doorway",
+      "label": "门洞／交界层",
+      "short": "具有门洞或空间交界的图片单列分析。",
+      "detail": "该层沿用主线语义和资格记录；困难程度与可标性分别判断。人数增加后的升质、退化及满员失败都作为结果保留。",
+      "unit": "图片层",
+      "better_direction": "不排序",
+      "denominator_or_support": "该门洞层的真实可用图片与人员池。",
+      "avoid_confusion": "门洞标签不自动等同不可标或GT错误。",
+      "source_paths": [
+        "docs/thesis_main/CONTEXT.md"
+      ]
+    },
+    {
+      "id": "common_qt_support",
+      "label": "共同质量—时间支持",
+      "short": "在同一批可比较团队上一起看Q和劳动时间。",
+      "detail": "只有各队质量可评且记录时间口径完整相同的共同单位，才同时报告Q变化和劳动比。失败另用全部同时间尝试为分母，避免被可评分过滤删掉。",
+      "unit": "Q分、劳动比或百分比，分别标单位",
+      "better_direction": "取舍描述",
+      "denominator_or_support": "人数前半段共同时间分析普通Manual为67图18楼；质量4304单位、时间失败4613尝试。",
+      "avoid_confusion": "不是把质量全域与另一个时间子集拼成双赢。",
+      "source_paths": [
+        "research/statistics/same_room_rebuilt_audit_20261023/results/population/COMMON_TIME_RESULTS.csv"
+      ]
+    },
+    {
+      "id": "median_position",
+      "label": "位置中位数",
+      "short": "通过投票的身份，其位置由实际支持者估计。",
+      "detail": "固定身份和票数不代表坐标不变；换入人员可改变位置中位数，进而改变底面、边界与高度分项。应结合具体端点票账查看。",
+      "unit": "实际坐标或指定几何距离",
+      "better_direction": "依当前比较对象",
+      "denominator_or_support": "当前端点该身份实际有效支持者。",
+      "avoid_confusion": "多转折、全票和低成员波动均不自动保证靠近采用参考。",
+      "source_paths": [
+        "research/fusion/fusion_paper_closeout_20261022/README.md"
+      ]
+    }
+  ]
+}

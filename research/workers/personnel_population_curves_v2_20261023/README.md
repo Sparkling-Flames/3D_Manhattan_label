@@ -11,7 +11,7 @@
 - `results/ENDPOINT_GEOMETRY.json.gz`：318,616条保存几何；与318,816标量分母不同。
 - `events/POLICY_PAIRED_PREFIX_EVENTS_LINKED.csv.gz`：**本地恢复后229,050行**，默认使用本文件。
 - `events/POLICY_DIRECT_PAIRED_PREFIX_EVENTS_LINKED.csv.gz`：112,520行完整原表。
-- `cases/`：五张原图、精确路径、投票/连接明细与已有图版。
+- `cases/`：五张普通原图、精确路径、投票/连接明细与已有图版；另接[7y-06门洞满员失败](cases/doorway_full_pool_20261024/README.md)，32份完整原答、4个既有端点与24条自然路径，纯提取不重算。
 - [主文图表来源清单](../../statistics/pro_return_review_20261023/MAIN_FIGURE_PLAN.csv)：分类、配比、替换、难度、人数和机制六组来源。
 
 ## 从Git恢复大表

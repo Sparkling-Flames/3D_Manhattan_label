@@ -1,5 +1,7 @@
 # v2：难在哪里、对谁难、造成什么标法变化
 
+**2026-10-24全线接续：** 本专题的条件规律已与当前v2自然人数过程、类别与快慢响应连接，见[图片条件与融合再审查](../../statistics/research_closeout_20261022/CONDITIONS_FUSION_REASSESSMENT_20261024.md)。32/47、36/47人的简化增加及困难后段27/29图V降低按实际多数采用；旧人数安排已执行。OOS子类独立统计仍由[专门清单](scope_closeout_20261022/OOS_REVIEW_20261024.md)接续。
+
 **2026-10-22范围与多数支持已补齐：** [当前收尾](scope_closeout_20261022/README.md)明确目标绑定、完整参考与原资格的区别，补充多数人员／可比较图片分母，并归档两份缺失ZIP源表。既有结论、标签和算法保持；分类发现可单条件或联合历史，效果仍分别按Manual／Semi报告。
 
 **2026-10-21阶段收尾：** 可采用结论、共同图片／同参考正反例及可直接整合段落见 [RESULTS_SYNTHESIS.md](RESULTS_SYNTHESIS.md)；跨线来源与支持范围见 [INTERPRETATION_INTERFACE.json](INTERPRETATION_INTERFACE.json)。本页原分析及数值保留，粗标签不变。

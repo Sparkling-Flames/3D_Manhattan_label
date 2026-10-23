@@ -1074,3 +1074,19 @@ analysis_results/difficulty/scope_workbench_recovered_20261015/quality_scope_rev
 # Complete local copy is restored from committed byte parts; no data is sampled.
 /research/workers/personnel_population_curves_v2_20261023/results/ENDPOINT_SCALARS.csv.gz
 /research/workers/personnel_population_curves_v2_20261023/results/PREFIX_RESULTS_REJOINED.csv.gz
+
+# Rebuilt same-room complete tables are restored from committed original byte parts.
+/research/same_room/same_room_large_block_rebuilt_20261023/anchor_paths/ANCHOR_PATH_EFFECTS.csv.gz
+/research/same_room/same_room_large_block_rebuilt_20261023/native_endpoints/ENDPOINT_SCALARS.csv.gz
+/research/same_room/same_room_large_block_rebuilt_20261023/results/EVENT_Q_STRUCTURE_EFFECTS.csv.gz
+
+# Formal rebuilt research shards and frozen runtime dependencies are source evidence.
+!/research/same_room/same_room_large_block_rebuilt_20261023/native_endpoints/parts/
+!/research/same_room/same_room_large_block_rebuilt_20261023/native_endpoints/parts/**
+!/research/same_room/same_room_large_block_rebuilt_20261023/engine/first_complete_event/native/parts/
+!/research/same_room/same_room_large_block_rebuilt_20261023/engine/first_complete_event/native/parts/**
+!/research/same_room/same_room_large_block_rebuilt_20261023/**/requirements*.txt
+!/research/same_room/same_room_large_block_rebuilt_20261023/engine/frozen_repo/research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip
+!/research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/requirements.txt
+!/research/workers/personnel_main_figures_v2_20261023/data/
+!/research/workers/personnel_main_figures_v2_20261023/data/**

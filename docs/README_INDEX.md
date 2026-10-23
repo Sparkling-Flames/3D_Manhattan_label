@@ -1,12 +1,19 @@
+- **2026-10-24门洞案例补齐：** [7y-06满员失败](../research/workers/personnel_population_curves_v2_20261023/cases/doorway_full_pool_20261024/README.md)从现有结果提取32人完整标注、4个端点及24条自然路径，研究台直接查看入口由展示线程接入；不新增融合/评分，OOS继续独立。
+- **2026-10-24整体收尾与OOS复核：** [全研究结论](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)统一人员、同房、难度、人数及用途的完成状态；[OOS的28图清单](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/OOS_REVIEW_20261024.md)单列具体结构因素和人工复核。已完成28图视觉复核；斜墙新增b8-19，连同x8同房两视角共3图，角度未定；子类间统计已完成，见[OOS收尾结果](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/README.md)；新增复算工具及定向测试。OOS超出标注标准，其GT可能受约束近似；独立工作台展示统计，不接研究总入口。 本次复用该结论入口汇总最初预期与新发现，新增三份定向再审查作为支撑，模型/进度/术语的旧状态折叠保存。人员主报告已统一六步读法与四套分类采用层级；质量算法与3D IoU比较见全研究结论第2.3节。
+
+- **2026-10-23人员统一图表：** [六组16张PNG/SVG、完整分类名单与68项提示词典](../research/workers/personnel_main_figures_v2_20261023/README.md)串起配比、换人、难度、人数及机制，已实际接入[人员研究六步](../research/statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=personnel_main)，含名单筛选、人员下钻和指标提示；页面使用中性研究文案。
+
+- **2026-10-23较大块同房新实验与人数重抽归档：** [新严格ABC完整来源](../research/same_room/same_room_large_block_rebuilt_20261023/README.md)保存62,676个ABC、311,333个唯一端点和658份几何票账；[人数路径与同来源时间](../research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/README.md)单列。14包已本地归档，Windows入口与两个空PDF已修补；采用结论以[独立核验](../research/statistics/same_room_rebuilt_audit_20261023/)为准，旧111,054端点实验未恢复。
+
 - **2026-10-23两轮Pro返回实核：** [人数过程、进入策略与同房当前分类](../research/statistics/pro_return_review_20261023/README.md)。核心结果可采用；04C完整229050行已本地重建，同房较大块已复用现成端点补算；源端阈值与劳动比口径已订正，最新12个来源文件已逐项归档至[人数过程](../research/workers/personnel_population_curves_v2_20261023/README.md)及[同房当前分类](../research/same_room/same_room_current_classes_v2_20261023/README.md)，已准备[六组主文图表来源](../research/statistics/pro_return_review_20261023/MAIN_FIGURE_PLAN.csv)；下载重复件按清理回执处理。
 
-- **2026-10-23人员混合构成验收：** [统一主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)与[四包归档/独立核验](../research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md)。完整配比、成员变化、大块AC和难度结果接齐；修复旧n20失败统计，原表保留。新增一份analysis审计、一份大表恢复工具和两份定向测试；两张大表按原gzip字节分块。未改变数据、参考、资格、评分或融合合同；分类展示暂缓。
+- **2026-10-23人员混合构成验收：** [统一主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)与[四包归档/独立核验](../research/workers/personnel_mixture_comparison_20261022/LOCAL_ACCEPTANCE.md)。完整配比、成员变化、大块AC和难度结果接齐；修复旧n20失败统计，原表保留。新增一份analysis审计、一份大表恢复工具和两份定向测试；两张大表按原gzip字节分块。未改变数据、参考、资格、评分或融合合同；后续人员详细展示现已接入。
 
 # HOHONET 文档入口
 
-**全研究汇报入口：** [各专题发现与证据链](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)，[研究台当前接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)，[指标与名词释义](thesis_main/CONTEXT.md)。现有非分类成果开始接入，新增人员分类暂缓。
+**全研究汇报入口：** [各专题发现与证据链](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)，[研究台当前接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)，[指标与名词释义](thesis_main/CONTEXT.md)。各专题和人员六组图表均已接入；核心研究与OOS独立描述统计已收尾，OOS工作台保持独立。
 
-**固定阅读路线：** [整体模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [当前整体进度](thesis_main/四线程成果与论文主线核对_20261015.md) → [人员主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。人员主报告包含想法演变、已有发现、完整配比范例与下一步；各原包只负责证据。
+**固定阅读路线：** [全研究结论与预期完成度](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md) → [整体模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [当前进度](thesis_main/四线程成果与论文主线核对_20261015.md) → [人员主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。人员主报告包含想法演变、已有发现、完整配比范例与下一步；各原包只负责证据。
 
 - **2026-10-22混合构成独立核验：** [各分类发现、完整配比、构成内波动与难度连接](../research/workers/personnel_mixture_audit_20261022/README.md)。新补两包逐面板复核、F01成员穷举和旧QTD重算已完成；随机人数曲线的版本与复用安排见人员统一比较清单。
 

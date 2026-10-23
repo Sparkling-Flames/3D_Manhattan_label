@@ -1,0 +1,34 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+const elements={};
+const el=id=>elements[id]??=( {value:'',textContent:'',innerHTML:'',addEventListener(type,fn){this[type]=fn;}} );
+const store={};let mounts=0,allowConflict=false;
+const context={URLSearchParams,Date,JSON,console,location:{hash:''},localStorage:{getItem:k=>store[k],setItem:(k,v)=>store[k]=v},document:{getElementById:el,querySelectorAll:()=>[]},WorkbenchGeometry:{mount:()=>mounts++},confirm:()=>allowConflict};
+context.window=context;context.addEventListener=()=>{};
+vm.createContext(context);
+for(const name of ['oos-review-data.js','oos-review.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,name),'utf8'),context);
+assert.equal(mounts,2);
+assert.doesNotMatch(el('review').innerHTML,/id="review-status"/);
+assert.match(el('review').innerHTML,/天花板是斜的/);
+assert.match(el('review').innerHTML,/当前采用因素/);
+assert.match(el('review').innerHTML,/新批Manual诊断/);
+assert.match(el('review').innerHTML,/不以GT判定人员对错/);
+assert.equal(context.OOS_REVIEW_DATA.images.reduce((n,i)=>n+i.diagnostic.inventory_n,0),804);
+assert.equal(context.OOS_REVIEW_DATA.images.reduce((n,i)=>n+i.diagnostic.pool_n,0),703);
+assert.match(el('count').textContent,/28 \/ 28/);
+el('search').value='G231';el('search').oninput();assert.match(el('count').textContent,/2 \/ 28/);
+el('extent').value='仅平台';el('note').value='斜墙角度未定';el('review-form').input();
+const saved=JSON.parse(Object.values(store)[0]),id=Object.keys(saved.records)[0];
+assert.equal(saved.records[id].note,'斜墙角度未定');
+assert.equal(saved.records[id].status,'已复核');
+async function upload(obj){await el('import').onchange({target:{files:[{text:async()=>JSON.stringify(obj)}],value:'selected'}});}
+(async()=>{
+ await upload({...saved,records:42});assert.match(el('status').textContent,/导入失败/);
+ await upload({...saved,records:{unknown:saved.records[id]}});assert.match(el('status').textContent,/导入失败/);
+ const incoming=JSON.parse(JSON.stringify(saved));incoming.records[id].note='新判断';
+ await upload(incoming);assert.equal(JSON.parse(Object.values(store)[0]).records[id].note,'斜墙角度未定');
+ allowConflict=true;await upload(incoming);assert.equal(JSON.parse(Object.values(store)[0]).records[id].note,'新判断');
+ console.log('PASS: inventory, same-room filter, draft save, invalid import, conflict retention and replacement');
+})().catch(e=>{console.error(e);process.exitCode=1;});
