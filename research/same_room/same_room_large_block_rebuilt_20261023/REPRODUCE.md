@@ -2,6 +2,10 @@
 
 当前路径为 `research/same_room/same_room_large_block_rebuilt_20261023/`。原件已归档；不需要再次下载冻结源码。
 
+## ZIP 引用说明
+
+`delivery/CROSS_PACKAGE_LINK_CONFIG.json` 和 `delivery/receipts/` 保留原交付包的构建与校读记录；其中 `/workspace/scratch/...` 是临时构建机路径，R01/R04/R05/R06 导出 ZIP 不包含在本仓库内，不能作为当前复现入口。当前复现请使用本文件中的仓库相对路径。运行所需的 `engine/frozen_repo/.../measurement_engine.zip` 已随冻结源码归档，ZIP 完整性检查通过。案例中的原图 ZIP URL 仅记录原始图片来源；所需案例图片已存于 `cases/`。
+
 ## 先恢复三张完整大表
 
 仓库根运行：
