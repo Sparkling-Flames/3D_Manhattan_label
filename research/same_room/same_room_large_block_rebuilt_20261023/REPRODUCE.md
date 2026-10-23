@@ -4,7 +4,7 @@
 
 ## ZIP 引用说明
 
-`delivery/CROSS_PACKAGE_LINK_CONFIG.json` 和 `delivery/receipts/` 保留原交付包的构建与校读记录；其中 `/workspace/scratch/...` 是临时构建机路径，R01/R04/R05/R06 导出 ZIP 不包含在本仓库内，不能作为当前复现入口。当前复现请使用本文件中的仓库相对路径。运行所需的 `engine/frozen_repo/.../measurement_engine.zip` 已随冻结源码归档，ZIP 完整性检查通过。案例中的原图 ZIP URL 仅记录原始图片来源；所需案例图片已存于 `cases/`。
+`delivery/CROSS_PACKAGE_LINK_CONFIG.json` 和 `delivery/receipts/` 保留原交付包的构建与校读记录；其中 `/workspace/scratch/...` 及 `source_original/` 内的 ZIP 名称/链接仅作历史溯源，不是当前复现入口。R00–R06 的 14 个源 ZIP 与 10A 源 ZIP 容器未存入仓库；其文件成员已按映射逐字节核对并归档至本仓库，源 ZIP 已清理。当前复现请使用本文件中的仓库相对路径。运行所需的 `engine/frozen_repo/.../measurement_engine.zip` 已随冻结源码归档，ZIP 完整性检查通过。案例中的原图 ZIP URL 仅记录原始图片来源；所需案例图片已存于 `cases/`。
 
 ## 先恢复三张完整大表
 
