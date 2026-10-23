@@ -1,0 +1,52 @@
+{
+  "independent_packaged_mode": "passed",
+  "outputs_byte_identical_to_prior_repo_mode": true,
+  "output_sha256": {
+    "EXISTING_MAIN_POLICY_BUILDING_POINTS.csv": "e1d083c6addf93ac2c4eb2c89bf54f4f5a802165118df6b47615f1f3bdf70bcc",
+    "EXISTING_MAIN_POLICY_WEIGHTING_COMPARISON.csv": "52f04959365cbebd0d0140a81e53b5cf3b18191119974e32faef6a8c4beb0958",
+    "EXISTING_MAIN_NATURAL_INTERVALS.csv": "8e2f6e7cd4a60973595c2cddfead28f72b5dced673d23d3093a6a297d86c8f73",
+    "EXISTING_MAIN_SELECTED_CURVE_POINTS.csv": "a73b58da1f55d7f4627c702013d30c25c8298a09f475e31c5ec36eb08d0702d5",
+    "PRIOR_REPORTED_BUILDING_RANGES_UNREPRODUCED.csv": "160f9f4d30bad4a298367164a91955ee2cb845109dbf37c30270f5d260ef69ff"
+  },
+  "source_reference": "research/statistics/pro_return_review_20261023/population/POLICY_RECOMPUTED.csv",
+  "source_sha256": "3fd6ec7a772a96f00b9b9677b18468d74dbc8e3d09c2f43bf530b58efbb9a183",
+  "complete_manual_time_rows_match_main": true,
+  "rows": [
+    {
+      "policy": "joint_fast_first",
+      "images_new": 88,
+      "buildings_new": 20,
+      "Q_image_equal": -0.541023575382733,
+      "Q_building_equal": -0.3976360886617991,
+      "joint_time_pct_image_equal": -21.797693982095986,
+      "joint_time_pct_building_equal": -20.99539632242292
+    },
+    {
+      "policy": "joint_highq_first",
+      "images_new": 88,
+      "buildings_new": 20,
+      "Q_image_equal": 7.617616775736263,
+      "Q_building_equal": 8.095023042956736,
+      "joint_time_pct_image_equal": 1.4964611824321743,
+      "joint_time_pct_building_equal": 1.42745384489613
+    },
+    {
+      "policy": "structure_dominant_first",
+      "images_new": 88,
+      "buildings_new": 20,
+      "Q_image_equal": -2.946658147130366,
+      "Q_building_equal": -3.022183865596902,
+      "joint_time_pct_image_equal": -1.8062777607505005,
+      "joint_time_pct_building_equal": -2.453564234592407
+    },
+    {
+      "policy": "structure_moreturn_first",
+      "images_new": 88,
+      "buildings_new": 20,
+      "Q_image_equal": 7.184365649482905,
+      "Q_building_equal": 7.749403011521754,
+      "joint_time_pct_image_equal": 6.185778465291703,
+      "joint_time_pct_building_equal": 5.65535201495366
+    }
+  ]
+}

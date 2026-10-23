@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261024_v43_oos_closeout",
+  "catalog_version": "research_catalog_20261024_v44_same_room_10a",
   "inventory_date": "2026-10-24",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -12084,6 +12084,25 @@
         "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/summary.json",
         "tools/thesis_main/analysis/oos_closeout_20261024.py",
         "tests/test_oos_closeout_20261024.py"
+      ]
+    },
+    {
+      "id": "MAT-same_room_delivery_clarifications_20261023",
+      "title": "同房研究10A恢复说明与口径修订",
+      "theme": "same_room",
+      "type": "来源澄清、历史身份与现存结果索引",
+      "date": "20261023",
+      "source_path": "HOHONET_10A_恢复说明与口径修订_20261023.zip",
+      "current_path": "research/same_room/same_room_delivery_clarifications_20261023",
+      "source": "用户Downloads中的10A补件；ZIP内52项已按原仓库相对路径归档。",
+      "adoption_status": "用于解释现存同房研究来源、阶段与历史身份；不代表遗失的大块结果已恢复。",
+      "verification_status": "ZIP CRC通过；52个文件均为原路径缺失项并已归档；未重跑分析或将作者报告升级为独立核验。",
+      "availability": "本地仓库可读；GitHub main分批推送中。",
+      "relationships": [
+        "research/same_room/same_room_delivery_clarifications_20261023/README.md",
+        "research/same_room/same_room_delivery_clarifications_20261023/REPORT_ZH.md",
+        "research/same_room/same_room_delivery_clarifications_20261023/REPRODUCE.md",
+        "research/same_room/same_room_large_block_rebuilt_20261023/README.md"
       ]
     }
   ]

@@ -1,0 +1,193 @@
+{
+  "EXISTING_MAIN_NATURAL_INTERVALS.csv": {
+    "rows": 27,
+    "columns": [
+      "condition",
+      "layer",
+      "difficulty",
+      "start",
+      "end",
+      "images",
+      "q_delta",
+      "up",
+      "buildings",
+      "buildings_up",
+      "v_down",
+      "source_commit",
+      "stage",
+      "quality_observed_image_denominator",
+      "source_table"
+    ]
+  },
+  "EXISTING_MAIN_POLICY_BUILDING_POINTS.csv": {
+    "rows": 656,
+    "columns": [
+      "condition",
+      "layer",
+      "policy",
+      "building",
+      "subset",
+      "difficulty_scope",
+      "images",
+      "pools",
+      "quality_images",
+      "quality_positive_images",
+      "p10_images",
+      "joint_qt_images",
+      "B8L2_delta",
+      "D10_delta",
+      "p10_delta",
+      "qt_q",
+      "qt_logtime",
+      "logtime",
+      "floor_turn5_n_delta",
+      "ref_bottom_pair_mean_deg_delta",
+      "ref_top_pair_mean_deg_delta",
+      "S_bottom_deg_delta",
+      "dir_delta",
+      "Hmean_delta",
+      "joint_time_pct",
+      "source_commit",
+      "stage",
+      "source_table",
+      "outcome_budget",
+      "difficulty"
+    ]
+  },
+  "EXISTING_MAIN_POLICY_WEIGHTING_COMPARISON.csv": {
+    "rows": 52,
+    "columns": [
+      "condition",
+      "layer",
+      "policy",
+      "subset",
+      "difficulty_scope",
+      "images",
+      "buildings",
+      "quality_images",
+      "positive_images",
+      "quality_buildings",
+      "positive_buildings",
+      "Q_image_equal",
+      "Q_building_equal",
+      "P10_image_equal",
+      "P10_building_equal",
+      "QT_Q_image_equal",
+      "QT_Q_building_equal",
+      "joint_time_pct_image_equal",
+      "joint_time_pct_building_equal",
+      "source_commit",
+      "stage",
+      "difficulty"
+    ]
+  },
+  "EXISTING_MAIN_SELECTED_CURVE_POINTS.csv": {
+    "rows": 36,
+    "columns": [
+      "condition",
+      "layer",
+      "difficulty",
+      "k",
+      "images",
+      "Q",
+      "SD",
+      "P10",
+      "failure",
+      "V",
+      "source_commit",
+      "stage",
+      "scored_image_counts"
+    ]
+  },
+  "PRIOR_REPORTED_BUILDING_RANGES_UNREPRODUCED.csv": {
+    "rows": 3,
+    "columns": [
+      "metric",
+      "lower",
+      "upper",
+      "condition",
+      "layer",
+      "difficulty",
+      "interval",
+      "status",
+      "source",
+      "missing_artifact",
+      "intended_sampling_level_as_reported",
+      "confidence_level_or_quantiles_verified",
+      "independently_recomputed_this_round"
+    ]
+  },
+  "SOURCE_FIELD_CONTRACT.csv": {
+    "rows": 16,
+    "columns": [
+      "field",
+      "source",
+      "function_or_section",
+      "definition",
+      "denominator",
+      "interpretation"
+    ]
+  },
+  "inputs/NATURAL_INTERVAL_RECOMPUTED.csv": {
+    "rows": 27,
+    "columns": [
+      "condition",
+      "layer",
+      "difficulty",
+      "start",
+      "end",
+      "images",
+      "q_delta",
+      "up",
+      "buildings",
+      "buildings_up",
+      "v_down"
+    ]
+  },
+  "inputs/NATURAL_RECOMPUTED.csv": {
+    "rows": 323,
+    "columns": [
+      "condition",
+      "layer",
+      "difficulty",
+      "k",
+      "images",
+      "Q",
+      "SD",
+      "P10",
+      "failure",
+      "V"
+    ]
+  },
+  "inputs/POLICY_PER_IMAGE_RECOMPUTED.csv": {
+    "rows": 712,
+    "columns": [
+      "condition",
+      "layer",
+      "pool_id",
+      "image",
+      "building",
+      "difficulty",
+      "policy",
+      "pool_n",
+      "pool_time_known",
+      "B8L2_delta",
+      "D10_delta",
+      "IoU3D100_delta",
+      "iou_2d_delta",
+      "S_bottom_deg_delta",
+      "dir_delta",
+      "Hmean_delta",
+      "reference_node_shortfall_delta",
+      "floor_turn5_n_delta",
+      "ref_top_pair_mean_deg_delta",
+      "ref_bottom_pair_mean_deg_delta",
+      "ref_edge_recall_5_delta",
+      "source_time_total_seconds_delta",
+      "logtime",
+      "qt_q",
+      "qt_logtime",
+      "p10_delta"
+    ]
+  }
+}

@@ -3,7 +3,7 @@
 
 - **2026-10-23人员统一图表：** [六组16张PNG/SVG、完整分类名单与68项提示词典](../research/workers/personnel_main_figures_v2_20261023/README.md)串起配比、换人、难度、人数及机制，已实际接入[人员研究六步](../research/statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=personnel_main)，含名单筛选、人员下钻和指标提示；页面使用中性研究文案。
 
-- **2026-10-23较大块同房新实验与人数重抽归档：** [新严格ABC完整来源](../research/same_room/same_room_large_block_rebuilt_20261023/README.md)保存62,676个ABC、311,333个唯一端点和658份几何票账；[人数路径与同来源时间](../research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/README.md)单列。14包已本地归档，Windows入口与两个空PDF已修补；采用结论以[独立核验](../research/statistics/same_room_rebuilt_audit_20261023/)为准，旧111,054端点实验未恢复。
+- **2026-10-23较大块同房新实验与人数重抽归档：** [新严格ABC完整来源](../research/same_room/same_room_large_block_rebuilt_20261023/README.md)保存62,676个ABC、311,333个唯一端点和658份几何票账；[人数路径与同来源时间](../research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/README.md)单列。14包已本地归档，Windows入口与两个空PDF已修补；[10A恢复说明与口径修订](../research/same_room/same_room_delivery_clarifications_20261023/README.md)补充现存来源与阶段身份；采用结论以[独立核验](../research/statistics/same_room_rebuilt_audit_20261023/)为准，旧111,054端点实验未恢复。
 
 - **2026-10-23两轮Pro返回实核：** [人数过程、进入策略与同房当前分类](../research/statistics/pro_return_review_20261023/README.md)。核心结果可采用；04C完整229050行已本地重建，同房较大块已复用现成端点补算；源端阈值与劳动比口径已订正，最新12个来源文件已逐项归档至[人数过程](../research/workers/personnel_population_curves_v2_20261023/README.md)及[同房当前分类](../research/same_room/same_room_current_classes_v2_20261023/README.md)，已准备[六组主文图表来源](../research/statistics/pro_return_review_20261023/MAIN_FIGURE_PLAN.csv)；下载重复件按清理回执处理。
 

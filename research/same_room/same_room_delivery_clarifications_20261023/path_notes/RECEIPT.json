@@ -1,0 +1,129 @@
+{
+  "source_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d",
+  "input_mode": "packaged_original_byte_inputs_sha256_verified",
+  "new_fusion_endpoints": 0,
+  "new_classifications": 0,
+  "new_orders": 0,
+  "bootstrap_runs": 0,
+  "inputs": {
+    "POLICY_PER_IMAGE_RECOMPUTED.csv": {
+      "relative_path": "research/statistics/pro_return_review_20261023/population/POLICY_PER_IMAGE_RECOMPUTED.csv",
+      "package_relative_path": "inputs/POLICY_PER_IMAGE_RECOMPUTED.csv",
+      "sha256": "f019d326c619c4c92112ed067a58d9f446e32e3a605621140bed7a4d0e199a59",
+      "sha256_verified": true,
+      "rows": 712,
+      "fields": [
+        "condition",
+        "layer",
+        "pool_id",
+        "image",
+        "building",
+        "difficulty",
+        "policy",
+        "pool_n",
+        "pool_time_known",
+        "B8L2_delta",
+        "D10_delta",
+        "IoU3D100_delta",
+        "iou_2d_delta",
+        "S_bottom_deg_delta",
+        "dir_delta",
+        "Hmean_delta",
+        "reference_node_shortfall_delta",
+        "floor_turn5_n_delta",
+        "ref_top_pair_mean_deg_delta",
+        "ref_bottom_pair_mean_deg_delta",
+        "ref_edge_recall_5_delta",
+        "source_time_total_seconds_delta",
+        "logtime",
+        "qt_q",
+        "qt_logtime",
+        "p10_delta"
+      ]
+    },
+    "NATURAL_INTERVAL_RECOMPUTED.csv": {
+      "relative_path": "research/statistics/pro_return_review_20261023/population/NATURAL_INTERVAL_RECOMPUTED.csv",
+      "package_relative_path": "inputs/NATURAL_INTERVAL_RECOMPUTED.csv",
+      "sha256": "f3ff6983f81f4fa231df8cabc4e4292306d8de5f1570559327e5f136c83b830c",
+      "sha256_verified": true,
+      "rows": 27,
+      "fields": [
+        "condition",
+        "layer",
+        "difficulty",
+        "start",
+        "end",
+        "images",
+        "q_delta",
+        "up",
+        "buildings",
+        "buildings_up",
+        "v_down"
+      ]
+    },
+    "NATURAL_RECOMPUTED.csv": {
+      "relative_path": "research/statistics/pro_return_review_20261023/population/NATURAL_RECOMPUTED.csv",
+      "package_relative_path": "inputs/NATURAL_RECOMPUTED.csv",
+      "sha256": "3556b736176895a870e16573f5d02c8e276560ea105368d62a0a8f524c0ce34c",
+      "sha256_verified": true,
+      "rows": 323,
+      "fields": [
+        "condition",
+        "layer",
+        "difficulty",
+        "k",
+        "images",
+        "Q",
+        "SD",
+        "P10",
+        "failure",
+        "V"
+      ]
+    }
+  },
+  "outputs": {
+    "EXISTING_MAIN_POLICY_BUILDING_POINTS.csv": 656,
+    "EXISTING_MAIN_POLICY_WEIGHTING_COMPARISON.csv": 52,
+    "EXISTING_MAIN_NATURAL_INTERVALS.csv": 27,
+    "EXISTING_MAIN_SELECTED_CURVE_POINTS.csv": 36,
+    "PRIOR_REPORTED_BUILDING_RANGES_UNREPRODUCED.csv": 3
+  },
+  "complete_manual_time_support_check": {
+    "subset": "complete_time",
+    "definition": "common four policies, ordinary Manual, N>=20, pool_n==pool_time_known, k=3..floor(N/2)",
+    "counts": [
+      {
+        "policy": "joint_fast_first",
+        "images": 88,
+        "buildings": 20
+      },
+      {
+        "policy": "joint_highq_first",
+        "images": 88,
+        "buildings": 20
+      },
+      {
+        "policy": "structure_dominant_first",
+        "images": 88,
+        "buildings": 20
+      },
+      {
+        "policy": "structure_moreturn_first",
+        "images": 88,
+        "buildings": 20
+      }
+    ],
+    "per_image_Q_equals_QT_Q": true,
+    "per_image_logtime_equals_QT_logtime": false,
+    "image_policy_rows_with_different_logtime_and_QT_logtime": 94,
+    "joint_time_column_used": "qt_logtime",
+    "time_support_note": "Full-pool time completeness does not eliminate unscorable paths; qt_logtime excludes pairs without a Q delta.",
+    "common_partial_time_subset_used_for_joint_claims": false
+  },
+  "definitions_sources": [
+    "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py",
+    "research/workers/personnel_population_curves_v2_20261023/code/analyze_policy_curves.py",
+    "research/statistics/pro_return_review_20261023/audit_scripts/audit_population.py"
+  ],
+  "limitations": "Prior bootstrap original files are unavailable; existing main policy points are regrouped, not recovered bootstrap results."
+}
