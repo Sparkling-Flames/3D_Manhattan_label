@@ -1,0 +1,26 @@
+{
+  "version": "SRLB_PATH_READING_20261023_v1",
+  "new_fusion_calls": 0,
+  "new_designs": 0,
+  "source": "ANCHOR_PATH_EFFECTS.csv.gz",
+  "main_direction": "TURN3:常规转折 -> TURN3:较多转折",
+  "selection_basis": "widest ordinary Manual direction by registered design coverage",
+  "segments": 8,
+  "joint_quality_geometry_metrics": [
+    "B8L2",
+    "D10",
+    "fusion_turn_n",
+    "fusion_short_turn_edges",
+    "fusion_redundancy_n",
+    "S_bottom_deg",
+    "dir",
+    "Hmean",
+    "height_mean_ratio"
+  ],
+  "scale_support": "m5 to m6/m7/m8 are existing physical transitions; their supports differ and are not subtracted from each other",
+  "background_support": "fixed actual XYZ and nested D; each segment uses its own paired before/after support",
+  "time_rule": "Q and recorded time both common across all 12 endpoint references; not a wall-clock completion estimate",
+  "zero_time_net": "Adding identical D adds identical recorded labor to A/B/C; tiny net floating differences are not a cost benefit.",
+  "failures": "all attempted transitions, while Q loss/gain fractions retain saved common-Q support",
+  "weighting": "member transitions within exact pair/direction/n_small/n_large/m_small/m_large -> physical pair -> optional building"
+}
