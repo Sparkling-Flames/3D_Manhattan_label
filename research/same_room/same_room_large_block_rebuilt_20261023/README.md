@@ -21,7 +21,7 @@
 - `source_recovery/`：R00 找回材料及未恢复旧原件说明；它不覆盖新实验身份。
 - `source_report/repository_snapshot/`：原包附带的旧同房报告副本，不覆盖当前主文档。
 
-[LOCAL_SOURCE_FILES.csv](LOCAL_SOURCE_FILES.csv)逐项记录包名、包内路径、仓库路径与字节数。14 个 ZIP 的原件仍保留在用户下载目录；仓库只收一次实际内容。三个超过 100 MiB 的 gzip 按原字节分片保存，完整本地表被 Git 忽略，恢复方式见复现说明。未新增 SHA；材料仅在本地整合，远端推送由用户执行。
+[LOCAL_SOURCE_FILES.csv](LOCAL_SOURCE_FILES.csv)逐项记录包名、包内路径、仓库路径与字节数。2026-10-24 将 R00–R06 的 1,909 项、R03 单独清单的 60 项及 10A 的 52 项与仓库副本逐字节核对，均无差异；对应 15 个源 ZIP 已清理，归档内容已推送至 GitHub main（`5d4cc3fdd`）。ZIP 容器不重复存入仓库。三个超过 100 MiB 的 gzip 按原字节分片保存，完整本地表被 Git 忽略，恢复方式见复现说明。
 
 ## 本地修补
 
