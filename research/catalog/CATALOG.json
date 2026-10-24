@@ -10445,8 +10445,8 @@
       "source_path": "research/statistics/research_explorer_v1_r2_20261017",
       "current_path": "research/statistics/research_explorer_v1_r2_20261017",
       "source": "原模块线程修正与统筹验收",
-      "adoption_status": "v2 六步汇报导览与148表保存数据；人员新分类与混合构成研究已验收、详细展示待接入；展示不改评分和标签",
-      "verification_status": "2026-10-23 表字段与行数合同8项pytest、v2 file浏览器导览/表跳转/提示/窄屏核对；历史阶段回执另见包内",
+      "adoption_status": "v2已保存表与人员研究展示按各自用途维护；OOS统计和复核工作台独立呈现，可从主研究台导航及总览打开；不重跑分型、评分或融合",
+      "verification_status": "2026-10-25定向Python与Node单元检查通过；Playwright交互套件因本机缺少playwright依赖未能复跑；OOS主台集成未采用",
       "availability": "本地双击HTML离线浏览；保留相邻前端目录与派生脚本分片；未推送或公网部署",
       "relationships": [
         "research/statistics/research_explorer_v1_r2_20261017/INTERACTIVE_20261020.json",
@@ -10454,7 +10454,10 @@
         "research/statistics/research_explorer_v1_r2_20261017/BRIEFING_TABLES_20261023.json",
         "research/statistics/research_explorer_v1_r2_20261017/research-comparison.js",
         "research/statistics/research_explorer_v1_r2_20261017/research-comparison.test.cjs",
-        "tools/thesis_main/analysis/build_research_workbench_v2_20261019.py"
+        "tools/thesis_main/analysis/build_research_workbench_v2_20261019.py",
+        "research/statistics/research_explorer_v1_r2_20261017/population-ui.test.cjs",
+        "research/statistics/research_explorer_v1_r2_20261017/workbench-ui.test.cjs",
+        "research/statistics/research_explorer_v1_r2_20261017/METHOD_EVIDENCE_REVIEW_20261020.md"
       ]
     },
     {
@@ -12069,7 +12072,7 @@
       "current_path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/OOS_REVIEW_20261024.md",
       "source": "当前v2逐份证据及保存人员对、26图用户导出、对话最终确认与28图视觉复核；历史融合来源单列",
       "adoption_status": "已完成28图/1222份描述专题；原答几何沿既有资格，时间/选择分来源，GT受约束近似不作正确性排名；q9-24原因未定及旧暂停保留",
-      "verification_status": "结构特征重新整理、人员对按子类/来源聚合；24图各一对几何独立重算，因素重叠/资格/旧scope/历史融合分母5项测试通过；工作台逻辑检查，未重跑融合或裁定GT",
+      "verification_status": "28图统计与复核范围保持独立；2026-10-25合成构造图脚本及5项定向检查通过；未接主研究台，不改正式评分或资格",
       "availability": "仓库路径可读；版本与发布状态以Git历史为准",
       "relationships": [
         "research/statistics/v2_evidence_audit_20261019/README.md",
@@ -12085,7 +12088,10 @@
         "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/FIELD_CONTRACT.md",
         "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/summary.json",
         "tools/thesis_main/analysis/oos_closeout_20261024.py",
-        "tests/test_oos_closeout_20261024.py"
+        "tests/test_oos_closeout_20261024.py",
+        "tools/thesis_main/analysis/build_oos_schematics_20261025.py",
+        "tests/test_oos_schematics_20261025.py",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/figures"
       ]
     },
     {

@@ -153,37 +153,42 @@ def mixture():
            all_rows[all_rows.example_id.isin(['semi_null','semi_failure'])].source_file.unique().tolist(),['data/MIXTURE_EXAMPLE_CONFIGURATIONS.csv'],['score_failure','composition_cell'])
 
 
-def exchange():
+def exchange_design():
     fig,aa=canvas(1,2,(15,8));left,right=aa.flat
     left.axis('off')
-    for y,label,block,col in [(.76,'A 原队','X：源类成员',COLORS[0]),(.47,'B 同类换人','Y：同源类其他人',COLORS[0]),(.18,'C 跨类换人','Z：另一目标类',COLORS[1])]:
+    for y,label,block,col in [(.76,'A 原队','X：原替换成员',COLORS[0]),(.47,'B 同类换人','Y：同构成\n其他成员',COLORS[0]),(.18,'C 跨类换人','Z：不同构成\n替换成员',COLORS[1])]:
         left.text(0,y+.08,label,fontsize=13,weight='bold')
         for xx,ww,txt,cc in [(.31,.30,'D\n相同保留成员','#DDE7EC'),(.65,.33,block,col)]:
             left.add_patch(FancyBboxPatch((xx,y),ww,.21,boxstyle='round,pad=.01',facecolor=cc,edgecolor='none'))
             left.text(xx+ww/2,y+.105,txt,ha='center',va='center',fontsize=11,color='white' if cc==col else '#243746')
     right.axis('off');right.text(.0,.83,'同一图片、同一条件、同一总人数n',fontsize=14,weight='bold')
-    right.text(.0,.61,'相同实际替换人数m；D/X/Y/Z互斥\nX、Y的类别构成相同，Z改变类别构成',fontsize=13,linespacing=1.8)
+    right.text(.0,.61,'相同实际替换人数m；D/X/Y/Z互斥\nX、Y的类别人数构成相同，Z改变构成\nX/Y/Z均可包含多个类别',fontsize=13,linespacing=1.8)
     right.text(.0,.27,'方向：C-A、B-A、C-B\n幅度：|B-A| 对比 (|C-A|+|C-B|)/2\n直接A/C：保留比较，单独标明没有B',fontsize=12,linespacing=1.8)
     finish(fig,'F3_design','F3','03 用严格匹配，把换成员与换类别分开',
            '模拟的是独立作答后的人员组合：从同一真实人员池重新组合，不假设参与者讨论或重复作答。',
            'A/B/C只是团队名称。D为保留成员，不是难度或方向误差。图形示意不指定实际m；实验按真实类别容量选规模。',
-           '本轮同房较大块n=5-24、m=5-8；普通配比实验与直接AC的范围另列。',
+           '普通图片严格ABC共85条件；直接AC另有461条件、m=4-20。同房n=5-24、m=5-8作为跨视角扩展。',
            ['docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md'],[],['strict_abc','direct_ac','team_n','prefix_k','replacement_m','replacement_ratio_r','background_d','extra_symmetric_abc'])
+
+
+def exchange():
+    exchange_design()
     p=f'{MIX}/exchanges/finite_pair_comparison/FINITE_PAIR_SELECTED_ZH.csv';d=read(p);export_data(d,'EXCHANGE_FINITE_PAIRS.csv')
-    q=d[d['指标'].eq('绝对 Q 变化（分）')&d['总人数_n'].eq(20)&d['实际换人数_m'].eq(4)&d['配比层级'].eq('粗类完整配比')]
-    t=d[d['指标'].eq('绝对 log 记录时间比')&d['实际换人数_m'].eq(4)&d['配比层级'].eq('粗类完整配比')]
-    fig,aa=canvas(1,2,(15,7));fig.subplots_adjust(left=.19,wspace=.60)
+    q=d[d['指标'].eq('绝对 Q 变化（分）')]
+    t=d[d['指标'].eq('绝对 log 记录时间比')]
+    fig,aa=canvas(1,2,(17,10));fig.subplots_adjust(left=.18,wspace=.72)
     for ax,x,unit in zip(aa.flat,[q,t],['绝对Q变化（分）','绝对自然对数劳动比']):
         for i,r in enumerate(x.to_dict('records')):
             ax.plot([r['同构成平均幅度'],r['改构成平均幅度']],[i,i],color='#A6B3BC',lw=3)
             ax.scatter(r['同构成平均幅度'],i,color=COLORS[0],s=70,label='同构成换人' if i==0 else None)
             ax.scatter(r['改构成平均幅度'],i,color=COLORS[1],s=70,label='改类别构成' if i==0 else None)
-        ax.set_yticks(range(len(x)),[f"{r['评价条件']} · {'结构' if r['分类']=='结构分类' else '联合'}\nn={r['总人数_n']}, m=4 · {r['可评价图片数']}图/{r['可评价建筑数']}楼" for r in x.to_dict('records')],fontsize=10)
+        layer={'coarse':'粗配比','fine_all_changes':'细配比含父类变化','fine_parent_fixed':'固定父类改细配比'}
+        ax.set_yticks(range(len(x)),[f"{r['评价条件']} · {'结构' if r['分类']=='结构分类' else '联合'} · {layer.get(r['classification_view'],r['配比层级'])}\nn={r['总人数_n']}, m={r['实际换人数_m']} · 更大 {r['改构成幅度更大图片数']}/{r['可评价图片数']}图" for r in x.to_dict('records')],fontsize=10)
         ax.invert_yaxis();ax.set_xlabel(unit);ax.set_xlim(left=0);ax.grid(axis='x',alpha=.15);ax.legend(loc='upper left',bbox_to_anchor=(0,1.11),ncol=2,fontsize=9)
-    finish(fig,'F3_general_magnitude','F3','03 任意改配比，Q差异未必明显大于同配比换人',
-           '整体比较中，Q的两种幅度接近；联合分类对记录时间变化的区分更清楚。',
-           '左、右分别按各自质量或时间共同支持比较。此处是固定实际共同D/m的团队两两配对幅度，不使用同房ABC的对称跨类定义。',
-           '已保存有限面板完整配对；图中方法支持不同，不按这几个均值直接排名四套分类。',
+    finish(fig,'F3_general_magnitude','F3','03 普通图片：换配比与同配比换人的变化幅度',
+           'Manual结构类在多数图片上改配比的Q幅度较大，平均分离较小；联合分类对记录时间差异的区分更清楚。',
+           '左、右分别按各自质量或时间支持比较；固定实际共同D/m的团队两两配对。时间是变化幅度，不是节时比例；m3/4/6的图片支持不同。',
+           '全部12项精选条件；标注为改配比幅度更大的图数/可评图数。完整结果可从原表追溯；不同方法/规模不直接排名。',
            [p],['data/EXCHANGE_FINITE_PAIRS.csv'],['within_cell_variability','absolute_change','time_history','recorded_time'])
     p=f'{AUDIT}/INDEPENDENT_MAIN_RESULTS.csv';d=read(p);d=d[d.method.eq('V3_BEHAVIOR')&d.subset.isin(['ordinary_all','ordinary_mixed','ordinary_mixed_less_half'])].copy();export_data(d,'EXCHANGE_SAME_ROOM_MAIN.csv')
     fig,aa=canvas(1,2,(15,7));fig.subplots_adjust(left=.15,wspace=.45)
@@ -211,7 +216,7 @@ def exchange():
     for j,(col,label) in enumerate([('pair_equal__B_change','同类队B自身Q变化'),('pair_equal__C_change','跨类队C自身Q变化'),('pair_equal__net_C_minus_B_change','C-B净优势变化')]):
         bars=ax.bar(np.arange(len(d))+(j-1)*.24,d[col],width=.22,label=label,color=COLORS[j]);ax.bar_label(bars,fmt='%+.2f',padding=3,fontsize=10)
     ax.axhline(0,color='#647380',lw=.8);ax.set_xticks(range(len(d)),[names[r.comparison]+f'\n{r.pairs}图对/{r.buildings}楼' for r in d.itertuples()]);ax.set_ylabel('Q变化（分）');ax.set_ylim(-6.4,3);ax.legend(loc='upper left',ncol=3,fontsize=10)
-    finish(fig,'F3_scale_background','F3','03 扩大替换块与增加背景，是两种不同操作',
+    finish(fig,'F3_scale_background','F3','03 同房扩展：扩大替换块与增加背景是两种操作',
            '常规→较多转折方向：扩大替换块时净优势增加；给同一XYZ加入背景时，净优势减弱。',
            '每个柱组使用该操作的精确共同路径。图对/建筑支持不同，不能把不同组相减当作每增加一人的边际收益。',
            '同房Manual TURN3主方向；历史楼外角色对齐。n、m与背景D均可追溯至原始成员。',
@@ -256,10 +261,10 @@ def late_population_figures():
     tables=['data/NATURAL_CURVES_FIXED_COHORTS.csv','data/NATURAL_LATE_COMPARISONS.csv',
             'data/NATURAL_LATE_IMAGE_CHANGES.csv','data/NATURAL_COHORT_IMAGES.csv']
     for minimum,fid,title,finding,note in [
-        (30,'F5_natural','05 固定157张图：人数曲线延伸到30人',
-         '20→30人：125/157图平均Q提高，156/157图底面波动下降；困难图平均Q仅小幅上升，缩波更明显。',
+        (30,'F5_natural','05 固定157图：单人基线与3—30人完整过程',
+         '3→6人平均Q +5.18分，155/157图提高；后续Q增益较小，困难图可回落而底面波动继续下降。',
          '固定N≥30：简单105图、中等25图、困难27图。每图24条自然顺序；图片集合不随k变化。'),
-        (35,'F5_late35','05 固定92张图：30人之后到35人',
+        (35,'F5_late35','05 固定92图：单人、早段到35人的完整过程',
          '30→35人：共同可评91图平均Q +0.23分；失败率0.72%→1.09%。满员成员波动归零是设计结果。',
          '固定N=35：简单71图、中等13图、困难8图；35人困难Q仅7/8图可评，失败率仍按8图计算。')]:
         fig,aa=canvas(2,3,(16,10));fig.subplots_adjust(left=.07,wspace=.38,hspace=.65,top=.80,bottom=.18)
@@ -267,16 +272,22 @@ def late_population_figures():
                                   ['平均质量Q（分）','图内低尾P10（Q分）','图内质量波动SD（Q分）','底面形状波动V（0-1）','不可评分比例（%）']):
             for diff,color in DIFF.items():
                 z=q[q.cohort_min_n.eq(minimum)&q.difficulty.eq(diff)&q.k.notna()].sort_values('k')
-                ax.plot(z.k,z[metric]*(100 if metric=='failure' else 1),color=color,label=f'{diff} · {z.images.max()}图',lw=2)
-            ax.set_title(label,fontsize=12);ax.set_xlabel('参与融合人数k');ax.set_xticks([3,6,10,15,20,25,30]+([35] if minimum==35 else []));ax.grid(alpha=.15)
+                active=z.policy_deferred.eq(0)
+                complete=z[metric+'_images'].eq(z.images)
+                values=z[metric]*(100 if metric=='failure' else 1)
+                ax.plot(z.k,values.where(active&complete),color=color,label=f'{diff} · {z.images.max()}候选图',lw=2,marker='o',ms=2.8)
+                partial=active&~complete&values.notna()
+                ax.scatter(z.loc[partial,'k'],values[partial],facecolors='white',edgecolors=color,s=22,zorder=4)
+            ax.axvspan(1.65,2.35,color='#cbd5e1',alpha=.35,zorder=0)
+            ax.set_title(label,fontsize=12);ax.set_xlabel('人数k（1人原答，2人未计算）',fontsize=9);ax.set_xticks([1,3,6,10,15,20,25,30]+([35] if minimum==35 else []));ax.grid(alpha=.15)
             if metric in ['Q','P10']:ax.set_ylim(0,100)
             ax.legend(fontsize=8,loc='best')
         ax=aa[1,2];ax.axis('off');ax.text(0,.98,'固定图片，分开看几种结果',fontsize=13,weight='bold',va='top')
-        message=('20→30人平均Q变化\n简单 +0.57 · 89/105图提高\n中等 +1.98 · 20/25图提高\n困难 +0.38 · 16/27图提高\n\n困难SD：9.60 → 5.45\n困难V：0.0853 → 0.0392\n困难失败：3.24% → 2.16%' if minimum==30 else
+        message=('固定157图平均Q变化\n3→6：+5.18 · 155图提高\n6→10：+1.73 · 139图提高\n10→20：+1.43 · 135图提高\n20→30：+0.76 · 125图提高\n\n困难27图3→6均升质\n失败6.94% → 12.65%\n6→10 Q−0.89，V有25图下降\n10→20 Q−0.25，V有26图下降' if minimum==30 else
                  '30→35人共同可评图片Q变化\n简单 +0.02 · 52/71图提高\n中等 +1.01 · 7/13图提高\n困难 +0.87 · 4/7图提高\n\n困难满员仍有1/8图不可评分\n满员全部顺序使用同一批人\nSD、V为0不证明接近参考')
-        ax.text(0,.80,message,fontsize=10.5,va='top',linespacing=1.7)
+        ax.text(0,.80,message,fontsize=9.5,va='top',linespacing=1.35)
         finish(fig,fid,'F5',title,finding,
-               '每图先算可评路径Q/P10/SD，再图等权；失败含全部路径，V沿用有效底面两两1−IoU。实际分母见小表；没有把失败填0。',
+               '1人是原答基线；灰带2人未运行（原实验设定），不计成功/失败。实线仅连全候选图有效的点；空心点部分可评。Q/P10/SD先图内汇总再图等权；失败另用全部路径，V为有效底面的两两差异。',
                note,[f'{base}/README.md',f'{base}/CURVE_SUMMARY.csv',f'{base}/LATE_COMPARISONS.csv'],tables,terms)
     z=changes[changes.cohort_min_n.eq(30)&changes.comparison.eq('30_to_full')]
     fig,aa=canvas(1,3,(16,7));fig.subplots_adjust(left=.10,wspace=.65,top=.73,bottom=.25)

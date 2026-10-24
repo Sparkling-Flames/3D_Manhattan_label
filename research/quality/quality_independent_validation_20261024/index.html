@@ -29,7 +29,7 @@
 <section class="card left"><h2>左边完整标注</h2><canvas class="erp" id="leftERP" width="1024" height="512" aria-label="左边完整标注全景图"></canvas><canvas class="space" id="leftSpace" width="1024" height="380" aria-label="左边空间布局"></canvas></section>
 <section class="card right"><h2>右边完整标注</h2><canvas class="erp" id="rightERP" width="1024" height="512" aria-label="右边完整标注全景图"></canvas><canvas class="space" id="rightSpace" width="1024" height="380" aria-label="右边空间布局"></canvas></section>
 </div>
-<div class="toolbar legend"><span style="color:#64d7ff">左边：蓝色</span><span style="color:#ffbf80">右边：橙色</span><span class="ref">参考：黄色虚线</span><span id="imageStatus"></span></div>
+<div class="toolbar legend"><span style="color:#64d7ff">左边：蓝色</span><span style="color:#ffbf80">右边：橙色</span><span class="ref">参考：黄色虚线</span><span>相机点：3D为拍摄点位，BEV为其水平投影</span><span id="imageStatus"></span></div>
 <section class="answer" aria-label="人工判断">
 <div class="choices">
 <label><input type="radio" name="choice" value="left">左边更符合标注要求</label>
@@ -64,12 +64,12 @@ function drawERP(side){const canvas=$(`#${side}ERP`),ctx=canvas.getContext('2d')
  if($('#reference').checked)draw(c.reference,colors.reference,true);if($('#annotation').checked)draw(c[side],colors[side],false);ctx.restore()}
 function projection(point,mode){if(mode==='bev')return [point[0],point[2]];const a=+$('#yaw').value*Math.PI/180,x=Math.cos(a)*point[0]+Math.sin(a)*point[2],z=-Math.sin(a)*point[0]+Math.cos(a)*point[2];return [x,.55*z-point[1]]}
 function drawSpace(side){const canvas=$(`#${side}Space`),ctx=canvas.getContext('2d'),c=cases[index],mode=$('#spatialMode').value;ctx.clearRect(0,0,1024,380);
- const all=[c.left,c.right,c.reference].flatMap(v=>mode==='bev'?v.bottom3d:[...v.bottom3d,...v.top3d]).map(p=>projection(p,mode));
+ const all=[c.left,c.right,c.reference].flatMap(v=>mode==='bev'?v.bottom3d:[...v.bottom3d,...v.top3d]).concat([[0,0,0]]).map(p=>projection(p,mode));
  const xs=all.map(p=>p[0]),ys=all.map(p=>p[1]),minx=Math.min(...xs),maxx=Math.max(...xs),miny=Math.min(...ys),maxy=Math.max(...ys),scale=Math.min(900/Math.max(maxx-minx,.1),290/Math.max(maxy-miny,.1));
  const plot=p=>{const q=projection(p,mode);return [512+(q[0]-(minx+maxx)/2)*scale,190+(q[1]-(miny+maxy)/2)*scale]};
  const draw=(v,color,ref)=>{ctx.lineWidth=ref?1.5:2.4;const dash=ref?[7,5]:[];const rings=mode==='bev'?[v.bottom3d]:[v.bottom3d,v.top3d];for(const ring of rings){const pts=ring.map(plot);path(ctx,[...pts,pts[0]],color,dash)}if(mode==='3d')v.bottom3d.forEach((p,i)=>path(ctx,[plot(p),plot(v.top3d[i])],color,dash))};
  if($('#reference').checked)draw(c.reference,colors.reference,true);if($('#annotation').checked)draw(c[side],colors[side],false);
- const origin=plot([0,0,0]);ctx.fillStyle='#e5e9ef';ctx.beginPath();ctx.arc(...origin,3,0,Math.PI*2);ctx.fill();ctx.font='14px system-ui';ctx.fillText('光心',origin[0]+7,origin[1]-5)}
+ const origin=plot([0,0,0]);ctx.fillStyle='#e5e9ef';ctx.beginPath();ctx.arc(...origin,3,0,Math.PI*2);ctx.fill();ctx.font='14px system-ui';const label=mode==='bev'?'拍摄点位（水平投影）':'相机拍摄点位';ctx.fillText(label,Math.min(1018-ctx.measureText(label).width,origin[0]+7),Math.max(16,origin[1]-5))}
 function draw(){drawERP('left');drawERP('right');drawSpace('left');drawSpace('right')}
 function show(i){index=Math.max(0,Math.min(cases.length-1,i));const c=cases[index];loaded=false;$('#imageStatus').textContent='原图加载中';image=new Image();image.onload=()=>{loaded=true;$('#imageStatus').textContent='';draw()};image.onerror=()=>{$('#imageStatus').textContent='原图加载失败，请记录题号';};image.src=c.image_data;
  $('#position').textContent=`${index+1}/${cases.length} · ${c.id}`;$('#jump').value=index;$('#prev').disabled=index===0;$('#next').disabled=index===cases.length-1;

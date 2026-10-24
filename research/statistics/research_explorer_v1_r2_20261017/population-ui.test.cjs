@@ -1,0 +1,17 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{pathToFileURL}=require('node:url');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});const out=path.join(__dirname,'v2-resources/qa/population-20261025');fs.mkdirSync(out,{recursive:true});const result={cohorts:[],errors:[]};try{
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>result.errors.push(e.message));await page.goto(pathToFileURL(path.join(__dirname,'index.html')).href+'#release=v2&module=personnel_main&tab=4');await page.locator('#content[data-ready=personnel_main]').waitFor();
+ assert.doesNotMatch(await page.locator('#content').innerText(),/该模块读取失败/);assert.equal(await page.locator('#populationComparison').inputValue(),'3_to_6');assert.equal(await page.locator('#populationStage').inputValue(),'3');assert.match(await page.locator('#latePopulation').innerText(),/155\/157/);
+ assert.equal(await page.locator('.personnel-figure').count(),6);await page.screenshot({path:path.join(out,'early-desktop.png')});
+ for(const cohort of ['30','35','20']){
+  await page.selectOption('#populationCohort',cohort);const stages=await page.locator('#populationStage').evaluate(e=>[...e.options].map(o=>o.value));assert(stages.includes('1')&&stages.includes('2')&&stages.includes('full')&&stages.includes(cohort));
+  const comps=await page.locator('#populationComparison').evaluate(e=>[...e.options].map(o=>o.value));for(const c of ['3_to_6','6_to_10','10_to_20','3_to_20'])assert(comps.includes(c));
+  for(const c of comps)await page.selectOption('#populationComparison',c);
+  await page.selectOption('#populationMetric','failure');await page.selectOption('#populationStage','2');assert.match(await page.locator('#populationStageStatus').innerText(),/未计算，不适用/);assert.doesNotMatch(await page.locator('#populationStageStatus').innerText(),/不可评分率 0%/);
+  await page.selectOption('#populationMetric','Q');await page.selectOption('#populationStage','1');assert.match(await page.locator('#populationStageStatus').innerText(),/观察 1人/);result.cohorts.push({cohort,stages:stages.length,comparisons:comps.length});
+ }
+ await page.selectOption('#populationCohort','35');await page.selectOption('#populationComparison','30_to_35');await page.selectOption('#populationMetric','Q');assert.match(await page.locator('#latePopulation').innerText(),/共同有值 91 图/);assert.match(await page.locator('#latePopulation').innerText(),/0.725% → 1.087%/);await page.selectOption('#populationImage','VFuaQ6m2Qom-04');assert.match(await page.locator('#latePopulation').innerText(),/Q 58.428 → —/);
+ await page.setViewportSize({width:390,height:850});await page.evaluate(()=>window.scrollTo(0,0));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));await page.screenshot({path:path.join(out,'narrow.png')});
+ await page.locator('[data-table-jump="personnel_main__NATURAL_CURVES_FIXED_N20"]').first().click();await page.locator('#content[data-ready=data]').waitFor();assert.equal(await page.locator('#tableSelect').inputValue(),'personnel_main__NATURAL_CURVES_FIXED_N20');assert.match(await page.locator('#rowCount').innerText(),/162/);
+ assert.deepEqual(result.errors,[]);console.log(JSON.stringify(result));
+ }catch(e){result.failure=e.stack;console.error(e);process.exitCode=1}finally{fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));await browser.close()}})();

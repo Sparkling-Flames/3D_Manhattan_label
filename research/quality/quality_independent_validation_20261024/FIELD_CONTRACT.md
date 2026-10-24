@@ -17,7 +17,7 @@ CSV为UTF-8；gzip候选表不改变行内容。`review_id`为本审查集键，
 
 `B8L2/D10/IoU3D100`为0—100；`iou_2d/legacy_iou2d/legacy_iou3d_mean_height/δ1`为0—1。`S_bottom_deg/dir/corner_bottom_assignment_mean_deg`为度；Hmean/Hcenter为相对高度量；`layout_depth_rmse_m`基于两侧共同假定相机高1.6米的布局渲染，除以1.6为相机高度单位。逐列顶部未均值化；均高仅用于legacy棱柱IoU。`legacy_status!=ok`时适用指标留空，绝不填失败0。
 
-底角9°用原声明角点的球面最小总成本一一分配，precision/recall分母分别是候选/参考角点数；这是几何位置诊断，不能认证隐藏墙角的语义必要性。所有评价的目标/参考、半球、光心与尺度必须一致；GT暂停、OOS、scope冲突不能因数值可算而恢复正式质量资格。
+底角9°用原声明角点的球面最小总成本一一分配，precision/recall分母分别是候选/参考角点数；这是几何位置诊断，不能认证隐藏墙角的语义必要性。所有评价的目标/参考、半球、相机拍摄点位与尺度必须一致；GT暂停、OOS、scope冲突不能因数值可算而恢复正式质量资格。
 
 导出答案schema为 `quality_independent_human_answers_20261024_v1`，含`review_set`、时间、题数、`answers`。每个题键下`choice`只能为`left/right/close/uncertain`或尚未选择的null，`reason`为原文字。未选择题保留缺失。`updated_at`是浏览器记录时间，不是活动耗时。页面默认无答案；本地存储只属于当前浏览器，导出后才成为可回连的研究材料。
 

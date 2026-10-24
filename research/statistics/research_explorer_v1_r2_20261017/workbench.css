@@ -5,6 +5,7 @@
 
 /* Keep multi-member legends from pushing local structures below the comparison. */
 .geometry .legend{max-height:150px;overflow:auto}
+.split>*{min-width:0}
 
 /* Long reference links must not shrink the primary navigation to zero. */
 .sidebar{overflow-y:auto}.sidebar nav,.sidefoot{flex-shrink:0}
@@ -15,10 +16,27 @@
 .briefing-intro{background:#eaf3f6;border:1px solid #bdd6dd;border-left:5px solid #087f8c;border-radius:8px;padding:24px;margin-bottom:20px}.briefing-intro h2{font-size:25px;margin-bottom:8px}.briefing-intro>p{max-width:900px}.briefing-intro .actions{margin-top:16px}.briefing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}.briefing-step{display:flex;flex-direction:column;gap:11px;margin:0}.briefing-step h2{font-size:18px;line-height:1.55;margin:0}.briefing-step figure{margin:0;background:#f3f7fa;border:1px solid #d7e4eb;border-radius:6px;overflow:hidden}.briefing-example{padding:18px;min-height:88px;font-size:15px;font-weight:600;line-height:1.6}.briefing-step figcaption{padding:6px 12px;border-top:1px solid #d7e4eb;font-size:11px;color:var(--muted)}.briefing-step .scope-label{margin:0;font-size:12px}.briefing-step .actions{margin-top:auto}.briefing-source{font-size:12px}.briefing-step button{white-space:normal;text-align:left}
 @media(max-width:900px){.briefing-grid{grid-template-columns:1fr}.briefing-intro{padding:18px}}
 .hint-trigger{font:inherit;font-size:11px;line-height:1.4;min-width:20px;min-height:20px;margin-left:5px;padding:0 4px;border-radius:50%;vertical-align:middle}.hint-trigger:focus-visible{outline:2px solid #087f8c;outline-offset:2px}.metric-hint{position:fixed;z-index:1000;max-width:min(360px,calc(100vw - 16px));padding:10px 12px;border:1px solid #4c6a74;border-radius:6px;background:#fff;color:#17323b;box-shadow:0 5px 18px #0003;font-size:13px;line-height:1.55;white-space:normal}.metric-hint[hidden]{display:none}.hint-glossary{font-size:12px;line-height:1.8;margin:14px 0 0}
-.briefing-visual{display:block;width:100%;height:190px;object-fit:contain;background:#fff}
+.briefing-visual{display:block;width:100%;height:auto;background:#fff}
 .personnel-figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.personnel-figure{margin:0}.personnel-figure img{display:block;width:100%;max-height:440px;object-fit:contain;background:#fff;border:1px solid var(--line);margin:12px 0}.personnel-figure .actions{margin-top:12px}.personnel-figure .actions a,.personnel-cases .actions a{font-size:12px}.personnel-terms{display:flex;flex-wrap:wrap;gap:5px 12px;margin:10px 0}.personnel-terms span{font-size:12px;color:#334155}.personnel-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.personnel-cases article{border:1px solid var(--line);padding:12px;border-radius:6px;min-width:0}.personnel-cases img{display:block;width:100%;max-height:300px;object-fit:contain}.personnel-cases .actions{margin-top:8px}.personnel-figure .actions,.personnel-cases .actions{overflow-wrap:anywhere}
 @media(max-width:900px){.personnel-figures,.personnel-cases{grid-template-columns:1fr}}
 .case-story-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;align-items:start}.case-story-nav{display:grid;gap:5px;position:sticky;top:80px;max-height:calc(100vh - 100px);overflow:auto}.case-story-nav button{text-align:left;white-space:normal}.case-story-nav button.active{border-color:var(--blue);background:var(--light);color:var(--blue)}.case-story-main{min-width:0}.case-story-figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.case-story-figures figure{margin:0;min-width:0;border:1px solid var(--line);border-radius:6px;background:#fff}.case-story-figures img{display:block;width:100%;max-height:390px;object-fit:contain}.case-story-figures figcaption{padding:6px 10px;font-size:12px;color:var(--muted)}#caseStoryGeometry{margin:12px 0}.case-story-main .toolbar label{min-width:170px;max-width:100%}
 @media(max-width:900px){.case-story-layout{grid-template-columns:1fr}.case-story-nav{position:static;display:flex;overflow:auto;max-height:none}.case-story-nav button{min-width:175px}.case-story-figures{grid-template-columns:1fr}}
 .case-story-failure{padding:10px;border-left:4px solid #b45309;background:#fff7ed;color:#7c2d12;font-weight:600}
 .panel:has([id^="ms-"])>label,.panel #ms-fusion-member label{display:flex;flex-direction:column;max-width:100%;margin:12px 0}.panel select[id^="ms-"]{max-width:100%;width:min(100%,720px)}.panel:has([id^="ms-"]) details{margin-top:12px}.panel:has([id^="ms-"]) .geometry{min-width:0}
+
+
+/* index 工作台排版与打印：只用本页壳层选择器，避免影响共用 workbench.css 的兄弟页面 */
+.pagehead h1{font-size:26px;line-height:1.35}
+#content .panel h2{font-size:19px}
+#content .panel h3{font-size:16px}
+#content .panel>p:not([class]){font-size:15px;line-height:1.75;max-width:78ch}
+#content .briefing-intro>p:not([class]){font-size:15px;line-height:1.75;max-width:78ch}
+#content .scope-label{font-size:13px;line-height:1.7}
+#content td.num{font-variant-numeric:tabular-nums}
+.briefing-intro{background:var(--light);border-color:#cfe0f5;border-left-color:var(--cyan)}
+#main .panel{border-radius:8px}
+@media(max-width:760px){.pagehead h1{font-size:22px}}
+.sidebar .navgroup{margin:0 0 4px}
+.sidebar .navgroup-title{margin:10px 12px 3px;font-size:11px;font-weight:650;color:#7c8a99;letter-spacing:.04em}
+@media(max-width:760px){.sidebar .navgroup{display:contents}.sidebar .navgroup-title{display:none}}
+@media print{.appbar,.sidebar,.actions,.contextbar,#tabs,#toast,.skip{display:none!important}#main{margin:0;padding:0}#content .panel{break-inside:avoid;box-shadow:none}}

@@ -18,8 +18,9 @@ const images=[...new Set(D.teams.map(r=>r.image_code))].sort();
 options('image',images.map(i=>[i,i]),images[0]);
 $('coverage').innerHTML=cards([['本轮图片',images.length,'普通与门洞分层'],['独立建筑',new Set(D.teams.map(r=>r.building_id)).size,'推断单位不使用重叠团队数'],['声明请求',D.teams.length,'含不同前缀与重复终点'],['当前数据','v1','冻结画像；修订后的有效几何']]);
 $('pointEdits').innerHTML=table(D.point_edits,['record_id','image_code','worker_id','raw_point_count','effective_point_count','removed_original_labels','added_labels','coordinate_edits']);
-Object.assign(columns,{case_number:'例子',user_verbatim:'用户原话'});
-$('humanFeedback').innerHTML=table(D.human_feedback||[],['case_number','image_code','request_a','request_b','user_verbatim']);
+const preferenceLabel=value=>({left:'左侧较好',right:'右侧较好',tie:'两者接近',close:'两者接近',uncertain:'未明确排序'}[value]||'未明确排序');
+Object.assign(columns,{case_number:'例子',preference_label:'已记录相对判断'});
+$('humanFeedback').innerHTML=table((D.human_feedback||[]).map(r=>({...r,preference_label:preferenceLabel(r.preference)})),['case_number','image_code','request_a','request_b','preference_label']);
 $('reviewCases').innerHTML=D.review_cases.map((r,i)=>`<button data-case="${i}">${i+1} · ${esc(r.scheme)} · ${esc(r.image_code)}</button>`).join('');
 $('reviewCases').onclick=e=>{const i=e.target.dataset.case;if(i===undefined)return;const c=D.review_cases[Number(i)];$('scheme').value=c.scheme;$('image').value=c.image_code;$('experiment').value='fixed_k_composition_and_members';controls();$('k').value='4';$('composition').value='';render();$('teamA').value=c.request_a;$('teamB').value=c.request_b;compare();$('geometryA').scrollIntoView({behavior:'smooth',block:'center'});};
 function baseRows(){return D.teams.filter(r=>r.scheme===$('scheme').value&&r.image_code===$('image').value&&r.experiment===$('experiment').value);}
@@ -75,7 +76,7 @@ function compare(){
  }
  const [a,b]=selected,metric=$('metric').value;
  const feedback=(D.human_feedback||[]).find(r=>r.request_a===a?.request_id&&r.request_b===b?.request_id);
- $('selectedFeedback').hidden=!feedback;$('selectedFeedback').textContent=feedback?'用户判断：'+feedback.user_verbatim+'（绑定当前左右两队；不据此反调分数或分类）':'';
+ $('selectedFeedback').hidden=!feedback;$('selectedFeedback').textContent=feedback?'已记录相对判断：'+preferenceLabel(feedback.preference)+'。对应当前左右两队，不代表分差大小已获人工校准。':'';
  $('comparison').textContent=a&&b?`${a.composition===b.composition?'同构成替换具体成员':'不同类别构成'}；同人数k=${a.k}。${yes(a.main_comparison_allowed)&&yes(b.main_comparison_allowed)&&number(a[metric])!==null&&number(b[metric])!==null?'右减左主质量差：'+fmt(number(b[metric])-number(a[metric])):'至少一侧不满足主质量比较资格，不能把诊断差作为主质量收益。'}`:'';
 }
 for(const id of ['scheme','image','experiment'])$(id).onchange=()=>controls(id);

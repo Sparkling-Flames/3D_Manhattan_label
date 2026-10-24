@@ -48,6 +48,81 @@ test('source links reject active script schemes', () => {
   assert.equal(R.safeSource({ path: '../data.json' }), '../data.json');
 });
 
+test('doorway spatial figure links to the verified paper assets', () => {
+  const html = harness().R.doorwaySchematic('compatible');
+  const image=html.match(/<img class="re-spatial-diagram" src="([^"]+)"/);
+  assert.ok(image);
+  assert.ok(fs.existsSync(path.resolve(__dirname,image[1].split('?')[0])));
+  assert.match(html,/DOORWAY_spatial_boundary.pdf/);
+  assert.match(html,/人为选定的封闭边界，不是实体墙/);
+  assert.match(html,/不等于整间房有第二层天花板/);
+});
+
+test('doorway drawing closes the room fill without inventing an unknown ray', () => {
+  const { R } = harness();
+  assert.match(R.doorwaySchematic('compatible'), /M230 131V65H58V238H230V211/);
+  assert.match(R.doorwaySchematic('compatible'), /绿色段在室内/);
+  assert.doesNotMatch(R.doorwaySchematic('unknown'), /向右的示意射线/);
+  assert.match(R.doorwaySchematic('incompatible'), /拍摄点位 c（水平投影）/);
+});
+
+test('shared geometry draws the camera above the floor in 3D and at its horizontal projection in BEV', () => {
+  const calls = { lines: [], markers: [], text: [] };
+  const ctx = { scale() {}, clearRect() { calls.lines=[];calls.markers=[];calls.text=[]; },
+    setLineDash() {}, beginPath() {}, stroke() {}, lineTo() {},
+    moveTo(x,y) { calls.lines.push([x,y]); },
+    fillRect(x,y) { calls.markers.push([x+3,y+3]); },
+    fillText(text,x,y) { calls.text.push({text,x,y}); },
+    measureText(text) { return {width:text.length*7}; } };
+  const elements = new Map();
+  const host = { isConnected: true, querySelector(selector) {
+    if (selector==='img') return null;
+    if (!elements.has(selector)) elements.set(selector, { style: {}, checked:selector==='[data-top]', value:1,
+      setAttribute() {}, getBoundingClientRect() { return {width:600,height:350}; }, getContext() { return ctx; } });
+    return elements.get(selector);
+  }, querySelectorAll() { return []; } };
+  const context = vm.createContext({ window:{WorkbenchCore:require('./workbench-core.js')}, devicePixelRatio:1,
+    ResizeObserver:class { observe() {} } });
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'geometry-view.js'),'utf8'),context);
+  context.window.WorkbenchGeometry.mount(host,{},null,{floor:[[0,0],[2,0],[0,2]]});
+  const change = elements.get('[data-view]').onchange;
+  change({target:{value:'3d'}});
+  assert.ok(Math.abs(calls.markers[0][0]-calls.lines[0][0])<1e-8);
+  assert.ok(calls.markers[0][1]<calls.lines[0][1]-1, 'camera must be above the floor point directly below it');
+  assert.equal(calls.text.at(-1).text,'相机拍摄点位');
+  change({target:{value:'bev'}});
+  assert.deepEqual(calls.markers[0],calls.lines[0]);
+  assert.equal(calls.text.at(-1).text,'拍摄点位（水平投影）');
+  context.window.WorkbenchGeometry.mount(host,{}, {raw_points:[[100,100],[100,300]]},null);
+  assert.match(host.innerHTML,/border-radius:50%;background:#087f8c/);
+  assert.match(host.innerHTML,/原始散点只在原图显示，不构造3D连线/);
+  elements.get('[data-view]').onchange({target:{value:'3d'}});
+  assert.equal(calls.lines.length,0,'raw points must not become an invented spatial ring');
+});
+
+test('quality review fits off-centre layouts and camera together on the same scale', () => {
+  const dir = path.join(__dirname,'../../quality/quality_independent_validation_20261024');
+  for (const filename of ['REVIEW_TEMPLATE.html','index.html']) {
+    const html = fs.readFileSync(path.join(dir,filename),'utf8');
+    const drawing = html.slice(html.indexOf('function projection('),html.indexOf('function draw(){'));
+    const marker=[], texts=[];
+    const ctx = {clearRect() {},beginPath() {},fill() {},arc(x,y) {marker.push([x,y]);},
+      fillText(text,x,y) {texts.push({text,x,y});},measureText(text) {return {width:text.length*7};}};
+    const layout={bottom3d:[[100,-1,100],[102,-1,100],[102,-1,102]],top3d:[[100,1,100],[102,1,100],[102,1,102]]};
+    let mode='bev';
+    const context=vm.createContext({cases:[{left:layout,right:layout,reference:layout}],index:0,
+      $:selector=>selector==='#spatialMode'?{value:mode}:selector==='#yaw'?{value:0}:
+        selector.endsWith('Space')?{getContext:()=>ctx}:{checked:false}});
+    vm.runInContext(drawing,context);
+    for (mode of ['bev','3d']) {
+      context.drawSpace('left');
+      const [x,y]=marker.at(-1),label=texts.at(-1);
+      assert.ok(x>=0&&x<=1024&&y>=0&&y<=380,filename+' camera stays visible');
+      assert.ok(label.x>=0&&label.x+label.text.length*7<=1024);
+    }
+  }
+});
+
 test('fresh evidence links clear stale comparison routes while preserving explicit targets and global filters', () => {
   const { R } = harness();
   const params = new URLSearchParams('module=evidence&tab=1&case=old&image=old-image&condition=semi&team=C&worker=W099&reference=old-ref&snapshot=old-snapshot&cmp_layer=doorway&cmp_class=old-class&cmp_scheme=F01&cmp_blind=1&group=old-group&stage=before&f_building=kept');
@@ -150,6 +225,9 @@ payloadTest('all evidence tabs consume the real payload and expose accessible co
       assert.match(host.innerHTML, /data-evidence-select="supportCondition"/);
       assert.match(host.innerHTML, /data-evidence-select="supportMinimum"/);
       assert.match(host.innerHTML, /固定最低人数要求/);
+      assert.match(host.innerHTML, /已经回答的问题与结果边界/);
+      assert.match(host.innerHTML, /低人数至满员过程/);
+      assert.doesNotMatch(host.innerHTML, /仍需单独验证的结论/);
     }
   }
 });

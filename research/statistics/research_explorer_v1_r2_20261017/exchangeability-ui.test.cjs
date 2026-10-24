@@ -40,7 +40,7 @@ const {chromium}=require('playwright');
   await page.setViewportSize({width:850,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.goto(pathToFileURL(path.join(__dirname,'personnel_composition.html')).href);
   await page.waitForFunction(()=>document.body.dataset.ready==='true');assert.equal(await page.locator('#humanFeedback tbody tr').count(),6);
-  await page.click('[data-case="3"]');assert.match(await page.locator('#selectedFeedback').innerText(),/第二个好于第一个/);
+  await page.click('[data-case="3"]');assert.match(await page.locator('#selectedFeedback').innerText(),/已记录相对判断：右侧较好/);
   assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
   console.log(JSON.stringify({schemes:3,sizes:4,images:8,original_photos:true,fixed_chain_means_matched:true,high_fast_filter:true,feedback:6,errors,remote,screenshot:path.join(temporary,'exchange.png')}));
  }finally{await browser.close();}

@@ -1,6 +1,7 @@
 import pytest
 import json
 import csv
+import gzip
 from pathlib import Path
 import pandas as pd
 from tools.thesis_main.analysis import build_research_workbench_v2_20261019 as builder
@@ -138,7 +139,9 @@ def test_personnel_main_interface_is_complete_and_source_bound():
         for path in figure['data_paths']:
             assert (source / path).is_file()
     for spec in interface['tables']:
-        with (builder.ROOT / spec['path']).open(encoding='utf-8-sig', newline='') as stream:
+        path = builder.ROOT / spec['path']
+        opener = gzip.open if path.suffix == '.gz' else open
+        with opener(path, 'rt', encoding='utf-8-sig', newline='') as stream:
             rows = csv.reader(stream)
             assert next(rows) == spec['columns']
             assert sum(1 for _ in rows) == spec['rows']

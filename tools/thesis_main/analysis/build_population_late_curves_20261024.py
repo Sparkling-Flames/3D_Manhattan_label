@@ -12,17 +12,21 @@ METRICS = ['Q', 'D10', 'P10', 'SD', 'V', 'failure', 'unavailable']
 
 
 def image_curves(prefix, geometry):
-    d = prefix.loc[prefix.policy.eq('natural_random') & prefix.layer.eq('ordinary_manual') & prefix.k.ge(3)].copy()
+    d = prefix.loc[prefix.policy.eq('natural_random') & prefix.layer.eq('ordinary_manual') & prefix.k.ge(1)].copy()
     assert not d.duplicated(['pool_id', 'path_id', 'k']).any()
     assert d.score_available.eq(d.B8L2.notna()).all()
+    paused = d.loc[d.k.eq(2)]
+    assert paused.policy_deferred.all() and paused.B8L2.isna().all()
+    assert not paused.score_failure_nonpolicy.any()
     d['unavailable'] = ~d.score_available
     out = d.groupby(META + ['k'], sort=True).agg(
         attempts=('path_id', 'size'), unique_teams=('team_key', 'nunique'),
         scorable=('B8L2', 'count'), Q=('B8L2', 'mean'), D10=('D10', 'mean'),
         P10=('B8L2', lambda s: s.quantile(.1)), SD=('B8L2', 'std'),
         failure=('score_failure_nonpolicy', 'mean'), unavailable=('unavailable', 'mean'),
+        policy_deferred=('policy_deferred', 'mean'),
     ).reset_index()
-    v = geometry.loc[geometry.policy.eq('natural_random') & geometry.layer.eq('ordinary_manual') & geometry.k.ge(3),
+    v = geometry.loc[geometry.policy.eq('natural_random') & geometry.layer.eq('ordinary_manual') & geometry.k.ge(1),
                      ['pool_id', 'k', 'V_floor_mean', 'V_floor_valid_pairs', 'geometry_valid_paths',
                       'member_variation_estimable', 'full_pool_endpoint']]
     out = out.merge(v, on=['pool_id', 'k'], validate='one_to_one', how='left', indicator=True)
@@ -61,7 +65,8 @@ def summarize_curves(panel):
         row.update(k=np.nan if keys[2] == 'full' else int(keys[2]),
                    images=len(g), buildings=g.building.nunique(), actual_n_min=g.k.min(), actual_n_max=g.k.max(),
                    attempts=g.attempts.sum(), scorable=g.scorable.sum(), unique_team_image_units=g.unique_teams.sum(),
-                   V_pairs=g.V_pairs.sum(min_count=1), geometry_valid_paths=g.geometry_valid_paths.sum())
+                   V_pairs=g.V_pairs.sum(min_count=1), geometry_valid_paths=g.geometry_valid_paths.sum(),
+                   policy_deferred=g.policy_deferred.mean())
         for metric in METRICS:
             row[metric] = g[metric].mean()
             row[metric + '_images'] = g[metric].count()
@@ -76,6 +81,7 @@ def late_changes(panel, prefix):
              30: [('20', '25'), ('25', '30'), ('20', '30'), ('30', 'full'), ('20', 'full')],
              35: [('20', '30'), ('30', '35'), ('20', '35')]}
     for minimum, pairs in steps.items():
+        pairs = [('3', '6'), ('6', '10'), ('10', '20'), ('3', '20')] + pairs
         p = panel.loc[panel.cohort_min_n.eq(minimum)]
         for start, end in pairs:
             joined = p.loc[p.stage.eq(start)].merge(p.loc[p.stage.eq(end)], on=META, suffixes=('_from', '_to'), validate='one_to_one')
@@ -133,7 +139,7 @@ def main():
     assert len(inventory) == inventory.image.nunique() == 177
     assert inventory.groupby('pool_id').size().eq(1).all()
     for _, g in images.groupby('pool_id'):
-        assert set(g.k) == set(range(3, int(g.pool_n.iloc[0]) + 1))
+        assert set(g.k) == set(range(1, int(g.pool_n.iloc[0]) + 1))
     # 在旧共同域逐图核对，扩展人数不能改变旧前缀的统计定义。
     old = pd.read_csv(BASE / 'stability_rebuilt_20261023/results/NATURAL_IMAGE_CURVES_REBUILT.csv.gz')
     old = old.loc[old.layer.eq('ordinary_manual') & old.k.ge(3)]
@@ -141,7 +147,7 @@ def main():
     for new, prior in [('Q','Q_mean'), ('D10','D10_mean'), ('P10','Q_p10'), ('SD','Q_sd_ddof1'),
                        ('failure','score_failure_nonpolicy_rate'), ('unavailable','score_unavailable_rate')]:
         np.testing.assert_allclose(check[new], check[prior], atol=1e-9, equal_nan=True)
-    checkpoints = natural.loc[natural.pool_n.ge(30) & (natural.k.isin([20,25,30,35]) | natural.k.eq(natural.pool_n))]
+    checkpoints = natural.loc[natural.pool_n.ge(20) & (natural.k.isin([1,2,3,6,10,20,25,30,35]) | natural.k.eq(natural.pool_n))]
     columns = ['team_key','B8L2','D10','score_available','score_failure_nonpolicy','image','condition']
     endpoints = pd.read_csv(BASE / 'results/ENDPOINT_SCALARS.csv.gz', usecols=columns, low_memory=False)
     linked = checkpoints.merge(endpoints, on='team_key', suffixes=('','_endpoint'), validate='many_to_one')
@@ -163,6 +169,7 @@ def main():
                    curve_rows=len(images), previous_image_steps_verified=len(check),
                    original_scalar_checkpoint_paths=len(linked), original_scalar_unique_endpoints=linked.team_key.nunique(),
                    natural_prefix_rows=len(natural), new_fusion_runs=0, new_score_runs=0,
+                   single_person_baseline=True, two_person_policy_deferred=True,
                    cohorts={str(n): int(inventory.pool_n.ge(n).sum()) for n in [20,30,35]},
                    full_pool_unique_teams_per_image=1,
                    fields='README.md', source_files=[

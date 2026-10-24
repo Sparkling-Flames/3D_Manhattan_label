@@ -87,7 +87,11 @@ if(fs.existsSync(dataPath)){
  assert.equal(data.cases.length,20);assert.equal(Object.keys(data.groups).length,5);
  for(const views of Object.values(data.groups))for(const v of views){assert.deepEqual(v.after.workers,views[0].after.workers);assert.deepEqual(v.before.workers,views[0].before.workers);}
 }else console.log('SKIP: generated comparisons payload not present; actual contract covered with fixtures');
-if(fs.existsSync(indexPath)){const index=JSON.parse(fs.readFileSync(indexPath,'utf8'));assert.equal(index.tables.length,134);}
+if(fs.existsSync(indexPath)){
+ const index=JSON.parse(fs.readFileSync(indexPath,'utf8')),ids=new Set(index.tables.map(t=>t.id));
+ assert.equal(ids.size,index.tables.length);
+ for(const tabs of Object.values(index.module_tabs))for(const [,id] of tabs)if(id)assert.ok(ids.has(id),'Missing tab table: '+id);
+}
 console.log('PASS: exact points, unknown classes, condition/reference/snapshot isolation, selection reset, frozen links, anonymous layers, feedback exports');
 
 const alternate={target_id:'alternate-reference',points:[[8,9]],floor:[[8,9]]};
