@@ -1,0 +1,16 @@
+{
+  "design": "current_four_scheme_fixed_panel_source_stratified_label_permutation_v1",
+  "data_release": "real_v2",
+  "panels": "research/workers/personnel_mixture_comparison_20261022/configurations/PANELS_USED.csv",
+  "teams": "research/workers/personnel_mixture_comparison_20261022/configurations/PANEL_TEAMS.csv.gz",
+  "labels": "research/workers/personnel_mixture_comparison_20261022/configurations/LOBO_LABELS_USED.csv.gz",
+  "endpoints": "research/workers/personnel_mixture_comparison_20261022/configurations/ENDPOINT_OUTCOMES_{manual,semi}.csv.gz",
+  "eligibility": "Only complete_924_labelled panels for each method and tier; metric-wise finite endpoint support",
+  "random_unit": "whole candidate worker label within fixed panel and origin stratum",
+  "fixed": "background labels, 12 candidate workers, all 924 six-person subsets, endpoint outcomes, per-origin class capacity",
+  "seed": 20261024,
+  "target_distinct_assignments": 99,
+  "small_capacity": "include all distinct sampled assignments including observed, record possible and actual distinct counts",
+  "statistic": "within-panel configuration-count vector eta-squared per metric; observed minus mean of matched random partitions; first panel then building equality",
+  "scope": "conditional value in the existing panels; not a transfer test across images or buildings"
+}
