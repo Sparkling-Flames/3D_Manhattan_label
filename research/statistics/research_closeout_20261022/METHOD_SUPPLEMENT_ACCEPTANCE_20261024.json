@@ -1,0 +1,160 @@
+{
+  "d10_input": {
+    "qualified": 7302,
+    "mean_lift": 2.035267842607502,
+    "median_lift": 1.5002778966669439
+  },
+  "d10_fit": {
+    "partition_rows": 184,
+    "label_refits": 92,
+    "inner_losses_recomputed_two_outer_folds": 1824,
+    "exclusion_rows": 794
+  },
+  "d10_selection": {
+    "selected_rows_rederived": 3798,
+    "paired_rows": 2532,
+    "highq": [
+      {
+        "condition": "manual",
+        "tier": "coarse",
+        "panels": 179,
+        "changed": 11,
+        "scored": 179,
+        "D10_delta": -0.005882517246485533,
+        "failure_net": 0
+      },
+      {
+        "condition": "manual",
+        "tier": "fine",
+        "panels": 179,
+        "changed": 11,
+        "scored": 179,
+        "D10_delta": -0.005882517246485533,
+        "failure_net": 0
+      },
+      {
+        "condition": "semi",
+        "tier": "coarse",
+        "panels": 32,
+        "changed": 21,
+        "scored": 28,
+        "D10_delta": -0.3077936644516827,
+        "failure_net": 2
+      },
+      {
+        "condition": "semi",
+        "tier": "fine",
+        "panels": 32,
+        "changed": 19,
+        "scored": 28,
+        "D10_delta": -1.1532911305483406,
+        "failure_net": 1
+      }
+    ]
+  },
+  "d10_abc": {
+    "events": 121852,
+    "common_triples": 58535,
+    "same_orientation": 55201
+  },
+  "fusion": {
+    "teams": 138,
+    "medoids_reselected": 138,
+    "lee_native_rebuilt": 138,
+    "complete_geometries_remeasured": 268,
+    "paired_metric_rows": 2220,
+    "status": {
+      "lee_mv50": {
+        "full_evaluable": 0,
+        "floor_output": 138
+      },
+      "medoid": {
+        "full_evaluable": 138,
+        "floor_output": 138
+      },
+      "wall_auto": {
+        "full_evaluable": 130,
+        "floor_output": 131
+      }
+    },
+    "ordinary_manual": [
+      {
+        "n": 4,
+        "images": 22,
+        "mean_delta": 7.108238477320728,
+        "positive": 16,
+        "negative": 6
+      },
+      {
+        "n": 8,
+        "images": 22,
+        "mean_delta": -0.5146212855436502,
+        "positive": 13,
+        "negative": 9
+      },
+      {
+        "n": 16,
+        "images": 23,
+        "mean_delta": -5.544830388507298,
+        "positive": 8,
+        "negative": 15
+      }
+    ],
+    "same_pool_n4_n16": {
+      "common_pools": 21,
+      "wall_minus_medoid_n4": 7.675863648068882,
+      "wall_minus_medoid_n16": -5.004024847365354,
+      "support": "same saved draw0 path; not all orders"
+    }
+  },
+  "coverage": {
+    "composition_team_vectors": 1862784,
+    "common_composition_panels": 1848,
+    "preregistered_attempts_across_tiers": 172032,
+    "abc_metric_panel_cells": 26050,
+    "fusion_summary_cells": 476,
+    "structure_available_unique_panels": 292
+  },
+  "correction": {
+    "panel_id": "X7HyMhZNoso-05__semi__5212c0d241__v2__n16",
+    "problem": "924 constant team scores produced numerical nonzero eta2",
+    "resolution": "between+within <= count*1e-20 gives undefined eta2; all attempts and cells retained",
+    "semi_comparable_panels": 41,
+    "semi_known_panels": 42
+  },
+  "limits": [
+    "All 92 final label fits rerun; inner candidate losses rerun for one heldout building in each condition, not all inner folds.",
+    "Wall-line fusion itself reused; 138 Lee runs rebuilt, 138 medoids independently selected, 268 complete outputs remeasured.",
+    "Personnel 7302 source score bindings checked; not all raw answers rescored.",
+    "Human answer counts checked; root did not independently repeat all 25 visual reviews."
+  ],
+  "tests": {
+    "passed": 14,
+    "command": "pytest -q tests/test_method_validation_20261024.py tests/test_lee_tile_stage1_20261002.py tests/test_quality_b8l2_d10_20261017.py"
+  },
+  "dashboard_handoff": {
+    "thread": "01a159f1-9a37-7b41-a914-8944f04d3801",
+    "status": "completed_accepted",
+    "entry": "research/statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=method_supplements&tab=0",
+    "qa": "research/statistics/research_explorer_v1_r2_20261017/METHOD_SUPPLEMENTS_QA_20261024.md",
+    "root_verification": {
+      "source_payload_and_offline_js_exact": true,
+      "personnel_tables": 8,
+      "fusion_table_count": 7,
+      "fusion_geometries": 414,
+      "human_pairs": 25,
+      "quality_control_counts": [
+        110,
+        6,
+        12
+      ],
+      "saved_screenshots_viewed": 3,
+      "node_test_passed": 1,
+      "browser_scope": "Implementation thread Edge file QA reviewed; root file URL access was denied, no root live browser acceptance."
+    }
+  },
+  "documentation_reconciliation": {
+    "current_inconsistencies_fixed": 4,
+    "historical_records_retained": true
+  }
+}

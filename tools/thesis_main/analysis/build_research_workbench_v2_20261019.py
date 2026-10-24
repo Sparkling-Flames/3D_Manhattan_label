@@ -28,6 +28,9 @@ PERSONNEL_MAIN = ROOT / 'research/workers/personnel_main_figures_v2_20261023'
 POPULATION_CASES = ROOT / 'research/workers/personnel_population_curves_v2_20261023/cases'
 SAME_ROOM_REBUILT = ROOT / 'research/same_room/same_room_large_block_rebuilt_20261023'
 DOORWAY_CASE = POPULATION_CASES / 'doorway_full_pool_20261024/CASE_DATA.json'
+D10_SENSITIVITY = ROOT / 'research/workers/personnel_d10_formation_sensitivity_20261024'
+FUSION_COMMON = ROOT / 'research/fusion/fusion_common_panel_20261024'
+QUALITY_VALIDATION = ROOT / 'research/quality/quality_independent_validation_20261024/human_review'
 MULTIVIEW_TABLES = ['mean_summary.csv', 'mean_groups.csv', 'individual_summary.csv',
                     'curve_summary.csv', 'replay_behavior.csv', 'group_coverage.csv',
                     'background_buildings.csv']
@@ -740,6 +743,75 @@ def pack_case_story(resources):
     return {key: len(value) for key, value in cases.items()}
 
 
+def pack_method_supplements(resources):
+    """只搬运已验收结果，并核对展示使用的精确对象与参考。"""
+    def rows(folder, name):
+        path = folder / name
+        opener = gzip.open if path.suffix == '.gz' else open
+        with opener(path, 'rt', encoding='utf-8-sig', newline='') as stream:
+            return list(csv.DictReader(stream))
+
+    personnel = {name: rows(D10_SENSITIVITY, name + ('.csv.gz' if name in
+        ('WORKER_RANK_AND_LABELS', 'SELECTED_TEAM_CROSS_EVALUATION') else '.csv'))
+        for name in ('PARTITION_COMPARISON', 'WORKER_RANK_AND_LABELS',
+                     'SELECTED_TEAM_CROSS_EVALUATION', 'COMPOSITION_COMMON_COMPARISON',
+                     'COMPOSITION_COMMON_PANEL_SUMMARY', 'STRUCTURE_HIGHQ_ROLE_SUMMARY',
+                     'ABC_COMMON_PHYSICAL_SUMMARY', 'ABC_LEGALITY_SUMMARY')}
+    constant = [r for r in personnel['COMPOSITION_COMMON_PANEL_SUMMARY']
+                if r['panel_id'] == 'X7HyMhZNoso-05__semi__5212c0d241__v2__n16']
+    if len(constant) != 8 or any(r['B8L2_eta2'] or r['D10_eta2'] for r in constant):
+        raise ValueError('constant Semi panel eta2 must remain undefined')
+
+    fusion = {name: rows(FUSION_COMMON, name + '.csv') for name in
+        ('TEAM_REGISTRATION', 'METHOD_ENDPOINTS', 'COMMON_TEAM_METRICS',
+         'COMMON_SCENE_SUMMARY', 'THREE_METHOD_COMMON_FLOOR',
+         'THREE_METHOD_FLOOR_SUMMARY', 'ALL_ATTEMPT_STATUS')}
+    fusion['METHOD_GEOMETRY'] = read(FUSION_COMMON / 'METHOD_GEOMETRY.json')
+    image_index = {image['image_code']: image for image in resources['images']}
+    detail_cache = {}
+    def detail(code):
+        if code not in detail_cache:
+            detail_cache[code] = read(PAGE / 'v2-resources' / image_index[code]['detail'])
+        return detail_cache[code]
+
+    if len(fusion['TEAM_REGISTRATION']) != 138 or len(fusion['METHOD_ENDPOINTS']) != 414 or len(fusion['METHOD_GEOMETRY']) != 414:
+        raise ValueError('fusion common panel coverage drift')
+    for team in fusion['TEAM_REGISTRATION']:
+        image = detail(team['image'])
+        answers = {a['object_id']: a for a in image['annotations']}
+        member_ids = team['member_object_ids'].split('|')
+        if (len(member_ids) != int(team['n']) or
+                team['reference_id'] not in {r['target_id'] for r in image['references']} or
+                any(oid not in answers for oid in member_ids) or
+                {answers[oid]['worker_id'] for oid in member_ids} != set(team['member_workers'].split('|'))):
+            raise ValueError('fusion team object/reference drift: ' + team['request_id'])
+    endpoint_keys = {(e['team_key'], e['method']) for e in fusion['METHOD_ENDPOINTS']}
+    if endpoint_keys != {(g['team_key'], g['method']) for g in fusion['METHOD_GEOMETRY']}:
+        raise ValueError('fusion endpoint/geometry drift')
+
+    quality = dict(pairs=rows(QUALITY_VALIDATION, 'ANSWER_METRIC_COMPARISON.csv'),
+                   directions=rows(QUALITY_VALIDATION, 'METRIC_DIRECTION_SUMMARY.csv'),
+                   notes=read(QUALITY_VALIDATION / 'ASSISTANT_VISUAL_NOTES.json')['cases'],
+                   controls={name: rows(QUALITY_VALIDATION.parent, name + '.csv') for name in
+                             ('HEIGHT_CONTROL_METRICS', 'BOTTOM_POINT_CONTROL_METRICS',
+                              'EXPOSED_STRUCTURE_AND_NEAR_SCORE_METRICS')})
+    if len(quality['pairs']) != 25 or len(quality['notes']) != 25:
+        raise ValueError('quality human review coverage drift')
+    for pair in quality['pairs']:
+        image = detail(pair['image'])
+        if (pair['reference_id'] not in {r['target_id'] for r in image['references']} or
+                any(pair[side + '_object_id'] not in {a['object_id'] for a in image['annotations']}
+                    for side in ('left', 'right'))):
+            raise ValueError('quality review identity/reference drift: ' + pair['review_id'])
+    payload = dict(schema='method_supplements_display_20261024_v1', data_release='v2',
+                   snapshot_id=SNAPSHOT, personnel=personnel, fusion=fusion, quality=quality)
+    write(PAGE / 'v2-resources/method_supplements.json', payload)
+    resources['method_supplements'] = 'method_supplements.json'
+    write(PAGE / 'v2-resources/index.json', resources)
+    return {key: len(value) for key, value in (('fusion_teams', fusion['TEAM_REGISTRATION']),
+                                                ('quality_pairs', quality['pairs']))}
+
+
 def build():
     source_tables = read(STATS / 'tables.json.gz')['tables']
     tables = {k:v for k,v in source_tables.items() if k!='quality__shared_records'}
@@ -933,6 +1005,7 @@ def build():
     pack_case_story(resources)
     resources['case_story'] = 'case_story.json'
     write(PAGE/'v2-resources/index.json', resources)
+    pack_method_supplements(resources)
     pack_comparisons(evidence, resources)
     pack_research_evidence(evidence, resources)
     pack_personnel_results(evidence, resources)

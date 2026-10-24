@@ -1,3 +1,4 @@
+- **2026-10-24人员收尾补充实验：** [四套分类随机参照与上游复现](../research/workers/personnel_supplement_20261024/README.md)、[主要结论多指标诊断](../research/quality/personnel_metric_dependence_20261024/README.md)、[门洞与zs-16门槛敏感性](../research/fusion/doorway_vote_sensitivity_20261024/README.md)。已完成[独立验收](../research/workers/personnel_supplement_20261024/INDEPENDENT_ACCEPTANCE.md)；复用真人v2团队并定向重放门槛，正式分类、评分、融合合同和OOS边界不变。
 - **2026-10-24门洞案例补齐：** [7y-06满员失败](../research/workers/personnel_population_curves_v2_20261023/cases/doorway_full_pool_20261024/README.md)从现有结果提取32人完整标注、4个端点及24条自然路径，研究台直接查看入口由展示线程接入；不新增融合/评分，OOS继续独立。
 - **2026-10-24整体收尾与OOS复核：** [全研究结论](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)统一人员、同房、难度、人数及用途的完成状态；[OOS的28图清单](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/OOS_REVIEW_20261024.md)单列具体结构因素和人工复核。已完成28图视觉复核；斜墙新增b8-19，连同x8同房两视角共3图，角度未定；子类间统计已完成，见[OOS收尾结果](../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/README.md)；新增复算工具及定向测试。OOS超出标注标准，其GT可能受约束近似；独立工作台展示统计，不接研究总入口。 本次复用该结论入口汇总最初预期与新发现，新增三份定向再审查作为支撑，模型/进度/术语的旧状态折叠保存。人员主报告已统一六步读法与四套分类采用层级；质量算法与3D IoU比较见全研究结论第2.3节。
 
@@ -335,3 +336,7 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 见[本轮独立结论与交付入口](thesis_main/人员角点距离补充与分型独立结论_20261020.md)。Pro新包、独立复算、连续角点与真实块学习分别留档；保留Rnew2/F01条件用途，新细分类未胜过有效基线，不升级生产人员标签。既有历史状态以上述接续为补充，不删除历史证据。
 
 本轮10份派生表已按冻结输入补齐并通过保留证据核验，完整CDF保留；未重拟合模型或重选阈值。旧孤立图与19项未能逐路径确认的历史计数差继续明确保留。详见[最新恢复状态与回执](../research/workers/personnel_interchangeability_followup_20261020/RECOVERY_STATUS.md)，实际归档进度以main提交核验为准。
+- **2026-10-24 D10上游分型敏感性：** [独立结果包](../research/workers/personnel_d10_formation_sensitivity_20261024/README.md)含四个analysis入口、字段合同及固定面板同队/同端点对照；不改正式评分、融合或B8L2采用结果。
+- **2026-10-24融合/质量方法验证：** [固定共同面板](../research/fusion/fusion_common_panel_20261024/README.md)和[25对人工页](../research/quality/quality_independent_validation_20261024/README.md)各自归档；新增两个Python入口、浏览器QA脚本与关键几何测试，正式算法/评分/资格不变；25题答案与comment视觉复核已接回主题包，未作全局效度认证。
+
+2026-10-24：[D10形成链与融合共同面板独立验收](../research/statistics/research_closeout_20261022/METHOD_SUPPLEMENT_ACCEPTANCE_20261024.md)已完成，含常数η²修复与真实重算边界；接入安排沿用主线研究台任务文档。

@@ -12,6 +12,7 @@ const modules={
  images:['图片与空间','查看图片、目标空间、原图标注及参考；高级条件收在筛选面板。',[]],
  profiles:['人员画像 · 本轮','Q水平、低尾、时间与难度表现；Manual／Semi分开，审核机会独立解释。',[]],
  personnel_main:['人员研究六步','分类、构成、难度、人数与真实机制；固定图和明细分开。',[]],
+ method_supplements:['已验收方法补充','D10 人员形成、同队三法融合、25 题人工质量判断；读取固定结果与完整几何。',[["人员形成与构成",null],["同队三法融合",null],["质量人工判断",null]]],
  taxonomy:['人员分类 · 阶段历史','此模块保留旧阶段工作标签和原始分母；新研究见“人员研究六步”。',[]],
  mechanisms:['条件与局部机制 · 10/21','同图、同参考、精确成员和保存节点分别追溯；难度、质量、融合、同房结果各自保留支持与资格。',[]],
  workers:['画像明细与历史','原尺度Q与任务调整Q并列；Scope区分拒绝倾向、历史裁定结局与当前相容机会，不是全量正确率。',[
@@ -58,6 +59,13 @@ const metricHints={
  source_k:['源历史人数 k：预测时已见过的源视角人员数。','这是源视角历史支持量，不是目标图融合团队人数。来源：同房预测合同。'],
  team_k:['融合团队人数 k：当前已纳入共识的真实成员数。','同 k 换组比较保持人数相同，但成员可能不同；不等于源历史人数。来源：融合人数合同。']
 };
+Object.assign(metricHints,{
+ medoid:['代表原答：同一团队中最接近其他原答的一份完整标注。','按团队内平均 1−底面IoU 最小选择，不用 GT 或目标质量分挑最好人；保留所选人的完整顶底界。'],
+ ARI:['ARI：两套人员分区的一致程度。','不受类别名字置换影响；1 表示分区相同，0 附近是随机参照，不是人员正确率。ALL 和楼外折应分开。'],
+ eta2:['η²：固定团队质量波动中的配比格间描述比例。','不是预测准确率。若团队分数没有波动则未定义，必须标为不适用，不能填 0。'],
+ common_evaluable_domain:['共同可评域：比较的两种方法都可评分的团队。','均分、低尾和几何差在同一组团队上比较；无连接、少点等失败另按全部预定尝试报告。'],
+ layout_depth:['布局深度误差：由声明的顶底边界渲染逐列深度，再与参考比较。','它能响应局部高度，不是相机实测深度；统一相机高下的归一单位与米制字段分开。']
+});
 const metricHintLabels={};
 const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(metricHintLabels[key]||key)}" aria-describedby="metricHint">?</button>`:'';
 let hintPopover=null,activeHint=null,hintPinned=false;
@@ -187,6 +195,7 @@ async function render(){
  try{
   if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
   if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
+  if(state.module==='method_supplements'){await MethodSupplements.render($('content'),{release:dataset.release,tab:state.tab,assets,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,imageDetail,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='case_story'){await CaseStory.render($('content'),{release:dataset.release,assets,deepLink:new URLSearchParams(location.hash.slice(1)),imageDetail,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,isCurrent:()=>token===state.loadToken,navigate:patch=>route(patch)});return;}
   if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
   if(['patterns','multiview'].includes(state.module)){if(dataset.release!=='v2'){ $('content').textContent='该交互使用v2保存结果，请切换到v2。';return; }await ResearchComparison.render($('content'),{mode:state.module,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,snapshot:SNAPSHOT,release:dataset.release,deepLink:new URLSearchParams(location.hash.slice(1)),onNavigate:patch=>route(patch),onContext:context=>{if(context.blind)$('activeFilters').textContent='盲审模式 · 人员身份、类别与分数隐藏；实际上下文随反馈导出。';else activeContext();}});return;}
@@ -207,7 +216,7 @@ async function render(){
   const toolbar=`<section class="panel"><div class="toolbar">${select('tableSelect',options,id,'当前表／对象粒度')}${select('metricSelect',metricOptions,state.metric,state.module==='workers'?'画像指标':'终点评价指标')}${facetControls(rows)}${select('chartField',[['','使用专题默认字段'],...numericCols.map(k=>[k,label(k)])],state.chartField||'','图表字段')}<span class="muted">来源：${esc(state.meta.path)}<br>字段原样保留；用途与缺失继承源表。</span></div></section>`;
   const title=support(state.rows);
   if(state.module==='quality'){
-   $('content').innerHTML=toolbar+`<div id="focusPanel"></div>`+tablePanel()+`<details><summary>当前范围分布与指标对照</summary>${genericChart(state.rows)}${svgChart(state.rows,'D10','scatter','B8L2','同输入、同参考B8L2／D10对照')}</details>`;
+   $('content').innerHTML=`<div class="info">已验收的 25 题人工质量判断、完整双人标注与高度/底点控制：<a href="#module=method_supplements&tab=2">进入质量方法补充</a>。</div>`+toolbar+`<div id="focusPanel"></div>`+tablePanel()+`<details><summary>当前范围分布与指标对照</summary>${genericChart(state.rows)}${svgChart(state.rows,'D10','scatter','B8L2','同输入、同参考B8L2／D10对照')}</details>`;
    const row=state.rows.find(r=>r.object_id===state.focusObject)||state.rows.find(r=>C.truth(r.quality_usable))||state.rows[0];if(row)await qualityFocus(row,$('focusPanel'),token);
   }else if(state.module==='workers'){
    $('content').innerHTML=toolbar+title+`<div class="split"><div>${tablePanel()}${genericChart(state.rows)}</div><section class="panel" id="focusPanel"></section></div>`;
@@ -215,9 +224,9 @@ async function render(){
   }else if(state.module==='same_room'){
    $('content').innerHTML=sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
   }else if(state.module==='fusion'&&id==='fusion__trajectory_scores'){
-   $('content').innerHTML=toolbar+`<div id="processFocus"></div>`+tablePanel();await processFocus(token);
+   $('content').innerHTML=`<div class="info">固定 138 队的墙线、代表原答和 Lee MV50 同队比较：<a href="#module=method_supplements&tab=1">进入融合方法补充</a>。</div>`+toolbar+`<div id="processFocus"></div>`+tablePanel();await processFocus(token);
   }else if(state.module==='fusion'){
-   $('content').innerHTML=toolbar+`<div class="info">选人指标、终点评价和成员是否改变分开。以下只展示现有请求与保存结果，不生成新团队。</div><div id="teamFocus"></div>`+title+genericChart(state.rows)+tablePanel();
+   $('content').innerHTML=`<div class="info">固定 138 队的三法保存几何、均值低尾和全部失败：<a href="#module=method_supplements&tab=1">进入融合方法补充</a>。</div>`+toolbar+`<div class="info">选人指标、终点评价和成员是否改变分开。以下只展示现有请求与保存结果，不生成新团队。</div><div id="teamFocus"></div>`+title+genericChart(state.rows)+tablePanel();
    if(state.rows[0])await teamFocus(state.rows[0],token);
   }else if(state.module==='time'&&state.tab===0){
    $('content').innerHTML=toolbar+title+`<div id="focusPanel"></div>`+genericChart(state.rows)+tablePanel();if(state.rows[0])await semiFocus(state.rows[0],token);
