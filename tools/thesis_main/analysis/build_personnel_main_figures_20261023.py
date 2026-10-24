@@ -243,6 +243,62 @@ def difficulty():
            [f'{MIX}/difficulty/README.md',f'{MIX}/configurations/DIFFICULTY_SPREAD_SUMMARY.csv'],['data/DIFFICULTY_RAW_EXPRESSION.csv','data/DIFFICULTY_MIXTURE_SPREAD.csv','data/DIFFICULTY_EXCHANGE_DIRECTIONS.csv'],['difficulty_d','structure_context_c','distribution_band','signed_delta'])
 
 
+def late_population_figures():
+    base=f'{POP}/late_population_20261024'
+    q=read(f'{base}/CURVE_SUMMARY.csv')
+    changes=read(f'{base}/LATE_COMPARISONS.csv')
+    exports=[('CURVE_SUMMARY.csv','NATURAL_CURVES_FIXED_COHORTS.csv'),
+             ('LATE_COMPARISONS.csv','NATURAL_LATE_COMPARISONS.csv'),
+             ('LATE_IMAGE_CHANGES.csv','NATURAL_LATE_IMAGE_CHANGES.csv'),
+             ('COHORT_IMAGES.csv','NATURAL_COHORT_IMAGES.csv')]
+    for source,target in exports:export_data(read(f'{base}/{source}'),target)
+    terms=['q_b8l2','q_p10','q_sd','v_floor_population','score_failure','prefix_k']
+    tables=['data/NATURAL_CURVES_FIXED_COHORTS.csv','data/NATURAL_LATE_COMPARISONS.csv',
+            'data/NATURAL_LATE_IMAGE_CHANGES.csv','data/NATURAL_COHORT_IMAGES.csv']
+    for minimum,fid,title,finding,note in [
+        (30,'F5_natural','05 固定157张图：人数曲线延伸到30人',
+         '20→30人：125/157图平均Q提高，156/157图底面波动下降；困难图平均Q仅小幅上升，缩波更明显。',
+         '固定N≥30：简单105图、中等25图、困难27图。每图24条自然顺序；图片集合不随k变化。'),
+        (35,'F5_late35','05 固定92张图：30人之后到35人',
+         '30→35人：共同可评91图平均Q +0.23分；失败率0.72%→1.09%。满员成员波动归零是设计结果。',
+         '固定N=35：简单71图、中等13图、困难8图；35人困难Q仅7/8图可评，失败率仍按8图计算。')]:
+        fig,aa=canvas(2,3,(16,10));fig.subplots_adjust(left=.07,wspace=.38,hspace=.65,top=.80,bottom=.18)
+        for ax,metric,label in zip(aa.flat,['Q','P10','SD','V','failure'],
+                                  ['平均质量Q（分）','图内低尾P10（Q分）','图内质量波动SD（Q分）','底面形状波动V（0-1）','不可评分比例（%）']):
+            for diff,color in DIFF.items():
+                z=q[q.cohort_min_n.eq(minimum)&q.difficulty.eq(diff)&q.k.notna()].sort_values('k')
+                ax.plot(z.k,z[metric]*(100 if metric=='failure' else 1),color=color,label=f'{diff} · {z.images.max()}图',lw=2)
+            ax.set_title(label,fontsize=12);ax.set_xlabel('参与融合人数k');ax.set_xticks([3,6,10,15,20,25,30]+([35] if minimum==35 else []));ax.grid(alpha=.15)
+            if metric in ['Q','P10']:ax.set_ylim(0,100)
+            ax.legend(fontsize=8,loc='best')
+        ax=aa[1,2];ax.axis('off');ax.text(0,.98,'固定图片，分开看几种结果',fontsize=13,weight='bold',va='top')
+        message=('20→30人平均Q变化\n简单 +0.57 · 89/105图提高\n中等 +1.98 · 20/25图提高\n困难 +0.38 · 16/27图提高\n\n困难SD：9.60 → 5.45\n困难V：0.0853 → 0.0392\n困难失败：3.24% → 2.16%' if minimum==30 else
+                 '30→35人共同可评图片Q变化\n简单 +0.02 · 52/71图提高\n中等 +1.01 · 7/13图提高\n困难 +0.87 · 4/7图提高\n\n困难满员仍有1/8图不可评分\n满员全部顺序使用同一批人\nSD、V为0不证明接近参考')
+        ax.text(0,.80,message,fontsize=10.5,va='top',linespacing=1.7)
+        finish(fig,fid,'F5',title,finding,
+               '每图先算可评路径Q/P10/SD，再图等权；失败含全部路径，V沿用有效底面两两1−IoU。实际分母见小表；没有把失败填0。',
+               note,[f'{base}/README.md',f'{base}/CURVE_SUMMARY.csv',f'{base}/LATE_COMPARISONS.csv'],tables,terms)
+    z=changes[changes.cohort_min_n.eq(30)&changes.comparison.eq('30_to_full')]
+    fig,aa=canvas(1,3,(16,7));fig.subplots_adjust(left=.10,wspace=.65,top=.73,bottom=.25)
+    for ax,metric,title in zip(aa.flat,['Q','P10','failure'],['平均质量Q（分）','图内低尾P10（Q分）','不可评分比例（%）']):
+        d=z[z.metric.eq(metric)].set_index('difficulty').loc[list(DIFF)]
+        factor=100 if metric=='failure' else 1
+        for i,(diff,r) in enumerate(d.iterrows()):
+            a,b=r.from_mean*factor,r.to_mean*factor
+            ax.plot([a,b],[i,i],color=DIFF[diff],lw=2)
+            ax.scatter(a,i,color=COLORS[0],label='30人' if i==0 else None,s=50)
+            ax.scatter(b,i,color=COLORS[1],label='各图满员' if i==0 else None,s=50)
+            ax.annotate(f'{a:.2f} → {b:.2f}',(max(a,b),i),xytext=(5,7),textcoords='offset points',fontsize=9)
+        ax.set_yticks(range(3),[f'{diff} · {int(r.common_images)}图' for diff,r in d.iterrows()],fontsize=10)
+        ax.invert_yaxis();ax.set_ylim(2.6,-.6);ax.set_title(title,fontsize=12);ax.legend(fontsize=9,loc='lower left');ax.grid(axis='x',alpha=.15)
+        ax.set_xlim((0,5) if metric=='failure' else (45,110))
+    finish(fig,'F5_full','F5','05 从30人到各图实际满员：同图比较质量与失败',
+           '满员为各图实际30—35人。Q比较保留两端可评156图：平均+0.29分；全部157图中仍有1图满员失败。',
+           'Q/P10使用共同可评图片；失败使用全部图片。满员时所有顺序汇到同一团队，SD/V=0是有限池设计事实，不是误差消失。',
+           '普通Manual固定N≥30的157图；质量共同域156图。满员困难26/27可评，简单105/105、中等25/25。',
+           [f'{base}/README.md',f'{base}/LATE_COMPARISONS.csv'],tables,terms)
+
+
 def population():
     p=f'{POP}/stability_rebuilt_20261023/results/NATURAL_IMAGE_CURVES_REBUILT.csv.gz';d=read(p);d=d[d.pool_n.ge(20)&d.k.between(3,20)]
     q=d.groupby(['condition','layer','difficulty','k']).agg(images=('image','nunique'),buildings=('building','nunique'),Q=('Q_mean','mean'),P10=('Q_p10','mean'),SD=('Q_sd_ddof1','mean'),failure=('score_failure_nonpolicy_rate','mean'),attempts=('paths_attempted','sum'),scorable=('quality_valid_paths','sum')).reset_index()
@@ -252,21 +308,7 @@ def population():
     old=read('research/statistics/pro_return_review_20261023/population/NATURAL_RECOMPUTED.csv')
     old=old[old.k.between(3,20)];joined=q.merge(old,on=['condition','layer','difficulty','k'],suffixes=('','_old'),validate='one_to_one')
     for col in ['Q','P10','SD','failure','V']:np.testing.assert_allclose(joined[col],joined[col+'_old'],atol=1e-7,equal_nan=True)
-    fig,aa=canvas(2,3,(16,10));fig.subplots_adjust(left=.07,wspace=.38,hspace=.65,top=.80,bottom=.18)
-    for ax,metric,label in zip(aa.flat,['Q','P10','SD','V','failure'],['平均质量Q（分）','图内低尾P10（Q分）','图内质量波动SD（Q分）','底面形状波动V（0-1）','不可评分比例（%）']):
-        for diff,color in DIFF.items():
-            z=q[q.layer.eq('ordinary_manual')&q.difficulty.eq(diff)]
-            ax.plot(z.k,z[metric]*(100 if metric=='failure' else 1),color=color,label=f'{diff} · {z.images.max()}图',lw=2)
-        ax.set_title(label,fontsize=12);ax.set_xlabel('参与融合人数k');ax.set_xticks([3,6,10,15,20]);ax.grid(alpha=.15)
-        if metric in ['Q','P10']:ax.set_ylim(0,100)
-        ax.legend(fontsize=8,loc='best')
-    ax=aa[1,2];ax.axis('off');ax.text(0,.98,'如何读这组曲线',fontsize=14,weight='bold',va='top')
-    ax.text(0,.80,'固定N≥20的图片池\n每图24条自然随机顺序\n每个k先计算图内统计，再图等权\n\n困难图3→6人：平均Q +7.97\n困难图10→20人：平均Q -0.22\n同时：低尾提高、分数与形状波动缩小\n\n失败保留在全部尝试分母中',fontsize=11,va='top',linespacing=1.7)
-    finish(fig,'F5_natural','F5','05 人数增加：早期改善质量，后段还可能减少波动',
-           '简单图较快达到较高Q；困难图也有早期收益，后段平均质量变化小，但低尾和成员波动仍改善。',
-           'P10是每图可评路径Q的10%分位；SD是同人数路径的样本标准差；V是有效路径底面两两1-IoU均值。它们不是同一种不确定性。',
-           '普通Manual固定简单110图、中等29图、困难29图；展示k=3-20，k2延期不画为失败或零分。',
-           [p,f'{POP}/results/PREFIX_GEOMETRY_VARIATION.csv.gz'],['data/NATURAL_CURVES_FIXED_N20.csv'],['q_b8l2','q_p10','q_sd','v_floor_population','score_failure','prefix_k'])
+    late_population_figures()
     fig,aa=canvas(2,2,(14,9));fig.subplots_adjust(hspace=.62)
     for row,layer in enumerate(['ordinary_semi','doorway_manual']):
         for diff,z in q[q.layer.eq(layer)].groupby('difficulty'):
@@ -340,7 +382,21 @@ def mechanisms():
 
 def main():
     (OUT/'data').mkdir(parents=True,exist_ok=True);(OUT/'figures').mkdir(exist_ok=True)
-    classification();mixture();exchange();difficulty();population();mechanisms()
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--population-only',action='store_true',help='仅更新人数图，保留其余已保存图版')
+    args=parser.parse_args()
+    if args.population_only:
+        previous=json.loads((OUT/'FIGURE_MANIFEST.json').read_text(encoding='utf-8'))['figures']
+        late_population_figures()
+        replacements={f['id']:f for f in FIGURES}
+        ordered=[]
+        for f in previous:
+            if f['id'] not in ['F5_late35','F5_full']:ordered.append(replacements.get(f['id'],f))
+            if f['id']=='F5_natural':ordered.extend([replacements['F5_late35'],replacements['F5_full']])
+        FIGURES[:]=ordered
+    else:
+        classification();mixture();exchange();difficulty();population();mechanisms()
     term_ids={t['id'] for t in json.loads((OUT/'GLOSSARY.json').read_text(encoding='utf-8'))['terms']}
     for f in FIGURES:
         assert set(f['term_ids']) <= term_ids, (f['id'], set(f['term_ids']) - term_ids)
@@ -348,6 +404,17 @@ def main():
         assert all((OUT/p).exists() for p in f['data_paths']+[f['image'],f['vector']])
     (OUT/'FIGURE_MANIFEST.json').write_text(json.dumps(dict(version='personnel_main_figures_v2_20261023',figures=FIGURES),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     pd.DataFrame([{k:v for k,v in f.items() if k not in ['source_paths','data_paths','term_ids']} for f in FIGURES]).to_csv(OUT/'FIGURE_INDEX.csv',index=False,encoding='utf-8-sig')
+    interface_path=OUT/'CONSUMER_INTERFACE.json'
+    interface=json.loads(interface_path.read_text(encoding='utf-8'))
+    for group in interface['groups']:
+        group['figure_ids']=[f['id'] for f in FIGURES if f['group']==group['id']]
+    new_names=['NATURAL_CURVES_FIXED_COHORTS','NATURAL_LATE_COMPARISONS','NATURAL_LATE_IMAGE_CHANGES','NATURAL_COHORT_IMAGES']
+    interface['tables']=[t for t in interface['tables'] if t['id'] not in new_names]
+    for name in new_names:
+        path=OUT/'data'/f'{name}.csv';frame=pd.read_csv(path)
+        interface['tables'].append(dict(id=name,path=path.relative_to(ROOT).as_posix(),rows=len(frame),columns=list(frame.columns)))
+    interface['validation']['figures']=len(FIGURES)
+    interface_path.write_text(json.dumps(interface,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(f'生成 {len(FIGURES)} 张研究台图（PNG/SVG）及对应小表；实际来源与路径断言通过。')
 
 

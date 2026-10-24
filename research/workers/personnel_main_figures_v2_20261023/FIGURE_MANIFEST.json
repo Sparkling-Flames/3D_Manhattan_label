@@ -294,18 +294,85 @@
     {
       "id": "F5_natural",
       "group": "F5",
-      "title": "05 人数增加：早期改善质量，后段还可能减少波动",
-      "finding": "简单图较快达到较高Q；困难图也有早期收益，后段平均质量变化小，但低尾和成员波动仍改善。",
-      "reading": "P10是每图可评路径Q的10%分位；SD是同人数路径的样本标准差；V是有效路径底面两两1-IoU均值。它们不是同一种不确定性。",
-      "support": "普通Manual固定简单110图、中等29图、困难29图；展示k=3-20，k2延期不画为失败或零分。",
+      "title": "05 固定157张图：人数曲线延伸到30人",
+      "finding": "20→30人：125/157图平均Q提高，156/157图底面波动下降；困难图平均Q仅小幅上升，缩波更明显。",
+      "reading": "每图先算可评路径Q/P10/SD，再图等权；失败含全部路径，V沿用有效底面两两1−IoU。实际分母见小表；没有把失败填0。",
+      "support": "固定N≥30：简单105图、中等25图、困难27图。每图24条自然顺序；图片集合不随k变化。",
       "image": "figures/F5_natural.png",
       "vector": "figures/F5_natural.svg",
       "source_paths": [
-        "research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/results/NATURAL_IMAGE_CURVES_REBUILT.csv.gz",
-        "research/workers/personnel_population_curves_v2_20261023/results/PREFIX_GEOMETRY_VARIATION.csv.gz"
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/CURVE_SUMMARY.csv",
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/LATE_COMPARISONS.csv"
       ],
       "data_paths": [
-        "data/NATURAL_CURVES_FIXED_N20.csv"
+        "data/NATURAL_CURVES_FIXED_COHORTS.csv",
+        "data/NATURAL_LATE_COMPARISONS.csv",
+        "data/NATURAL_LATE_IMAGE_CHANGES.csv",
+        "data/NATURAL_COHORT_IMAGES.csv"
+      ],
+      "term_ids": [
+        "q_b8l2",
+        "q_p10",
+        "q_sd",
+        "v_floor_population",
+        "score_failure",
+        "prefix_k"
+      ],
+      "priority": "main",
+      "display": "static_saved_result",
+      "data_release": "v2"
+    },
+    {
+      "id": "F5_late35",
+      "group": "F5",
+      "title": "05 固定92张图：30人之后到35人",
+      "finding": "30→35人：共同可评91图平均Q +0.23分；失败率0.72%→1.09%。满员成员波动归零是设计结果。",
+      "reading": "每图先算可评路径Q/P10/SD，再图等权；失败含全部路径，V沿用有效底面两两1−IoU。实际分母见小表；没有把失败填0。",
+      "support": "固定N=35：简单71图、中等13图、困难8图；35人困难Q仅7/8图可评，失败率仍按8图计算。",
+      "image": "figures/F5_late35.png",
+      "vector": "figures/F5_late35.svg",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/CURVE_SUMMARY.csv",
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/LATE_COMPARISONS.csv"
+      ],
+      "data_paths": [
+        "data/NATURAL_CURVES_FIXED_COHORTS.csv",
+        "data/NATURAL_LATE_COMPARISONS.csv",
+        "data/NATURAL_LATE_IMAGE_CHANGES.csv",
+        "data/NATURAL_COHORT_IMAGES.csv"
+      ],
+      "term_ids": [
+        "q_b8l2",
+        "q_p10",
+        "q_sd",
+        "v_floor_population",
+        "score_failure",
+        "prefix_k"
+      ],
+      "priority": "main",
+      "display": "static_saved_result",
+      "data_release": "v2"
+    },
+    {
+      "id": "F5_full",
+      "group": "F5",
+      "title": "05 从30人到各图实际满员：同图比较质量与失败",
+      "finding": "满员为各图实际30—35人。Q比较保留两端可评156图：平均+0.29分；全部157图中仍有1图满员失败。",
+      "reading": "Q/P10使用共同可评图片；失败使用全部图片。满员时所有顺序汇到同一团队，SD/V=0是有限池设计事实，不是误差消失。",
+      "support": "普通Manual固定N≥30的157图；质量共同域156图。满员困难26/27可评，简单105/105、中等25/25。",
+      "image": "figures/F5_full.png",
+      "vector": "figures/F5_full.svg",
+      "source_paths": [
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/late_population_20261024/LATE_COMPARISONS.csv"
+      ],
+      "data_paths": [
+        "data/NATURAL_CURVES_FIXED_COHORTS.csv",
+        "data/NATURAL_LATE_COMPARISONS.csv",
+        "data/NATURAL_LATE_IMAGE_CHANGES.csv",
+        "data/NATURAL_COHORT_IMAGES.csv"
       ],
       "term_ids": [
         "q_b8l2",

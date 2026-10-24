@@ -1,6 +1,6 @@
 # 人员分类、构成与人数过程：研究台图表
 
-本目录将已核的真人 **v2** 结果整理成六组、16张可直接嵌入的PNG/SVG，配套实际名单、图表小表及68项名词解释。用途是连接既有研究台的研究叙事与数据浏览；结论真源继续是[人员主报告](../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。
+本目录将已核的真人 **v2** 结果整理成六组、18张可直接嵌入的PNG/SVG，配套实际名单、图表小表及68项名词解释。用途是连接既有研究台的研究叙事与数据浏览；结论真源继续是[人员主报告](../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。
 
 ## 从哪里看起
 
@@ -10,7 +10,7 @@
 |2 混合配比|比例变了与同配比换人，分别怎样变化？|[Manual](figures/F2_manual.png)、[Semi](figures/F2_semi.png)、[联合类](figures/F2_joint.png)、[弱差异与失败](figures/F2_counterexamples.png)；7个分类视图（6个不同面板），每视图924队，全部配比格与分位带|
 |3 匹配换人/换类|固定背景与换人数，方向和幅度有何区别？|[ABC设计](figures/F3_design.png)、[完整配对](figures/F3_general_magnitude.png)、[同房大块](figures/F3_same_room.png)、[规模与背景](figures/F3_scale_background.png)；成员及端点可沿精确设计追溯|
 |4 图片难度|哪些图片条件放大或改变人员差异？|[难度连接图](figures/F4_difficulty.png)；原答表达、格间/格内波动与定向换类并列，各自显示支持|
-|5 人数过程|加人后Q、低尾、形状波动和失败怎样变？|[Manual自然曲线](figures/F5_natural.png)、[Semi与门洞](figures/F5_conditions.png)、[进入顺序](figures/F5_policy.png)、[同源时间取舍](figures/F5_time_tradeoff.png)|
+|5 人数过程|加人后Q、低尾、形状波动和失败怎样变？|[Manual固定157图到30人](figures/F5_natural.png)、[固定92图到35人](figures/F5_late35.png)、[实际满员同图对照](figures/F5_full.png)、[Semi与门洞](figures/F5_conditions.png)、[进入顺序](figures/F5_policy.png)、[同源时间取舍](figures/F5_time_tradeoff.png)|
 |6 真实机制|这些变化怎样发生？|[五个机制例](figures/F6_mechanisms.png)；继续进入完整个人标注、原图、投票与位置；补充同房G130/G172两视角|
 
 各图的中文发现、读法、支持、原表与术语ID在 [FIGURE_MANIFEST.json](FIGURE_MANIFEST.json)。每图都有同名SVG，可放大查看。先看发现与图，再按需展开原表，不要求先读代号。
@@ -38,7 +38,8 @@
 - `MIXTURE_EXAMPLE_CONFIGURATIONS.csv`：七个实例分类视图的配比格（对应六个不同面板），均值/分位数只来自可评分队；团队总数与失败率含全部队，单队格不估成员波动。具体背景/候选人及楼外类定义使用接口中原表。
 - `EXCHANGE_*.csv`：沿来源保留图/楼/图对等权，不将不同支持直接排名。旧完整配对的绝对差与新ABC对称幅度不同，图中明确说明。
 - `DIFFICULTY_*.csv`：结果和逐图支持相连；缺困难Semi不填0。原答、配比和替换不是同一支持集，难度由人工主线提供。
-- `NATURAL_CURVES_FIXED_N20.csv`：固定N≥20池，k=3—20的自然顺序；Q与失败、V保留各自有效数。进入策略在前半段对应自然路径比较，满员端点相同。
+- `NATURAL_CURVES_FIXED_COHORTS.csv`、`NATURAL_LATE_COMPARISONS.csv`、`NATURAL_LATE_IMAGE_CHANGES.csv`、`NATURAL_COHORT_IMAGES.csv`：固定157图到30人、固定92图到35人以及实际满员；分别保留共同可评质量与全尝试失败分母。详见[后段口径](../personnel_population_curves_v2_20261023/late_population_20261024/README.md)。满员零波动是同队设计事实。
+- `NATURAL_CURVES_FIXED_N20.csv`（旧范围保留）：固定N≥20池，k=3—20的自然顺序；Q与失败、V保留各自有效数。进入策略在前半段对应自然路径比较，满员端点相同。
 - 时间图采用当前R03独立复算的普通Manual67图18楼：联合质量时间4304单位；时间/失败4613尝试。不是此前88图、不同来源的历史时间域。
 
 静态图为固定支持的概览，不能伪装成随所有筛选即时重算。筛选表可联动；图应明确固定支持，或由对应表重新绘制匹配筛选结果。Tooltip支持悬浮、键盘聚焦和点击固定，Escape关闭；单位、条件和关键分母常驻。
@@ -50,9 +51,10 @@
 ```powershell
 .venv/Scripts/python.exe -X utf8 tools/thesis_main/analysis/prepare_personnel_classification_figures_20261023.py
 .venv/Scripts/python.exe -X utf8 tools/thesis_main/analysis/prepare_personnel_difficulty_figures_20261023.py
+python -m tools.thesis_main.analysis.build_population_late_curves_20261024
 .venv/Scripts/python.exe -X utf8 tools/thesis_main/analysis/build_personnel_main_figures_20261023.py
 ```
 
-分类提取核对正式名单、中心、选型和原答对象；难度提取含1058项值与支持断言；绘图核对七个分类视图各924队、失败分母、固定人数曲线与独立汇总一致、所有来源及词典ID。版式检查涵盖16张总览及高密度图的放大查看。新增展示文件不改动标注、参考、资格、评分公式、分类或融合实现。
+分类提取核对正式名单、中心、选型和原答对象；难度提取含1058项值与支持断言；绘图核对七个分类视图各924队、失败分母、固定人数曲线与独立汇总一致、所有来源及词典ID。原16图已做版式检查；本轮另检查30人、35人及满员3张更新图。仅更新人数图可运行构建器 `--population-only`。新增展示文件不改动标注、参考、资格、评分公式、分类或融合实现。
 
-已接入[既有研究台“人员研究六步”](../../statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=personnel_main)。页面增加24表（本包22表＋2表实例成员/角色），支持条件/方案/粗细类名单筛选、人员画像下钻、实例配比、图版放大和68项提示。研究台线程在Edge file页面检查六步、提示、原表跳转、名单和390px窄屏；相关9项测试通过。页面说明见[研究台README](../../statistics/research_explorer_v1_r2_20261017/README.md)。
+已接入[既有研究台“人员研究六步”](../../statistics/research_explorer_v1_r2_20261017/index.html#release=v2&module=personnel_main)。原页面阶段增加24表（本包22表＋2表实例成员/角色）；本轮再增4表且已接入，现共28表，支持条件/方案/粗细类名单筛选、人员画像下钻、实例配比、图版放大和68项提示。研究台线程在Edge file页面检查六步、提示、原表跳转、名单和390px窄屏；相关9项测试通过。本轮后段人数的15项定向测试、离线构建与研究台线程file实测见[接入回执](../../statistics/research_explorer_v1_r2_20261017/LATE_POPULATION_QA_20261024.md)。页面说明见[研究台README](../../statistics/research_explorer_v1_r2_20261017/README.md)。

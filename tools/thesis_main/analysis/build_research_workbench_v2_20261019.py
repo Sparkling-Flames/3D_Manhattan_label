@@ -894,7 +894,7 @@ def build():
     if (personnel_interface['data_release'] != 'v2'
             or personnel_interface['version'] != personnel_figures['version']
             or len(personnel_interface['groups']) != 6
-            or len(personnel_figures['figures']) != 16
+            or len(personnel_figures['figures']) != 18
             or len(personnel_glossary['terms']) != 68):
         raise ValueError('personnel main display interface drift')
     personnel_specs = [dict(id='personnel_main__' + spec['id'], source=spec['path'],

@@ -14,7 +14,7 @@ def test_figure_and_hint_contract():
     interface = json.loads((BASE / 'CONSUMER_INTERFACE.json').read_text(encoding='utf-8'))
     terms = {t['id']: t for t in glossary['terms']}
     assert len(terms) == len(glossary['terms'])
-    assert len(manifest['figures']) == 16
+    assert len(manifest['figures']) == 18
     assert {f['group'] for f in manifest['figures']} == {'F1', 'F2', 'F3', 'F4', 'F5', 'F6'}
     for f in manifest['figures']:
         assert f['data_release'] == 'v2'

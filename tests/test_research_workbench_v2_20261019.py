@@ -130,7 +130,7 @@ def test_personnel_main_interface_is_complete_and_source_bound():
     assert interface['data_release'] == 'v2'
     assert interface['version'] == figures['version']
     assert [g['id'] for g in interface['groups']] == [f'F{i}' for i in range(1, 7)]
-    assert len(figures['figures']) == 16 and len(glossary['terms']) == 68
+    assert len(figures['figures']) == 18 and len(glossary['terms']) == 68
     for figure in figures['figures']:
         assert set(figure['term_ids']) <= ids
         assert (source / figure['image']).is_file()
@@ -142,6 +142,29 @@ def test_personnel_main_interface_is_complete_and_source_bound():
             rows = csv.reader(stream)
             assert next(rows) == spec['columns']
             assert sum(1 for _ in rows) == spec['rows']
+
+
+def test_late_population_display_keeps_common_quality_and_full_failure_denominators():
+    base = builder.PERSONNEL_MAIN / 'data'
+    with (base / 'NATURAL_LATE_COMPARISONS.csv').open(encoding='utf-8-sig', newline='') as stream:
+        rows = list(csv.DictReader(stream))
+    def cell(cohort, comparison, metric):
+        return next(row for row in rows if row['cohort_min_n'] == cohort
+                    and row['comparison'] == comparison and row['metric'] == metric
+                    and row['difficulty'] == '全部')
+    q35 = cell('35', '30_to_35', 'Q')
+    fail35 = cell('35', '30_to_35', 'failure')
+    qfull = cell('30', '30_to_full', 'Q')
+    assert (q35['cohort_images'], q35['common_images']) == ('92', '91')
+    assert float(q35['delta_mean']) == pytest.approx(0.2270326875774808)
+    assert (fail35['cohort_images'], fail35['common_images']) == ('92', '92')
+    assert (float(fail35['from_mean']), float(fail35['to_mean'])) == pytest.approx(
+        (0.0072463768115942, 0.0108695652173913))
+    assert (qfull['cohort_images'], qfull['common_images']) == ('157', '156')
+    with (base / 'NATURAL_LATE_IMAGE_CHANGES.csv').open(encoding='utf-8-sig', newline='') as stream:
+        failing = next(row for row in csv.DictReader(stream)
+                       if row['image'] == 'VFuaQ6m2Qom-04' and row['comparison'] == '30_to_35')
+    assert failing['Q_to'] == '' and failing['Q_delta'] == '' and failing['failure_to'] == '1.0'
 
 
 def test_find_photo_normalizes_windows_relative_path(tmp_path):
