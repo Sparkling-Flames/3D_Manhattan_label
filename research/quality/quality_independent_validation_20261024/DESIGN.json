@@ -1,0 +1,44 @@
+{
+  "schema": "quality_independent_validation_design_20261024_v1",
+  "new_candidate_target": 20,
+  "exposed_mechanism_pairs": 5,
+  "actual_pairs": 25,
+  "categories": {
+    "range_direction_tradeoff": 4,
+    "structure_regularity": 4,
+    "global_height": 4,
+    "local_height": 4,
+    "near_score_shape": 4
+  },
+  "candidate_counts": {
+    "global_height": 1282,
+    "local_height": 4277,
+    "near_score_shape": 2023,
+    "range_direction_tradeoff": 6648,
+    "structure_regularity": 5940
+  },
+  "exclusions": {
+    "historical_v1_not_new_candidate": 3222,
+    "quality_scope_or_reference_ineligible": 2246,
+    "image_in_known_quality_case_tables": 394
+  },
+  "selection": "fixed_threshold_strata_then_SHA256_pair_id; one_new_pair_per_image; max3_per_building",
+  "relation_priority": [
+    "discordant",
+    "concordant",
+    "near",
+    "any"
+  ],
+  "no_new_parameter_tuning": true,
+  "human_answers": "pending_not_filled",
+  "exposure_sources": [
+    "research/quality_parallel_local_20261012/exposure_ledger.json",
+    "research/quality_holdout_exposure_correction_20261011/exposure_registry.json",
+    "research/quality/v2_profile_combo_quality_20261021/CASE_ROWS.csv"
+  ],
+  "independence": "new batch excludes known quality-case images; other historical viewing is not certified absent",
+  "official_reference": "https://github.com/sunset1995/HorizonNet/blob/master/eval_general.py",
+  "camera_height": "both layouts normalized to camera height1; HorizonNet depth uses1.6m for both",
+  "coordinate_conversion": "continuous3D_to_HorizonNet_pixel_center; every top vertex preserved",
+  "no_population_win_rate_estimation": true
+}

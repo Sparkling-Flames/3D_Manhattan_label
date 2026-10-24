@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>完整标注对照审查</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif;background:#111820;color:#edf2f7}*{box-sizing:border-box}body{margin:0}header,main{max-width:1500px;margin:auto;padding:16px 24px}header{border-bottom:1px solid #334151}h1{font-size:24px;margin:0 0 8px}p{margin:8px 0;color:#c1ceda}button,select,input,textarea{font:inherit}button{background:#25384b;color:#fff;border:1px solid #577089;border-radius:7px;padding:7px 14px;cursor:pointer}button:hover{background:#344c63}button:disabled{opacity:.4;cursor:default}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:12px 0}.toolbar label{display:flex;gap:7px;align-items:center}.toolbar input[type=range]{width:140px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{background:#19232e;border:1px solid #344656;border-radius:10px;overflow:hidden}.card h2{font-size:18px;padding:10px 14px;margin:0}.left h2{color:#64d7ff}.right h2{color:#ffbf80}canvas{display:block;width:100%;background:#0a1118}.erp{aspect-ratio:2;cursor:crosshair}.space{aspect-ratio:2.7;border-top:1px solid #344656}.answer{margin:18px 0;background:#19232e;padding:18px;border-radius:10px}.choices{display:flex;flex-wrap:wrap;gap:10px}.choices label{display:flex;align-items:center;gap:8px;border:1px solid #53677a;border-radius:8px;padding:11px 14px;cursor:pointer}.choices label:has(input:checked){border-color:#86c7ff;background:#27445b}textarea{display:block;margin-top:12px;width:100%;min-height:70px;border:1px solid #53677a;border-radius:7px;background:#101922;color:#fff;padding:10px}.muted{font-size:14px;color:#a8bacb}#saveStatus{margin-left:auto;color:#b8d8be}#position{min-width:150px;font-weight:650}#jump{max-width:280px}.legend{display:flex;gap:20px;font-size:14px}.ref{color:#f3df78}footer{margin:12px 0;color:#a8bacb;font-size:14px}@media(max-width:850px){header,main{padding:14px}.pair{grid-template-columns:1fr}.choices{display:grid}.toolbar{gap:10px}#saveStatus{margin-left:0}}
+</style>
+<header>
+<h1>完整标注对照审查</h1>
+<p>请根据原图、当前标注范围和布局表达，判断哪一份更符合标注要求。可切换参考辅助查看；若范围、遮挡或参考本身不清楚，请选“各有问题或无法判断”，并写明原因。</p>
+<p class="muted">左右均显示完整标注。点击全景图定位局部，再使用放大滑块；底面与三维采用相同视角和比例。这里没有预设答案。</p>
+</header>
+<main>
+<div class="toolbar">
+<button id="prev">上一题</button><span id="position"></span><button id="next">下一题</button>
+<select id="jump" aria-label="跳到题目"></select><button id="unanswered">下一道未选择</button>
+<span id="progress"></span>
+</div>
+<div class="toolbar">
+<label><input id="annotation" type="checkbox" checked>显示标注</label>
+<label><input id="reference" type="checkbox">显示参考</label>
+<label>全景放大 <input id="zoom" type="range" min="1" max="4" step=".25" value="1"><span id="zoomValue">1×</span></label>
+<button id="resetView">恢复全图</button>
+<label>下方视图 <select id="spatialMode"><option value="bev">底面 BEV</option><option value="3d">三维线框</option></select></label>
+<label>三维旋转 <input id="yaw" type="range" min="0" max="360" value="35"></label>
+</div>
+<div class="pair">
+<section class="card left"><h2>左边完整标注</h2><canvas class="erp" id="leftERP" width="1024" height="512" aria-label="左边完整标注全景图"></canvas><canvas class="space" id="leftSpace" width="1024" height="380" aria-label="左边空间布局"></canvas></section>
+<section class="card right"><h2>右边完整标注</h2><canvas class="erp" id="rightERP" width="1024" height="512" aria-label="右边完整标注全景图"></canvas><canvas class="space" id="rightSpace" width="1024" height="380" aria-label="右边空间布局"></canvas></section>
+</div>
+<div class="toolbar legend"><span style="color:#64d7ff">左边：蓝色</span><span style="color:#ffbf80">右边：橙色</span><span class="ref">参考：黄色虚线</span><span id="imageStatus"></span></div>
+<section class="answer" aria-label="人工判断">
+<div class="choices">
+<label><input type="radio" name="choice" value="left">左边更符合标注要求</label>
+<label><input type="radio" name="choice" value="right">右边更符合标注要求</label>
+<label><input type="radio" name="choice" value="close">两者接近</label>
+<label><input type="radio" name="choice" value="uncertain">各有问题或无法判断</label>
+</div>
+<textarea id="reason" aria-label="判断原因" placeholder="可以写原因、局部位置，或需要进一步确认的范围和结构。"></textarea>
+<div class="toolbar"><button id="export">导出判断 JSON</button><span id="saveStatus" role="status"></span></div>
+</section>
+<footer>选择和原因会自动保存在当前浏览器中。完成后请导出 JSON；更换浏览器或清理浏览器数据可能丢失本地记录。未选择的题目保持空白。</footer>
+</main>
+<script id="cases" type="application/json">__CASES_JSON__</script>
+<script>
+"use strict";
+const cases=JSON.parse(document.querySelector('#cases').textContent), key='hohonet_quality_review_20261024_v1';
+const $=s=>document.querySelector(s), colors={left:'#64d7ff',right:'#ffbf80',reference:'#f3df78'};
+let index=0,answers={},image=new Image(),loaded=false,zoom=1,center=[512,256],saveAllowed=true;
+try{answers=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){saveAllowed=false}
+cases.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${i+1}. ${c.id} · ${c.image}`;$('#jump').append(o)});
+function save(){const c=cases[index],choice=document.querySelector('input[name=choice]:checked')?.value||null,reason=$('#reason').value;
+ if(choice||reason)answers[c.id]={choice,reason,updated_at:new Date().toISOString()};else delete answers[c.id];
+ try{localStorage.setItem(key,JSON.stringify(answers));saveAllowed=true}catch(e){saveAllowed=false}
+ $('#saveStatus').textContent=saveAllowed?'已自动保存在此浏览器':'浏览器未允许本地保存，请及时导出 JSON';updateProgress()}
+function updateProgress(){$('#progress').textContent=`已选择 ${cases.filter(c=>answers[c.id]?.choice).length}/${cases.length}`}
+function path(ctx,points,color,dash=[]){if(!points.length)return;ctx.strokeStyle=color;ctx.setLineDash(dash);ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.stroke();ctx.setLineDash([])}
+function drawERP(side){const canvas=$(`#${side}ERP`),ctx=canvas.getContext('2d'),c=cases[index];ctx.clearRect(0,0,1024,512);if(!loaded)return;
+ ctx.save();ctx.translate(512,256);ctx.scale(zoom,zoom);ctx.translate(-center[0],-center[1]);ctx.drawImage(image,0,0,1024,512);
+ const draw=(layout,color,ref)=>{ctx.lineWidth=(ref?1.4:2)/zoom;const dash=ref?[7/zoom,5/zoom]:[];
+ for(const edge of layout.edge_segments){let segment=[];for(const p of edge){if(segment.length&&Math.abs(p[0]-segment.at(-1)[0])>512){path(ctx,segment,color,dash);segment=[]}segment.push(p)}path(ctx,segment,color,dash)}
+ for(let i=0;i<layout.points.length;i+=2){path(ctx,[layout.points[i],layout.points[i+1]],color,dash);if(!ref){ctx.fillStyle=color;for(const p of [layout.points[i],layout.points[i+1]]){ctx.beginPath();ctx.arc(p[0],p[1],2.3/zoom,0,Math.PI*2);ctx.fill()}}}};
+ if($('#reference').checked)draw(c.reference,colors.reference,true);if($('#annotation').checked)draw(c[side],colors[side],false);ctx.restore()}
+function projection(point,mode){if(mode==='bev')return [point[0],point[2]];const a=+$('#yaw').value*Math.PI/180,x=Math.cos(a)*point[0]+Math.sin(a)*point[2],z=-Math.sin(a)*point[0]+Math.cos(a)*point[2];return [x,.55*z-point[1]]}
+function drawSpace(side){const canvas=$(`#${side}Space`),ctx=canvas.getContext('2d'),c=cases[index],mode=$('#spatialMode').value;ctx.clearRect(0,0,1024,380);
+ const all=[c.left,c.right,c.reference].flatMap(v=>mode==='bev'?v.bottom3d:[...v.bottom3d,...v.top3d]).map(p=>projection(p,mode));
+ const xs=all.map(p=>p[0]),ys=all.map(p=>p[1]),minx=Math.min(...xs),maxx=Math.max(...xs),miny=Math.min(...ys),maxy=Math.max(...ys),scale=Math.min(900/Math.max(maxx-minx,.1),290/Math.max(maxy-miny,.1));
+ const plot=p=>{const q=projection(p,mode);return [512+(q[0]-(minx+maxx)/2)*scale,190+(q[1]-(miny+maxy)/2)*scale]};
+ const draw=(v,color,ref)=>{ctx.lineWidth=ref?1.5:2.4;const dash=ref?[7,5]:[];const rings=mode==='bev'?[v.bottom3d]:[v.bottom3d,v.top3d];for(const ring of rings){const pts=ring.map(plot);path(ctx,[...pts,pts[0]],color,dash)}if(mode==='3d')v.bottom3d.forEach((p,i)=>path(ctx,[plot(p),plot(v.top3d[i])],color,dash))};
+ if($('#reference').checked)draw(c.reference,colors.reference,true);if($('#annotation').checked)draw(c[side],colors[side],false);
+ const origin=plot([0,0,0]);ctx.fillStyle='#e5e9ef';ctx.beginPath();ctx.arc(...origin,3,0,Math.PI*2);ctx.fill();ctx.font='14px system-ui';ctx.fillText('光心',origin[0]+7,origin[1]-5)}
+function draw(){drawERP('left');drawERP('right');drawSpace('left');drawSpace('right')}
+function show(i){index=Math.max(0,Math.min(cases.length-1,i));const c=cases[index];loaded=false;$('#imageStatus').textContent='原图加载中';image=new Image();image.onload=()=>{loaded=true;$('#imageStatus').textContent='';draw()};image.onerror=()=>{$('#imageStatus').textContent='原图加载失败，请记录题号';};image.src=c.image_data;
+ $('#position').textContent=`${index+1}/${cases.length} · ${c.id}`;$('#jump').value=index;$('#prev').disabled=index===0;$('#next').disabled=index===cases.length-1;
+ document.querySelectorAll('input[name=choice]').forEach(r=>r.checked=r.value===answers[c.id]?.choice);$('#reason').value=answers[c.id]?.reason||'';
+ zoom=1;center=[512,256];$('#zoom').value=1;$('#zoomValue').textContent='1×';$('#saveStatus').textContent=answers[c.id]?'已恢复本地记录':'尚未选择';updateProgress();draw()}
+$('#prev').onclick=()=>show(index-1);$('#next').onclick=()=>show(index+1);$('#jump').onchange=e=>show(+e.target.value);
+$('#unanswered').onclick=()=>{for(let j=1;j<=cases.length;j++){const i=(index+j)%cases.length;if(!answers[cases[i].id]?.choice){show(i);return}}};
+document.querySelectorAll('input[name=choice]').forEach(r=>r.onchange=save);$('#reason').oninput=save;
+for(const id of ['annotation','reference','spatialMode','yaw'])$('#'+id).oninput=draw;
+$('#zoom').oninput=e=>{zoom=+e.target.value;center=[Math.max(512/zoom,Math.min(1024-512/zoom,center[0])),Math.max(256/zoom,Math.min(512-256/zoom,center[1]))];$('#zoomValue').textContent=zoom+'×';draw()};
+$('#resetView').onclick=()=>{zoom=1;center=[512,256];$('#zoom').value=1;$('#zoomValue').textContent='1×';draw()};
+for(const side of ['left','right'])$(`#${side}ERP`).onclick=e=>{const b=e.currentTarget.getBoundingClientRect();center=[center[0]+((e.clientX-b.left)/b.width*1024-512)/zoom,center[1]+((e.clientY-b.top)/b.height*512-256)/zoom];if(zoom===1){zoom=2;$('#zoom').value=2;$('#zoomValue').textContent='2×'}center=[Math.max(512/zoom,Math.min(1024-512/zoom,center[0])),Math.max(256/zoom,Math.min(512-256/zoom,center[1]))];draw()};
+$('#export').onclick=()=>{const result={schema:'quality_independent_human_answers_20261024_v1',review_set:key,exported_at:new Date().toISOString(),question_count:cases.length,answered_count:cases.filter(c=>answers[c.id]?.choice).length,answers};const url=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='quality_review_20261024_answers.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+show(0);
+</script>
+</html>
