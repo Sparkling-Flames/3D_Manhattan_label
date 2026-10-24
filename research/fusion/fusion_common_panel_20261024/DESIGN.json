@@ -1,0 +1,30 @@
+{
+  "schema": "fusion_common_panel_registration_20261024_v1",
+  "method_versions": {
+    "wall": "MV50_gap7.5_automatic_saved_v2",
+    "medoid": "valid_complete_source_min_mean_pairwise_1_minus_BEV_IoU",
+    "lee": "lee_tile_stage1_20261002_mv50"
+  },
+  "selection": "building_round_robin_then_SHA256_pool_id; existing_uniform_prefix_draw0",
+  "strata": {
+    "ordinary_manual/简单": 8,
+    "ordinary_manual/中等": 8,
+    "ordinary_manual/困难": 8,
+    "ordinary_semi/简单": 8,
+    "ordinary_semi/中等": 4,
+    "ordinary_semi/困难": 1,
+    "doorway_manual/单列": 8,
+    "special_manual/简单": 1,
+    "special_manual/困难": 1,
+    "special_semi/简单": 1
+  },
+  "sizes": [
+    4,
+    8,
+    16
+  ],
+  "no_target_gt_or_score_in_panel_selection": true,
+  "medoid_tie": "minimum_mean_distance_rounded_12_decimals_then_object_id",
+  "lee_capability": "floor_only",
+  "oos": "not_in_this_v2_source_snapshot"
+}
