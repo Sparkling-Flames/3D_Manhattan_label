@@ -76,6 +76,47 @@ def read(path):
     return json.loads(raw.decode('utf-8-sig'))
 
 
+
+PRECISION_ROOT = POPULATION_CASES.parent / 'sampling_precision_20261025'
+PRECISION_FILES = {
+    'hybrid_images': 'analysis_precision/new_results/HYBRID48_IMAGE_CURVES.csv.gz',
+    'hybrid_fixed': 'analysis_precision/new_results/HYBRID48_FIXED_SUPPORT_CURVES.csv',
+    'batch_images': 'analysis_precision/new_results/NATURAL_POOL_K_BATCH_POINTS.csv.gz',
+    'precision': 'analysis_precision/new_results/KEY_PRECISION_BY_K.csv',
+    'batch_differences': 'analysis_precision/new_results/KEY_BATCH_REPLICATION_CURVE_DIFFS.csv',
+    'paired_intervals': 'analysis_precision/new_results/NATURAL_POOL_INTERVAL_BATCH_POINTS.csv.gz',
+    'exact': 'analysis_precision/new_results/EXACT_FINITE_MARGINAL_STATISTICS.csv',
+    'policy_key': 'local_audit/policy/KEY_EARLY_Q_RESULTS.csv',
+    'policy_summary': 'local_audit/policy/POLICY_PRECISION_FIXED_SUMMARY.csv',
+    'policy_images': 'local_audit/policy/POLICY_IMAGE_PHASE_FIXED.csv',
+    'wc2_weights': 'analysis_geometry/case_WC2_46_P10/WC2_46_BATCH_P10_AND_WEIGHTS.csv',
+    'wc2_teams': 'analysis_geometry/case_WC2_46_P10/WC2_46_EXACT_28_TEAMS_AND_FREQUENCIES.csv',
+    'geometry_fixed': 'local_audit/geometry/V_FIXED157_REAGGREGATED.csv',
+    'vfua_votes': 'local_audit/geometry/VFUA_VOTES_RECOMPUTED.csv',
+}
+
+
+def population_precision_tables():
+    """展示独立验收的保存表；不复算分数、融合、分类或抽样。"""
+    required = {
+        'hybrid_images': {'estimator', 'policy_deferred_units', 'Q_mean', 'k', 'pool_n'},
+        'hybrid_fixed': {'exact_images', 'random48_images', 'available_images', 'observed_images'},
+        'batch_images': {'version', 'Q_mean_MCSE_analytic', 'Q_sd_ddof1'},
+        'paired_intervals': {'paired_Q_delta', 'marginal_Q_delta', 'both_quality_valid_paths'},
+        'policy_summary': {'path_valid_replicates', 'path_invalid_replicates', 'path_interval_status', 'building_lo'},
+        'policy_images': {'fixed_Q_k', 'legal_QT_prefixes', 'QT_paired_Q_delta'},
+    }
+    specs = []
+    for name, relative in PRECISION_FILES.items():
+        path = PRECISION_ROOT / relative
+        frame = pd.read_csv(path, encoding='utf-8-sig')
+        if required.get(name, set()) - set(frame.columns):
+            raise ValueError('population precision field drift: ' + name)
+        specs.append(dict(id='population_precision__' + name, source=path.relative_to(ROOT).as_posix(),
+                          columns=list(frame.columns), rows=len(frame)))
+    return load_declared_tables(dict(tables=specs))
+
+
 def classification_evidence():
     """只打包已存类中心与名单；类号始终连同方法和排除建筑解释。"""
     source = ROOT / 'research/workers/personnel_classification_guide_20261025/sources'
@@ -1058,7 +1099,10 @@ def build():
         if len(personnel[spec['id']]) != spec['rows']:
             raise ValueError('personnel main row count drift: ' + spec['id'])
     tables.update(personnel)
+    precision, precision_provenance = population_precision_tables()
+    tables.update(precision)
     source_map = dict(extra_provenance)
+    source_map.update(precision_provenance)
     source_map.update(taxonomy_provenance)
     source_map.update(mechanism_provenance)
     source_map.update(review_provenance)
@@ -1204,12 +1248,12 @@ def build():
              support='四重点条件及全部71条件；严格ABC需n+2m名不同人员，三块真实成员互斥。',
              counterexample='各条件图片、n/m与选择方向不同，不作无条件排行榜；直接AC没有同类B队。',
              source='../../../research/workers/personnel_classification_guide_20261025/README.md', tables=[]),
-        dict(id='population', title='从低人数到30/35和满员，哪些量在改善？', module='personnel_main', tab=4,
-             finding='固定157图3→6人Q平均+5.184分，155/157图提高；20→30仍+0.758，125/157图提高。',
-             example='困难27图3→6全部升质，但失败6.944%→12.654%；后段Q可近乎不变，换组波动继续下降。',
-             support='固定N≥30的157图、N=35的92图及旧N≥20范围分别保留；30→35质量用91共同可评图。',
-             counterexample='30→35共同图Q+0.227，全部92图失败0.725%→1.087%；单人是原答基线，两人未计算不计成败，满员SD/V=0是同成员设计事实。',
-             source='../../../research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md', tables=[]),
+        dict(id='population', title='低人数先提高质量，困难图后段主要改善低尾与稳定性', module='personnel_main', tab=4,
+             finding='合48路径普通168图3→6人Q平均+5.346，165升/3降；失败同时增加1.612个百分点。',
+             example='困难27图20→30的Q仅+0.016，P10+4.153、SD−4.439，后二项各24/27图改善。',
+             support='自然曲线采用合48与精确有限边际；固定N≥30为157图，四段几何V均22/22楼平均下降。',
+             counterexample='wc2-46的96路径虽见到全部28队，低分仅7次；随机P10为97.387，精确目录为52.406。策略157图与自然157图仅148图相交。',
+             source='../../../research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md', tables=[]),
         dict(id='same_room', title='同房跨视角，什么能够重复？', module='same_room', tab=0,
              finding='同房均值预测MAE5.081，对照9.303，9/12楼改善；105/123图对人员排序正相关，42/57人相对同行方向多数重复。',
              example='第三层看混合团队：旧结构混合队跨类幅度多1.960分，61/78图对为正；两端响应超过2分时CA同向率73.01%。',
@@ -1217,7 +1261,7 @@ def build():
              counterexample='扣公共任务与稳定个人水平后的额外相关仅0.031，不否定前两层相似。未知同建筑关系不当作异房。',
              source='../../../research/statistics/research_closeout_20261022/SAME_ROOM_REASSESSMENT_20261024.md', tables=[dict(id='same_room_pro__direct_mean_summary',label='同房均值与支持')]),
         dict(id='doorway', title='增加人数能解决门洞问题吗？', module='case_story', tab=0, case='doorway',
-             finding='门洞17图3→6人平均Q+6.072，15图提高；10→20平均−3.066，11图下降，满员仍6/17不可评。',
+             finding='门洞17图合48路径10→20的平均Q−2.339，6图升/11图降；满员仍6/17不可评。',
              example='7y-06保留32份完整原答与真实满员失败；点位、目标范围、门楣和表示限制分别看。',
              support='固定门洞自然人数范围17图；满员27—35人。个别例子不替代全层分母。',
              counterexample='不能因前段改善就称门洞已解决，也不能因满员失败否认早段增人的价值。',

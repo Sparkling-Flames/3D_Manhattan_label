@@ -45,8 +45,13 @@ test('source links reject active script schemes', () => {
   assert.equal(R.safeSource('javascript:alert(1)'), null);
   assert.equal(R.safeSource('data:text/html,x'), null);
   assert.equal(R.safeSource('//outside.example/file'), null);
-  assert.equal(R.safeSource('research/a.json'), '../../../research/a.json');
-  assert.equal(R.safeSource({ path: '../data.json' }), '../data.json');
+  assert.equal(R.safeSource('research/a.json'), null);
+  assert.equal(R.safeSource('research/a.md'), null);
+  assert.equal(R.safeSource('docs/thesis_main/CONTEXT.md'), null);
+  assert.equal(R.safeSource('research/a.csv'), '../../../research/a.csv');
+  assert.equal(R.safeSource('research/figure.png'), '../../../research/figure.png');
+  assert.equal(R.safeSource({ path: '../data.json' }), null);
+  assert.equal(R.safeSource({ path: '../data.csv.gz' }), '../data.csv.gz');
 });
 
 test('doorway spatial figure links to the verified paper assets', () => {

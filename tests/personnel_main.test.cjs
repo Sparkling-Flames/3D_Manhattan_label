@@ -6,6 +6,7 @@ const index=read(path.join(page,'v2-data/index.json'));
 const context={window:{}};vm.createContext(context);
 vm.runInContext(fs.readFileSync(path.join(page,'personnel-methods.js'),'utf8'),context);
 context.PersonnelMethods=context.window.PersonnelMethods;
+vm.runInContext(fs.readFileSync(path.join(page,'population-precision.js'),'utf8'),context);context.PopulationPrecision=context.window.PopulationPrecision;
 vm.runInContext(fs.readFileSync(path.join(page,'personnel-main.js'),'utf8'),context);
 class Element {
  constructor(tag='div'){this.tag=tag;this.value='';this.listeners={};this.textContent='';}
@@ -110,12 +111,23 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
   const target=path.resolve(page,url[1].split('#')[0].split('?')[0]);
   assert(fs.existsSync(target),'missing local link '+url[1]);
  }
- const population=await render(4);allHTML.push(population.querySelector('#latePopulation').innerHTML);
+ const difficulty=await render(3);assert.doesNotMatch(difficulty.innerHTML,/precisionPolicy/);
+ const population=await render(4);allHTML.push(population.querySelector('#latePopulation').innerHTML);assert(population.innerHTML.includes('id="precisionNatural"'));assert(population.innerHTML.includes('id="precisionPolicy"'));
+ allHTML.push(population.querySelector('#precisionNatural').innerHTML,population.querySelector('#precisionPolicy').innerHTML);
  for(const key of ['natural_paths','saved_endpoint','resampling_unit','paired_quality','all_attempts','percentage_points'])assert(allHTML.join('').includes('data-hint="'+key+'"'),key);
  for(const id of allHTML.join('').matchAll(/data-table-jump="([^"]+)"/g))assert(index.tables.some(t=>t.id===id[1]),id[1]);
  const overview=read(path.join(page,'v2-data/overview.json'));
  assert.deepEqual(overview.sections.map(x=>x.id),['quality','consensus','difficulty','profiles','classification','mixture','exchange','population','same_room','doorway','oos']);
  for(const item of overview.sections){assert(item.finding&&item.support&&item.counterexample);for(const t of item.tables)assert(index.tables.some(x=>x.id===t.id),t.id);assert(fs.existsSync(path.resolve(page,item.source.split('#')[0])),item.source);}
+ for(const html of allHTML)assert.doesNotMatch(html,/href="[^"<>]*\.(?:md|json|py|zip)(?:[?#][^"<>]*)?"/i);
+ const output={innerHTML:''},presentation={window:{},dataset:{release:'v2'},SNAPSHOT:'v2_integrated_analysis_20261019',overview,assets:read(path.join(page,'v2-resources/index.json')),index:{...index,documents:[{path:'PRIVATE_INTERNAL.md',content:'INTERNAL_DRAFT_SENTINEL'}]},state:{},$:()=>output,esc:hintScope.esc,fmt:String,label:k=>k,hintButton,metricCards:()=>''};
+ vm.createContext(presentation);
+ vm.runInContext(shell.slice(shell.indexOf('function renderOverview(){'),shell.indexOf('function renderPlan(){'))+shell.slice(shell.indexOf('function renderSources(){'),shell.indexOf('function setTable('))+'renderOverview();',presentation);
+ const publicOverview=output.innerHTML;vm.runInContext('renderSources();',presentation);
+ for(const html of [publicOverview,output.innerHTML])assert.doesNotMatch(html,/\.md|PRIVATE_INTERNAL|INTERNAL_DRAFT|CONCLUSIONS_ZH|CATALOG|CONSUMER_INTERFACE|上游核对|当前消费/);
+ assert.match(publicOverview,/OOS 独立统计/);assert.match(publicOverview,/查看实例与图表/);
+ assert.equal((output.innerHTML.match(/data-table-jump=/g)||[]).length,index.tables.length);
+ for(const name of ['index.html','oos-review.html'])assert.doesNotMatch(fs.readFileSync(path.join(page,name),'utf8'),/href="[^"<>]*\.md(?:[?#][^"<>]*)?"/i);
  const current=guide.main_conditions.find(x=>x.method==='DSTRUCT_K3');assert(overview.sections.find(x=>x.id==='exchange').finding.includes(current.B8L2_cross_image_equal.toFixed(3)));
 
  console.log('PASS: CONTEXT hint definitions and population placements, 8 method/layer displays × 23 rosters, 71 × 7 metric selections, 4 historical schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');

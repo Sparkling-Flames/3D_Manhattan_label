@@ -197,7 +197,7 @@ async function render(host,options){
  <p class="info" id="rc-context">图片 ${esc(im.image_code)} · 条件 ${esc(s.condition)} · 参考 ${esc(ref?.target_id||'不可用')} · 快照 ${esc(snapshot||'不可用')} · 案例 ${esc(c?(blind?alias('case',c.case_id,snapshot):c.case_id):'自由浏览')} · ${teams.length}支兼容保存团队</p>
  ${!blind?failureOverviewHTML(saved.failure_summary):''}${context.notices.map(n=>`<p class="warning">${esc(n)}</p>`).join('')}
  <p>${answers.length}份原答${blind?'':`；${groups.map(g=>`${esc(g)} ${answers.filter(a=>classOf(a,s.scheme,labels,c?.worker_classes)===g).length}人`).join(' / ')}`}。原答叠线不是融合。滚轮放大，拖拽平移，重置返回全景。</p>
- ${c&&context.caseReferenceMatches&&!blind?`<p class="info">${esc(c.explanation)}<br>来源：<a href="../../../${esc(c.source)}">冻结案例</a></p>`:''}
+ ${c&&context.caseReferenceMatches&&!blind?`<p class="info">${esc(c.explanation)}</p>`:''}
  ${image.flags?.gt_problem||image.flags?.image_hold?'<p class="warning">本图参考／用途存在限制；保留标法观察，不据此恢复正式质量资格。</p>':''}
  <details><summary>当前冻结状态链接</summary><p><a id="rc-state-link" href="${esc(link)}">打开此图片、条件、参考与选择</a></p>${blind?'':`<input id="rc-link-text" aria-label="当前冻结状态链接" readonly value="${esc(link)}">`}<button id="rc-export-state">导出状态JSON</button></details></section>
  <div class="geopair"><section class="panel"><h2>同图原标注叠加</h2><div id="rc-original"></div></section><section class="panel"><h2>对应已保存团队融合</h2><div id="rc-teams"></div></section></div>
@@ -215,7 +215,7 @@ async function render(host,options){
   teamHost.innerHTML=`<p>保存结果来源：${esc(blind?alias('case',fusionCase.case_id,snapshot):fusionCase.case_id)}；已核对图片、条件、参考坐标与资源快照。筛选不改变已计算团队。</p>`+
    (teams.length>1?select('rc-pair','与'+teamName(a)+'比较',teams.slice(1).map(t=>[t.label,teamName(t)]),b.label):'')+
    picked.map(t=>`<section class="panel"><h3>${esc(teamName(t))} · ${t.workers.length}人</h3>${blind?'':`<p>${esc(teamStatus(t).text)}</p><p>B8L2 ${fmt(t.B8L2)} / D10 ${fmt(t.D10)}${t.IoU3D100!==undefined?' / 均高棱柱IoU×100 '+fmt(t.IoU3D100):''}。${t.score_status?'源状态 '+esc(t.score_status):''}</p>${teamLedger(t)}`}</section>`).join('')+
-   `<details><summary>${blind?'匿名成员':'实际成员、团队身份与保存来源'}</summary>${picked.map(t=>`<p>${esc(teamName(t))}：${esc(t.workers.map(workerName).join('、'))}${blind?'':`<br>${esc(t.team_key)}<br>源环序：${esc(t.order_status||'源候选')}；${esc(t.reason||'')}<br>状态原件：${esc(t.source_state||fusionCase.source)}${t.provenance?'<br>源参考版本：'+esc(t.provenance.reference_version)+'；几何来源：'+esc(t.provenance.geometry_origin):''}`}</p>`).join('')}</details><div id="rc-fusion"></div>`;
+   `<details><summary>${blind?'匿名成员':'实际成员与团队条件'}</summary>${picked.map(t=>`<p>${esc(teamName(t))}：${esc(t.workers.map(workerName).join('、'))}${blind?'':`<br>${esc(t.team_key)}<br>源环序：${esc(t.order_status||'源候选')}；${esc(t.reason||'')}${t.provenance?'<br>参考版本：'+esc(t.provenance.reference_version):''}`}</p>`).join('')}</details><div id="rc-fusion"></div>`;
   const layers=picked.filter(t=>t.points||t.footprint).map((t,i)=>({id:blind?alias('team',t.team_key||t.label,snapshot):t.label,label:teamName(t),points:t.points,floor:['below_four','invalid_floor'].includes(teamStatus(t).kind)?null:t.footprint,diagnostic:['below_four','invalid_floor'].includes(teamStatus(t).kind),confirmed:!['below_four','invalid_floor'].includes(teamStatus(t).kind)&&!!t.points,color:colors[i]}));
   if(layers.length)WorkbenchGeometry.mount(host.querySelector('#rc-fusion'),image,null,{points:ref?.points,floor:ref?.floor},null,{layers,focus:c?.zoom});
   else host.querySelector('#rc-fusion').innerHTML='<p class="placeholder">所选保存端点没有可展示坐标；上方保留真实状态与票数，不生成假几何。</p>';

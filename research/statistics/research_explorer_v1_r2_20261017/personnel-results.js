@@ -15,7 +15,7 @@ function metric(title,value,note){return `<div class="metric"><small>${esc(title
 function filterProfiles(rows,s){return rows.filter(r=>r.condition===s.condition&&r.panel===s.panel&&(s.origin==='all'||r.origin===s.origin));}
 function selectRows(rows,s,keys){return rows.filter(r=>keys.every(k=>s[k]==null||String(r[k])===String(s[k])));}
 function matchedReference(a,b){return !!a?.target_id&&a.target_id===b?.target_id&&JSON.stringify(a.points)===JSON.stringify(b.points)&&JSON.stringify(a.floor)===JSON.stringify(b.floor);}
-function sourceLink(path){return path?.startsWith('research/')?`<a href="../../../${esc(path)}">来源字段与采用范围</a>`:'';}
+function sourceLink(path){return path?.startsWith('research/')&&/\.(?:csv(?:\.gz)?|png|jpe?g|svg|pdf)(?:[?#]|$)/i.test(path)?`<a href="../../../${esc(path)}">来源字段与采用范围</a>`:'';}
 function scatter(rows){
  const good=rows.filter(r=>num(r.Q_mean)&&num(r.source_time_median));if(!good.length)return '<p>本条件没有共同Q／来源时间支持。</p>';
  const max=Math.max(...good.map(r=>r.source_time_median),1),W=700,H=245;

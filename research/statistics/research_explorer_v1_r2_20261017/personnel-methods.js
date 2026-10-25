@@ -3,7 +3,7 @@ window.PersonnelMethods=(()=>{
  const root='../../../',base='research/workers/personnel_classification_guide_20261025/';
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const fmt=v=>v===null||v===undefined?'—':typeof v==='number'?v.toLocaleString('zh-CN',{maximumFractionDigits:3}):String(v);
- const link=(p,t)=>`<a href="${esc(root+p)}" target="_blank" rel="noopener">${esc(t)}</a>`;
+ const link=(p,t)=>/\.(?:csv(?:\.gz)?|png|jpe?g|webp|svg|pdf)(?:[?#]|$)/i.test(p)?`<a href="${esc(root+p)}" target="_blank" rel="noopener">${esc(t)}</a>`:'';
  const table=(heads,rows)=>`<div class="tablewrap"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(x=>`<td>${esc(fmt(x))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
  const roleName=r=>({largest_to_highest_turn:'最大类→较多转折类',into_smallest_class:'非核心类→响应核心类',between_nonsmall_classes:'两个非核心类之间','higher_Q|slower|more_turns':'换入高历史Q、较慢、多转折角色'})[r]||r;
  const phaseName=p=>({screen:'探索筛查',selection_heldout_building:'选型保留建筑内检查',within_building_extension:'已有建筑内扩展'})[p]||p;

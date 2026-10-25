@@ -77,3 +77,11 @@ node research/statistics/research_explorer_v1_r2_20261017/workbench-core.test.cj
 本轮程序验证：23项pytest、39项Node检查通过，无跳过；人员控件8×23名单及71×7指标检查通过。完整离线构建仍为10,439库存、7,302正式质量、261图、187表、454分片。本轮没有浏览器视觉/窄屏验收：已有浏览器访问限制，不换浏览器、服务器或入口绕过。
 
 新增测试为tests/saved_fusion_examples.test.cjs；与current-class-answers.js及其测试一并作为既有研究台子资产交由统筹登记。README/COVERAGE已同步；项目地图及全局catalog由统筹统一维护，避免并行覆盖。协议、资格、GT/参考、评分、OOS统计及Label Studio运营边界未变。
+
+## 人数抽样精度与固定支持（2026-10-25接入）
+
+采用唯一入口sampling_precision_20261025/LOCAL_ACCEPTANCE.md及local_audit/policy/README.md；构建器读取14张保存表，不调用融合/评分/分类/重抽。population_precision__保存原字段和null；201表/492分片、261图、10,439库存与7,302正式质量。具体页面读法、版本和边界见README本节。
+
+新增测试覆盖6290个混合点、四种随机批次、2人缺口、修正合16的四个估计/重抽可估次数、Q/T各自图数，以及wc2完整28队和96路径中的7次低分。控件实测（DOM替身，无浏览器）覆盖自然固定范围/图/批次/指标/配对阶段、门洞和策略批次/阶段/指标，确认F4难度原位保留，F5含自然与策略，全部表跳转和图像链接存在。26项pytest、42项Node及人员控件检查通过，无跳过；diff检查通过。
+
+未做浏览器视觉/窄屏验收：既有本地文件限制仍在，不换浏览器/服务器绕过。旧ZIP维持原187表版本，不含新补充。新population-precision.js和两份测试为既有研究台子资产，全局catalog/地图由统筹登记，未覆盖并行文档。

@@ -75,16 +75,18 @@ window.ResearchEvidence = (() => {
   function safeSource(source) {
     const path = typeof source === 'string' ? source : source?.path || source?.url || '';
     if (!path || /^(?:javascript|data|vbscript):/i.test(path) || path.startsWith('//')) return null;
+    if (!/\.(?:csv(?:\.gz)?|png|jpe?g|webp|svg|pdf)(?:[?#]|$)/i.test(path)) return null;
     if (/^https?:\/\//i.test(path) || path.startsWith('#') || path.startsWith('../') || path.startsWith('./')) return path;
     return '../../../' + path.replace(/^\/+/, '');
   }
-  function sourceLink(source, defaultLabel = '查看保存来源') {
+  function sourceLink(source, defaultLabel = '查看数据或图版') {
     const url = safeSource(source);
     return url ? `<a href="${esc(url)}">${esc(typeof source === 'object' ? source.label || defaultLabel : defaultLabel)}</a>` : '';
   }
   function sourceFooter(item) {
     const sources = item?.sources ? list(item.sources) : [item?.source, item?.score_source].filter(Boolean);
-    return sources.length ? `<div class="re-sources">${sources.map(s => sourceLink(s)).filter(Boolean).join(' · ')}</div>` : '';
+    const links = sources.map(s => sourceLink(s)).filter(Boolean);
+    return links.length ? `<div class="re-sources">${links.join(' · ')}</div>` : '';
   }
   function missing(title, text) {
     return `<div class="re-empty"><strong>${esc(title)}</strong><p>${esc(text)}</p></div>`;
