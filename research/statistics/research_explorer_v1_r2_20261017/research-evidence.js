@@ -29,7 +29,7 @@ window.ResearchEvidence = (() => {
       text: '把门洞范围歧义、视点退化与单层表示限制分别记录。', tab: 0,
       limit: '图示是几何示意；真实相机位置仍需核验。' },
     { id: 'people', n: '04', title: '人员标注方式与团队构成', status: '已有证据', level: 'supported',
-      text: '从同图原答进入已有类别与真实团队，保留未知人员和反例。', module: 'patterns',
+      text: '从同图原答进入已有类别与真实团队，保留未知人员和反例。', module: 'personnel_main',
       limit: 'Manual／Semi分别研究；普通场景类别不自动跨条件成立。' },
     { id: 'uncertainty', n: '05', title: '不确定性的来源', status: '探索中', level: 'exploratory',
       text: '分别看原答分歧、参考限制、换人敏感和结构跳变。', tab: 2,
@@ -170,6 +170,7 @@ window.ResearchEvidence = (() => {
     if (selected) state.qualityCase = caseId(selected, cases.indexOf(selected));
     const records = recordsFor(selected);
     return heading('测量范围', '质量指标与已知反例', 'B8L2 同时反映与参考的接近程度和作答自身的几何一致性。D10 只改变方向尺度；分数变化不代表几何变好。') +
+      (window.MethodDiagrams?.quality() || '') +
       `<div class="re-grid re-two"><section class="re-panel re-accent"><h3>B8L2：冻结的联合工作指数</h3><p>底面范围与球面底边进入一块损失，自身方向残差进入另一块；两块以 L2 组合，整体及局部高度损失另外相加。</p><div class="re-factor-line"><span>范围／底边</span><span>方向</span><span>整体高度</span><span>局部高度</span></div><p class="re-muted">不绘制“各项贡献百分比”：非线性组合不能冒充可加总扣分。</p></section>
       <section class="re-panel"><h3>均高棱柱代理 ≠ 一般三维体积</h3><p>当前 IoU3D100 使用角点均值高度形成棱柱，再计算其重叠。它不保留所有局部顶界形状，也不是任意连续三维实体的精确 IoU。</p><p class="re-muted">均高相同仍可能有局部高低差；底面 IoU 高也不能单独证明细小必要结构正确。</p></section></div>
       <section class="re-panel"><div class="re-heading"><div><h3>保存案例对照</h3><p class="re-muted">案例、控制与来源保持原身份。每个数值只对应其绑定输入和参考。</p></div>${cases.length ? select('qualityCase', '选择案例', cases.map((c, i) => [caseId(c, i), `${c.id || c.case_id} · ${c.title || ''}`]), state.qualityCase) : ''}</div>
@@ -242,6 +243,7 @@ window.ResearchEvidence = (() => {
     const selection = fusionSelection(selected, state);
     const savedStage = list(selected?.stages).find(item => item.key === stage.key);
     return heading('融合过程', '融合过程里的成员、身份、位置与连接', '沿实际保存团队，分别查看成员、身份、支持和位置、连接的变化。切换步骤只展开已有证据，不在浏览器里重新融合。') +
+      (window.MethodDiagrams?.fusion() || '') +
       `<section class="re-panel"><div class="re-heading"><h3>选择保存事件</h3>${cases.length ? select('fusionCase', '保存案例', cases.map((c, i) => [caseId(c, i), c.title || c.id || c.case_id]), state.fusionCase) : ''}${selection.nodes.length ? select('fusionK', '当前保存人数节点', selection.nodes.map(node => [String(node.k), `k=${node.k} · B8L2 ${fmt(node.B8L2)}`]), state.fusionK) : ''}</div>${selected ? `<div class="re-case-summary"><h4>${esc(selected.title || selected.id)}</h4><p>${esc(selected.summary || selected.description || '')}</p><p class="re-muted">${esc([selected.image_code || selected.image_id, selected.condition, selected.group_id, selected.reference_id ? '参考：' + selected.reference_id : ''].filter(Boolean).join(' · '))}</p></div>${fusionNodeSummary(selection)}${identityControlHTML(selected, selection.current)}` : missing('保存事件尚未接入', 'q9／G046／G057 等案例只能使用已有路径与几何。当前未读到载荷，不补演示团队。')}
       <div class="re-steps" role="tablist" aria-label="融合证据步骤">${stages.map((item, i) => `<button type="button" id="re-step-${item.key}" role="tab" aria-controls="re-stage-panel" aria-selected="${item.key === stage.key}" tabindex="${item.key === stage.key ? '0' : '-1'}" data-evidence-stage="${item.key}"><span>${i + 1}</span><strong>${esc(item.title)}</strong></button>`).join('')}</div>
       <div class="re-stage" id="re-stage-panel" role="tabpanel" aria-labelledby="re-step-${stage.key}"><p class="re-kicker">${esc(stage.title)}</p><h3>${esc(stage.question)}</h3><p>${esc(savedStage?.description || stage.text)}</p>${selected ? ledgerHTML(stageRows(selected, stage.key, selection.current), `${stage.title}来源台账${selection.current ? ' · k=' + selection.current.k : ''}`) : ''}</div>

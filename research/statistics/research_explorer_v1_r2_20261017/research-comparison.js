@@ -162,6 +162,7 @@ async function render(host,options){
  const link=makeDeepLink(frozen,options.linkBase||(typeof window.location!=='undefined'?window.location.href:'index.html'));
  host.innerHTML=`<section class="panel"><h2>${blind?'盲审：同图原答与已保存融合':'类别／标法 → 同图原答 → 已保存融合'}</h2>
  <p>${blind?'盲审隐藏人员编号、研究类别、案例解释与分数；匿名别名在同一快照内稳定。导出复核记录保留真实绑定ID用于追溯。':'全部非OOS图片为起点，门洞可单列，GT问题图仍保留标法研究。下方使用独立条件；全局图片条件限制图片，人员条件用于高亮。类别未知不补标签。Rnew2/F01来源于普通Manual研究；切到Semi或门洞仅作跨条件观察，不称类别已跨条件验证。'}</p>
+ ${blind?'':'<p class="info">本页保留历史Rnew2／F01及案例冻结标签，不代表当前DSTRUCT／RFUSE分类验证。<a href="#release=v2&amp;module=personnel_main&amp;tab=0">查看当前7种分类与ALL／楼外名单</a>；新大块证据在人员研究第3步。筛选原答不重新生成团队。</p>'}
  <div class="toolbar">${select('rc-layer','场景',[['all','全部非OOS'],['ordinary','非门洞'],['doorway','门洞交界']],s.layer)}
  ${select('rc-case','已有发现',[['','自由浏览'],...cases.map(x=>[x.case_id,caseName(x)])],c?.case_id||'')}
  ${select('rc-image','图片',images.map(x=>[x.image_id,x.image_code]),s.image)}

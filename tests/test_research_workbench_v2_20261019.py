@@ -131,7 +131,10 @@ def test_personnel_main_interface_is_complete_and_source_bound():
     assert interface['data_release'] == 'v2'
     assert interface['version'] == figures['version']
     assert [g['id'] for g in interface['groups']] == [f'F{i}' for i in range(1, 7)]
-    assert len(figures['figures']) == 18 and len(glossary['terms']) == 68
+    assert len(figures['figures']) == 18
+    assert len(ids) == len(glossary['terms']) and len(ids) >= 68
+    guide = builder.read(builder.ROOT / 'research/workers/personnel_classification_guide_20261025/GUIDE.json')
+    assert {f"method_{method['id'].lower()}" for method in guide['methods']} <= ids
     for figure in figures['figures']:
         assert set(figure['term_ids']) <= ids
         assert (source / figure['image']).is_file()

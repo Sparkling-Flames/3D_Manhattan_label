@@ -10454,7 +10454,7 @@
       "current_path": "research/statistics/research_explorer_v1_r2_20261017",
       "source": "原模块线程修正与统筹验收",
       "adoption_status": "v2已保存表与人员研究展示按各自用途维护；OOS统计和复核工作台独立呈现，可从主研究台导航及总览打开；不重跑分型、评分或融合",
-      "verification_status": "2026-10-25定向Python与Node单元检查通过；Playwright交互套件因本机缺少playwright依赖未能复跑；OOS主台集成未采用",
+      "verification_status": "2026-10-25 PR26本机完整构建187表、19项Python、25项Node及人员控件检查通过；Edge启动即退出，当前浏览器视觉/窄屏未验收；OOS主台集成未采用",
       "availability": "本地双击HTML离线浏览；保留相邻前端目录与派生脚本分片；未推送或公网部署",
       "relationships": [
         "research/statistics/research_explorer_v1_r2_20261017/INTERACTIVE_20261020.json",
@@ -10465,7 +10465,10 @@
         "tools/thesis_main/analysis/build_research_workbench_v2_20261019.py",
         "research/statistics/research_explorer_v1_r2_20261017/population-ui.test.cjs",
         "research/statistics/research_explorer_v1_r2_20261017/workbench-ui.test.cjs",
-        "research/statistics/research_explorer_v1_r2_20261017/METHOD_EVIDENCE_REVIEW_20261020.md"
+        "research/statistics/research_explorer_v1_r2_20261017/METHOD_EVIDENCE_REVIEW_20261020.md",
+        "research/statistics/research_explorer_v1_r2_20261017/method-diagrams.js",
+        "research/statistics/research_explorer_v1_r2_20261017/method-diagrams.test.cjs",
+        "research/statistics/research_explorer_v1_r2_20261017/METHOD_DIAGRAMS_QA_20261025.md"
       ]
     },
     {
