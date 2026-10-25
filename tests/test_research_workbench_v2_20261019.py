@@ -182,3 +182,45 @@ def test_find_photo_normalizes_windows_relative_path(tmp_path):
     assert builder.find_photo(tmp_path, dict(image_id='W100', photo=None)) == image
     assert builder.find_photo(tmp_path, dict(image_id='W100', photo='.\\missing\\W100.png')) == image
     assert builder.find_photo(tmp_path, dict(image_id='W999', photo='')) is None
+
+
+def test_current_class_centers_and_coarse_rosters_keep_source_identity():
+    data = builder.classification_evidence()
+    assert data['schema'] == 'current_class_evidence_v1'
+    rows = data['coarse_rosters']
+    assert len({r['fold'] for r in rows}) == 23
+    for fold in {r['fold'] for r in rows}:
+        assert sum(len(r['workers']) for r in rows if r['fold'] == fold) == 62
+    assert sorted(len(r['workers']) for r in rows if r['fold'] == 'ALL') == [3, 12, 47]
+    definitions = data['definitions']
+    assert len({(r['method'], r['heldout_building'], r['class_id']) for r in definitions}) == len(definitions)
+    assert {r['method'] for r in definitions} == {
+        'DSTRUCT_K2', 'DSTRUCT_K3', 'DBOUNDARY_K3', 'DJOINT_K4', 'MSDGEOM_K4',
+        'MSDGEOM_SCOPE_K4', 'RFUSE_GEOM_K2', 'RFUSE_GEOMQ_K3'}
+    source = pd.read_csv(builder.ROOT / data['sources'][0])
+    for saved in [r for r in definitions if r['method'] == 'DSTRUCT_K3']:
+        row = source[(source.method == saved['method']) & (source.heldout_building == saved['heldout_building'])
+                     & (source.class_id == saved['class_id'])].iloc[0]
+        assert saved['members'] == row.members
+        assert saved['m_hard_turn_n'] == pytest.approx(row.m_hard_turn_n)
+
+
+@pytest.mark.skipif(not (builder.PAGE / 'v2-resources/comparisons.json').exists(), reason='local display payload not built')
+def test_saved_fusion_bridge_preserves_full_pool_status_and_missing_quality():
+    data = builder.read(builder.PAGE / 'v2-resources/comparisons.json')
+    assert data['snapshot_id'] == builder.SNAPSHOT and data['data_release'] == 'v2'
+    with (builder.DOORWAY_CASE.parent / 'DOORWAY_FULL_POOL_STATUS.csv').open(encoding='utf-8-sig', newline='') as f:
+        status = list(csv.DictReader(f))
+    teams = {c['teams'][0]['team_key']: c['teams'][0] for c in data['cases'] if c['case_id'].startswith('D_FULL_')}
+    assert set(teams) == {r['team_key'] for r in status}
+    for row in status:
+        team = teams[row['team_key']]
+        assert len(team['workers']) == len(set(team['workers'])) == int(row['pool_n'])
+        assert team['nodes'] == int(row['nodes'])
+        assert team['complete_evaluable'] == (row['complete_evaluable'] == 'True')
+        if row['complete_evaluable'] == 'False':
+            assert all(team[k] is None for k in ['B8L2', 'D10', 'IoU3D100'])
+    summary = data['failure_summary']
+    assert summary['layers']['ordinary_manual'] == {'pools': 177, 'incomplete': 1}
+    assert summary['ordinary_ever_failure_images'] == 54
+    assert summary['ordinary_ever_by_difficulty'] == {'简单': 9, '中等': 15, '困难': 30}

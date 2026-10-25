@@ -7,17 +7,18 @@ function mount(host,image,answer,reference,extra=null,options={}){
  let mode='erp',yaw=-35,pitch=25,zoom=1,erpView=[0,0,1024,512];
  const layers=[{id:'reference',label:'查看参考',points:reference?.points,floor:reference?.floor,confirmed:true},
   {id:'answer',label:'个人作答',color:answer?.color,highlight:answer?.highlight,points:answer?.points,raw:answer?.raw_points,confirmed:!!answer?.points},
-  {id:'fusion',label:'已保存融合',points:extra?.points,floor:extra?.footprint,confirmed:extra?.connected===true},
+  {id:'fusion',label:'已保存融合',points:extra?.points,floor:extra?.footprint,confirmed:extra?.connected===true,diagnostic:extra?.diagnostic===true},
   {id:'raw',label:'原始导出散点',raw:answer?.raw_points,visible:false},
   {id:'received',label:'本轮预处理前散点',raw:answer?.before_preprocessing_points,visible:false},
   {id:'initial',label:'有绑定证据的Semi初始化',points:answer?.evidence?.semi_evidence?.initialization_points,confirmed:true,visible:false}]
  .concat(options.layers||[]).filter(l=>l.points||l.floor||l.raw).map(l=>({...l,color:l.color||colors[l.id]||'#64748b',visible:l.visible??true}));
  host.className='geometry';
- host.innerHTML=`<div class="geom-controls"><label>视图 <select data-view aria-label="几何视图"><option value="erp">原图叠线</option><option value="bev">BEV俯视</option><option value="3d">3D线框</option></select></label><button data-full>放大／全屏</button><button data-reset>重置视角</button><button data-zoom-in>局部放大＋</button><button data-zoom-out>缩小－</button><label><input type="checkbox" data-labels>点号（0基）</label><label><input type="checkbox" data-top checked>顶界</label><label>叠线 <input data-opacity type="range" min=".2" max="1" step=".1" value="${options.layers?.length ? 0.4 : 1}" aria-label="叠线不透明度"></label></div><div class="legend">${layers.map(l=>`<label><input type="checkbox" data-layer="${l.id}" ${l.visible?'checked':''}><i style="${l.raw&&!l.points?`border:0;width:8px;height:8px;border-radius:50%;background:${l.color}`:`border-color:${l.color};border-top-style:${l.id==='reference'?'dashed':l.id==='fusion'?'dotted':'solid'}`}"></i>${l.label}</label>`).join('')}</div><div class="geom-photo"><svg viewBox="0 0 1024 512" role="img" aria-label="原图标注与空间参考叠线"></svg></div><canvas class="geom-canvas" hidden tabindex="0" aria-label="几何线框；方向键旋转，加减键缩放"></canvas><div class="geostatus">相机高度单位h，非实测米。${answer?.order_status?'作答环序状态：'+esc(answer.order_status)+'；连线沿用冻结输入，不表示本轮人工重审。 ' :''}${!reference?.points&&reference?.floor?'参考仅底面；不生成未知顶界。 ':''}${answer&&!answer.points?'作答仅原始散点或坐标不可用；不连接为确认环。 ':''}${extra&&!extra.connected?'融合环序未获确认，仅显示保存点和可用底面；不连接为完整布局。 ':''}${answer?.geometry_binding_reasons?.length?'坐标隔离原因：'+esc(answer.geometry_binding_reasons.join('、'))+'。 ':''}原始散点只在原图显示，不构造3D连线。点号来自各自数组，不代表跨作答的墙角身份。切换参考仅供查看，不改变评分绑定。</div>`;
+ host.innerHTML=`<div class="geom-controls"><label>视图 <select data-view aria-label="几何视图"><option value="erp">原图叠线</option><option value="bev">BEV俯视</option><option value="3d">3D线框</option></select></label><button data-full>放大／全屏</button><button data-reset>重置视角</button><button data-zoom-in>局部放大＋</button><button data-zoom-out>缩小－</button><label><input type="checkbox" data-labels>点号（0基）</label><label><input type="checkbox" data-top checked>顶界</label><label>叠线 <input data-opacity type="range" min=".2" max="1" step=".1" value="${options.layers?.length ? 0.4 : 1}" aria-label="叠线不透明度"></label></div><div class="legend">${layers.map(l=>`<label><input type="checkbox" data-layer="${l.id}" ${l.visible?'checked':''}><i style="${(l.raw&&!l.points)||l.diagnostic?`border:0;width:8px;height:8px;border-radius:50%;background:${l.color}`:`border-color:${l.color};border-top-style:${l.id==='reference'?'dashed':l.id==='fusion'?'dotted':'solid'}`}"></i>${l.label}</label>`).join('')}</div><div class="geom-photo"><svg viewBox="0 0 1024 512" role="img" aria-label="原图标注与空间参考叠线"></svg></div><canvas class="geom-canvas" hidden tabindex="0" aria-label="几何线框；方向键旋转，加减键缩放"></canvas><div class="geostatus">相机高度单位h，非实测米。${answer?.order_status?'作答环序状态：'+esc(answer.order_status)+'；连线沿用冻结输入，不表示本轮人工重审。 ' :''}${!reference?.points&&reference?.floor?'参考仅底面；不生成未知顶界。 ':''}${answer&&!answer.points?'作答仅原始散点或坐标不可用；不连接为确认环。 ':''}${layers.some(l=>l.diagnostic)?'节点不足诊断点：ERP/BEV/3D保留保存坐标，仅画点，不闭合为完整布局。 ':''}${extra&&!extra.connected?'融合环序未获确认，仅显示保存点和可用底面；不连接为完整布局。 ':''}${answer?.geometry_binding_reasons?.length?'坐标隔离原因：'+esc(answer.geometry_binding_reasons.join('、'))+'。 ':''}原始散点只在原图显示，不构造3D连线。点号来自各自数组，不代表跨作答的墙角身份。切换参考仅供查看，不改变评分绑定。</div>`;
  const photo=host.querySelector('.geom-photo'),svg=host.querySelector('svg'),canvas=host.querySelector('canvas');
  photo.style.aspectRatio='2 / 1';photo.style.minHeight='0';photo.style.overflow='hidden';
  const projectERP=([x,y,z])=>[((Math.atan2(x,-z)/(2*Math.PI)+.5)*1024+1024)%1024,(.5-Math.atan2(y,Math.hypot(x,z))/Math.PI)*512];
  function segments(l){
+  if(l.diagnostic)return [];
   if(l.points&&l.confirmed){const g=C.geometry(l.points);if(!g)return [];
    const lines=[];for(const ring of [g.bottom,...(host.querySelector('[data-top]').checked?[g.top]:[])]){
     ring.forEach((a,i)=>{const b=ring[(i+1)%ring.length];let old=projectERP(a);
@@ -42,14 +43,16 @@ function mount(host,image,answer,reference,extra=null,options={}){
   }
   const w=canvas.getBoundingClientRect().width||600,h=canvas.getBoundingClientRect().height||350,dpr=devicePixelRatio||1;
   canvas.width=w*dpr;canvas.height=h*dpr;const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
-  const gs=layers.filter(l=>l.visible).map(l=>({l,g:l.points&&l.confirmed?C.geometry(l.points):l.floor?{bottom:l.floor.map(([x,z])=>[x,-1,z]),top:[]}:null})).filter(x=>x.g);
+  const gs=layers.filter(l=>l.visible).map(l=>({l,g:l.points&&(l.confirmed||l.diagnostic)?C.geometry(l.points):l.floor?{bottom:l.floor.map(([x,z])=>[x,-1,z]),top:[]}:null})).filter(x=>x.g);
   const all=gs.flatMap(x=>[...x.g.bottom,...x.g.top]).concat([[0,0,0]]);
   if(all.length===1){ctx.fillStyle='#526171';ctx.fillText('没有已确认可连接的几何；请查看原图散点。',20,40);return;}
   const lo=[0,1,2].map(i=>Math.min(...all.map(p=>p[i]))),hi=[0,1,2].map(i=>Math.max(...all.map(p=>p[i]))),center=lo.map((x,i)=>(x+hi[i])/2);
   const radius=Math.max(...all.map(p=>Math.hypot(...p.map((x,i)=>x-center[i]))),.01),scale=Math.min(w,h)*.4/radius*zoom;
   const project=p=>{const [x,y,z]=p.map((x,i)=>x-center[i]);if(mode==='bev')return [w/2+x*scale,h/2+z*scale];
    const a=yaw*Math.PI/180,b=pitch*Math.PI/180,u=x*Math.cos(a)-z*Math.sin(a),d=x*Math.sin(a)+z*Math.cos(a);return [w/2+u*scale,h/2-(y*Math.cos(b)-d*Math.sin(b))*scale];};
-  for(const {l,g} of gs){ctx.strokeStyle=l.color;ctx.fillStyle=l.color;ctx.lineWidth=l.highlight?4:2;ctx.globalAlpha=Number(opacity);ctx.setLineDash(l.id==='reference'?[6,4]:l.id==='fusion'?[2,4]:[]);
+  for(const {l,g} of gs){
+   if(l.diagnostic){ctx.fillStyle=l.color;ctx.globalAlpha=Number(opacity);for(const ring of [g.bottom,...(mode==='3d'&&host.querySelector('[data-top]').checked?[g.top]:[])])ring.forEach((p,i)=>{const q=project(p);ctx.beginPath();ctx.arc(q[0],q[1],3,0,2*Math.PI);ctx.fill();if(labels)ctx.fillText(String(i),q[0]+5,q[1]-5);});continue;}
+   ctx.strokeStyle=l.color;ctx.fillStyle=l.color;ctx.lineWidth=l.highlight?4:2;ctx.globalAlpha=Number(opacity);ctx.setLineDash(l.id==='reference'?[6,4]:l.id==='fusion'?[2,4]:[]);
    const line=(a,b)=>{const u=project(a),v=project(b);ctx.beginPath();ctx.moveTo(...u);ctx.lineTo(...v);ctx.stroke();};
    for(const ring of [g.bottom,...(mode==='3d'&&host.querySelector('[data-top]').checked?[g.top]:[])])ring.forEach((p,i)=>{line(p,ring[(i+1)%ring.length]);if(labels)ctx.fillText(String(i),...project(p));});
    if(mode==='3d'&&host.querySelector('[data-top]').checked)g.top.forEach((p,i)=>line(p,g.bottom[i]));

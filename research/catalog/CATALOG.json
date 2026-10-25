@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261025_v50_personnel_methods_display",
+  "catalog_version": "research_catalog_20261025_v52_month_review",
   "inventory_date": "2026-10-25",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -956,13 +956,13 @@
     },
     {
       "symbol": "Hm",
-      "unit": "输入几何坐标单位",
-      "meaning": "整体均高偏差。"
+      "unit": "无量纲相对误差",
+      "meaning": "作答与参考的周长加权均高之比偏离1的绝对值。"
     },
     {
       "symbol": "Hc",
-      "unit": "输入几何坐标单位",
-      "meaning": "基于底边对应的中心化局部高度残差。"
+      "unit": "无量纲相对误差",
+      "meaning": "均高中心化后，双向最近底边高度残差RMS除以参考周长加权均高。"
     },
     {
       "symbol": "F,d,H",
@@ -975,7 +975,7 @@
       "id": "hill_global08",
       "name": "WQ前身 hill_global08",
       "formula": "100*I/(1+K), K=Sb^2/32+1.5D^2/(D^2+37.5)+(Hm/0.8)^2+(Hc/0.25)^2",
-      "parameters": "D scale=sqrt(37.5) degrees; H scales=.8/.25 input units",
+      "parameters": "D scale=sqrt(37.5) degrees; H scales=.8/.25 dimensionless relative errors",
       "purpose": "历史综合几何质量分",
       "adoption_status": "历史前身",
       "verification_status": "按历史包记录",
@@ -993,7 +993,7 @@
       "id": "WQ-LS08",
       "name": "WQ-LS08",
       "formula": "F=(1/I-1)+Sb^2/32; d=1.5*D^2/(D^2+37.5); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+F+d+H), I=0 -> 0",
-      "parameters": "c=sqrt(37.5) degrees; H scales=.8/.25 input units",
+      "parameters": "c=sqrt(37.5) degrees; H scales=.8/.25 dimensionless relative errors",
       "purpose": "历史WQ合成指数",
       "adoption_status": "历史工作版；部分下游仍使用",
       "verification_status": "历史实算；未自动升级其他模块",
@@ -1012,7 +1012,7 @@
       "id": "A10",
       "name": "A10",
       "formula": "F=(1/I-1)+Sb^2/32; d10=1.5*D^2/(D^2+10^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+F+d10+H), I=0 -> 0",
-      "parameters": "c=10 degrees; H scales=.8/.25 input units",
+      "parameters": "c=10 degrees; H scales=.8/.25 dimensionless relative errors",
       "purpose": "B8L2的并行加法敏感性",
       "adoption_status": "历史并行对照",
       "verification_status": "固定集合实算；不作为当前采用版",
@@ -1030,7 +1030,7 @@
       "id": "S8",
       "name": "S8",
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+F+d8+H), I=0 -> 0",
-      "parameters": "c=8 degrees; H scales=.8/.25 input units",
+      "parameters": "c=8 degrees; H scales=.8/.25 dimensionless relative errors",
       "purpose": "与B同方向尺度的加法控制",
       "adoption_status": "机制对照",
       "verification_status": "部分固定集合实算",
@@ -1048,10 +1048,10 @@
       "id": "B8L2",
       "name": "B8L2",
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+sqrt(F^2+d8^2)+H), I=0 -> 0",
-      "parameters": "c=8 degrees; L2 pooling; H scales=.8/.25 input units",
+      "parameters": "c=8 degrees; L2 pooling; H scales=.8/.25 dimensionless relative errors",
       "purpose": "当前质量线几何工作指数，合并底面/边界负担与自身方向残差",
       "adoption_status": "当前主线采用原WQ-B8L2-20261015；固定v6共同评分已完成，Pro新方案并行，各模块按自身资格另作建模/过程研究",
-      "verification_status": "固定原参数实算1624，1622条件数值；旧891同参考分值在1e-8内保持；专项数值不认证表示适用性",
+      "verification_status": "10月16日历史固定参考核验1624份、1622条件数值；当前真人v2正式质量7302份，后续方法及D10核验范围见当前结论，不把历史数当当前覆盖",
       "evidence_paths": [
         "research/quality/quality_ab_feedback_handoff_20261015/README.md",
         "research/quality/quality_combination_review_20261016/README.md",
@@ -1059,14 +1059,15 @@
         "research/statistics/b8l2_mainline_status_20261016/README.md",
         "research/statistics/b8l2_shared_v6_20261016/README.md",
         "research/statistics/b8l2_shared_v6_20261016/MODEL_PARAMETERS.json",
-        "research/statistics/b8l2_shared_v6_20261016/audit/SCORING_AUDIT.md"
+        "research/statistics/b8l2_shared_v6_20261016/audit/SCORING_AUDIT.md",
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md"
       ],
       "implementation_paths": [
         "tools/thesis_main/analysis/scope_quality_scoring_20261016.py",
         "research/quality/quality_combination_review_20261016/pro_original/src/mechanisms.py"
       ],
       "relationships": [
-        "Pro机制研究推荐；用户30份粗核验整体更偏好；人员/融合/同房未全量改分。",
+        "Pro机制研究推荐；早期30份粗核验为开发证据。当前v2及各专题按保存评分版本消费，历史WQ结果不追改。",
         "2026-10-16用户澄清：先用B8L2推进主线，同时Pro研究整体新方案；B8L2不限定新方案框架。"
       ]
     },
@@ -1074,7 +1075,7 @@
       "id": "C8",
       "name": "C8",
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; M=max(F,d8)+(sqrt(2)-1)*min(F,d8); Q=100/(1+M+H), I=0 -> 0",
-      "parameters": "c=8 degrees; lambda=sqrt(2)-1; H scales=.8/.25 input units",
+      "parameters": "c=8 degrees; lambda=sqrt(2)-1; H scales=.8/.25 dimensionless relative errors",
       "purpose": "组合形状敏感性",
       "adoption_status": "候选敏感性；不取代B8L2",
       "verification_status": "按Pro机制研究记录",
@@ -10855,7 +10856,7 @@
       "source_path": "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
       "current_path": "docs/thesis_main/v2数据研究台与Pro推进_20261019.md",
       "source": "v2冻结输入与已审核来源的独立汇总",
-      "adoption_status": "已授权接入既有非分类成果；新分类暂缓；页面实施待目标线程验收",
+      "adoption_status": "当前接入任务入口；人员分类及其他专题已有展示，本轮解释链与保存融合接入由研究台线程继续修订",
       "verification_status": "2026-10-22统筹核对专题说明与消费路径；不新增研究计算",
       "availability": "本地main，用户自行推送",
       "relationships": [
@@ -11532,7 +11533,7 @@
       "source_path": "docs/thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md",
       "current_path": "docs/thesis_main/统筹完整交接_研究意图三线成果与人工查看_20261021.md",
       "source": "用户要求准确交接长对话",
-      "adoption_status": "当前接手入口；用户目标、研究决定与探索结论分开",
+      "adoption_status": "2026-10-21阶段交接；当前接手以统一模型、全研究结论和当前进度为准",
       "verification_status": "核对六线程返回及仓库现有资料，定向本地链接和目录检查",
       "availability": "仓库文档；未提交推送",
       "relationships": [
@@ -12062,7 +12063,7 @@
       "source_path": "research/workers/personnel_main_figures_v2_20261023",
       "current_path": "research/workers/personnel_main_figures_v2_20261023",
       "source": "既有v2分类、完整配比、同房大块及人数路径独立核验结果",
-      "adoption_status": "六组16张PNG/SVG；ALL与LOBO、Manual与Semi及各指标分母分别保留",
+      "adoption_status": "历史六组18张PNG/SVG及四套标签保留；最新7方法名单与同图大块另行衔接，ALL与LOBO、Manual与Semi分开",
       "verification_status": "实际来源提取断言、曲线重聚合一致、词典/名单/失败合同及图面检查；页面验收另记",
       "availability": "本地资料，已交研究台线程接入，未推送",
       "relationships": [
@@ -12083,7 +12084,7 @@
       "current_path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/OOS_REVIEW_20261024.md",
       "source": "当前v2逐份证据及保存人员对、26图用户导出、对话最终确认与28图视觉复核；历史融合来源单列",
       "adoption_status": "已完成28图/1222份描述专题；原答几何沿既有资格，时间/选择分来源，GT受约束近似不作正确性排名；q9-24原因未定及旧暂停保留",
-      "verification_status": "28图统计与复核范围保持独立；2026-10-25合成构造图脚本及5项定向检查通过；未接主研究台，不改正式评分或资格",
+      "verification_status": "28图统计与复核范围保持独立；2026-10-25合成构造图脚本及5项定向检查通过；主研究台提供独立OOS入口，统计仍独立，不改正式评分或资格",
       "availability": "仓库路径可读；版本与发布状态以Git历史为准",
       "relationships": [
         "research/statistics/v2_evidence_audit_20261019/README.md",
@@ -12295,6 +12296,24 @@
         "research/workers/personnel_classification_guide_20261025/VERIFICATION.md",
         "tools/thesis_main/analysis/build_personnel_classification_guide_20261025.py",
         "tests/test_personnel_classification_guide_20261025.py"
+      ]
+    },
+    {
+      "id": "MAT-outline-v4-revised-20261025",
+      "title": "全景布局标注不确定性论文提纲V4本地修订",
+      "theme": "coordination",
+      "type": "论文提纲与写作说明",
+      "date": "20261025",
+      "source_path": "docs/thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx",
+      "current_path": "docs/thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx",
+      "source": "用户提供的Pro V4及本地已验收专题；原下载稿保留",
+      "adoption_status": "写作方案；正文取舍不删研究台证据，不改变评分、参考或资格",
+      "verification_status": "内容与来源定向核对，DOCX段落/表格/文件结构检查；缺少LibreOffice，未完成渲染分页视觉验收",
+      "availability": "仓库文档",
+      "relationships": [
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
+        "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md"
       ]
     }
   ]

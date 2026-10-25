@@ -25,17 +25,17 @@ window.ResearchEvidence = (() => {
     { id: 'consensus', n: '02', title: '完整布局共识的形成过程', status: '已有证据', level: 'supported',
       text: '沿真实保存路径，区分身份变化、支持门槛、位置聚合和连接。', tab: 2,
       limit: '精选状态不代表所有人数路径都已可视化。' },
-    { id: 'doorway', n: '03', title: '任务范围与表示限制', status: '探索中', level: 'exploratory',
+    { id: 'doorway', n: '03', title: '任务范围与表示限制', status: '已有条件证据', level: 'supported',
       text: '把门洞范围歧义、视点退化与单层表示限制分别记录。', tab: 0,
       limit: '图示是几何示意；真实相机位置仍需核验。' },
     { id: 'people', n: '04', title: '人员标注方式与团队构成', status: '已有证据', level: 'supported',
       text: '从同图原答进入已有类别与真实团队，保留未知人员和反例。', module: 'personnel_main',
       limit: 'Manual／Semi分别研究；普通场景类别不自动跨条件成立。' },
-    { id: 'uncertainty', n: '05', title: '不确定性的来源', status: '探索中', level: 'exploratory',
+    { id: 'uncertainty', n: '05', title: '不确定性的来源', status: '已有条件证据', level: 'supported',
       text: '分别看原答分歧、参考限制、换人敏感和结构跳变。', tab: 2,
       limit: '观察到共同变化，尚不能单独确认因果机制。' },
-    { id: 'transfer', n: '06', title: '同房结构迁移的适用范围', status: '待验证', level: 'pending',
-      text: '已有预测和多视角个案；跨视角结构与人员类型的普遍迁移仍待验证。', module: 'multiview',
+    { id: 'transfer', n: '06', title: '同房结构迁移的适用范围', status: '多数规律已验证', level: 'supported',
+      text: '123直接图对中105对人员排序正相关；严格混合队61/78图对跨类幅度更大，具体收益仍有波动。', module: 'same_room',
       limit: '个人质量预测、团队曲线、局部结构是不同结果。' }
   ];
   const stages = [
@@ -98,7 +98,7 @@ window.ResearchEvidence = (() => {
   }
   function overviewHTML(options = {}) {
     if (options.release && options.release !== 'v2') return '';
-    return `<section class="re-overview" aria-labelledby="re-overview-title"><div class="re-heading"><div><p class="re-kicker">研究问题、保存证据与适用边界</p><h2 id="re-overview-title">六项研究问题</h2></div><p>状态描述证据进度，不代表已证明创新性。</p></div>
+    return `<section class="re-overview" aria-labelledby="re-overview-title"><div class="re-heading"><div><p class="re-kicker">研究问题、保存证据与适用边界</p><h2 id="re-overview-title">六项研究问题</h2></div><p>以下为已完成研究的条件规律；任意新人、新房间的普遍推广仍需另验。</p></div>
       <div class="re-theme-grid">${themes.map(theme => `<article class="re-theme"><div class="re-theme-top"><span class="re-number">${theme.n}</span>${badge(theme.status, theme.level)}</div><h3>${esc(theme.title)}</h3><p>${esc(theme.text)}</p><small>${esc(theme.limit)}</small>${routeLink('查看证据', theme.module ? { module: theme.module } : { module: 'evidence', tab: theme.tab })}</article>`).join('')}</div></section>`;
   }
   function contextHTML(options, data) {
@@ -130,7 +130,7 @@ window.ResearchEvidence = (() => {
       ${selected === 'unknown' ? '' : `<g aria-label="向右的示意射线；橙色截面右侧超出左室目标"><path d="M${cx + 12} 171H350" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 3"/>${cx < 230 ? `<path d="M${cx + 12} 171H230" stroke="#087f8c" stroke-width="3"/>` : ''}<path d="M350 171l-9 -5v10Z" fill="#b91c1c"/></g>`}
       ${camera}<text x="237" y="225" fill="#92400e">门洞封闭截面</text><text x="230" y="282" text-anchor="middle">BEV 示意 · 无测量比例</text>
       </svg><figcaption>实线是墙边；橙色虚线是人为选定的封闭截面，不是实体墙。${selected === 'compatible' ? '靠近门洞仍可能满足内部视点条件，不能仅因接近边界就判不可标。以左室为目标，绿色段在室内，红色虚线段已越过封闭截面。' : selected === 'ambiguous' ? '左室目标与紫色虚线所示的两室联合目标不同；绿色射线段在左室内，红段在左室外。选择联合目标时还需处理内部隔墙及遮挡，不能直接把外框当成最终布局。' : selected === 'incompatible' ? '假定相机拍摄点位恰在门口封闭边界上：朝右一看就已经在左室之外，无法在这个方向给左室画出正的内部距离。' : '位置待核验标记只是占位，不表示拍摄点位一定在门洞。全景中的视觉居中不能替代位姿或平面图证据。'}</figcaption></figure>
-      <figure class="re-schematic">${doorwayFrameFigure()}<figcaption>蓝灰色为门洞实体；橙色半透明面是人为选定的封闭边界，不是实体墙。门洞上方构件底面低于房间顶界，不等于整间房有第二层天花板。三维图固定展示内部点位情形；左图按钮另示不同情况。</figcaption></figure></div>`;
+      <figure class="re-schematic">${doorwayFrameFigure()}<figcaption>蓝灰色为门洞实体；橙色半透明面是人为选定的封闭边界，不是实体墙。门洞上方构件底面低于房间顶界，不代表整间房有第二层天花板。三维图固定展示内部点位情形；左图按钮另示不同情况。</figcaption></figure></div>`;
   }
   function doorwayHTML(data, state) {
     const section = data?.doorway || {}, cases = list(section.cases), status = state.doorway || 'compatible';
@@ -141,7 +141,7 @@ window.ResearchEvidence = (() => {
       <div class="re-note"><strong>门洞交界为什么要单列？</strong>先确定目标房间，再判断拍摄点位与目标边界的关系。若将门洞封闭，封闭截面属于目标定义，并非新增实体墙；若延伸到相邻房间，则是另一目标。拍摄点位严格位于内部，意味着从这里向任意方向先走一小段仍在目标房间内；若射线离开目标后又重新进入，或门楣后方还有不同顶界，一对上下边界点未必能完整表示。因此应检查目标、拍摄点位和表示，而不是把门洞都判为不可标。<br><strong>与 OOS 的区别：</strong>门洞交界关注目标范围、拍摄点位和可见结构的关系；OOS 关注真实目标构造超出标注标准。门洞案例可以不是 OOS，也可以同时存在斜墙或多层顶／底面等 OOS 因素。</div></section>
       <div class="re-grid re-two"><section class="re-panel"><h3>真实案例的核查顺序</h3><ol class="re-checklist"><li><strong>目标与封闭规则</strong><span>标哪一室？门洞按哪个截面闭合？</span></li><li><strong>拍摄点位的位置证据</strong><span>位姿、平面图或三维几何能否证明严格在内部？</span></li><li><strong>表示是否足够</strong><span>若目标包含门楣及其后方顶界，现有上下边界表示能否同时表达？是否出现同一方向多段结构？</span></li><li><strong>独立记录判断</strong><span>理由与证据位置单列；不自动修改 OOS、参考或质量资格。</span></li></ol></section>
       <section class="re-panel"><h3>研究解释的边界</h3><ul class="re-bullets"><li>门框居中不证明相机位于门平面；墙厚还可能形成连接体积。</li><li>看到门楣不自动证明投影冲突，需要逐例检查。</li><li>几何机制不限定于某一数据集；采集位置频率需另行统计。</li><li>已有开口范围歧义研究；不能仅凭这个现象宣称首创。</li></ul>${sourceFooter(section)}</section></div>
-      ${doorwayCasesHTML(section, state)}`;
+      ${window.ResearchComparison?.failureOverviewHTML(data.failure_summary)||''}${doorwayCasesHTML(section, state)}`;
   }
   function doorwayCasesHTML(section, state) {
     const cases = list(section.cases), selected = cases.find(c => c.image_id === state.doorwayCase) || cases[0];
@@ -171,7 +171,7 @@ window.ResearchEvidence = (() => {
     const records = recordsFor(selected);
     return heading('测量范围', '质量指标与已知反例', 'B8L2 同时反映与参考的接近程度和作答自身的几何一致性。D10 只改变方向尺度；分数变化不代表几何变好。') +
       (window.MethodDiagrams?.quality() || '') +
-      `<div class="re-grid re-two"><section class="re-panel re-accent"><h3>B8L2：冻结的联合工作指数</h3><p>底面范围与球面底边进入一块损失，自身方向残差进入另一块；两块以 L2 组合，整体及局部高度损失另外相加。</p><div class="re-factor-line"><span>范围／底边</span><span>方向</span><span>整体高度</span><span>局部高度</span></div><p class="re-muted">不绘制“各项贡献百分比”：非线性组合不能冒充可加总扣分。</p></section>
+      `<div class="re-grid re-two"><section class="re-panel re-accent"><h3>B8L2：冻结的联合工作指数</h3><p>底面范围与球面底边进入一块损失，自身方向残差进入另一块；两块以 L2 组合，整体及局部高度损失另外相加。</p><div class="re-factor-line"><span>范围／底边</span><span>方向</span><span>整体高度</span><span>局部高度</span></div><p class="re-muted">不绘制“各项贡献百分比”：非线性组合不能当作可加总的扣分。</p></section>
       <section class="re-panel"><h3>均高棱柱代理 ≠ 一般三维体积</h3><p>当前 IoU3D100 使用角点均值高度形成棱柱，再计算其重叠。它不保留所有局部顶界形状，也不是任意连续三维实体的精确 IoU。</p><p class="re-muted">均高相同仍可能有局部高低差；底面 IoU 高也不能单独证明细小必要结构正确。</p></section></div>
       <section class="re-panel"><div class="re-heading"><div><h3>保存案例对照</h3><p class="re-muted">案例、控制与来源保持原身份。每个数值只对应其绑定输入和参考。</p></div>${cases.length ? select('qualityCase', '选择案例', cases.map((c, i) => [caseId(c, i), `${c.id || c.case_id} · ${c.title || ''}`]), state.qualityCase) : ''}</div>
       ${selected ? `<div class="re-case-summary">${badge(selected.kind === 'synthetic' || selected.synthetic === true ? '保存控制实验 · 非真实作答' : selected.evidence_type || '保存证据')}<h4>${esc(selected.title || selected.id)}</h4><p>${esc(selected.summary || selected.description || '')}</p><p class="re-muted">${esc([selected.image_code || selected.image_id, selected.condition, selected.reference_id ? '参考：' + selected.reference_id : '', selected.snapshot_id ? '来源快照：' + selected.snapshot_id : ''].filter(Boolean).join(' · '))}</p></div>${qualityTable(records)}${records.some(r => numeric(r.saved_direction_zero_B8L2)) ? '<p class="re-note">d=0列是来源保存的诊断控制：固定其余测量，仅置方向残差为零。它不是修复后的真实几何，也不表示独立因果贡献。</p>' : ''}<div class="re-geometry-grid" data-evidence-quality-geometries></div>${list(selected.limitations).length ? `<ul class="re-bullets re-note">${list(selected.limitations).map(text => `<li>${esc(text)}</li>`).join('')}</ul>` : ''}${sourceFooter(selected)}${selected.image_id ? `<div class="re-actions">${routeLink('继续看同图原答', { module: 'patterns', image: selected.image_id, condition: selected.condition || 'manual', reference: selected.reference_id || '', snapshot: selected.snapshot_id || '' })}</div>` : ''}` : missing('质量案例载荷尚未接入', 'S1／S2／S3等案例必须来自保存测量；没有数据时保留方法说明，不生成曲线、几何或分数。')}</section>
@@ -243,7 +243,7 @@ window.ResearchEvidence = (() => {
     const selection = fusionSelection(selected, state);
     const savedStage = list(selected?.stages).find(item => item.key === stage.key);
     return heading('融合过程', '融合过程里的成员、身份、位置与连接', '沿实际保存团队，分别查看成员、身份、支持和位置、连接的变化。切换步骤只展开已有证据，不在浏览器里重新融合。') +
-      (window.MethodDiagrams?.fusion() || '') +
+      (window.ResearchComparison?.failureOverviewHTML(data.failure_summary)||'') + (window.MethodDiagrams?.fusion() || '') +
       `<section class="re-panel"><div class="re-heading"><h3>选择保存事件</h3>${cases.length ? select('fusionCase', '保存案例', cases.map((c, i) => [caseId(c, i), c.title || c.id || c.case_id]), state.fusionCase) : ''}${selection.nodes.length ? select('fusionK', '当前保存人数节点', selection.nodes.map(node => [String(node.k), `k=${node.k} · B8L2 ${fmt(node.B8L2)}`]), state.fusionK) : ''}</div>${selected ? `<div class="re-case-summary"><h4>${esc(selected.title || selected.id)}</h4><p>${esc(selected.summary || selected.description || '')}</p><p class="re-muted">${esc([selected.image_code || selected.image_id, selected.condition, selected.group_id, selected.reference_id ? '参考：' + selected.reference_id : ''].filter(Boolean).join(' · '))}</p></div>${fusionNodeSummary(selection)}${identityControlHTML(selected, selection.current)}` : missing('保存事件尚未接入', 'q9／G046／G057 等案例只能使用已有路径与几何。当前未读到载荷，不补演示团队。')}
       <div class="re-steps" role="tablist" aria-label="融合证据步骤">${stages.map((item, i) => `<button type="button" id="re-step-${item.key}" role="tab" aria-controls="re-stage-panel" aria-selected="${item.key === stage.key}" tabindex="${item.key === stage.key ? '0' : '-1'}" data-evidence-stage="${item.key}"><span>${i + 1}</span><strong>${esc(item.title)}</strong></button>`).join('')}</div>
       <div class="re-stage" id="re-stage-panel" role="tabpanel" aria-labelledby="re-step-${stage.key}"><p class="re-kicker">${esc(stage.title)}</p><h3>${esc(stage.question)}</h3><p>${esc(savedStage?.description || stage.text)}</p>${selected ? ledgerHTML(stageRows(selected, stage.key, selection.current), `${stage.title}来源台账${selection.current ? ' · k=' + selection.current.k : ''}`) : ''}</div>
@@ -266,7 +266,7 @@ window.ResearchEvidence = (() => {
     return heading('支持范围', '共同支持与各项结论的分母', '记录数、人员数、图片数、关系数和保存状态数分别报告。不同条件、用途和参考的结果不合并成一个总均分。') +
       `<div class="re-grid re-three"><section class="re-panel"><span class="re-number">01</span><h3>图片 × 人员 × 条件</h3><p>Manual 与 Semi 分别建立研究画像。条件间叠图是附加观察，不能代替另一条件的类型验证。</p>${routeLink('人员画像', { module: 'workers' })}${routeLink('同图类别与原答', { module: 'patterns' })}</section><section class="re-panel"><span class="re-number">02</span><h3>成员 × 人数 × 路径</h3><p>同人数换人、沿路径增人、最终全员结果是不同比较。只显示保存节点，缺失阶段不连成完整链。</p>${routeLink('保存融合路径', { module: 'fusion' })}</section><section class="re-panel"><span class="re-number">03</span><h3>关系 × 视角 × 建筑</h3><p>同房图对会共享图片与人员。未知关系不是确认异房；局部结构迁移也不等同个人质量预测。</p>${routeLink('同房统计与预测', { module: 'same_room' })}${routeLink('同人／同团队多视角', { module: 'multiview' })}</section></div>
       ${supportCountsHTML(support)}${supportMatrixHTML(support, state, data?.snapshot_id)}
-      <section class="re-panel"><h3>已经回答的问题与结果边界</h3><div class="re-grid re-two"><div><h4>已完成的研究</h4><ul class="re-bullets"><li>质量分项、3D IoU与人工判断的对照：不同指标保留的信息不同。</li><li>类别配比、类内换人和跨类替换：构成差异与具体成员波动同时存在。</li><li>低人数至满员过程：质量、低尾、几何波动和失败并非同步变化。</li><li>同房跨视角：平均表现及部分配比趋势可重复，具体调整收益未必重复。</li></ul></div><div><h4>阅读时分别判断</h4><ul class="re-bullets"><li>分类有解释价值，不要求每位成员普遍可互换。</li><li>结构变化可以升质或降质，不以升质作为唯一有效结果。</li><li>多数与条件规律保留，同时展示反例及实际支持范围。</li><li>结果对应当前人员池、参考和融合算法；各实验的实际支持范围分别查看。</li></ul></div></div><div class="re-actions">${routeLink('质量与方法验证', { module: 'method_supplements', tab: 2 })}${routeLink('人员完整研究', { module: 'personnel_main' })}${routeLink('查看数据覆盖与缺失', { module: 'coverage' })}${routeLink('查看全部来源', { module: 'sources' })}</div></section>${overviewHTML()}`;
+      <section class="re-panel"><h3>已经回答的问题与结果边界</h3><div class="re-grid re-two"><div><h4>已完成的研究</h4><ul class="re-bullets"><li>质量分项、3D IoU与人工判断的对照：不同指标保留的信息不同。</li><li>类别配比、类内换人和跨类替换：构成差异与具体成员波动同时存在。</li><li>低人数至满员过程：质量、P10、几何波动和失败并非同步变化。</li><li>同房跨视角：平均表现及部分配比趋势可重复，具体调整收益未必重复。</li></ul></div><div><h4>阅读时分别判断</h4><ul class="re-bullets"><li>分类有解释价值，不要求每位成员普遍可互换。</li><li>结构变化可以升质或降质，不以升质作为唯一有效结果。</li><li>多数与条件规律保留，同时展示反例及实际支持范围。</li><li>结果对应当前人员池、参考和融合算法；各实验的实际支持范围分别查看。</li></ul></div></div><div class="re-actions">${routeLink('质量与方法验证', { module: 'method_supplements', tab: 2 })}${routeLink('人员完整研究', { module: 'personnel_main' })}${routeLink('查看数据覆盖与缺失', { module: 'coverage' })}${routeLink('查看全部来源', { module: 'sources' })}</div></section>${overviewHTML()}`;
   }
   function supportCountsHTML(support) {
     const names = { records: '全部作答', images: '独立图片', workers: '全部人员', buildings: '建筑', reference_bindings: '参考绑定', quality_records: '主质量记录', independent_vote_records: '独立投票记录' };

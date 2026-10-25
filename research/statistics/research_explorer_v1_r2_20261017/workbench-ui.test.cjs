@@ -13,7 +13,7 @@ fs.mkdirSync(shots,{recursive:true});
   await page.addInitScript(()=>{window.fetch=()=>{throw Error('offline fetch attempted');};});
   await page.goto(pathToFileURL(path.join(__dirname,'index.html')).href);
   async function ready(module){await page.waitForSelector(`#content[data-ready="${module}"]`,{timeout:60000});assert.doesNotMatch(await page.locator('#content').innerText(),/该模块读取失败|工作台暂时无法打开/);}
-  async function go(module){await page.locator(`#navigation [data-module="${module}"]`).click();await ready(module);}
+  async function go(module){await page.locator(`#navigation [data-module="${module}"]`).evaluate(e=>{if(e.closest('details'))e.closest('details').open=true;});await page.locator(`#navigation [data-module="${module}"]`).click();await ready(module);}
   await ready('overview');await go('data');assert.match(await page.locator('#rowCount').innerText(),/10,439/);
   const moduleIds=await page.locator('#navigation [data-module]').evaluateAll(es=>es.map(e=>e.dataset.module));assert(moduleIds.includes('personnel_main')&&moduleIds.includes('method_supplements'));
   await page.screenshot({path:path.join(shots,'data.png')});

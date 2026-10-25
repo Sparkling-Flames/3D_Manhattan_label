@@ -84,7 +84,7 @@ assert.equal(caseA.reference,ref);assert.equal(caseA.teams,teams);assert.deepEqu
 const dataPath=__dirname+'/v2-resources/comparisons.json',indexPath=__dirname+'/v2-data/index.json';
 if(fs.existsSync(dataPath)){
  const data=JSON.parse(fs.readFileSync(dataPath,'utf8'));
- assert.equal(data.cases.length,20);assert.equal(Object.keys(data.groups).length,5);
+ assert.equal(data.cases.filter(c=>!c.case_id.startsWith('D_FULL_')&&!c.case_id.startsWith('F_SAVED_')).length,20);assert.equal(new Set(data.cases.map(c=>c.case_id)).size,data.cases.length);assert.equal(Object.keys(data.groups).length,5);
  for(const views of Object.values(data.groups))for(const v of views){assert.deepEqual(v.after.workers,views[0].after.workers);assert.deepEqual(v.before.workers,views[0].before.workers);}
 }else console.log('SKIP: generated comparisons payload not present; actual contract covered with fixtures');
 if(fs.existsSync(indexPath)){
@@ -118,6 +118,7 @@ class Host{
 }
 (async()=>{
  const mounted=[];ctx.WorkbenchGeometry={mount:(...args)=>mounted.push(args)};
+ for(const team of teams){team.points=[[100,200],[100,300],[300,200],[300,300],[600,200],[600,300],[900,200],[900,300]];team.nodes=4;}
  const data={...payload,labels:[{worker_id:'W100',Rnew2_geometry_quality_class:'C01'}],groups:{}};
  const refImage={...image,flags:{},image_code:'Image A',annotations:answers.map(a=>({...a,condition:'manual'})).concat({object_id:'semi-object',worker_id:'W101',condition:'semi',retained:true,points:[[4,5],[4,6]]})};
  const assets={snapshot_id:snapshot,data_release:'v2',images:[{image_id:'image-a',image_code:'Image A',flags:{}}]};
@@ -135,7 +136,7 @@ class Host{
  assert.equal(host.querySelector('#rc-review-notes').value,'');
  const semiOptions={...options,deepLink:new URLSearchParams('image=image-a&condition=semi&team=A&worker=W100')};
  await R.render(host,semiOptions);assert.equal(contexts.at(-1).compatible_teams.length,0);assert.equal(contexts.at(-1).worker,'');assert.equal(contexts.at(-1).team,'all');
- assert.match(host.querySelector('#rc-teams').innerHTML,/没有兼容/);
+ assert.match(host.querySelector('#rc-teams').innerHTML,/尚未接入/);
  assert.equal(reads,1); // Same immutable resource/read context reuses payload.
  await R.render(host,{...options,assets:{...assets},deepLink:new URLSearchParams('image=image-a&condition=manual')});assert.equal(reads,2); // A new index invalidates the payload cache.
  await R.render(host,{...options,deepLink:new URLSearchParams('image=missing-image&condition=manual')});assert.match(host.innerHTML,/不替换成其它图片/);

@@ -42,3 +42,6 @@
 @media print{.appbar,.sidebar,.actions,.contextbar,#tabs,#toast,.skip{display:none!important}#main{margin:0;padding:0}#content .panel{break-inside:avoid;box-shadow:none}}
 
 .exchange-bars{display:block;width:100%;max-width:760px;height:auto;margin:18px 0}.exchange-bars text{font:15px system-ui,sans-serif;fill:#243748}.exchange-bars text:last-child{font-size:12px}#newClassRosters td:last-child{min-width:180px;max-width:680px;line-height:1.9}#currentExchanges .toolbar label{max-width:100%}#newExchange{width:min(720px,100%)}
+.nav-more{margin:8px 4px;border-top:1px solid #dce4e9;padding-top:8px}.nav-more>summary{font-size:13px;line-height:1.6;color:#486072;padding:8px;cursor:pointer}.nav-more a{font-size:13px}#currentAnswerEvidence{scroll-margin-top:90px}#currentAnswerEvidence select{max-width:100%}#newClassRosters .actions{max-height:190px;overflow:auto}#newClassRosters .actions button{font-size:12px}.briefing-grid .briefing-step h2{line-height:1.6}@media(max-width:760px){.nav-more{min-width:200px;flex-shrink:0}}
+#currentAnswerEvidence .toolbar label{max-width:100%;min-width:0;flex:1 1 220px}#currentAnswerEvidence select{width:100%;min-width:0}
+#currentClassification .personnel-figures>article,#currentClassification .personnel-figures>details{grid-column:1/-1}

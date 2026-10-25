@@ -6,6 +6,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 import pandas as pd
+from collections import Counter
 
 from .build_research_workbench_20261017 import write
 
@@ -73,6 +74,38 @@ BRIEFING_MODULE_TABS = {
 def read(path):
     raw = gzip.decompress(path.read_bytes()) if path.suffix == '.gz' else path.read_bytes()
     return json.loads(raw.decode('utf-8-sig'))
+
+
+def classification_evidence():
+    """只打包已存类中心与名单；类号始终连同方法和排除建筑解释。"""
+    source = ROOT / 'research/workers/personnel_classification_guide_20261025/sources'
+    guide = read(source.parent / 'GUIDE.json')
+    methods = {m['id'] for m in guide['methods']} | {'DSTRUCT_K2'}
+    paths = [source / 'NEW_CLASS_DEFINITIONS_ALL_LOBO.csv.gz',
+             source / 'SCOPE_INCREMENT_CLASS_DEFINITIONS_ALL_LOBO.csv.gz',
+             ROOT / 'analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/06A/research/workers/personnel_exchange_discrimination_20261025/reverse/REVERSE_CLASS_CENTERS_ALL_LOBO.csv.gz']
+    definitions = []
+    for path in paths:
+        frame = pd.read_csv(path)
+        frame = frame[frame.method.isin(methods)]
+        definitions.extend(frame.astype(object).where(frame.notna(), None).to_dict('records'))
+    keys = [(r['method'], r['heldout_building'], r['class_id']) for r in definitions]
+    if len(keys) != len(set(keys)):
+        raise ValueError('duplicate current class definition')
+    labels = pd.read_csv(source / 'NEW_METHOD_LABELS_ALL_LOBO.csv.gz')
+    coarse = []
+    for (fold, class_id), rows in labels[labels.method == 'DSTRUCT_K2'].groupby(['heldout_building', 'class_id']):
+        coarse.append(dict(method='DSTRUCT_K2', fold=fold, class_id=class_id,
+                           known=bool(rows.known.all()), workers=sorted(rows.worker_id.tolist())))
+    by_key = {(r['method'], r['heldout_building'], r['class_id']): r for r in definitions}
+    for row in guide['rosters'] + coarse:
+        if not row['known']:
+            continue
+        saved = by_key[(row['method'], row['fold'], row['class_id'])]
+        if set(saved['members'].split('|')) != set(row['workers']):
+            raise ValueError('current roster/definition mismatch: ' + str(row))
+    return dict(schema='current_class_evidence_v1', definitions=definitions, coarse_rosters=coarse,
+                sources=[p.relative_to(ROOT).as_posix() for p in paths])
 
 
 def load_same_room_prediction(source):
@@ -233,6 +266,115 @@ def pack_resources(scores, evidence):
     return summary
 
 
+def saved_fusion_examples(resources):
+    """连接门洞满员及普通失败端点；不运行融合、评分或重造票账。"""
+    folder = DOORWAY_CASE.parent
+    with (folder / 'DOORWAY_FULL_POOL_STATUS.csv').open(encoding='utf-8-sig', newline='') as f:
+        status = list(csv.DictReader(f))
+    keys = {r['team_key'] for r in status}
+    if len(status) != 17 or len(keys) != 17:
+        raise ValueError('doorway full-pool inventory drift')
+    scalar_path = POPULATION_CASES.parent / 'results/ENDPOINT_SCALARS.csv.gz'
+    scalars, full_rows, extra = {}, {}, {}
+    with gzip.open(scalar_path, 'rt', encoding='utf-8-sig', newline='') as f:
+        for row in csv.DictReader(f):
+            if row['k'] == row['pool_n']:
+                full_rows[row['pool_id']] = row
+            if row['team_key'] in keys:
+                scalars[row['team_key']] = row
+            if row['k'] == row['pool_n'] and ((row['image']=='VFuaQ6m2Qom-04' and row['condition']=='manual') or (row['image']=='e9zR4mvMWw7-39' and row['condition']=='semi')):
+                extra['full_'+row['image']] = row
+            if (row['layer']=='ordinary_manual' and int(row['k'])>=3 and row['score_status'] in ('no_connection','invalid_floor')
+                    and (row['score_status']=='invalid_floor' or (row['image']=='7y3sRwLe3Va-03' and int(row['nodes'])>=6))):
+                extra.setdefault(row['score_status'], row)
+    for kind, row in extra.items():
+        scalars[row['team_key']] = row
+        keys.add(row['team_key'])
+        status.append({k:row[k] for k in ('image','pool_id','pool_n','team_key','nodes','complete_evaluable')})
+    geometry_path = scalar_path.with_name('ENDPOINT_GEOMETRY.json.gz')
+    geometries = {r['team_key']: r for r in read(geometry_path) if r['team_key'] in keys}
+    frozen_path = ROOT / read(DOORWAY_CASE)['sources'][0]
+    pools = {p['pool_id']: p for p in read(frozen_path)['images']}
+    images = {i['image_code']: i for i in resources['images']}
+    if set(scalars) != keys or set(geometries) != keys:
+        raise ValueError('doorway saved endpoint not available')
+    cases = []
+    for item in status:
+        row = scalars[item['team_key']]
+        pool, stored = pools[item['pool_id']], geometries[item['team_key']]
+        detail = read(PAGE / 'v2-resources' / images[item['image']]['detail'])
+        lookup = {a['object_id']: a for a in detail['annotations']}
+        reference = pool['reference']
+        workers = row['member_workers'].split('|')
+        pool_members = {r['worker_id']: r['object_id'] for r in pool['records']}
+        ref = dict(points=reference['points_1024x512'], floor=reference['floor_xz_h'], target_id=reference['target_id'])
+        if (row['condition'] != pool['meta']['condition'] or row['image_id'] != detail['image_id']
+                or row['reference_id'] != reference['target_id']
+                or len(workers) != int(row['k']) or len(set(workers)) != len(workers) or not set(workers) <= set(pool_members)
+                or (row['k']==row['pool_n'] and set(workers)!=set(pool_members))
+                or set(row['member_object_ids'].split('|')) != {pool_members[w] for w in workers}
+                or any(r['object_id'] not in lookup or lookup[r['object_id']]['worker_id'] != r['worker_id']
+                       or lookup[r['object_id']]['points'] != r['points'] for r in pool['records'])):
+            raise ValueError('doorway frozen membership/reference drift: ' + item['image'])
+        metric = lambda name: float(row[name]) if row.get(name) else None
+        geometry = stored['geometry']
+        complete = row['complete_evaluable'] == 'True'
+        nodes = int(row['nodes'])
+        supports = [int(x) for x in row['node_supports'].split('|') if x]
+        if (complete != (item['complete_evaluable'] == 'True') or nodes != int(item['nodes'])
+                or (geometry['points'] is not None and len(geometry['points']) != 2 * nodes)
+                or sorted(supports) != sorted(stored['node_supports'])
+                or (not complete and any(metric(k) is not None for k in ('B8L2', 'D10', 'IoU3D100')))):
+            raise ValueError('doorway saved status drift: ' + item['image'])
+        team = dict(label=('满员 n=' if row['k']==row['pool_n'] else '保存失败 n=') + str(len(workers)), team_key=item['team_key'], workers=workers,
+                    member_object_ids=[pool_members[w] for w in workers], nodes=nodes,
+                    B8L2=metric('B8L2'), D10=metric('D10'), IoU3D100=metric('IoU3D100'),
+                    complete_evaluable=complete, score_status=row['score_status'],
+                    points=geometry['points'], footprint=geometry['footprint'],
+                    order_status=geometry['order_status'], ring_confirmed=geometry['ring_confirmed'],
+                    geometry_status=geometry.get('geometry_status', row['geometry_status']), reason=geometry['reason'],
+                    minimum_support=int(row['minimum_support']),
+                    identity_groups_n=int(row['identity_groups_n']), unselected_groups_n=int(row['unselected_groups_n']),
+                    selected_node_supports=supports, vote_ledger_status='selected_distribution_only',
+                    source_state=row['geometry_state_pointer'],
+                    provenance={k:row[k] for k in ('data_release','reference_version','endpoint_origin','geometry_origin','geometry_state_pointer')})
+        teams = [team]
+        if item['image'] == '7y3sRwLe3Va-06':
+            for endpoint in read(DOORWAY_CASE)['endpoints'][:-1]:
+                g = endpoint['geometry']
+                teams.append(dict(label='n=' + str(endpoint['k']), team_key=endpoint['team_key'], workers=endpoint['members'],
+                    member_object_ids=[pool_members[w] for w in endpoint['members']], nodes=endpoint['nodes'],
+                    **endpoint['metrics'], complete_evaluable=endpoint['complete_evaluable'], score_status=endpoint['score_status'],
+                    points=g['points'], footprint=g['footprint'], order_status=g['order_status'], ring_confirmed=g['ring_confirmed'],
+                    geometry_status=g.get('geometry_status'), reason=g['reason'], minimum_support=endpoint['minimum_support'],
+                    identity_groups_n=endpoint['identity_groups_n'], unselected_groups_n=endpoint['unselected_groups_n'],
+                    selected_node_supports=endpoint['selected_node_supports'], vote_ledger_status='selected_distribution_only'))
+        doorway = row['layer']=='doorway_manual'
+        cases.append(dict(case_id=('D_FULL_' if doorway else 'F_SAVED_') + item['image'] + ('' if row['k']==row['pool_n'] else '_'+row['score_status']), title=item['image'] + (' · 门洞满员保存结果' if doorway else ' · 普通场景保存失败'),
+            image_id=detail['image_id'], condition=row['condition'], snapshot_id=SNAPSHOT, reference=ref,
+            explanation='已计算的冻结满员池；完整可评、节点不足与连接失败分别解释。库存人数不替代冻结池人数。',
+            worker_classes={}, source=(folder / 'README.md').relative_to(ROOT).as_posix() if doorway else 'research/fusion/fusion_paper_closeout_20261022/README.md', teams=teams))
+    failed = [c['teams'][0] for c in cases if c['case_id'].startswith('D_FULL_') and not c['teams'][0]['complete_evaluable']]
+    if len(failed) != 6 or sorted(t['nodes'] for t in failed) != [2, 3, 3, 3, 3, 3]:
+        raise ValueError('doorway full-pool failure denominator drift')
+    actual = pd.read_csv(POPULATION_CASES.parent / 'design/ACTUAL_POOLS.csv')
+    ordinary = actual[actual.layer=='ordinary_manual']
+    curves_path = POPULATION_CASES.parent / 'late_population_20261024/IMAGE_CURVES.csv.gz'
+    curves = pd.read_csv(curves_path)
+    ever_ids = set(curves[(curves.k>=3)&(curves.failure>0)].pool_id) & set(ordinary.pool_id)
+    ever = ordinary[ordinary.pool_id.isin(ever_ids)]
+    layers = {layer:dict(pools=int(sum(actual.layer==layer)), incomplete=sum(row['layer']==layer and row['complete_evaluable']=='False' for row in full_rows.values())) for layer in ['ordinary_manual','ordinary_semi','doorway_manual']}
+    if layers['ordinary_manual']!={'pools':177,'incomplete':1} or layers['ordinary_semi']!={'pools':32,'incomplete':1} or len(ever_ids)!=54:
+        raise ValueError('saved ordinary failure support drift')
+    return cases, dict(pools=17, incomplete=6, three_nodes=5, two_nodes=1, layers=layers,
+                       ordinary_ever_failure_images=len(ever_ids), ordinary_ever_by_difficulty=dict(Counter(ever.difficulty)),
+                       ordinary_images_by_difficulty=dict(Counter(ordinary.difficulty)),
+                       ordinary_curve_source=curves_path.relative_to(ROOT).as_posix(),
+                       examples=[{k:c[k] for k in ('case_id','image_id','condition','title')} for c in cases if c['case_id'].startswith('F_SAVED_')],
+                       source=(folder / 'DOORWAY_FULL_POOL_STATUS.csv').relative_to(ROOT).as_posix(),
+                       sources=[p.relative_to(ROOT).as_posix() for p in (frozen_path, scalar_path, geometry_path)])
+
+
 def pack_comparisons(evidence, resources):
     """仅搬运已有案例和保存状态；不在打包时重新融合或评分。"""
     labels = pd.read_csv(ROOT/'research/workers/personnel_interchangeability_followup_20261020/audit_learning/RESEARCH_WORKING_LABELS_60.csv').fillna('').to_dict('records')
@@ -285,14 +427,18 @@ def pack_comparisons(evidence, resources):
     for views in groups.values():
         assert all(v['before']['workers']==views[0]['before']['workers'] and v['after']['workers']==views[0]['after']['workers'] for v in views), 'multiview members differ'
     image_ids = {r['image_id'] for r in evidence}
+    doorway_cases, doorway_summary = saved_fusion_examples(resources)
+    cases.extend(doorway_cases)
     assert all(c['image_id'] in image_ids for c in cases)
-    payload=dict(schema='research_workbench_saved_comparisons_v1',display_revision='interactive_20261020',
+    payload=dict(schema='research_workbench_saved_comparisons_v1',display_revision='doorway_full_pool_20261025',
+        data_release='v2',snapshot_id=SNAPSHOT,failure_summary=doorway_summary,
         labels=labels,cases=cases,groups=dict(groups),
         group_source='research/same_room/same_room_multiview_20261020/structure_transfer/case_states.json',
         caveat='Saved illustrative cases, not full v2 fusion coverage; reference and eligibility remain unchanged.')
     write(PAGE/'v2-resources/comparisons.json',payload)
-    resources.update(display_revision='interactive_20261020',comparisons='comparisons.json',
-        fusion_revision='saved_v2_cases_and_multiview_states_only; full_v2_paths_not_packed')
+    resources.update(display_revision='doorway_full_pool_20261025',comparisons='comparisons.json',
+        fusion_failure_summary=doorway_summary,
+        fusion_revision='saved_v2_cases_multiview_and_17_doorway_full_pools; all_paths_not_packed')
     write(PAGE/'v2-resources/index.json',resources)
 
 
@@ -396,7 +542,7 @@ def build_support_payload(evidence):
         by_condition=conditions, matrix=matrix, constant_support_cohorts=cohorts,
         source='research/statistics/v2_evidence_audit_20261019/records.json.gz',
         unit='image × condition × bound reference; repeated answer and team views are not independent samples',
-        limitations=['Manual与Semi分开统计；跨条件有同人同图不等于同一研究条件。',
+        limitations=['Manual 与 Semi 分开统计；跨条件时，同一人同一图不代表同一研究条件。',
             '同一图可有多个参考绑定；绑定数不是独立房间数。',
             '固定人数曲线须使用固定图集；此处仅给冻结库存支持范围，不补算融合或预测。'])
 
@@ -546,6 +692,7 @@ def pack_research_evidence(evidence, resources):
               structure/'case_states.json',structure/'focus_process.csv',MULTIVIEW/'group_coverage.csv',
               EVIDENCE/'records.json.gz',ROOT/'research/workers/pro_personnel_v2_20261019/analysis_context.json.gz']
     payload = dict(schema='research_workbench_method_evidence_v1',snapshot_id=SNAPSHOT,data_release='v2',
+        failure_summary=resources.get('fusion_failure_summary'),
         display_revision='method_evidence_20261020_r1',sources=[source_entry(p) for p in inputs],
         quality=dict(cases=quality_cases,saved_sensitivity_controls=findings['control'],
             pair_support={k:v for k,v in findings.items() if k not in ('spotlight','control','fusion','source')},
@@ -988,6 +1135,7 @@ def build():
           documents=[dict(path=spec['path'], content=read(ROOT / spec['path']))
                      for spec in review_interface['documents']] + [
                      dict(path='personnel_classification_guide', content=read(ROOT/'research/workers/personnel_classification_guide_20261025/GUIDE.json')),
+                     dict(path='current_class_evidence', content=classification_evidence()),
                      dict(path='personnel_main_interface', content=personnel_interface),
                      dict(path='personnel_main_figures', content=personnel_figures),
                      dict(path='personnel_main_glossary', content=personnel_glossary),
@@ -1012,67 +1160,74 @@ def build():
     pack_research_evidence(evidence, resources)
     pack_personnel_results(evidence, resources)
     sections = [
-        dict(title='1 · 任务与真实数据',
-             finding=f"真人 v2 共 {summary['raw_records']:,} 份作答，其中 {summary['quality_records']:,} 份符合正式质量要求；两个数统计的不是同一批记录。",
-             example='在全景图上选一个目标空间，叠加真实作答、参考和上下点，可以看到库存如何逐级进入评分。',
-             support='v2 全部真人作答；Manual、Semi、门洞、OOS 和参考状态分别统计。',
-             counterexample='能算出几何，不代表满足正式质量要求；图片数、人员数和作答数也不能相加。',
-             source='../../../research/statistics/v2_integrated_analysis_20261019/README.md',
-             tables=[dict(id='statistics__condition_summary',label='条件与统计范围'),
-                     dict(id='quality__shared_records',label='逐份证据')]),
-        dict(title='2 · 怎样判断一个布局',
-             finding='B8L2 分数同时考虑底面、方向和高度；分数相同、节点数相同，局部结构仍可能不一样。',
-             example='对照质量案例的原答、参考和分项，再切换 ERP／BEV／3D 核对位置。',
-             visual='../../../research/workers/personnel_interchangeability_20261020/interchangeability_20261020/figures/cases/S09_same_composition_different_shape/paired_1.png',
-             visual_alt='S09 同分同点数但底面形状不同的两队对照',
-             support='B8L2 只在固定参考和正式质量要求下计算；D10 只改变方向尺度。',
-             counterexample='分数不代表正确概率；G015 继续按现有 GT 评价，不改参考。',
-             source='../../../research/quality/v2_profile_combo_quality_20261021/PAPER_RESULTS.md',
-             tables=[dict(id='quality__case_rows',label='同分异形案例'),
-                     dict(id='quality__latest_case_components',label='分项与参考')]),
-        dict(title='3 · 图片条件与人的响应',
-             finding='在固定 6 个参考转折的条件下，图片结构不同，标注时的简化程度差别明显。',
-             example='短边和几何自遮挡分开看；每个点是一张图，黑横线为组内图片等权均值，H为几何自遮挡量，不是高度。',
-             visual='../../../research/difficulty/difficulty_mechanisms_v2_20261020/fixed6_conditions.png',
-             visual_alt='固定六个参考转折时三种结构条件的简化比例',
-             support='33 张图固定了复杂度；短边和自遮挡在多数人身上得到支持，分别为 32/47 和 36/47 人。',
-             counterexample='同一建筑不表示同一房间；几何自遮挡和家具遮挡是两回事。三档难度不由单个阈值自动决定。',
-             source='../../../research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md',
-             tables=[dict(id='difficulty__fixed_complexity_summary',label='固定结构比较'),
-                     dict(id='difficulty__person_fixed6_conditions',label='同人对照'),
-                     dict(id='difficulty__image_scope_support',label='逐图范围支持')]),
-        dict(title='4 · 连续人员画像与可靠性',
-             finding='平均质量、质量偏低的那一端（P10）、作答用时和 Manual／Semi 两种条件下的表现，回答的是不同问题；每条结论都要写明用了多少条记录。',
-             example='W109 与 W112 的总体 Q 接近，但作答速度和不同难度下的表现不同；Semi 的确认错误只在有记录的范围内统计。',
-             visual='../../../research/workers/personnel_profiles_composition_20261020/source/mechanisms/figures/profile_W109_W112.png',
-             visual_alt='W109 与 W112 同图局部和底面对照',
-             support='已保存 182 格画像；人员用匿名 ID；Manual 与 Semi 分开统计。',
-             counterexample='没改动预标注不代表盲信；有记录的范围判断比例，也不是全体 OOS 判断的准确率。',
-             source='../../../research/workers/personnel_profiles_composition_20261020/PROFILE_FINDINGS.md',
-             tables=[dict(id='profiles__continuous',label='连续画像'),
-                     dict(id='profiles__selected_common_pairs',label='同支持人员对')]),
-        dict(title='5 · 共识机制与人数过程',
-             finding='身份对应、支持门槛、位置聚合和连接都会改变最终结构；增加人数并不保证质量一路上升。',
-             example='wc2 全票仍存在定位差；zs 增人跨过门槛；B6 连接失败。可以查看保存端点和历史人数面板。',
-             visual='../../../research/workers/personnel_effective_exchange_conditions_20261022/mechanisms/positive_cases/figures/E20261022_wc2_56_n20_m6/comparison.png',
-             visual_alt='wc2 三队全票四角仍有定位和质量差异',
-             support='保存机制案例；v1 的历史人数结果和 v2 的机制案例各保留版本信息。',
-             counterexample='人数相同但换一批人，结果稳定也不代表接近参考；固定157图到30人、92图到35人及实际满员的曲线见人员研究第5步，各条件只在有记录的范围内解释。',
-             source='../../../research/fusion/fusion_paper_closeout_20261022/README.md',
-             tables=[dict(id='fusion_closeout__endpoint_alignment',label='机制端点'),
-                     dict(id='fusion_closeout__count_panel_by_condition',label='历史人数条件')]),
-        dict(title='6 · 同房与选队用途',
-             finding='同房的平均质量可以跨视角预测；个人的剩余差异、选队效果和获取历史记录的成本，要分别检验。',
-             example='先比较同房均值，再查看按楼外 Q 选队、质量偏低的部分和基于已有历史的停止规则。',
-             visual='../../../research/same_room/same_room_profile_return_review_20261021/pro/room_similarity/figures/01_declared_group_means.png',
-             visual_alt='用户直接声明关系下的同房质量均值图',
-             support='房间关系按用户直接给出的证据；选队和停止规则各自有支持范围。',
-             counterexample='同建筑且关系未知时，不当作异房；劳动比不是总交付时长，也不是新人员在没有历史支持时的部署收益。',
-             source='../../../research/same_room/same_room_profile_return_review_20261021/README.md',
-             tables=[dict(id='same_room_pro__direct_mean_summary',label='同房均值'),
-                     dict(id='same_room_pro__policy_summary',label='选队结果'),
-                     dict(id='same_room_pro__stopping_summary',label='停止结果'),
-                     dict(id='same_room_pro__source_acquisition_summary',label='获取历史成本')]),
+        dict(id='quality', title='怎样衡量布局质量？', module='method_supplements', tab=2,
+             finding='不同指标保留的信息不同：明确偏好的新Manual五题中，B8L2/D10同向5题，均高IoU同向3题。',
+             example='25组完整原答、分项、均高棱柱IoU与高度/底点控制一起看；默认展示漏转折案例。',
+             support='25对/25图/15楼，一名人工复核者；5题指新Manual明确左右偏好，Semi另1题与这些指标反向。',
+             counterexample='这是按指标关系选出的诊断案例，不是随机样本准确率；接近和各有问题/无法判断不强制二分。',
+             source='../../../research/quality/quality_independent_validation_20261024/human_review/REPORT_ZH.md', tables=[]),
+        dict(id='consensus', title='融合一定胜过完整原答吗？', module='method_supplements', tab=1,
+             finding='共同面板中，普通Manual四人队墙线比代表原答平均高7.11分，16人队却低5.54分。',
+             example='n4有16/22图提高；n16为8/23图提高。三法底面比较与完整顶部比较分开。',
+             support='固定138队全部尝试；普通Manual n4为24尝试/22共同完整可评，n16为23/23；Lee仅底面。',
+             counterexample='门洞n16有5/6图提高，仍因一图大幅下降而均差−4.94；均值、图多数、P10 和失败同时报告。',
+             source='../../../research/fusion/fusion_common_panel_20261024/README.md', tables=[]),
+        dict(id='difficulty', title='图片结构怎样改变标法？', module='conditions', tab=0,
+             finding='固定六个参考转折后，短边和几何自遮挡仍与简化表达有关，分别在32/47、36/47人得到支持。',
+             example='黑横线为图片等权均值；H是几何自遮挡量，不是高度。短边、自遮挡、家具遮挡分别解释。',
+             visual='../../../research/difficulty/difficulty_mechanisms_v2_20261020/fixed6_conditions.png', visual_alt='固定六参考转折的条件比较',
+             support='33张固定结构图；逐图范围支持及同人比较均可查。',
+             counterexample='困难、门洞或OOS不预设必然不一致；结构复杂度与人工难度也不是同一变量。',
+             source='../../../research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md', tables=[dict(id='difficulty__person_fixed6_conditions',label='同人固定结构比较')]),
+        dict(id='profiles', title='平均分接近的人，表现也一样吗？', module='profiles', tab=0,
+             finding='W109/W112同99图均Q为84.322/84.990，但后者每图更慢；困难15图高8.097分，中等18图低6.784分。',
+             example='记录耗时比的几何中位数7.669；平均质量、困难优势、P10 和可靠性记录分别看。',
+             visual='../../../research/workers/personnel_profiles_composition_20261020/source/mechanisms/figures/profile_W109_W112.png', visual_alt='同图原答与快慢正反例',
+             support='99普通Manual图/21楼、相同参考；全体182格画像另查各自有效分母。',
+             counterexample='较慢不必普遍更好；Semi确认/报告错误、scope倾向与审核机会不合成统一错误率。',
+             source='../../../research/workers/personnel_profiles_composition_20261020/PROFILE_FINDINGS.md', tables=[dict(id='profiles__continuous',label='完整连续画像')]),
+        dict(id='classification', title='哪些标法差异值得分组？', module='personnel_main', tab=0,
+             finding='困难结构三类用于主解释：ALL为8/39/12人，二类粗层47/12人；都保留3名未知。',
+             example='从分类依据和每折角色中心，点选名单中的人，再在同一图查看完整原答。融合响应类回答怎样影响当前共识。',
+             support='当前方法及22个楼外范围；ALL描述与排除目标楼的实验名单分开。',
+             counterexample='转折多不是正确率；新分类不冒领旧四分类的完整配比、进入策略和同房实验。',
+             source='../../../research/workers/personnel_classification_guide_20261025/README.md', tables=[]),
+        dict(id='mixture', title='类别配比和具体成员分别影响什么？', module='personnel_main', tab=1,
+             finding='旧结构类n20：困难14图的配比格均值Q跨度11.98分、格内四分位距9.97；简单21图为1.71和1.58。',
+             example='同时看不同类别人数比例与同配比中换具体成员的波动；七个实例连接真实成员与完整格。',
+             support='旧四分类336个有限面板、13,406配比格，每面板固定背景并枚举924队。',
+             counterexample='构成与成员波动都存在；格数不是独立实验次数，此处未按新DSTRUCT重编。',
+             source='../../../research/workers/personnel_mixture_comparison_20261022/configurations/README.md', tables=[dict(id='personnel_main__MIXTURE_ALL_MANUAL',label='Manual完整配比')]),
+        dict(id='exchange', title='同人数、同背景下，换类与同类换人有多大差别？', module='personnel_main', tab=2,
+             finding='DSTRUCT K3 n18/m7：同类Q幅度3.438分、跨类6.386分；31/40图及10/10楼跨类更大。',
+             example='RFUSE两类和几何＋质量响应三类分别23/29、16/21图跨类更大；方向与幅度分列，保留降质。',
+             support='四重点条件及全部71条件；严格ABC需n+2m名不同人员，三块真实成员互斥。',
+             counterexample='各条件图片、n/m与选择方向不同，不作无条件排行榜；直接AC没有同类B队。',
+             source='../../../research/workers/personnel_classification_guide_20261025/README.md', tables=[]),
+        dict(id='population', title='从低人数到30/35和满员，哪些量在改善？', module='personnel_main', tab=4,
+             finding='固定157图3→6人Q平均+5.184分，155/157图提高；20→30仍+0.758，125/157图提高。',
+             example='困难27图3→6全部升质，但失败6.944%→12.654%；后段Q可近乎不变，换组波动继续下降。',
+             support='固定N≥30的157图、N=35的92图及旧N≥20范围分别保留；30→35质量用91共同可评图。',
+             counterexample='30→35共同图Q+0.227，全部92图失败0.725%→1.087%；单人是原答基线，两人未计算不计成败，满员SD/V=0是同成员设计事实。',
+             source='../../../research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md', tables=[]),
+        dict(id='same_room', title='同房跨视角，什么能够重复？', module='same_room', tab=0,
+             finding='同房均值预测MAE5.081，对照9.303，9/12楼改善；105/123图对人员排序正相关，42/57人相对同行方向多数重复。',
+             example='第三层看混合团队：旧结构混合队跨类幅度多1.960分，61/78图对为正；两端响应超过2分时CA同向率73.01%。',
+             support='公共水平123直接图对/64图/12楼；个人2,581配对/57人；构成与大块实验各有原标签及支持域。',
+             counterexample='扣公共任务与稳定个人水平后的额外相关仅0.031，不否定前两层相似。未知同建筑关系不当作异房。',
+             source='../../../research/statistics/research_closeout_20261022/SAME_ROOM_REASSESSMENT_20261024.md', tables=[dict(id='same_room_pro__direct_mean_summary',label='同房均值与支持')]),
+        dict(id='doorway', title='增加人数能解决门洞问题吗？', module='case_story', tab=0, case='doorway',
+             finding='门洞17图3→6人平均Q+6.072，15图提高；10→20平均−3.066，11图下降，满员仍6/17不可评。',
+             example='7y-06保留32份完整原答与真实满员失败；点位、目标范围、门楣和表示限制分别看。',
+             support='固定门洞自然人数范围17图；满员27—35人。个别例子不替代全层分母。',
+             counterexample='不能因前段改善就称门洞已解决，也不能因满员失败否认早段增人的价值。',
+             source='../../../research/workers/personnel_population_curves_v2_20261023/README.md', tables=[]),
+        dict(id='oos', title='超出表示标准时，人们怎样表达？', href='oos-review.html',
+             finding='OOS28图、1,222份独立统计：斜顶三图80份新Manual均为四角底面；曲线玻璃同房五视角角点数分歧61.8%。',
+             example='看已完成统计，再看28图完整原答；构造图解释表示限制，复核填写和导出留在次级入口。',
+             support='新Manual804份用于时间/选择，703份/24图按既有资格整理几何；因素允许重叠。',
+             counterexample='327/804选择不可标是响应倾向，不是正确率；GT可能受约束近似，正式质量资格始终为0。',
+             source='../../../research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/oos_statistics_20261024/README.md', tables=[]),
     ]
     write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员第1步：DSTRUCT主解释、融合响应及跨条件对照；第3步：同图大块与容量；旧配比、时间、人数和同房结果继续保留。'))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))

@@ -5,15 +5,15 @@ const requestedRelease=new URLSearchParams(location.hash.slice(1)).get('release'
 const dataset=window.RESEARCH_DATASETS.find(d=>d.release===requestedRelease);
 const SNAPSHOT=dataset?.snapshot;
 const modules={
- overview:['汇报导览','六步导览串联阅读路线；全研究结论、专题和完整明细都保留入口，可展开数据自行取舍。',[]],
+ overview:['研究发现总览','主要发现与对应证据；全研究结论、专题和完整明细都保留入口，可自行展开。',[]],
  case_story:['跨专题典型案例','十个保存案例，含原图、每人的完整标注和团队几何；每个案例列出总体支持范围和记录条数。',[]],
  evidence:['方法与证据','任务范围、质量测量和结构共识的概念，以及对应的保存案例。页面只读取已保存结果，不重新评分或融合。',[['任务与门洞',null],['质量度量',null],['融合机制',null],['研究支持',null]]],
  conditions:['难度与范围','固定参考结构、不同采集条件下的表现和逐图范围支持，三部分分开查看。',[]],
  images:['图片与空间','逐图查看目标空间、原图标注和参考；更多条件在筛选里设置。',[]],
  profiles:['人员画像 · 本轮','Q 水平、偏低的部分（P10）、作答用时和不同难度下的表现。Manual 与 Semi 分开，审核只在有记录的范围内统计。',[]],
- personnel_main:['人员研究六步','人员分类、构成、难度、人数和共识机制，共六步；固定图与可筛选明细分开。',[]],
+ personnel_main:['人员标法与团队','人员分类、构成、难度、人数和共识机制，共六步；固定图与可筛选明细分开。',[]],
  method_supplements:['已验收方法补充','三组已验收的补充方法：D10 人员形成、同队三法融合、质量指标与实际缺陷对照；只读取固定结果和已保存几何。',[["人员形成与构成",null],["同队三法融合",null],["质量指标验证",null]]],
- taxonomy:['人员分类 · 阶段历史','保留旧阶段的工作标签和原来的统计范围；新研究见“人员研究六步”。',[]],
+ taxonomy:['人员分类 · 阶段历史','保留旧阶段的工作标签和原来的统计范围；新研究见“人员标法与团队”。',[]],
  mechanisms:['条件与局部机制 · 10/21','按同图、同参考、精确成员和保存节点逐层追溯。难度、质量、融合和同房结果各自保留支持与资格。',[]],
  workers:['画像明细与历史','原尺度 Q 与任务调整 Q 并列。Scope 分开显示拒绝倾向、历史裁定结局和当前可判断的记录；这些不是全量正确率。',[
   ['连续画像与分组','workers__person_profiles_and_evidence'],['原尺度Q与P10','workers__absolute_Q_training_profiles'],['楼外画像','workers__fold_person_profiles'],['难度与场景','difficulty__worker_strata'],['Scope裁定覆盖','workers__scope_worker_opportunities'],['历史Scope结局','workers__scope_outcome_counts'],['可靠性与排除','workers__record_evidence'],['门洞专项','workers__doorway_specialist_profiles']]],
@@ -23,7 +23,7 @@ const modules={
  benefits:['人员组合效益','高低 Q 配比、快慢配比、固定核心增人和实际投票案例。这里不新增正式人员类型。',[['配比与收益',null],['原答／投票／融合案例',null]]],
  fusion:['融合过程','人员组合、同图、真实路径、成员和已保存几何，可逐层查看。',[
   ['人员组合策略','workers__strategy_vs_random'],['纯类同k逐图对照','workers__pure_group_direct_by_image'],['固定构成换人','statistics__replacement_group_summary'],['换指标与重新选人','workers__metric_reselection_contrasts'],['真实人数过程','fusion__trajectory_scores'],['同k换组稳定性V','fusion__same_k_stability'],['完整率与失败','fusion__completion'],['构成汇总','statistics__team_composition_summary'],['团队成员与几何','workers__team_results']]],
- same_room:['同房比较','在已有关系和可比范围内比较同成员的跨视角表现。没有同房记录时按未知处理，不当作异房。',[
+ same_room:['同房跨视角规律','在已有关系和可比范围内比较同成员的跨视角表现。没有同房记录时按未知处理，不当作异房。',[
   ['原答图对','same_room__endpoint_pairs'],['同成员同顺序过程','same_room__process_paired_prefixes'],['配对过程汇总','same_room__consumer_pair_summary'],['关系组与覆盖','statistics__room_group_registry'],['候选与过程接入','same_room__same_room_endpoint_integration']]],
  multiview:['同房多视角叠加','沿相同人员或相同保存团队比较不同视角；原答与团队评分分开显示。',[]],
  same_room_review:['同房独立补算 · 10/21','个人 Q 校准、结构迁移增量和源图人数选择。支持范围、偏低的部分（P10）、缺失和反例分别保留；页面不重新融合。',[]],
@@ -46,9 +46,9 @@ const metricHints={
  D10:['方向容忍尺度改为10°的对照分；越高越接近该尺度。','与 B8L2 使用同一原答、参考和资格，只把方向尺度 8° 改为 10°；分数差不是几何改善。来源：质量测量专题。'],
  iou_2d:['底面 IoU，0—1；越高表示候选与参考底面更重合。','只看俯视底面交并比，不直接测顶界或全部必要转折。例：平面接近仍可能高度不同。来源：固定评分实现。'],
  S_bottom_deg:['底边球面角距，单位度；越低越接近参考边界。','冻结实现为双向平均距离，不表示墙角身份对应正确率。来源：质量分项合同。'],
- dir:['自身方向残差，单位度；越低越规整。','测输出自身的方向规整性，不冒称每条墙相对 GT 的方向误差。来源：质量分项合同。'],
- Hmean:['整体高度误差分项；越低越好。','这里是质量公式的高度损失，不是图片条件中的几何自遮挡 H。来源：固定评分实现。'],
- Hcenter:['局部中心化高度误差分项；越低越好。','这里是质量公式的局部高度损失；不能与几何自遮挡代理混用。来源：固定评分实现。'],
+ dir:['自身方向残差，单位度；越低越规整。','测输出自身的方向规整性，不是每条墙相对 GT 的方向误差。来源：质量分项合同。'],
+ Hmean:['整体均高相对绝对差；0.1表示相差参考均高的10%。','先按底面周长加权求候选和参考均高，再取绝对差/参考均高；无量纲，正负另看height_mean_ratio−1。它是评分输入，不是缩放后的高度损失，也不是几何自遮挡H。'],
+ Hcenter:['扣掉整体均高差后的局部高度轮廓相对残差；越小越接近参考。','按最近底面位置匹配，做双向均方根并除以参考均高；center指去掉均高，不是房间中心。无量纲，既不是米，也不证明同一语义墙面已对应。'],
  floor_jaccard_difference:['同人数换组后的底面差异；越低表示较稳定。','V 描述更换成员的敏感性，不保证融合更接近参考；跨方法的归一范围不同。来源：融合人数专题。'],
  source_active_time_seconds:['来源活动时间，单位人秒；只统计有来源的记录。','与报告时间、同目标时间和交付历时分开；缺失不补零。来源：时间字段合同。'],
  target_matched_time_seconds:['同目标匹配时间，单位人秒。','只对可匹配目标的真实记录统计，不可用来源活动时间或 lead time 偷换。来源：时间字段合同。'],
@@ -68,8 +68,32 @@ Object.assign(metricHints,{
  oos_disagreement:['原答底面分歧：同图两份底面的对称差面积除以二者并集，再对人员对平均。','0表示重合，1表示不重合；比较人员之间的近似表达，不比较GT，也不衡量顶面是否忠实。子类在每图汇总后按图等权。'],
  oos_scope_choice:['不可标选择：参与者对当次任务的响应。','327/804是新Manual任务选择的记录比例；28图中6图为多数人选择不可标。它不是OOS识别准确率，可见因素与参与者目标范围分别保留。']
 });
-const metricHintLabels={oos_disagreement:'原答底面分歧',oos_scope_choice:'不可标选择'};
-const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(metricHintLabels[key]||key)}" aria-describedby="metricHint">?</button>`:'';
+// 短释义/展开说明沿用 CONTEXT.md；单位和实际分母仍在正文、表格中显示。
+Object.assign(metricHints,{
+ mae:['MAE：预测与实际差的绝对值，再取平均；越小越准。','预测Q时单位是分，预测比例时按表中比例/百分点单位读取。比较方法须保持目标、样本和图/楼权重相同；平均预测改善不等于能筛查严重低Q。'],
+ rmse:['RMSE：误差平方后取平均，再开方；对大误差更敏感。','单位与预测目标相同。它与MAE关注的大误差权重不同，不能把两种指标直接混为同一排名。'],
+ bias:['有符号偏差：平均预测值减实际值。','正值表示平均高估，负值表示平均低估；正负误差可以抵消，接近零不保证每次预测都准。'],
+ pearson_r:['Pearson r：两组数值一起线性变化的程度。','范围−1至1；相关不等于数值相等，也不等于预测误差小。它与看排序的Spearman相关应分别读取。'],
+ spearman_r:['Spearman ρ：两组数值排序一起变化的程度。','范围−1至1；对排名一致性的描述不等于绝对Q预测准确，必须核对共同支持与聚合层级。'],
+ R2:['R²：相对声明基准的平方误差改善程度，可以为负。','常见形式为1−残差平方和/总平方和。面板内相对变化的解释能力，不等于陌生图片绝对Q的预测能力。'],
+ SD:['SD：结果围绕均值的分散程度；Q的SD单位是分。','自然曲线这里描述同图、同人数的顺序间质量波动，不是均值的置信区间，也不同于几何波动V；样本少于2个时不可估。'],
+ P10:['P10：当前样本的第10百分位，Q中通常表示较差端。','约10%的观测不高于此值；它不是最低分或10%错误率。分位数随支持集合变化，分位带不是置信区间。'],
+ P50:['P50：当前样本的中位数。','约一半观测不高于此值；它描述结果分布的中间位置，不是均值或估计精度。'],
+ P90:['P90：当前样本的第90百分位。','约90%的观测不高于此值；对Q是较高端，对误差则是较大误差端。分位带不是置信区间。'],
+ resampling_unit:['重抽区间：按声明的建筑、图片或路径单位重复抽样得到。','重抽次数不是新增独立数据。当前自然路径的2000次bootstrap仅重抽原24条，R03范围到k20；不能据此宣称验证30/35人的路径精度。探索选型后的区间仍属内部分析。'],
+ natural_paths:['路径是一次人员进入顺序；同k取前k名人员形成团队。','大池24条自然顺序是抽样，不是全排列；路径共享成员，同一成员集合复用端点。满员回到同一支团队、SD/V归零，不代表Q正确；角色优先的8条配对顺序另列。'],
+ saved_endpoint:['端点：一支确定团队在既定规则下的保存融合输出。','同一端点可被多个路径或事件引用，因此端点引用次数不是独立团队数。页面读取已保存结果，不按筛选重新融合。'],
+ comparison_event:['事件：一次换人、换类或前缀端点的对照。','事件有各自A/B/C或前后端点，可能共享图片、团队和人员；事件数不等于独立图片数或独立团队数。'],
+ paired_quality:['同一路径两端可评Q：只比较同一条路径前后都能评分的结果。','两端各自可评路径的边际均分可能来自不同路径集合。配对Q与边际Q分列；恢复、新增失败和两端失败另按全部尝试报告。'],
+ all_attempts:['全部尝试：包含真实失败和缺Q的预定团队/路径记录。','失败率按对应全部尝试计算；原实验暂缓未运行不计成功或失败。Q缺失不填0，也不把只在成功子集上的均分当作全部尝试表现。'],
+ percentage_points:['百分点：两个百分比直接相减。','失败率10%→15%是增加5个百分点，相对原值增加50%；两种读法不能混写。Q的0—100分变化仍用分表示。'],
+ pair_nodes:['一个布局节点对应一组顶底点；4个节点是8个点。','节点表示候选布局转折，近共线分段需按对应定义解释。少于4节点的保存诊断点不能闭合为完整可评布局；没有坐标时不补造。']
+});
+for(const [key,source] of Object.entries({r2:'R2',pearson:'pearson_r',spearman:'spearman_r',sd:'SD',p10:'P10',q10:'P10',p50:'P50',p90:'P90',building_equal_mae:'mae',own_source_mae:'mae',source_peers_mae:'mae',outside_history_mae:'mae',descriptive_bootstrap_lower:'resampling_unit',descriptive_bootstrap_upper:'resampling_unit',attempts:'all_attempts',attempted_paths:'all_attempts',paired_Q_paths:'paired_quality',paired_Q:'paired_quality',path_id:'natural_paths',team_key:'saved_endpoint',event_id:'comparison_event',nodes:'pair_nodes'}))metricHints[key]=metricHints[source];
+metricHints.absolute_error=['单次绝对误差：本次预测与实际相差多少，不保留正负号。','同单位的多次绝对误差再按声明权重平均才是MAE；这一个值不是总体预测精度。'];
+metricHints.method_dstruct_k2=['二类是困难结构表达的粗层，不是两人团队。','K为类别数，n为每队人数，m为替换人数，N为当图可用池。二/三类保留各自保存名单和实验，楼外同号类不跨折套用角色。'];
+const metricHintLabels={mae:'MAE平均绝对误差',rmse:'RMSE均方根误差',pearson_r:'Pearson线性相关',spearman_r:'Spearman排序相关',bias:'有符号偏差',resampling_unit:'重抽单位与区间',natural_paths:'自然路径',saved_endpoint:'保存端点',comparison_event:'对照事件',paired_quality:'同一路径两端可评Q',all_attempts:'全部尝试',percentage_points:'百分点',pair_nodes:'节点与顶底点对',oos_disagreement:'原答底面分歧',oos_scope_choice:'不可标选择'};
+const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(metricHintLabels[key]||labels[key]||key)}" aria-describedby="metricHint">?</button>`:'';
 let hintPopover=null,activeHint=null,hintPinned=false;
 function hideHint(){if(activeHint)activeHint.setAttribute('aria-expanded','false');activeHint=null;hintPinned=false;if(hintPopover)hintPopover.hidden=true;}
 function showHint(trigger,detailed){const content=metricHints[trigger.dataset.hint];if(!content||!hintPopover)return; if(activeHint&&activeHint!==trigger)activeHint.setAttribute('aria-expanded','false');activeHint=trigger;hintPinned=detailed;trigger.setAttribute('aria-expanded',String(detailed));hintPopover.textContent=detailed?content.join(' '):content[0];hintPopover.hidden=false;const rect=trigger.getBoundingClientRect(),width=hintPopover.offsetWidth,height=hintPopover.offsetHeight;hintPopover.style.left=Math.max(8,Math.min(rect.left,innerWidth-width-8))+'px';hintPopover.style.top=(rect.bottom+height+8<innerHeight?rect.bottom+6:Math.max(8,rect.top-height-6))+'px';}
@@ -133,7 +157,7 @@ function applyRows(rows){let result;
  if(state.module==='workers'&&rows.some(r=>Object.hasOwn(r,'Q_effect')||Object.hasOwn(r,'relative_q'))){
   const records=C.filterRows([...scoreMap.values()],state.filters,imageMap).rows,workers=new Set(records.map(r=>r.worker_id));
   result={rows:rows.filter(r=>workers.has(r.worker_id)),unsupported:[]};
-  $('notice').innerHTML=dataset.release==='v2'?'<div class="info">图片／条件筛选限定可查看的人员名单，不重算画像。此处画像采用原快照的描述性候选；最新人员分类与楼外验证见“人员研究六步”。</div>':'<div class="info">图片／条件筛选仅限定可查看的人员名单。Q/T效应仍为所选源画像的冻结训练结果，不因筛选重新拟合；楼外、专项结果请使用对应页签。</div>';
+  $('notice').innerHTML=dataset.release==='v2'?'<div class="info">图片／条件筛选限定可查看的人员名单，不重算画像。此处画像采用原快照的描述性候选；最新人员分类与楼外验证见“人员标法与团队”。</div>':'<div class="info">图片／条件筛选仅限定可查看的人员名单。Q/T效应仍为所选源画像的冻结训练结果，不因筛选重新拟合；楼外、专项结果请使用对应页签。</div>';
  }else result=C.filterRows(rows,state.filters,imageMap);const defaults=facetDefaults(rows);let out=result.rows.filter(r=>passesWhere(r)&&Object.entries(defaults).every(([k,v])=>r[k]===v));
  if(rows.some(r=>r.metric)&&['workers','same_room'].includes(state.module))out=out.filter(r=>!r.metric||r.metric===state.metric);
  state.rows=out;return result.unsupported;
@@ -178,27 +202,31 @@ function lineChart(rows,yKey,title){
 }
 function chosenMetric(rows){const cols=Object.keys(rows[0]||{});return (C.fields[state.metric]||[]).find(k=>cols.includes(k)&&rows.some(r=>C.numeric(r[k])))||cols.find(k=>k.startsWith(state.metric)&&rows.some(r=>C.numeric(r[k])));}
 function genericChart(rows){const presets={'fusion__same_k_stability':'floor_jaccard_difference','same_room__endpoint_pairs':'mean_absolute_person_delta','workers__absolute_Q_training_profiles':'mean','workers__semi_initialization_scores':'worker_attributable_gain_'+state.metric};const preset=presets[state.meta?.id];const k=state.chartField&&rows.some(r=>C.numeric(r[state.chartField]))?state.chartField:preset||chosenMetric(rows);
- return k?svgChart(rows,k,'histogram'):placeholder('专题图表待配置','明细已接通；该表尚未绑定默认数值图，不用其它字段冒充质量结果。');}
+ return k?svgChart(rows,k,'histogram'):placeholder('专题图表待配置','明细已接通；该表尚未绑定默认数值图，不用其它字段代替质量结果。');}
 function sameRoomPredictionPanel(id){
  if(!id.startsWith('same_room_prediction__'))return '';
  const base='../../same_room/same_room_v2_prediction_20261019/';
- const note=`<div class="info">v2同房条件预测：OOS已排除，门洞单列，人员分类未接入。源视角Q已有评价参考，尚无确认异房匹配对照。MAE越低越好；耗时误差在log(1+秒数)上计算，不能读作秒数。配对描述及审计表保留未准入关系；主分析需普通场景、关系可比、共同有效人员≥4。<a href="${base}README.md">完整报告</a> · <a href="${base}CONSUMER_INTERFACE.json">数据接口</a></div>`;
+ const note=`<div class="info">v2同房条件预测：OOS已排除，门洞单列；此首轮预测面板未纳入人员分类，同房构成与大块结果在后续表保留原标签。源视角Q已有评价参考，尚无确认异房匹配对照。MAE越低越好；耗时误差在log(1+秒数)上计算，不能读作秒数。配对描述及审计表保留未准入关系；主分析需普通场景、关系可比、共同有效人员≥4。<a href="${base}README.md">完整报告</a> · <a href="${base}CONSUMER_INTERFACE.json">数据接口</a></div>`;
  if(id!=='same_room_prediction__prediction_summary')return note;
  const coverage=index.documents.find(d=>d.content.schema==='same_room_v2_prediction_20261019_r1').content.coverage.find(r=>r.metric==='B8L2');
  return note+`<section class="panel"><h2>首轮固定的研究范围</h2><p>以下覆盖与原报告图是固定结果，不随下方明细筛选或指标切换重算。质量描述、本人源视角预测和其他人数实验各有自己的支持范围。</p>${metricCards([['质量直接同房关系',coverage.pairs,'不是独立房间数'],['图片 / 建筑',`${coverage.images} / ${coverage.buildings}`,'质量描述范围'],['共同有效人员中位数',coverage.median_common,'每对关系']])}<div class="split equal"><figure><img style="width:100%;height:auto" src="${base}prediction_by_building.png" alt="本人源视角预测的逐建筑增益，旧新增人员分列"><figcaption>本人源视角预测：人员来源分开，正增益表示误差下降。</figcaption></figure><figure><img style="width:100%;height:auto" src="${base}source_people_learning.png" alt="固定评价面板中源视角其他人员从4增加到16人的预测误差"><figcaption>人数实验固定30对关系、39图、10栋、35名新增人员；k是源视角其他人员数，不是融合团队人数。</figcaption></figure></div></section>`;
+}
+function findingSummary(module){
+ const item=dataset.release==='v2'&&overview.sections.find(s=>s.id===module);if(!item)return '';
+ return `<section class="panel"><h2>${esc(item.title)}</h2><p><strong>${esc(item.finding)}</strong></p><p>${esc(item.example)}</p><p class="scope-label">支持：${esc(item.support)}</p><p class="scope-label">边界：${esc(item.counterexample)}</p><p class="scope-label">固定专题支持，不随明细筛选重算。<a href="${esc(item.source)}" target="_blank" rel="noopener">完整研究与来源</a></p></section>`;
 }
 async function render(){
  const token=++state.loadToken,mod=modules[state.module];supportSets.clear();chartCounter=0;
   const exportButton=document.querySelector('.pagehead [data-act="export"]');exportButton.disabled=false;exportButton.textContent='导出筛选明细';
  $('title').textContent=mod[0];$('description').textContent=mod[1];$('crumb').textContent=`数据 ${dataset.release} / ${dataset.analysisLabel} / ${mod[0]}`;activeContext();
- document.querySelectorAll('#navigation a').forEach(a=>a.classList.toggle('active',a.dataset.module===state.module));
+ document.querySelectorAll('#navigation a').forEach(a=>{const active=a.dataset.module===state.module;a.classList.toggle('active',active);if(active&&a.closest('details'))a.closest('details').open=true;});
  const tabs=mod[2];state.tab=Math.min(Math.max(0,state.tab),Math.max(0,tabs.length-1));
  $('tabs').innerHTML=tabs.map(([title],i)=>`<button type="button" role="tab" aria-selected="${i===state.tab}" aria-controls="content" data-tab="${i}" class="${i===state.tab?'active':''}">${esc(title)}</button>`).join('');
  $('content').dataset.ready='';$('content').innerHTML='<div class="placeholder" role="status">正在按需读取本地数据…</div>';
  $('notice').innerHTML='';state.rows=[];state.meta=null;
  try{
-  if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
-  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
+  if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});if(token===state.loadToken&&state.module==='profiles'&&state.tab===0)$('content').insertAdjacentHTML('afterbegin',findingSummary('profiles'));return;}
+  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,assets,imageDetail,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='method_supplements'){await MethodSupplements.render($('content'),{release:dataset.release,tab:state.tab,assets,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,imageDetail,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='case_story'){await CaseStory.render($('content'),{release:dataset.release,assets,deepLink:new URLSearchParams(location.hash.slice(1)),imageDetail,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,isCurrent:()=>token===state.loadToken,navigate:patch=>route(patch)});return;}
   if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
@@ -226,7 +254,9 @@ async function render(){
    $('content').innerHTML=toolbar+title+`<div class="split"><div>${tablePanel()}${genericChart(state.rows)}</div><section class="panel" id="focusPanel"></section></div>`;
    const row=state.rows.find(r=>r.worker_id===state.focusWorker)||state.rows[0];if(row)profile(row);
   }else if(state.module==='same_room'){
-   $('content').innerHTML=sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
+   $('content').innerHTML=(state.tab===0?findingSummary('same_room'):'')+sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
+  }else if(state.module==='same_room_review'){
+   $('content').innerHTML=`<section class="panel"><h2>结构表达可重复，位置迁移与严重错误筛查仍有限</h2><p>44图、7楼、55人中，本人源视角对9°未匹配参考角点比例的预测MAE比同源他人少1.099个百分点，5/7楼改善；底点偏移和面积log误差却7/7楼更差。未匹配也可能来自定位偏离，不直接等同漏画。</p><p>同预算个人Q校准MAE从12.364降至11.145，6/7楼改善；目标Q&lt;50的事后子集MAE为25.719，对照23.443，反而更差。改善平均预测不等于能筛查严重错误；该子集也不是选人时已知的信息。</p><p class="hint-glossary">预测误差 MAE ${hintButton('mae')} · 有符号偏差 ${hintButton('bias')} · 相关与预测精度 ${hintButton('spearman_r')} · 百分点 ${hintButton('percentage_points')} · 重抽区间 ${hintButton('resampling_unit')}。</p><div class="actions"><a href="../../same_room/same_room_independent_followup_20261021/structure/summary.csv">结构迁移逐指标汇总</a><a href="../../same_room/same_room_independent_followup_20261021/README.md">校准结果、支持与边界</a></div></section>`+toolbar+title+tablePanel();
   }else if(state.module==='fusion'&&id==='fusion__trajectory_scores'){
    $('content').innerHTML=`<div class="info">固定 138 队的墙线、代表原答和 Lee MV50 同队比较：<a href="#module=method_supplements&tab=1">进入融合方法补充</a>。</div>`+toolbar+`<div id="processFocus"></div>`+tablePanel();await processFocus(token);
   }else if(state.module==='fusion'){
@@ -239,12 +269,13 @@ async function render(){
   }else{
    let note='';if(state.module==='fusion')note='<div class="info">当前为同图同k的既有组合／换人／重选成员证据。成员选择指标与终点评价分开；打开记录可追到真实路径和来源。单条路径位于“真实人数过程”。</div>';
    if(state.module==='coverage')note='<div class="info">计算状态、主质量用途与诊断状态分别读取；多重原因可重叠，原因行数不能直接相加作为作答总数。</div>';
-   if(state.module==='taxonomy')note='<div class="info">M0/M1是Manual结构表达工作分类；SP_LOW是Semi条件性尺度组，A2是独立几何关系分区。楼外表先在图内合并参考面板，再按图、楼等权；A2严格匹配加入共同点数层，n_pairs为匹配前对数，n_pairs_contributing为实际贡献对数。换入M1的历史Q较高，当前没有标法独立净收益结论。<a href="../../workers/personnel_taxonomy_20261021/REPORT_ZH.md">方法与解释</a> · <a href="#module=patterns" data-module="patterns">查看此前保存原答/融合</a></div><details class="panel"><summary>新分类原答与团队正反例图</summary><p>图例对应的逐对象成员在“图例与逐对象成员”页签；C13/C14为保存团队，页面筛选不会重新融合。历史图沿用图内配色：原图黄色线、BEV黑色虚线为参考；粉色、蓝色等表示图内对应人员或队伍。坐标单位为相机高度h，不是米。</p><div class="actions"><a href="../../workers/personnel_taxonomy_20261021/figures/C01_manual_classes.png">C01 Manual短转折</a><a href="../../workers/personnel_taxonomy_20261021/figures/C02_manual_classes.png">C02 GT遗漏与标法分开</a><a href="../../workers/personnel_taxonomy_20261021/figures/C08_A2_positive.png">C08 A2正例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C09_A2_counterexample.png">C09 A2反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C10_Semi_height.png">C10 Semi尺度</a><a href="../../workers/personnel_taxonomy_20261021/figures/C11_Semi_height_counterexample.png">C11 Semi反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C13_jtc26_third_vote.png">C13 同类关键第三票</a><a href="../../workers/personnel_taxonomy_20261021/figures/C14_Uw22_threshold.png">C14 必要结构失选与恢复</a></div></details>';
+   if(state.module==='taxonomy')note='<div class="info">M0/M1是Manual结构表达工作分类；SP_LOW是Semi条件性尺度组，A2是独立几何关系分区。楼外表先在图内合并参考面板，再按图、楼等权；A2严格匹配加入共同点数层，n_pairs为匹配前对数，n_pairs_contributing为实际贡献对数。换入M1的历史Q较高，当前没有标法独立净收益结论。<a href="../../workers/personnel_taxonomy_20261021/REPORT_ZH.md">方法与解释</a> · <a href="#module=patterns" data-module="patterns">查看此前保存原答/融合</a></div><details class="panel"><summary>历史分类原答与团队正反例图</summary><p>图例对应的逐对象成员在“图例与逐对象成员”页签；C13/C14为保存团队，页面筛选不会重新融合。历史图沿用图内配色：原图黄色线、BEV黑色虚线为参考；粉色、蓝色等表示图内对应人员或队伍。坐标单位为相机高度h，不是米。</p><div class="actions"><a href="../../workers/personnel_taxonomy_20261021/figures/C01_manual_classes.png">C01 Manual短转折</a><a href="../../workers/personnel_taxonomy_20261021/figures/C02_manual_classes.png">C02 GT遗漏与标法分开</a><a href="../../workers/personnel_taxonomy_20261021/figures/C08_A2_positive.png">C08 A2正例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C09_A2_counterexample.png">C09 A2反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C10_Semi_height.png">C10 Semi尺度</a><a href="../../workers/personnel_taxonomy_20261021/figures/C11_Semi_height_counterexample.png">C11 Semi反例</a><a href="../../workers/personnel_taxonomy_20261021/figures/C13_jtc26_third_vote.png">C13 同类关键第三票</a><a href="../../workers/personnel_taxonomy_20261021/figures/C14_Uw22_threshold.png">C14 必要结构失选与恢复</a></div></details>';
    if(state.module==='mechanisms')note='<div class="info">16张接续表按源模块保留原粒度。共同77图的快慢差异、近分异形、同配比不同成员/对应、G046/G057局部同房观测可经图或对象关联回原研究台；无关联字段的汇总在全局筛选下明确停显。G046 A/B同角已确认；G057局部预测未胜恒定0.5基线。<a href="../review_progress_20261021/index.html">六站原图与机制图</a> · <a href="#module=images" data-module="images">逐图原答/参考</a></div>';
    if(state.module==='time'){
     note='<div class="info">来源活动时间和同目标审计时间各自按真实非空支持统计。未改动不自动判失败，编辑后未知不判成功。</div>';
    }
    $('content').innerHTML=toolbar+note+title+genericChart(state.rows)+tablePanel();
+   if(state.tab===0&&state.module==='conditions')$('content').insertAdjacentHTML('afterbegin',findingSummary('difficulty'));
   }
   if(token!==state.loadToken)return;drawTable();
   if(unsupported.length)$('content').insertAdjacentHTML('afterbegin',placeholder('当前筛选不适用于此表','未展示全表数字以免误导；更换明细表或清空不兼容条件。'));
@@ -257,7 +288,7 @@ async function qualityFocus(row,host,token){
  const answer=image.annotations.find(a=>a.object_id===row.object_id),ref=image.references.find(r=>r.target_id===(row.rescore_target_id||answer?.target_id));
  state.focusObject=row.object_id;
  const keys=['object_id','image_id','worker_id','condition','rescore_target_id','reference_id','reference_version','calculation_status','quality_usable','B8L2','D10','IoU3D100','iou_2d','S_bottom_deg','dir','Hmean','Hcenter','diagnostic_B8L2','diagnostic_D10','quality_exclusion_reasons'];
- host.innerHTML=`<div class="split"><div id="answerGeometry"></div><section class="panel"><h2>作答、参考与测量</h2><div class="actions"><button data-jump="images" data-image="${esc(image.image_id)}" data-object="${esc(row.object_id)}">图片与空间</button><button data-jump="workers" data-worker="${esc(row.worker_id)}">人员画像</button></div>${fieldList(Object.fromEntries(keys.filter(k=>Object.hasOwn(row,k)).map(k=>[k,row[k]])))}<details><summary>分项解释与限制</summary><p>底面IoU、底边偏差、方向残差与高度误差按冻结评分引擎解释。Hmean／Hcenter不冒充米制高度；IoU3D100为既定平均高度棱柱定义。非线性分项不能当作可相加的百分比扣分。</p><p>参考切换只用于看图；当前数值始终绑定本行参考。</p></details>${answer&&!answer.geometry_compatible?`<div class="warning">几何与消费快照绑定不一致：${esc(answer.geometry_binding_reasons.join('、'))}</div>`:''}</section></div>`;
+ host.innerHTML=`<div class="split"><div id="answerGeometry"></div><section class="panel"><h2>作答、参考与测量</h2><div class="actions"><button data-jump="images" data-image="${esc(image.image_id)}" data-object="${esc(row.object_id)}">图片与空间</button><button data-jump="workers" data-worker="${esc(row.worker_id)}">人员画像</button></div>${fieldList(Object.fromEntries(keys.filter(k=>Object.hasOwn(row,k)).map(k=>[k,row[k]])))}<details><summary>分项解释与限制</summary><p>底面IoU、底边偏差、方向残差与高度误差按冻结评分引擎解释。Hmean／Hcenter 不是米制高度；IoU3D100为既定平均高度棱柱定义。非线性分项不能当作可相加的百分比扣分。</p><p>参考切换只用于看图；当前数值始终绑定本行参考。</p></details>${answer&&!answer.geometry_compatible?`<div class="warning">几何与消费快照绑定不一致：${esc(answer.geometry_binding_reasons.join('、'))}</div>`:''}</section></div>`;
  if(answer?.evidence)host.insertAdjacentHTML('beforeend',`<details class="panel"><summary>坐标处理、参考绑定、时间、Semi、scope及审核证据</summary>${fieldList(answer.evidence)}</details>`);
  WorkbenchGeometry.mount(host.querySelector('#answerGeometry'),image,answer,ref);
 }
@@ -276,7 +307,7 @@ async function renderImages(token){
  const candidates=detail.annotations.filter(a=>!eligibleObjects||eligibleObjects.has(a.object_id));const answer=C.selectAnnotation(candidates,state.focusObject);
  const reference=detail.references.find(r=>r.target_id===state.viewTarget)||detail.references.find(r=>r.target_id===answer?.target_id)||detail.references.find(r=>r.current)||detail.references[0];
  state.focusObject=answer?.object_id||'';
- $('imageFocus').innerHTML=`<section class="panel"><h2>${esc(image.image_code)} · 当前查看对象</h2><div class="toolbar">${select('answerSelect',candidates.map(a=>[a.object_id,`${a.worker_id} · ${a.condition} · ${a.object_id}${a.retained?'':' · 已移出'}`]),answer?.object_id,'个人作答（保留与移出均可查）')}${select('targetSelect',detail.references.map(r=>[r.target_id,r.label]),reference?.target_id,'查看空间／参考（不重评分）')}</div>${reference?.target_id!==answer?.target_id?'<div class="warning">当前查看参考与该作答评分绑定目标不同；这里只对照几何，不把旧分数当新参考评价。</div>':''}<div id="imageGeometry"></div></section><div class="split equal">${panel('范围、GT与房间依据',fieldList({图片:image.image_code,难度:image.difficulty,场景:image.scene,图级标记:image.flags,空间候选:detail.spaces,备注:image.notes}))}${panel('该图全部人员作答',`<div class="tablewrap"><table><thead><tr><th>人员</th><th>条件</th><th>目标</th><th>计算状态</th><th>质量用途</th><th>B8L2</th><th>打开</th></tr></thead><tbody>${detail.annotations.map(a=>`<tr><td>${esc(a.worker_id)}</td><td>${esc(a.condition)}</td><td title="${esc(a.target_id)}">${esc(a.target_id?.split(':')[0]||'待定')}</td><td>${esc(a.calculation_status)}</td><td>${a.quality_usable?'主质量':'非主质量'}</td><td>${fmt(a.quality?.B8L2)}</td><td><button data-object-open="${esc(a.object_id)}">核验</button></td></tr>`).join('')}</tbody></table></div>`)}</div>${placeholder('裁切点／冗余点逐点依据','已有目标、底面和原始点可查看；逐点审核回执的可视映射尚未接入。本页不以候选边界冒充真实墙角，也不补未知顶界。')}`;
+ $('imageFocus').innerHTML=`<section class="panel"><h2>${esc(image.image_code)} · 当前查看对象</h2><div class="toolbar">${select('answerSelect',candidates.map(a=>[a.object_id,`${a.worker_id} · ${a.condition} · ${a.object_id}${a.retained?'':' · 已移出'}`]),answer?.object_id,'个人作答（保留与移出均可查）')}${select('targetSelect',detail.references.map(r=>[r.target_id,r.label]),reference?.target_id,'查看空间／参考（不重评分）')}</div>${reference?.target_id!==answer?.target_id?'<div class="warning">当前查看参考与该作答评分绑定目标不同；这里只对照几何，不把旧分数当新参考评价。</div>':''}<div id="imageGeometry"></div></section><div class="split equal">${panel('范围、GT与房间依据',fieldList({图片:image.image_code,难度:image.difficulty,场景:image.scene,图级标记:image.flags,空间候选:detail.spaces,备注:image.notes}))}${panel('该图全部人员作答',`<div class="tablewrap"><table><thead><tr><th>人员</th><th>条件</th><th>目标</th><th>计算状态</th><th>质量用途</th><th>B8L2</th><th>打开</th></tr></thead><tbody>${detail.annotations.map(a=>`<tr><td>${esc(a.worker_id)}</td><td>${esc(a.condition)}</td><td title="${esc(a.target_id)}">${esc(a.target_id?.split(':')[0]||'待定')}</td><td>${esc(a.calculation_status)}</td><td>${a.quality_usable?'主质量':'非主质量'}</td><td>${fmt(a.quality?.B8L2)}</td><td><button data-object-open="${esc(a.object_id)}">核验</button></td></tr>`).join('')}</tbody></table></div>`)}</div>${placeholder('裁切点／冗余点逐点依据','已有目标、底面和原始点可查看；逐点审核回执的可视映射尚未接入。本页不把候选边界当作真实墙角，也不补未知顶界。')}`;
  WorkbenchGeometry.mount($('imageGeometry'),detail,answer,reference);
 }
 async function pairFocus(row,token){const host=$('focusPanel');if(!host)return;const a=row.image_a||row.image_id_a,b=row.image_b||row.image_id_b;
@@ -314,7 +345,7 @@ async function semiFocus(row,token){const host=$('focusPanel');if(!host)return;
   host.innerHTML=`<p class="info">有实际初始化绑定的记录，可在下方几何图勾选Semi初始化层；新批报告标志不生成初始坐标。增益资格、研究者修订与已确认纠错分别解释。</p><div id="semiFinal"></div>${panel('当前初始化与净改善证据',fieldList(row))}`;
   const score=scoreMap.get(row.object_id);if(score)await qualityFocus(score,$('semiFinal'),token);return;
  }
- host.innerHTML=`<div class="split equal">${placeholder('实际初始化几何待适配','初始化来源和兼容测量已接入；尚未把已恢复的初始化坐标打包进离线查看器。不使用模型重推结果代替。')}<div id="semiFinal"></div></div>${panel('初始化、最终与参考的同口径计量',fieldList(Object.fromEntries(Object.entries(row).filter(([k])=>/object_id|worker_id|reference|initial_B8L2|final_B8L2|gain_B8L2|initial_D10|final_D10|gain_D10|compatib|unavailable|source_time/.test(k)))))}${placeholder('修改量与确认错误的逐位置对应','确认错误机会、未改动和编辑后未知在“确认错误与未知”页签查看；未发布的局部修复测量不冒充成功。')}`;
+ host.innerHTML=`<div class="split equal">${placeholder('实际初始化几何待适配','初始化来源和兼容测量已接入；尚未把已恢复的初始化坐标打包进离线查看器。不使用模型重推结果代替。')}<div id="semiFinal"></div></div>${panel('初始化、最终与参考的同口径计量',fieldList(Object.fromEntries(Object.entries(row).filter(([k])=>/object_id|worker_id|reference|initial_B8L2|final_B8L2|gain_B8L2|initial_D10|final_D10|gain_D10|compatib|unavailable|source_time/.test(k)))))}${placeholder('修改量与确认错误的逐位置对应','确认错误机会、未改动和编辑后未知在“确认错误与未知”页签查看；未发布的局部修复测量不算作成功。')}`;
  const score=scoreMap.get(row.object_id);if(score)await qualityFocus(score,$('semiFinal'),token);else $('semiFinal').innerHTML=placeholder('最终作答未关联','消费快照没有同对象。');
 }
 async function teamFocus(row,token){
@@ -339,11 +370,11 @@ function renderOverview(){
   $('content').innerHTML=(window.ResearchEvidence?ResearchEvidence.overviewHTML({release:dataset.release,snapshot:SNAPSHOT}):'')+metricCards([['作答总数',s.raw_records,'份；包含非主质量记录'],['研究图片',s.images,'张；不是过程池数'],['当前质量可用',s.quality_records,'份；各专题的统计范围另列'],['保留人员',s.retained_people,'人；不是画像训练人数']])+`<div class="info">这里保留 v1 的冻结概要；筛选只作用于明细模块。</div><div class="cards">${overview.sections.map(s=>`<section class="panel finding"><h2>${esc(s.title)}</h2><p>${esc(s.finding)}</p><p class="scope-label">${esc(s.support)}</p><details><summary>解释限制与反例</summary><p>${esc(s.counterexample)}</p></details><div class="actions">${s.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div></section>`).join('')}</div>`;
   state.rows=[];return;
  }
- const summary=assets.image_summary, steps=['images','quality','conditions','workers','fusion','same_room'];
- const cards=overview.sections.map((item,i)=>`<section class="panel briefing-step"><p class="eyebrow">${esc(item.title)}</p><h2>${esc(item.finding)}</h2><figure>${item.visual?`<a href="${esc(item.visual)}" target="_blank" rel="noopener"><img class="briefing-visual" src="${esc(item.visual)}" alt="${esc(item.visual_alt)}" loading="lazy"></a>`:''}<figcaption>${esc(item.example||'查看保存实例')} · 固定保存实例，不随明细筛选变化。${item.visual?` <a href="${esc(item.visual)}" target="_blank" rel="noopener">查看原尺寸图片 ↗</a>`:''}</figcaption></figure><p class="scope-label"><strong>支持范围：</strong>${esc(item.support)}</p><p class="scope-label"><strong>例外：</strong>${esc(item.counterexample)}</p><div class="actions"><button data-module="${steps[i]||'data'}">查看实例与图表</button>${item.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div>${item.source?`<a class="briefing-source" href="${esc(item.source)}">来源与方法说明</a>`:''}</section>`).join('');
- $('content').innerHTML=`<div class="briefing-intro"><p class="eyebrow">六步概览 · ${esc(dataset.release)} · ${esc(SNAPSHOT)}</p><h2>每一步的结果、例子和适用范围</h2><p>按钮会打开同一研究台的原表和几何。导览用的是固定保存的证据，不随明细筛选重新计算。</p><div class="actions"><button class="primary" data-module="images">打开图片与原答</button><button data-module="data">进入数据浏览</button><a href="../../../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md" target="_blank" rel="noopener">全研究结论与14条主线</a><a href="../../../research/catalog/INDEX.md" target="_blank" rel="noopener">研究资料目录与专题</a><a href="oos-review.html">OOS 独立统计与复核工作台</a></div><p class="hint-glossary">同名符号依上下文：几何自遮挡 H ${hintButton('occlusion_h')} / 高度损失 H ${hintButton('height_loss_h')}；方向残差 D ${hintButton('direction_d')} / 共同背景 D ${hintButton('background_d')}；源历史人数 k ${hintButton('source_k')} / 融合团队人数 k ${hintButton('team_k')}。</p></div>`+
+ const summary=assets.image_summary;
+ const cards=overview.sections.map((item,i)=>`<section class="panel briefing-step"><p class="eyebrow">${esc(item.title)}</p><h2>${esc(item.finding)}</h2><figure>${item.visual?`<a href="${esc(item.visual)}" target="_blank" rel="noopener"><img class="briefing-visual" src="${esc(item.visual)}" alt="${esc(item.visual_alt)}" loading="lazy"></a>`:''}<figcaption>${esc(item.example||'查看保存实例')} · 固定保存实例，不随明细筛选变化。${item.visual?` <a href="${esc(item.visual)}" target="_blank" rel="noopener">查看原尺寸图片 ↗</a>`:''}</figcaption></figure><p class="scope-label"><strong>支持范围：</strong>${esc(item.support)}</p><p class="scope-label"><strong>例外：</strong>${esc(item.counterexample)}</p><div class="actions"><a href="${esc(item.href||'#release=v2&module='+(item.module||'data')+'&tab='+(item.tab||0)+(item.case?'&case='+item.case:''))}">查看实例与图表</a>${item.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div>${item.source?`<a class="briefing-source" href="${esc(item.source)}">来源与方法说明</a>`:''}</section>`).join('');
+ $('content').innerHTML=`<div class="briefing-intro"><p class="eyebrow">研究发现总览 · ${esc(dataset.release)} · ${esc(SNAPSHOT)}</p><h2>本轮的主要发现与对应证据</h2><p>按钮会打开同一研究台的原表和几何。导览用的是固定保存的证据，不随明细筛选重新计算。</p><div class="actions"><button class="primary" data-module="images">打开图片与原答</button><button data-module="data">进入数据浏览</button><a href="../../../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md" target="_blank" rel="noopener">全研究结论主线</a><a href="../../../research/catalog/INDEX.md" target="_blank" rel="noopener">研究资料目录与专题</a><a href="oos-review.html">OOS 独立统计与复核工作台</a></div><p class="hint-glossary">提示用法：悬浮或键盘聚焦看短释义，点击 ? 看详细说明，Esc 关闭。<a href="../../../docs/thesis_main/CONTEXT.md" target="_blank" rel="noopener">完整术语说明</a></p><p class="hint-glossary">同名符号依上下文：几何自遮挡 H ${hintButton('occlusion_h')} / 高度损失 H ${hintButton('height_loss_h')}；方向残差 D ${hintButton('direction_d')} / 共同背景 D ${hintButton('background_d')}；源历史人数 k ${hintButton('source_k')} / 融合团队人数 k ${hintButton('team_k')}。</p></div>`+
  metricCards([['作答总数',summary.raw_records,'份；包含非主质量记录'],['研究图片',summary.images,'张；不是过程池数'],['当前质量可用',summary.quality_records,'份；各专题的统计范围另列'],['保留人员',summary.retained_people,'人；不是画像训练人数']])+
- `<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <button data-module="case_story">直接查看跨专题案例的原答与保存融合</button> <button data-module="personnel_main">进入人员研究六步</button> · <a href="../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md">人员研究主报告</a>。历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
+ `<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <button data-module="case_story">直接查看跨专题案例的原答与保存融合</button> <button data-module="personnel_main">进入人员标法与团队</button> · <a href="../../../docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md">人员研究主报告</a>。历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
  state.rows=[];
 }
 function renderPlan(){const plans=assets.supplement_plan?.plans;
@@ -351,7 +382,7 @@ function renderPlan(){const plans=assets.supplement_plan?.plans;
 }
 function renderSources(){
  const historyEntry=assets.historical_offline_files?'<a href="../research_explorer_20261017/explorer.html">历史195表 ↗</a>':placeholder('历史195表载荷尚未构建','保留旧源码与来源身份；本机没有旧explorer-data，不能把当前109表当作195表。可查相邻旧包README与构建工具。');
- $('content').innerHTML='<section class="panel"><h2>全研究结论与专题</h2><p>研究台保留全部已完成研究和历史明细；六步导览用于串联阅读路线，读者可展开数据自行取舍。</p><div class="actions"><a href="../../../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md" target="_blank" rel="noopener">全研究结论与14条主线</a><a href="../../../research/catalog/INDEX.md" target="_blank" rel="noopener">研究资料目录与专题</a></div></section>'+`<section class="panel"><h2>当前消费与上游核对</h2>${fieldList({数据版本:dataset.release,消费快照:assets.snapshot_id,资源构建时间:assets.built_at,共同评分:assets.gallery_score_context,融合分析修订:assets.fusion_revision,几何绑定不匹配数:assets.geometry_binding_mismatches,上游状态:'仅在构建时核对；离线页面不知道此后变化'})}</section><div class="cards">${assets.dependencies.map(d=>panel(d.module,`<p>${d.status==='matches_at_build'?'构建时与捕获接口一致':'构建时接口已变化或缺失；不当作已同步'}</p><p class="scope-label">${esc(d.path)}</p><details><summary>消费版本与当前接口原文</summary><pre>${esc(JSON.stringify({captured:d.captured,current:d.current},null,2))}</pre></details>`)).join('')}</div><section class="panel"><h2>版本入口（并列，不是时间线）</h2><div class="actions"><span class="chip">数据 ${esc(dataset.release)} · 当前</span><span class="chip">${esc(dataset.analysisLabel)}</span>${historyEntry}${window.RESEARCH_DATASETS.filter(d=>!d.available).map(d=>`<button disabled>${esc(d.label)}</button>`).join('')}</div></section><section class="panel"><h2>当前表来源、字段与合同</h2><div class="doclist">${index.tables.map(t=>`<details><summary>${esc(t.id)} · ${t.row_count}行${t.status==='superseded'?' · 被替代接口':''}</summary><p>${esc(t.path)}</p><p>${esc(t.caveats?.join('；'))}</p><p>字段：${esc(t.columns.join('、'))}</p><button data-table-jump="${esc(t.id)}">查看完整明细</button></details>`).join('')}${index.documents.map(d=>`<details><summary>${esc(d.path)}</summary><pre>${esc(typeof d.content==='string'?d.content:JSON.stringify(d.content,null,2))}</pre></details>`).join('')}</div></section>`;state.rows=[];
+ $('content').innerHTML='<section class="panel"><h2>全研究结论与专题</h2><p>研究台保留全部已完成研究和历史明细；导览页把主要发现串起来，读者可展开数据自行取舍。</p><div class="actions"><a href="../../../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md" target="_blank" rel="noopener">全研究结论主线</a><a href="../../../research/catalog/INDEX.md" target="_blank" rel="noopener">研究资料目录与专题</a></div></section>'+`<section class="panel"><h2>当前消费与上游核对</h2>${fieldList({数据版本:dataset.release,消费快照:assets.snapshot_id,资源构建时间:assets.built_at,共同评分:assets.gallery_score_context,融合分析修订:assets.fusion_revision,几何绑定不匹配数:assets.geometry_binding_mismatches,上游状态:'仅在构建时核对；离线页面不知道此后变化'})}</section><div class="cards">${assets.dependencies.map(d=>panel(d.module,`<p>${d.status==='matches_at_build'?'构建时与捕获接口一致':'构建时接口已变化或缺失；不当作已同步'}</p><p class="scope-label">${esc(d.path)}</p><details><summary>消费版本与当前接口原文</summary><pre>${esc(JSON.stringify({captured:d.captured,current:d.current},null,2))}</pre></details>`)).join('')}</div><section class="panel"><h2>版本入口（并列，不是时间线）</h2><div class="actions"><span class="chip">数据 ${esc(dataset.release)} · 当前</span><span class="chip">${esc(dataset.analysisLabel)}</span>${historyEntry}${window.RESEARCH_DATASETS.filter(d=>!d.available).map(d=>`<button disabled>${esc(d.label)}</button>`).join('')}</div></section><section class="panel"><h2>当前表来源、字段与合同</h2><div class="doclist">${index.tables.map(t=>`<details><summary>${esc(t.id)} · ${t.row_count}行${t.status==='superseded'?' · 被替代接口':''}</summary><p>${esc(t.path)}</p><p>${esc(t.caveats?.join('；'))}</p><p>字段：${esc(t.columns.join('、'))}</p><button data-table-jump="${esc(t.id)}">查看完整明细</button></details>`).join('')}${index.documents.map(d=>`<details><summary>${esc(d.path)}</summary><pre>${esc(typeof d.content==='string'?d.content:JSON.stringify(d.content,null,2))}</pre></details>`).join('')}</div></section>`;state.rows=[];
 }
 
 function setTable(id){state.chartField='';route({table:id,where:null});}
@@ -446,7 +477,7 @@ async function init(){
   $('release').innerHTML=window.RESEARCH_DATASETS.map(d=>`<option value="${d.release}" ${d.release===dataset.release?'selected':''} ${!d.available?'disabled':''}>${esc(d.label)}</option>`).join('');
   [index,assets,overview]=await Promise.all([read(dataset.tablesIndex),read(dataset.resourcesIndex),read(dataset.overview)]);
   if(index.snapshot_id!==SNAPSHOT||assets.snapshot_id!==SNAPSHOT||overview.metadata?.snapshot_id!==SNAPSHOT||index.data_release!==dataset.release||assets.data_release!==dataset.release)throw Error('数据版本、消费索引、资源与概要快照不一致，停止混合加载。');
-  if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对 Q、同任务相对 Q、作答用时和不同难度下的表现都是探索性画像。Semi 和 Scope 只在有记录的范围内统计；10-20 的人员工作标签仅作研究参照，不是生产分类。';modules.fusion[1]='v2 的组合人数支持、10-20 类别块替换和角点证据。历史融合过程仍在 v1 入口。';}
+  if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对 Q、同任务相对 Q、作答用时和不同难度下的表现都是探索性画像。Semi 和 Scope 只在有记录的范围内统计；10-20 的人员工作标签仅作研究参照，不是生产分类。';modules.fusion[1]='v2 已接入低人数到30/35/满员的自然人数结果、类别块替换、普通图及门洞失败几何；各入口保留各自成员、参考与支持。';}
   if(dataset.release==='v2'){
    const personnel=PersonnelMain.loadDocs(index);
    modules.personnel_main[2]=personnel.api.groups.map(g=>[g.title,null]);
@@ -455,10 +486,11 @@ async function init(){
   for(const image of assets.images){imageMap.set(image.image_id,image);imageMap.set(image.image_code,image);}
   const scores=await table('quality__shared_records');scoreMap=new Map(scores.map(r=>[r.object_id,r]));
   try{state.notes=JSON.parse(localStorage.getItem('research-workbench:'+SNAPSHOT)||'{}');}catch{state.notes={};}
-  const navGroups=[['概览',['overview','case_story','evidence']],['人员',['personnel_main','profiles','workers','benefits','taxonomy','method_supplements']],['条件与共识',['conditions','mechanisms','images','quality','fusion','patterns','multiview','same_room','same_room_review','time']],['数据与来源',['data','coverage','sources']]];
- const groupedIds=new Set(navGroups.flatMap(([,ids])=>ids));
+  const primary=['overview','personnel_main','evidence','conditions','same_room','profiles','data'];
+  const navGroups=[['原答、团队与方法明细',['case_story','images','patterns','method_supplements','fusion','multiview']],['其它研究、历史与来源',['workers','benefits','taxonomy','mechanisms','quality','same_room_review','time','coverage','sources']]];
+ const groupedIds=new Set([...primary,...navGroups.flatMap(([,ids])=>ids)]);
   const navLink=id=>modules[id]?`<a href="#module=${id}" data-module="${id}">${modules[id][0]}</a>`:'';
- $('navigation').innerHTML=navGroups.map(([title,ids])=>`<div class="navgroup"><p class="navgroup-title">${esc(title)}</p>${ids.map(navLink).join('')}</div>`).join('')+Object.keys(modules).filter(id=>!groupedIds.has(id)).map(navLink).join('');
+ $('navigation').innerHTML=primary.map(navLink).join('')+'<a href="oos-review.html">OOS独立研究</a>'+navGroups.map(([title,ids])=>`<details class="nav-more"><summary>${esc(title)}</summary>${ids.map(navLink).join('')}</details>`).join('')+Object.keys(modules).filter(id=>!groupedIds.has(id)).map(navLink).join('');
   if(!assets.historical_offline_files){const link=document.getElementById('historicalTables');link.href='#module=sources';link.dataset.module='sources';link.textContent='历史195表 · 载荷状态';}
   hintPopover=document.createElement('div');hintPopover.id='metricHint';hintPopover.className='metric-hint';hintPopover.setAttribute('role','tooltip');hintPopover.hidden=true;document.body.append(hintPopover);
   document.addEventListener('pointerover',e=>{const trigger=e.target.closest?.('[data-hint]');if(trigger&&!hintPinned)showHint(trigger,false);});

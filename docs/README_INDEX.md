@@ -1,3 +1,5 @@
+- **2026-10-25论文V4修订：** [修订提纲](thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx)保留两项方法与完整实证主线，修正折内名单、人工判断及控制实验表述，补齐D10形成敏感性、速度×难度和门洞人数结果。原Pro稿保留；仅修订解释，未新增实验。研究台保留完整研究，展示整理状态见[当前进度](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
 - **2026-10-25人员分类展示整理：** [主要方法、核心效果对照与其它用途](../research/workers/personnel_classification_guide_20261025/README.md)接入既有人员六步；7套ALL/楼外名单、四重点与71条件，保留旧配比/人数标签；仅整理保存结果。
 
 - **2026-10-25同图大块换类独立验收：** [13包、分类/反推、严格ABC与规模路径](../analysis_results/personnel_exchange_discrimination_audit_20261025/README.md)。四个具体条件有多数图/楼支持；保留旧分类、负向结果与分项差别。来源与审查结果单列；采用解释已接入人员主报告及研究台。

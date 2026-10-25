@@ -11,25 +11,48 @@ class Element {
  constructor(tag='div'){this.tag=tag;this.value='';this.listeners={};this.textContent='';}
  set innerHTML(html){this.html=html;if(this.tag==='select')this.value=html.match(/<option value="([^"]*)"/)?.[1]??'';}
  get innerHTML(){return this.html||'';}
+ querySelectorAll(){return [];}
  addEventListener(type,fn){this.listeners[type]=fn;}
  change(value){this.value=value;this.listeners.change();}
 }
 class Host extends Element {
- set innerHTML(html){this.html=html;this.nodes=new Map();for(const m of html.matchAll(/<(select|div|p|tbody)[^>]*\bid="([^"]+)"[^>]*>/g)){const e=new Element(m[1]);if(m[1]==='select')e.innerHTML=html.slice(m.index+m[0].length).split('</select>')[0];this.nodes.set('#'+m[2],e);}}
+ set innerHTML(html){this.html=html;this.nodes=new Map();for(const m of html.matchAll(/<(select|div|section|p|tbody)[^>]*\bid="([^"]+)"[^>]*>/g)){const e=new Element(m[1]);if(m[1]==='select')e.innerHTML=html.slice(m.index+m[0].length).split('</select>')[0];this.nodes.set('#'+m[2],e);}}
  get innerHTML(){return this.html;}
  querySelector(id){assert(this.nodes.has(id),'missing element '+id);return this.nodes.get(id);}
- querySelectorAll(ids){return ids.split(',').map(id=>this.querySelector(id));}
+ querySelectorAll(ids){return ids.startsWith('[')?[]:ids.split(',').map(id=>this.querySelector(id));}
 }
 const loaded=new Set();
 async function table(id){loaded.add(id);const meta=index.tables.find(t=>t.id===id);assert(meta,'missing table '+id);return meta.parts.flatMap(p=>{const d=read(path.join(page,'v2-data',p.path));return d.rows.map(row=>Object.fromEntries(d.columns.map((k,i)=>[k,row[i]])));});}
-async function render(tab){const host=new Host();await context.window.PersonnelMain.render(host,{release:'v2',index,tab,table,hintButton:()=>'',isCurrent:()=>true});return host;}
+const shell=fs.readFileSync(path.join(page,'workbench.js'),'utf8'),hintScope={window:{},labels:{},innerWidth:1000,innerHeight:800,esc:v=>String(v)};vm.createContext(hintScope);
+vm.runInContext(shell.slice(shell.indexOf('const metricHints='),shell.indexOf('const fieldList='))+'window.hints=metricHints;window.hintButton=hintButton;window.showHint=showHint;window.hideHint=hideHint;window.setPopover=p=>hintPopover=p;' ,hintScope);
+const hints=hintScope.window.hints,hintButton=hintScope.window.hintButton;
+for(const term of read(path.resolve(page,'../../workers/personnel_main_figures_v2_20261023/GLOSSARY.json')).terms)hints[term.id]=[term.short,term.detail];
+for(const key of ['mae','rmse','bias','pearson_r','spearman_r','R2','SD','P10','P50','P90','resampling_unit','natural_paths','saved_endpoint','comparison_event','paired_quality','all_attempts','percentage_points','pair_nodes']){
+ assert.equal(hints[key].length,2,key);assert(hints[key].every(x=>typeof x==='string'&&x.length>10),key);
+ assert.match(hintButton(key),/type="button".*aria-label="解释 .*aria-describedby="metricHint"/);
+}
+assert.equal(hints.own_source_mae,hints.mae);assert.equal(hints.attempted_paths,hints.all_attempts);
+assert.match(hints.resampling_unit[1],/2000.*24.*k20/);assert.match(hints.paired_quality[1],/不同路径集合/);
+assert.match(hints.SD[1],/不是均值的置信区间/);assert.match(hints.P10[1],/分位带不是置信区间/);
+assert.match(hints.bias[1],/高估.*低估/);assert.match(hints.percentage_points[1],/5个百分点.*50%/);
+assert.match(hints.absolute_error[0],/单次/);assert.notEqual(hints.absolute_error,hints.mae);
+assert.equal(hintButton('unregistered_hint'),'');
+const popover={hidden:true,textContent:'',style:{},offsetWidth:300,offsetHeight:100},trigger={dataset:{hint:'mae'},setAttribute(k,v){this[k]=v;},getBoundingClientRect:()=>({left:20,top:20,bottom:40})};
+hintScope.window.setPopover(popover);hintScope.window.showHint(trigger,false);assert.equal(popover.textContent,hints.mae[0]);assert.equal(popover.hidden,false);
+hintScope.window.showHint(trigger,true);assert.equal(popover.textContent,hints.mae.join(' '));assert.equal(trigger['aria-expanded'],'true');
+hintScope.window.hideHint();assert.equal(popover.hidden,true);assert.equal(trigger['aria-expanded'],'false');
+assert.match(hints.Hmean[0],/0.1.*10%/);assert.match(hints.Hcenter[1],/去掉均高.*不是房间中心/);
+
+async function render(tab){const host=new Host();await context.window.PersonnelMain.render(host,{release:'v2',index,tab,table,hintButton,isCurrent:()=>true});return host;}
 (async()=>{
  let host=await render(0);
  assert.equal((host.innerHTML.match(/data-scheme=/g)||[]).length,4);
- assert.equal((host.innerHTML.match(/data-current-method=/g)||[]).length,7);
+ assert.equal((host.innerHTML.match(/data-current-method=/g)||[]).length,8);
  assert(host.innerHTML.indexOf('id="currentClassification"')<host.innerHTML.indexOf('id="classificationQuestions"'));
  assert.match(host.querySelector('#newRosterDetail').innerHTML,/困难时保留较多非冗余转折/);
- const guide=index.documents.find(d=>d.path==='personnel_classification_guide').content;
+ const guide=context.window.PersonnelMethods.read(index);
+ assert(guide.methods.some(m=>m.id==='DSTRUCT_K2'));
+ assert.match(host.innerHTML,/术语词典 · 75项/);
  for(const method of guide.methods){
   host.querySelector('#newMethod').change(method.id);
   for(const fold of [...new Set(guide.rosters.map(r=>r.fold))]){
@@ -87,6 +110,13 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
   const target=path.resolve(page,url[1].split('#')[0].split('?')[0]);
   assert(fs.existsSync(target),'missing local link '+url[1]);
  }
+ const population=await render(4);allHTML.push(population.querySelector('#latePopulation').innerHTML);
+ for(const key of ['natural_paths','saved_endpoint','resampling_unit','paired_quality','all_attempts','percentage_points'])assert(allHTML.join('').includes('data-hint="'+key+'"'),key);
  for(const id of allHTML.join('').matchAll(/data-table-jump="([^"]+)"/g))assert(index.tables.some(t=>t.id===id[1]),id[1]);
- console.log('PASS: 7 current methods × 23 rosters, 71 × 7 metric selections, 4 historical schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');
+ const overview=read(path.join(page,'v2-data/overview.json'));
+ assert.deepEqual(overview.sections.map(x=>x.id),['quality','consensus','difficulty','profiles','classification','mixture','exchange','population','same_room','doorway','oos']);
+ for(const item of overview.sections){assert(item.finding&&item.support&&item.counterexample);for(const t of item.tables)assert(index.tables.some(x=>x.id===t.id),t.id);assert(fs.existsSync(path.resolve(page,item.source.split('#')[0])),item.source);}
+ const current=guide.main_conditions.find(x=>x.method==='DSTRUCT_K3');assert(overview.sections.find(x=>x.id==='exchange').finding.includes(current.B8L2_cross_image_equal.toFixed(3)));
+
+ console.log('PASS: CONTEXT hint definitions and population placements, 8 method/layer displays × 23 rosters, 71 × 7 metric selections, 4 historical schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');
 })().catch(e=>{console.error(e);process.exitCode=1;});

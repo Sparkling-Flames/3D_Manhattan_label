@@ -77,8 +77,30 @@ function resolveContext(image,cases,s,{snapshot,assetsSnapshot,requestedSnapshot
  const compatible=x=>snapshotOK&&x.image_id===image.image_id&&x.condition===s.condition&&
   snapshotCompatible(snapshot,x)&&!!ref?.target_id&&x.reference?.target_id===ref.target_id&&sameGeometry(x.reference,ref)&&x.teams?.length;
  const fusionCase=(c&&compatible(c)?c:null)||cases.find(compatible)||null;
- if(!fusionCase)notices.push('当前图片、条件、参考与快照没有兼容的已保存融合；不生成新团队或分数。');
- return {case:c,caseReferenceMatches,reference:ref,fusionCase,teams:fusionCase?.teams||[],snapshot,snapshotOK,notices};
+ const candidates=cases.filter(x=>x.image_id===image.image_id&&x.condition===s.condition&&x.teams?.length);
+ const availability=fusionCase?'available':!snapshotOK?'snapshot_mismatch':candidates.length?'reference_mismatch':'not_integrated';
+ const unavailable={snapshot_mismatch:'快照不兼容：已停用保存团队，不能把旧结果套到当前快照。',reference_mismatch:'参考不兼容：本图有保存融合，但当前参考身份或坐标不同；不借用替换。',not_integrated:'保存结果尚未接入本页：不能据此判断未计算或融合失败。'};
+ if(!fusionCase)notices.push(unavailable[availability]);
+ return {case:c,caseReferenceMatches,reference:ref,fusionCase,teams:fusionCase?.teams||[],snapshot,snapshotOK,notices,availability,unavailable:unavailable[availability]};
+}
+function teamStatus(team){
+ if(team.score_status==='policy_deferred'||team.policy_deferred)return {kind:'policy_deferred',text:'原实验设定暂未运行：不计为成功或失败，Q保持缺失。'};
+ if(team.score_status==='below_four'||(team.complete_evaluable===false&&Number(team.nodes)<4))return {kind:'below_four',text:`真实节点不足：${team.nodes}个上下点对（候选布局转折），不是完整可评布局；Q缺失，不记0。`};
+ if(team.score_status==='no_connection')return {kind:'no_connection',text:'真实连接失败：保存结果没有可连接候选；保留节点/支持信息，不补连线。'};
+ if(team.score_status==='invalid_floor')return {kind:'invalid_floor',text:'真实无效底面（invalid_floor）：保留已有坐标作诊断，不能当作完整可评布局；Q缺失不记0。'};
+ if(team.complete_evaluable===false)return {kind:'diagnostic',text:`保存诊断结果，完整Q不可用；源状态${team.score_status||'未提供'}，不填0。`};
+ if(!team.points&&!team.footprint)return {kind:'geometry_not_loaded',text:'端点已计算，几何坐标尚未接入/未归档；这条说明本身不代表融合失败。'};
+ return {kind:'complete',text:`保存的完整候选：${team.nodes}个上下点对、${Number(team.nodes)*2}个顶底点；沿冻结源环序显示，不表示新增人工确认。`};
+}
+function failureOverviewHTML(summary){
+ if(!summary?.layers)return '';
+ const manual=summary.layers.ordinary_manual,semi=summary.layers.ordinary_semi;
+ const examples=(summary.examples||[]).map(x=>`<a href="#${new URLSearchParams({module:'patterns',release:'v2',case:x.case_id,image:x.image_id,condition:x.condition})}">${esc(x.title)}</a>`).join(' · ');
+ return `<section class="panel"><h3>完整共识失败：普通图也会发生</h3><p>普通Manual满员${manual.incomplete}/${manual.pools}池失败，普通Semi为${semi.incomplete}/${semi.pools}；门洞为${summary.incomplete}/${summary.pools}（${summary.three_nodes}个三节点、${summary.two_nodes}个两节点）。</p><p>普通Manual在已计算的自然路径/人数k≥3中，${summary.ordinary_ever_failure_images}/${manual.pools}图至少出现过一次失败：简单${summary.ordinary_ever_by_difficulty['简单']}/${summary.ordinary_images_by_difficulty['简单']}、中等${summary.ordinary_ever_by_difficulty['中等']}/${summary.ordinary_images_by_difficulty['中等']}、困难${summary.ordinary_ever_by_difficulty['困难']}/${summary.ordinary_images_by_difficulty['困难']}。这不等于每条路径、每个人数都失败。</p><p>节点不足、已有节点但无法连接、invalid_floor分别保留；两人原实验暂缓不混入真实失败。4个上下点对表示4个候选布局转折，每对顶底2点，因此是8个点，不是8个房间转折。</p><div class="actions">${examples}<a href="#release=v2&module=case_story&case=doorway">门洞7y-06：32人/16票/3节点与固定路径</a></div></section>`;
+}
+function teamLedger(team){
+ if(team.minimum_support==null)return '';
+ return `<section class="info"><h4>保存的支持票与失选摘要</h4><p>全队${team.workers.length}人，门槛${team.minimum_support}票；身份组${team.identity_groups_n}，入选节点${team.nodes}，失选组${team.unselected_groups_n}。入选支持数分布：${esc((team.selected_node_supports||[]).join('、'))||'未保存'}。</p><p>支持数列表没有逐节点ID绑定，不按数组位置贴到具体角点。逐个失选组的票数及成员未随本归档保留，不能从原答最近邻重新拼造；失选也不等于人员没有画。</p></section>`;
 }
 function reconcileSelection(s,answers,teams,labels,caseLabels){
  if(s.team!=='all'&&!teams.some(t=>t.label===s.team||t.team_key===s.team)){s.team='all';s.cls='all';s.worker='';}
@@ -128,7 +150,7 @@ async function render(host,options){
   const entry={read,assets,snapshot,promise:read('v2-resources/comparisons.json')};savedCache=entry;
   entry.promise.catch(()=>{if(savedCache===entry)savedCache=null;});
  }
- const saved=await savedCache.promise;if(!alive())return;
+ let saved;try{saved=await savedCache.promise;}catch(e){throw Error('保存结果载荷未加载：'+e.message+'；这是文件读取问题，不是融合失败。');}if(!alive())return;
  const labels=Object.fromEntries(saved.labels.map(r=>[r.worker_id,r]));
  if(mode==='multiview')return multiview(host,s,loadImage,labels,options,alive,saved);
  applyDeepLink(s,routeInput(options),saved.cases);
@@ -173,7 +195,7 @@ async function render(host,options){
  ${select('rc-team','原答成员范围',[['all','全部保留作答'],...teams.map(t=>[t.label,teamName(t)+'成员'])],s.team)}
  <label><input id="rc-blind" type="checkbox" ${blind?'checked':''}>盲审模式</label></div>
  <p class="info" id="rc-context">图片 ${esc(im.image_code)} · 条件 ${esc(s.condition)} · 参考 ${esc(ref?.target_id||'不可用')} · 快照 ${esc(snapshot||'不可用')} · 案例 ${esc(c?(blind?alias('case',c.case_id,snapshot):c.case_id):'自由浏览')} · ${teams.length}支兼容保存团队</p>
- ${context.notices.map(n=>`<p class="warning">${esc(n)}</p>`).join('')}
+ ${!blind?failureOverviewHTML(saved.failure_summary):''}${context.notices.map(n=>`<p class="warning">${esc(n)}</p>`).join('')}
  <p>${answers.length}份原答${blind?'':`；${groups.map(g=>`${esc(g)} ${answers.filter(a=>classOf(a,s.scheme,labels,c?.worker_classes)===g).length}人`).join(' / ')}`}。原答叠线不是融合。滚轮放大，拖拽平移，重置返回全景。</p>
  ${c&&context.caseReferenceMatches&&!blind?`<p class="info">${esc(c.explanation)}<br>来源：<a href="../../../${esc(c.source)}">冻结案例</a></p>`:''}
  ${image.flags?.gt_problem||image.flags?.image_hold?'<p class="warning">本图参考／用途存在限制；保留标法观察，不据此恢复正式质量资格。</p>':''}
@@ -189,13 +211,16 @@ async function render(host,options){
   {layers:layers(answers,s.scheme,labels,c?.worker_classes,s.cls,s.worker,{blind,snapshot}),focus:c?.zoom});
  const teamHost=host.querySelector('#rc-teams');
  if(teams.length){
-  const a=teams[0],b=teams.find(t=>t.label===s.pair)||teams[1]||teams[0];
+  const a=teams[0],b=teams.find(t=>t.label===s.pair)||teams[1]||teams[0],picked=[...new Set([a,b])];
   teamHost.innerHTML=`<p>保存结果来源：${esc(blind?alias('case',fusionCase.case_id,snapshot):fusionCase.case_id)}；已核对图片、条件、参考坐标与资源快照。筛选不改变已计算团队。</p>`+
    (teams.length>1?select('rc-pair','与'+teamName(a)+'比较',teams.slice(1).map(t=>[t.label,teamName(t)]),b.label):'')+
-   (blind?`<p>${esc(teamName(a))} ${a.workers.length}人；${esc(teamName(b))} ${b.workers.length}人。</p>`:`<p>${esc(teamName(a))} ${a.workers.length}人：B8L2 ${fmt(a.B8L2)} / D10 ${fmt(a.D10)}；${esc(teamName(b))} ${b.workers.length}人：${fmt(b.B8L2)} / ${fmt(b.D10)}。节点 ${a.nodes} → ${b.nodes}。</p>`)+
-   `<details><summary>${blind?'匿名成员':'实际成员与团队身份'}</summary><p>${esc(teamName(a))}：${esc(a.workers.map(workerName).join('、'))}<br>${esc(teamName(b))}：${esc(b.workers.map(workerName).join('、'))}</p>${blind?'':`<p>${esc(a.team_key)}<br>${esc(b.team_key)}</p>`}</details><div id="rc-fusion"></div>`;
-  WorkbenchGeometry.mount(host.querySelector('#rc-fusion'),image,null,{points:ref?.points,floor:ref?.floor},null,{layers:[...new Set([a,b])].map((t,i)=>({id:blind?alias('team',t.team_key||t.label,snapshot):t.label,label:teamName(t),points:t.points,floor:t.footprint,confirmed:!!t.points,color:colors[i]})),focus:c?.zoom});
- }else teamHost.innerHTML='<p class="placeholder">当前上下文没有兼容的已保存融合；不借用其它条件、参考或快照的团队。</p>';
+   picked.map(t=>`<section class="panel"><h3>${esc(teamName(t))} · ${t.workers.length}人</h3>${blind?'':`<p>${esc(teamStatus(t).text)}</p><p>B8L2 ${fmt(t.B8L2)} / D10 ${fmt(t.D10)}${t.IoU3D100!==undefined?' / 均高棱柱IoU×100 '+fmt(t.IoU3D100):''}。${t.score_status?'源状态 '+esc(t.score_status):''}</p>${teamLedger(t)}`}</section>`).join('')+
+   `<details><summary>${blind?'匿名成员':'实际成员、团队身份与保存来源'}</summary>${picked.map(t=>`<p>${esc(teamName(t))}：${esc(t.workers.map(workerName).join('、'))}${blind?'':`<br>${esc(t.team_key)}<br>源环序：${esc(t.order_status||'源候选')}；${esc(t.reason||'')}<br>状态原件：${esc(t.source_state||fusionCase.source)}${t.provenance?'<br>源参考版本：'+esc(t.provenance.reference_version)+'；几何来源：'+esc(t.provenance.geometry_origin):''}`}</p>`).join('')}</details><div id="rc-fusion"></div>`;
+  const layers=picked.filter(t=>t.points||t.footprint).map((t,i)=>({id:blind?alias('team',t.team_key||t.label,snapshot):t.label,label:teamName(t),points:t.points,floor:['below_four','invalid_floor'].includes(teamStatus(t).kind)?null:t.footprint,diagnostic:['below_four','invalid_floor'].includes(teamStatus(t).kind),confirmed:!['below_four','invalid_floor'].includes(teamStatus(t).kind)&&!!t.points,color:colors[i]}));
+  if(layers.length)WorkbenchGeometry.mount(host.querySelector('#rc-fusion'),image,null,{points:ref?.points,floor:ref?.floor},null,{layers,focus:c?.zoom});
+  else host.querySelector('#rc-fusion').innerHTML='<p class="placeholder">所选保存端点没有可展示坐标；上方保留真实状态与票数，不生成假几何。</p>';
+ }else teamHost.innerHTML=`<p class="placeholder">${esc(context.unavailable)}不借用其它条件、参考或快照的团队。</p>`;
+
  const redraw=()=>render(host,options).catch(e=>{host.textContent=e.message;});
  for(const [id,key] of [['rc-case','case'],['rc-layer','layer'],['rc-image','image'],['rc-condition','condition'],['rc-reference','reference'],['rc-scheme','scheme'],['rc-class','cls'],['rc-worker','worker'],['rc-team','team'],['rc-pair','pair']]){
   const el=host.querySelector('#'+id);if(el)el.onchange=()=>{changeSelection(s,key,el.value,saved.cases);s.reviewDraft={};redraw();};
@@ -292,5 +317,5 @@ async function multiview(host,s,loadImage,labels,options,alive,saved){
  host.querySelector('#mv-export-state').onclick=()=>download(options,'multiview-state.json',JSON.stringify({...frozen,url:link},null,2),'application/json');
  if(options.onContext)options.onContext({...frozen,blind});
 }
-return {render,classOf,layers,alias,changeSelection,readDeepLink,applyDeepLink,resolveContext,reconcileSelection,frozenState,makeDeepLink,feedbackRecord,exportFeedback,readMultiviewLink,groupFromRows};
+return {render,classOf,layers,alias,changeSelection,readDeepLink,applyDeepLink,resolveContext,teamStatus,teamLedger,failureOverviewHTML,reconcileSelection,frozenState,makeDeepLink,feedbackRecord,exportFeedback,readMultiviewLink,groupFromRows};
 })();

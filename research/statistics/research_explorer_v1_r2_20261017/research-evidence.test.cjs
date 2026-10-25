@@ -16,11 +16,12 @@ function harness() {
 const plain = value => JSON.parse(JSON.stringify(value));
 const payloadTest = payload ? test : test.skip;
 
-test('six evidence themes retain mixed support levels and ordinary deep links', () => {
+test('completed themes retain their conditions and ordinary deep links', () => {
   const { R } = harness(), html = R.overviewHTML({ release: 'v2' });
   assert.equal(R.themes.length, 6);
-  assert.equal(new Set(R.themes.map(row => row.level)).size, 3);
-  assert.match(html, /不代表已证明创新性/);
+  assert(R.themes.every(row=>row.level==='supported'));
+  assert.doesNotMatch(html,/待验证|探索中/);
+  assert.match(html, /普遍推广仍需另验/);
   const links = [...html.matchAll(/href="#([^"]+)"/g)].map(match => new URLSearchParams(match[1].replaceAll('&amp;', '&')));
   assert.ok(links.some(link => link.get('module') === 'evidence' && link.get('tab') === '1'));
   assert.doesNotMatch(html, /data-module=/);
@@ -55,7 +56,7 @@ test('doorway spatial figure links to the verified paper assets', () => {
   assert.ok(fs.existsSync(path.resolve(__dirname,image[1].split('?')[0])));
   assert.match(html,/DOORWAY_spatial_boundary.pdf/);
   assert.match(html,/人为选定的封闭边界，不是实体墙/);
-  assert.match(html,/不等于整间房有第二层天花板/);
+  assert.match(html,/不代表整间房有第二层天花板/);
 });
 
 test('doorway drawing closes the room fill without inventing an unknown ray', () => {
