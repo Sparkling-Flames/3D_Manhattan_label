@@ -1,0 +1,106 @@
+{
+  "input_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "underlying_data_version": "v2",
+  "research_date": "2026-10-25",
+  "records": 7302,
+  "current_workers": 60,
+  "roster_workers": 62,
+  "heldout_buildings": [
+    "2t7WUuJeko7",
+    "7y3sRwLe3Va",
+    "B6ByNegPMKs",
+    "S9hNv5qa7GM",
+    "UwV83HsGsw3",
+    "VFuaQ6m2Qom",
+    "VLzqgDo317F",
+    "X7HyMhZNoso",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "e9zR4mvMWw7",
+    "jh4fc5c5qoQ",
+    "jtcxE69GiFV",
+    "pRbA3pwrgk9",
+    "pa4otMbVnkk",
+    "q9vSo1VnCiC",
+    "rPc6DW4iMge",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "yqstnuAEVhm",
+    "zsNo4HB9uLZ"
+  ],
+  "methods": [
+    "DSTRUCT_K2",
+    "DSTRUCT_K3",
+    "DSTRUCT_K4",
+    "DBOUNDARY_K2",
+    "DBOUNDARY_K3",
+    "DBOUNDARY_K4",
+    "DJOINT_K2",
+    "DJOINT_K3",
+    "DJOINT_K4",
+    "MSDGEOM_K2",
+    "MSDGEOM_K3",
+    "MSDGEOM_K4"
+  ],
+  "no_target_fusion_selection": true,
+  "no_new_fusion": true,
+  "scope_included": false,
+  "scope_missing_note": "Separate supported old-worker common-domain increment only.",
+  "source_files": {
+    "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/RAW_POOL_MEMBER_FEATURES.csv.gz": "6c5af5aef27838836d1ae77d45bb0029d695fe90bb16f1d1f6e854e4d1a116c8",
+    "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv": "fc2f624c5fd4a9c5c4c2a0072209a430d67a610c1d27ef2a3fcb4f53bc976137"
+  },
+  "class_history": "Frozen labels use non-doorway fixed-reference history with known easy/medium/hard grade; includes declared auxiliary special-range history e9zR4mvMWw7-16 and jtcxE69GiFV-18. No relabeling was performed.",
+  "missing_rule": "Unknown retained; only support counts filled with 0; no behavior imputation.",
+  "support_rules": {
+    "manual_geometry": ">=12 non-doorway fixed-reference images/3 buildings, >=5 easy images/2 buildings, >=4 hard images/2 buildings; declared special-range history retained",
+    "manual_time": ">=5 easy and >=4 hard source-compatible times",
+    "semi_geometry": ">=6 images/3 buildings"
+  },
+  "quality_and_time": "Historical B8L2; log source record seconds centered by image/condition/origin/time_source, not measured production time.",
+  "feature_matching": "9-degree nearest one-to-one azimuth Hungarian match is feature-only; distinct from fusion correspondence.",
+  "geometry": "Positive signed ERP top/bottom error means downwards; supplied ring order unchanged.",
+  "aggregation": "Image-condition peer median residuals; equal building means within worker and difficulty stratum.",
+  "code_sha256": "857c5adf381772bd0d0208e544e84f6944ae51645c7463af9f29a9fd6592d39c",
+  "history_scope_clarification": "Frozen labels use non-doorway fixed-reference history with known easy/medium/hard grade; includes declared auxiliary special-range history e9zR4mvMWw7-16 and jtcxE69GiFV-18. No relabeling was performed.",
+  "history_records_by_pool_layer": {
+    "ordinary_manual": 5719,
+    "ordinary_semi": 901,
+    "special_manual": 66,
+    "special_semi": 45
+  },
+  "special_range_history_support": [
+    {
+      "pool_id": "e9zR4mvMWw7-16__manual__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 35,
+      "workers": 35
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-16__semi__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "pool_layer": "special_semi",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 45,
+      "workers": 45
+    },
+    {
+      "pool_id": "jtcxE69GiFV-18__manual__5b5b064c0a",
+      "image_code": "jtcxE69GiFV-18",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "困难",
+      "building": "jtcxE69GiFV",
+      "records": 31,
+      "workers": 31
+    }
+  ]
+}

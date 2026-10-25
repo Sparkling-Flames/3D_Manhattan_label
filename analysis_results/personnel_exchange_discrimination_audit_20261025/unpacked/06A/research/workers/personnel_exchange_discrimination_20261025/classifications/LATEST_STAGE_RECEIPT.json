@@ -1,0 +1,65 @@
+{
+  "stage": "complete_20_candidate_feature_discovery",
+  "underlying_data_version": "v2",
+  "input_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "methods": 20,
+  "folds": 23,
+  "label_rows": 28520,
+  "scope_included": true,
+  "scope_workers_available": 62,
+  "historical_stage_receipt": "BUILD_RECEIPT.json is the initial 12-method stage, when scope was not yet incorporated. Its old-worker-only scope note was a provisional assumption superseded by the full-v2 scope recovery.",
+  "scope_source": "../features_scope/SCOPE_FEATURES_ALL_LOBO.csv.gz",
+  "scope_recovery": "286 historical oos strings restored from exact old questionnaire to features only; no GT/qualification change.",
+  "labels_selected_on_target_fusion": false,
+  "raw_pair_validation": "Held-out original answers; not a fusion replacement outcome.",
+  "effects": "Manual and Semi must be evaluated separately even for joint-input labels.",
+  "reproducible_scripts": [
+    "build_condition_response_classes.py",
+    "build_axis_controls.py",
+    "build_scope_increment.py",
+    "describe_candidate_support.py",
+    "assemble_classification_links.py",
+    "describe_main_class_roles.py"
+  ],
+  "all_descriptive_vs_lobo": "ALL centers describe population, target use must join heldout_building.",
+  "status": "Candidate discovery complete; main fusion experiment is in the parent experiment outputs.",
+  "history_scope_clarification": "Frozen labels use non-doorway fixed-reference history with known easy/medium/hard grade; includes declared auxiliary special-range history e9zR4mvMWw7-16 and jtcxE69GiFV-18. No relabeling was performed.",
+  "history_records_by_pool_layer": {
+    "ordinary_manual": 5719,
+    "ordinary_semi": 901,
+    "special_manual": 66,
+    "special_semi": 45
+  },
+  "special_range_history_support": [
+    {
+      "pool_id": "e9zR4mvMWw7-16__manual__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 35,
+      "workers": 35
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-16__semi__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "pool_layer": "special_semi",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 45,
+      "workers": 45
+    },
+    {
+      "pool_id": "jtcxE69GiFV-18__manual__5b5b064c0a",
+      "image_code": "jtcxE69GiFV-18",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "困难",
+      "building": "jtcxE69GiFV",
+      "records": 31,
+      "workers": 31
+    }
+  ]
+}

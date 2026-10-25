@@ -1,0 +1,53 @@
+{
+  "documentation_commit": "e88d1d443f4000715a50475e085a773661be9c04",
+  "experiment_input_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "underlying_data": "v2",
+  "source_snapshot_manifest": "SOURCE_SNAPSHOT_MANIFEST.csv",
+  "new_computation": "table joins, memberships and exact text excerpts only; no fusion, scoring, classification fit",
+  "inputs": [
+    {
+      "path": "classifications/CANDIDATE_LABELS_COMPLETE_ALL_LOBO.csv.gz",
+      "sha256": "d7fad65d32e13c800b812f769def30b5fc32433e297e20a993f1884d9b0635e0"
+    },
+    {
+      "path": "classifications/CANDIDATE_CLASS_DEFINITIONS_COMPLETE_ALL.csv",
+      "sha256": "cd2a1d4390470e492ac3b2ee01f82f609e0152f65b5114b5cc8739413e23ed49"
+    },
+    {
+      "path": "classifications/NEW_OLD_LABEL_CROSSWALK_SUMMARY.csv",
+      "sha256": "db6faf024256d416352764e52d8a965f9e942f108522a93a7fa865456a874b5d"
+    },
+    {
+      "path": "features/HISTORY_FEATURES_ALL_LOBO.csv.gz",
+      "sha256": "7d392f5afd6a3d749893691386e8a63bdd0962850ff692ea4d8b539961ee6ffa"
+    },
+    {
+      "path": "reverse/REVERSE_LABELS_ALL.csv",
+      "sha256": "745d43016bdb1b1941d52430d32b34a18764a969b77656e7f77908c62d21bc90"
+    },
+    {
+      "path": "reverse/REVERSE_CLASS_CENTERS_ALL.csv",
+      "sha256": "9a7a7b93e2415d33da9f38f7442ec24a38ce07aae742d7c6939a70ded716d924"
+    },
+    {
+      "path": "design/screen/FROZEN_LABELS.csv.gz",
+      "sha256": "2dd9901c5eab7d3597a2b52e22da32f8c61b8d63c62a326431b92e460151754c"
+    },
+    {
+      "path": "design/screen/DESIGN.json",
+      "sha256": "bf2a275fa9c7451f95e7f35afcf425b1066c827055327c1567b01886cf152ea3"
+    },
+    {
+      "path": "analysis/screen/METHOD_N_M_COMPARISON.csv",
+      "sha256": "8b528da97e5b6e118cd7c76122bddc670686c72502c674014fc5e1484d92e211"
+    },
+    {
+      "path": "cases/CASE_SELECTION.csv",
+      "sha256": "5513eb2c2f58a505bbd58eebe82b8fd2e5bfbc7badf5a2910309d88cbaf65aec"
+    },
+    {
+      "path": "cases/CASE_MECHANISM_SUMMARY.csv",
+      "sha256": "8ed8242a912c160a5e993cf9694e5c6619fe8ca50c776902a8507a0289ae36ed"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "actual_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "underlying_data_version": "v2",
+  "sampling_policy": "natural_random only; category-priority orders excluded",
+  "pool_layer": "ordinary_manual",
+  "team_sizes": [
+    10,
+    12,
+    14,
+    16,
+    20,
+    24
+  ],
+  "natural_orders": 4248,
+  "registered_links": 24336,
+  "unique_endpoints": 24237,
+  "eligible_endpoints": 24004,
+  "images": 171,
+  "buildings": 22,
+  "workers": 60,
+  "failures": 228,
+  "finite_by_output": {
+    "floor_turn5_n": 24060,
+    "floor_short_edge_03_n": 24060,
+    "floor_redundant5_n": 24060,
+    "bottom_y_mean_px": 24062,
+    "top_y_mean_px": 24062,
+    "log_floor_area": 24060,
+    "log_height_mean": 24062,
+    "B8L2": 24009,
+    "D10": 24009,
+    "iou2d100": 24008,
+    "IoU3D100": 24009,
+    "boundary_loss": 24008,
+    "direction_loss": 24008,
+    "height_loss": 24008
+  },
+  "distinct_team_rule": "Each deterministic member endpoint stored once; original natural-order multiplicity retained as explicit MC weight.",
+  "no_new_fusion": true,
+  "source_files": {
+    "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/design/EXACT_ORDER_DESIGN.csv.gz": "4e9094062d403397c4ac07635186b3b9df3e2d4f3b128548bf0491ed439111a9",
+    "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/results/ENDPOINT_SCALARS.csv.gz": "f1f3719e16326c0dd8c48e1fc7594f27eeab8aac6e2aaf7e5f23ac9befdf850a",
+    "exchange_research_20261025/recovery/library/HOHONET_v2人数过程_阶段03C_几何与精确顺序关联_20261023.zip": "61b24a2beb58dcaca3627eeb6dd8f45c0ca496001653ef040376628b7f59da5d"
+  },
+  "geometry_outputs": [
+    "floor_turn5_n",
+    "floor_short_edge_03_n",
+    "floor_redundant5_n",
+    "bottom_y_mean_px",
+    "top_y_mean_px",
+    "log_floor_area",
+    "log_height_mean"
+  ],
+  "quality_outputs": [
+    "B8L2",
+    "D10",
+    "iou2d100",
+    "IoU3D100",
+    "boundary_loss",
+    "direction_loss",
+    "height_loss"
+  ]
+}

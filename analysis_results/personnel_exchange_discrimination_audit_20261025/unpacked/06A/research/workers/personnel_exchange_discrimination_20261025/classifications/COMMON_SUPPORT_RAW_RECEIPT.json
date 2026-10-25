@@ -1,0 +1,37 @@
+{
+  "candidates": [
+    "DBOUNDARY_AXIS2",
+    "DBOUNDARY_K2",
+    "DBOUNDARY_K3",
+    "DBOUNDARY_K4",
+    "DJOINT_K2",
+    "DJOINT_K3",
+    "DJOINT_K4",
+    "DSTRUCT_AXIS2",
+    "DSTRUCT_K2",
+    "DSTRUCT_K3",
+    "DSTRUCT_K4",
+    "MSDGEOM_K2",
+    "MSDGEOM_K3",
+    "MSDGEOM_K4",
+    "MSDGEOM_SCOPE_AXIS2",
+    "MSDGEOM_SCOPE_K2",
+    "MSDGEOM_SCOPE_K3",
+    "MSDGEOM_SCOPE_K4",
+    "Q_HARD_MEDIAN2"
+  ],
+  "baselines": [
+    "Q_MEDIAN2",
+    "OLD_V3_BEHAVIOR_COARSE"
+  ],
+  "pool_layer": "ordinary_manual",
+  "common_support": "Intersection of candidate, Q_MEDIAN2 and old V3_BEHAVIOR coarse known workers, separately per heldout building and actual image.",
+  "no_new_fusion": true,
+  "no_new_candidates": true,
+  "labels_unchanged": true,
+  "aggregation": "Equal class means within and unordered class-pair means across; same image and common exact person pool; then equal image/building.",
+  "interpretation": "Descriptive separation comparison; candidates differ in class count and class balance. Not a causal gain or proof of better fused quality.",
+  "image_comparison_rows": 131320,
+  "panels": 3363,
+  "unestimable_panels": 124
+}

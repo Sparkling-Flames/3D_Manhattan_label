@@ -1,0 +1,52 @@
+{
+  "methods": 20,
+  "all_labels": 28520,
+  "raw_pairs": 121515,
+  "raw_image_comparisons": 86060,
+  "no_new_fusion": true,
+  "raw_test_scope": "Snapshot pool_layer separates ordinary_manual, special_manual, doorway_manual, ordinary_semi, special_semi; non_doorway alone does not mean ordinary.",
+  "same_count": "Exact raw corner-pair count equality; still compares top/bottom azimuth and scale, not just corner number.",
+  "pairing": "One-to-one Hungarian azimuth matching within 9 degrees; unmatched fraction reported separately.",
+  "aggregation": "Equal class means within; equal unordered class-pair means across; then image and building means.",
+  "qualification": "Historical labels fitted excluding target building; no target fusion score used for candidates.",
+  "full_combination_note": "Capacity is a mathematical feasibility bound, not a claim that endpoints or permutations were computed.",
+  "history_scope_clarification": "Frozen labels use non-doorway fixed-reference history with known easy/medium/hard grade; includes declared auxiliary special-range history e9zR4mvMWw7-16 and jtcxE69GiFV-18. No relabeling was performed.",
+  "history_records_by_pool_layer": {
+    "ordinary_manual": 5719,
+    "ordinary_semi": 901,
+    "special_manual": 66,
+    "special_semi": 45
+  },
+  "special_range_history_support": [
+    {
+      "pool_id": "e9zR4mvMWw7-16__manual__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 35,
+      "workers": 35
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-16__semi__d23b7d1ff9",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "pool_layer": "special_semi",
+      "difficulty_coarse": "简单",
+      "building": "e9zR4mvMWw7",
+      "records": 45,
+      "workers": 45
+    },
+    {
+      "pool_id": "jtcxE69GiFV-18__manual__5b5b064c0a",
+      "image_code": "jtcxE69GiFV-18",
+      "condition": "manual",
+      "pool_layer": "special_manual",
+      "difficulty_coarse": "困难",
+      "building": "jtcxE69GiFV",
+      "records": 31,
+      "workers": 31
+    }
+  ]
+}

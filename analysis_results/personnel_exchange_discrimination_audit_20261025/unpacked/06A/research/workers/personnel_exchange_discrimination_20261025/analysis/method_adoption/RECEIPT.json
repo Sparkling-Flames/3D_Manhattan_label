@@ -1,0 +1,43 @@
+{
+  "actual_methods": 31,
+  "new_forward": 20,
+  "old_retested": 7,
+  "new_reverse": 4,
+  "new_fusion_run": false,
+  "labels_changed": false,
+  "status_counts": {
+    "保留探索细层": 4,
+    "主推荐": 2,
+    "保留探索粗层": 2,
+    "保留形状补充": 2,
+    "保留条件用途": 2,
+    "保留旧细层/不升新主推荐": 2,
+    "保留粗类解释": 1,
+    "保留透明对照": 1,
+    "保留探索解释": 1,
+    "保留探索形状候选": 1,
+    "保留竞争候选": 1,
+    "主用条件方案": 1,
+    "保留大团队探索候选": 1,
+    "保留有效基线": 1,
+    "保留粗类替换备选": 1,
+    "保留负向/弱增量对照": 1,
+    "保留旧成果与比较": 1,
+    "保留既有主用途": 1,
+    "保留历史解释/本轮不主用": 1,
+    "保留历史对照/本轮不主用": 1,
+    "保留机会有限的对照": 1,
+    "保留具体小类方向/大分支不主用": 1,
+    "保留重点条件发现": 1
+  },
+  "reference_n_m_rule": "Screen-only methods show n20/m6 for consistent scale, except explicitly retained n24/m5 axis signal; confirmed methods use named role/branch conditions, not a maximum selected over all rows.",
+  "historical_methods_not_counted_in31": 7,
+  "source_sha256": {
+    "analysis/screen/METHOD_N_M_COMPARISON.csv": "8b528da97e5b6e118cd7c76122bddc670686c72502c674014fc5e1484d92e211",
+    "analysis/confirm/METHOD_N_M_COMPARISON.csv": "f8865055ad7646696a0a826916cdb96b85707c6c90e3fb63c440fb8af4d873e5",
+    "analysis/confirm/SEMANTIC_ROLE_COMPARISON.csv": "7041d564e2907ed2193fe68823ed38b03936ac00e409b0c29e1a1001b6253d3d",
+    "analysis/reverse_confirm/REVERSE_BRANCH_COMPARISON.csv": "47319d1ff4f94b2f764afbf7ba12a8c0bd02b32cdb7ff0803ca579716c1dc87a",
+    "analysis/reverse_screen/METHOD_N_M_COMPARISON.csv": "554903848f76f5bf8d9da7e6fd70eef49245e081509da238316d28b20e5afcaf"
+  },
+  "code_sha256": "562e581b44d781bad604bb31eacd6831a535afc44b416517b4268a997b25aff0"
+}

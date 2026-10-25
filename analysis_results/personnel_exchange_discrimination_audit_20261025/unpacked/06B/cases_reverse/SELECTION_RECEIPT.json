@@ -1,0 +1,27 @@
+{
+  "selection_type": "post-comparison explanatory case; not a new independent effectiveness test",
+  "input": "results/reverse_confirm/EVENT_METRICS.csv.gz",
+  "input_sha256": "2f8ebb7d99b4dcc15af6ba321ee02f808a0e546ff8baf60b38f57aeff143add6",
+  "all_reverse_confirmation_events": 20278,
+  "method_n_m_frame_events": 118,
+  "method_n_m_frame_images": 51,
+  "method_n_m_frame_buildings": 17,
+  "whole_four_person_medium_hard_events": 20,
+  "whole_four_person_medium_hard_images": 10,
+  "whole_four_person_medium_hard_q_valid_events": 19,
+  "positive_in_each_of_multiple_blocks_backgrounds_images": 5,
+  "chosen_image": "B6ByNegPMKs-47",
+  "chosen_event": "f261cd4329817662818a5684",
+  "reason": "Two different source XY blocks and backgrounds both positive Q gap; A/B have small Q differences; C changes nodes. Chose lower-gap event, equidistant from the two-event image median, not maximum effect. Alternative background has negative shape gap and remains in selected-image context. Cached originals had no qualifying medium/hard image; download only this one.",
+  "image_gap_median": 8.31786570649189,
+  "chosen_gap": 5.7182404317512265,
+  "chosen_gap_distance_from_median": 2.5996252747406636,
+  "both_backgrounds_shape_gap_positive": false,
+  "lobo_target_members": [
+    "W109",
+    "W112",
+    "W126",
+    "W130"
+  ],
+  "all_labels_used_for_event": false
+}

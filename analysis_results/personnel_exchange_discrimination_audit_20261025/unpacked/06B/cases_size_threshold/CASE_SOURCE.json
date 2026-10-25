@@ -1,0 +1,30 @@
+{
+  "data": "v2",
+  "input_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "case_stage": "fixed_block_size_path_mechanism",
+  "chosen_before_event": "3b15e1f073610cfe79b11d8a",
+  "chosen_after_event": "d8c03de1c870a22a3d448441",
+  "native_endpoint_replays": 6,
+  "altered_threshold_fusions": 0,
+  "entrant": "W117",
+  "membership_check": "same XYZ and all previous D; adds same W117 in each arm",
+  "case_selection": "selected by root after size analysis to explain a large loss; not random or representative-rate sample",
+  "source_hashes": [
+    {
+      "path": "design/size_paths/EVENTS_EXACT.csv.gz",
+      "sha256": "41b0eea4bbb617c11b09031f20cfba1da6b7d4a731d9b453babdc5d762d87763"
+    },
+    {
+      "path": "results/size_paths/EVENT_METRICS.csv.gz",
+      "sha256": "9eb93f0b6f0488a059e28371ccadeadf83a2d5a620d5311ea03f17c7856ad258"
+    },
+    {
+      "path": "analysis/size_paths/PATH_STEP_CHANGES.csv.gz",
+      "sha256": "961ad1bf77daf2375f3151ab9e082d2ba73ee93263ce6cf52e348bd5b4322585"
+    },
+    {
+      "path": "cases/build_exchange_cases.py",
+      "sha256": "ae98f4a13d86b4a1713e110e57c4970fe9a29782bd07098f705abfa988781793"
+    }
+  ]
+}
