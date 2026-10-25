@@ -1,0 +1,10 @@
+{
+  "original_errors": [
+    "os.O_DIRECTORY absent on Windows",
+    "UTF-8 JSON read using GBK default"
+  ],
+  "local_patch": "skip directory fsync only on Windows; retain file fsync and atomic replacement; explicitly read UTF-8",
+  "directory_flush_sites_patched": 2,
+  "plain_and_gzip_json_roundtrip": "passed",
+  "original_zip_and_extracted_code_changed": false
+}

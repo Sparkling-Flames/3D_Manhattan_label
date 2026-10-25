@@ -1,3 +1,7 @@
+- **2026-10-25人员分类展示整理：** [主要方法、核心效果对照与其它用途](../research/workers/personnel_classification_guide_20261025/README.md)接入既有人员六步；7套ALL/楼外名单、四重点与71条件，保留旧配比/人数标签；仅整理保存结果。
+
+- **2026-10-25同图大块换类独立验收：** [13包、分类/反推、严格ABC与规模路径](../analysis_results/personnel_exchange_discrimination_audit_20261025/README.md)。四个具体条件有多数图/楼支持；保留旧分类、负向结果与分项差别。来源与审查结果单列；采用解释已接入人员主报告及研究台。
+
 - **2026-10-24人员收尾补充实验：** [四套分类随机参照与上游复现](../research/workers/personnel_supplement_20261024/README.md)、[主要结论多指标诊断](../research/quality/personnel_metric_dependence_20261024/README.md)、[门洞与zs-16门槛敏感性](../research/fusion/doorway_vote_sensitivity_20261024/README.md)。已完成[独立验收](../research/workers/personnel_supplement_20261024/INDEPENDENT_ACCEPTANCE.md)；复用真人v2团队并定向重放门槛，正式分类、评分、融合合同和OOS边界不变。
 - **2026-10-24人数延伸：** [固定157图到30人、92图到35人与实际满员](../research/workers/personnel_population_curves_v2_20261023/late_population_20261024/README.md)从既有前缀重聚合，配套图表、同路径/同图质量、波动与完整失败分母；Semi为次要分析。
 - **2026-10-24门洞案例补齐：** [7y-06满员失败](../research/workers/personnel_population_curves_v2_20261023/cases/doorway_full_pool_20261024/README.md)从现有结果提取32人完整标注、4个端点及24条自然路径，研究台直接查看入口由展示线程接入；不新增融合/评分，OOS继续独立。

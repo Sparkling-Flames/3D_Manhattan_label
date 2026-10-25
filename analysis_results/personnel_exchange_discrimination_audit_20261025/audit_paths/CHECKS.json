@@ -1,0 +1,55 @@
+{
+  "size_design": {
+    "events": 3264,
+    "paths": 286,
+    "images": 90,
+    "buildings": 22,
+    "n_min": 10,
+    "n_max": 21,
+    "arithmetic_metrics": 37
+  },
+  "size_scalar_link_rows": 9792,
+  "size_curve_rows_columns": [
+    4083,
+    396
+  ],
+  "size_failure_summary_rows": 32,
+  "ac_design": {
+    "events": 2288,
+    "paths": 286,
+    "n_max": 28,
+    "arithmetic_metrics": 37
+  },
+  "ac_key_rows": 32,
+  "omissions": [
+    {
+      "method": "DSTRUCT_K3",
+      "anchors": 84,
+      "complete_CB": 82,
+      "all_positive": 68,
+      "majority_positive": 70,
+      "risk_complete": 83,
+      "no_risk": 81,
+      "C7_minus_C6": 0.6196571985852173,
+      "B7_minus_B6": -0.4690175207193935,
+      "net": 1.0886747193046107
+    },
+    {
+      "method": "MSDGEOM_SCOPE_K4",
+      "anchors": 54,
+      "complete_CB": 49,
+      "all_positive": 44,
+      "majority_positive": 46,
+      "risk_complete": 54,
+      "no_risk": 54,
+      "C7_minus_C6": 0.7430245507190537,
+      "B7_minus_B6": -0.024200970032755967,
+      "net": 0.7672255207518097
+    }
+  ],
+  "omission_design": {
+    "events": 2002,
+    "anchors": 286,
+    "images": 90
+  }
+}

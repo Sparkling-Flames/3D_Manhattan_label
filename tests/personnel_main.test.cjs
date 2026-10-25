@@ -4,6 +4,8 @@ const page=path.join(__dirname,'../research/statistics/research_explorer_v1_r2_2
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
 const index=read(path.join(page,'v2-data/index.json'));
 const context={window:{}};vm.createContext(context);
+vm.runInContext(fs.readFileSync(path.join(page,'personnel-methods.js'),'utf8'),context);
+context.PersonnelMethods=context.window.PersonnelMethods;
 vm.runInContext(fs.readFileSync(path.join(page,'personnel-main.js'),'utf8'),context);
 class Element {
  constructor(tag='div'){this.tag=tag;this.value='';this.listeners={};this.textContent='';}
@@ -24,12 +26,41 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
 (async()=>{
  let host=await render(0);
  assert.equal((host.innerHTML.match(/data-scheme=/g)||[]).length,4);
+ assert.equal((host.innerHTML.match(/data-current-method=/g)||[]).length,7);
+ assert(host.innerHTML.indexOf('id="currentClassification"')<host.innerHTML.indexOf('id="classificationQuestions"'));
+ assert.match(host.querySelector('#newRosterDetail').innerHTML,/困难时保留较多非冗余转折/);
+ const guide=index.documents.find(d=>d.path==='personnel_classification_guide').content;
+ for(const method of guide.methods){
+  host.querySelector('#newMethod').change(method.id);
+  for(const fold of [...new Set(guide.rosters.map(r=>r.fold))]){
+   host.querySelector('#newFold').change(fold);
+   const html=host.querySelector('#newRosterDetail').innerHTML;
+   assert.match(html,/共62人/);assert.doesNotMatch(html,/undefined|NaN/);
+   if(fold!=='ALL')assert.doesNotMatch(html,/C3 · 困难时保留/);
+  }
+ }
+ host.querySelector('#newMethod').change('RFUSE_GEOM_K2');host.querySelector('#newFold').change('ALL');
+ assert.match(host.querySelector('#newRosterDetail').innerHTML,/W109、W112、W126、W130/);
  assert(host.innerHTML.indexOf('id="classificationQuestions"')<host.innerHTML.indexOf('id="personCondition"'));
  assert.match(host.innerHTML,/24\/27图/);assert.match(host.querySelector('#personCount').textContent,/248 \/ 248/);
  host.querySelector('#personCondition').change('semi');assert.match(host.querySelector('#personCount').textContent,/124 \/ 248/);
  host=await render(1);assert.match(host.innerHTML,/13,406/);assert.match(host.innerHTML,/全部79格/);
  host.querySelector('#mixtureExample').change('semi_failure');assert.match(host.querySelector('#mixtureDetails').innerHTML,/205队失败/);
  host=await render(2);assert.equal(host.querySelector('#ordinaryExchange').value,'S01');
+ assert(host.innerHTML.indexOf('id="currentExchanges"')<host.innerHTML.indexOf('id="ordinaryExchangeResults"'));
+ assert.match(host.innerHTML,/n21 \/ m7/);assert.match(host.innerHTML,/n28 \/ m7/);
+ assert.match(host.querySelector('#newExchangeDetail').innerHTML,/30图 \/ 235事件/);
+ host.querySelector('#newConditionRange').change('all');
+ for(let i=0;i<guide.all_conditions.length;i++){
+  host.querySelector('#newExchange').change(String(i));
+  for(const metric of ['B8L2','D10','IoU3D100','geometry_bev_distance','geometry_top_angle','geometry_bottom_angle','floor_turn5_n']){
+   host.querySelector('#newMetric').change(metric);
+   assert.doesNotMatch(host.querySelector('#newExchangeDetail').innerHTML,/undefined|NaN/);
+  }
+ }
+ host.querySelector('#newConditionRange').change('main');host.querySelector('#newExchange').change('2');host.querySelector('#newMetric').change('B8L2');
+ assert.match(host.querySelector('#newExchangeDetail').innerHTML,/1\.828/);
+ assert.match(host.querySelector('#newExchangeDetail').innerHTML,/4\/56/);
  assert(host.innerHTML.indexOf('id="ordinaryExchangeResults"')<host.innerHTML.indexOf('id="sameRoomExtension"'));
  assert(host.innerHTML.includes('<details open><summary>查看同房大块、替换规模与背景结果</summary>'));
  assert.match(host.innerHTML,/20 \/ 6/);assert.match(host.innerHTML,/17 \/ 23/);
@@ -49,7 +80,13 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
   assert.doesNotMatch(host.querySelector('#ordinaryExchangeDetail').innerHTML,/undefined|NaN/);
  }
  const allHTML=[host.innerHTML];
- for(const tab of [0,1])allHTML.push((await render(tab)).innerHTML);
+ const mechanismHost=await render(5);assert.match(mechanismHost.innerHTML,/B6-47/);assert.match(mechanismHost.innerHTML,/96.60→45.46/);
+ for(const tab of [0,1,3,5])allHTML.push((await render(tab)).innerHTML);
+ for(const url of allHTML.join('').matchAll(/(?:href|src)="([^"#]+)"/g)){
+  if(/^(?:https?:|data:)/.test(url[1]))continue;
+  const target=path.resolve(page,url[1].split('#')[0].split('?')[0]);
+  assert(fs.existsSync(target),'missing local link '+url[1]);
+ }
  for(const id of allHTML.join('').matchAll(/data-table-jump="([^"]+)"/g))assert(index.tables.some(t=>t.id===id[1]),id[1]);
- console.log('PASS: four schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');
+ console.log('PASS: 7 current methods × 23 rosters, 71 × 7 metric selections, 4 historical schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');
 })().catch(e=>{console.error(e);process.exitCode=1;});

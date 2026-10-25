@@ -1,0 +1,968 @@
+{
+  "zip_packages": 13,
+  "virtual_research_files": 783,
+  "gzip_files_fully_read": [
+    {
+      "file": "classifications/AXIS_CLASS_DEFINITIONS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 141980
+    },
+    {
+      "file": "classifications/AXIS_METHOD_LABELS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 1072704
+    },
+    {
+      "file": "classifications/CANDIDATE_CLASS_DEFINITIONS_COMPLETE_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 1113707
+    },
+    {
+      "file": "classifications/CANDIDATE_LABELS_COMPLETE_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 4973372
+    },
+    {
+      "file": "classifications/CURRENT_POOL_CLASS_CAPACITY.csv.gz",
+      "uncompressed_bytes": 2621473
+    },
+    {
+      "file": "classifications/HELDOUT_RAW_DISTANCE_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 23734163
+    },
+    {
+      "file": "classifications/NEW_CLASS_DEFINITIONS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 762766
+    },
+    {
+      "file": "classifications/NEW_METHOD_LABELS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 2742017
+    },
+    {
+      "file": "classifications/NEW_METHOD_LABELS_LOBO.csv.gz",
+      "uncompressed_bytes": 2642741
+    },
+    {
+      "file": "classifications/SCOPE_INCREMENT_CLASS_DEFINITIONS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 244560
+    },
+    {
+      "file": "classifications/SCOPE_INCREMENT_LABELS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 1114241
+    },
+    {
+      "file": "classifications/STRICT_ABC_CAPACITY_BY_N.csv.gz",
+      "uncompressed_bytes": 57206486
+    },
+    {
+      "file": "design/screen/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 9009005
+    },
+    {
+      "file": "design/screen/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 24525082
+    },
+    {
+      "file": "design/screen/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 433264
+    },
+    {
+      "file": "design/screen/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 4109817
+    },
+    {
+      "file": "design/screen/REQUESTS.json.gz",
+      "uncompressed_bytes": 17214671
+    },
+    {
+      "file": "features/HISTORY_FEATURES_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 3739052
+    },
+    {
+      "file": "features/HISTORY_FEATURES_WITH_SCOPE_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 4199503
+    },
+    {
+      "file": "features/RAW_CONDITION_RESPONSE_RECORDS.csv.gz",
+      "uncompressed_bytes": 5952844
+    },
+    {
+      "file": "features/RAW_ORIGINAL_PAIR_DISTANCES.csv.gz",
+      "uncompressed_bytes": 41459515
+    },
+    {
+      "file": "features_scope/SCOPE_FEATURES_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 660889
+    },
+    {
+      "file": "features_scope/SCOPE_RECORDS_WITH_OPPORTUNITIES.csv.gz",
+      "uncompressed_bytes": 3195228
+    },
+    {
+      "file": "analysis/screen/BUILDING_METHOD_N_M_SUMMARY.csv.gz",
+      "uncompressed_bytes": 9797292
+    },
+    {
+      "file": "analysis/screen/POOL_METHOD_N_M_SUMMARY.csv.gz",
+      "uncompressed_bytes": 23148000
+    },
+    {
+      "file": "results/screen/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 147577377
+    },
+    {
+      "file": "results/screen/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "uncompressed_bytes": 67238239
+    },
+    {
+      "file": "results/screen/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "uncompressed_bytes": 129668830
+    },
+    {
+      "file": "cases/1f1055f13748d0a3f1f9a3cc/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 101321
+    },
+    {
+      "file": "cases/657ca45c363d898187246206/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 113429
+    },
+    {
+      "file": "cases/7131b3e0aa7ea1cacd8687c2/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 134351
+    },
+    {
+      "file": "cases/d736b65c895fa37104d8f307/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 118181
+    },
+    {
+      "file": "design/confirm/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 2680612
+    },
+    {
+      "file": "design/confirm/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 41850194
+    },
+    {
+      "file": "design/confirm/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 163316
+    },
+    {
+      "file": "design/confirm/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 4109817
+    },
+    {
+      "file": "design/confirm/REQUESTS.json.gz",
+      "uncompressed_bytes": 28494756
+    },
+    {
+      "file": "design/reverse_confirm/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 3572115
+    },
+    {
+      "file": "design/reverse_confirm/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 21502990
+    },
+    {
+      "file": "design/reverse_confirm/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 58878
+    },
+    {
+      "file": "design/reverse_confirm/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 4813933
+    },
+    {
+      "file": "design/reverse_confirm/REQUESTS.json.gz",
+      "uncompressed_bytes": 14357827
+    },
+    {
+      "file": "design/reverse_screen/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 1309919
+    },
+    {
+      "file": "design/reverse_screen/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 8326942
+    },
+    {
+      "file": "design/reverse_screen/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 58878
+    },
+    {
+      "file": "design/reverse_screen/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 4813933
+    },
+    {
+      "file": "design/reverse_screen/REQUESTS.json.gz",
+      "uncompressed_bytes": 5671835
+    },
+    {
+      "file": "design/size_paths/ANCHOR_PATHS.csv.gz",
+      "uncompressed_bytes": 189042
+    },
+    {
+      "file": "design/size_paths/BASELINE_N10_LINKS.csv.gz",
+      "uncompressed_bytes": 1812494
+    },
+    {
+      "file": "design/size_paths/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 193621
+    },
+    {
+      "file": "design/size_paths/ENDPOINT_REQUEST_USAGE.csv.gz",
+      "uncompressed_bytes": 2098628
+    },
+    {
+      "file": "design/size_paths/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 5381379
+    },
+    {
+      "file": "design/size_paths/EXISTING_N10_REQUESTS.json.gz",
+      "uncompressed_bytes": 175033
+    },
+    {
+      "file": "design/size_paths/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 37630
+    },
+    {
+      "file": "design/size_paths/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 300831
+    },
+    {
+      "file": "design/size_paths/NEW_SIZE_REQUESTS.json.gz",
+      "uncompressed_bytes": 2182645
+    },
+    {
+      "file": "design/size_paths/PAIR_LINKS.csv.gz",
+      "uncompressed_bytes": 1899782
+    },
+    {
+      "file": "design/size_paths/REQUESTS.json.gz",
+      "uncompressed_bytes": 2357677
+    },
+    {
+      "file": "design/target_omissions/ANCHORS.csv.gz",
+      "uncompressed_bytes": 156081
+    },
+    {
+      "file": "design/target_omissions/CAPACITY_AND_ATTEMPTS.csv.gz",
+      "uncompressed_bytes": 175361
+    },
+    {
+      "file": "design/target_omissions/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 2650987
+    },
+    {
+      "file": "design/target_omissions/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 37630
+    },
+    {
+      "file": "design/target_omissions/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 300831
+    },
+    {
+      "file": "design/target_omissions/PAIR_LINKS.csv.gz",
+      "uncompressed_bytes": 1081588
+    },
+    {
+      "file": "design/target_omissions/REQUESTS.json.gz",
+      "uncompressed_bytes": 641785
+    },
+    {
+      "file": "reverse/INNER_BUILDING_RESPONSE_ERRORS.csv.gz",
+      "uncompressed_bytes": 5701659
+    },
+    {
+      "file": "reverse/REVERSE_CLASS_CENTERS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 309103
+    },
+    {
+      "file": "reverse/REVERSE_CURRENT_POOL_MEMBERS.csv.gz",
+      "uncompressed_bytes": 274673
+    },
+    {
+      "file": "reverse/REVERSE_LABELS_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 1104428
+    },
+    {
+      "file": "reverse/REVERSE_STRICT_CAPACITY_BY_IMAGE_N.csv.gz",
+      "uncompressed_bytes": 2612934
+    },
+    {
+      "file": "reverse/WORKER_FUSION_RESPONSE_FEATURES_ALL_LOBO.csv.gz",
+      "uncompressed_bytes": 3368748
+    },
+    {
+      "file": "reverse/folds/LABELS_2t7WUuJeko7.csv.gz",
+      "uncompressed_bytes": 48688
+    },
+    {
+      "file": "reverse/folds/LABELS_7y3sRwLe3Va.csv.gz",
+      "uncompressed_bytes": 48652
+    },
+    {
+      "file": "reverse/folds/LABELS_ALL.csv.gz",
+      "uncompressed_bytes": 40008
+    },
+    {
+      "file": "reverse/folds/LABELS_B6ByNegPMKs.csv.gz",
+      "uncompressed_bytes": 48652
+    },
+    {
+      "file": "reverse/folds/LABELS_b8cTxDM8gDG.csv.gz",
+      "uncompressed_bytes": 48688
+    },
+    {
+      "file": "reverse/folds/LABELS_e9zR4mvMWw7.csv.gz",
+      "uncompressed_bytes": 48648
+    },
+    {
+      "file": "reverse/folds/LABELS_jh4fc5c5qoQ.csv.gz",
+      "uncompressed_bytes": 48680
+    },
+    {
+      "file": "reverse/folds/LABELS_jtcxE69GiFV.csv.gz",
+      "uncompressed_bytes": 48680
+    },
+    {
+      "file": "reverse/folds/LABELS_pa4otMbVnkk.csv.gz",
+      "uncompressed_bytes": 48676
+    },
+    {
+      "file": "reverse/folds/LABELS_pRbA3pwrgk9.csv.gz",
+      "uncompressed_bytes": 48688
+    },
+    {
+      "file": "reverse/folds/LABELS_q9vSo1VnCiC.csv.gz",
+      "uncompressed_bytes": 48668
+    },
+    {
+      "file": "reverse/folds/LABELS_rPc6DW4iMge.csv.gz",
+      "uncompressed_bytes": 48636
+    },
+    {
+      "file": "reverse/folds/LABELS_S9hNv5qa7GM.csv.gz",
+      "uncompressed_bytes": 48680
+    },
+    {
+      "file": "reverse/folds/LABELS_uNb9QFRL6hY.csv.gz",
+      "uncompressed_bytes": 48624
+    },
+    {
+      "file": "reverse/folds/LABELS_UwV83HsGsw3.csv.gz",
+      "uncompressed_bytes": 48644
+    },
+    {
+      "file": "reverse/folds/LABELS_VFuaQ6m2Qom.csv.gz",
+      "uncompressed_bytes": 48664
+    },
+    {
+      "file": "reverse/folds/LABELS_VLzqgDo317F.csv.gz",
+      "uncompressed_bytes": 48688
+    },
+    {
+      "file": "reverse/folds/LABELS_wc2JMjhGNzB.csv.gz",
+      "uncompressed_bytes": 48644
+    },
+    {
+      "file": "reverse/folds/LABELS_X7HyMhZNoso.csv.gz",
+      "uncompressed_bytes": 48664
+    },
+    {
+      "file": "reverse/folds/LABELS_x8F5xyUWy9e.csv.gz",
+      "uncompressed_bytes": 48564
+    },
+    {
+      "file": "reverse/folds/LABELS_yqstnuAEVhm.csv.gz",
+      "uncompressed_bytes": 48592
+    },
+    {
+      "file": "reverse/folds/LABELS_Z6MFQCViBuw.csv.gz",
+      "uncompressed_bytes": 48688
+    },
+    {
+      "file": "reverse/folds/LABELS_zsNo4HB9uLZ.csv.gz",
+      "uncompressed_bytes": 48684
+    },
+    {
+      "file": "reverse/inputs/NATURAL_ORDER_INVENTORY.csv.gz",
+      "uncompressed_bytes": 1702222
+    },
+    {
+      "file": "reverse/inputs/NATURAL_TRAINING_ENDPOINTS.csv.gz",
+      "uncompressed_bytes": 22535026
+    },
+    {
+      "file": "reverse/inputs/NATURAL_TRAINING_PATH_TEAM_LINKS.csv.gz",
+      "uncompressed_bytes": 7428658
+    },
+    {
+      "file": "reverse/inputs/TRAINING_TEAM_MEMBER_LINKS.csv.gz",
+      "uncompressed_bytes": 51729846
+    },
+    {
+      "file": "results/confirm/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 261591535
+    },
+    {
+      "file": "results/target_omissions/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 13645710
+    },
+    {
+      "file": "results/reverse_confirm/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 136971595
+    },
+    {
+      "file": "results/reverse_screen/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 53611126
+    },
+    {
+      "file": "results/batch02/ENDPOINT_SCALARS.csv.gz",
+      "uncompressed_bytes": 379575283
+    },
+    {
+      "file": "results/batch02/ENDPOINT_GEOMETRY.json.gz",
+      "uncompressed_bytes": 195885150
+    },
+    {
+      "file": "analysis/large_team_ac_tail/CURVE_BY_K_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 2528193
+    },
+    {
+      "file": "analysis/large_team_ac_tail/CURVE_BY_K_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 4711338
+    },
+    {
+      "file": "analysis/large_team_ac_tail/CURVE_BY_K_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 877134
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FIXED_N35_BY_N_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 1069320
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FIXED_N35_BY_N_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 1906432
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FIXED_N35_BY_N_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 353462
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FROM_STRICT_TAIL_BY_K_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 4078238
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FROM_STRICT_TAIL_BY_K_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 1335285
+    },
+    {
+      "file": "analysis/large_team_ac_tail/FROM_STRICT_TAIL_EXACT.csv.gz",
+      "uncompressed_bytes": 9039777
+    },
+    {
+      "file": "analysis/large_team_ac_tail/STEP_BY_K_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 3943142
+    },
+    {
+      "file": "analysis/large_team_ac_tail/STEP_BY_K_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 1169407
+    },
+    {
+      "file": "analysis/large_team_ac_tail/STEP_EXACT.csv.gz",
+      "uncompressed_bytes": 9396990
+    },
+    {
+      "file": "analysis/large_team_ac_tail/UNMEASURED_EVENTS.csv.gz",
+      "uncompressed_bytes": 1816
+    },
+    {
+      "file": "analysis/size_paths/CURVE_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 13003348
+    },
+    {
+      "file": "analysis/size_paths/CURVE_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 23818217
+    },
+    {
+      "file": "analysis/size_paths/CURVE_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 3811427
+    },
+    {
+      "file": "analysis/size_paths/FROM_N10_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 29750521
+    },
+    {
+      "file": "analysis/size_paths/FROM_N10_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 4781602
+    },
+    {
+      "file": "analysis/size_paths/MECHANISM_STEP_CANDIDATES.csv.gz",
+      "uncompressed_bytes": 62514
+    },
+    {
+      "file": "analysis/size_paths/PATH_BASELINE_CHANGES.csv.gz",
+      "uncompressed_bytes": 22938543
+    },
+    {
+      "file": "analysis/size_paths/PATH_STEP_CHANGES.csv.gz",
+      "uncompressed_bytes": 24255647
+    },
+    {
+      "file": "analysis/size_paths/STEP_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 29494215
+    },
+    {
+      "file": "analysis/size_paths/STEP_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 4364805
+    },
+    {
+      "file": "analysis/size_paths/THRESHOLD_ENTRANT_ROLE_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 1610456
+    },
+    {
+      "file": "analysis/size_paths/THRESHOLD_GROUP_BY_BUILDING.csv.gz",
+      "uncompressed_bytes": 3221099
+    },
+    {
+      "file": "analysis/size_paths/THRESHOLD_GROUP_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 5891356
+    },
+    {
+      "file": "analysis/size_paths/THRESHOLD_GROUP_BY_IMAGE_VALID_PATH_COUNTS.csv.gz",
+      "uncompressed_bytes": 853360
+    },
+    {
+      "file": "analysis/size_paths/UNMEASURED_REGISTERED_EVENTS.csv.gz",
+      "uncompressed_bytes": 1608
+    },
+    {
+      "file": "design/large_team_ac_tail/ANCHOR_PATHS.csv.gz",
+      "uncompressed_bytes": 170114
+    },
+    {
+      "file": "design/large_team_ac_tail/ENDPOINT_REQUEST_USAGE.csv.gz",
+      "uncompressed_bytes": 989912
+    },
+    {
+      "file": "design/large_team_ac_tail/EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 4178380
+    },
+    {
+      "file": "design/large_team_ac_tail/EXISTING_STRICT_TAIL_REQUESTS.json.gz",
+      "uncompressed_bytes": 158382
+    },
+    {
+      "file": "design/large_team_ac_tail/FOLD_ROLE_CENTERS.csv.gz",
+      "uncompressed_bytes": 37630
+    },
+    {
+      "file": "design/large_team_ac_tail/FROZEN_LABELS.csv.gz",
+      "uncompressed_bytes": 300831
+    },
+    {
+      "file": "design/large_team_ac_tail/NEW_TAIL_REQUESTS.json.gz",
+      "uncompressed_bytes": 1160943
+    },
+    {
+      "file": "design/large_team_ac_tail/PAIR_LINKS.csv.gz",
+      "uncompressed_bytes": 1056254
+    },
+    {
+      "file": "design/large_team_ac_tail/REQUESTS.json.gz",
+      "uncompressed_bytes": 1319323
+    },
+    {
+      "file": "design/large_team_ac_tail/STRICT_TAIL_LINKS.csv.gz",
+      "uncompressed_bytes": 936969
+    },
+    {
+      "file": "results/large_team_ac_tail/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 9507420
+    },
+    {
+      "file": "results/large_team_ac_tail/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "uncompressed_bytes": 4217211
+    },
+    {
+      "file": "results/large_team_ac_tail/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "uncompressed_bytes": 8608062
+    },
+    {
+      "file": "results/size_paths/EVENT_METRICS.csv.gz",
+      "uncompressed_bytes": 23952082
+    },
+    {
+      "file": "results/size_paths/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "uncompressed_bytes": 9423200
+    },
+    {
+      "file": "results/size_paths/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "uncompressed_bytes": 17473546
+    },
+    {
+      "file": "cases_reverse/SELECTED_IMAGE_ALL_EVENTS.csv.gz",
+      "uncompressed_bytes": 22073
+    },
+    {
+      "file": "cases_reverse/SELECTION_FRAME_EVENTS.csv.gz",
+      "uncompressed_bytes": 80671
+    },
+    {
+      "file": "cases_reverse/f261cd4329817662818a5684/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 172320
+    },
+    {
+      "file": "cases_size_threshold/SAME_IMAGE_ALL_STEPS.csv.gz",
+      "uncompressed_bytes": 156553
+    },
+    {
+      "file": "cases_size_threshold/SAME_IMAGE_TWO_PATHS_METRICS.csv.gz",
+      "uncompressed_bytes": 152194
+    },
+    {
+      "file": "cases_size_threshold/3b15e1f073610cfe79b11d8a/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 152209
+    },
+    {
+      "file": "cases_size_threshold/d8c03de1c870a22a3d448441/CASE_GEOMETRY.json.gz",
+      "uncompressed_bytes": 154494
+    },
+    {
+      "file": "analysis/FINAL_CONDITIONS_ALL_COMPONENTS.csv.gz",
+      "uncompressed_bytes": 1159311
+    },
+    {
+      "file": "analysis/FINAL_CONDITIONS_POOL_SUMMARIES.csv.gz",
+      "uncompressed_bytes": 2570267
+    },
+    {
+      "file": "analysis/condition_support/DSTRUCT_K3_n18_m7_EXACT_SUPPORT_EVENTS.csv.gz",
+      "uncompressed_bytes": 596816
+    },
+    {
+      "file": "analysis/condition_support/MSDGEOM_SCOPE_K4_n20_m6_EXACT_SUPPORT_EVENTS.csv.gz",
+      "uncompressed_bytes": 1037716
+    },
+    {
+      "file": "analysis/condition_support/RFUSE_GEOMQ_K3_n20_m6_EXACT_SUPPORT_EVENTS.csv.gz",
+      "uncompressed_bytes": 84284
+    },
+    {
+      "file": "analysis/condition_support/RFUSE_GEOM_K2_n12_m4_EXACT_SUPPORT_EVENTS.csv.gz",
+      "uncompressed_bytes": 186801
+    },
+    {
+      "file": "analysis/confirm/COMMON_POOL_BASELINE_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 495245
+    },
+    {
+      "file": "analysis/confirm/FAIR_ROLE_COMMON_POOL_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 1356477
+    },
+    {
+      "file": "analysis/reverse_confirm/COMMON_POOL_BASELINE_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 1
+    },
+    {
+      "file": "analysis/reverse_confirm/FAIR_ROLE_COMMON_POOL_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 1
+    },
+    {
+      "file": "analysis/reverse_confirm/GEOMQ_K3_N20_M6_ROLE_EXACT_SUPPORT.csv.gz",
+      "uncompressed_bytes": 139658
+    },
+    {
+      "file": "analysis/reverse_confirm/REVERSE_BRANCH_BUILDING_SUMMARY.csv.gz",
+      "uncompressed_bytes": 3215805
+    },
+    {
+      "file": "analysis/reverse_confirm/REVERSE_BRANCH_POOL_SUMMARY.csv.gz",
+      "uncompressed_bytes": 14383099
+    },
+    {
+      "file": "analysis/reverse_screen/COMMON_POOL_BASELINE_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 1
+    },
+    {
+      "file": "analysis/reverse_screen/FAIR_ROLE_COMMON_POOL_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 1
+    },
+    {
+      "file": "analysis/reverse_screen/REVERSE_BRANCH_BUILDING_SUMMARY.csv.gz",
+      "uncompressed_bytes": 2081197
+    },
+    {
+      "file": "analysis/reverse_screen/REVERSE_BRANCH_POOL_SUMMARY.csv.gz",
+      "uncompressed_bytes": 5822019
+    },
+    {
+      "file": "analysis/screen/COMMON_POOL_BASELINE_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 3741507
+    },
+    {
+      "file": "analysis/screen/FAIR_ROLE_COMMON_POOL_DIFFERENCES.csv.gz",
+      "uncompressed_bytes": 11041101
+    },
+    {
+      "file": "analysis/size_paths/KEY_SCALE_METRICS.csv.gz",
+      "uncompressed_bytes": 41489186
+    },
+    {
+      "file": "classifications/COMMON_SUPPORT_RAW_COMPARISON_BY_IMAGE.csv.gz",
+      "uncompressed_bytes": 46652677
+    },
+    {
+      "file": "classifications/COMMON_SUPPORT_RAW_PANELS.csv.gz",
+      "uncompressed_bytes": 1109986
+    },
+    {
+      "file": "classifications/COMMON_SUPPORT_RAW_UNESTIMABLE.csv.gz",
+      "uncompressed_bytes": 30059
+    },
+    {
+      "file": "classifications/MAIN_CANDIDATE_PERSON_HISTORY_ALL.csv.gz",
+      "uncompressed_bytes": 386671
+    },
+    {
+      "file": "classifications/folds/LABELS_2t7WUuJeko7.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_7y3sRwLe3Va.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_ALL.csv.gz",
+      "uncompressed_bytes": 99509
+    },
+    {
+      "file": "classifications/folds/LABELS_B6ByNegPMKs.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_b8cTxDM8gDG.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_e9zR4mvMWw7.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_jh4fc5c5qoQ.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_jtcxE69GiFV.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_pa4otMbVnkk.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_pRbA3pwrgk9.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_q9vSo1VnCiC.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_rPc6DW4iMge.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_S9hNv5qa7GM.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_uNb9QFRL6hY.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_UwV83HsGsw3.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_VFuaQ6m2Qom.csv.gz",
+      "uncompressed_bytes": 120473
+    },
+    {
+      "file": "classifications/folds/LABELS_VLzqgDo317F.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_wc2JMjhGNzB.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_X7HyMhZNoso.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_x8F5xyUWy9e.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_yqstnuAEVhm.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_Z6MFQCViBuw.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "classifications/folds/LABELS_zsNo4HB9uLZ.csv.gz",
+      "uncompressed_bytes": 120341
+    },
+    {
+      "file": "final/ALL_BUILDING_METHOD_N_M_SUMMARIES.csv.gz",
+      "uncompressed_bytes": 16646335
+    },
+    {
+      "file": "final/ALL_DIFFICULTY_COMPARISON.csv.gz",
+      "uncompressed_bytes": 20416320
+    },
+    {
+      "file": "final/ALL_DIFFICULTY_OUTCOMES.csv.gz",
+      "uncompressed_bytes": 76573381
+    },
+    {
+      "file": "final/ALL_METHOD_N_M_COMPARISON.csv.gz",
+      "uncompressed_bytes": 7418732
+    },
+    {
+      "file": "final/ALL_METHOD_N_M_OUTCOMES.csv.gz",
+      "uncompressed_bytes": 26991987
+    },
+    {
+      "file": "final/ALL_POOL_METHOD_N_M_SUMMARIES.csv.gz",
+      "uncompressed_bytes": 51446091
+    },
+    {
+      "file": "final/ALL_RISK_TIME_SUMMARIES.csv.gz",
+      "uncompressed_bytes": 1906749
+    },
+    {
+      "file": "final/ALL_SEMANTIC_ROLE_COMPARISON.csv.gz",
+      "uncompressed_bytes": 24814936
+    },
+    {
+      "file": "final/ALL_SEMANTIC_ROLE_OUTCOMES.csv.gz",
+      "uncompressed_bytes": 96087338
+    },
+    {
+      "file": "final/LABELS_LOBO.csv.gz",
+      "uncompressed_bytes": 5047397
+    },
+    {
+      "file": "runtime/population/inputs/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "uncompressed_bytes": 1692864
+    },
+    {
+      "file": "runtime/population/inputs/INPUT_SNAPSHOT.json.gz",
+      "uncompressed_bytes": 7055381
+    },
+    {
+      "file": "runtime/population/inputs/RAW_POOL_MEMBER_FEATURES.csv.gz",
+      "uncompressed_bytes": 2489518
+    },
+    {
+      "file": "runtime/population/inputs/RECORD_ELIGIBILITY_TIME_LINK.csv.gz",
+      "uncompressed_bytes": 4462435
+    },
+    {
+      "file": "final/ALL_EVENTS_EXACT.csv.gz",
+      "uncompressed_bytes": 129516772
+    },
+    {
+      "file": "final/ENDPOINT_REUSE_COUNTS.csv.gz",
+      "uncompressed_bytes": 20240727
+    },
+    {
+      "file": "final/EVENT_ENDPOINT_LINKS.csv.gz",
+      "uncompressed_bytes": 56743318
+    },
+    {
+      "file": "final/UNIQUE_ENDPOINT_INVENTORY.csv.gz",
+      "uncompressed_bytes": 121707260
+    }
+  ],
+  "scalar_batches": [
+    {
+      "file": "results/batch02/ENDPOINT_SCALARS.csv.gz",
+      "rows": 202694,
+      "scored": 200607,
+      "failed": 2087,
+      "max_abs_error": {
+        "B8L2": 5.684341886080802e-14,
+        "D10": 5.684341886080802e-14
+      }
+    },
+    {
+      "file": "results/large_team_ac_tail/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "rows": 4392,
+      "scored": 4326,
+      "failed": 66,
+      "max_abs_error": {
+        "B8L2": 5.684341886080802e-14,
+        "D10": 5.684341886080802e-14
+      }
+    },
+    {
+      "file": "results/screen/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "rows": 68009,
+      "scored": 66095,
+      "failed": 1914,
+      "max_abs_error": {
+        "B8L2": 5.684341886080802e-14,
+        "D10": 5.684341886080802e-14
+      }
+    },
+    {
+      "file": "results/size_paths/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "rows": 9792,
+      "scored": 9626,
+      "failed": 166,
+      "max_abs_error": {
+        "B8L2": 5.684341886080802e-14,
+        "D10": 5.684341886080802e-14
+      }
+    }
+  ],
+  "geometry_batches": [
+    {
+      "file": "results/batch02/ENDPOINT_GEOMETRY.json.gz",
+      "geometry_rows": 202694,
+      "needed_rows": 202448,
+      "absent_geometry": 0,
+      "absent_scorable_geometry": 0
+    },
+    {
+      "file": "results/large_team_ac_tail/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "geometry_rows": 4392,
+      "needed_rows": 3820,
+      "absent_geometry": 0,
+      "absent_scorable_geometry": 0
+    },
+    {
+      "file": "results/screen/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "geometry_rows": 68009,
+      "needed_rows": 68009,
+      "absent_geometry": 0,
+      "absent_scorable_geometry": 0
+    },
+    {
+      "file": "results/size_paths/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "geometry_rows": 9792,
+      "needed_rows": 8934,
+      "absent_geometry": 0,
+      "absent_scorable_geometry": 0
+    }
+  ],
+  "unique_endpoints": 283211,
+  "unique_scorable": 279013,
+  "unique_unscorable": 4198,
+  "batch_rows_with_complete_source_time": 186597,
+  "member_object_reference_time_and_minimum_support": "all scalar batch rows checked against saved v2 snapshot",
+  "not_done": [
+    "all native fusion reruns",
+    "full scoring from original geometry",
+    "file hashes"
+  ]
+}

@@ -1,0 +1,39 @@
+--- a/runtime/population/code/run_prefix_endpoints.py
++++ b/runtime/population/code/run_prefix_endpoints.py
+@@ -27,9 +27,10 @@
+     with tmp.open('wb') as f: f.write(b);f.flush();os.fsync(f.fileno())
+     tmp.replace(path)
+     # Persist the directory entry as well as the bytes for durable checkpoints.
+-    directory_fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
+-    try:os.fsync(directory_fd)
+-    finally:os.close(directory_fd)
++    if os.name != 'nt':
++        directory_fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
++        try:os.fsync(directory_fd)
++        finally:os.close(directory_fd)
+ 
+ def save(path,v):
+     b=json.dumps(clean(v),ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+@@ -41,7 +42,7 @@
+     atomic_bytes(path,packed)
+ 
+ def read(path):
+-    with (gzip.open(path,'rt') if str(path).endswith('.gz') else open(path)) as f:return json.load(f)
++    with (gzip.open(path,'rt',encoding='utf-8-sig') if str(path).endswith('.gz') else open(path,encoding='utf-8-sig')) as f:return json.load(f)
+ 
+ def team_key(pid,ws):
+     digest=hashlib.sha256(json.dumps(sorted(ws),sort_keys=True,separators=(',',':')).encode()).hexdigest()[:20]
+@@ -151,9 +152,10 @@
+     def finish_file(temporary,target):
+         with temporary.open('rb') as f:os.fsync(f.fileno())
+         temporary.replace(target)
+-        fd=os.open(target.parent,os.O_RDONLY|os.O_DIRECTORY)
+-        try:os.fsync(fd)
+-        finally:os.close(fd)
++        if os.name != 'nt':
++            fd=os.open(target.parent,os.O_RDONLY|os.O_DIRECTORY)
++            try:os.fsync(fd)
++            finally:os.close(fd)
+     geo_stream=gzip.GzipFile(filename=str(geometry_tmp),mode='wb',compresslevel=3,mtime=0)
+     geo_stream.write(b'[')
+     for pid,keys in needed.items():

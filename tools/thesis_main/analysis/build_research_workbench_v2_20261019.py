@@ -986,6 +986,7 @@ def build():
     write(PAGE/'v2-data/index.json', dict(snapshot_id=SNAPSHOT, data_release='v2', tables=metadata,module_tabs=modules,
           documents=[dict(path=spec['path'], content=read(ROOT / spec['path']))
                      for spec in review_interface['documents']] + [
+                     dict(path='personnel_classification_guide', content=read(ROOT/'research/workers/personnel_classification_guide_20261025/GUIDE.json')),
                      dict(path='personnel_main_interface', content=personnel_interface),
                      dict(path='personnel_main_figures', content=personnel_figures),
                      dict(path='personnel_main_glossary', content=personnel_glossary),
@@ -1055,7 +1056,7 @@ def build():
              visual='../../../research/workers/personnel_effective_exchange_conditions_20261022/mechanisms/positive_cases/figures/E20261022_wc2_56_n20_m6/comparison.png',
              visual_alt='wc2 三队全票四角仍有定位和质量差异',
              support='保存机制案例；v1 的历史人数结果和 v2 的机制案例各保留版本信息。',
-             counterexample='人数相同但换一批人，结果稳定也不代表接近参考；固定 N≥20 池的 v2 自然人数曲线见人员研究第 5 步，各条件只在有记录的范围内解释。',
+             counterexample='人数相同但换一批人，结果稳定也不代表接近参考；固定157图到30人、92图到35人及实际满员的曲线见人员研究第5步，各条件只在有记录的范围内解释。',
              source='../../../research/fusion/fusion_paper_closeout_20261022/README.md',
              tables=[dict(id='fusion_closeout__endpoint_alignment',label='机制端点'),
                      dict(id='fusion_closeout__count_panel_by_condition',label='历史人数条件')]),
@@ -1072,7 +1073,7 @@ def build():
                      dict(id='same_room_pro__stopping_summary',label='停止结果'),
                      dict(id='same_room_pro__source_acquisition_summary',label='获取历史成本')]),
     ]
-    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员分类、混合构成与人数机制见“人员研究六步”；旧分类模块仅作阶段历史。'))
+    write(PAGE/'v2-data/overview.json',dict(metadata=dict(snapshot_id=SNAPSHOT),sections=sections,personnel_status='人员第1步：DSTRUCT主解释、融合响应及跨条件对照；第3步：同图大块与容量；旧配比、时间、人数和同房结果继续保留。'))
     print(json.dumps(dict(**summary,tables=len(metadata)),ensure_ascii=True))
 
 
