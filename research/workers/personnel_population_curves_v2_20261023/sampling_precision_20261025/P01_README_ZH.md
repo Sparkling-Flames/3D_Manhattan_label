@@ -1,0 +1,32 @@
+# P01：精确新增抽样设计、端点请求和冻结执行闭包
+
+这是2026-10-25人数随机顺序精度补充的完整预定设计及可执行输入，当前为P01第2版。登记设计的实际计算已完成，全部新增标量、前缀与轻量几何见P02，完整融合状态见P03，最终分析见P04。
+
+实际读取main：40d0fe62dc62f6f6c12723af10195b7abb7bc9fe，真人v2。冻结设计见STUDY_FREEZE_ZH.md。
+
+## 实际登记量
+
+- 普通Manual177池、门洞Manual17池；自然每池新增24，53个预选焦点池另48，共7200条新自然顺序。
+- 原四策略共同域157池，每种新增8条配对base变换，共5024条策略顺序；总新顺序12224条、前缀连接403376条。
+- k=1、k=N−1及6个小池全子集精确边际，14904个队×人数记录。
+- 全设计340055个唯一团队；复用旧人口研究16246端点，复用本轮计时中恰好命中的2个新端点，另需执行323807个端点。满员194个唯一团队全部命中旧结果，不新增。
+
+## 文件怎么用
+
+NEW_EXACT_ORDER_DESIGN保存完整进入顺序、派生种子、batch、target角色/成员、建筑外标签身份；NEW_PREFIX_TEAM_LINKS给每条路径每个人数对应team_key。ENDPOINT_DEPENDENCIES保存精确成员、原答object_id、参考、来源与是否新增；NEW_NATIVE_ENDPOINT_REQUESTS是正式待执行去重队。EXACT_MARGINAL_TEAM_DESIGN用于均匀子集精确总体，不能作为额外随机路径拼入曲线。
+
+engine/native_population_runner.py与engine/frozen_repo构成执行闭包；实际启动源码另保留executed_native_population_runner_20261025.py。portable入口只调整默认源目录查找，融合/评分算法没变。engine/benchmark保存本轮真实计时队；只有设计关联中的2队参与正式复用，其余仅是时间/接口核对。
+
+旧大端点及原24输入不重复打包，按inventory/NECESSARY_SOURCE_FILES.csv引用上述提交。engine闭包内的冻结原答与必要评分代码用于不依赖丢失临时环境的执行。运行步骤详见engine/README_ZH.md。
+
+## 阶段身份
+
+P00是新增前的原24精度诊断；P01是完整抽样设计及代码；后续数据包必须给出实际完成标量、状态、几何与分析。表中的“new_native_required”保留登记时的来源名称；当前这些请求均已有实际输出，不表示仍待执行，也不表示全部成功形成共识。k2延期、真实失败和缺Q各自保存。
+
+## P01第2版：顺序元数据更正
+
+下载后按成员核对发现，5,024个策略行的workers/worker_order由自然base行继承，而实际前缀生成使用了正确的策略顺序。本版按冻结前缀重建正式清单，再与同base的target优先稳定分割逐行核对；5,022行内容改变，2行本来即一致。7,200个自然行原字段未改变。新字段base_worker_order独立保存配对自然顺序。
+
+全部403,376条前缀team_key重新核对吻合。请求、前缀、团队、标量、几何及Q文件9份SHA均未改变；没有新增实验或修改统计数值。原顺序表及原注册脚本保留于design/source_original/policy_order_metadata_20261025/，更正脚本与完整回执同时提供。运行时仅使用design/NEW_EXACT_ORDER_DESIGN.csv.gz这一正式表，不使用source_original副本。
+
+第1版ZIP SHA256：75e09ef5da8c5a0a58d64188d9290d113e8fb1827a7d8f0682fe6ca05019d9e7。更正后的正式设计SHA256：3708aac6d12e2b57313bf6b6e80440c5b6899e03f9a3c8e1d9d2c8e7c2ff1e49。完整更正凭据为design/POLICY_ORDER_METADATA_CORRECTION_RECEIPT.json。

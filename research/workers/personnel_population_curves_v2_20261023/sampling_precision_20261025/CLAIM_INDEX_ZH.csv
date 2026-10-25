@@ -1,0 +1,8 @@
+﻿主张键,研究问题,主结果,敏感性与对照,支持范围,精确表与事件,采用判断
+R01,原24在哪些层面足够,跨图平均人数曲线和几何下降保留；3/6/10/20/30原24与48均Q接近,独立新24；固定图片路径重抽与建筑重抽分开,普通N≥30 157图/22楼,key_tables/T02_FIXED_SUPPORT_CURVE_LEVELS.csv; analysis_geometry/results/GEOMETRY_FIXED157_INTERVAL_MAIN.csv,保留，可入主文
+R02,困难图小幅均Q方向,6→10及20→30原新24反向，48分别+0.021/+0.016,同路径区间、旧/新独立重复、实际幅度与反向图,困难N≥20 29图；N≥30 27图,key_tables/T01_FIXED_SUPPORT_PERSON_COUNT_CHANGES.csv,修正为小变化/方向不稳；低尾和成员波动改善保留
+R03,单图均值/P10精度,低人数单图仍显著粗于跨图平均；48降低多数误差，96并非各项单调改善,精确有限边际误差、秩界、单图MCSE、重点新72,普通177与门洞17；53重点池单列,key_tables/T04_SINGLE_IMAGE_PRECISION_REACH.csv; T04B_FOCUS_MATCHED_SINGLE_IMAGE_PRECISION.csv; T05_EXACT_FINITE_TRUTH_ACCURACY.csv,有范围采用，不能给所有单图精细结论
+R04,边界有限计算是否值得,补齐单人/N−1/小池；2441仅精确边际新增队,VFua35队；rPc6-06 26队与随机批次估计误差,14904目录行；2人保持延期,design/EXACT_MARGINAL_TEAM_DESIGN.csv.gz; analysis_precision/new_results/HYBRID48_IMAGE_CURVES.csv.gz; analysis_geometry/results/GEOMETRY_SAMPLE_VS_EXACT.csv.gz,建议采用精确边界＋48中段，停止边界重复随机估计
+R05,门洞稀少成功/失败,旧24并未漏掉N−1真实失败池；两池旧全失败而精确各仅1队可评,完整69队与192路径；可评Q/失败分母分别保存,门洞17/9楼；两稀少成功池单列,analysis_geometry/case_missed_failure/RARE_SUCCESS_SUPPORT_SUMMARY.csv,条件支持出现，不称质量改善或可靠融合
+R06,原优先策略是否依赖少量base,高Q、多转折平均正向，快速、多数结构平均负向均独立重复,旧8/新8/16；路径/建筑范围；逐图换向/坏尾,四策略共同157图/22楼，和自然157只重叠148,analysis_policy/results/POLICY_COMMON_PAIRED_EVENTS.csv.gz; key_tables/T06_PRIORITY_POLICY_PRECISION.csv; T07_POLICY_INDEPENDENT_BATCH_DIRECTION.csv,主方向保留；快优先细小P10收益不采用
+R07,增加抽样后如何停止,完成预设均衡48、重点96、8新策略base及有限边际,旧噪声预算冻结；没有按新Q选种或追求显著性,新增7200自然/5024策略路径；323809主新增记录,STUDY_FREEZE_ZH.md; design/DESIGN_RECEIPT.json; new_endpoints/EXECUTION_ACCOUNTING.json,本轮停止新增融合；只为未来具体精细问题设追加预算

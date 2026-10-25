@@ -1,0 +1,24 @@
+{
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "source_precision_table": "work/population_precision_20261025/analysis_precision/old_diagnostics/OLD_PATH_POOL_K_PRECISION.csv.gz",
+  "source_sha256": "f88c3c468fa9d2177ef6e206ec98b9460e286682601c17c663e31baecaf09d38",
+  "selection_rule": "Manual ordinary N>10 top12 per difficulty by original24 RMS of mean-Q MCSE over k3..min(20,N-1); all doorway; no new outcomes",
+  "full_Manual_pools": 194,
+  "focused_pools": 53,
+  "main_balanced_total_paths": 48,
+  "focused_total_paths": 96,
+  "endpoint_anchors": [
+    "every Manual pool: all N teams at k=N-1",
+    "Manual N<=10: all legal nonempty subsets except deferred k=2; k=1/full reused"
+  ],
+  "precision_reporting_scales": {
+    "single_image_mean_MCSE_Q": 1.0,
+    "fixed_image_panel_mean_MCSE_Q": 0.5,
+    "single_image_P10_empirical_95_halfwidth_Q": 2.0
+  },
+  "stopping_rule": "Complete the registered fixed budgets once; report targets reached and not reached. No sign/significance/smoothness stopping, no seed screening, no further broad sampling.",
+  "population": "fixed eligible real v2 pool, uniformly random permutation; kth-prefix uniform k-subset",
+  "focus_role": "selected for old sampling noise; secondary fixed-focus-domain result, never substituted for balanced primary all-image result",
+  "new_outcomes_used_for_selection": false,
+  "output_sha256": "5ff5c4cafba7699bab2efc0fd74e0346f533f04f1582073886c8ede9450ae8b4"
+}

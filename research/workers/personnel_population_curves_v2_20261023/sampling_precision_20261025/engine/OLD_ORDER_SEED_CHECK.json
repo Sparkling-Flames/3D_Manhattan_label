@@ -1,0 +1,20 @@
+{
+  "checked_MC_paths": 5256,
+  "MC_pools": 219,
+  "by_generation": {
+    "added20": 4380,
+    "old4": 876
+  },
+  "all_saved_orders_reproduced": true,
+  "derived_seed_collisions": 0,
+  "duplicated_condition_image_pool_identities": 0,
+  "old4_key": "[2026101901, uniform_order, pool_id, draw_id], canonical JSON SHA256 first16 hex as integer",
+  "added20_key": "[v2-full-pool-prefix, 20261023, condition, image, replicate], SHA256 first8 bytes little-endian",
+  "interpretation": "Pools do not share a deliberately reused random-order seed/base. Chance identical permutations remain legal, especially in small spaces; no such outcome is removed.",
+  "exact_small_pool_note": "N<=4 exact permutation catalogues are excluded from this MC 4+20 check; they are not independent random draws.",
+  "source_hashes": {
+    "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/register_design.py": "89ca38f2cc594bc47183db39de82f09dae2a6859c7f8a58de3aa822d8f2f6932",
+    "research/workers/personnel_population_curves_v2_20261023/code/register_population_orders.py": "c36e45b2e2b2539dfafb13b52638129387e170d7ecc3217811fa246a3b1b91a0",
+    "research/workers/personnel_population_curves_v2_20261023/code/order_policies.py": "34fa2af2b30d4c798ce9aca066d02a2d8e4ac3c29a88d972bc73e9487336a7bc"
+  }
+}

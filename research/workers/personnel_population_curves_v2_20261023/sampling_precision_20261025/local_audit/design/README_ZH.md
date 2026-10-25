@@ -1,0 +1,30 @@
+# 抽样设计与端点关联独立核查
+
+本审查从冻结人员池和正式CSV/gzip重建关系，不采用作者回执代替检查。执行闭包的229池原始输入快照与仓库原快照逐值完全相同；七份核心融合/评分源码也经直接字节比较一致。
+
+- audit_date：2026-10-25
+- data_release：v2
+- file_hashes_recomputed：False
+- core_source_files_byte_compared：['tools/thesis_main/analysis/consensus_delivery_20261008.py', 'tools/thesis_main/analysis/ring_correspondence_20261007.py', 'tools/thesis_main/analysis/quality_b8l2_d10_20261017.py', 'research/workers/personnel_interchangeability_20261020/analysis/composition/fusion_runner.py', 'research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/fusion_engine.py', 'research/workers/personnel_global_composition_20261021/composition/global_study.py', 'research/workers/personnel_population_curves_v2_20261023/code/run_prefix_endpoints.py']
+- focus_precision_input_recomputed_cells：3397
+- focus_pools_rebuilt_from_old24：53
+- orders_rebuilt_from_seed：12224
+- natural_orders：7200
+- policy_orders：5024
+- prefix_links：403376
+- exact_catalog_rows：14904
+- unique_registered_teams：340055
+- duplicate_path_visits：68556
+- source_counts：{'new_native_required_20261025': 323807, 'inherited_population_20261023': 16246, 'reused_new_benchmark_20261025': 2}
+- new_scalars：323809
+- formal_new_requests：323807
+- scalar_states：{'complete_conditional': 304202, 'two_person_deferred': 7874, 'below_four': 7068, 'no_connection': 4544, 'invalid_floor': 121}
+- scored_scalar_formula_max_abs_error：{'B8L2': 7.105427357601002e-14, 'D10': 7.105427357601002e-14}
+- prefix_and_exact_scalar_bindings_passed：True
+
+- 未重跑原生融合或原答几何评分。
+- P03完整状态未下载；本审查验证标量、成员与前缀，不认证全部票账。
+- 种子与抽样规则可重建，预选名单只依赖旧24精度；静态文件不能独立证明实际执行时间先后。
+- 未重算文件SHA；身份键/随机种子算法中的SHA仅用于复现既有科学定义。
+
+复算：`python -m tools.thesis_main.analysis.audit_population_precision_design_20261025`。

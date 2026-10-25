@@ -1,0 +1,122 @@
+{
+  "correction_id": "policy_order_metadata_20261025",
+  "repository_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "cause": "prow copied natural row without replacing workers/worker_order; actual prefix generation used correct policy po",
+  "corrected_fields": [
+    "workers",
+    "worker_order"
+  ],
+  "new_field": "base_worker_order retains the actual paired uniform base; natural rows repeat their own order",
+  "order_rows": 12224,
+  "natural_rows_original_fields_unchanged": 7200,
+  "policy_rows_checked": 5024,
+  "policy_rows_actual_order_changed_from_old_metadata": 5022,
+  "policy_rows_by_policy": {
+    "structure_moreturn_first": 1256,
+    "structure_dominant_first": 1256,
+    "joint_highq_first": 1256,
+    "joint_fast_first": 1256
+  },
+  "all_policy_orders_match_stable_target_partition_of_same_base": true,
+  "all_prefix_team_keys_reconstructed_and_matched": 403376,
+  "all_other_original_order_fields_unchanged": true,
+  "new_fusion_or_scoring_or_selection": 0,
+  "originals_preserved": [
+    {
+      "path": "design/source_original/policy_order_metadata_20261025/NEW_EXACT_ORDER_DESIGN.csv.gz",
+      "sha256": "33e3e31d930b157afa4c42d18834c8576b58ddd8f68ed4f4769482c1d12f6305"
+    },
+    {
+      "path": "design/source_original/policy_order_metadata_20261025/register_precision_design.py",
+      "sha256": "7cf38aa6ed765d217b8ec643937f91a455ec4641673b9f93d666e9cda92ac452"
+    }
+  ],
+  "corrected_files": [
+    {
+      "path": "design/NEW_EXACT_ORDER_DESIGN.csv.gz",
+      "sha256": "3708aac6d12e2b57313bf6b6e80440c5b6899e03f9a3c8e1d9d2c8e7c2ff1e49",
+      "bytes": 912152
+    },
+    {
+      "path": "engine/register_precision_design.py",
+      "sha256": "0bf532edaf0766d291fa187595112700aaa790694a615bd4952c212ffa0abace",
+      "bytes": 13707
+    }
+  ],
+  "unchanged_teams_links_results_and_Q_files_sha256": {
+    "design/NEW_PREFIX_TEAM_LINKS.csv.gz": "06a6b292a981b19434ad5c5d8a70a5bf625b504032c74c6edb5e84d9d12cbfb5",
+    "design/EXACT_MARGINAL_TEAM_DESIGN.csv.gz": "89ab9435eac10705b82db6418f2b660748d091083ce3ff94fd8bd8c1a29df6f4",
+    "design/ENDPOINT_DEPENDENCIES.csv.gz": "9683f7823accee75443d820cd98b5b2391f3aaf49235a430f6723c544454d5a8",
+    "design/NEW_NATIVE_ENDPOINT_REQUESTS.csv.gz": "2d724ae89e5e9db15397d1e92135b3fba9f8e739011aeb2992183695a901faeb",
+    "new_endpoints/NEW_ENDPOINT_SCALARS.csv.gz": "6eff6be954277443e1f3d9a1afc384e81c5df449dee2bc59f78000ca215b019b",
+    "new_endpoints/NEW_PREFIX_VALUES_COMPACT.csv.gz": "347e29cf169131f113dced1a189e661e2295817a1e585c4d6f78307eceb1ec72",
+    "new_endpoints/EXACT_MARGINAL_VALUES.csv.gz": "333b601b12f48cb03079b1e702307a0b720c411ac571bb2161cc258f1c7aa431",
+    "new_endpoints/NEW_ENDPOINT_GEOMETRY_COMPACT.jsonl.gz": "59fbec9e6d41346d495ded33941692a990b02f0d14c097082084515d99beb7bd",
+    "new_endpoints/TABLE_SHARD_MANIFEST.json": "578a35f62714c31aff883303eecaf6d91190a8a0f45eceb41e95334e3e53338f"
+  },
+  "canonical_design_full_gzip_eof_verified": true,
+  "canonical_design_columns": [
+    "building",
+    "condition",
+    "difficulty",
+    "difficulty_aligned",
+    "image",
+    "image_id",
+    "layer",
+    "new_member_n",
+    "old_member_n",
+    "pool_id",
+    "pool_n",
+    "reference_id",
+    "reference_version",
+    "room_id",
+    "scene",
+    "source_inventory_n",
+    "source_time_known_n",
+    "target_time_known_n",
+    "path_id",
+    "base_path_id",
+    "replicate",
+    "new_index",
+    "seed",
+    "master_seed",
+    "policy",
+    "workers",
+    "worker_order",
+    "order_kind",
+    "generation",
+    "seed_rule",
+    "sample_kind",
+    "batch",
+    "sampling_weight_new_batch",
+    "final_pool_hash",
+    "final_pool_identity",
+    "eligible",
+    "reason",
+    "target_capacity",
+    "paired_for_policy",
+    "pool_input_sha256",
+    "repository_commit",
+    "heldout_building",
+    "pool_size",
+    "method",
+    "tier",
+    "target_class",
+    "selected_family",
+    "target_members",
+    "known_members",
+    "unknown_members",
+    "non_target_capacity",
+    "known_capacity",
+    "unknown_capacity",
+    "full_pool_class_vector",
+    "history_people",
+    "history_turn_center",
+    "history_short_center",
+    "history_redundancy_center",
+    "history_q_center",
+    "history_t_center",
+    "base_worker_order"
+  ],
+  "write_method": "fully materialized gzip in memory, fsync temporary file, atomic replace, fsync directory, complete EOF and CSV comparison"
+}

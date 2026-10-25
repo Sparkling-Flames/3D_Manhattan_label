@@ -1,0 +1,41 @@
+{
+  "registered_unique_endpoints": 340055,
+  "old_endpoints_reused": 16246,
+  "benchmark_new_endpoints_reused": 2,
+  "new_main_endpoints": 323807,
+  "new_endpoints_total": 323809,
+  "prefix_rows": 403376,
+  "exact_marginal_rows": 14904,
+  "missing_endpoint_links": 0,
+  "validation": {
+    "NEW_ENDPOINT_SCALARS.csv.gz": {
+      "rows": 323809,
+      "fields": 142,
+      "unique_key_fields": [
+        "team_key"
+      ],
+      "complete_gzip_read": true
+    },
+    "NEW_PREFIX_VALUES_COMPACT.csv.gz": {
+      "rows": 403376,
+      "fields": 89,
+      "unique_key_fields": [
+        "path_id",
+        "k"
+      ],
+      "complete_gzip_read": true
+    },
+    "EXACT_MARGINAL_VALUES.csv.gz": {
+      "rows": 14904,
+      "fields": 78,
+      "unique_key_fields": [
+        "pool_id",
+        "k",
+        "team_key"
+      ],
+      "complete_gzip_read": true
+    }
+  },
+  "interpretation": "new path values include exact old-cache endpoints; old data are not duplicated in NEW_ENDPOINT_SCALARS",
+  "fullN_unique_endpoint_count": 194
+}

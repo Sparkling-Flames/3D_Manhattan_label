@@ -1,0 +1,17 @@
+{
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "source_input": "work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/inputs/PREFIX_VALUES_COMPACT.csv.gz",
+  "prefix_rows_read": 404082,
+  "natural_rows": 175032,
+  "pools": 229,
+  "new_fusion": 0,
+  "new_random_orders": 0,
+  "bootstrap_replicates": 1000,
+  "seed": 2026102503,
+  "estimand": "fixed_real_eligible_pool_uniform_permutation_k_prefix; Q conditional on scoreable team",
+  "P10": "empirical NumPy linear; distribution-free binomial rank CI additionally",
+  "SD": "ddof1; exact finite distribution also reported with retained convention",
+  "failure": "all nondeferred attempted paths; no Q zero-fill",
+  "bootstrap": "whole paths within pool, same index across all k; not independent added paths",
+  "selection_rule": "rank existing-only k3_to10 precision within layer/difficulty; final allocation frozen separately"
+}

@@ -1,0 +1,20 @@
+{
+  "tables": [
+    "T01_FIXED_SUPPORT_PERSON_COUNT_CHANGES.csv",
+    "T02_FIXED_SUPPORT_CURVE_LEVELS.csv",
+    "T03_OLD_NEW_COMMON_IMAGE_COMPARISON.csv",
+    "T04B_FOCUS_MATCHED_SINGLE_IMAGE_PRECISION.csv",
+    "T04_SINGLE_IMAGE_PRECISION_REACH.csv",
+    "T05_EXACT_FINITE_TRUTH_ACCURACY.csv",
+    "T06_PRIORITY_POLICY_PRECISION.csv",
+    "T07_POLICY_INDEPENDENT_BATCH_DIRECTION.csv",
+    "T08_EXACT_LEAVE_ONE_OUT_FAILURES.csv",
+    "T09B_FAILURE_SAMPLING_SUMMARY.csv",
+    "T09_LEAVE_ONE_OUT_FAILURE_SAMPLING.csv",
+    "T10_QUALITY_COMPONENT_COMMON_SUPPORT.csv"
+  ],
+  "description": "Derived from saved natural and policy analysis tables; no additional fusion or selection.",
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "caution": "T04 focus96 is the old-noise-selected subset. Compare it only against the same focus pools, not all-image old24/pooled48 rows.",
+  "precision": "MCSE is one standard error, not a 95 percent half-width. P10 empirical interval is accompanied by rank bounds in the detailed table."
+}

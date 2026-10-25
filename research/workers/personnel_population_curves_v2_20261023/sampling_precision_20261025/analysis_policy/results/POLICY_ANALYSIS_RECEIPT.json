@@ -1,0 +1,35 @@
+{
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "new_analysis": true,
+  "new_classification": false,
+  "common_images": 157,
+  "buildings": 22,
+  "old_bases": 8,
+  "new_independent_bases": 8,
+  "combined_bases": 16,
+  "seed": 2026102511,
+  "replicates": 1000,
+  "phase": [
+    "early_3_to_half",
+    "low_3_to_6",
+    "late_20_to_Nminus1",
+    "full"
+  ],
+  "policies": [
+    "joint_highq_first",
+    "structure_moreturn_first",
+    "joint_fast_first",
+    "structure_dominant_first"
+  ],
+  "Q_support": "same pool, same k, natural and priority both scoreable",
+  "failure_support": "all paired attempts except deferred k2",
+  "aggregation": "path mean at k, equal k within phase, then image/building equal; P10/SD within-image common Q paths",
+  "time": "all members known positive, single source semantic kind in both teams and same kind; Q/T common support",
+  "intervals": "separate whole-base and whole-building percentile95; pointwise not simultaneous",
+  "sources": [
+    "work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023/stability_rebuilt_20261023/inputs/PREFIX_VALUES_COMPACT.csv.gz",
+    "work/population_precision_20261025/new_endpoints/NEW_PREFIX_VALUES_COMPACT.csv.gz",
+    "work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023/results/ENDPOINT_SCALARS.csv.gz",
+    "work/population_precision_20261025/new_endpoints/NEW_ENDPOINT_SCALARS.csv.gz"
+  ]
+}

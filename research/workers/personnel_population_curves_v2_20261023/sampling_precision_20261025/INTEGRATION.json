@@ -1,0 +1,103 @@
+{
+  "study_id": "population_random_order_precision_20261025",
+  "data_version": "human_v2",
+  "source_repository": "https://github.com/Sparkling-Flames/3D_Manhattan_label",
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "repository_relative_path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025",
+  "status": "completed",
+  "new_fusion_after_registered_execution": 0,
+  "scope": {
+    "ordinary_manual": {
+      "pools": 177,
+      "buildings": 22
+    },
+    "doorway_manual": {
+      "pools": 17,
+      "buildings": 9
+    },
+    "semi": "old-path diagnostic only"
+  },
+  "estimand": "For each fixed eligible personnel pool and k, uniformly random k-subsets induced by iid uniform permutations. Q is conditional on scoreability; failures use all nondeferred attempts.",
+  "weighting": [
+    "within-image equal path weights",
+    "image_equal",
+    "building_equal separately"
+  ],
+  "frozen_seed": 2026102501,
+  "full_team_repeated_paths_are_not_new_teams": true,
+  "design_revision": "P01-v2-policy-order-metadata-correction",
+  "primary_keys": {
+    "endpoint": [
+      "team_key"
+    ],
+    "pool": [
+      "pool_id"
+    ],
+    "path_prefix": [
+      "path_id",
+      "k"
+    ],
+    "policy_match": [
+      "pool_id",
+      "base_path_id",
+      "k"
+    ],
+    "exact": [
+      "pool_id",
+      "k",
+      "team_key"
+    ]
+  },
+  "foreign_keys": {
+    "original_annotation": "member_object_ids -> frozen v2 object_id",
+    "reference": [
+      "reference_id",
+      "reference_version"
+    ],
+    "original_inputs": "inventory/NECESSARY_SOURCE_FILES.csv"
+  },
+  "counts": {
+    "new_natural_orders": 7200,
+    "new_policy_orders": 5024,
+    "new_orders": 12224,
+    "new_prefixes": 403376,
+    "unique_requested_teams": 340055,
+    "inherited_endpoints": 16246,
+    "new_primary_endpoints": 323809,
+    "new_native_full_states": 323807,
+    "benchmark_new_primary_reuse": 2,
+    "exact_rows": 14904
+  },
+  "primary_tables": [
+    "analysis_precision/new_results/HYBRID48_IMAGE_CURVES.csv.gz",
+    "analysis_precision/new_results/NATURAL_FIXED_SUPPORT_STABILITY.csv.gz",
+    "analysis_precision/new_results/NATURAL_POOL_K_BATCH_PRECISION.csv.gz",
+    "analysis_policy/results/POLICY_COMMON_PAIRED_EVENTS.csv.gz",
+    "analysis_geometry/results/GEOMETRY_PATH_PRECISION.csv.gz"
+  ],
+  "main_findings_index": "CLAIM_INDEX_ZH.csv",
+  "small_tables": "key_tables/",
+  "figures": "figures/",
+  "geometry_cases": [
+    "analysis_geometry/case_VFua_04/",
+    "analysis_geometry/case_missed_failure/",
+    "analysis_geometry/case_WC2_46_P10/"
+  ],
+  "reproduction": "REPRODUCE_ZH.md",
+  "field_contract": "FIELD_CONTRACT_ZH.md",
+  "recommended_paper_use": [
+    "macro curves independent replication",
+    "mean plateau vs tail and dispersion improvement",
+    "aggregate vs per-image precision",
+    "exact boundary computational advantage",
+    "paired priority strategy replication"
+  ],
+  "not_adopted": [
+    "uniform per-image P10 precision from 24/96 paths",
+    "complete invariance from non-significance",
+    "tiny fast-priority P10 benefit as recommendation",
+    "Semi new-sampling validation"
+  ],
+  "artifact_manifest": "CURRENT_FILES.csv (separate final attachment)",
+  "verification": "verification/FINAL_DOWNLOADED_DATA_ASSOCIATIONS.json"
+}

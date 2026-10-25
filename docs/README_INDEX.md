@@ -1,3 +1,5 @@
+- **2026-10-25人数抽样精度独立验收：** [四包归档、自然48/重点96与精确有限边际、策略共同k修正](../research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md)。新增4个专题复算脚本和3个定向测试文件均在既有analysis/tests目录；源结果保留，正式合同不变。
+
 - **2026-10-25论文V4修订：** [修订提纲](thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx)保留两项方法与完整实证主线，修正折内名单、人工判断及控制实验表述，补齐D10形成敏感性、速度×难度和门洞人数结果。原Pro稿保留；仅修订解释，未新增实验。研究台保留完整研究，展示整理状态见[当前进度](thesis_main/四线程成果与论文主线核对_20261015.md)。
 
 - **2026-10-25人员分类展示整理：** [主要方法、核心效果对照与其它用途](../research/workers/personnel_classification_guide_20261025/README.md)接入既有人员六步；7套ALL/楼外名单、四重点与71条件，保留旧配比/人数标签；仅整理保存结果。

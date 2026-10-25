@@ -1,0 +1,22 @@
+{
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "image": "wc2JMjhGNzB-46",
+  "pool_id": "wc2JMjhGNzB-46__manual__ddafdd7484",
+  "N": 28,
+  "k": 27,
+  "exact_team_count": 28,
+  "registered_paths": 96,
+  "new_fusion_calls": 0,
+  "low_peak_teams": 4,
+  "high_peak_teams": 24,
+  "exact_low_peak_probability": 0.14285714285714285,
+  "largest_gap_lower_Q": 52.60143234959924,
+  "largest_gap_upper_Q": 97.31392921169284,
+  "peak_threshold": 74.95768078064604,
+  "peak_definition": "Midpoint of the largest adjacent score gap in the complete catalogue, determined without path frequencies; descriptive only.",
+  "main_P10_definition": "numpy.quantile(values, 0.1, method=linear), retained for both original and new reported curves",
+  "finite_catalogue_linear_P10": 52.406206944032334,
+  "uniform_finite_population_inverseCDF_P10": 51.95068099770955,
+  "definition_difference_catalogue_linear_minus_inverseCDF": 0.455525946322787,
+  "interpretation": "As random draws grow, sample linear P10 approaches the inverse-CDF quantile of the finite uniform team distribution; a small complete-catalogue linear percentile is a different convention. Both are reported explicitly."
+}

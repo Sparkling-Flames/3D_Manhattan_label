@@ -1,0 +1,41 @@
+{
+  "all_tables_read_to_EOF": true,
+  "tables": 22,
+  "readable_prefix_replay": [
+    {
+      "file": "NATURAL_FIXED_SUPPORT_BATCH_COMPARISONS.csv.gz",
+      "original_readable_prefix_bytes": 25309365,
+      "replayed_complete_bytes": 26120070,
+      "byte_identical_readable_prefix": true
+    },
+    {
+      "file": "NATURAL_POOL_K_REPLICATION_COMPARISON.csv.gz",
+      "original_readable_prefix_bytes": 50279340,
+      "replayed_complete_bytes": 50532218,
+      "byte_identical_readable_prefix": true
+    },
+    {
+      "file": "NATURAL_FIXED_SUPPORT_STABILITY.csv.gz",
+      "original_readable_prefix_bytes": 38117719,
+      "replayed_complete_bytes": 41143159,
+      "byte_identical_readable_prefix": true
+    },
+    {
+      "file": "NATURAL_POOL_K_BATCH_PRECISION.csv.gz",
+      "original_readable_prefix_bytes": 16343037,
+      "replayed_complete_bytes": 18628404,
+      "byte_identical_readable_prefix": true
+    },
+    {
+      "file": "PRECISION_TARGET_REACH.csv.gz",
+      "original_readable_prefix_bytes": 3851477,
+      "replayed_complete_bytes": 4119410,
+      "byte_identical_readable_prefix": true
+    }
+  ],
+  "pool_k_rows": 20626,
+  "hybrid_rows": 6290,
+  "exact_marginal_cells": 613,
+  "actual_full_zero_change_N30_images": 10,
+  "status": "complete"
+}

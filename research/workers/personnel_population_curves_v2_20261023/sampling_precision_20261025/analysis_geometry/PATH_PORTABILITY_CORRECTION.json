@@ -1,0 +1,83 @@
+{
+  "source_commit": "40d0fe62dc62f6f6c12723af10195b7abb7bc9fe",
+  "change_scope": "Input path resolution and method commands only; no statistics, scoring, fusion, team or seed changes. VFua can read the published merged geometry table when an excluded per-pool checkpoint is absent.",
+  "modified_files": [
+    {
+      "file": "GEOMETRY_METHOD_ZH.md",
+      "before_sha256": "351685265c601cd52a6d1431a1ae560fed354d3f39e37c7a99fac72d551d9ae4",
+      "after_sha256": "7737f445e7a437eb8feb79a3754692ec2dc1f46a317bb5a3a0affd81371eec3b"
+    },
+    {
+      "file": "build_vfua_leave_one_out_case.py",
+      "before_sha256": "8d17a53b075e2eebeda2a1194a224d693d7afb62c50df60d4180160c86fa81c1",
+      "after_sha256": "abad9d96c333fbd64a08b1195c0c3b235b0726e1e526bcde3583cc8bf42b9f39"
+    },
+    {
+      "file": "find_missed_leave_one_out_failure.py",
+      "before_sha256": "9c86acdbcc467fab83943eaa2aa9086f103592c5bc8f23c944234efa16b4df62",
+      "after_sha256": "455dcc6f5386f17df8d97bbb32c791b65d4c86305793ade5a79a746c633c149c"
+    },
+    {
+      "file": "summarize_rare_success_support.py",
+      "before_sha256": "f8a36048cdebf375f0a91ecca2d38281328cfcb2ba6233cae77ad5bef515ccc5",
+      "after_sha256": "3559f31f683f6cdb965569fa597c84c1dec86493865f7acac94c4f21d4701e33"
+    },
+    {
+      "file": "summarize_wc2_p10_weights.py",
+      "before_sha256": "50f64c96319db4f3a4275cd1a84bd89446ab3d92151193c84ae9ca46a6c8f02c",
+      "after_sha256": "fa7106a2d8df6962e5f1fd91ca92d51ec538db31c9bab71eed7989247cf19eab"
+    }
+  ],
+  "new_helper": {
+    "file": "population_paths.py",
+    "sha256": "f17eb631b638bf7c2065905f66076e384868c0abc94168580c819893e524dc6f"
+  },
+  "help_checks": [
+    {
+      "file": "build_vfua_leave_one_out_case.py",
+      "help_exit_code": 0,
+      "population_root_argument_present": true
+    },
+    {
+      "file": "find_missed_leave_one_out_failure.py",
+      "help_exit_code": 0,
+      "population_root_argument_present": true
+    },
+    {
+      "file": "summarize_rare_success_support.py",
+      "help_exit_code": 0,
+      "population_root_argument_present": true
+    },
+    {
+      "file": "summarize_wc2_p10_weights.py",
+      "help_exit_code": 0,
+      "population_root_argument_present": true
+    }
+  ],
+  "path_resolution_checks": [
+    {
+      "mode": "explicit",
+      "resolved": "/workspace/scratch/0640d80a5c3a/work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023",
+      "actual_pool_manifest_exists": true
+    },
+    {
+      "mode": "final_repository_parent",
+      "resolved": "/workspace/scratch/0640d80a5c3a/work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023",
+      "actual_pool_manifest_exists": true
+    },
+    {
+      "mode": "legacy_scratch_fallback",
+      "resolved": "/workspace/scratch/0640d80a5c3a/work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023",
+      "actual_pool_manifest_exists": true
+    },
+    {
+      "mode": "environment",
+      "resolved": "/workspace/scratch/0640d80a5c3a/work/population_precision_20261025/repo/research/workers/personnel_population_curves_v2_20261023",
+      "actual_pool_manifest_exists": true
+    }
+  ],
+  "VFua_published_table_fallback_rows_equal": 25,
+  "existing_delivered_outputs_hashes_unchanged": 56,
+  "new_fusion_calls": 0,
+  "case_regeneration_calls": 0
+}

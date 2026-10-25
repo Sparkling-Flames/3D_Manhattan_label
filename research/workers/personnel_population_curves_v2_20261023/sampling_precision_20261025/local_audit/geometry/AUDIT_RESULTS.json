@@ -1,0 +1,140 @@
+{
+  "cases": {
+    "wc2_exact_linear_p10": 52.406206944032334,
+    "wc2_exact_inverse_cdf_p10": 51.95068099770955,
+    "vfua_valid": 32,
+    "vfua_failed": 3,
+    "vfua_exact_q_mean": 54.67925279379233,
+    "vfua_exact_q_p10": 26.20502580615656
+  },
+  "geometry": {
+    "pools": 6,
+    "unique_endpoint_geometries": 2738,
+    "path_metric_checks": 157,
+    "exact_metric_checks": 6,
+    "max_abs_V_error": 4.440892098500626e-16
+  },
+  "aggregates": [
+    {
+      "cohort": "combined48",
+      "k_from": 3,
+      "k_to": 6,
+      "images": 157,
+      "delta_mean": -0.04336061531100953,
+      "images_decrease": 157,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "combined48",
+      "k_from": 6,
+      "k_to": 10,
+      "images": 157,
+      "delta_mean": -0.019303658750822544,
+      "images_decrease": 153,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "combined48",
+      "k_from": 10,
+      "k_to": 20,
+      "images": 157,
+      "delta_mean": -0.023050179184690617,
+      "images_decrease": 156,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "combined48",
+      "k_from": 20,
+      "k_to": 30,
+      "images": 157,
+      "delta_mean": -0.020595905854049315,
+      "images_decrease": 156,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "new24",
+      "k_from": 3,
+      "k_to": 6,
+      "images": 157,
+      "delta_mean": -0.04412769941115071,
+      "images_decrease": 156,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "new24",
+      "k_from": 6,
+      "k_to": 10,
+      "images": 157,
+      "delta_mean": -0.02010745997534074,
+      "images_decrease": 148,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "new24",
+      "k_from": 10,
+      "k_to": 20,
+      "images": 157,
+      "delta_mean": -0.0220236616628274,
+      "images_decrease": 152,
+      "buildings": 22,
+      "buildings_decrease": 21
+    },
+    {
+      "cohort": "new24",
+      "k_from": 20,
+      "k_to": 30,
+      "images": 157,
+      "delta_mean": -0.02057072472041059,
+      "images_decrease": 155,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "old24",
+      "k_from": 3,
+      "k_to": 6,
+      "images": 157,
+      "delta_mean": -0.04307312174512584,
+      "images_decrease": 157,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "old24",
+      "k_from": 6,
+      "k_to": 10,
+      "images": 157,
+      "delta_mean": -0.01889789466385461,
+      "images_decrease": 155,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "old24",
+      "k_from": 10,
+      "k_to": 20,
+      "images": 157,
+      "delta_mean": -0.02366149054758814,
+      "images_decrease": 155,
+      "buildings": 22,
+      "buildings_decrease": 22
+    },
+    {
+      "cohort": "old24",
+      "k_from": 20,
+      "k_to": 30,
+      "images": 157,
+      "delta_mean": -0.02050425664835842,
+      "images_decrease": 156,
+      "buildings": 22,
+      "buildings_decrease": 21
+    }
+  ],
+  "boundary": "No fusion/scoring replay; no all-pair geometry replay; only three packaged native states checked; P03 not downloaded"
+}

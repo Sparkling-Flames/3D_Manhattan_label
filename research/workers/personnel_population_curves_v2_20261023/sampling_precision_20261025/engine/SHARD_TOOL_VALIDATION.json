@@ -1,0 +1,27 @@
+{
+  "actual_source_files": [
+    "engine/benchmark/ENDPOINT_SCALARS.csv.gz",
+    "engine/benchmark/parts/jh4fc5c5qoQ-13__manual__274d69d1f7/part_00001.geometry_state.jsonl.gz"
+  ],
+  "purpose": "Validate gzip row-partition and restoration on real existing rows before large exports; no fusion or inference samples added",
+  "validation": [
+    {
+      "rows": 36,
+      "columns": 141,
+      "semantic_sha256": "52cd96ffd9d371c41ba30629415ca5561c3d21f0eb7f5f7a05a47510e0632da2",
+      "compressed_sha256": "3645521f138eec311f4027d550a810ccefa5e974c59d20f3507e95b5dff5b310",
+      "all_input_and_restored_gzip_read_to_eof": true,
+      "temporary_target_basename": "ENDPOINT_SCALARS.csv.gz",
+      "temporary_validation_copy_removed_after_complete_read": true
+    },
+    {
+      "rows": 9,
+      "columns": 25,
+      "semantic_sha256": "60a272cb10212460ff7629b26c74f50dc5c2c6d862c86c5e117aa343438540f9",
+      "compressed_sha256": "94d6ba1db2e7d7971ae16408315252e1a92197d3f3a07e2979916ce047776c86",
+      "all_input_and_restored_gzip_read_to_eof": true,
+      "temporary_target_basename": "part_00001.geometry_state.jsonl.gz",
+      "temporary_validation_copy_removed_after_complete_read": true
+    }
+  ]
+}

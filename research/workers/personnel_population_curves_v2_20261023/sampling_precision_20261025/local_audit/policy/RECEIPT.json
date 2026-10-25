@@ -1,0 +1,16 @@
+{
+  "replicates": 1000,
+  "seed": 2026102521,
+  "images": 157,
+  "buildings": 22,
+  "exact_events_rebuilt": 336256,
+  "all_author_k_metrics_recomputed": true,
+  "fixed_support": "per policy/image/phase/metric: k finite in old8,new8,combined16; no dropping k in bootstrap",
+  "aggregate": "fixed eligible images and building membership; any missing image invalidates complete-panel path replicate; building bootstrap uses fixed point estimates",
+  "failure": "all candidate phase k and all paired attempts, not quality-filtered",
+  "labor": "single same semantic source, positive complete times, both Q scoreable for QT",
+  "original_files_changed": false,
+  "fusion_rerun": false,
+  "scoring_rerun": false,
+  "interval": "pointwise empirical 2.5/97.5 percentiles; if some path draws cannot estimate all fixed k/images, the reported range is conditional on estimable draws, with counts disclosed"
+}

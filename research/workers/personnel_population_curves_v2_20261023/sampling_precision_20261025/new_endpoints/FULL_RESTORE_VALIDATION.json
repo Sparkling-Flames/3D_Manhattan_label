@@ -1,0 +1,35 @@
+{
+  "source_manifest_sha256": "578a35f62714c31aff883303eecaf6d91190a8a0f45eceb41e95334e3e53338f",
+  "source": "actual completed local 19 logical gzip shards",
+  "original_unified_files_preserved": true,
+  "zip_download_validation": "Separate root-level check of the actually downloaded delivery packages; this receipt describes the full restoration run.",
+  "restored_tables": [
+    {
+      "rows": 323809,
+      "columns": 142,
+      "semantic_sha256": "b10dd0c75c48b8a9d6ba050a90782dc7358f842ffd40432e7e937e0645abc456",
+      "compressed_sha256": "8a0278bbc884e49c43014a06763aa0755b0f990afab3b4d63513d22d988da338",
+      "all_input_and_restored_gzip_read_to_eof": true,
+      "restored_file_basename": "NEW_ENDPOINT_SCALARS.csv.gz",
+      "temporary_validation_copy_removed_after_complete_read": true
+    },
+    {
+      "rows": 323809,
+      "columns": 13,
+      "semantic_sha256": "9cc8428c584017513278436f3442e4b348a5e97ef80dc67242357b9c5c43ea61",
+      "compressed_sha256": "50cd7c4ba6bb569a2db75c161f98caf54f7d954341d597db61ff9e1baecceeb9",
+      "all_input_and_restored_gzip_read_to_eof": true,
+      "restored_file_basename": "NEW_ENDPOINT_GEOMETRY_COMPACT.jsonl.gz",
+      "temporary_validation_copy_removed_after_complete_read": true
+    },
+    {
+      "rows": 403376,
+      "columns": 89,
+      "semantic_sha256": "903c6114f2be348a844c833fd5f82d37d4918f59d9ec4417dbff005f5cc0adca",
+      "compressed_sha256": "b5034176429d9c970ad88f969206a93881d30e4799a17aa1b4409fd625f83ae9",
+      "all_input_and_restored_gzip_read_to_eof": true,
+      "restored_file_basename": "NEW_PREFIX_VALUES_COMPACT.csv.gz",
+      "temporary_validation_copy_removed_after_complete_read": true
+    }
+  ]
+}

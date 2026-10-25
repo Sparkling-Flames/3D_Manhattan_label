@@ -1,5 +1,5 @@
 {
-  "catalog_version": "research_catalog_20261025_v52_month_review",
+  "catalog_version": "research_catalog_20261025_v53_population_precision",
   "inventory_date": "2026-10-25",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "人数抽样精度补充已验收：自然48/精确有限边际与策略共同k修正，作者与本地审查分开",
+          "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md"
+        },
         {
           "text": "人员六组18图与完整历史名单；新方法用途、楼外名单及大块结果已接入",
           "path": "research/workers/personnel_main_figures_v2_20261023/README.md"
@@ -421,6 +425,10 @@
       "description": "多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "人数抽样精度补充已验收：自然48/精确有限边际与策略共同k修正，作者与本地审查分开",
+          "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md"
+        },
         {
           "text": "当前人员分类：DSTRUCT主解释、融合响应核心对照与多域用途；7套名单及71条件",
           "path": "research/workers/personnel_classification_guide_20261025/README.md"
@@ -12305,15 +12313,42 @@
       "type": "论文提纲与写作说明",
       "date": "20261025",
       "source_path": "docs/thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx",
-      "current_path": "docs/thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx",
+      "current_path": "",
       "source": "用户提供的Pro V4及本地已验收专题；原下载稿保留",
       "adoption_status": "写作方案；正文取舍不删研究台证据，不改变评分、参考或资格",
       "verification_status": "内容与来源定向核对，DOCX段落/表格/文件结构检查；缺少LibreOffice，未完成渲染分页视觉验收",
-      "availability": "仓库文档",
+      "availability": "本次开始时工作区文件已删除；历史版本见Git，本次未恢复",
       "relationships": [
         "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
         "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
         "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md"
+      ]
+    },
+    {
+      "id": "MAT-population_sampling_precision_20261025",
+      "title": "人数抽样精度四包：自然48、重点96、精确边际与策略共同k修正",
+      "theme": "workers",
+      "type": "新增计算来源与独立复算采用",
+      "date": "20261025",
+      "source_path": "HOHONET_P01新版/P02A/P02B/P04：四个ZIP",
+      "current_path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025",
+      "source": "作者四包460个唯一原文件；独立设计/端点、自然、几何和策略复算另存local_audit",
+      "adoption_status": "采用合48和精确有限边际；困难后段均值近零但低尾/波动改善；策略采用共同k修正合16，旧分类身份不变；Semi未追加",
+      "verification_status": "323807新增请求及全端点关联；304202分项评分复算；20626曲线点、7050阶段、2880汇总、9关键路径bootstrap；策略336256配对/63048逐k行重算与修正；6池几何及三状态票账；11测试通过",
+      "availability": "本地来源与审计可读；P03完整状态未下载；发布状态以Git为准",
+      "relationships": [
+        "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/local_audit/policy/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/local_audit/natural/AUDIT.json",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/local_audit/geometry/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/local_audit/design/README_ZH.md",
+        "tools/thesis_main/analysis/audit_population_precision_design_20261025.py",
+        "tools/thesis_main/analysis/audit_population_precision_natural_20261025.py",
+        "tools/thesis_main/analysis/audit_population_precision_geometry_20261025.py",
+        "tools/thesis_main/analysis/audit_population_precision_policy_20261025.py",
+        "tests/test_population_precision_natural_20261025.py",
+        "tests/test_population_precision_geometry_20261025.py",
+        "tests/test_population_precision_policy_20261025.py"
       ]
     }
   ]
