@@ -1,0 +1,21 @@
+{
+  "source": "analysis/screen complete 22830 events on 49 images / 12 discovery buildings",
+  "selection_time": "before confirm target fusion",
+  "preserved_controls": [
+    "Q_MEDIAN2",
+    "Q_HARD_MEDIAN2",
+    "V3_BEHAVIOR_coarse",
+    "V3_JOINT_QT_coarse"
+  ],
+  "new_candidates": {
+    "DSTRUCT_K3": "Main structural distinction, n10m7 cross/within 2.09, 16/24 images; retain harder/medium conditions and weaker large-n comparison.",
+    "MSDGEOM_SCOPE_K4": "Joint Manual+Semi+scope with semantic high-turn role, 13/16 images and 7/7 buildings at n10m7; majority larger distinction without requiring balanced class sizes.",
+    "MSDGEOM_SCOPE_K2": "Coarser same family retains larger target pool and promising n14m9; do not dismiss narrower supported image subset.",
+    "DBOUNDARY_K3": "Position/shape use: n18m7 BEV difference gap .0213, 20/25 images 8/9 buildings.",
+    "DBOUNDARY_AXIS2": "Large m10 position/scale axis contrast on 15 images, 10/15 gap positive, cross/within 2.47.",
+    "DJOINT_K4": "Manual structure+hard-geometry+QT alternative: intermediate difficulty 11/11 positive in exploratory events, preserve other strata too."
+  },
+  "direction_rule": "All feasible directions retained in selected method/n/m cells; role-specific summaries in addition, not only favorable direction.",
+  "sampling": "4 independent XYZ draws, up to 3 D target count levels, 2 background draws each; deterministic member-set endpoint reuse.",
+  "selection_reuse": "The v2 data have been repeatedly used previously. Confirm buildings were not used in this turn method/scale selection; this is internal validation, not external blind evidence."
+}

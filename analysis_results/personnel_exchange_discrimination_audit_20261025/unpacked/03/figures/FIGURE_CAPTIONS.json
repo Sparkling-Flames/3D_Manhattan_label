@@ -1,0 +1,49 @@
+{
+  "01_Q_GAP_ALL_METHODS": {
+    "title": "同类与跨类替换的 Q 幅度区分",
+    "metric": "B8L2",
+    "available_cells": 198,
+    "no_capacity_cells": 45,
+    "not_evaluable_cells": 0,
+    "zero_fill_missing": false,
+    "definition": "distance cross mean minus within, then saved hierarchical image-equal aggregation",
+    "source": "analysis/screen/METHOD_N_M_COMPARISON.csv"
+  },
+  "02_BEV_SHAPE_GAP_ALL_METHODS": {
+    "title": "同类与跨类替换的融合底面形状区分",
+    "metric": "geometry_bev_distance",
+    "available_cells": 198,
+    "no_capacity_cells": 45,
+    "not_evaluable_cells": 0,
+    "zero_fill_missing": false,
+    "definition": "distance cross mean minus within, then saved hierarchical image-equal aggregation",
+    "source": "analysis/screen/METHOD_N_M_COMPARISON.csv"
+  },
+  "03_DIFFICULTY_WITHIN_CROSS_Q": {
+    "title": "难度与同类／跨类变化",
+    "sample": "screen exploratory",
+    "units": "absolute B8L2 points",
+    "points": "individual image-level hierarchical means",
+    "source": "analysis/screen/DIFFICULTY_COMPARISON.csv"
+  },
+  "04_DSTRUCT_K3_ALL_FEATURES": {
+    "title": "ALL DSTRUCT_K3 历史特征解释",
+    "label_stage": "ALL descriptive only",
+    "known_people": 59,
+    "unknown_people": 3,
+    "feature_units": "image-condition peer-median residuals, building-equal within worker",
+    "formation_inputs": "Manual structure level and difficulty-conditioned structure, not Q/T or position",
+    "comparison_columns": [
+      "m_hard_turn_n",
+      "m_hard_short_turn_edges",
+      "m_hard_near_straight_nodes_5deg",
+      "m_hard_matched_top_bias_deg",
+      "m_hard_matched_bottom_bias_deg",
+      "m_hard_images",
+      "m_hard_buildings",
+      "m_all_images",
+      "m_all_buildings",
+      "people"
+    ]
+  }
+}

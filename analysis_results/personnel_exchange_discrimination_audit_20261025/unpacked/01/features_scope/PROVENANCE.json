@@ -1,0 +1,39 @@
+{
+  "actual_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "data_version": "v2",
+  "sources": [
+    {
+      "path": "HOHONET_exchange_latest/research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/input/RECORD_EVIDENCE_LEDGER.csv.gz",
+      "sha256": "b61b4756bb50efb7a18968cb77366f2c02207b9feea0a12b6511a41b6d3c1944"
+    },
+    {
+      "path": "HOHONET_exchange_latest/research/workers/worker_b8l2_d10_20261017/scope_response_evidence.csv",
+      "sha256": "c4befc7c534f3fb793357eda86551d4be15dbe97a5c6e36d43fa6b815f84dc77"
+    },
+    {
+      "path": "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv",
+      "sha256": "fc2f624c5fd4a9c5c4c2a0072209a430d67a610c1d27ef2a3fcb4f53bc976137"
+    },
+    {
+      "path": "exchange_research_20261025/recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/RAW_POOL_MEMBER_FEATURES.csv.gz",
+      "sha256": "6c5af5aef27838836d1ae77d45bb0029d695fe90bb16f1d1f6e854e4d1a116c8"
+    }
+  ],
+  "input_records": 10439,
+  "scope_response_v2_n": 9845,
+  "recovered_historical_oos": 286,
+  "scope_feature_response_n": 10131,
+  "deduplicated_opportunities": 10411,
+  "scope_worker_n": 62,
+  "folds": 23,
+  "rules": {
+    "scope_response_not_correctness": true,
+    "scope_recovery": "286 old oos strings have exact unique worker-image match and original questionnaire source; no conflict with an existing ledger response; derived auxiliary features only",
+    "centering": "train-side image×condition×origin mean; at least three observed responders; heldout building removed first",
+    "main_domain": "mean of supported ordinary Manual and Semi residual means; each needs eight images and three buildings",
+    "target_building_exclusion": "all supplied conditions removed before any fitting",
+    "missing": "unknown stays missing, not response zero",
+    "scope_gold": "93 opportunities and correctness remain source values, not used as general correctness classification",
+    "frozen_contract_unchanged": true
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "stage": "size_paths",
+  "seed": 2026102521,
+  "underlying_data": "v2",
+  "anchors": 286,
+  "events": 3264,
+  "transitions": 2978,
+  "images": 90,
+  "buildings": 22,
+  "methods": [
+    "DSTRUCT_K3",
+    "MSDGEOM_SCOPE_K4"
+  ],
+  "n_min": 10,
+  "n_max": 21,
+  "m": 7,
+  "unique_required_endpoints": 9792,
+  "unique_referenced_n10_endpoints": 858,
+  "unique_beyond_n10_endpoints": 8934,
+  "new_fusion_run": false,
+  "n_path": "Every feasible integer n=10..N-14; X7/Y7/Z7 and original D3 fixed; remaining actual workers enter D one at a time.",
+  "background_sampling": "One SHA256-rank permutation of all remaining workers per existing anchor. No outcomes used. Existing anchors already span members/backgrounds.",
+  "requests": "REQUESTS is all unique required sets, with existing n10 keys preserved. NEW_SIZE_REQUESTS contains only n>10; it is not a declaration of cache misses.",
+  "phase_source": "Original registered n10/m7 event phase and historical-role fields copied unchanged.",
+  "endpoint_identity": "Exact native team_key(pool_id, sorted worker_ids), identical at n10 to original registered keys.",
+  "interpretation": "Fixed blocks identify the joint background-growth and vote-threshold process. Adding one common person and changing n occur together; this is not an isolated pure-threshold intervention.",
+  "enumeration_scope": "All feasible n on each of 286 fixed single-order paths; not all remaining-person permutations, all D sets or all pool compositions.",
+  "validation": {
+    "strict_disjoint_ABC": true,
+    "actual_m_always_7": true,
+    "fixed_XYZ": true,
+    "original_D3_preserved": true,
+    "n10_members_and_keys_exact": true,
+    "every_step_adds_same_one_person_to_ABC": true,
+    "no_n_gap": true,
+    "all_labels_copied_from_registered_source": true
+  },
+  "sources": {
+    "design/target_omissions/ANCHORS.csv.gz": "47fd3032ff337f8addf2a560393476ee8f29c8a026ad8b4577c6d29f505ecb0a",
+    "design/target_omissions/FROZEN_LABELS.csv.gz": "5cc9eff5dd899882ce415eb1536c30bb1804386e37267189583304f743965e13",
+    "recovery/prior_population/research/workers/personnel_population_curves_v2_20261023/inputs/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "design/confirm/EVENTS_EXACT.csv.gz": "fccd943c544999e163da814e3f1328585dddd23fb5a6f25648cc6b905f686ae8",
+    "design/screen/EVENTS_EXACT.csv.gz": "e4917bd7c8ee38f329f9705561ada59861580e4919ef9a39a83b291472b06e6e"
+  },
+  "code_sha256": "e61bad2ba892e1efdec13e28abfe785bcfe2c21819abb35d61e4124cc0c76e53"
+}

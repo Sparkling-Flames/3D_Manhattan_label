@@ -1,0 +1,13 @@
+{
+  "methods": 20,
+  "all_labels": 28520,
+  "raw_pairs": 121515,
+  "raw_image_comparisons": 86060,
+  "no_new_fusion": true,
+  "raw_test_scope": "All current formal pools, main ordinary and doorway separate in image table.",
+  "same_count": "Exact raw corner-pair count equality; still compares top/bottom azimuth and scale, not just corner number.",
+  "pairing": "One-to-one Hungarian azimuth matching within 9 degrees; unmatched fraction reported separately.",
+  "aggregation": "Equal class means within; equal unordered class-pair means across; then image and building means.",
+  "qualification": "Historical labels fitted excluding target building; no target fusion score used for candidates.",
+  "full_combination_note": "Capacity is a mathematical feasibility bound, not a claim that endpoints or permutations were computed."
+}

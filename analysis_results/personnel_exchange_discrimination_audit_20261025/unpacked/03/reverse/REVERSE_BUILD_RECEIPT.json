@@ -1,0 +1,50 @@
+{
+  "actual_commit": "972857b2b3f548316be215400e42d6ef6e639250",
+  "underlying_data_version": "v2",
+  "method": "Nested-LOBO multi-output ridge on actual natural-prefix fusion responses, Ward K2/K3",
+  "model_rows": 24004,
+  "training_images": 171,
+  "training_buildings": 22,
+  "raw_training_workers": 60,
+  "outputs": [
+    "floor_turn5_n",
+    "floor_short_edge_03_n",
+    "floor_redundant5_n",
+    "bottom_y_mean_px",
+    "top_y_mean_px",
+    "log_floor_area",
+    "log_height_mean",
+    "B8L2",
+    "D10",
+    "iou2d100",
+    "IoU3D100",
+    "boundary_loss",
+    "direction_loss",
+    "height_loss"
+  ],
+  "strata": [
+    "all",
+    "easy",
+    "hard"
+  ],
+  "alphas": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "input_design": "person membership fraction 1/n; X and each outcome centered within image x n, natural-order occurrence weighted",
+  "weights": "equal building, equal image within building, equal n within image, natural-order empirical weights within image x n",
+  "ridge_penalty": "alpha times average diagonal of training XTX; alpha selected using only other training buildings",
+  "class_features": "All, hard, hard-minus-easy fitted worker response; per-domain robust scaling, 2 PCs, equal domain weight; Ward K2/K3 same tree",
+  "qualification": "ordinary_manual natural_random only; category-priority orders, special ranges and doorways excluded from reverse training",
+  "missing": "Failure endpoints retained in input inventory, no zero Q; common finite-output response rows used; insufficient worker history unknown",
+  "unknown_rule": ">=8 images/3 buildings overall, >=5 easy images/2 buildings, >=3 hard images/2 buildings",
+  "target_exclusion": "All target-building teams omitted from outer fit and from every inner hyperparameter evaluation",
+  "differs_from_previous": "Learns actual n10..24 fusion endpoint response to member composition, not original-answer Q/features or single-person/m2 replacement relationships",
+  "no_new_fusion": true,
+  "exploration": "v2 internal material reused; not a new external blind test",
+  "source_input_sha256": "3018bbe7d29f0c4ab456888e1b7be5611d3ce2fe59e60d1539f266c1185b23be",
+  "code_sha256": "f548ddca2d9751d9f6b6ec2a710baaf87b8e7ddcfd1a582244ac1867ab6ce3aa",
+  "validation_baseline": "The zero-response baseline is measured on each held-out inner building with its training-scale denominator; it is not assumed equal to 1 across buildings.",
+  "labels_unchanged_baseline_completion": true
+}
