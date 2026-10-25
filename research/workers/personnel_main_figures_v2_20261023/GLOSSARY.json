@@ -83,7 +83,7 @@
       "id": "taxonomy_manual_structure",
       "label": "Manual结构分类",
       "short": "按历史转折与短转折表达区分人员，解释怎样标。",
-      "detail": "当前ALL方案选中TURN，主输入为同图中心化、再按建筑等权的有效转折与短边残差；形成明显简化、常规、较多转折三类。输入不直接含Q/T。楼外方法族V3_BEHAVIOR可能选择TURN2/3或其他结构家族，须显示实际折方案。",
+      "detail": "该历史图包的ALL方案选中TURN，主输入为同图中心化、再按建筑等权的有效转折与短边残差；形成明显简化、常规、较多转折三类。输入不直接含Q/T。楼外方法族V3_BEHAVIOR可能选择TURN2/3或其他结构家族，须显示实际折方案。",
       "unit": "人员类别",
       "better_direction": "不排序",
       "denominator_or_support": "满足结构历史机会门槛的人员；未知人员单列。",
@@ -97,7 +97,7 @@
       "id": "taxonomy_manual_joint",
       "label": "Manual结构＋Q＋T分类",
       "short": "同时组织结构表达、历史质量和记录时间的人员角色。",
-      "detail": "当前ALL方案为CQT五类，结合简单/复杂结构机会下的表达、相对历史Q及低尾、同来源相对对数时间。每域等权、域内分摊权重，稳健标准化后Ward聚类。它解释怎样搭配人员，与三类结构分组分别保留。",
+      "detail": "该历史图包的ALL方案为CQT五类，结合简单/复杂结构机会下的表达、相对历史Q及低尾、同来源相对对数时间。每域等权、域内分摊权重，稳健标准化后Ward聚类。它解释怎样搭配人员，与三类结构分组分别保留。",
       "unit": "人员类别",
       "better_direction": "不排序",
       "denominator_or_support": "结构情境、质量及时间均达到本条件支持门槛的人员。",
@@ -942,6 +942,97 @@
       "avoid_confusion": "多转折、全票和低成员波动均不自动保证靠近采用参考。",
       "source_paths": [
         "research/fusion/fusion_paper_closeout_20261022/README.md"
+      ]
+    },
+    {
+      "id": "method_dstruct_k3",
+      "label": "困难结构表达 · 三类 · DSTRUCT_K3",
+      "short": "主要解释方法：同样遇到困难结构，哪些人较简化，哪些人保留更多实际转折？",
+      "detail": "Manual总体、困难及困难−简单的转折、短边、近共线节点和参考对应缺失；不含Q/T。 把主线图片难度接回人员表达，连接原答、混合构成与大块替换。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "转折多不是结构正确率。新C3的12人来自旧M3的19人，但整套分区不是旧三类的纯细分。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_rfuse_geom_k2",
+      "label": "融合几何响应 · 二类 · RFUSE_GEOM_K2",
+      "short": "核心效果对照：哪些人员共同进入时，更容易改变当前融合的结构、位置或尺度？",
+      "detail": "训练楼的自然随机团队；同图同人数内估计人员份额与实际融合几何的关系，再对响应特征聚类。 解释融合响应角色；ALL为55人与4人两类，四人核心可对应具体支持票变化。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "不是纯个人能力或必然因果贡献；结论与当前融合规则有关。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_rfuse_geomq_k3",
+      "label": "融合几何＋质量响应 · 三类 · RFUSE_GEOMQ_K3",
+      "short": "核心效果对照：哪种人员块既改变输出形状，也有不同的参考质量响应？",
+      "detail": "自然随机团队的几何响应，加上B8L2、D10、3D IoU等质量响应域；训练目标楼排除。 ALL为20/32/7人；在已检验的n20/m6条件，类内波动小、跨类幅度较大。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "含质量响应，不作为纯风格证据。与K2共同可评20图上跨/同比约2.06；全部21图约3.09。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_msdgeom_scope_k4",
+      "label": "Manual＋Semi＋范围判断 · 四类 · MSDGEOM_SCOPE_K4",
+      "short": "跨条件联合解释：两种标注方式下的结构、边界与范围判断，能否共同区分人员？",
+      "detail": "Manual困难结构与边界、Semi终稿结构与边界、scope回答倾向及困难响应；不直接输入Q/T。 用更多行为维度描述同一人；本轮效果仍只评价普通Manual。历史Q/T用于解释或选择方向。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "scope是判断倾向，不是准确率；终稿特征不是初始化纠错或盲信。尚不能把全部增益归给scope单项。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_dboundary_k3",
+      "label": "边界与尺度 · 三类 · DBOUNDARY_K3",
+      "short": "几何差别解释：总质量相近时，顶底界位置、空间尺度是否仍以不同方式变化？",
+      "detail": "Manual顶/底界相对位置、面积、高度及困难−简单响应。 n18/m7同/跨Q幅度约4.058/4.000；顶界角距离约0.440°/0.550°，41/61图跨类更大。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "Q总分区分弱仍可有几何用途；不能把位置差异直接称为质量增益。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_djoint_k4",
+      "label": "难度结构＋质量＋时间 · 四类 · DJOINT_K4",
+      "short": "质量与劳动取舍：表达、历史质量和速度相近或不同时，怎样组织构成比较？",
+      "detail": "Manual结构、难度响应、历史Q和记录时间。 区别质量相近但速度或表达不同的角色；用于质量—劳动—结构的共同解释。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "不是纯结构分类，也不能把历史快角色等同于本图实际节时。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
+      ]
+    },
+    {
+      "id": "method_msdgeom_k4",
+      "label": "Manual＋Semi几何 · 四类 · MSDGEOM_K4",
+      "short": "跨条件几何对照：两条件的终稿表达和定位，是否提供互补的人员画像？",
+      "detail": "Manual结构/边界与Semi终稿结构/边界，不含scope域。 保留跨条件几何差异，并作为含scope方案的来源对照。",
+      "unit": "分类方法，非评分量",
+      "better_direction": "不排序",
+      "denominator_or_support": "ALL只作整体描述；逐图结果读取该目标建筑的LOBO标签与实际可用成员。",
+      "avoid_confusion": "与含scope方案的图片和方向支持不同，现有数值不等于固定条件下scope消融增量。",
+      "source_paths": [
+        "research/workers/personnel_classification_guide_20261025/GUIDE.json"
       ]
     }
   ]

@@ -113,3 +113,12 @@
 @media(prefers-reduced-motion:reduce){.research-evidence *,.re-overview *{scroll-behavior:auto!important}}
 
 .re-spatial-diagram{display:block;width:100%;height:auto}.re-schematic>p{padding:0 14px}
+
+
+/* Saved-score comparison: common scale, distinct within-metric series. */
+.metric-pair-chart {margin:1rem 0;padding:1rem;border:1px solid #b9d0dc;border-radius:12px;background:#f8fbfd}
+.metric-pair-chart figcaption {font-weight:700}.metric-pair-chart h4 {margin:.8rem 0 .3rem}
+.metric-bar-row {display:grid;grid-template-columns:2em minmax(40px,1fr) 4.5em;gap:.6rem;align-items:center;margin:.3rem 0}
+.metric-bar-track {height:16px;background:#e2e8ef;border-radius:4px;overflow:hidden}
+.metric-bar-fill {display:block;height:100%}.metric-bar-fill.left {background:#397baf}.metric-bar-fill.right {background:#b26226}
+.method-diagram svg {display:block;min-width:560px}.method-diagram {overflow-x:auto}
