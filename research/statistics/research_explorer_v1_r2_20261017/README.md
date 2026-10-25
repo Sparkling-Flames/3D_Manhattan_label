@@ -206,4 +206,3 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 [同房独立补算 · 10/21](index.html#module=same_room_review)新增13页签，读取[源包](../../same_room/same_room_independent_followup_20261021/README.md)固定提交 `e83286b7814afc614253aa392050e9a3851ae058` 的保存结果。研究台121→134表，概览8→9节；显示接口见 [SAME_ROOM_REVIEW_INTERFACE_20261021.json](SAME_ROOM_REVIEW_INTERFACE_20261021.json)。
 
 仓库根执行 `python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019`。快照仍为 `v2_integrated_analysis_20261019`，生成数据仅本地使用。校准、结构、人数选择及D10敏感性按各自支持查看，不重跑研究、评分或融合。G015保持现有固定GT；Pro新团队和47.1MiB包仍未复现。低尾、完整率、反例及未接明细见源包和[本轮回执](INTEGRATION_RECEIPT_20261021_SAME_ROOM.md)。
-

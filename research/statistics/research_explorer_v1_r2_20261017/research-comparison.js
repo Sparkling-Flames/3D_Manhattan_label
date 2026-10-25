@@ -294,4 +294,3 @@ async function multiview(host,s,loadImage,labels,options,alive,saved){
 }
 return {render,classOf,layers,alias,changeSelection,readDeepLink,applyDeepLink,resolveContext,reconcileSelection,frozenState,makeDeepLink,feedbackRecord,exportFeedback,readMultiviewLink,groupFromRows};
 })();
-

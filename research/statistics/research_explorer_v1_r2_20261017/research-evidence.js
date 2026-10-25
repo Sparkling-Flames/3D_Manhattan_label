@@ -425,4 +425,3 @@ window.ResearchEvidence = (() => {
   }
   return { render, overviewHTML, tabs, themes, geometryBinding, stageRows, fusionSelection, navigationPatch, safeSource, qualityTable, doorwaySchematic };
 })();
-

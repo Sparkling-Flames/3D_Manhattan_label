@@ -21,3 +21,8 @@ test('diagrams and current-class routes are wired without changing saved experim
  const glossary=JSON.parse(read('../../workers/personnel_main_figures_v2_20261023/GLOSSARY.json'));
  assert.equal(new Set(glossary.terms.map(t=>t.id)).size,glossary.terms.length);assert.ok(glossary.terms.some(t=>t.id==='method_dstruct_k3'));
 });
+
+test('combined human answer retains both problem and uncertainty meanings',()=>{
+ const html=D.comparison({review_id:'QV003',human_choice:'uncertain'});
+ assert.ok(html.includes('人工判断：各有问题或无法判断。'));
+});

@@ -43,7 +43,7 @@ window.MethodDiagrams = (() => {
    if(!Number.isFinite(n)||n<0||n>100)return `<span>${side}：未保存／不在0–100量程</span>`;
    return `<div class="metric-bar-row"><span>${side}</span><span class="metric-bar-track"><span class="metric-bar-fill ${side==='左'?'left':'right'}" style="width:${n}%"></span></span><strong>${n.toFixed(2)}</strong></div>`;
   };
-  return `<figure class="metric-pair-chart"><figcaption>同一对作答的排序对照 · ${esc(pair.review_id)}</figcaption><p>各行固定0–100量程；只在同一指标内比较左右，不把不同指标的分差当作等价。条形读取保存值，不重新评分。</p>${rows.map(([key,label])=>`<section><h4>${label}</h4>${bar(pair['left_'+key],'左')}${bar(pair['right_'+key],'右')}</section>`).join('')}<p>人工判断：${esc(({left:'左侧较好',right:'右侧较好',close:'两者接近',uncertain:'无法判断'})[pair.human_choice]||pair.human_choice||'未记录')}。均高棱柱IoU是本研究的冻结代理，不代表所有3D IoU实现。</p></figure>`;
+  return `<figure class="metric-pair-chart"><figcaption>同一对作答的排序对照 · ${esc(pair.review_id)}</figcaption><p>各行固定0–100量程；只在同一指标内比较左右，不把不同指标的分差当作等价。条形读取保存值，不重新评分。</p>${rows.map(([key,label])=>`<section><h4>${label}</h4>${bar(pair['left_'+key],'左')}${bar(pair['right_'+key],'右')}</section>`).join('')}<p>人工判断：${esc(({left:'左侧较好',right:'右侧较好',close:'两者接近',uncertain:'各有问题或无法判断'})[pair.human_choice]||pair.human_choice||'未记录')}。均高棱柱IoU是本研究的冻结代理，不代表所有3D IoU实现。</p></figure>`;
  }
  return {quality,fusion,comparison};
 })();
