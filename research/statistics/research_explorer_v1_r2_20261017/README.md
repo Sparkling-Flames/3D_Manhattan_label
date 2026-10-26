@@ -249,3 +249,8 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 ## 2026-10-26 离线展示包更新
 
 经用户授权，已用当前页面和201表/492分片更新离线ZIP，包含人数抽样精度补充与VFua图版；261张完整原图保留。输出为analysis_results/research_workbench_delivery_20261026/全景标注研究台_20261026.zip（约568MiB），完整解压双击START.html，无需安装环境/联网/服务器。包内控件、静态依赖和ZIP完整性检查通过，旧20261025 ZIP在核验后删除；浏览器视觉/窄屏仍未验收。前文“未更新ZIP”是10-25接入时的历史状态。
+
+
+## 2026-10-26 构成方差与 DSTRUCT 衔接
+
+[独立离线页](composition-variance.html)已从侧栏、人员第2步及当前分类说明接入。231个Manual面板、40图22楼、213,444条团队关联按目标楼外标签重聚合；K2/K3与旧结构粗细同支持比较，方差与完整配比分布并列。历史四方案保留原身份。数据、覆盖、测试与验证见[交付目录](../../workers/dstruct_composition_bridge_20261026/README.md)。不依赖本地服务器，不声称已部署。
