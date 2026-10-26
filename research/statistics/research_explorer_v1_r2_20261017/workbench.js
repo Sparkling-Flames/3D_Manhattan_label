@@ -70,12 +70,12 @@ Object.assign(metricHints,{
 });
 // 短释义/展开说明沿用 CONTEXT.md；单位和实际分母仍在正文、表格中显示。
 Object.assign(metricHints,{
- mae:['MAE：预测与实际差的绝对值，再取平均；越小越准。','预测Q时单位是分，预测比例时按表中比例/百分点单位读取。比较方法须保持目标、样本和图/楼权重相同；平均预测改善不等于能筛查严重低Q。'],
+ mae:['MAE：预测与实际差的绝对值，再取平均；越小越准。','预测Q时单位是分，预测比例时按表中比例/百分点单位读取。比较方法须保持目标、样本和图/楼权重相同；平均预测改善不能用来筛查严重低 Q。'],
  rmse:['RMSE：误差平方后取平均，再开方；对大误差更敏感。','单位与预测目标相同。它与MAE关注的大误差权重不同，不能把两种指标直接混为同一排名。'],
  bias:['有符号偏差：平均预测值减实际值。','正值表示平均高估，负值表示平均低估；正负误差可以抵消，接近零不保证每次预测都准。'],
- pearson_r:['Pearson r：两组数值一起线性变化的程度。','范围−1至1；相关不等于数值相等，也不等于预测误差小。它与看排序的Spearman相关应分别读取。'],
- spearman_r:['Spearman ρ：两组数值排序一起变化的程度。','范围−1至1；对排名一致性的描述不等于绝对Q预测准确，必须核对共同支持与聚合层级。'],
- R2:['R²：相对声明基准的平方误差改善程度，可以为负。','常见形式为1−残差平方和/总平方和。面板内相对变化的解释能力，不等于陌生图片绝对Q的预测能力。'],
+ pearson_r:['Pearson r：两组数值一起线性变化的程度。','范围−1至1；相关不是数值相等，也不代表预测误差小。它与看排序的Spearman相关应分别读取。'],
+ spearman_r:['Spearman ρ：两组数值排序一起变化的程度。','范围−1至1；对排名一致性的描述不代表绝对 Q 预测准确，必须核对共同支持与聚合层级。'],
+ R2:['R²：相对声明基准的平方误差改善程度，可以为负。','常见形式为1−残差平方和/总平方和。面板内相对变化的解释能力，不代表陌生图片绝对 Q 的预测能力。'],
  SD:['SD：结果围绕均值的分散程度；Q的SD单位是分。','自然曲线这里描述同图、同人数的顺序间质量波动，不是均值的置信区间，也不同于几何波动V；样本少于2个时不可估。'],
  P10:['P10：当前样本的第10百分位，Q中通常表示较差端。','约10%的观测不高于此值；它不是最低分或10%错误率。分位数随支持集合变化，分位带不是置信区间。'],
  P50:['P50：当前样本的中位数。','约一半观测不高于此值；它描述结果分布的中间位置，不是均值或估计精度。'],
@@ -83,7 +83,7 @@ Object.assign(metricHints,{
  resampling_unit:['重抽区间：按声明的建筑、图片或路径单位重复抽样得到。','重抽次数不是新增独立数据。旧R03的2000次bootstrap仅重抽原24条且范围到k20；新补充的独立新24、合48、重点96和精确有限边际须分别读取，不能把重抽次数当新增路径。探索选型后的区间仍属内部分析。'],
  natural_paths:['路径是一次人员进入顺序；同k取前k名人员形成团队。','当前主展示普通点为合48，重点池另有96；旧24保留历史身份，均为抽样而非全排列。路径共享成员，同一成员集合复用端点。满员回到同一支团队、SD/V归零，不代表Q正确；角色优先的8条配对顺序另列。'],
  saved_endpoint:['端点：一支确定团队在既定规则下的保存融合输出。','同一端点可被多个路径或事件引用，因此端点引用次数不是独立团队数。页面读取已保存结果，不按筛选重新融合。'],
- comparison_event:['事件：一次换人、换类或前缀端点的对照。','事件有各自A/B/C或前后端点，可能共享图片、团队和人员；事件数不等于独立图片数或独立团队数。'],
+ comparison_event:['事件：一次换人、换类或前缀端点的对照。','事件有各自A/B/C或前后端点，可能共享图片、团队和人员；事件数不是独立图片数或独立团队数。'],
  paired_quality:['同一路径两端可评Q：只比较同一条路径前后都能评分的结果。','两端各自可评路径的边际均分可能来自不同路径集合。配对Q与边际Q分列；恢复、新增失败和两端失败另按全部尝试报告。'],
  all_attempts:['全部尝试：包含真实失败和缺Q的预定团队/路径记录。','失败率按对应全部尝试计算；原实验暂缓未运行不计成功或失败。Q缺失不填0，也不把只在成功子集上的均分当作全部尝试表现。'],
  percentage_points:['百分点：两个百分比直接相减。','失败率10%→15%是增加5个百分点，相对原值增加50%；两种读法不能混写。Q的0—100分变化仍用分表示。'],
@@ -256,7 +256,7 @@ async function render(){
   }else if(state.module==='same_room'){
    $('content').innerHTML=(state.tab===0?findingSummary('same_room'):'')+sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
   }else if(state.module==='same_room_review'){
-   $('content').innerHTML=`<section class="panel"><h2>结构表达可重复，位置迁移与严重错误筛查仍有限</h2><p>44图、7楼、55人中，本人源视角对9°未匹配参考角点比例的预测MAE比同源他人少1.099个百分点，5/7楼改善；底点偏移和面积log误差却7/7楼更差。未匹配也可能来自定位偏离，不直接等同漏画。</p><p>同预算个人Q校准MAE从12.364降至11.145，6/7楼改善；目标Q&lt;50的事后子集MAE为25.719，对照23.443，反而更差。改善平均预测不等于能筛查严重错误；该子集也不是选人时已知的信息。</p><p class="hint-glossary">预测误差 MAE ${hintButton('mae')} · 有符号偏差 ${hintButton('bias')} · 相关与预测精度 ${hintButton('spearman_r')} · 百分点 ${hintButton('percentage_points')} · 重抽区间 ${hintButton('resampling_unit')}。</p><div class="actions"><a href="../../same_room/same_room_independent_followup_20261021/structure/summary.csv">结构迁移逐指标汇总</a></div></section>`+toolbar+title+tablePanel();
+   $('content').innerHTML=`<section class="panel"><h2>结构表达可重复，位置迁移与严重错误筛查仍有限</h2><p>44图、7楼、55人中，本人源视角对9°未匹配参考角点比例的预测MAE比同源他人少1.099个百分点，5/7楼改善；底点偏移和面积log误差却7/7楼更差。未匹配也可能来自定位偏离，不直接等同漏画。</p><p>同预算个人Q校准MAE从12.364降至11.145，6/7楼改善；目标Q&lt;50的事后子集MAE为25.719，对照23.443，反而更差。改善平均预测不能用来筛查严重错误；该子集也不是选人时已知的信息。</p><p class="hint-glossary">预测误差 MAE ${hintButton('mae')} · 有符号偏差 ${hintButton('bias')} · 相关与预测精度 ${hintButton('spearman_r')} · 百分点 ${hintButton('percentage_points')} · 重抽区间 ${hintButton('resampling_unit')}。</p><div class="actions"><a href="../../same_room/same_room_independent_followup_20261021/structure/summary.csv">结构迁移逐指标汇总</a></div></section>`+toolbar+title+tablePanel();
   }else if(state.module==='fusion'&&id==='fusion__trajectory_scores'){
    $('content').innerHTML=`<div class="info">固定 138 队的墙线、代表原答和 Lee MV50 同队比较：<a href="#module=method_supplements&tab=1">进入融合方法补充</a>。</div>`+toolbar+`<div id="processFocus"></div>`+tablePanel();await processFocus(token);
   }else if(state.module==='fusion'){
@@ -381,7 +381,7 @@ function renderPlan(){const plans=assets.supplement_plan?.plans;
  $('content').innerHTML=plans?panel('已有补人计划 · 只读',`<p class="scope-label">读取构建时的独立计划，不修改原服务存储，也不启动采集。</p><div class="tablewrap"><table><thead><tr><th>图片</th><th>计划补人数</th><th>备注</th><th>记录时间</th></tr></thead><tbody>${Object.entries(plans).map(([id,p])=>`<tr><td><button data-jump="images" data-image="${esc(id)}">${esc(imageMap.get(id)?.image_code||id)}</button></td><td>${fmt(p.additional_people)}</td><td>${esc(p.note)}</td><td>${esc(p.updated_at||'未填写')}</td></tr>`).join('')}</tbody></table></div>`):placeholder('补人计划未接入','未找到已有计划文件，不创建新计划。');state.rows=plans?Object.entries(plans).map(([image_id,p])=>({image_id,...p})):[];state.meta={id:'supplement_plan'};
 }
 function renderSources(){
- $('content').innerHTML=`<section class="panel"><h2>数据与方法范围</h2><p>当前数据版本：${esc(dataset.release)}。Manual与Semi分别分析，门洞单列，OOS在独立页面讨论。库存、质量可用、完整可评和全部尝试使用各自分母；缺失不填0。</p><p>图表和几何来自已保存实验。页面选择用于查看固定结果，不重新形成分类或融合团队。人员、图片、条件和参考的绑定保持不变。</p><div class="actions"><button data-module="evidence">指标与方法解释</button><button data-module="personnel_main">人员与团队研究</button><a href="oos-review.html">OOS独立研究</a></div></section><section class="panel"><h2>统计表与支持范围</h2><p>以下可打开完整明细；记录行数不等于独立图片或人员数，按各表声明的统计单位解释。</p><div class="doclist">${index.tables.map(t=>`<details><summary>${esc(t.title||t.id)} · ${t.row_count}行</summary><p>${esc(t.caveats?.join('；')||'样本、指标与缺失状态分别保留。')}</p><p>字段：${esc(t.columns.map(label).join('、'))}</p><button data-table-jump="${esc(t.id)}">查看统计明细</button></details>`).join('')}</div></section>`;state.rows=[];
+ $('content').innerHTML=`<section class="panel"><h2>数据与方法范围</h2><p>当前数据版本：${esc(dataset.release)}。Manual与Semi分别分析，门洞单列，OOS在独立页面讨论。库存、质量可用、完整可评和全部尝试使用各自分母；缺失不填0。</p><p>图表和几何来自已保存实验。页面选择用于查看固定结果，不重新形成分类或融合团队。人员、图片、条件和参考的绑定保持不变。</p><div class="actions"><button data-module="evidence">指标与方法解释</button><button data-module="personnel_main">人员与团队研究</button><a href="oos-review.html">OOS独立研究</a></div></section><section class="panel"><h2>统计表与支持范围</h2><p>以下可打开完整明细；记录行数不是独立图片或人员数，按各表声明的统计单位解释。</p><div class="doclist">${index.tables.map(t=>`<details><summary>${esc(t.title||t.id)} · ${t.row_count}行</summary><p>${esc(t.caveats?.join('；')||'样本、指标与缺失状态分别保留。')}</p><p>字段：${esc(t.columns.map(label).join('、'))}</p><button data-table-jump="${esc(t.id)}">查看统计明细</button></details>`).join('')}</div></section>`;state.rows=[];
 }
 
 function setTable(id){state.chartField='';route({table:id,where:null});}

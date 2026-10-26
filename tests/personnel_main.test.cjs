@@ -73,6 +73,37 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
  host=await render(2);assert.equal(host.querySelector('#ordinaryExchange').value,'S01');
  assert(host.innerHTML.indexOf('id="currentExchanges"')<host.innerHTML.indexOf('id="ordinaryExchangeResults"'));
  assert.match(host.innerHTML,/n21 \/ m7/);assert.match(host.innerHTML,/n28 \/ m7/);
+ assert(host.innerHTML.indexOf('id="exchangeBackground"')<host.innerHTML.indexOf('id="currentExchanges"'));
+ for(const method of ['DSTRUCT_K3','MSDGEOM_SCOPE_K4']){
+  host.querySelector('#backgroundMethod').change(method);
+  for(const phase of ['ALL_PHASES','selection_heldout_building']){
+   host.querySelector('#backgroundPhase').change(phase);
+   const html=host.querySelector('#backgroundPathResults').innerHTML;
+   for(const row of guide.strict_paths.filter(r=>r.method===method&&r.phase===phase)){
+    assert(html.includes(`${row.n} / 7`));
+    assert(html.includes(`${row.gap_positive_images}/${row.gap_valid_images}图`));
+    assert(html.includes(`${row.A_failed} / ${row.B_failed} / ${row.C_failed}（各以${row.events}为分母）`));
+    assert(html.includes(row.cross.toLocaleString('zh-CN',{maximumFractionDigits:3})));
+   }
+   assert.doesNotMatch(html,/undefined|NaN/);
+  }
+ }
+ host.querySelector('#voteTeam').change('18');
+ host.querySelector('#backgroundVotes').change('1');assert.match(host.querySelector('#voteExplanation').innerHTML,/7人全部支持也不能入选/);
+ host.querySelector('#backgroundVotes').change('2');assert.match(host.querySelector('#voteExplanation').innerHTML,/至少给7票即可入选/);
+ host.querySelector('#backgroundVotes').change('8');assert.match(host.querySelector('#voteExplanation').innerHTML,/至少给1票即可入选/);
+ host.querySelector('#backgroundVotes').change('9');assert.match(host.querySelector('#voteExplanation').innerHTML,/背景已经达票/);
+ host.querySelector('#voteTeam').change('10');host.querySelector('#backgroundVotes').change('0');
+ assert.match(host.querySelector('#voteExplanation').innerHTML,/至少给5票即可入选/);
+ host.querySelector('#voteTeam').change('14');host.querySelector('#backgroundVotes').change('0');
+ assert.match(host.querySelector('#voteExplanation').innerHTML,/至少给7票即可入选/);
+ for(const n of [10,14,18,20,21]){
+  host.querySelector('#voteTeam').change(String(n));
+  for(let votes=0;votes<=n-7;votes++){
+   host.querySelector('#backgroundVotes').change(String(votes));
+   assert.doesNotMatch(host.querySelector('#voteExplanation').innerHTML,/undefined|NaN/);
+  }
+ }
  assert.match(host.querySelector('#newExchangeDetail').innerHTML,/30图 \/ 235事件/);
  host.querySelector('#newConditionRange').change('all');
  for(let i=0;i<guide.all_conditions.length;i++){
