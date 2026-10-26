@@ -1,0 +1,51 @@
+{
+  "complete_input_gate": {
+    "complete": true,
+    "pools": 194,
+    "new_fusion_endpoints": 0,
+    "new_random_orders": 0,
+    "whole_curve_sampling_design_unchanged": true
+  },
+  "readout_tables": [
+    {
+      "source": "GEOMETRY_STRICT_COMMON_CURVE_SUMMARY.csv.gz",
+      "output": "KEY_COMPLETE_CURVES.csv",
+      "rows": 3850
+    },
+    {
+      "source": "GEOMETRY_FIXED_SUPPORT_INTERVALS.csv.gz",
+      "output": "KEY_PAIRED_INTERVALS.csv",
+      "rows": 2150
+    },
+    {
+      "source": "GEOMETRY_TO_ACTUAL_FULL_SUMMARY.csv",
+      "output": "KEY_TO_ACTUAL_FULL.csv",
+      "rows": 950
+    },
+    {
+      "source": "GEOMETRY_SINGLE_IMAGE_PRECISION_CHANGES.csv.gz",
+      "output": "KEY_SINGLE_IMAGE_PRECISION.csv",
+      "rows": 885
+    },
+    {
+      "source": "GEOMETRY_COMMON_SUPPORT_BATCH_CHANGES.csv.gz",
+      "output": "KEY_BATCH_POINT_CHANGES.csv",
+      "rows": 1180
+    }
+  ],
+  "logical_distance_accounting": {
+    "pools": 194,
+    "pool_k_rows": 6096,
+    "distinct_polygon_pair_evaluations": 183997497,
+    "team_pairs_without_exact_footprint_dedup": 185316188,
+    "logical_pair_evaluations_saved": 1318691,
+    "logical_saving_fraction": 0.0071158975059426545,
+    "description": "logical saved polygon-distance evaluations, once per pool/k; not physical hardware time, process rerun accounting or new independent samples",
+    "exact_coordinate_byte_dedup": true,
+    "path_frequency_weights_unchanged": true
+  },
+  "case_display_frequency_rows": 5,
+  "new_fusions": 0,
+  "new_paths": 0,
+  "new_bootstrap": 0
+}

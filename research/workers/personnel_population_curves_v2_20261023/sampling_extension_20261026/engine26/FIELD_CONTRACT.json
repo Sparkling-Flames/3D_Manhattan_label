@@ -1,0 +1,50 @@
+{
+  "version": "population_wholecurve_precision_20261026_v1",
+  "data_version": "human_v2",
+  "main_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "exact_endpoint_key": "team_key",
+  "path_value_key": ["path_id", "k"],
+  "pool_key": "pool_id",
+  "native_role_policy_baseline": "Inherited historical V3 roles from population_20261023 exact order design; not DSTRUCT or RFUSE",
+  "join_fields": {
+    "member_workers": "Pipe-separated canonical sorted worker identifiers",
+    "member_object_ids": "Pipe-separated frozen v2 original-answer identifiers in worker order",
+    "reference_id": "Frozen reference binding",
+    "reference_version": "Frozen reference version",
+    "pool_input_sha256": "Canonical full pool input digest; matching references and members alone are not used to override this digest",
+    "base_path_id": "The exact paired natural base path; equal to path_id for a natural order",
+    "natural_base_path_id": "Explicit alias of base_path_id in materialized new prefix values",
+    "new_index": "Natural uniform order index, 0..207; stage1 0..103, stage2 104..207; new policies use 0..15",
+    "seed": "Unsigned 64-bit integer represented as a decimal string; do not round through IEEE double precision",
+    "replicate": "96+new_index for new orders, avoiding old focus indices; identify cohorts by path_id/batch, not replicate alone"
+  },
+  "units": {
+    "B8L2": "Frozen main quality score, points on its existing 0-100 scale, nullable",
+    "D10": "Frozen sensitivity quality score, nullable",
+    "geometry.points": "Alternating top/bottom panorama coordinates in the frozen 1024x512 coordinate system",
+    "geometry.footprint": "XZ coordinates normalized by camera height, same within-image frame",
+    "height_mean_h": "Height normalized by camera height",
+    "source_time_total_seconds": "Inherited source-clock total only when all members have that field",
+    "target_time_total_seconds": "Inherited target-clock total only when all members have that field",
+    "native_evaluation_wall_seconds": "Computer execution time; never annotator labor or parallel delivery time"
+  },
+  "geometry_fields": {
+    "geometry_state_pointer": "Relative compact final-candidate file and 1-based JSONL line; not a promise of full identity state",
+    "full_state_pointer": "Optional pointer to a retained complete native identity state; blank means not retained, not failed fusion",
+    "geometry_available": "Native candidate object exists; this alone does not establish valid polygon geometry",
+    "complete_floor_evaluable": "Use with a non-null footprint for the inherited floor-geometry analysis support",
+    "complete_evaluable": "Inherited complete geometry qualification, kept separate from score_available"
+  },
+  "status_fields": {
+    "score_status": "Unchanged native status",
+    "endpoint_state": "Added explicit execution/score category; see README_ENGINE_ZH.md",
+    "actual_consensus_failure": "fusion_exception, consensus_incomplete_below_four, or consensus_not_connected",
+    "output_generated_unscorable": "generated_geometry_unscorable or measurement_exception",
+    "reference_unavailable": "Reference support does not permit the score",
+    "policy_deferred": "Frozen two-person scoring deferral; this term is unrelated to which entrant-priority policy was used",
+    "unscored_nonpolicy": "Non-two-person executed endpoint with missing B8L2; broader than actual_consensus_failure"
+  },
+  "missingness": "Missing Q is never filled with zero. Requested but unexecuted teams have no result row and remain in the exact request table. Empty new-request pools can have fully materialized new random paths using cached exact endpoints.",
+  "weighting": "All random prefix occurrences are retained. Reusing an exact endpoint does not deduplicate its random sampling weight. Full-pool prefixes all refer to one finite team and add no new team variation.",
+  "source_table_resolution": "Exact request source_table names the unified logical new scalar dataset. Complete pool/part scalar shards are its authority; assemble_scalar_table.py can materialize NEW_ENDPOINT_SCALARS.csv.gz. dependencies_by_pool records actual per-stage output locations."
+}

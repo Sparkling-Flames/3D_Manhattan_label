@@ -117,6 +117,59 @@ def population_precision_tables():
     return load_declared_tables(dict(tables=specs))
 
 
+POPULATION256_ROOT = POPULATION_CASES.parent / 'sampling_extension_20261026'
+POPULATION256_FILES = {
+    'hybrid_images': 'analysis_precision26/results_stage2/HYBRID_POOLED256_DISPLAY_CURVES.csv.gz',
+    'batch_images': 'analysis_precision26/results_stage2/NATURAL_CURVES.csv.gz',
+    'fixed_curves': 'analysis_precision26/results_stage2/FIXED_IMAGE_AGGREGATE_CURVE_BANDS.csv.gz',
+    'paired_intervals': 'analysis_precision26/results_stage2/NATURAL_INTERVALS.csv.gz',
+    'interval_summary': 'analysis_precision26/results_stage2/COMMON_SUPPORT_INTERVAL_SUMMARY.csv.gz',
+    'precision': 'analysis_precision26/results_stage2/PRECISION_REACH_BY_LAYER_K.csv.gz',
+    'geometry_fixed': 'analysis_geometry26/results_stage2/GEOMETRY_STRICT_COMMON_CURVE_SUMMARY.csv.gz',
+    'geometry_images': 'analysis_geometry26/results_stage2/GEOMETRY_PATH_PRECISION.csv.gz',
+    'policy_summary': 'analysis_policy26/results/POLICY_PRECISION_SUMMARY.csv',
+    'policy_images': 'analysis_policy26/results/POLICY_IMAGE_PHASE.csv',
+    'policy_support': 'analysis_policy26/results/FIXED_SUPPORT.csv.gz',
+}
+
+
+def population256_tables():
+    """只整理已独立核验的256自然/32策略结果，保留原字段和精确点身份。"""
+    tables, sources = {}, {}
+    required = {
+        'hybrid_images': {'estimator', 'Q_sd_display', 'actual_consensus_failure_rate', 'exact_kind'},
+        'batch_images': {'cohort', 'Q_sd_ddof1', 'policy_deferred_paths'},
+        'fixed_curves': {'capacity_images', 'images', 'support_rule', 'pointwise_valid_draws'},
+        'geometry_fixed': {'common_images', 'common_buildings', 'support_rule'},
+        'policy_summary': {'version', 'path_valid_replicates', 'path_invalid_replicates'},
+        'policy_support': {'matched_k', 'matched_k_list'},
+    }
+    for name, relative in POPULATION256_FILES.items():
+        path = POPULATION256_ROOT / relative
+        # Seeds remain exact decimal strings; never round uint64 identifiers through float.
+        frame = pd.read_csv(path, encoding='utf-8-sig', dtype={'building_seed': str})
+        if required.get(name, set()) - set(frame.columns):
+            raise ValueError('population256 field drift: ' + name)
+        tid = 'population256__' + name
+        tables[tid] = frame.astype(object).where(frame.notna(), None).to_dict('records')
+        sources[tid] = path.relative_to(ROOT).as_posix()
+    # 首屏只读展示投影，完整原表仍供数据浏览和CSV导出。
+    columns = ['pool_id', 'image', 'layer', 'difficulty', 'pool_n', 'cohort', 'k', 'Q_mean', 'Q_p10',
+               'Q_sd_ddof1', 'Q_mean_MCSE_analytic', 'paths_attempted', 'quality_valid_paths', 'unique_teams',
+               'actual_consensus_failure_rate', 'output_unscoreable_rate', 'reference_unavailable_rate',
+               'not_executed_rate', 'policy_deferred_paths']
+    tables['population256__batch_display'] = [{k: r[k] for k in columns}
+                                             for r in tables['population256__batch_images']]
+    for name, field, value, display in [('geometry_images', 'metric', 'V_floor', 'geometry_floor_images'),
+                                         ('geometry_fixed', 'metric', 'V_floor', 'geometry_floor_fixed'),
+                                         ('policy_support', 'metric', 'paired_Q_delta', 'policy_q_support')]:
+        tables['population256__' + display] = [r for r in tables['population256__' + name] if r[field] == value]
+    for display, source in [('batch_display', 'batch_images'), ('geometry_floor_images', 'geometry_images'),
+                            ('geometry_floor_fixed', 'geometry_fixed'), ('policy_q_support', 'policy_support')]:
+        sources['population256__' + display] = sources['population256__' + source]
+    return tables, sources
+
+
 def classification_evidence():
     """只打包已存类中心与名单；类号始终连同方法和排除建筑解释。"""
     source = ROOT / 'research/workers/personnel_classification_guide_20261025/sources'
@@ -1101,8 +1154,11 @@ def build():
     tables.update(personnel)
     precision, precision_provenance = population_precision_tables()
     tables.update(precision)
+    population256, population256_provenance = population256_tables()
+    tables.update(population256)
     source_map = dict(extra_provenance)
     source_map.update(precision_provenance)
+    source_map.update(population256_provenance)
     source_map.update(taxonomy_provenance)
     source_map.update(mechanism_provenance)
     source_map.update(review_provenance)
@@ -1250,11 +1306,13 @@ def build():
              counterexample='背景人数不等于结构支持票；路径与18/7重点的图片范围不同，直接AC没有同类B队。',
              source='../../../research/workers/personnel_classification_guide_20261025/README.md', tables=[]),
         dict(id='population', title='低人数先提高质量，困难图后段主要改善低尾与稳定性', module='personnel_main', tab=4,
-             finding='合48路径普通168图3→6人Q平均+5.346，165升/3降；失败同时增加1.612个百分点。',
-             example='困难27图20→30的Q仅+0.016，P10+4.153、SD−4.439，后二项各24/27图改善。',
-             support='自然曲线采用合48与精确有限边际；固定N≥30为157图，四段几何V均22/22楼平均下降。',
+             visual='../../../research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/figures_stage2/F01_固定157全曲线_独立追加.png',
+             visual_alt='固定157候选图的旧48、新208和合256纯路径人数曲线，各指标全程支持独立声明',
+             finding='合256自然路径普通177图3→6人Q平均+5.068，174升/3降；实际共识失败率同时增加1.576个百分点。',
+             example='困难27图20→30：Q−0.175，P10+4.246（24图升）、SD−4.676（25图降）、V−0.047685（26图降）。',
+             support='自然主展示合256＋已知精确边际；固定N≥30为157图，N≥35为92图；历史四策略合32，Semi沿用原版。',
              counterexample='wc2-46的96路径虽见到全部28队，低分仅7次；随机P10为97.387，精确目录为52.406。策略157图与自然157图仅148图相交。',
-             source='../../../research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md', tables=[]),
+             source='../../../research/statistics/pro_return_review_20261023/population256_20261027/README.md', tables=[]),
         dict(id='same_room', title='同房跨视角，什么能够重复？', module='same_room', tab=0,
              finding='同房均值预测MAE5.081，对照9.303，9/12楼改善；105/123图对人员排序正相关，42/57人相对同行方向多数重复。',
              example='第三层看混合团队：旧结构混合队跨类幅度多1.960分，61/78图对为正；两端响应超过2分时CA同向率73.01%。',
@@ -1262,9 +1320,11 @@ def build():
              counterexample='扣公共任务与稳定个人水平后的额外相关仅0.031，不否定前两层相似。未知同建筑关系不当作异房。',
              source='../../../research/statistics/research_closeout_20261022/SAME_ROOM_REASSESSMENT_20261024.md', tables=[dict(id='same_room_pro__direct_mean_summary',label='同房均值与支持')]),
         dict(id='doorway', title='增加人数能解决门洞问题吗？', module='case_story', tab=0, case='doorway',
-             finding='门洞17图合48路径10→20的平均Q−2.339，6图升/11图降；满员仍6/17不可评。',
+             visual='../../../research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/figures_stage2/F03_35人与门洞曲线.png',
+             visual_alt='固定35人池和门洞单列的256纯路径曲线；失败与可评质量支持分开',
+             finding='门洞17图合256路径6→10平均Q−1.006（12图降），实际失败率−13.534个百分点（17图全降）；满员仍6/17失败。',
              example='7y-06保留32份完整原答与真实满员失败；点位、目标范围、门楣和表示限制分别看。',
-             support='固定门洞自然人数范围17图；满员27—35人。个别例子不替代全层分母。',
+             support='门洞20→30的Q支持15图，均−1.729但8升7降；实际失败支持16图、平均+9.131个百分点。满员范围17图。',
              counterexample='不能因前段改善就称门洞已解决，也不能因满员失败否认早段增人的价值。',
              source='../../../research/workers/personnel_population_curves_v2_20261023/README.md', tables=[]),
         dict(id='oos', title='超出表示标准时，人们怎样表达？', href='oos-review.html',

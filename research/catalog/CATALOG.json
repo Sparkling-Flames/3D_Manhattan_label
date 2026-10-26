@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261026_v54_dstruct_composition_closeout",
-  "inventory_date": "2026-10-26",
+  "catalog_version": "research_catalog_20261027_v57_sampling256_room_type_scoping",
+  "inventory_date": "2026-10-27",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "256条自然曲线与32条历史策略独立审查：新增排列、端点、分项及关键统计复算通过，旧来源保留",
+          "path": "research/statistics/pro_return_review_20261023/population256_20261027/README.md"
+        },
         {
           "text": "人数抽样精度补充已验收：自然48/精确有限边际与策略共同k修正，作者与本地审查分开",
           "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md"
@@ -426,6 +430,14 @@
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
         {
+          "text": "自然256＋精确边际与历史策略32：新来源归档、只读接口及独立审查",
+          "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/README.md"
+        },
+        {
+          "text": "256条自然曲线与32条历史策略独立审查：新增排列、端点、分项及关键统计复算通过，旧来源保留",
+          "path": "research/statistics/pro_return_review_20261023/population256_20261027/README.md"
+        },
+        {
           "text": "DSTRUCT同团队构成衔接：231面板，配比方差与严格换类分别解释",
           "path": "research/workers/dstruct_composition_bridge_20261026/README.md"
         },
@@ -806,6 +818,10 @@
       "description": "各批次覆盖、分母、分层结果、表格、图表与扩展复算。",
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
+        {
+          "text": "同类房间用途相似性初步盘点：覆盖/描述，相关性及预测增量待Pro实算",
+          "path": "research/statistics/room_type_similarity_scoping_20261027/README.md"
+        },
         {
           "text": "2026-10-22下载来源归档：1616份选入源文件、七份完整事件流及明确依赖缺口；归档不等于复算",
           "path": "research/statistics/downloads_research_audit_20261022/README.md"
@@ -11951,8 +11967,8 @@
       "source_path": "research/statistics/pro_return_review_20261023",
       "current_path": "research/statistics/pro_return_review_20261023",
       "source": "用户下载的03A/03C/04C/04D及同房01—04包、四个端点分片；冻结仓库楼外标签",
-      "adoption_status": "两轮核心结论采用、04C已恢复；后续同房大块实核完成；当前联合时间采用R03同语义67图支持",
-      "verification_status": "404082前缀实际成员、人数/策略汇总、58组几何；71126同房成员与类别向量及1954面板；恢复229050完整事件，复用端点补m>4诊断；未重融合/评分/分类全链拟合",
+      "adoption_status": "两轮核心结论采用、04C已恢复；后续同房大块实核完成；当前联合时间采用R03同语义67图支持；2026-10-27自然256/历史策略32可替换主展示，实际接入待更新",
+      "verification_status": "404082前缀实际成员、人数/策略汇总、58组几何；71126同房成员与类别向量及1954面板；恢复229050完整事件，复用端点补m>4诊断；未重融合/评分/分类全链拟合；本轮全部新增种子/前缀/标量对应及保存分量合成通过，45池原始前缀复算，完整策略事件重聚合；未重跑融合",
       "availability": "本地main；最新来源已归档到人员与同房专题，由用户自行推送",
       "relationships": [
         "research/statistics/pro_return_review_20261023/README.md",
@@ -11963,7 +11979,8 @@
         "research/workers/personnel_population_curves_v2_20261023/README.md",
         "research/same_room/same_room_current_classes_v2_20261023/README.md",
         "research/statistics/pro_return_review_20261023/MAIN_FIGURE_PLAN.csv",
-        "research/statistics/pro_return_review_20261023/SOURCE_ARCHIVE_RECEIPT.json"
+        "research/statistics/pro_return_review_20261023/SOURCE_ARCHIVE_RECEIPT.json",
+        "research/statistics/pro_return_review_20261023/population256_20261027/README.md"
       ]
     },
     {
@@ -12385,6 +12402,63 @@
         "docs/thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md",
         "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
         "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md"
+      ]
+    },
+    {
+      "id": "MAT-population_sampling_extension_20261026",
+      "title": "自然256条与历史策略32条完整新来源归档和可复用入口",
+      "theme": "workers",
+      "type": "完整来源归档与只读数据接口",
+      "date": "20261027",
+      "source_path": "HOHONET_20261026_S01_exact_design / S10_report_code / S11_analysis_results / 14 DATA ZIP",
+      "current_path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026",
+      "source": "冻结b9bcec809输入的17包，24140来源成员记录/24127唯一源路径；S10最终代码优先，2个早期不同版本另存，旧24/48与精确目录复用原位",
+      "adoption_status": "普通Manual与门洞自然主256，精确有限边际优先；历史V3策略32；Semi未追加，53重点池96/304仅敏感性。科学采用及核验以独立审查为准",
+      "verification_status": "21保存接口1945644行完整EOF、5914新增片路径与1356657新端点数闭合、6标量/几何身份指针、3定向测试、最终主表15表头无写入检查通过；未新增融合/评分/分类/哈希",
+      "availability": "完整包内路径及只读接口本地可用；原下载和旧来源未删；本线程未推送部署",
+      "relationships": [
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/README.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/REPRODUCE.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/DATA_ACCESS.json",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/REUSED_INPUTS.json",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/LOCAL_SOURCE_FILES.csv",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/SOURCE_ARCHIVE_RECEIPT.json",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/READ_ACCESS_CHECK.json",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/read_saved.py",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/check_saved.py",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/test_read_saved.py",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/report26/RESEARCH_DESK_FIELDS_ZH.md",
+        "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/new_endpoints26/COMPLETE_NEW_ENDPOINT_SHARD_INDEX.csv.gz",
+        "research/workers/personnel_population_curves_v2_20261023/README.md",
+        "research/statistics/pro_return_review_20261023/population256_20261027/README.md"
+      ]
+    },
+    {
+      "id": "MAT-room_type_similarity_scoping_20261027",
+      "title": "同类房间用途相似性：标签覆盖与描述统计初步盘点",
+      "theme": "statistics",
+      "type": "preliminary / 后续交Pro实算",
+      "date": "20261027",
+      "source_path": "research/data/releases/v2/analysis_input/data.json.gz",
+      "current_path": "research/statistics/room_type_similarity_scoping_20261027",
+      "source": "主线程复用既有coarse_type与冻结v2证据，盘点用途标签、普通原答资格、人员和跨建筑图对支持；不同物理房间的同用途与旧同房视角区分",
+      "adoption_status": "preliminary：覆盖和图片等权描述可作为后续设计依据；相关性、个人用途表现重复性及预测增量尚未实算，后续交Pro，不标为完成验证",
+      "verification_status": "主线程SCOPE_CHECK：10439库存/261图；普通Manual5719份177图60人22楼、Semi901份32图59人12楼；主线程报告2项测试通过；本线程仅登记路径及目录核验",
+      "availability": "本地README、PRO_TASK、8张CSV与SCOPE_CHECK可读；未修改该专题内容，未新增融合评分分类或预测",
+      "relationships": [
+        "research/statistics/room_type_similarity_scoping_20261027/README.md",
+        "research/statistics/room_type_similarity_scoping_20261027/PRO_TASK_ZH.md",
+        "research/statistics/room_type_similarity_scoping_20261027/IMAGE_TYPE_INDEX.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/INVENTORY_TYPE_COVERAGE.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/ORDINARY_IMAGE_QUALITY.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/ORDINARY_TYPE_DESCRIPTIVE.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/TYPE_DIFFICULTY_DESCRIPTIVE.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/WORKER_TYPE_SUPPORT.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/WORKER_TYPE_SUPPORT_SUMMARY.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/CROSS_BUILDING_PAIR_SUPPORT.csv",
+        "research/statistics/room_type_similarity_scoping_20261027/SCOPE_CHECK.json",
+        "tools/thesis_main/analysis/room_type_similarity_scoping_20261027.py",
+        "tests/test_room_type_similarity_scoping_20261027.py"
       ]
     }
   ]

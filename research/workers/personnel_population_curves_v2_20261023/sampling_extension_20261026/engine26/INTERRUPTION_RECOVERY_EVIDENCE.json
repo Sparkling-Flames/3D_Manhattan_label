@@ -1,0 +1,82 @@
+{
+  "both_old_sessions_unknown_process": true,
+  "interrupted_pool_checks": [
+    {
+      "exact_requests_total": 4578,
+      "pool_id": "7y3sRwLe3Va-04__manual__d7b320ab08",
+      "preserved_closed_parts": 11,
+      "preserved_closed_rows": 2750,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 1828
+    },
+    {
+      "exact_requests_total": 4589,
+      "pool_id": "S9hNv5qa7GM-10__manual__38e19faf10",
+      "preserved_closed_parts": 13,
+      "preserved_closed_rows": 3250,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 1339
+    },
+    {
+      "exact_requests_total": 4562,
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "preserved_closed_parts": 9,
+      "preserved_closed_rows": 2250,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 2312
+    },
+    {
+      "exact_requests_total": 4558,
+      "pool_id": "X7HyMhZNoso-13__manual__373442ac7c",
+      "preserved_closed_parts": 6,
+      "preserved_closed_rows": 1500,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 3058
+    },
+    {
+      "exact_requests_total": 4604,
+      "pool_id": "jh4fc5c5qoQ-13__manual__274d69d1f7",
+      "preserved_closed_parts": 15,
+      "preserved_closed_rows": 3750,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 854
+    },
+    {
+      "exact_requests_total": 4593,
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "preserved_closed_parts": 12,
+      "preserved_closed_rows": 3000,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 1593
+    },
+    {
+      "exact_requests_total": 4597,
+      "pool_id": "uNb9QFRL6hY-48__manual__5a1d61d7e4",
+      "preserved_closed_parts": 15,
+      "preserved_closed_rows": 3750,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 847
+    },
+    {
+      "exact_requests_total": 4556,
+      "pool_id": "uNb9QFRL6hY-78__manual__dfd88df676",
+      "preserved_closed_parts": 2,
+      "preserved_closed_rows": 500,
+      "scalar_geometry_and_request_keys_verified": true,
+      "still_needed_at_stop": 4056
+    }
+  ],
+  "memory_events_at_check": "low 0\nhigh 0\nmax 17015\noom 0\noom_kill 0\noom_group_kill 0\n",
+  "observed_cutoff_utc": "2026-10-26T11:11:50+00:00",
+  "observed_last_closed_part_utc": "2026-10-26T11:11:49.100853+00:00",
+  "old_native_pid": 5913,
+  "old_native_session": 13372,
+  "old_pid_absent": true,
+  "old_postexecution_waiter_session": 15165,
+  "original_stage1_closed_parts": 1450,
+  "original_stage1_closed_rows": 334978,
+  "recovery_rule": "Resume identical requests. Closed receipt parts validated and skipped; uncommitted tail recomputed from identical team keys. No new random selection.",
+  "resume_owner": "root only; child did not start native",
+  "same_design_and_seeds": true,
+  "stop_reason": "No Python traceback or exit code available. Simultaneous disappearance near subagent final handoff is compatible with tool/agent lifecycle cleanup; a 60-minute limit is not established. No cgroup OOM or OOM-kill recorded."
+}

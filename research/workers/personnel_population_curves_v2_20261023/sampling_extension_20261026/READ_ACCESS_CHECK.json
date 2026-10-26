@@ -1,0 +1,270 @@
+{
+  "schema": "population256_local_readability_check_v1",
+  "source_member_records": 24140,
+  "unique_source_paths": 24127,
+  "source_sizes_verified": true,
+  "saved_tables": [
+    {
+      "alias": "natural_display",
+      "rows": 6290,
+      "default_rows": 6290,
+      "cohorts": {
+        "pooled256": 6290
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_curves",
+      "rows": 41252,
+      "default_rows": 6290,
+      "cohorts": {
+        "old48": 6290,
+        "stage1_104": 6290,
+        "stage2_104": 6290,
+        "new208": 6290,
+        "pooled152": 6290,
+        "pooled256": 6290,
+        "prior96": 1756,
+        "all_history304": 1756
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_intervals",
+      "rows": 14100,
+      "default_rows": 2152,
+      "cohorts": {
+        "old48": 2152,
+        "stage1_104": 2152,
+        "stage2_104": 2152,
+        "new208": 2152,
+        "pooled152": 2152,
+        "pooled256": 2152,
+        "prior96": 594,
+        "all_history304": 594
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_status",
+      "rows": 49268,
+      "default_rows": 7487,
+      "cohorts": {
+        "old48": 7170,
+        "stage1_104": 7351,
+        "stage2_104": 7345,
+        "new208": 7466,
+        "pooled152": 7404,
+        "pooled256": 7487,
+        "prior96": 2469,
+        "all_history304": 2576
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_fixed_bands",
+      "rows": 43648,
+      "default_rows": 5456,
+      "cohorts": {
+        "old48": 5456,
+        "stage1_104": 5456,
+        "stage2_104": 5456,
+        "new208": 5456,
+        "pooled152": 5456,
+        "pooled256": 5456,
+        "prior96": 5456,
+        "all_history304": 5456
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_summary",
+      "rows": 108880,
+      "default_rows": 13610,
+      "cohorts": {
+        "old48": 13610,
+        "stage1_104": 13610,
+        "stage2_104": 13610,
+        "new208": 13610,
+        "pooled152": 13610,
+        "pooled256": 13610,
+        "prior96": 13610,
+        "all_history304": 13610
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_interval_summary",
+      "rows": 37440,
+      "default_rows": 4680,
+      "cohorts": {
+        "old48": 4680,
+        "stage1_104": 4680,
+        "stage2_104": 4680,
+        "new208": 4680,
+        "pooled152": 4680,
+        "pooled256": 4680,
+        "prior96": 4680,
+        "all_history304": 4680
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "natural_components",
+      "rows": 577528,
+      "default_rows": 88060,
+      "cohorts": {
+        "old48": 88060,
+        "stage1_104": 88060,
+        "stage2_104": 88060,
+        "new208": 88060,
+        "pooled152": 88060,
+        "pooled256": 88060,
+        "prior96": 24584,
+        "all_history304": 24584
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "geometry_curves",
+      "rows": 28200,
+      "default_rows": 5640,
+      "cohorts": {
+        "old48": 5640,
+        "stage1_104": 5640,
+        "stage2_104": 5640,
+        "new208": 5640,
+        "pooled256": 5640
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "geometry_intervals",
+      "rows": 33800,
+      "default_rows": 6760,
+      "cohorts": {
+        "old48": 6760,
+        "stage1_104": 6760,
+        "stage2_104": 6760,
+        "new208": 6760,
+        "pooled256": 6760
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "policy_image_k",
+      "rows": 63048,
+      "default_rows": 21016,
+      "cohorts": {
+        "old16": 21016,
+        "new16": 21016,
+        "pooled32": 21016
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "policy_phase",
+      "rows": 7536,
+      "default_rows": 2512,
+      "cohorts": {
+        "old16": 2512,
+        "new16": 2512,
+        "pooled32": 2512
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "policy_summary",
+      "rows": 8640,
+      "default_rows": 2880,
+      "cohorts": {
+        "old16": 2880,
+        "new16": 2880,
+        "pooled32": 2880
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "policy_events",
+      "rows": 672512,
+      "default_rows": 672512,
+      "cohorts": {
+        "old16": 336256,
+        "new16": 336256
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "policy_support",
+      "rows": 180864,
+      "default_rows": 60288,
+      "cohorts": {
+        "old16": 60288,
+        "new16": 60288,
+        "pooled32": 60288
+      },
+      "read_to_EOF": true
+    },
+    {
+      "alias": "orders",
+      "rows": 50400,
+      "default_rows": 50400,
+      "cohorts": {},
+      "read_to_EOF": true
+    },
+    {
+      "alias": "pool_plan",
+      "rows": 194,
+      "default_rows": 194,
+      "cohorts": {},
+      "read_to_EOF": true
+    },
+    {
+      "alias": "endpoint_shards",
+      "rows": 5914,
+      "default_rows": 5914,
+      "cohorts": {},
+      "read_to_EOF": true
+    },
+    {
+      "alias": "exact_marginals",
+      "rows": 613,
+      "default_rows": 613,
+      "cohorts": {},
+      "read_to_EOF": true
+    },
+    {
+      "alias": "exact_p10",
+      "rows": 613,
+      "default_rows": 613,
+      "cohorts": {},
+      "read_to_EOF": true
+    },
+    {
+      "alias": "exact_values",
+      "rows": 14904,
+      "default_rows": 14904,
+      "cohorts": {},
+      "read_to_EOF": true
+    }
+  ],
+  "endpoint_shards": 5914,
+  "new_endpoint_rows": 1356657,
+  "endpoint_rows_by_stage": {
+    "1": 784140,
+    "2": 572517
+  },
+  "geometry_pointer_samples": [
+    "2t7WUuJeko7-06__manual__9b197d01a2__000c06ecf56583abb241",
+    "pRbA3pwrgk9-14__manual__c4667a1d8c__d78722f2e8614d6f93be",
+    "zsNo4HB9uLZ-16__manual__7e980a16d1__f0cc2ea0f36ddae0090a",
+    "2t7WUuJeko7-06__manual__9b197d01a2__0014f15cdd6d06c58e2d",
+    "pRbA3pwrgk9-14__manual__c4667a1d8c__a3c5a413de9303c5cb14",
+    "zsNo4HB9uLZ-16__manual__7e980a16d1__fd0a4ff73e764e0e7bb1"
+  ],
+  "existing_prior_logical_parts": 19,
+  "no_old_data_copies": true,
+  "no_extra_hashes": true,
+  "no_fusion_scoring_classification": true,
+  "scope": "Archive-byte sizes, complete saved-interface CSV/gzip reads and six scalar/geometry identity pointers; not a new scientific recomputation or all geometry-body verification."
+}

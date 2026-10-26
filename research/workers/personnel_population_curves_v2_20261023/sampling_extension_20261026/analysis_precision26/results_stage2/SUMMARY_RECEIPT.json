@@ -1,0 +1,86 @@
+{
+  "stage": 2,
+  "pools": 194,
+  "cohorts": [
+    "all_history304",
+    "new208",
+    "old48",
+    "pooled152",
+    "pooled256",
+    "prior96",
+    "stage1_104",
+    "stage2_104"
+  ],
+  "complete_requested_pool_support": true,
+  "expected_pools": 194,
+  "bootstrap": 2000,
+  "bootstrap_master_seed": 2026102607,
+  "source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "outputs": [
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/PRECISION_REACH_BY_LAYER_K.csv.gz",
+      "rows": 4000,
+      "fields": 30,
+      "bytes": 234240,
+      "sha256": "9451358e7c1f9071f4f5f300696f644583afab82acb2c2c01ea9b4b8c9de627e",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/PRIOR_FOCUS_MATCHED_PRECISION_REACH.csv.gz",
+      "rows": 4000,
+      "fields": 30,
+      "bytes": 230718,
+      "sha256": "a9b7689deaec682ec788befc1679cf7d0f85e6401e9e9166abe5c28536072374",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/PER_IMAGE_OLD_NEW_COMPARISONS.csv.gz",
+      "rows": 39496,
+      "fields": 81,
+      "bytes": 9808997,
+      "sha256": "4373e92fd92123e801293ece85b4f5ccbb16b1c5ac08b7064a0d018e3e8f1def",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/PER_IMAGE_FULL_CURVE_BATCH_DIFFERENCES.csv.gz",
+      "rows": 4868,
+      "fields": 23,
+      "bytes": 258037,
+      "sha256": "94e9deccce7a813db4fb1ed8ce9f3b68c45cc4038848d4a00ace71e3be55a6a3",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/INDEPENDENT_INTERVAL_REPETITION_PER_IMAGE.csv.gz",
+      "rows": 43040,
+      "fields": 20,
+      "bytes": 1036696,
+      "sha256": "a80e6948f9109f1cb91a1c51d989baa39f4ca953f5b4ccaedd80eb7366642311",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/INDEPENDENT_INTERVAL_REPETITION_SUMMARY.csv",
+      "rows": 1200,
+      "fields": 17,
+      "bytes": 139402,
+      "sha256": "8eea7e9e1b70686bc83b33a833061cb8514a9d2bf1f01205646da56dd699977f",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/QUALITY_COMPONENT_COMMON_SUPPORT_SUMMARY.csv.gz",
+      "rows": 108640,
+      "fields": 13,
+      "bytes": 2750445,
+      "sha256": "0e9682b3c2a0e66422c8316690b6a6233be2a4e7ee7f12a30b8940dad4d01043",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/COMMON_SUPPORT_KEYS.csv.gz",
+      "rows": 113179,
+      "fields": 6,
+      "bytes": 424368,
+      "sha256": "58d15c1fe9aa5c68862261b87dd103619e71d7939e2bf7a7e7bbe306e03008a4",
+      "readback": "CSV/gzip complete to EOF"
+    }
+  ],
+  "common_support": "Fixed observed metric support across comparison versions; no bootstrap skip-renormalize"
+}

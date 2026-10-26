@@ -1,0 +1,214 @@
+{
+  "scope": "finite delivery documentation and selection correction; no fusion or resampling",
+  "checked_shell_commands": [
+    {
+      "script": "engine26/setup_from_main.py",
+      "options": [
+        "--repo",
+        "--study"
+      ]
+    },
+    {
+      "script": "report26/assemble_key_tables.py",
+      "options": [
+        "--base"
+      ]
+    },
+    {
+      "script": "report26/plot_policy32_Q_labor.py",
+      "options": [
+        "--base"
+      ]
+    },
+    {
+      "script": "engine26/prefix_outputs.py",
+      "options": [
+        "--base",
+        "--prepare"
+      ]
+    },
+    {
+      "script": "engine26/prefix_outputs.py",
+      "options": [
+        "--base",
+        "--stage"
+      ]
+    },
+    {
+      "script": "engine26/prefix_outputs.py",
+      "options": [
+        "--base",
+        "--stage"
+      ]
+    },
+    {
+      "script": "analysis_precision26/analyze_natural.py",
+      "options": [
+        "--root",
+        "--stage",
+        "--bootstrap",
+        "--resume"
+      ]
+    },
+    {
+      "script": "analysis_precision26/refresh_components.py",
+      "options": [
+        "--root",
+        "--stage"
+      ]
+    },
+    {
+      "script": "analysis_precision26/analyze_natural.py",
+      "options": [
+        "--root",
+        "--stage",
+        "--compile-only"
+      ]
+    },
+    {
+      "script": "analysis_precision26/summarize_natural.py",
+      "options": [
+        "--root",
+        "--stage",
+        "--bootstrap"
+      ]
+    },
+    {
+      "script": "analysis_precision26/exact_anchor_and_display.py",
+      "options": [
+        "--root",
+        "--stage"
+      ]
+    },
+    {
+      "script": "analysis_precision26/plot_natural_precision.py",
+      "options": [
+        "--root",
+        "--stage"
+      ]
+    },
+    {
+      "script": "analysis_policy26/analyze_policy32.py",
+      "options": [
+        "--base",
+        "--prepare-old"
+      ]
+    },
+    {
+      "script": "analysis_policy26/analyze_policy32.py",
+      "options": [
+        "--base",
+        "--replicates",
+        "--aggregate"
+      ]
+    },
+    {
+      "script": "analysis_policy26/restore_named_loss_components.py",
+      "options": [
+        "--base",
+        "--replicates"
+      ]
+    },
+    {
+      "script": "analysis_policy26/report_policy_precision.py",
+      "options": [
+        "--base"
+      ]
+    },
+    {
+      "script": "analysis_geometry26/geometry_extension.py",
+      "options": [
+        "--study",
+        "--population",
+        "--prior",
+        "--prepare"
+      ]
+    },
+    {
+      "script": "analysis_geometry26/geometry_extension.py",
+      "options": [
+        "--study",
+        "--stage",
+        "--jobs"
+      ]
+    },
+    {
+      "script": "analysis_geometry26/summarize_geometry_extension.py",
+      "options": [
+        "--root",
+        "--stage",
+        "--replicates"
+      ]
+    },
+    {
+      "script": "analysis_geometry26/render_geometry_results.py",
+      "options": [
+        "--root"
+      ]
+    },
+    {
+      "script": "analysis_reporting26/fixed_threshold_attainment.py",
+      "options": [
+        "--base"
+      ]
+    },
+    {
+      "script": "engine26/execute_extension.py",
+      "options": [
+        "--base",
+        "--stage",
+        "--jobs"
+      ]
+    },
+    {
+      "script": "engine26/execute_extension.py",
+      "options": [
+        "--base",
+        "--stage",
+        "--jobs"
+      ]
+    },
+    {
+      "script": "engine26/generate_registered_design.py",
+      "options": [
+        "--base"
+      ]
+    },
+    {
+      "script": "engine26/assemble_scalar_table.py",
+      "options": [
+        "--base"
+      ]
+    }
+  ],
+  "scripts_syntax_valid": true,
+  "S05_archive_not_modified": true,
+  "S10_S11_not_built_by_this_check": true,
+  "files": [
+    {
+      "path": "report26/REPRODUCE.md",
+      "bytes": 13558,
+      "sha256": "7361fc3b54d8ed629eedabd8f4aa800d2891656c71e7aa775889c7d2999dd8f7"
+    },
+    {
+      "path": "report26/RESEARCH_DESK_FIELDS_ZH.md",
+      "bytes": 10315,
+      "sha256": "a361eace7138a6de0ba22bf22863420aa41a9556dbce69115b2878c89a429256"
+    },
+    {
+      "path": "report26/DELIVERY_REPRO_NOTES_ZH.md",
+      "bytes": 4400,
+      "sha256": "8fcf49085bb69a3a46ab744a3c14fe4e5b0a32852497bd33e0e81616e19c8971"
+    },
+    {
+      "path": "report26/extract_policy32_evidence.py",
+      "bytes": 13611,
+      "sha256": "85ebc3864d0f94ff26f3b80d12d00b303f7950c71b39016c5d2c6397543d9cea"
+    },
+    {
+      "path": "delivery26/prepare_final_packages.py",
+      "bytes": 7936,
+      "sha256": "29c9395e14bbe01fd656f153d044548c9a86c7d2401b20df321192ba0e2e38c8"
+    }
+  ]
+}

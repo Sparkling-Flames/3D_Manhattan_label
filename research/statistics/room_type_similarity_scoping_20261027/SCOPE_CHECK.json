@@ -1,0 +1,29 @@
+{
+  "version": "room_type_similarity_scoping_20261027",
+  "inventory_records": 10439,
+  "inventory_images": 261,
+  "ordinary_quality_records": 6620,
+  "ordinary_quality_images": 177,
+  "ordinary_by_condition": [
+    {
+      "condition": "manual",
+      "records": 5719,
+      "images": 177,
+      "workers": 60,
+      "buildings": 22
+    },
+    {
+      "condition": "semi",
+      "records": 901,
+      "images": 32,
+      "workers": 59,
+      "buildings": 12
+    }
+  ],
+  "image_label_source": "research/data/releases/v2/analysis_input/data.json.gz#images",
+  "score_source": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+  "label_checks": "Every observed image room classification agrees with frozen v2 evidence.",
+  "analysis": "Coverage and descriptive image-equal means only; no correlation, prediction, p-value, fusion or relabeling.",
+  "missing_label_policy": "Unrecorded stays unrecorded; literal 无法判断 retained separately.",
+  "cross_building_pair_policy": "Capacity count only; overlapping pairs are not independent samples."
+}

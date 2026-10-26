@@ -1,0 +1,47 @@
+{
+  "complete": true,
+  "pools": 194,
+  "new_fusion": false,
+  "new_resampling": false,
+  "purpose": "compact deterministic report readout of final saved estimates",
+  "sources": [
+    "NATURAL_CURVES.csv.gz",
+    "NATURAL_CURVE_BAND_SUMMARY.csv.gz",
+    "PER_IMAGE_OLD_NEW_COMPARISONS.csv.gz",
+    "NATURAL_COMPONENTS.csv.gz"
+  ],
+  "outputs": [
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/FINAL_READOUT_WHOLE_CURVE_PRECISION.csv",
+      "rows": 360,
+      "fields": 22,
+      "bytes": 79044,
+      "sha256": "5d34c2669423c3b8fc921007e92bf0da8fd803329a3777a669da52376966988d",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/FINAL_READOUT_POINT_REVISIONS.csv",
+      "rows": 2288,
+      "fields": 23,
+      "bytes": 497403,
+      "sha256": "c8fe64ae4fcd99c4bb819617fa24f03ecbb213ff3a82d9af9bca7fbb91cf9b45",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/FINAL_READOUT_NEW_FAILURES.csv",
+      "rows": 90,
+      "fields": 15,
+      "bytes": 29508,
+      "sha256": "f7bdfe092624cb518d8f1e30f58b4e304ecd7f3e7c3253f05d02fa4d3799cdef",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage2/FINAL_READOUT_MATCHED_COMPONENT_INTERVALS.csv",
+      "rows": 2870,
+      "fields": 19,
+      "bytes": 825356,
+      "sha256": "9ae56c370be9ed3295464b7a15795a1abc288448842d59f5844026dd97857c73",
+      "readback": "CSV/gzip complete to EOF"
+    }
+  ]
+}

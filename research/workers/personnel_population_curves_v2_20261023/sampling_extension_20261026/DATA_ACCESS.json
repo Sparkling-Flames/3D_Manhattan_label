@@ -1,0 +1,272 @@
+{
+  "schema": "population256_saved_data_access_v1",
+  "date": "2026-10-27",
+  "source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "paths_relative_to": "repository_root",
+  "natural_primary_cohort": "pooled256",
+  "policy_primary_version": "pooled32",
+  "sensitivity_only": [
+    "prior96",
+    "all_history304"
+  ],
+  "semi_extended": false,
+  "independent_review": "research/statistics/pro_return_review_20261023/population256_20261027/README.md",
+  "field_contract": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/report26/RESEARCH_DESK_FIELDS_ZH.md",
+  "tables": {
+    "natural_display": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/HYBRID_POOLED256_DISPLAY_CURVES.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "k",
+        "cohort",
+        "exact_kind",
+        "estimator",
+        "Q_mean",
+        "actual_executed_nondeferred_units"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_curves": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/NATURAL_CURVES.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "cohort",
+        "k",
+        "Q_mean",
+        "quality_valid_paths",
+        "paths_attempted",
+        "actual_executed_nondeferred_paths"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_intervals": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/NATURAL_INTERVALS.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "cohort",
+        "interval",
+        "marginal_Q_delta",
+        "paired_Q_valid_paths"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_status": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/NATURAL_STATUS.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "cohort",
+        "k",
+        "status_class",
+        "paths",
+        "nondeferred_paths"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_fixed_bands": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/FIXED_IMAGE_AGGREGATE_CURVE_BANDS.csv.gz",
+      "required_columns": [
+        "cohort",
+        "panel",
+        "metric",
+        "k",
+        "images",
+        "capacity_images",
+        "uncertainty"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_summary": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/COMMON_SUPPORT_CURVE_SUMMARY.csv.gz",
+      "required_columns": [
+        "cohort",
+        "panel",
+        "k",
+        "metric",
+        "images",
+        "buildings",
+        "weighting"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_interval_summary": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/COMMON_SUPPORT_INTERVAL_SUMMARY.csv.gz",
+      "required_columns": [
+        "cohort",
+        "interval",
+        "metric",
+        "images",
+        "buildings"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "natural_components": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/NATURAL_COMPONENTS.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "cohort",
+        "k"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "geometry_curves": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_geometry26/results_stage2/GEOMETRY_FIXED_SUPPORT_CURVES.csv.gz",
+      "required_columns": [
+        "cohort",
+        "panel",
+        "k",
+        "metric",
+        "common_images",
+        "common_buildings"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "geometry_intervals": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_geometry26/results_stage2/GEOMETRY_FIXED_SUPPORT_INTERVALS.csv.gz",
+      "required_columns": [
+        "cohort",
+        "metric"
+      ],
+      "default_filters": {
+        "cohort": "pooled256"
+      }
+    },
+    "policy_image_k": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_policy26/results/POLICY_IMAGE_K.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "version",
+        "policy",
+        "k",
+        "base_paths",
+        "both_Q_paths",
+        "legal_QT_paths"
+      ],
+      "default_filters": {
+        "version": "pooled32"
+      }
+    },
+    "policy_phase": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_policy26/results/POLICY_IMAGE_PHASE.csv",
+      "required_columns": [
+        "pool_id",
+        "version",
+        "policy",
+        "phase"
+      ],
+      "default_filters": {
+        "version": "pooled32"
+      }
+    },
+    "policy_summary": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_policy26/results/POLICY_PRECISION_SUMMARY.csv",
+      "required_columns": [
+        "version",
+        "policy",
+        "phase",
+        "metric",
+        "images",
+        "candidate_images",
+        "buildings"
+      ],
+      "default_filters": {
+        "version": "pooled32"
+      }
+    },
+    "policy_events": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_policy26/results/EXACT_PAIRED_EVENTS.csv.gz",
+      "required_columns": [
+        "version",
+        "policy",
+        "pool_id",
+        "base_path_id",
+        "k",
+        "team_key_natural",
+        "team_key_policy"
+      ],
+      "default_filters": {},
+      "note": "Exact events contain old16 and new16 once each; pooled32 is their union, not a duplicated third event version."
+    },
+    "policy_support": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_policy26/results/FIXED_SUPPORT.csv.gz",
+      "required_columns": [
+        "version",
+        "policy"
+      ],
+      "default_filters": {
+        "version": "pooled32"
+      }
+    },
+    "orders": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/design26/NEW_EXACT_ORDER_DESIGN.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "path_id",
+        "base_path_id",
+        "seed",
+        "master_seed"
+      ],
+      "default_filters": {}
+    },
+    "pool_plan": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/design26/POOL_SAMPLING_PLAN.csv",
+      "required_columns": [
+        "pool_id",
+        "pool_n"
+      ],
+      "default_filters": {}
+    },
+    "endpoint_shards": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/new_endpoints26/COMPLETE_NEW_ENDPOINT_SHARD_INDEX.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "stage",
+        "scalar_file",
+        "geometry_file",
+        "rows"
+      ],
+      "default_filters": {}
+    },
+    "exact_marginals": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/analysis_precision/new_results/EXACT_FINITE_MARGINAL_STATISTICS.csv",
+      "required_columns": [
+        "pool_id",
+        "k"
+      ],
+      "default_filters": {}
+    },
+    "exact_p10": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/analysis_precision/p10_definition_sensitivity/EXACT_P10_REFERENCES.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "k"
+      ],
+      "default_filters": {}
+    },
+    "exact_values": {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/new_endpoints/EXACT_MARGINAL_VALUES.csv.gz",
+      "required_columns": [
+        "pool_id",
+        "k"
+      ],
+      "default_filters": {}
+    }
+  }
+}

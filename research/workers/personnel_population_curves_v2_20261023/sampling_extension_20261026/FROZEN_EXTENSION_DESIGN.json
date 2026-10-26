@@ -1,0 +1,69 @@
+{
+  "study": "HOHONET population whole-curve sampling precision extension",
+  "version": "population_wholecurve_precision_20261026",
+  "source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "registered_at_utc": "2026-10-26T10:08:30.366452+00:00",
+  "underlying_data": "real human v2",
+  "namespace": "population_wholecurve_precision_20261026",
+  "master_seed": 2026102601,
+  "primary_pools": {
+    "ordinary_manual": 177,
+    "doorway_manual": 17,
+    "total_manual": 194
+  },
+  "new_uniform_orders_per_pool": 208,
+  "stages": [
+    {
+      "stage": 1,
+      "new_index_inclusive": [
+        0,
+        103
+      ],
+      "uniform_orders_per_pool": 104,
+      "native_unique_requests": 784140
+    },
+    {
+      "stage": 2,
+      "new_index_inclusive": [
+        104,
+        207
+      ],
+      "uniform_orders_per_pool": 104,
+      "native_unique_requests": 572517
+    }
+  ],
+  "new_natural_orders": 40352,
+  "new_policy_orders": 10048,
+  "new_prefix_links": 1644576,
+  "native_unique_requests": 1356657,
+  "policy_pools": 157,
+  "policies": [
+    "joint_highq_first",
+    "structure_moreturn_first",
+    "joint_fast_first",
+    "structure_dominant_first"
+  ],
+  "policy_new_base_indices_inclusive": [
+    0,
+    15
+  ],
+  "policy_historical_label_identity": "V3_BEHAVIOR fine and V3_JOINT_QT coarse; not DSTRUCT or RFUSE",
+  "main_versions": [
+    "old48",
+    "stage1_104",
+    "stage2_104",
+    "new208",
+    "pooled152",
+    "pooled256"
+  ],
+  "focus_sensitivity_versions": [
+    "prior96",
+    "all_history304"
+  ],
+  "stop_rule": "complete prespecified two-stage budget; no sign/significance/curve-smoothness stopping",
+  "new_result_based_selection": false,
+  "native_concurrency_initial": 8,
+  "storage": "all new scalar and final compact geometry; full state for fixed three case images and sha256(team_key) mod 200 = 0",
+  "frozen_methods_changed": false,
+  "semi": "No new primary allocation in this run; retain prior evidence as secondary and separate. Main incremental budget goes to all Manual full curves."
+}

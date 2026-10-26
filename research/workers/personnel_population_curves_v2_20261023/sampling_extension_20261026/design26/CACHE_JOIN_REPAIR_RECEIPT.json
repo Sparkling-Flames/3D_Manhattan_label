@@ -1,0 +1,25 @@
+{
+  "all_repaired_rows_from_actual_prior_scalar_source": true,
+  "discarded_overwritten_intermediate_fragments": [
+    "inputs_cache26/needed_old_by_pool/B6ByNegPMKs-21__manual__5f07be7326__inherited_precision_20261025.csv.gz",
+    "inputs_cache26/needed_old_by_pool/jh4fc5c5qoQ-13__manual__274d69d1f7__inherited_precision_20261025.csv.gz"
+  ],
+  "reason": "Prior precision scalar table has two correction rows appended after pool-sorted body; join fragments must preserve these recurrent pool groups.",
+  "repaired_files": [
+    {
+      "file": "inputs_cache26/needed_old_by_pool/B6ByNegPMKs-21__manual__5f07be7326__inherited_precision_20261025__complete_repaired.csv.gz",
+      "origin": "inherited_precision_20261025",
+      "pool_id": "B6ByNegPMKs-21__manual__5f07be7326",
+      "rows": 72,
+      "sha256": "34d45e4f7bd3f4a813ff5c0249de7b5c4dca132dc4eb0d26bee5d34998e56904"
+    },
+    {
+      "file": "inputs_cache26/needed_old_by_pool/jh4fc5c5qoQ-13__manual__274d69d1f7__inherited_precision_20261025__complete_repaired.csv.gz",
+      "origin": "inherited_precision_20261025",
+      "pool_id": "jh4fc5c5qoQ-13__manual__274d69d1f7",
+      "rows": 102,
+      "sha256": "ed9404e4f6d1c416266f7ccbf85c96eb6b78dd032fe6c21b327055c397e5f51c"
+    }
+  ],
+  "total_cache_rows": 39852
+}

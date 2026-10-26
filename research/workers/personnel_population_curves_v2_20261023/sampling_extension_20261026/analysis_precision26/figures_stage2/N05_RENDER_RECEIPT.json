@@ -1,0 +1,53 @@
+{
+  "complete": true,
+  "final_pools": 194,
+  "images": 4,
+  "new_fusion": false,
+  "new_resampling": false,
+  "plots": [
+    "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_单图完整人数曲线.png",
+    "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_单图完整人数曲线.pdf"
+  ],
+  "tables": [
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_CASE_SELECTION.csv",
+      "rows": 4,
+      "fields": 15,
+      "bytes": 1780,
+      "sha256": "5331e2542e5b1e980ba6105f15e4e0fc0a3f24f4d3140e5c45daf969326a4cda",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_POSTHOC_CANDIDATE_RANKING.csv.gz",
+      "rows": 1256,
+      "fields": 12,
+      "bytes": 53412,
+      "sha256": "bf4013b6a61a47e364d30a9be3087c1fac834ab057c14d1caed7a9180e481a5d",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_CURVE_SOURCE.csv.gz",
+      "rows": 1116,
+      "fields": 26,
+      "bytes": 25291,
+      "sha256": "b369883d9da2578ddf5ea4588eec5ef44314609f0cc1547ad9ff5f1e8bab8b81",
+      "readback": "CSV/gzip complete to EOF"
+    },
+    {
+      "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/figures_stage2/N05_EXACT_ANCHOR_SOURCE.csv",
+      "rows": 36,
+      "fields": 16,
+      "bytes": 8482,
+      "sha256": "71cbeb21fb409055a59469ea02ce68b7bbafd6950f09abc5130d8db0bcbee31a",
+      "readback": "CSV/gzip complete to EOF"
+    }
+  ],
+  "exact_anchor_k": "1,N-1,N",
+  "source_tables": [
+    "NATURAL_CURVES.csv.gz",
+    "PER_IMAGE_OLD_NEW_COMPARISONS.csv.gz",
+    "EXACT_ANCHOR_MC_ACCURACY.csv.gz"
+  ],
+  "fullN_interval": "masked; single known team shown as exact point",
+  "fourth_case": "posthoc display only, independent old48 versus new208 mean change"
+}

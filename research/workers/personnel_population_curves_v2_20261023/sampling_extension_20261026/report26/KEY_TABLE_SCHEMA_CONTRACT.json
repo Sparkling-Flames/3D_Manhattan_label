@@ -1,0 +1,330 @@
+{
+  "source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "schema_source": "actual analysis code; no partial result values used",
+  "inputs": {
+    "curves": {
+      "path": "analysis_precision26/results_stage2/NATURAL_CURVES.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "image_id",
+        "building",
+        "condition",
+        "layer",
+        "difficulty",
+        "pool_n",
+        "reference_id",
+        "reference_version",
+        "cohort",
+        "k",
+        "Q_mean",
+        "Q_p10",
+        "Q_sd_ddof1",
+        "D10_mean",
+        "paths_attempted",
+        "quality_valid_paths",
+        "unique_teams",
+        "Q_mean_MCSE_analytic",
+        "P10_linear_boot_halfwidth",
+        "P10_order_halfwidth",
+        "actual_executed_nondeferred_paths",
+        "actual_consensus_failure_paths",
+        "output_unscoreable_paths",
+        "actual_consensus_failure_rate",
+        "output_unscoreable_rate",
+        "failure_rate",
+        "fullN_single_known_team"
+      ]
+    },
+    "whole_curve": {
+      "path": "analysis_precision26/results_stage2/FIXED_IMAGE_AGGREGATE_CURVE_BANDS.csv.gz",
+      "required_fields": [
+        "cohort",
+        "panel",
+        "layer",
+        "difficulty",
+        "metric",
+        "weighting",
+        "uncertainty",
+        "k",
+        "estimate",
+        "images",
+        "buildings",
+        "capacity_images",
+        "excluded_pool_ids",
+        "pointwise_low",
+        "pointwise_high",
+        "pointwise_MCSE",
+        "pointwise_valid_draws",
+        "complete_bootstrap_draws",
+        "support_rule"
+      ]
+    },
+    "pointwise": {
+      "path": "analysis_precision26/results_stage2/COMMON_SUPPORT_CURVE_SUMMARY.csv.gz",
+      "required_fields": [
+        "cohort",
+        "panel",
+        "layer",
+        "difficulty",
+        "metric",
+        "weighting",
+        "k",
+        "estimate",
+        "images",
+        "buildings",
+        "path95_low",
+        "path95_high",
+        "building95_low",
+        "building95_high",
+        "support_rule"
+      ]
+    },
+    "precision": {
+      "path": "analysis_precision26/results_stage2/PRECISION_REACH_BY_LAYER_K.csv.gz",
+      "required_fields": [
+        "cohort",
+        "panel",
+        "layer",
+        "difficulty",
+        "k",
+        "images",
+        "buildings",
+        "mean_mcse_estimable_images",
+        "mean_mcse_gt1_images",
+        "P10_boot_estimable_images",
+        "P10_boot_halfwidth_gt2_images",
+        "P10_rank_estimable_images",
+        "P10_rank_halfwidth_gt2_images",
+        "actual_failure_estimable_images",
+        "consensus_failure_CP_halfwidth_median",
+        "output_unscoreable_CP_halfwidth_median"
+      ]
+    },
+    "intervals": {
+      "path": "analysis_precision26/results_stage2/COMMON_SUPPORT_INTERVAL_SUMMARY.csv.gz",
+      "required_fields": [
+        "cohort",
+        "panel",
+        "layer",
+        "difficulty",
+        "interval",
+        "metric",
+        "weighting",
+        "estimate",
+        "images",
+        "buildings",
+        "positive_images",
+        "negative_images",
+        "near_zero_images",
+        "path95_low",
+        "path95_high",
+        "path_valid_draws",
+        "path_requested_draws",
+        "building95_low",
+        "building95_high",
+        "support_rule"
+      ]
+    },
+    "image_intervals": {
+      "path": "analysis_precision26/results_stage2/NATURAL_INTERVALS.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "image_id",
+        "building",
+        "condition",
+        "layer",
+        "difficulty",
+        "pool_n",
+        "reference_id",
+        "reference_version",
+        "cohort",
+        "interval",
+        "k_from",
+        "k_to",
+        "paths_attempted",
+        "paired_Q_valid_paths",
+        "from_Q_valid_paths",
+        "to_Q_valid_paths"
+      ]
+    },
+    "common_keys": {
+      "path": "analysis_precision26/results_stage2/COMMON_SUPPORT_KEYS.csv.gz",
+      "required_fields": [
+        "kind",
+        "pool_id",
+        "k",
+        "interval",
+        "metric",
+        "common_cohorts"
+      ]
+    },
+    "interval_repetition": {
+      "path": "analysis_precision26/results_stage2/INDEPENDENT_INTERVAL_REPETITION_SUMMARY.csv",
+      "required_fields": [
+        "older_cohort",
+        "newer_cohort",
+        "interval",
+        "metric",
+        "threshold",
+        "layer",
+        "difficulty",
+        "images",
+        "buildings",
+        "both_near_zero",
+        "one_active_one_near_zero",
+        "both_active_same_direction",
+        "both_active_opposite_direction"
+      ]
+    },
+    "old_new": {
+      "path": "analysis_precision26/results_stage2/PER_IMAGE_OLD_NEW_COMPARISONS.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "image_id",
+        "building",
+        "condition",
+        "layer",
+        "difficulty",
+        "pool_n",
+        "reference_id",
+        "reference_version",
+        "k",
+        "older_cohort",
+        "newer_cohort",
+        "old_paths",
+        "new_paths",
+        "old_Q_valid",
+        "new_Q_valid",
+        "old_actual_consensus_failures",
+        "new_actual_consensus_failures",
+        "old_output_unscoreable",
+        "new_output_unscoreable",
+        "new_consensus_failure_seen_after_zero_old",
+        "new_output_unscoreable_seen_after_zero_old",
+        "Q_mean_difference",
+        "Q_p10_difference",
+        "Q_sd_ddof1_difference"
+      ]
+    },
+    "curve_changes": {
+      "path": "analysis_precision26/results_stage2/PER_IMAGE_FULL_CURVE_BATCH_DIFFERENCES.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "image_id",
+        "building",
+        "condition",
+        "layer",
+        "difficulty",
+        "pool_n",
+        "reference_id",
+        "reference_version",
+        "older_cohort",
+        "newer_cohort",
+        "metric",
+        "comparable_k_n",
+        "max_absolute_change",
+        "k_at_max_absolute_change",
+        "signed_change_at_max",
+        "mean_absolute_change_over_k"
+      ]
+    },
+    "policy_summary": {
+      "path": "analysis_policy26/results/POLICY_PRECISION_SUMMARY.csv",
+      "required_fields": [
+        "version",
+        "policy",
+        "phase",
+        "difficulty",
+        "metric",
+        "weighting",
+        "estimate",
+        "images",
+        "candidate_images",
+        "buildings",
+        "positive_images",
+        "negative_images",
+        "nearzero_images",
+        "path_lo",
+        "path_hi",
+        "path_valid_replicates",
+        "path_invalid_replicates",
+        "path_interval_status",
+        "building_lo",
+        "building_hi"
+      ]
+    },
+    "policy_support": {
+      "path": "analysis_policy26/results/FIXED_SUPPORT.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "policy",
+        "version",
+        "phase",
+        "metric",
+        "candidate_k",
+        "adopted_old16_k",
+        "matched_k",
+        "lost_k",
+        "matched_k_list",
+        "point",
+        "valid_bootstraps",
+        "invalid_bootstraps"
+      ]
+    },
+    "policy_k": {
+      "path": "analysis_policy26/results/POLICY_IMAGE_K.csv.gz",
+      "required_fields": [
+        "pool_id",
+        "image",
+        "building",
+        "difficulty",
+        "pool_n",
+        "policy",
+        "version",
+        "k",
+        "base_paths",
+        "both_Q_paths",
+        "legal_QT_paths"
+      ]
+    },
+    "policy_repeat": {
+      "path": "analysis_policy26/presentation/POLICY_INDEPENDENT_BATCH_SUMMARY.csv",
+      "required_fields": [
+        "policy",
+        "role_zh",
+        "phase",
+        "images",
+        "buildings",
+        "old16_mean",
+        "new16_mean",
+        "pooled32_mean",
+        "both_positive_images",
+        "both_negative_images",
+        "opposite_nonzero_images",
+        "both_nearzero_images",
+        "one_nearzero_images"
+      ]
+    },
+    "policy_precision": {
+      "path": "analysis_policy26/presentation/POLICY_PRECISION_COUNTS.csv",
+      "required_fields": [
+        "policy",
+        "role_zh",
+        "phase",
+        "version",
+        "candidate_images",
+        "Q_images",
+        "buildings",
+        "median_Q_path_MCSE",
+        "images_MCSE_gt1",
+        "median_Q_path95_halfwidth",
+        "images_incomplete_bootstrap_support"
+      ]
+    }
+  }
+}

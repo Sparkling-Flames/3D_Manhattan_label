@@ -1,0 +1,32 @@
+{
+  "source": "exact per-pool path_strata checkpoints and existing bootstrap master seed",
+  "cause": "int64/uint64 cross-pool concatenation can coerce to float64",
+  "locked_S02_modified": false,
+  "changes": [
+    {
+      "stage": 0,
+      "status": "no merged seed table yet; formal compiler patched"
+    },
+    {
+      "stage": 1,
+      "status": "corrected merged export",
+      "old_sha256": "f585049d7c70af3ba7c25ec3a9f406e2d63d768f575402233a24b01cbbd10104",
+      "paths_with_changed_serialized_seed": 5712,
+      "exact_pool_support": 36,
+      "bootstrap_resampled": false,
+      "statistics_recomputed": false,
+      "output": {
+        "file": "/workspace/scratch/0640d80a5c3a/work/population_extension_20261026/analysis_precision26/results_stage1/NATURAL_PATH_STRATA.csv.gz",
+        "rows": 5712,
+        "fields": 9,
+        "bytes": 30493,
+        "sha256": "82d905fc446a70fe2e9ead0d2ec5d53e2b4efb91722301e8aef3cdd894297361",
+        "readback": "CSV/gzip complete to EOF"
+      }
+    },
+    {
+      "stage": 2,
+      "status": "no merged seed table yet; formal compiler patched"
+    }
+  ]
+}
