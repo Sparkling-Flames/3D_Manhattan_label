@@ -44,7 +44,7 @@ hintScope.window.showHint(trigger,true);assert.equal(popover.textContent,hints.m
 hintScope.window.hideHint();assert.equal(popover.hidden,true);assert.equal(trigger['aria-expanded'],'false');
 assert.match(hints.Hmean[0],/0.1.*10%/);assert.match(hints.Hcenter[1],/去掉均高.*不是房间中心/);
 
-async function render(tab){const host=new Host();await context.window.PersonnelMain.render(host,{release:'v2',index,tab,table,hintButton,isCurrent:()=>true});return host;}
+async function render(tab){const host=new Host();await context.window.PersonnelMain.render(host,{release:'v2',index,tab,table,hintButton,difficultyFormation:()=>'<p>FORMATION_TEST_SENTINEL</p>',isCurrent:()=>true});return host;}
 (async()=>{
  let host=await render(0);
  assert.equal((host.innerHTML.match(/data-scheme=/g)||[]).length,4);
@@ -142,7 +142,7 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
   const target=path.resolve(page,url[1].split('#')[0].split('?')[0]);
   assert(fs.existsSync(target),'missing local link '+url[1]);
  }
- const difficulty=await render(3);assert.doesNotMatch(difficulty.innerHTML,/precisionPolicy/);
+ const difficulty=await render(3);assert.doesNotMatch(difficulty.innerHTML,/precisionPolicy/);assert.match(difficulty.innerHTML,/FORMATION_TEST_SENTINEL/);
  const population=await render(4);allHTML.push(population.querySelector('#latePopulation').innerHTML);assert(population.innerHTML.includes('id="precisionNatural"'));assert(population.innerHTML.includes('id="precisionPolicy"'));
  allHTML.push(population.querySelector('#precisionNatural').innerHTML,population.querySelector('#precisionPolicy').innerHTML);
  for(const key of ['natural_paths','saved_endpoint','resampling_unit','paired_quality','all_attempts','percentage_points'])assert(allHTML.join('').includes('data-hint="'+key+'"'),key);
@@ -153,12 +153,19 @@ async function render(tab){const host=new Host();await context.window.PersonnelM
  for(const html of allHTML)assert.doesNotMatch(html,/href="[^"<>]*\.(?:md|json|py|zip)(?:[?#][^"<>]*)?"/i);
  const output={innerHTML:''},presentation={window:{},dataset:{release:'v2'},SNAPSHOT:'v2_integrated_analysis_20261019',overview,assets:read(path.join(page,'v2-resources/index.json')),index:{...index,documents:[{path:'PRIVATE_INTERNAL.md',content:'INTERNAL_DRAFT_SENTINEL'}]},state:{},$:()=>output,esc:hintScope.esc,fmt:String,label:k=>k,hintButton,metricCards:()=>''};
  vm.createContext(presentation);
- vm.runInContext(shell.slice(shell.indexOf('function renderOverview(){'),shell.indexOf('function renderPlan(){'))+shell.slice(shell.indexOf('function renderSources(){'),shell.indexOf('function setTable('))+'renderOverview();',presentation);
+ vm.runInContext(shell.slice(shell.indexOf('function researchMapHTML(){'),shell.indexOf('function renderPlan(){'))+shell.slice(shell.indexOf('function renderSources(){'),shell.indexOf('function setTable('))+'renderOverview();',presentation);
  const publicOverview=output.innerHTML;vm.runInContext('renderSources();',presentation);
  for(const html of [publicOverview,output.innerHTML])assert.doesNotMatch(html,/\.md|PRIVATE_INTERNAL|INTERNAL_DRAFT|CONCLUSIONS_ZH|CATALOG|CONSUMER_INTERFACE|上游核对|当前消费/);
  assert.match(publicOverview,/OOS 独立统计/);assert.match(publicOverview,/查看实例与图表/);
+ assert.match(publicOverview,/研究问题与已完成比较/);assert.match(publicOverview,/已有数据/);assert.match(publicOverview,/完成的比较/);assert.match(publicOverview,/主要结论/);assert.match(publicOverview,/查看DSTRUCT方差与完整配比/);
+ assert.doesNotMatch(publicOverview,/此处未按新DSTRUCT重编/);
+ vm.runInContext('window.difficulty=difficultyFormationHTML();',presentation);const formation=presentation.window.difficulty;
+ for(const word of ['几何初分','视觉辅助复核','部分人工修订','冻结版本','2026-10-18','不是三档标签的生成办法'])assert(formation.includes(word),word);
+ assert(formation.indexOf('几何初分')<formation.indexOf('视觉辅助复核'));assert.doesNotMatch(formation,/href="[^"]*\.md/);
+ const mixtureCard=overview.sections.find(x=>x.id==='mixture');assert.equal(mixtureCard.href,'composition-variance.html');assert.match(mixtureCard.finding,/14.36%.*85.64%/);
+
  assert.equal((output.innerHTML.match(/data-table-jump=/g)||[]).length,index.tables.length);
- for(const name of ['index.html','oos-review.html'])assert.doesNotMatch(fs.readFileSync(path.join(page,name),'utf8'),/href="[^"<>]*\.md(?:[?#][^"<>]*)?"/i);
+ for(const name of ['index.html','oos-review.html','composition-variance.html'])assert.doesNotMatch(fs.readFileSync(path.join(page,name),'utf8'),/href="[^"<>]*\.md(?:[?#][^"<>]*)?"/i);
  const current=guide.main_conditions.find(x=>x.method==='DSTRUCT_K3');assert(overview.sections.find(x=>x.id==='exchange').finding.includes(current.B8L2_cross_image_equal.toFixed(3)));
 
  console.log('PASS: CONTEXT hint definitions and population placements, 8 method/layer displays × 23 rosters, 71 × 7 metric selections, 4 historical schemes, all-source links, ordinary-before-same-room, all 18 conditions, Manual/Semi, m6, failure and difficulty denominators');

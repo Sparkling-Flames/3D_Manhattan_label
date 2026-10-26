@@ -1,3 +1,6 @@
+- **2026-10-26构成方差收尾：** [DSTRUCT同团队衔接与展示验收](../research/workers/dstruct_composition_bridge_20261026/DELIVERY_QA.md)保留本地数学定义、CA／CB及门槛修订，合入远端231个Manual面板；修复坐标、缺失提示和Windows UTF-8，配比方差与严格换类并列，未新增融合/评分/拟合。
+- **快速汇报与提纲修订：** [研究线路、方法与结论总览图](../research/statistics/research_closeout_20261022/DATA_EVIDENCE_OVERVIEW_20261026.png)及[当前Word提纲10项具体修改细则](thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md)；图片生成工具为`tools/thesis_main/analysis/build_research_evidence_overview_20261026.py`，不产生新研究统计。
+
 - **2026-10-25人数抽样精度独立验收：** [四包归档、自然48/重点96与精确有限边际、策略共同k修正](../research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md)。新增4个专题复算脚本和3个定向测试文件均在既有analysis/tests目录；源结果保留，正式合同不变。
 
 - **2026-10-25人员分类展示整理：** [主要方法、核心效果对照与其它用途](../research/workers/personnel_classification_guide_20261025/README.md)接入既有人员六步；7套ALL/楼外名单、四重点与71条件，保留旧配比/人数标签；仅整理保存结果。

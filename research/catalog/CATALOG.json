@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261025_v53_population_precision",
-  "inventory_date": "2026-10-25",
+  "catalog_version": "research_catalog_20261026_v54_dstruct_composition_closeout",
+  "inventory_date": "2026-10-26",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -425,6 +425,10 @@
       "description": "多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "DSTRUCT同团队构成衔接：231面板，配比方差与严格换类分别解释",
+          "path": "research/workers/dstruct_composition_bridge_20261026/README.md"
+        },
         {
           "text": "人数抽样精度补充已验收：自然48/精确有限边际与策略共同k修正，作者与本地审查分开",
           "path": "research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md"
@@ -11890,7 +11894,10 @@
         "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md",
         "research/statistics/research_closeout_20261022/PERSONNEL_REASSESSMENT_20261024.md",
         "research/statistics/research_closeout_20261022/CONDITIONS_FUSION_REASSESSMENT_20261024.md",
-        "research/statistics/research_closeout_20261022/SAME_ROOM_REASSESSMENT_20261024.md"
+        "research/statistics/research_closeout_20261022/SAME_ROOM_REASSESSMENT_20261024.md",
+        "research/statistics/research_closeout_20261022/DATA_EVIDENCE_OVERVIEW_20261026.png",
+        "docs/thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md",
+        "tools/thesis_main/analysis/build_research_evidence_overview_20261026.py"
       ]
     },
     {
@@ -12349,6 +12356,36 @@
         "tests/test_population_precision_natural_20261025.py",
         "tests/test_population_precision_geometry_20261025.py",
         "tests/test_population_precision_policy_20261025.py"
+      ]
+    },
+    {
+      "id": "MAT-dstruct_composition_bridge_20261026",
+      "title": "DSTRUCT构成方差衔接：同团队有限配比、成员分布与严格换类并列",
+      "theme": "workers",
+      "type": "保存团队重聚合与展示收尾",
+      "date": "20261026",
+      "source_path": "research/workers/personnel_mixture_comparison_20261022/configurations",
+      "current_path": "research/workers/dstruct_composition_bridge_20261026",
+      "source": "远端1aae5baed的231个Manual保存面板及22个楼外标签折；保留本地9c25f624b的数学定义、CA/CB、替换比例与门槛修订",
+      "adoption_status": "研究结果采用：同支持K3 Q构成间14.3627%/内85.6373%；不是全库解释率或预测准确率，与严格ABC效果并列。DSTRUCT主用不以占比最大为依据",
+      "verification_status": "4620图格坐标与缺失提示定向检查、Windows关闭默认UTF8模式的重生成检查；真实浏览器和下载验收见DELIVERY_QA.md/BROWSER_QA.json",
+      "availability": "独立file页面及主研究台导航；未追加融合/评分/分类拟合，本次本地内容合并未提交或推送",
+      "relationships": [
+        "research/workers/dstruct_composition_bridge_20261026/README.md",
+        "research/workers/dstruct_composition_bridge_20261026/DELIVERY_QA.md",
+        "research/workers/dstruct_composition_bridge_20261026/BROWSER_QA.json",
+        "research/workers/dstruct_composition_bridge_20261026/SUMMARY.csv",
+        "research/workers/dstruct_composition_bridge_20261026/PANEL_VARIANCE.csv",
+        "research/workers/dstruct_composition_bridge_20261026/CONFIGURATIONS.csv",
+        "research/workers/dstruct_composition_bridge_20261026/build_presentation.py",
+        "research/workers/dstruct_composition_bridge_20261026/test_bridge.py",
+        "research/statistics/research_explorer_v1_r2_20261017/composition-variance.html",
+        "research/statistics/research_explorer_v1_r2_20261017/composition-variance.js",
+        "research/statistics/research_explorer_v1_r2_20261017/composition-variance.test.cjs",
+        "tests/composition_variance_browser_20261026.cjs",
+        "docs/thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md",
+        "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md"
       ]
     }
   ]

@@ -213,7 +213,7 @@ function sameRoomPredictionPanel(id){
 }
 function findingSummary(module){
  const item=dataset.release==='v2'&&overview.sections.find(s=>s.id===module);if(!item)return '';
- return `<section class="panel"><h2>${esc(item.title)}</h2><p><strong>${esc(item.finding)}</strong></p><p>${esc(item.example)}</p><p class="scope-label">支持：${esc(item.support)}</p><p class="scope-label">边界：${esc(item.counterexample)}</p><p class="scope-label">固定专题支持，不随明细筛选重算。<a href="${esc(item.source)}" target="_blank" rel="noopener">完整研究与来源</a></p></section>`;
+ return `<section class="panel"><h2>${esc(item.title)}</h2><p><strong>${esc(item.finding)}</strong></p><p>${esc(item.example)}</p><p class="scope-label">支持：${esc(item.support)}</p><p class="scope-label">边界：${esc(item.counterexample)}</p><p class="scope-label">固定专题支持，不随明细筛选重算。<a href="#module=evidence">查看方法与证据</a></p></section>`;
 }
 async function render(){
  const token=++state.loadToken,mod=modules[state.module];supportSets.clear();chartCounter=0;
@@ -226,7 +226,7 @@ async function render(){
  $('notice').innerHTML='';state.rows=[];state.meta=null;
  try{
   if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});if(token===state.loadToken&&state.module==='profiles'&&state.tab===0)$('content').insertAdjacentHTML('afterbegin',findingSummary('profiles'));return;}
-  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,assets,imageDetail,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
+  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,assets,imageDetail,difficultyFormation:difficultyFormationHTML,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='method_supplements'){await MethodSupplements.render($('content'),{release:dataset.release,tab:state.tab,assets,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,imageDetail,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='case_story'){await CaseStory.render($('content'),{release:dataset.release,assets,deepLink:new URLSearchParams(location.hash.slice(1)),imageDetail,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,isCurrent:()=>token===state.loadToken,navigate:patch=>route(patch)});return;}
   if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
@@ -275,7 +275,7 @@ async function render(){
     note='<div class="info">来源活动时间和同目标审计时间各自按真实非空支持统计。未改动不自动判失败，编辑后未知不判成功。</div>';
    }
    $('content').innerHTML=toolbar+note+title+genericChart(state.rows)+tablePanel();
-   if(state.tab===0&&state.module==='conditions')$('content').insertAdjacentHTML('afterbegin',findingSummary('difficulty'));
+   if(state.tab===0&&state.module==='conditions')$('content').insertAdjacentHTML('afterbegin',difficultyFormationHTML()+findingSummary('difficulty'));
   }
   if(token!==state.loadToken)return;drawTable();
   if(unsupported.length)$('content').insertAdjacentHTML('afterbegin',placeholder('当前筛选不适用于此表','未展示全表数字以免误导；更换明细表或清空不兼容条件。'));
@@ -364,6 +364,23 @@ async function teamFocus(row,token){
   WorkbenchGeometry.mount(slot,image,null,{points:saved.reference.points_1024x512,floor:saved.reference.floor_xz_h},{...candidate,connected:C.truth(t.connection_available)&&C.truth(t.floor_evaluable)});
  }
 }
+function researchMapHTML(){
+ const rows=[
+  ['#module=quality','怎样衡量质量？','同参考作答、人工比较及控制案例','B8L2／D10／3D IoU与分项对照','指标保留的信息不同，分数不等于正确概率。'],
+  ['#module=conditions','难度怎样形成、怎样影响标法？','冻结难度标签、原图及六转折条件子集','标签形成过程；同结构条件和同人跨条件比较','粗难度与具体几何条件互补，后续结果不反写标签。'],
+  ['#module=profiles','人员质量、速度和标法是否一致？','逐人×条件×场景记录；实际可用时间','绝对／相对质量、时间及难度响应','高Q、快速与保留结构是不同维度，须按共同支持解释。'],
+  ['composition-variance.html','配比与具体成员各解释多少差异？','231个Manual面板，40图22楼；旧四分类保留','DSTRUCT K2/K3与旧粗细层同团队比较','K3的Q构成间14.36%、内85.64%；衔接完成，成员波动仍占主导。'],
+  ['#module=personnel_main&tab=2','换谁、换多少、背景怎样起作用？','严格ABC、大块与背景/门槛保存对照','同类换人、跨类替换、替换比例和固定块加背景','幅度和方向分别看，跨类变化更大不保证升质。'],
+  ['#module=personnel_main&tab=4','加人和改变顺序改善什么？','自然合48与精确边际；固定支持策略合16','低人数至满员、低尾、几何波动与失败','早段通常升质，困难后段主要改善低尾与成员选择稳定性。'],
+  ['#module=same_room','同房另一视角能重复什么？','直接同房图对与共同人员；各后续子集','均值、个人结构及同房团队跨视角比较','平均水平和部分表达可重复，具体调整收益未必迁移。'],
+  ['#module=case_story&case=doorway','更多人员能解决门洞吗？','17图人数结果、原答与失败几何','各人数质量与全部尝试失败分开','满员仍6/17不可评；点位、目标与表示限制需共同解释。'],
+  ['oos-review.html','结构超出标准时怎样表达？','28图独立OOS记录与原图','结构子类、人员分歧、任务选择及时间','近似表达一致或输出完整，不代表真实结构已正确恢复。'],
+ ];
+ return `<section class="panel"><h2>先看全貌：研究问题与已完成比较</h2><div class="tablewrap research-map"><table><thead><tr><th scope="col">研究问题</th><th scope="col">已有数据</th><th scope="col">完成的比较</th><th scope="col">主要结论</th></tr></thead><tbody>${rows.map(([href,q,data,comparison,finding])=>`<tr><th scope="row"><a href="${esc(href)}">${esc(q)}</a></th><td>${esc(data)}</td><td>${esc(comparison)}</td><td>${esc(finding)}</td></tr>`).join('')}</tbody></table></div><p class="scope-label">各行保留自己的条件和支持范围；图片、人员、团队、路径与事件数不能互换。点击问题进入对应证据，完整图表继续在下方保留。</p></section>`;
+}
+function difficultyFormationHTML(){
+ return `<section class="panel" id="difficultyFormation"><h2>难度标签怎样形成？</h2><p><strong>几何初分 → 视觉辅助复核 → 研究者部分人工修订 → 冻结版本后分析。</strong>分层对象是给定目标空间下的标注任务，综合结构表达负担和定位推断负担。</p><ol><li><strong>几何初分：</strong>历史基线先用参考点对数N与几何自遮挡H分组，提供初步候选；它不是能重建全部现行等级的自动公式。</li><li><strong>视觉辅助复核：</strong>结合原图中的角位、墙顶线和邻接线索，核查定位与推断负担；几何自遮挡与家具遮挡分别记录，H&gt;0不自动判困难。</li><li><strong>部分人工修订：</strong>研究者随后重点复核中等／困难候选，采用30条明确等级（26图改档、4图不变）。未复核者继承上版，不把空评分当认可，也不宣称全量独立盲审。</li><li><strong>冻结版本：</strong>衔接已确认目标、参考及后续等级修订，现行入口采用2026-10-18修订；各历史实验继续按实际消费的版本解释。</li></ol><p><strong>固定六转折的短边／自遮挡实验是后续解释分析，不是三档标签的生成办法。</strong>不按人员Q或融合效果回写难度；GT错误、门洞交界和OOS分别处理，不作为困难档兜底。</p></section>`;
+}
 function renderOverview(){
  if(dataset.release==='v1'){
   const s=assets.image_summary;
@@ -371,10 +388,10 @@ function renderOverview(){
   state.rows=[];return;
  }
  const summary=assets.image_summary;
- const cards=overview.sections.map((item,i)=>`<section class="panel briefing-step"><p class="eyebrow">${esc(item.title)}</p><h2>${esc(item.finding)}</h2><figure>${item.visual?`<a href="${esc(item.visual)}" target="_blank" rel="noopener"><img class="briefing-visual" src="${esc(item.visual)}" alt="${esc(item.visual_alt)}" loading="lazy"></a>`:''}<figcaption>${esc(item.example||'查看保存实例')} · 固定保存实例，不随明细筛选变化。${item.visual?` <a href="${esc(item.visual)}" target="_blank" rel="noopener">查看原尺寸图片 ↗</a>`:''}</figcaption></figure><p class="scope-label"><strong>支持范围：</strong>${esc(item.support)}</p><p class="scope-label"><strong>例外：</strong>${esc(item.counterexample)}</p><div class="actions"><a href="${esc(item.href||'#release=v2&module='+(item.module||'data')+'&tab='+(item.tab||0)+(item.case?'&case='+item.case:''))}">查看实例与图表</a>${item.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div></section>`).join('');
+ const cards=overview.sections.map((item,i)=>`<section class="panel briefing-step"><p class="eyebrow">${esc(item.title)}</p><h2>${esc(item.finding)}</h2><figure>${item.visual?`<a href="${esc(item.visual)}" target="_blank" rel="noopener"><img class="briefing-visual" src="${esc(item.visual)}" alt="${esc(item.visual_alt)}" loading="lazy"></a>`:''}<figcaption>${esc(item.example||'查看保存实例')} · 固定保存实例，不随明细筛选变化。${item.visual?` <a href="${esc(item.visual)}" target="_blank" rel="noopener">查看原尺寸图片 ↗</a>`:''}</figcaption></figure><p class="scope-label"><strong>支持范围：</strong>${esc(item.support)}</p><p class="scope-label"><strong>例外：</strong>${esc(item.counterexample)}</p><div class="actions"><a href="${esc(item.href||'#release=v2&module='+(item.module||'data')+'&tab='+(item.tab||0)+(item.case?'&case='+item.case:''))}">${esc(item.link_label||'查看实例与图表')}</a>${item.tables.map(t=>`<button data-table-jump="${esc(t.id)}">${esc(t.label)}</button>`).join('')}</div></section>`).join('');
  $('content').innerHTML=`<div class="briefing-intro"><p class="eyebrow">研究发现总览 · ${esc(dataset.release)} · ${esc(SNAPSHOT)}</p><h2>本轮的主要发现与对应证据</h2><p>按钮会打开同一研究台的原表和几何。导览用的是固定保存的证据，不随明细筛选重新计算。</p><div class="actions"><button class="primary" data-module="images">打开图片与原答</button><button data-module="data">进入数据浏览</button><a href="oos-review.html">OOS 独立统计与复核工作台</a></div><p class="hint-glossary">提示用法：悬浮或键盘聚焦看短释义，点击 ? 看详细说明，Esc 关闭。</p><p class="hint-glossary">同名符号依上下文：几何自遮挡 H ${hintButton('occlusion_h')} / 高度损失 H ${hintButton('height_loss_h')}；方向残差 D ${hintButton('direction_d')} / 共同背景 D ${hintButton('background_d')}；源历史人数 k ${hintButton('source_k')} / 融合团队人数 k ${hintButton('team_k')}。</p></div>`+
  metricCards([['作答总数',summary.raw_records,'份；包含非主质量记录'],['研究图片',summary.images,'张；不是过程池数'],['当前质量可用',summary.quality_records,'份；各专题的统计范围另列'],['保留人员',summary.retained_people,'人；不是画像训练人数']])+
- `<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <button data-module="case_story">直接查看跨专题案例的原答与保存融合</button> <button data-module="personnel_main">进入人员标法与团队</button>历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
+ researchMapHTML()+`<div class="info">${esc(overview.personnel_status||'人员分类展示按来源阶段解释。')} <button data-module="case_story">直接查看跨专题案例的原答与保存融合</button> <button data-module="personnel_main">进入人员标法与团队</button>历史分类页仍可从侧栏进入。</div><div class="briefing-grid">${cards}</div>`;
  state.rows=[];
 }
 function renderPlan(){const plans=assets.supplement_plan?.plans;

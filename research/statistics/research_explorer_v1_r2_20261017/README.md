@@ -221,7 +221,7 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 - `current_class_evidence`是`v2-data/index`中的文档，schema=`current_class_evidence_v1`；`definitions`原样保留方法、`heldout_building`、`class_id`、成员及已保存特征，`coarse_rosters`补充DSTRUCT_K2，`sources`定位源文件。前向与反推类中心含义不同，不合并成个人能力值。
 - 展示保留原7方法及DSTRUCT_K2粗层。角色的“偏高/偏低”只是该折保存特征相对值的中文解释，不生成新人员标签。ALL仅描述；选择楼外折时，图片只列目标建筑。未知保留，不补类。
 - 点人员只选择其实际原答；左右完整对象仍按对象ID、同图Manual及该方法/折的实际成员交集连接。门洞/OOS不混入此普通图查看器。没有该类原答时保留缺失；原始输入、冻结点对与环序均不改写。
-- 新分类尚未按全部既有团队重编完整混合配比。第2步的13,406格及旧同房结果始终保留原标签；大块结果另按各自方法/方向/n/m查看。进入顺序和低人数到满员的既有结果不重复计算。
+- DSTRUCT K2/K3已完成231个Manual面板的同团队完整配比与方差衔接（40图22楼），该项旧待办关闭。第2步历史四分类13,406格继续保留；其它方法、Semi、进入策略与同房结果仍按各自原标签解释，不因此自动重编。人数结果不重复计算。
 - 重复程序检查：`node tests/personnel_main.test.cjs`、`node --test tests/current_class_answers.test.cjs`及`pytest tests/test_research_workbench_v2_20261019.py`。浏览器受明确安全限制时不得换入口绕过；没有运行的视觉检查应独立说明。
 
 ## 保存失败与满员展示（2026-10-25）
@@ -253,3 +253,16 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 ## 2026-10-26 离线展示包更新
 
 经用户授权，已用当前页面和201表/492分片更新离线ZIP，包含人数抽样精度补充与VFua图版；261张完整原图保留。输出为analysis_results/research_workbench_delivery_20261026/全景标注研究台_20261026.zip（约568MiB），完整解压双击START.html，无需安装环境/联网/服务器。包内控件、静态依赖和ZIP完整性检查通过，旧20261025 ZIP在核验后删除；浏览器视觉/窄屏仍未验收。前文“未更新ZIP”是10-25接入时的历史状态。
+
+
+## 2026-10-26 构成方差与 DSTRUCT 衔接
+
+[独立离线页](composition-variance.html)已从侧栏、人员第2步及当前分类说明接入。231个Manual面板、40图22楼、213,444条团队关联按目标楼外标签重聚合；K2/K3与旧结构粗细同支持比较，方差与完整配比分布并列。历史四方案保留原身份。数据、覆盖、测试与验证见[交付目录](../../workers/dstruct_composition_bridge_20261026/README.md)。不依赖本地服务器，不声称已部署。
+
+## 2026-10-26 展示收尾与交付包同步
+
+首页配比卡改为DSTRUCT K2/K3完成状态，直接进入composition-variance.html；历史四分类13,406格继续保留。分类指南和本页关闭DSTRUCT同团队完整配比的旧待办，其范围为231个Manual面板/40图22楼，其它方法、Semi、进入策略和同房不自动重编。难度与范围入口及人员第4步复用同一形成说明：几何初分→视觉辅助复核→研究者部分修订→冻结版本；固定六转折为后续解释分析，不是标签生成。首页新增九行“研究问题—已有数据—完成比较—主要结论”总表，不新增研究实验或图表。
+
+撤下新方差页重新出现的内部README/提纲同步链接，数据CSV下载保留；通用专题摘要也不再链接内部Markdown。本次ZIP包含方差HTML/JS、presentation-data.js、SUMMARY.csv、CONFIGURATIONS.csv，并补齐动态门槛表ZS16_20_21_FIXED_TEAM_THRESHOLD.csv；201表/492分片和261图不变。
+
+26项pytest及19项Node通过；人员控件、首页/难度说明断言通过；方差页20种方法指标组合、全部4,620图格及28,775条配比分布的程序检查通过，包内同样复测。没有重新聚合科学结果、融合、评分、分类或修改难度等级。本次新增首页/难度说明的浏览器视觉与窄屏未验收，既有方差页浏览器记录不冒称本轮验收。所有改动位于已有入口文件，不新增地图条目；全局研究目录既有DSTRUCT衔接登记继续适用。
