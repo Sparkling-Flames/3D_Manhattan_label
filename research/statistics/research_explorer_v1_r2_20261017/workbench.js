@@ -85,12 +85,14 @@ Object.assign(metricHints,{
  saved_endpoint:['端点：一支确定团队在既定规则下的保存融合输出。','同一端点可被多个路径或事件引用，因此端点引用次数不是独立团队数。页面读取已保存结果，不按筛选重新融合。'],
  comparison_event:['事件：一次换人、换类或前缀端点的对照。','事件有各自A/B/C或前后端点，可能共享图片、团队和人员；事件数不是独立图片数或独立团队数。'],
  paired_quality:['同一路径两端可评Q：只比较同一条路径前后都能评分的结果。','两端各自可评路径的边际均分可能来自不同路径集合。配对Q与边际Q分列；恢复、新增失败和两端失败另按全部尝试报告。'],
- all_attempts:['全部尝试：包含真实失败和缺Q的预定团队/路径记录。','失败率按对应全部尝试计算；原实验暂缓未运行不计成功或失败。Q缺失不填0，也不把只在成功子集上的均分当作全部尝试表现。'],
+ all_attempts:['实际尝试：已执行团队或路径，包含成功及真实输出失败。','实际共识失败率以已执行且非延期的尝试为分母；未执行、合同延期、缺参考和输出不可评分分开。历史表若采用更宽的未评分口径，应按原字段解释。Q缺失不填0。'],
  percentage_points:['百分点：两个百分比直接相减。','失败率10%→15%是增加5个百分点，相对原值增加50%；两种读法不能混写。Q的0—100分变化仍用分表示。'],
  pair_nodes:['一个布局节点对应一组顶底点；4个节点是8个点。','节点表示候选布局转折，近共线分段需按对应定义解释。少于4节点的保存诊断点不能闭合为完整可评布局；没有坐标时不补造。']
 });
 for(const [key,source] of Object.entries({r2:'R2',pearson:'pearson_r',spearman:'spearman_r',sd:'SD',p10:'P10',q10:'P10',p50:'P50',p90:'P90',building_equal_mae:'mae',own_source_mae:'mae',source_peers_mae:'mae',outside_history_mae:'mae',descriptive_bootstrap_lower:'resampling_unit',descriptive_bootstrap_upper:'resampling_unit',attempts:'all_attempts',attempted_paths:'all_attempts',paired_Q_paths:'paired_quality',paired_Q:'paired_quality',path_id:'natural_paths',team_key:'saved_endpoint',event_id:'comparison_event',nodes:'pair_nodes'}))metricHints[key]=metricHints[source];
 metricHints.absolute_error=['单次绝对误差：本次预测与实际相差多少，不保留正负号。','同单位的多次绝对误差再按声明权重平均才是MAE；这一个值不是总体预测精度。'];
+metricHints.failure_rate=['历史宽口径未评分率：并非全部都是共识形成失败。','按原表声明的非延期不可评分口径读取，缺参考等状态不应直接归为实际融合失败。新版实际共识失败、输出不可评、参考不可用与未执行分别列示。'];
+metricHints.actual_consensus_failure_rate=['实际共识失败率：已执行且非延期尝试中的共识形成失败比例。','节点不足、连接失败等按保存状态统计；参考缺失或未执行不进入失败分子。'];
 metricHints.method_dstruct_k2=['二类是困难结构表达的粗层，不是两人团队。','K为类别数，n为每队人数，m为替换人数，N为当图可用池。二/三类保留各自保存名单和实验，楼外同号类不跨折套用角色。'];
 const metricHintLabels={mae:'MAE平均绝对误差',rmse:'RMSE均方根误差',pearson_r:'Pearson线性相关',spearman_r:'Spearman排序相关',bias:'有符号偏差',resampling_unit:'重抽单位与区间',natural_paths:'自然路径',saved_endpoint:'保存端点',comparison_event:'对照事件',paired_quality:'同一路径两端可评Q',all_attempts:'全部尝试',percentage_points:'百分点',pair_nodes:'节点与顶底点对',oos_disagreement:'原答底面分歧',oos_scope_choice:'不可标选择'};
 const hintButton=key=>metricHints[key]?`<button class="hint-trigger" type="button" data-hint="${esc(key)}" aria-label="解释 ${esc(metricHintLabels[key]||labels[key]||key)}" aria-describedby="metricHint">?</button>`:'';
@@ -215,6 +217,23 @@ function findingSummary(module){
  const item=dataset.release==='v2'&&overview.sections.find(s=>s.id===module);if(!item)return '';
  return `<section class="panel"><h2>${esc(item.title)}</h2><p><strong>${esc(item.finding)}</strong></p><p>${esc(item.example)}</p><p class="scope-label">支持：${esc(item.support)}</p><p class="scope-label">边界：${esc(item.counterexample)}</p><p class="scope-label">固定专题支持，不随明细筛选重算。<a href="#module=evidence">查看方法与证据</a></p></section>`;
 }
+function researchMathHTML(group){
+ const sections={
+  fusion:['输出状态与评价资格','实际执行后的成功、节点不足或连接失败属于输出状态；Q或底面是否可评取决于各自测量、参考与资格。延期、未执行、参考不可用与方法不提供测量分别记账。MV50按全体n人计票：支持s时2s≥n即保留，偶数平票纳入；位置中位数与环连接是后续步骤。'],
+  population:['人数过程的统计对象','固定图片、参考、算法和抽组规则；每个随机顺序的前k人构成团队。256条增加的是抽样顺序，不是团队人数。完整有限目录按不同团队等权，随机路径保留重复团队频次。Q均值、P10和SD只在Q可评团队内；实际失败按实际执行且非延期的尝试计。满员唯一团队的Q方差或几何V仅在相应测量可用时为0。'],
+  mixture:['配比与成员的方差','固定任务和抽组分布，在Q可评团队内：总方差 = 各配比均值的方差 + 各配比内部方差的加权平均。权重按有效团队计；格等权是另一设计。总方差为0时占比无定义。嵌套细类占比不下降是数学性质，不等于预测更好或因果效应。'],
+  abc:['严格ABC：幅度、方向和共同支持','A=D∪X，B=D∪Y，C=D∪Z；三块互斥、等人数，X与Y构成相同。每队n人、每块m人时需n+2m名不同人员。同类幅度=|Qᵦ−Qₐ|，跨类幅度=(|Q꜀−Qₐ|+|Q꜀−Qᵦ|)/2；二者之差衡量幅度，不能当作升质方向。CA与CB的有符号差分别解释，三队共同可评才计算Q幅度；失败按全部实际尝试另计。'],
+  background:['背景与半数门槛','固定替换块再增加共同背景，会同时改变总人数、替换比例和票门槛。MV50门槛为⌈n/2⌉；固定对应时，偶数加一人提高门槛，奇数加一人门槛不变。实际重新对应、定位和连接也可能变化，不能把这一局部性质直接当成总体Q规律。'],
+  same_room:['同房响应的方向与层级','CA=Q꜀−Qₐ，CB=Q꜀−Qᵦ，须使用各自对应的两视角结果。旧结构类混合团队在六端点共同可评的78图对中，双端响应同向：CA 73.01%、CB 74.05%；先在图对内按配置及事件计，再图对等权，不把总事件当独立图对。'],
+ };
+ const [title,body]=sections[group];return `<details class="panel"><summary>读法与数学定义：${title}</summary><p>${body}</p></details>`;
+}
+function roomTypeHTML(){
+ const root='../../../research/statistics/room_type_similarity_20261027/';
+ const figures=[['figures/I01_PURPOSE_DIFFICULTY.png','用途均值与难度构成'],['figures/I03_LOBO_IMAGE_PREDICTION.png','图片预测：左为177图22楼，右为161图21楼；左右支持不同'],['figures/I04_ALL_THREE_SAME_DIFFICULTY.png','同难度三图匹配'],['cases_history/C01_COMPLETE_ANSWERS.png','三图全景与两名人员的代表作答对照'],['cases_history/C02_COMMON_PERSON_TURNS.png','共同人员的转折表达']];
+ const files=[['key_tables/K01_PURPOSE_COVERAGE.csv','用途与样本覆盖'],['key_tables/K02_IMAGE_PREDICTION_161.csv','161图图片预测'],['key_tables/K03_IMAGE_PURPOSE_GAIN.csv','用途预测增量'],['key_tables/K04_PERSON_PREDICTION_161.csv','161图个人预测'],['key_tables/K05_STRICT_TRIPLES_SAME_DIFFICULTY.csv','严格三图匹配'],['key_tables/K06_PERSON_REPEATABILITY.csv','个人重复性'],['key_tables/K07_TIME_SEPARATE_SOURCES.csv','时间来源与支持'],['key_tables/K08_PERSON_PURPOSE_CARDS.csv','人员用途记录'],['key_tables/K09_MEAN_CLOSE_PERSON_CHANGE_CASES.csv','均值相近与个人差异案例'],['key_tables/K10_PROTECTED_PURPOSE_SUMMARY.csv','固定一般历史后的用途修正'],['results/image/DIFFICULTY_STANDARDIZED_PURPOSE.csv','用途均值与难度标准化'],['cases_history/CASE_IMAGE_SUMMARY.csv','三图及参考条件'],['cases_history/CASE_FEATURED_ANSWERS.csv','六份代表作答'],['cases_history/CASE_ALL_FORMAL_ANSWERS.csv','全部104份正式作答'],['cases_history/CASE_COMMON_PERSON_COMPARISONS.csv','共同人员比较'],['cases_history/CASE_PAIR_SUMMARY.csv','图对汇总']];
+ return `<section class="panel"><h2>扩展：同用途的不同房间</h2><p>用途可补充图片条件，但不能代替难度与几何，也不能代替同一个物理房间的跨视角关系。普通Manual为主；下方为固定研究结果，不随全局筛选变化。</p><details><summary>查看研究报告、图表和完整数据</summary><h3>图片平均质量预测</h3><p>按建筑留出，在用途出现在多个建筑的161图、21楼、5,236份作答上，难度＋参考几何的图片平均Q预测MAE为4.567，加入用途后为4.188，降低0.379分（8.3%）；97/161图、19/21楼误差下降，建筑重抽范围[0.152,0.667]。MAE ${hintButton('mae')}衡量预测误差，降低不表示真实质量提高。D10为4.387→4.218，89/161图改善，范围[−0.026,0.362]；模型使用已知参考几何，属于当前v2内部的留楼比较。</p><h3>用途、难度与个人</h3><p>六大用途155图按相同难度比例标准化：卧室原均Q 76.16→71.18，卫浴68.07→74.59；排序变化说明原均值含难度构成差异。严格匹配1,638事件，汇总150图21楼：同用途与异用途的共同人员图片均Q绝对差为9.042和9.537，89/150图同用途更接近；个人相对Q差为16.609和16.446，同用途没有平均优势。选控制图依据参考几何，不读取Q。</p><p>161图个人相对Q预测：一般历史MAE 11.449，仅同用途历史12.107；固定一般历史再加用途修正11.450。21/22个留楼折选择不加修正；这不支持按用途另建人员主分类。</p><h3>三图、104份正式作答</h3><p>S9-05与jtc-13均为卫浴、中等、参考六转折、H=0，分别34和35份正式作答；少于参考转折为8/34和26/35。共同31人中21人在jtc-13表达更少转折。第三张b8-07卧室有35份。保留完整处理后作答，案例说明局部结构和定位差异，不能直接推断用途的因果作用。</p><div class="actions"><a href="#release=v2&module=images&image=S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee">S9-05 原图与作答</a><a href="#release=v2&module=images&image=jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36">jtc-13 原图与作答</a><a href="#release=v2&module=images&image=b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df">b8-07 原图与作答</a></div><details><summary>展开研究图与完整原答对照</summary>${figures.map(([p,label])=>`<figure><a href="${root+p}" target="_blank" rel="noopener"><img class="briefing-visual" loading="lazy" src="${root+p}" alt="${label}"></a><figcaption>${label}</figcaption></figure>`).join('')}</details><details><summary>下载统计表与作答明细 CSV</summary><div class="actions">${files.map(([p,label])=>`<a href="${root+p}" download>${label}</a>`).join('')}</div></details></details></section>`;
+}
 async function render(){
  const token=++state.loadToken,mod=modules[state.module];supportSets.clear();chartCounter=0;
   const exportButton=document.querySelector('.pagehead [data-act="export"]');exportButton.disabled=false;exportButton.textContent='导出筛选明细';
@@ -226,10 +245,10 @@ async function render(){
  $('notice').innerHTML='';state.rows=[];state.meta=null;
  try{
   if(['profiles','benefits'].includes(state.module)){await PersonnelResults.render($('content'),{mode:state.module,tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});if(token===state.loadToken&&state.module==='profiles'&&state.tab===0)$('content').insertAdjacentHTML('afterbegin',findingSummary('profiles'));return;}
-  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,assets,imageDetail,difficultyFormation:difficultyFormationHTML,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
+  if(state.module==='personnel_main'){await PersonnelMain.render($('content'),{release:dataset.release,index,tab:state.tab,table,hintButton,assets,imageDetail,difficultyFormation:difficultyFormationHTML,researchMath:researchMathHTML,filters:state.filters,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='method_supplements'){await MethodSupplements.render($('content'),{release:dataset.release,tab:state.tab,assets,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,imageDetail,isCurrent:()=>token===state.loadToken});return;}
   if(state.module==='case_story'){await CaseStory.render($('content'),{release:dataset.release,assets,deepLink:new URLSearchParams(location.hash.slice(1)),imageDetail,read,resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,hintButton,isCurrent:()=>token===state.loadToken,navigate:patch=>route(patch)});return;}
-  if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});return;}
+  if(state.module==='evidence'){await ResearchEvidence.render($('content'),{tab:state.tab,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,navigate:patch=>route(patch),resourcesBase:dataset.resourcesBase,snapshot:SNAPSHOT,release:dataset.release});if(token===state.loadToken&&state.tab===2)$('content').insertAdjacentHTML('afterbegin',researchMathHTML('fusion'));return;}
   if(['patterns','multiview'].includes(state.module)){if(dataset.release!=='v2'){ $('content').textContent='该交互使用v2保存结果，请切换到v2。';return; }await ResearchComparison.render($('content'),{mode:state.module,assets,loadImage:imageDetail,read,isCurrent:()=>token===state.loadToken,filters:state.filters,snapshot:SNAPSHOT,release:dataset.release,deepLink:new URLSearchParams(location.hash.slice(1)),onNavigate:patch=>route(patch),onContext:context=>{if(context.blind){$('activeFilters').textContent='盲审模式 · 人员身份、类别与分数隐藏；实际上下文随反馈导出。';const bar=$('activeFilters').closest('.contextbar');if(bar)bar.hidden=false;}else activeContext();}});return;}
   if(state.module==='overview'){renderOverview();return;}
   if(state.module==='sources'){renderSources();return;}
@@ -254,7 +273,7 @@ async function render(){
    $('content').innerHTML=toolbar+title+`<div class="split"><div>${tablePanel()}${genericChart(state.rows)}</div><section class="panel" id="focusPanel"></section></div>`;
    const row=state.rows.find(r=>r.worker_id===state.focusWorker)||state.rows[0];if(row)profile(row);
   }else if(state.module==='same_room'){
-   $('content').innerHTML=(state.tab===0?findingSummary('same_room'):'')+sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
+   $('content').innerHTML=(state.tab===0?findingSummary('same_room')+researchMathHTML('same_room'):'')+sameRoomPredictionPanel(id)+toolbar+title+`<div id="focusPanel"></div>`+tablePanel();const row=state.rows[0];if(row)await pairFocus(row,token);
   }else if(state.module==='same_room_review'){
    $('content').innerHTML=`<section class="panel"><h2>结构表达可重复，位置迁移与严重错误筛查仍有限</h2><p>44图、7楼、55人中，本人源视角对9°未匹配参考角点比例的预测MAE比同源他人少1.099个百分点，5/7楼改善；底点偏移和面积log误差却7/7楼更差。未匹配也可能来自定位偏离，不直接等同漏画。</p><p>同预算个人Q校准MAE从12.364降至11.145，6/7楼改善；目标Q&lt;50的事后子集MAE为25.719，对照23.443，反而更差。改善平均预测不能用来筛查严重错误；该子集也不是选人时已知的信息。</p><p class="hint-glossary">预测误差 MAE ${hintButton('mae')} · 有符号偏差 ${hintButton('bias')} · 相关与预测精度 ${hintButton('spearman_r')} · 百分点 ${hintButton('percentage_points')} · 重抽区间 ${hintButton('resampling_unit')}。</p><div class="actions"><a href="../../same_room/same_room_independent_followup_20261021/structure/summary.csv">结构迁移逐指标汇总</a></div></section>`+toolbar+title+tablePanel();
   }else if(state.module==='fusion'&&id==='fusion__trajectory_scores'){
@@ -275,7 +294,7 @@ async function render(){
     note='<div class="info">来源活动时间和同目标审计时间各自按真实非空支持统计。未改动不自动判失败，编辑后未知不判成功。</div>';
    }
    $('content').innerHTML=toolbar+note+title+genericChart(state.rows)+tablePanel();
-   if(state.tab===0&&state.module==='conditions')$('content').insertAdjacentHTML('afterbegin',difficultyFormationHTML()+findingSummary('difficulty'));
+   if(state.tab===0&&state.module==='conditions')$('content').insertAdjacentHTML('afterbegin',difficultyFormationHTML()+findingSummary('difficulty')+roomTypeHTML());
   }
   if(token!==state.loadToken)return;drawTable();
   if(unsupported.length)$('content').insertAdjacentHTML('afterbegin',placeholder('当前筛选不适用于此表','未展示全表数字以免误导；更换明细表或清空不兼容条件。'));
@@ -373,7 +392,7 @@ function researchMapHTML(){
   ['#module=personnel_main&tab=2','换谁、换多少、背景怎样起作用？','严格ABC、大块与背景/门槛保存对照','同类换人、跨类替换、替换比例和固定块加背景','幅度和方向分别看，跨类变化更大不保证升质。'],
   ['#module=personnel_main&tab=4','加人和改变顺序改善什么？','自然256与精确边际；历史固定支持策略32','低人数至满员、低尾、几何波动与失败','早段通常升质，困难后段主要改善低尾与成员选择稳定性。'],
   ['#module=same_room','同房另一视角能重复什么？','直接同房图对与共同人员；各后续子集','均值、个人结构及同房团队跨视角比较','平均水平和部分表达可重复，具体调整收益未必迁移。'],
-  ['#module=case_story&case=doorway','更多人员能解决门洞吗？','17图人数结果、原答与失败几何','各人数质量与全部尝试失败分开','满员仍6/17不可评；点位、目标与表示限制需共同解释。'],
+  ['#module=case_story&case=doorway','更多人员能解决门洞吗？','17图人数结果、原答与失败几何','各人数质量与实际共识失败分开','满员仍6/17实际共识失败；点位、目标与表示限制需共同解释。'],
   ['oos-review.html','结构超出标准时怎样表达？','28图独立OOS记录与原图','结构子类、人员分歧、任务选择及时间','近似表达一致或输出完整，不代表真实结构已正确恢复。'],
  ];
  return `<section class="panel"><h2>先看全貌：研究问题与已完成比较</h2><div class="tablewrap research-map"><table><thead><tr><th scope="col">研究问题</th><th scope="col">已有数据</th><th scope="col">完成的比较</th><th scope="col">主要结论</th></tr></thead><tbody>${rows.map(([href,q,data,comparison,finding])=>`<tr><th scope="row"><a href="${esc(href)}">${esc(q)}</a></th><td>${esc(data)}</td><td>${esc(comparison)}</td><td>${esc(finding)}</td></tr>`).join('')}</tbody></table></div><p class="scope-label">各行保留自己的条件和支持范围；图片、人员、团队、路径与事件数不能互换。点击问题进入对应证据，完整图表继续在下方保留。</p></section>`;

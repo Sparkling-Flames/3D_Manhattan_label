@@ -22,6 +22,13 @@ assert.equal(doorway.endpoints[1].geometry.points,null);
 assert.equal(doorway.endpoints[3].score_status,'below_four');
 assert.equal(doorway.endpoints[3].metrics.B8L2,null);
 assert.equal(stories.find(s=>s.id==='doorway').fusion,'doorway');
+for(const id of ['uw12','doorway','b633']){
+ const story=stories.find(s=>s.id===id);
+ assert.match(story.support,/历史.*24条/);
+ assert.match(story.support,/当前256条/);
+}
+assert.match(stories.find(s=>s.id==='doorway').figures[1][1],/历史.*24条.*17图/);
+assert.match(fs.readFileSync(path.join(page,'case-story.js'),'utf8'),/module=personnel_main&amp;tab=4/);
 for(const id of ['g130','same_room'])assert.match(stories.find(s=>s.id===id).figures[0][2],/紫色虚线框.*局部放大.*水平投影/);
 assert.match(stories.find(s=>s.id==='quality').figures.find(f=>f[0].endsWith('same_image_overlay.png'))[2],/星号.*水平投影.*圆点为顶点、三角为底点/);
 assert.match(stories.find(s=>s.id==='marking').figures[0][2],/黑色虚线为参考.*不是米/);

@@ -1,0 +1,82 @@
+{
+  "source_commit": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "records": 10439,
+  "image_condition_rows": 313,
+  "image_labels": 261,
+  "purpose_source_mismatches": 0,
+  "ordinary_manual_formal": 5719,
+  "ordinary_semi_formal": 901,
+  "duplicate_object_ids": 0,
+  "formal_Q_D10_mismatch_n": 0,
+  "source_files": [
+    {
+      "role": "audit",
+      "path": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "bytes": 14751756,
+      "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251"
+    },
+    {
+      "role": "legacy_metadata",
+      "path": "research/data/processed_input_review_20261018/data.json.gz",
+      "bytes": 2334598,
+      "sha256": "c9fa495d9a4b3c8f716cda3f6d573575c664d8204748a0154a57273171c9036a"
+    },
+    {
+      "role": "pool_conditions",
+      "path": "research/workers/personnel_composition_study_20261019/analysis/independent/POOL_IMAGE_CONDITIONS.csv",
+      "bytes": 254162,
+      "sha256": "80224237687ce37d883e6b234627029b9d56ef15cb27710210cc6dca90ce3d68"
+    },
+    {
+      "role": "features",
+      "path": "research/difficulty/difficulty_mechanisms_v2_20261020/record_conditions.csv.gz",
+      "bytes": 1136425,
+      "sha256": "8aa5bc743e05ea2e5e6c2127bad116781d6d4ae7a35e884f861acaef9d749e48"
+    },
+    {
+      "role": "reference_features",
+      "path": "research/difficulty/difficulty_mechanisms_v2_20261020/reference_conditions.csv",
+      "bytes": 49286,
+      "sha256": "3f7da185394f10060dd377e927bd655351e58fd489c713eb924d134799042358"
+    }
+  ],
+  "requested_unavailable": [
+    "research/data/releases/v2/analysis_input/data.json.gz"
+  ],
+  "reconstruction": "Public v2 evidence contains adopted purpose; legacy effective manifest supplies source provenance only, never replaces v2 quality or geometry.",
+  "same_physical_room_policy": "All primary source-target tests use different buildings; no invented room clustering or transitive relation expansion.",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "initial_main": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "main_update_evidence": "source/MAIN_UPDATE_SOURCE_CHECK.json",
+  "upstream_scoping_comparison": "source/NEW_MAIN_SCOPING_COMPARISON.json",
+  "adoption_note": "All five primary file Git blobs unchanged; 209 ordinary image-condition means agree to <5e-14; all 261 purpose labels agree. Source input CSV bytes unchanged after commit adoption.",
+  "repository_relative_output": "research/statistics/room_type_similarity_20261027",
+  "references_only": [
+    {
+      "path": "research/statistics/room_type_similarity_scoping_20261027/",
+      "use": "最新用途及正式支持核对，与本轮输入逐值一致"
+    },
+    {
+      "path": "research/statistics/descriptive_statistics_20261015/",
+      "use": "旧描述统计，保持历史版本"
+    },
+    {
+      "path": "research/workers/personnel_composition_study_20261019/analysis/composition/scene_analysis/",
+      "use": "旧用途×构成分层，不冒称本轮新团队"
+    },
+    {
+      "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/",
+      "use": "已归档Manual256自然顺序，历史策略32配对；本轮不重算"
+    },
+    {
+      "path": "research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md",
+      "use": "b8-07/jtc-13机制线索，本轮补入S9-05同用途对照及完整几何"
+    },
+    {
+      "path": "research/same_room/",
+      "use": "同物理房间研究保持独立；本轮跨建筑防止同房视角混入"
+    }
+  ]
+}

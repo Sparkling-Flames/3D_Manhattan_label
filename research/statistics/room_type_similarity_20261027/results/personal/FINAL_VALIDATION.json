@@ -1,0 +1,636 @@
+{
+  "status": "complete",
+  "read_to_EOF": [
+    {
+      "path": "personal/CROSS_BUILDING_REPEATABILITY_ROWS.csv.gz",
+      "rows": 17157,
+      "fields": 22,
+      "sha256": "f5f11c38639891476fd2d5ef97e12baeaaba5fec626d28eb59d54bcf37e6ee76"
+    },
+    {
+      "path": "personal/FOLDS_D10.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "99c8b5e0be6e937394d395daa06a4f21c888594ea90fa5f96fd8dd81dc76d790"
+    },
+    {
+      "path": "personal/FOLDS_Q.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "606562502651770a59c8acf6410ee575c12936bca04ba250dae00049830a7f1b"
+    },
+    {
+      "path": "personal/FOLDS_annotation_turn5.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "54a36041e771c130586b9ebba68deb68882069ef7d010cf3bb2e4a40410bdefc"
+    },
+    {
+      "path": "personal/GAIN_BY_DIFFICULTY.csv",
+      "rows": 72,
+      "fields": 10,
+      "sha256": "bccab708c6173690b9b9d91c48712913abfca2e8d8ce2f55fb7dd35ce73d6816"
+    },
+    {
+      "path": "personal/GAIN_BY_PURPOSE.csv",
+      "rows": 264,
+      "fields": 10,
+      "sha256": "296dcad44041eae98695d5b27293d5dc815f34fbdf3409f76cdb08cb08e6fe16"
+    },
+    {
+      "path": "personal/HISTORY_BUDGET_MATCHED_SUPPORT.csv",
+      "rows": 396,
+      "fields": 9,
+      "sha256": "b69a1207279403dd7f8353754c2163efb0948ae73e680d483703c47348756a43"
+    },
+    {
+      "path": "personal/HISTORY_SUPPORT_D10.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "e484b954aed6468ba9fe8231c922f50e30576225755a51668f28b7894d49ec8e"
+    },
+    {
+      "path": "personal/HISTORY_SUPPORT_Q.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "c0d25a5038d9dfcbed7663d3db993dc00995ebcb672be3028e32e4966642c45c"
+    },
+    {
+      "path": "personal/HISTORY_SUPPORT_annotation_turn5.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "5d016e98d63a38ebaf4b68b8620cc39a2853d38ba53572e44f0c600b81a94ba1"
+    },
+    {
+      "path": "personal/INNER_CV_Q.csv.gz",
+      "rows": 2200,
+      "fields": 9,
+      "sha256": "8fccc767918b0ba7a6e5b493d2d2d42d6a146765c1ba8ec930f726ad6a03f55e"
+    },
+    {
+      "path": "personal/INNER_CV_annotation_turn5.csv.gz",
+      "rows": 2200,
+      "fields": 9,
+      "sha256": "c121c18ff2183cd14fc0359d35fdfb3e3ed81f2073927e5deab4527e8541b59f"
+    },
+    {
+      "path": "personal/METHOD_SUMMARY.csv",
+      "rows": 21,
+      "fields": 9,
+      "sha256": "cbaf4f12d2ef5c04a1e3a3ae24fea47eee3d62209ef058000bd24c40ca21f452"
+    },
+    {
+      "path": "personal/MODELS_D10.jsonl.gz",
+      "rows": 88,
+      "type": "jsonl",
+      "sha256": "efceb68e283ad95efeb35a5fdb6d0938aae8dac1b06b7fe671cfa23ec4f66dbe"
+    },
+    {
+      "path": "personal/MODELS_Q.jsonl.gz",
+      "rows": 88,
+      "type": "jsonl",
+      "sha256": "a78ccc19161252d66c3efd6e7ec00abdc318c9fd95201da1b74a49009772e940"
+    },
+    {
+      "path": "personal/MODELS_annotation_turn5.jsonl.gz",
+      "rows": 88,
+      "type": "jsonl",
+      "sha256": "f1a33ea5a7feb01d09bcd0044b09190a4718e78f16fbbb4782544976b8c258d3"
+    },
+    {
+      "path": "personal/OOF_D10.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "268be7463ab013e5157d1aa3bc29a22b83bac56febf89359a65c8c04420cc0c7"
+    },
+    {
+      "path": "personal/OOF_Q.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "95542a15167be30eb966850bd905d1f70b749f7a833b87ff81c2d613cad0d0f8"
+    },
+    {
+      "path": "personal/OOF_annotation_turn5.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "f8843472f93f12a49f2d07df46139263f3c404a92a4efb388f4c4e53f62d9a17"
+    },
+    {
+      "path": "personal/PAIRED_GAIN_SUMMARY.csv",
+      "rows": 24,
+      "fields": 18,
+      "sha256": "6acfea9d295137932d3ead96cc6a5865336914fd034e7ed6f518285b2967c959"
+    },
+    {
+      "path": "personal/PAIRED_IMAGE_GAIN.csv.gz",
+      "rows": 4248,
+      "fields": 26,
+      "sha256": "a94623aa9b9945d0a60cab91197eb46683b01ef217fc0261ccd11afec5a2c493"
+    },
+    {
+      "path": "personal/PERSON_PURPOSE_BUILDING_EVIDENCE.csv.gz",
+      "rows": 9267,
+      "fields": 12,
+      "sha256": "d7f2c71f9f91c6a1d3d5be95b2e5f598b313b294ff25aa975ff3cad54c6aad57"
+    },
+    {
+      "path": "personal/PERSON_PURPOSE_CARDS.csv",
+      "rows": 1752,
+      "fields": 14,
+      "sha256": "f257e2d3970e657d960941ca3217c689023f83f83e8460244a7a5568df0bad56"
+    },
+    {
+      "path": "personal/PERSON_PURPOSE_EVIDENCE_CARDS.csv",
+      "rows": 1752,
+      "fields": 23,
+      "sha256": "71a7a4934181da01cd1633b3514d4b6a91b36bf85045574994f9395739e100ba"
+    },
+    {
+      "path": "personal/PERSON_PURPOSE_GAIN_SUPPORT.csv",
+      "rows": 66,
+      "fields": 10,
+      "sha256": "2d8687b14d83c298036c20f1000bca0e5366473aa77c452d1720ef69b8611bff"
+    },
+    {
+      "path": "personal/PER_BUILDING_METHODS.csv",
+      "rows": 462,
+      "fields": 7,
+      "sha256": "72fe2917eca5082b285e6d93c41e2a6d22ab1611c1925bacc5b08604d177692b"
+    },
+    {
+      "path": "personal/PER_IMAGE_METHODS.csv.gz",
+      "rows": 3717,
+      "fields": 15,
+      "sha256": "18866e7e0a943501ade8c815c9b20ca4eb20ea20c6bb7b573468708c3094a093"
+    },
+    {
+      "path": "personal/PER_PERSON_INCREMENTAL_GAIN.csv",
+      "rows": 180,
+      "fields": 19,
+      "sha256": "c561153e792ef5655bdf65b321ca4ef37c0a825a2cd312eabab7ebd260306193"
+    },
+    {
+      "path": "personal/PER_PERSON_METHODS.csv",
+      "rows": 1260,
+      "fields": 10,
+      "sha256": "5ccdcb3d467d16e70bbfd8d4e4e5c0125ab18ae677fbbe2e27066cbfc9351276"
+    },
+    {
+      "path": "personal/PER_PERSON_PURPOSE_METHODS.csv.gz",
+      "rows": 12264,
+      "fields": 13,
+      "sha256": "520ccc6178ee4801c0a9e93c835e37f10fca5e03a73e902cf8ba66b39d0e7346"
+    },
+    {
+      "path": "personal/RANK_CORRELATION_SUPPORT.csv",
+      "rows": 21,
+      "fields": 5,
+      "sha256": "72e20e75c9adcf8a5c9bdb831cebc9f53289454801fe976d5f29e5a3cb9db05d"
+    },
+    {
+      "path": "personal/READABLE_EXACT_PERSON_PREDICTIONS.csv.gz",
+      "rows": 17157,
+      "fields": 28,
+      "sha256": "e2d8b9f9f418f0e2d05a34a852baaadbdfe0e63855a241f8a780edca6089847b"
+    },
+    {
+      "path": "personal/REPEATABILITY_BY_PURPOSE.csv",
+      "rows": 66,
+      "fields": 13,
+      "sha256": "0af4ba3676061cf26182f4247dc1aef6c0df3d4e207ae48f31c58926c5949a88"
+    },
+    {
+      "path": "personal/REPEATABILITY_WEIGHTED.csv",
+      "rows": 144,
+      "fields": 11,
+      "sha256": "c50a9d4cc5c07270f16b6fb18c422483b70ca68fc3e6f32e89a18b9b83d72b52"
+    },
+    {
+      "path": "personal/main161/GAIN_BY_DIFFICULTY.csv",
+      "rows": 72,
+      "fields": 10,
+      "sha256": "ffaa6ce8fae191ccd3c97951bcc14b1f0d46bcc1b891e403613f71a42531e657"
+    },
+    {
+      "path": "personal/main161/GAIN_BY_PURPOSE.csv",
+      "rows": 168,
+      "fields": 10,
+      "sha256": "5fcfd3bf7268a89d9c74c9de60acb761de03291efa101e08a9407ea492fbfb41"
+    },
+    {
+      "path": "personal/main161/METHOD_SUMMARY.csv",
+      "rows": 21,
+      "fields": 9,
+      "sha256": "b2ef92ebf819b6fafffe6b41e78fe5c5b6f58977186904058ae1eea6b00a551e"
+    },
+    {
+      "path": "personal/main161/PAIRED_GAIN_SUMMARY.csv",
+      "rows": 24,
+      "fields": 18,
+      "sha256": "d5b95733057297c47ffe6a7e718a49e0df2eb106cd8b4a1e07b3778e77c909a6"
+    },
+    {
+      "path": "personal/main161/PAIRED_IMAGE_GAIN.csv.gz",
+      "rows": 3864,
+      "fields": 26,
+      "sha256": "90d07cda65ff80c2355825fbc29fd312840332a99d7d7b07f642beeff9d4d208"
+    },
+    {
+      "path": "personal/main161/PER_BUILDING_METHODS.csv",
+      "rows": 441,
+      "fields": 7,
+      "sha256": "628076ce705873da6c78171c8052a694d5ab2b83557edc1ab418f64ec894271c"
+    },
+    {
+      "path": "personal/main161/PER_IMAGE_METHODS.csv.gz",
+      "rows": 3381,
+      "fields": 15,
+      "sha256": "79e29df5f5b1a81f27ccf73a488ddde263108f580a2f7ef1f754e1afcdb435b5"
+    },
+    {
+      "path": "personal/main161/PER_PERSON_INCREMENTAL_GAIN.csv",
+      "rows": 180,
+      "fields": 19,
+      "sha256": "73caf3a0d6def2bc6d06ed84428a980faf8b76b55929b81d68db7bac0ddfb45c"
+    },
+    {
+      "path": "personal/main161/PER_PERSON_METHODS.csv",
+      "rows": 1260,
+      "fields": 10,
+      "sha256": "4cb7de73afc502d888a95047af1e8758ffca843a12cf0d69b54137b40805e04c"
+    },
+    {
+      "path": "personal/main161/PER_PERSON_PURPOSE_METHODS.csv.gz",
+      "rows": 8568,
+      "fields": 13,
+      "sha256": "e4e2a37c2a7a64a09950dfafbbbe64e2900294a11ceb807ce92129ea3c77ebb8"
+    },
+    {
+      "path": "personal/main161/TARGET_SUPPORT.csv.gz",
+      "rows": 5236,
+      "fields": 7,
+      "sha256": "bdac3c5f5d28214fd8a8e78921f33a8d30dd04750e55affcd3106aa9a2c90077"
+    },
+    {
+      "path": "personal_semi/CROSS_BUILDING_REPEATABILITY_ROWS.csv.gz",
+      "rows": 2703,
+      "fields": 22,
+      "sha256": "294b9fdab7ee477b751190d26155c917faf852f1b6a1aecad3a1e77949de42e2"
+    },
+    {
+      "path": "personal_semi/FOLDS_D10.csv",
+      "rows": 48,
+      "fields": 14,
+      "sha256": "67d998dceda0a0dbe4f49416c171b8932a890fb6d0b978f7fb3c1e923d200544"
+    },
+    {
+      "path": "personal_semi/FOLDS_Q.csv",
+      "rows": 48,
+      "fields": 14,
+      "sha256": "daebd2d7887bd316fd24d151446c48d678472a6ad9a7a038676d339dd4542a3b"
+    },
+    {
+      "path": "personal_semi/FOLDS_annotation_turn5.csv",
+      "rows": 48,
+      "fields": 14,
+      "sha256": "5582ad42c2efd2a4c3efca2f6196d39781e0e2ac2bded820eb8cefbf8148af34"
+    },
+    {
+      "path": "personal_semi/GAIN_BY_DIFFICULTY.csv",
+      "rows": 72,
+      "fields": 10,
+      "sha256": "68317501336bede9b74e73f95ebbf61f080a8adc4bfef61f961b05d54fa34833"
+    },
+    {
+      "path": "personal_semi/GAIN_BY_PURPOSE.csv",
+      "rows": 240,
+      "fields": 10,
+      "sha256": "0644b8563b4d83540adf33ef4d84d7ed9ff8a103b515d34577161a2e6abe90ff"
+    },
+    {
+      "path": "personal_semi/HISTORY_BUDGET_MATCHED_SUPPORT.csv",
+      "rows": 360,
+      "fields": 9,
+      "sha256": "618837689f3954fff68f52b73277319bec171dd0af09f1c283df241b9e6cb094"
+    },
+    {
+      "path": "personal_semi/HISTORY_SUPPORT_D10.csv.gz",
+      "rows": 901,
+      "fields": 16,
+      "sha256": "49481b2aacb16f68a148fd117d0489b52ac6cc34f05f476f4381a6eea5f3ba95"
+    },
+    {
+      "path": "personal_semi/HISTORY_SUPPORT_Q.csv.gz",
+      "rows": 901,
+      "fields": 16,
+      "sha256": "6c997d7579b6f79c3a0a6f7b9be0b34c313c80bb134eb9c2f6e719fff1e99c9b"
+    },
+    {
+      "path": "personal_semi/HISTORY_SUPPORT_annotation_turn5.csv.gz",
+      "rows": 901,
+      "fields": 16,
+      "sha256": "e697dde2eb66679a3c7b3cc7c9175224889878a44cba3c0246f411869688f4c9"
+    },
+    {
+      "path": "personal_semi/INNER_CV_Q.csv.gz",
+      "rows": 1200,
+      "fields": 9,
+      "sha256": "66a080e092f27f8279c1a2f9c74046fb6032ee253fe829ecf976ca85e9076dbf"
+    },
+    {
+      "path": "personal_semi/INNER_CV_annotation_turn5.csv.gz",
+      "rows": 1200,
+      "fields": 9,
+      "sha256": "ab457ea337844cd6fbd4e617c6f97b50f5ab81284ca9b0e78739c575eb501adc"
+    },
+    {
+      "path": "personal_semi/METHOD_SUMMARY.csv",
+      "rows": 21,
+      "fields": 9,
+      "sha256": "c90314d3eeec6040e3ddb785f76f66267dc685569200cfcfa07f7160d0640599"
+    },
+    {
+      "path": "personal_semi/MODELS_D10.jsonl.gz",
+      "rows": 48,
+      "type": "jsonl",
+      "sha256": "be780096804dc8d8432c8123cdbda27c3579fc85e09afbc35c604f6f3860a386"
+    },
+    {
+      "path": "personal_semi/MODELS_Q.jsonl.gz",
+      "rows": 48,
+      "type": "jsonl",
+      "sha256": "7fef3eac217043a2d7e1b9ee6cc99bec118feace74e66918ec615333b1c8be67"
+    },
+    {
+      "path": "personal_semi/MODELS_annotation_turn5.jsonl.gz",
+      "rows": 48,
+      "type": "jsonl",
+      "sha256": "63a725d4694035f5890ce643034f50da3a6c6aabb2f2784525da2c707a1655a8"
+    },
+    {
+      "path": "personal_semi/OOF_D10.csv.gz",
+      "rows": 6307,
+      "fields": 18,
+      "sha256": "b6da19a1682bf3d1361e9e05bdbb85c5e979cf3a64ccb9fbdd9ce0c645c5334e"
+    },
+    {
+      "path": "personal_semi/OOF_Q.csv.gz",
+      "rows": 6307,
+      "fields": 18,
+      "sha256": "49564d161d6877108f04a7d2f50f8fb2e7878c6a0f380b6e3af4e0922322eda9"
+    },
+    {
+      "path": "personal_semi/OOF_annotation_turn5.csv.gz",
+      "rows": 6307,
+      "fields": 18,
+      "sha256": "ff0e0b81d57cbb6e5672f117355b8ac8838e008abd7c2e22094c2fea0ec59d9a"
+    },
+    {
+      "path": "personal_semi/PAIRED_GAIN_SUMMARY.csv",
+      "rows": 24,
+      "fields": 18,
+      "sha256": "9000d3244dcf40c077d11718f85eab79740b1936ac942d111571d929ce4f699c"
+    },
+    {
+      "path": "personal_semi/PAIRED_IMAGE_GAIN.csv.gz",
+      "rows": 768,
+      "fields": 26,
+      "sha256": "30f6e7359932cbbd17d1b89239aa36096067042f6a446134d097b149263d7bc0"
+    },
+    {
+      "path": "personal_semi/PERSON_PURPOSE_BUILDING_EVIDENCE.csv.gz",
+      "rows": 2217,
+      "fields": 12,
+      "sha256": "053edfa42af50488d23a0cb5bcf48ee5126d974dd831f5b68d8ae65d03ae8898"
+    },
+    {
+      "path": "personal_semi/PERSON_PURPOSE_CARDS.csv",
+      "rows": 1152,
+      "fields": 14,
+      "sha256": "81f845665a981e0cb12b4c06155492e4ad7da65691375a2d2b6a0849072154bf"
+    },
+    {
+      "path": "personal_semi/PERSON_PURPOSE_EVIDENCE_CARDS.csv",
+      "rows": 1152,
+      "fields": 23,
+      "sha256": "7822fb61e87572a6170cff48cf5a68294a11271b63918990e937633dd44687b4"
+    },
+    {
+      "path": "personal_semi/PERSON_PURPOSE_GAIN_SUPPORT.csv",
+      "rows": 60,
+      "fields": 10,
+      "sha256": "cdab62485780b27a52daf71751ce87d1488ae8b23a2851fb953cab83238d1f28"
+    },
+    {
+      "path": "personal_semi/PER_BUILDING_METHODS.csv",
+      "rows": 252,
+      "fields": 7,
+      "sha256": "671cdf9a6bb2d64c82f79770cd9023f3b5de4d71026bc16c7a76df4a43d46aa2"
+    },
+    {
+      "path": "personal_semi/PER_IMAGE_METHODS.csv.gz",
+      "rows": 672,
+      "fields": 15,
+      "sha256": "53d46e1614bcacbf56114de56bbda1ca6957ce55d20b94d2b2aa42715f283eeb"
+    },
+    {
+      "path": "personal_semi/PER_PERSON_INCREMENTAL_GAIN.csv",
+      "rows": 177,
+      "fields": 19,
+      "sha256": "aca8dc9abda9ea19dd54244c17d8899ba61faf54ea3c4f936a3afbf944b963dd"
+    },
+    {
+      "path": "personal_semi/PER_PERSON_METHODS.csv",
+      "rows": 1239,
+      "fields": 10,
+      "sha256": "713ec3ac16b4ba3b8f63c771005f845219c42a6abebcb9d5c51cdde2769f28cc"
+    },
+    {
+      "path": "personal_semi/PER_PERSON_PURPOSE_METHODS.csv.gz",
+      "rows": 8064,
+      "fields": 13,
+      "sha256": "64c28f13ed0e7246f0008b7ab86a6548549cc0132c472a133dd0f4c8ce8d43cf"
+    },
+    {
+      "path": "personal_semi/RANK_CORRELATION_SUPPORT.csv",
+      "rows": 21,
+      "fields": 5,
+      "sha256": "657fdacb7a5ff591183fbb8f6cff3c466ba328dd46a7049acbeb06616d290fd7"
+    },
+    {
+      "path": "personal_semi/READABLE_EXACT_PERSON_PREDICTIONS.csv.gz",
+      "rows": 2703,
+      "fields": 28,
+      "sha256": "54c6b0afeec631d4f0bbe250c0eec17855e8eae493bb8d0b8c5834fe77686aa0"
+    },
+    {
+      "path": "personal_semi/REPEATABILITY_BY_PURPOSE.csv",
+      "rows": 60,
+      "fields": 13,
+      "sha256": "5ee999fdffadf2f0f89201b24bd7de57a8287133978f3132b7ff1a33d45d8c39"
+    },
+    {
+      "path": "personal_semi/REPEATABILITY_WEIGHTED.csv",
+      "rows": 72,
+      "fields": 11,
+      "sha256": "65bc9124fb7dddbfff85c91d583fe095b471f5b0e7a17cf5d428e520d39c162e"
+    },
+    {
+      "path": "personal_oldgate/CROSS_BUILDING_REPEATABILITY_ROWS.csv.gz",
+      "rows": 5719,
+      "fields": 22,
+      "sha256": "88da3645a65d9323ae9d9126af736ecca6d22a5c1e13e81ca571e90c43e6d4ab"
+    },
+    {
+      "path": "personal_oldgate/FOLDS_Q.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "0640b16aedbf9173191a465a741b5cf640e832ece5f4f05aec54bb0fabe91224"
+    },
+    {
+      "path": "personal_oldgate/GAIN_BY_DIFFICULTY.csv",
+      "rows": 24,
+      "fields": 10,
+      "sha256": "afcc19c159ad9d33be28a1885d85535d5ed8025a32e49a0ded05c625b14af1b5"
+    },
+    {
+      "path": "personal_oldgate/GAIN_BY_PURPOSE.csv",
+      "rows": 88,
+      "fields": 10,
+      "sha256": "aa722412926ae4ca24535430eb7f82291e9aecbc9adc5e898c5b87ad435d06c8"
+    },
+    {
+      "path": "personal_oldgate/HISTORY_SUPPORT_Q.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "cb3bc1a8be57b054b3e2ea03e612c0d83fbc105c146210bd234253dae4c74b66"
+    },
+    {
+      "path": "personal_oldgate/METHOD_SUMMARY.csv",
+      "rows": 7,
+      "fields": 9,
+      "sha256": "4a2a36e7deaa9c8089df077a37bea6c12be5c53015d76cde22aa8a32da019c60"
+    },
+    {
+      "path": "personal_oldgate/MODELS_Q.jsonl.gz",
+      "rows": 88,
+      "type": "jsonl",
+      "sha256": "81959060c3ca7d3894cd84e0a1d6133d33a574b23cb11b5db9c35cc1c507fe44"
+    },
+    {
+      "path": "personal_oldgate/OOF_Q.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "53d36380057e9964bccd27041f965d09c23c817b9b7091454a3e2c23042c5d06"
+    },
+    {
+      "path": "personal_oldgate/PAIRED_GAIN_SUMMARY.csv",
+      "rows": 8,
+      "fields": 18,
+      "sha256": "6b4158dbfb1eea42d6282066b6cf2336c7e23cd31da52068f632172a03dd2ad6"
+    },
+    {
+      "path": "personal_oldgate/PAIRED_IMAGE_GAIN.csv.gz",
+      "rows": 1416,
+      "fields": 26,
+      "sha256": "cc43831a3de9a4f173b91e82efa69dd91f5e6213db11eb9e196adf1c27fb411b"
+    },
+    {
+      "path": "personal_oldgate/PERSON_PURPOSE_CARDS.csv",
+      "rows": 584,
+      "fields": 14,
+      "sha256": "a3937c80368d8464588db3d2d5c12a8dcb5f53b6628d77d72a1a66de6df302f2"
+    },
+    {
+      "path": "personal_oldgate/PER_BUILDING_METHODS.csv",
+      "rows": 154,
+      "fields": 7,
+      "sha256": "ec02610d5133c458c8965491d74b3b5f114264319d6469501e8ef09ebab679e3"
+    },
+    {
+      "path": "personal_oldgate/PER_IMAGE_METHODS.csv.gz",
+      "rows": 1239,
+      "fields": 15,
+      "sha256": "e45337316f58f9b9478063df70a851b5dea20918219fc00b74affe1c102a1ddc"
+    },
+    {
+      "path": "personal_oldgate/PER_PERSON_INCREMENTAL_GAIN.csv",
+      "rows": 60,
+      "fields": 19,
+      "sha256": "0c011e76948c87044bf10c91cbe3ffe6c41ec37ea84bf18e7ec6c4cc5c71ee26"
+    },
+    {
+      "path": "personal_oldgate/PER_PERSON_METHODS.csv",
+      "rows": 420,
+      "fields": 10,
+      "sha256": "28b5b81ae38769d76aaa2143f6e3aa69b224ccb4fdbabaf2ade67ba526baec2d"
+    },
+    {
+      "path": "personal_oldgate/PER_PERSON_PURPOSE_METHODS.csv.gz",
+      "rows": 4088,
+      "fields": 13,
+      "sha256": "9c88819e80f38fbeee8d00211892483c4c7c6ffcb0916e7560cb1d41afb3f758"
+    },
+    {
+      "path": "personal_oldgate/REPEATABILITY_BY_PURPOSE.csv",
+      "rows": 22,
+      "fields": 13,
+      "sha256": "5ba4236bff9c6d5e7709e65bf81abefc50bfb165649545d1ace71ad5ea96117f"
+    },
+    {
+      "path": "personal_protected_purpose/BY_PERSON_PURPOSE.csv",
+      "rows": 1168,
+      "fields": 8,
+      "sha256": "f6437ded25025f8b5bec043a578550d6b05aa245fd06022c5518bc63b212b111"
+    },
+    {
+      "path": "personal_protected_purpose/BY_PURPOSE.csv",
+      "rows": 22,
+      "fields": 8,
+      "sha256": "23dd4c868ad53fea406c2b0ebc6e08939342e690d243f5a8a819936f5c3058db"
+    },
+    {
+      "path": "personal_protected_purpose/INNER_CV.csv.gz",
+      "rows": 660,
+      "fields": 7,
+      "sha256": "0a0b63497e4698345f0f42b77c6ec6d036549e97f75d13eddf93f980d21f6820"
+    },
+    {
+      "path": "personal_protected_purpose/OUTER_FOLD_LAMBDA.csv",
+      "rows": 22,
+      "fields": 9,
+      "sha256": "34714ad2d28956f244313ead52eb7321f29a42b98cfc6fcff706f3a97e126201"
+    },
+    {
+      "path": "personal_protected_purpose/PER_IMAGE.csv",
+      "rows": 354,
+      "fields": 14,
+      "sha256": "b060a9b5dfe3063b0624e083f4f9366bd06969e2f71e57e309276169208c58a2"
+    },
+    {
+      "path": "personal_protected_purpose/PROTECTED_PURPOSE_OOF.csv.gz",
+      "rows": 11438,
+      "fields": 21,
+      "sha256": "10752de27026f4dc1167a3d7e2a03bb8fca138cd534c6876b9c47c3644615e16"
+    },
+    {
+      "path": "personal_protected_purpose/SUMMARY.csv",
+      "rows": 4,
+      "fields": 20,
+      "sha256": "afa74045c2f99f4c62125ccacd329fdff512acd2dadb95c442ed993787377f82"
+    }
+  ],
+  "replay_models": 24,
+  "selected_folds": [
+    "2t7WUuJeko7",
+    "uNb9QFRL6hY"
+  ],
+  "selection_rule": "Lexicographically first and largest target-building record count, no outcome-based choice",
+  "max_prediction_abs_error": 3.552713678800501e-15,
+  "max_coefficient_abs_error": 0.0,
+  "all_outcomes_same_object_method_support": true,
+  "computed_source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "adopted_latest_commit": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "source_equivalence": "Root MAIN_UPDATE_SOURCE_CHECK.json: five core input Git blobs unchanged; this is not new external validation",
+  "input_sha256": "03f10f887f522455531bcdda9c103cc1b9c81cc9283c038eb108c33781b3045d"
+}

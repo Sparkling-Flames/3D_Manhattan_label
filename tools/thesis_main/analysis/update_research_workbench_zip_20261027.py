@@ -14,6 +14,7 @@ PAGE = Path('research/statistics/research_explorer_v1_r2_20261017')
 DELIVERY = ROOT / 'analysis_results/research_workbench_delivery_20261026'
 ZIP = DELIVERY / '全景标注研究台_20261026.zip'
 SEVENZIP = Path('D:/7-Zip/7z.exe')
+OVERVIEW_IMAGE = 'research/statistics/research_closeout_20261022/DATA_EVIDENCE_OVERVIEW_20261026.png'
 
 
 def local_reference(base, href):
@@ -93,15 +94,20 @@ def refresh():
         extension = Path('research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026')
         stems = re.findall(r"\['((?:analysis_precision26|analysis_geometry26|report26)/[^']+)'", script)
         assets = [extension / (stem + suffix) for stem in stems for suffix in ['.png', '.pdf']]
-        assets += [extension / 'report26/figures/P02_policy32_Q_labor_support_SOURCE.csv',
-                   Path('research/statistics/research_closeout_20261022/DATA_EVIDENCE_OVERVIEW_20261026.png')]
+        assets += [extension / 'report26/figures/P02_policy32_Q_labor_support_SOURCE.csv']
+        shell = (ROOT / PAGE / 'workbench.js').read_text(encoding='utf-8')
+        room_section = shell.split('function roomTypeHTML(){', 1)[1].split('async function render(){', 1)[0]
+        room_paths = re.findall(r"\['((?:figures|key_tables|cases_history|results/image)/[^']+\.(?:png|csv))'", room_section)
+        if not room_paths:
+            raise ValueError('同用途专题的动态资产清单为空')
+        assets += [Path('research/statistics/room_type_similarity_20261027') / p for p in room_paths]
         for rel in assets:
             dest = stage / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / rel, dest)
         staged = {p.relative_to(stage).as_posix() for p in stage.rglob('*') if p.is_file()}
         # 旧包中已有依赖继续保留；新增的HTML直接依赖必须在更新后的集合中存在。
-        expected = names | staged
+        expected = (names - {OVERVIEW_IMAGE}) | staged
         for p in (stage / PAGE).glob('*.html'):
             for ref in re.findall(r'(?:src|href)=["\']([^"\']+)', p.read_text(encoding='utf-8')):
                 target = local_reference(p.relative_to(stage).as_posix(), ref)
@@ -110,16 +116,22 @@ def refresh():
         for spec in index['tables']:
             assert all((PAGE / 'v2-data' / Path(part['path']).with_suffix('.js')).as_posix() in staged for part in spec['parts'])
         shutil.copy2(ZIP, pending)
+        if OVERVIEW_IMAGE in names:
+            subprocess.run([str(SEVENZIP), 'd', str(pending), OVERVIEW_IMAGE, '-bsp0'],
+                           check=True, stdout=subprocess.DEVNULL)
         subprocess.run([str(SEVENZIP), 'u', str(pending), './*', '-mx=7', '-mmt=4', '-mcu=on', '-bsp0'],
                        cwd=stage, check=True, stdout=subprocess.DEVNULL)
         with ZipFile(pending) as archive:
             assert archive.testzip() is None
+            assert OVERVIEW_IMAGE not in archive.namelist()
             assert all(archive.read(n) == (stage / n).read_bytes() for n in staged)
             final_names = archive.namelist()
         pending.replace(ZIP)
         receipt.update(files=sum(not n.endswith('/') for n in final_names), zip_MiB=round(ZIP.stat().st_size / 2**20, 1),
                        tables=len(index['tables']), parts=sum(len(t['parts']) for t in index['tables']),
-                       refreshed='2026-10-27 自然256＋精确边际／历史策略32', population256_included=True,
+                       refreshed='2026-10-27 自然256／策略32、数学定义与同用途专题', population256_included=True,
+                       room_type_assets=len(room_paths),
+                       overview_image_included=False,
                        natural_paths=256, policy_paths=32, semi='original version retained',
                        browser_visual_check='blocked: file URL browser policy; no workaround attempted',
                        runtime_byte_match=True, zip_integrity='CRC passed')

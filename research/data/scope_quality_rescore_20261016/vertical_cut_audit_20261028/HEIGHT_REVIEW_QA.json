@@ -1,0 +1,21 @@
+{
+  "cases": 9,
+  "original_images_found": 9,
+  "original_images_visually_read": 9,
+  "initial_user_decisions": 0,
+  "script": "node tests/scope_height_review.test.cjs",
+  "logic_checks": [
+    "nine unique target IDs",
+    "all image and script/style dependencies exist",
+    "initial decisions empty",
+    "draft restore across navigation",
+    "clear selection",
+    "export all nine records including unanswered"
+  ],
+  "mock_dom_test": "passed",
+  "browser_layout": "not_validated",
+  "native_download": "not_validated",
+  "browser_block": "IAB URL policy rejected file protocol; no alternate browser workaround used",
+  "formal_reference_changes": 0,
+  "new_scores": 0
+}

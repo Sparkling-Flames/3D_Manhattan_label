@@ -1,0 +1,31 @@
+{
+  "prediction_rows": 4248,
+  "methods": [
+    "difficulty",
+    "difficulty_purpose",
+    "geometry",
+    "geometry_history",
+    "geometry_history_purpose",
+    "geometry_history_purpose_ridge10",
+    "geometry_history_ridge10",
+    "geometry_purpose",
+    "geometry_purpose_rich",
+    "geometry_rich",
+    "purpose_only",
+    "training_mean"
+  ],
+  "outer_folds_per_metric_method": 22,
+  "fit_model_rows": 528,
+  "target_images": 177,
+  "ordinary_manual_buildings": 22,
+  "all_metrics_methods_same_target_keys": true,
+  "target_actuals_match_frozen_image_means": true,
+  "outer_held_building_never_in_train_building_keys": true,
+  "descriptive_complete": true,
+  "new_fusion": 0,
+  "new_personnel_classification": 0,
+  "calculation_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "source_recheck_commit": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "source_core_blobs_identical": true,
+  "execution_note": "Initial model fit completed and saved; a pandas metadata/model-name collision in aggregation was corrected without refitting those models. Two same-family geometry-only controls were then added to isolate model flexibility from personnel-history inputs. Current aggregate tables include all 12 methods."
+}

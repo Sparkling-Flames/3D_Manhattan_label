@@ -20,3 +20,16 @@ def test_confirmed_image_and_display_use_medium_without_changing_input():
     packed = pack_image(image, {}, Path('.'))
     assert packed['difficulty']['label'] == packed['scene']['conditional_difficulty'] == '中等'
     assert image['difficulty']['label'] == '简单'
+
+
+def test_pa4_current_revision_and_display_preserve_other_images():
+    from tools.thesis_main.analysis.build_research_workbench_20261017 import pack_image
+    from pathlib import Path
+    iid='pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e'
+    rows=[dict(image_id=iid,current_class='简单'),dict(image_id='unaffected',current_class='困难')]
+    result=apply_difficulty_overrides(rows)
+    assert result[0]['current_class']=='中等' and result[1]==rows[1]
+    assert apply_difficulty_overrides(result)==result
+    image=dict(image_id=iid,difficulty={'label':'简单'},scene={'conditional_difficulty':'简单'},annotations=[])
+    shown=pack_image(image,{},Path('.'))
+    assert shown['difficulty']['label']==shown['scene']['conditional_difficulty']=='中等'

@@ -27,6 +27,6 @@ python tools/thesis_main/analysis/build_research_evidence_overview_20261026.py
 python tools/thesis_main/analysis/update_research_workbench_zip_20261027.py
 ```
 
-ZIP更新器使用现有7-Zip和Python标准库，保留原离线包的原图与运行时依赖，刷新当前JS伴随载荷、人数图版及研究总图，核对动态图版、HTML依赖、全部表分片、字节一致和ZIP CRC后才替换正式包。仅含v2，完整解压后双击`START.html`；不要求接收方安装Python、Node或服务器。
+ZIP更新器使用现有7-Zip和Python标准库，保留原离线包的原图与运行时依赖，刷新当前JS伴随载荷和专题图版，核对动态图版、HTML依赖、全部表分片、字节一致和ZIP CRC后才替换正式包。研究总图单独提供，不纳入ZIP。仅含v2，完整解压后双击`START.html`；不要求接收方安装Python、Node或服务器。
 
 地图与索引已检查：本次脚本和验收说明属于既有研究台／论文工具子资产，不新增独立研究主题；全局地图、索引与catalog由统筹负责，本线程不并行修改。下一步为在允许访问本地页面的真实浏览器中完成宽窄屏、关键交互和CSV下载验收。

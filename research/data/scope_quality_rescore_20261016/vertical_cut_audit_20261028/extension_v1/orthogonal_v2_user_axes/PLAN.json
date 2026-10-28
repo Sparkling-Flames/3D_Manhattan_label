@@ -1,0 +1,15 @@
+{
+  "version": "orthogonal_scope_v2_user_axes_20261028",
+  "scope": "43 confirmed spaces plus two explicit user revisions and all 30 saved manual GT, OOS audit only",
+  "axis": "scope: unrounded source axis; manual GT: optimize joint vertex displacement around user geometry common axis, never snap back to MP3D shape",
+  "solver": "joint least squares equality constraints per horizontal/vertical edge, original order and edge direction fixed",
+  "micro_screen": {
+    "max_ERP_pixel_move": 0.1,
+    "max_3D_h_move": 0.002,
+    "max_relative_area_percent": 0.05
+  },
+  "screen_meaning": "engineering screen for precision-only auto candidates, not a quality tolerance; explicit revised GT always manual review",
+  "heights": "retain original full-pair heights or authorized explicit source plane; retain height-break vertices",
+  "scoring": "same Manual objects per reference, original unorthogonal full reference or same-height diagnostic candidate; no max-Q selection",
+  "adoption": "independent version only; no formal references or labels overwritten; no new fusion"
+}

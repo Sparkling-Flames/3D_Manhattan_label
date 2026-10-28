@@ -1,0 +1,110 @@
+{
+  "status": "completed",
+  "scope": "finite completed-output consistency only; no refit",
+  "personal_support": [
+    {
+      "method": "person_geometry",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "person_geometry_purpose",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "person_history",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "person_purpose",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "person_ridge",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "same_purpose_history",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    },
+    {
+      "method": "zero",
+      "rows": 5719,
+      "images": 177,
+      "buildings": 22
+    }
+  ],
+  "other_person_baseline_max_difference": 7.105427357601002e-15,
+  "outer_and_inner_buildings_disjoint": true,
+  "personal_Q_values": [
+    {
+      "method": "person_geometry",
+      "image_equal_mae": 11.779141131144565,
+      "building_equal_mae": 11.751310239458723,
+      "image_reaggregation_difference": 0.0,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "person_geometry_purpose",
+      "image_equal_mae": 11.905840616705897,
+      "building_equal_mae": 11.92452590738148,
+      "image_reaggregation_difference": 0.0,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "person_history",
+      "image_equal_mae": 11.431089068208033,
+      "building_equal_mae": 11.416108776063368,
+      "image_reaggregation_difference": 1.7763568394002505e-15,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "person_purpose",
+      "image_equal_mae": 11.59306604116898,
+      "building_equal_mae": 11.549670653353056,
+      "image_reaggregation_difference": 0.0,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "person_ridge",
+      "image_equal_mae": 11.436726204714923,
+      "building_equal_mae": 11.426723316202912,
+      "image_reaggregation_difference": -1.7763568394002505e-15,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "same_purpose_history",
+      "image_equal_mae": 12.142346801347603,
+      "building_equal_mae": 11.929219419739049,
+      "image_reaggregation_difference": 0.0,
+      "building_reaggregation_difference": 0.0
+    },
+    {
+      "method": "zero",
+      "image_equal_mae": 12.885310512265981,
+      "building_equal_mae": 12.900886999714475,
+      "image_reaggregation_difference": 1.7763568394002505e-15,
+      "building_reaggregation_difference": -1.7763568394002505e-15
+    }
+  ],
+  "image_all_methods_Q_D10_same_targets": true,
+  "image_targets": 177,
+  "source_code_sha256": {
+    "personal.py": "8d601887eb6ee76eb50ffd4b7aea22e65281207af575541a54ffee404e852a9f",
+    "image_similarity.py": "00031f122964b86f757683e3a7d8c455e5f88f6969f62981492a41fa13fc4531"
+  },
+  "latest_accessible_main_reported_by_root": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "analysis_source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "core_input_equivalence": "Five core blobs identical per root acquisition check; not re-audited in this finite check"
+}

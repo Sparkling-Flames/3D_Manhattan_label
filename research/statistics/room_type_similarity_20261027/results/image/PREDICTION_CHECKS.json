@@ -1,0 +1,30 @@
+{
+  "images": 177,
+  "buildings": 22,
+  "workers": 60,
+  "records": 5719,
+  "methods": [
+    "difficulty",
+    "difficulty_purpose",
+    "geometry",
+    "geometry_history",
+    "geometry_history_purpose",
+    "geometry_history_purpose_ridge10",
+    "geometry_history_ridge10",
+    "geometry_purpose",
+    "geometry_purpose_rich",
+    "geometry_rich",
+    "purpose_only",
+    "training_mean"
+  ],
+  "all_models_same_targets": true,
+  "Q_D10_support_equal": true,
+  "outer_held_building_never_trains": true,
+  "inner_history_recomputed_excluding_inner_validation_buildings": true,
+  "no_target_annotation_features_in_predictors": true,
+  "geometry_information": "Frozen reference-derived geometry; audited-geometry application/oracle covariate analysis, not no-reference RGB predictor",
+  "history_shrinkage_n": 10,
+  "main_loss": "image equal absolute error; whole-building group inner 5-fold; 2000 whole-building sensitivity resamples",
+  "source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "new_fusion": 0
+}

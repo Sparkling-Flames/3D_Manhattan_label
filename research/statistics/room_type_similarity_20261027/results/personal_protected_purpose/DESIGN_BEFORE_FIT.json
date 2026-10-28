@@ -1,0 +1,22 @@
+{
+  "study_status": "Post-primary finite internal method comparison; not independent external validation",
+  "reason": "Shared ridge shrinkage may perturb stable person effects; isolate purpose contribution while retaining exact general-history baseline.",
+  "formula": "center_target_roster[general_person_history + b/(b+lambda)*(same_purpose_person_history-general_person_history)]",
+  "b": "number of distinct eligible historical buildings for worker and purpose outside target building",
+  "lambda_candidates": [
+    "infinity",
+    64,
+    16,
+    4,
+    1,
+    0
+  ],
+  "infinity": "exact zero purpose increment",
+  "selection": "5-building-group inner CV minimizing image-equal MSE, outer entire building omitted; tie order prefers stronger shrinkage",
+  "main_Q_support": "177 ordinary Manual images; also retain prespecified 161 images of recorded purposes with >=2 buildings",
+  "D10": "Same support and Q-selected lambda; no additional hyperparameter search",
+  "target_peer_baseline": "Target self excluded; prediction uses no target response; target roster centering only",
+  "new_fusion": 0,
+  "new_personnel_classification": false,
+  "input_sha256": "03f10f887f522455531bcdda9c103cc1b9c81cc9283c038eb108c33781b3045d"
+}

@@ -1,0 +1,32 @@
+{
+  "version": "structure_sensitivity_v1_20261028",
+  "status": "frozen_before_supplement_computation",
+  "scope": "Manual only, new result directory; no official labels, roster or prior results overwritten; cached endpoints only",
+  "curves": {
+    "source": "HYBRID_POOLED256_DISPLAY_CURVES for exact finite margins and pooled256; GEOMETRY_PATH_PRECISION pooled256 for V",
+    "weights": "reuse saved per-image finite-team or path-occurrence weighted estimates; never deduplicate sampled teams; image and building equal summaries both",
+    "groups": "all; reference turn5=4,6,>=8; within each exact turn count plain_H0 / short_H0 / H_positive; primary mechanism contrast fixed turn5=6",
+    "thresholds": "inherited turn5 >5degrees; inherited short edge ratio<4% with endpoint turns>=15degrees; H>0",
+    "fixed_panels": "N>=30 and N>=35; all available k 1,3..cap plus each image actual-full; k2 saved separately due deferred semantics; metric-specific complete-curve common images, explicit excluded-image ledger",
+    "metrics": ["Q_mean", "Q_p10", "Q_p10_inverse_cdf", "Q_sd_display", "actual_consensus_failure_rate", "output_unscoreable_rate", "reference_unavailable_rate", "not_executed_rate", "V_floor", "V_centroid_h", "V_height_h", "V_turn5", "V_nodes"],
+    "deltas": "1->6,6->10,10->20,20->30,30->35 where supported; 30->actual-full and 35->actual-full; marginal differences not paired path effects",
+    "continuous": "descriptive Spearman of fixed-panel 6->30 per-image changes with turn5,H,short count,min angular span; fixed-turn6 separately; no threshold selection by outcome"
+  },
+  "dstruct": {
+    "K": 3,
+    "training": "frozen RAW_CONDITION_RESPONSE_RECORDS history_eligible Manual; same 4 peer-centered structure metrics, same buildings excluded; no new quality-dependent selection",
+    "methods": {
+      "original": "published DSTRUCT_K3 labels; reproduce original history and Ward labels before comparison",
+      "overall": "M_STRUCTURE_LEVEL only; no grade-conditioned behavioral features",
+      "geometry_response": "overall structure plus challenge structure and challenge-minus-plain; challenge iff ref_turn5>6 OR ref_H>0 OR ref_short_edges>0; plain complement; no old grade in these response features"
+    },
+    "support": "overall native >=12 images/3 buildings; geometry native same total plus >=5 plain images/2 buildings and >=4 challenge images/2 buildings; original native uses frozen manual_geometry. Primary all 3 methods refitted on per-fold intersection; native eligibility changes reported separately. Common-support eligibility inherits original restrictions but new behavioral definition does not use grade.",
+    "encoding": "reuse original robust scaling, clip3, <=2 PCs per domain, equal-domain normalization, Ward; same K3; no Q/T or target ABC outcomes in fitting",
+    "label_alignment": "Hungarian maximum member overlap to original on same fold, for comparison only; retain raw class ID and centers",
+    "composition": "same 231 Manual finite panels; keep every original team; compare only panels where all candidate and background workers known under all methods; removed panels explicit; within/between population variance, not predictive R2",
+    "ABC": "original DSTRUCT_K3 strict-disjoint events in screen,confirm,size_paths; fixed original blocks/D/directions/n/m; no selection/reorientation from target outcomes; legal only if X,Y each pure same known class and Z pure distinct known class, D remains same/disjoint, unknown D counted; invalid events retained as invalid, not new strict ABC",
+    "ABC_effect": "same=abs(B-A); cross=(abs(C-A)+abs(C-B))/2; gap=cross-same; CB separately; scored common support; report each method legal subset AND common legal subset, by stage/phase/n/m/image/building; n18/m7 retained as pre-existing headline",
+    "missing_teams": "no new selection or fusion; all reused event keys and complete-panel endpoints checked; missing cache rows listed and never filled"
+  },
+  "validation": "author checks and targeted tests only, not independent acceptance; no hashes; no global catalog edits per coordinator ownership"
+}

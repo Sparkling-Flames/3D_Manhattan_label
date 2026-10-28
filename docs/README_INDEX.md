@@ -1,9 +1,22 @@
+- **2026-10-29论文提纲：** [v2.1 修订稿](thesis_main/论文提纲草稿_v2.1_20261029.docx)按当前主目标与其他空间范围更新；旧提纲保留。
+- **当前研究阅读入口（2026-10-29）：** [资料导航](thesis_main/论文撰写资料入口_20261027.md) → [v2.1独立结论与完成范围](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md) → [个人汇报讲稿](thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md)；论文提纲与改动方案本轮未修改。
+- **2026-10-29其它合法空间补充：** [31池231份分空间分析](../research/data/releases/v2.1/admitted_space_extension/README.md)，复用已有Q，新增自然256及独立两人；[完整独立检查](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md)通过数值核对，扩展难度与受影响选队、浏览器仍待完成。保持原263池、既有排除和CURRENT。
+- **2026-10-28多空间参考：** [顶面人工判断采用](../research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_adopted_20261028/README.md)：24份全点均高、6份代表点近同高组均值；底面和排除资格保持；[v2.1受影响依赖重算](../research/data/releases/v2.1/README.md)必要计算与定向检查已完成，当前标签换类/策略/同房、D10形成链和自然曲线均已接续；真实浏览器与下载尚待验收，CURRENT未切换。
+- **2026-10-28结构条件与分类敏感性：** [独立验收](../research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.md)完成69组分类重拟合及曲线/构成/ABC复算；保留正式三档与DSTRUCT，采用新增条件解释。
+- **2026-10-28外部审稿与多空间：** [独立核对](../research/statistics/external_review_response_20261028/README.md)重算失败、历史版本、类别Q及41图范围覆盖；确认其中12图进入Manual256，保留原数据和资格。
+- **2026-10-28难度实证：** [固定177图、22楼的二档/三档/连续几何比较](../research/difficulty/difficulty_computable_comparison_20261028/README.md)支持几何补充结构解释，保留三档；不改标签，不重跑融合评分。
+- **2026-10-28难度后续方案：** [可计算依据与最小实证比较](thesis_main/topics/difficulty/图片难度可计算依据与最小比较方案_20261028.md)盘点177图主面板，比较几何条件、连续特征与人员校正响应；先复用结果检验，不改正式标签。
+- **2026-10-28图片难度定义：** [跨领域依据与复核建议](thesis_main/topics/difficulty/图片难度定义_跨领域依据与复核建议_20261028.md)区分条件、操作成本、人员响应与模型难度；人工复核优先建议已被后续可计算比较取代，现行标签保持。
+- **2026-10-28研究讨论讲解：** [个人讲解稿与研究台路线](thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md)含40分钟主线、10分钟简版、结果讲法、术语参数备查及敏感性讨论；不改论文正文。
+- **2026-10-28论文提纲 LaTeX：** [Elsevier 工程](thesis_main/论文提纲_LaTeX_20261028/README.md)，英文 Elsevier 章节骨架，正文待撰写，历史稿保留。
+- **2026-10-27论文撰写资料：** [当前资料入口](thesis_main/论文撰写资料入口_20261027.md)统一数学定义、256条自然曲线／32条策略、人员构成和同用途补充的采用范围；[提纲修改方案](thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md)提供逐节改法；[修订提纲](thesis_main/论文提纲草稿_修订_20261026.docx)已更新256／32及来源，原草稿保留。
+- **2026-10-27论文写作SOP：** [避免AI化与防御性表述](thesis_main/SOP_论文写作_避免AI化与防御性表述_20261027.md)。约束提纲、正文、摘要与图表说明的主句、术语、数字与边界写法；不改变研究结论、合同或数据。
 - **2026-10-26构成方差收尾：** [DSTRUCT同团队衔接与展示验收](../research/workers/dstruct_composition_bridge_20261026/DELIVERY_QA.md)保留本地数学定义、CA／CB及门槛修订，合入远端231个Manual面板；修复坐标、缺失提示和Windows UTF-8，配比方差与严格换类并列，未新增融合/评分/拟合。
 - **快速汇报与提纲修订：** 研究线路与结论总览图保留在本机，不随仓库推送；[当前Word提纲10项具体修改细则](thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md)复用已核数据，未改写Word正文。
 
 - **2026-10-25人数抽样精度独立验收：** [四包归档、自然48/重点96与精确有限边际、策略共同k修正](../research/workers/personnel_population_curves_v2_20261023/sampling_precision_20261025/LOCAL_ACCEPTANCE.md)。新增4个专题复算脚本和3个定向测试文件均在既有analysis/tests目录；源结果保留，正式合同不变。
 
-- **2026-10-25论文V4修订：** [修订提纲](thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx)保留两项方法与完整实证主线，修正折内名单、人工判断及控制实验表述，补齐D10形成敏感性、速度×难度和门洞人数结果。原Pro稿保留；仅修订解释，未新增实验。研究台保留完整研究，展示整理状态见[当前进度](thesis_main/四线程成果与论文主线核对_20261015.md)。
+- **2026-10-25论文V4修订：** 历史V4修订（旧文件名 `Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx`，当前本地未留此文件；当前草稿与采用数字见[资料入口](thesis_main/论文撰写资料入口_20261027.md)）保留两项方法与完整实证主线，修正折内名单、人工判断及控制实验表述，补齐D10形成敏感性、速度×难度和门洞人数结果。原Pro稿保留；仅修订解释，未新增实验。研究台保留完整研究，展示整理状态见[当前进度](thesis_main/四线程成果与论文主线核对_20261015.md)。
 
 - **2026-10-25人员分类展示整理：** [主要方法、核心效果对照与其它用途](../research/workers/personnel_classification_guide_20261025/README.md)接入既有人员六步；7套ALL/楼外名单、四重点与71条件，保留旧配比/人数标签；仅整理保存结果。
 

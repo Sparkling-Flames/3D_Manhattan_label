@@ -57,15 +57,25 @@ def scored_source():
     return bundle, difficulty, references, quality, bindings, copy.deepcopy(quality), metadata
 
 
-def test_shared_scores_use_complete_population_and_typed_binding_booleans():
+@pytest.mark.parametrize('version',['quality_b8l2_d10_20261017_v2','quality_workers_v2_20261019','quality_workers_v21_20261028'])
+def test_shared_scores_use_complete_population_and_typed_binding_booleans(version):
     from tools.thesis_main.analysis.current_annotation_context_20261017 import build_scored_context
-    args=scored_source(); before=copy.deepcopy(args)
+    args=scored_source();args[-1]['version']=version; before=copy.deepcopy(args)
     result=build_scored_context(*args)
     assert result['quality_records'][0]['B8L2']==73
     assert result['quality_records'][0]['D10']==75
     assert result['binding_records'][0]['target_binding_unique'] is True
     assert result['quality_records'][0]['is_oos'] is False
     assert args==before
+
+
+@pytest.mark.parametrize('release,version',[('v2.1','quality_workers_v2_20261019'),('v2','quality_workers_v21_20261028'),('v1','quality_workers_v21_20261028')])
+def test_explicit_score_context_cannot_cross_data_releases(tmp_path,release,version):
+    import json
+    from tools.thesis_main.analysis.current_annotation_context_20261017 import load_scored_context
+    source=tmp_path/'context.json';source.write_text(json.dumps(dict(version=version)),encoding='utf8')
+    with pytest.raises(ValueError,match='quality_data_release_mismatch'):
+        load_scored_context(dict(manifest=dict(data_release=release)),source)
 
 
 @pytest.mark.parametrize('change',['missing_id','identity','mask','oos','bool','binding','qualified','reference_image'])

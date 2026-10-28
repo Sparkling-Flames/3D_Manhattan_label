@@ -1,0 +1,27 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const dir=path.resolve(__dirname,'../research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_diagnostic');
+const html=fs.readFileSync(path.join(dir,'ceiling-review.html'),'utf8');
+const elements={},inputs=['keep_original_heights','adopt_flat_diagnostic','adopt_majority_height_plane','multiple_heights_need_edit','uncertain'].map(value=>({value,checked:false}));
+const element=id=>elements[id]??=( {value:'',textContent:'',innerHTML:''} );
+let mounted=0,blob;
+const context={window:{WorkbenchGeometry:{mount(){mounted++}}},document:{getElementById:element,querySelectorAll:()=>inputs,querySelector:()=>inputs.find(x=>x.checked),createElement:()=>({click(){}})},localStorage:{getItem:()=>null,setItem(){}},Blob:class{constructor(parts){blob=parts.join('')}},URL:{createObjectURL:()=>'',revokeObjectURL(){}},setTimeout:()=>{},Date,console};
+vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(dir,'ceiling-review-data.js'),'utf8'),context);
+const rows=context.window.CEILING_REVIEW.cases;assert.equal(rows.length,30);
+const catalog=JSON.parse(fs.readFileSync(path.join(dir,'../REFERENCE_CATALOG.json'),'utf8'));
+const candidates=JSON.parse(fs.readFileSync(path.join(dir,'CANDIDATES.json'),'utf8'));
+const eligible=candidates.filter(r=>{const a=catalog.find(a=>a.target_id===r.target_id);return a.current_target&&!a.image_analysis_blocked&&!a.image_analysis_hold_reasons.length});
+assert.deepEqual(Array.from(rows,r=>r.target_id).sort(),eligible.map(r=>r.target_id).sort());
+assert(!rows.some(r=>['wc2JMjhGNzB-14','7y3sRwLe3Va-16','wc2JMjhGNzB-23'].includes(r.image)));
+assert.equal(rows.filter(r=>r.image==='wc2JMjhGNzB-26').length,1);
+for(const r of rows){assert(fs.existsSync(path.resolve(dir,r.photo)));assert.equal(r.baseline_points.length,r.points_1024x512.length)}
+vm.runInContext([...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1],context);
+assert.equal(mounted,1);assert(inputs.every(x=>!x.checked));
+inputs[0].checked=true;inputs[0].onchange();element('note').value='保留原顶高';element('note').oninput();
+element('next').onclick();assert.equal(mounted,2);assert(inputs.every(x=>!x.checked));
+element('prev').onclick();assert.equal(element('note').value,'保留原顶高');assert(inputs[0].checked);
+element('export').onclick();const exported=JSON.parse(blob);assert.equal(exported.records.length,30);assert.equal(exported.records[0].decision,'keep_original_heights');assert.equal(exported.records[1].decision,null);
+element('clear').onclick();assert(inputs.every(x=>!x.checked));
+assert(html.includes('value="adopt_majority_height_plane"'));
+inputs[2].checked=true;inputs[2].onchange();element('note').value='以第1、2、3点高度为准';element('note').oninput();
+element('export').onclick();const majority=JSON.parse(blob).records[0];assert.equal(majority.decision,'adopt_majority_height_plane');assert.equal(majority.note,'以第1、2、3点高度为准');
+console.log('PASS: 30 current eligible references, empty defaults, navigation, draft restoration, export identity and clear');

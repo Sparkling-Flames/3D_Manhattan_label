@@ -54,7 +54,7 @@ def pack_image(image, scores, root):
             result['difficulty'] = dict(image['difficulty'], label=revised['current_class'])
             result['scene'] = dict(image['scene'], conditional_difficulty=revised['current_class'])
             result['notes'] = [*image.get('notes', []),
-                '2026-10-18用户确认难度为中等；历史r2统计尚未按此修订重分组。']
+                '当前用户确认难度为中等；历史r2统计尚未按此修订重分组。']
     result.pop('thumbnail_url', None)
     result.pop('original_url', None)
     available = [p for p in (image.get('original_path'), image.get('thumbnail_path')) if p and (root / p).is_file()]

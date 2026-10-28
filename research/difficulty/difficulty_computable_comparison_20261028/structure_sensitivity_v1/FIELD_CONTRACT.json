@@ -1,0 +1,89 @@
+{
+  "version": "structure_sensitivity_v1_20261028",
+  "encoding": "UTF-8; CSV blank means missing, never implicit zero; gz files are ordinary gzip CSV",
+  "identities": {
+    "curve_population": "ordinary_manual; 177 images, frozen pool_id/reference_id/worker pool; N=pool_n",
+    "classification_population": "original history_eligible Manual, 5785 records/179 images; not the same population as curves",
+    "heldout_building": "ALL is descriptive all-history fit; all other folds exclude that building from training; team relabeling uses the team's held-out-building fold",
+    "methods": {"published": "frozen DSTRUCT_K3", "original_common": "original feature definition refitted on common eligibility", "overall_common": "overall structure only", "geometry_common": "overall and challenge response"},
+    "class_id": "maximum-overlap aligned to original within fold; raw_class_id retains fitted order; unknown is not a fourth class"
+  },
+  "source_paths_relative_to_repository": {
+    "pools": "research/workers/personnel_population_curves_v2_20261023/design/ACTUAL_POOLS.csv",
+    "geometry_conditions": "research/workers/personnel_population_curves_v2_20261023/inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv",
+    "Q_and_states": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_precision26/results_stage2/HYBRID_POOLED256_DISPLAY_CURVES.csv.gz",
+    "V": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/analysis_geometry26/results_stage2/GEOMETRY_PATH_PRECISION.csv.gz",
+    "history": "analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/01/features/RAW_CONDITION_RESPONSE_RECORDS.csv.gz",
+    "frozen_features": "analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/01/features/HISTORY_FEATURES_ALL_LOBO.csv.gz",
+    "frozen_labels": "analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/01/classifications/NEW_METHOD_LABELS_ALL_LOBO.csv.gz",
+    "frozen_transform_code": "analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/03/classifications/code/build_condition_response_classes.py",
+    "composition": "research/workers/personnel_mixture_comparison_20261022/configurations/{PANELS_USED.csv,PANEL_TEAMS.csv.gz,TEAM_MEMBERS.csv.gz,ENDPOINT_OUTCOMES_manual.csv.gz}",
+    "ABC": "analysis_results/personnel_exchange_discrimination_audit_20261025/unpacked/{02A/results/screen,04A1/results/confirm,05/results/size_paths}/EVENT_METRICS.csv.gz"
+  },
+  "conditions": {
+    "ref_turn5": "reference effective turn count, excluding turns <=5 degrees; not historical raw point-pair count",
+    "ref_H": "saved self-occlusion measure under the declared solid-wall footprint; not furniture occlusion",
+    "ref_short_edges": "saved count of edges shorter than 4% of perimeter with both endpoint turns >=15 degrees",
+    "ref_min_horizontal_deg": "saved minimum horizontal angular span, degrees",
+    "structure_group": "H_positive takes priority over short_H0; plain_H0 has H=0 and no short edge",
+    "challenge": "ref_turn5>6 OR ref_H>0 OR ref_short_edges>0; plain is complement; not a replacement difficulty label",
+    "scope": "all, turn_band, mechanism or exact reference turn count; groups overlap across scopes, never sum them as disjoint populations"
+  },
+  "curve_fields": {
+    "capacity": "fixed candidate support N>=30 or N>=35, then metric-specific complete curve",
+    "point": "k as string or full for actual N; k2 is deferred and retained only in source rows",
+    "common_curve": "all required points have a finite saved value for this image/metric; missing_points lists excluded points",
+    "Q_mean": "saved mean Q on valid quality support, not failure-filled quality",
+    "Q_p10": "saved linear-interpolated P10",
+    "Q_p10_inverse_cdf": "saved inverse-CDF P10, reported separately",
+    "Q_sd_display": "saved exact finite-population SD or path sample SD according to source estimator; do not replace missing by zero",
+    "actual_consensus_failure_rate": "saved actual execution failure rate; [0,1], not all unscoreable states",
+    "output_unscoreable_rate": "saved output unscoreable rate, distinct from actual failure",
+    "reference_unavailable_rate": "saved unavailable-reference rate",
+    "not_executed_rate": "saved not-executed rate",
+    "V_metrics": "V_floor,V_centroid_h,V_height_h,V_turn5,V_nodes: saved pure-geometry pooled256 mean with original attempted/valid pair counts; no new exact V computation or conversion of its units",
+    "image_equal": "equal mean over fixed eligible image values",
+    "building_equal": "first images equally within building, then buildings equally",
+    "delta": "later marginal estimate minus earlier for the same image; not path-paired individual effect",
+    "positive_images_negative_images": "counts using delta tolerance 1e-10; analogous counts for building averages",
+    "spearman": "descriptive rank correlation with per-image 6->30 marginal change; no covariate adjustment, significance selection or new prediction claim",
+    "source_columns": "CURVE_SOURCE_ROWS and GEOMETRY_SOURCE_ROWS preserve all original fields, including estimators, exact_kind, attempts, valid units, counts and uncertainty; no recomputation or sampled-team deduplication"
+  },
+  "classification_fields": {
+    "ST": "turn_n,short_turn_edges,near_straight_nodes_5deg,unmatched_ref_9, using frozen peer-centered values",
+    "a_c_p": "all, challenge, plain; means first across records within worker/building, then buildings equally",
+    "c_minus_p": "challenge response minus plain response",
+    "native_eligibility": "original frozen manual_geometry; overall >=12 images/3 buildings; geometry additionally plain>=5/2 and challenge>=4/2",
+    "common": "intersection of native eligibility and finite required features; fitting comparisons use same workers",
+    "changed": "aligned label differs from published label on common support",
+    "ARI": "adjusted Rand index of partition vs published, not prediction accuracy",
+    "CLASS_CENTERS": "means of original-unit history features and complete members; no Q/T center used to select classes",
+    "TRANSFORMS": "original robust transformation/PCA parameters and per-fold reporting alignment"
+  },
+  "composition_fields": {
+    "configuration": "C1|C2|C3 counts for all members of the actual team, including fixed background",
+    "valid": "finite metric outcomes in that panel; failures remain missing and are not zero",
+    "total": "population variance E[(Y-EY)^2] over valid team occurrences",
+    "between": "population variance of configuration conditional means, weighted by occurrence counts",
+    "within": "weighted conditional population variances; total=between+within",
+    "between_share": "between/total after panel->image->building equal aggregation of variances; not mean panel shares or predictive R2",
+    "common_panel": "all background/candidate members known under every compared definition; original links and every 924 teams retained"
+  },
+  "ABC_fields": {
+    "identity": "stage+event_id; phase/source_class/target_class/n/m remain original design and must not be pooled as independent observations",
+    "legal": "X,Y pure known same class, Z pure known different class; fixed D and disjoint actual members validated",
+    "reason": "strict_ABC, mixed_block, unknown_block_member, XY_different_class or Z_same_class",
+    "unknown_D": "unknown labels in fixed background, recorded but not a new eligibility gate",
+    "scored": "original ABC_scored and all A/B/C Q finite; independent of legality",
+    "within": "abs(B_Q-A_Q)",
+    "cross": "(abs(C_Q-A_Q)+abs(C_Q-B_Q))/2",
+    "gap": "cross-within",
+    "CB": "C_Q-B_Q on ABC-complete common metric support; not historical standalone CB support",
+    "common_legal": "same frozen event legal under all definitions; its outcome metrics necessarily identical across methods",
+    "frozen_primary_role": "original-fold largest class -> original-fold highest m_hard_turn_n class, source distinct from target; retains original n18/m7 confirm headline",
+    "aggregation": "equal background_target_n levels within block, equal blocks within image; then image equal or equal images within building followed by building equal",
+    "own_legal": "method-specific remaining events; different populations prohibit ranking method effectiveness by means",
+    "events": "scored legal event count for the stated support; neither independent people nor independent images"
+  },
+  "boundaries": ["No official label/reference/roster change", "No new scoring, fusion or arrival paths", "No new ABC team selection", "No RFUSE refit", "No time-response claim", "Author checks are not independent acceptance"]
+}

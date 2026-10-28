@@ -1,0 +1,37 @@
+{
+  "version": "current_image_review_decisions_20261017_v1",
+  "scope": "当前图片级人工裁定；保留原始人数与作答排除，历史快照不追改。pending暂停当前分析，不等于GT错误或永久排除。",
+  "decisions": [
+    {
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "image_code": "b8cTxDM8gDG-04",
+      "status": "pending",
+      "date": "2026-10-17",
+      "source": "用户在接手统计数据任务的直接确认",
+      "source_quote": "是这张,这张也变成待定",
+      "reason": "用户确认这张test图（人工改过GT，原26人/保留24人）应改为待定；待定原因与后续采用范围尚未进一步裁定。"
+    }
+  ],
+  "new_batch_difficulty_decisions": [
+    {
+      "image_id": "2t7WUuJeko7_1a0d730696cc4057b0037a75c8ef6b59",
+      "image_code": "2t7WUuJeko7-02",
+      "difficulty": "中等",
+      "qualifier": "偏简单",
+      "date": "2026-10-17",
+      "source": "用户在接手统计数据任务的直接裁定",
+      "source_quote": "新增的两张图片 都可以归入中等难度(偏简单)",
+      "analysis_included": false
+    },
+    {
+      "image_id": "2t7WUuJeko7_218fdf5321f9482e85e828c56f2c0c94",
+      "image_code": "2t7WUuJeko7-03",
+      "difficulty": "中等",
+      "qualifier": "偏简单",
+      "date": "2026-10-17",
+      "source": "用户在接手统计数据任务的直接裁定",
+      "source_quote": "新增的两张图片 都可以归入中等难度(偏简单)",
+      "analysis_included": false
+    }
+  ]
+}

@@ -17,9 +17,17 @@ function selectRows(rows,s,keys){return rows.filter(r=>keys.every(k=>s[k]==null|
 function matchedReference(a,b){return !!a?.target_id&&a.target_id===b?.target_id&&JSON.stringify(a.points)===JSON.stringify(b.points)&&JSON.stringify(a.floor)===JSON.stringify(b.floor);}
 function sourceLink(path){return path?.startsWith('research/')&&/\.(?:csv(?:\.gz)?|png|jpe?g|svg|pdf)(?:[?#]|$)/i.test(path)?`<a href="../../../${esc(path)}">来源字段与采用范围</a>`:'';}
 function scatter(rows){
- const good=rows.filter(r=>num(r.Q_mean)&&num(r.source_time_median));if(!good.length)return '<p>本条件没有共同Q／来源时间支持。</p>';
- const max=Math.max(...good.map(r=>r.source_time_median),1),W=700,H=245;
- return `<figure class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="当前条件人员绝对Q与来源时间散点图"><path d="M45 12V205H675" fill="none" stroke="#94a3b8"/><text x="48" y="14">Q均分（0–100）</text><text x="400" y="240">来源活动时间中位数（秒；横轴为log1p）</text>${[0,50,100].map(q=>`<text x="12" y="${205-q*1.8}">${q}</text>`).join('')}${[0,max/2,max].map(t=>`<text x="${45+Math.log1p(t)/Math.log1p(max)*610}" y="223">${Math.round(t)}</text>`).join('')}${good.map(r=>`<circle cx="${45+Math.log1p(r.source_time_median)/Math.log1p(max)*610}" cy="${205-r.Q_mean*1.8}" r="4" fill="${r.origin==='new'?'#087f8c':'#b45309'}"><title>${esc(r.worker_id)} · Q ${fmt(r.Q_mean)} · 时间 ${fmt(r.source_time_median)}秒 · Q n=${r.n_quality} / T n=${r.source_time_n}</title></circle>`).join('')}</svg><figcaption>仅绘制同时有Q和时间者；不把来源ID当正式投票资格。绿色为新增来源，橙色为旧批。</figcaption></figure>`;
+ const good=rows.filter(r=>num(r.Q_mean)&&num(r.source_time_median)&&r.source_time_median>=0);if(!good.length)return '<p>本条件没有共同Q／来源时间支持。</p>';
+ const times=good.map(r=>r.source_time_median).sort((a,b)=>a-b),scores=good.map(r=>r.Q_mean).sort((a,b)=>a-b);
+ const median=a=>{const i=Math.floor(a.length/2);return a.length%2?a[i]:(a[i-1]+a[i])/2;};
+ const min=Math.log1p(times[0]),max=Math.log1p(times.at(-1)),pad=(max-min||0.5)*0.06,lo=Math.max(0,min-pad),hi=max+pad;
+ const qpad=Math.max(2,(scores.at(-1)-scores[0])*0.1),qstepBase=10**Math.floor(Math.log10((scores.at(-1)-scores[0]+2*qpad)/4));
+ const qstep=[1,2,5,10].map(v=>v*qstepBase).find(v=>v>=(scores.at(-1)-scores[0]+2*qpad)/4),qlo=Math.max(0,Math.floor((scores[0]-qpad)/qstep)*qstep),qhi=Math.min(100,Math.ceil((scores.at(-1)+qpad)/qstep)*qstep);
+ const x=t=>660-(Math.log1p(t)-lo)/(hi-lo)*600,y=q=>255-(q-qlo)/(qhi-qlo)*235,mt=median(times),mq=median(scores);
+ const ticks=Array.from({length:5},(_,i)=>Math.expm1(hi-(hi-lo)*i/4));
+ const rounded=ticks.map(Math.round),tickLabels=new Set(rounded).size===ticks.length?rounded:ticks.map(fmt);
+ const qticks=Array.from({length:Math.round((qhi-qlo)/qstep)+1},(_,i)=>qlo+i*qstep);
+ return `<figure class="chart"><svg viewBox="0 0 700 310" style="max-height:390px" role="img" aria-label="当前条件的人员质量与耗时，右上方更快且质量更高；虚线为中位数"><path d="M60 20V255H660" fill="none" stroke="#94a3b8"/><text x="63" y="14">Q均分（局部范围，满分100）</text><text x="660" y="304" text-anchor="end">来源活动时间中位数（秒，对数刻度；越往右越快）</text>${qticks.map(q=>`<text x="50" y="${y(q)+4}" text-anchor="end">${fmt(q)}</text>`).join('')}${ticks.map((t,i)=>`<text x="${x(t)}" y="274" text-anchor="middle">${tickLabels[i]}</text>`).join('')}<path d="M${x(mt)} 20V255 M60 ${y(mq)}H660" fill="none" stroke="#64748b" stroke-dasharray="5 4"><title>时间中位数 ${fmt(mt)} 秒；Q中位数 ${fmt(mq)} 分</title></path><text x="655" y="34" text-anchor="end">较快 · 较高Q</text>${good.map(r=>`<circle cx="${x(r.source_time_median)}" cy="${y(r.Q_mean)}" r="4" fill="${r.origin==='new'?'#087f8c':'#b45309'}"><title>${esc(r.worker_id)} · Q ${fmt(r.Q_mean)} · 时间 ${fmt(r.source_time_median)}秒 · Q n=${r.n_quality} / T n=${r.source_time_n}</title></circle>`).join('')}</svg><figcaption>纵轴按当前数据范围放大，Q仍为0–100分。虚线为当前筛选下${good.length}名同时有Q和时间的人员中位数：Q ${fmt(mq)}分、时间 ${fmt(mt)}秒；分区仅作相对比较，不是人员等级。Q和时间的记录支持可能不同。绿色为新增来源，橙色为旧批。</figcaption></figure>`;
 }
 function profilesHTML(data,s){
  const rows=filterProfiles(data.profiles,s);if(!rows.some(r=>r.worker_id===s.worker))s.worker=rows[0]?.worker_id||'';

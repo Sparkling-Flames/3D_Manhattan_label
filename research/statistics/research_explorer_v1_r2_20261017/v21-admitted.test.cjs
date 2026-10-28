@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=__dirname;
+const node=()=>({children:[],textContent:'',append(x){this.children.push(x);}});
+const dom={admittedAvailable:node(),admittedFixed:node()};
+const context={window:{},document:{getElementById:id=>dom[id],createElement:()=>node()}};
+vm.createContext(context);
+vm.runInContext(fs.readFileSync(path.join(root,'v21-admitted-data.js'),'utf8'),context);
+const data=context.window.V21_ADMITTED;
+assert.equal(data.checks.pools,31);assert.equal(data.checks.records,231);assert.equal(data.rows.length,18);
+vm.runInContext(fs.readFileSync(path.join(root,'v21-admitted.js'),'utf8'),context);
+assert.equal(dom.admittedAvailable.children.length,3);assert.equal(dom.admittedFixed.children.length,6);
+const texts=rows=>rows.children.map(row=>row.children.map(cell=>cell.textContent));
+assert.deepEqual(texts(dom.admittedAvailable)[1],['新增目标','3','63.94','30 / 28 / 30','4.26%','30 / 28 / 30']);
+assert.deepEqual(texts(dom.admittedFixed)[2],['新增目标','3','53.98','15 / 14 / 15','8.29%','15 / 14 / 15']);
+assert.deepEqual(texts(dom.admittedFixed)[3],['新增目标','6','62.47','15 / 14 / 15','13.07%','15 / 14 / 15']);
+console.log('admitted-space displayed scopes, denominators, quality and actual failure verified');

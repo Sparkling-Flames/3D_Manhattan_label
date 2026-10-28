@@ -647,13 +647,13 @@
     },
     {
       "id": "score_failure",
-      "label": "失败／不可评分",
-      "short": "一次尝试没得到指定指标的可用值，仍计入尝试分母。",
-      "detail": "无连接、节点不足、无效底面、完整几何不可用及按设计暂缓等保留各自状态。Q失败可仍有结构数或部分底面诊断。均分仅用有效Q；失败率用全部相应尝试，并报告新增失败与恢复评分。",
+      "label": "输出失败与评价不可用",
+      "short": "输出失败与指定指标不可用是不同状态，各按明确分母统计。",
+      "detail": "无连接、节点不足等实际共识失败按已执行且非延期的尝试统计；无效输出、缺参考、未执行和按设计延期分别记录。Q不可用仍可能有结构数或底面诊断；均分仅用有效Q，历史宽口径未评分率不等同实际共识失败率。",
       "unit": "次数/比例/百分点",
-      "better_direction": "失败率通常越低越好，原因需分列",
+      "better_direction": "实际失败率通常越低越好，各类不可用原因需分列",
       "denominator_or_support": "端点、事件或路径尝试分母必须明确，不能混用去重端点数与引用次数。",
-      "avoid_confusion": "缺失不等于0分；研究设计暂缓与真正输出失败可分别解释，不能删掉后只报告高均分。",
+      "avoid_confusion": "缺失不等于0分；延期、未执行或缺参考不能归入已执行融合失败。",
       "source_paths": [
         "research/same_room/same_room_large_block_rebuilt_20261023/FIELD_CONTRACT.md",
         "research/workers/personnel_population_curves_v2_20261023/code/analyze_natural_curves.py"

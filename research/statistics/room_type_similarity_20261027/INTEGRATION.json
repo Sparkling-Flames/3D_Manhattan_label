@@ -1,0 +1,148 @@
+{
+  "study_id": "room_type_similarity_20261027",
+  "repository_relative_path": "research/statistics/room_type_similarity_20261027",
+  "data_release": "human_v2",
+  "adopted_commit": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "calculation_started_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "core_inputs_changed_between_commits": false,
+  "main_condition": "manual",
+  "main_layer": "ordinary",
+  "new_fusion_endpoints": 0,
+  "new_scores": 0,
+  "new_personnel_classes": 0,
+  "entry_report": "REPORT_ZH.md",
+  "claim_index": "CLAIM_INDEX_ZH.csv",
+  "sources": "SOURCE_DEPENDENCIES.json",
+  "field_contract": "FIELD_CONTRACT.md",
+  "reproduce": "REPRODUCE.md",
+  "datasets": [
+    {
+      "file": "inputs/annotations.csv.gz",
+      "key": [
+        "object_id"
+      ],
+      "rows": 10439,
+      "links": [
+        "worker_id",
+        "image_key",
+        "image_id",
+        "reference_id",
+        "reference_version",
+        "pool_id"
+      ],
+      "role": "minimal frozen original-answer scalar evidence plus explicit qualification"
+    },
+    {
+      "file": "inputs/images.csv",
+      "key": [
+        "image_key"
+      ],
+      "rows": 313,
+      "role": "image by condition inventory; formal mean and frozen purpose/difficulty/geometry"
+    },
+    {
+      "file": "inputs/image_labels.csv",
+      "key": [
+        "image_id"
+      ],
+      "rows": 261,
+      "role": "adopted room purpose and provenance; unknown/multifunction/missing preserved"
+    },
+    {
+      "file": "inputs/annotation_geometry.jsonl.gz",
+      "key": [
+        "object_id"
+      ],
+      "rows": 10439,
+      "role": "frozen original/received/effective/reference coordinates; no new fusion"
+    },
+    {
+      "file": "results/image/CROSS_BUILDING_IMAGE_PAIRS.csv.gz",
+      "key": [
+        "pair_key"
+      ],
+      "rows": 12289,
+      "role": "physical unordered cross-building image pairs; not independent units"
+    },
+    {
+      "file": "results/image/MATCHED_THREE_IMAGE_EVENTS.csv.gz",
+      "key": [
+        "regime",
+        "target_key",
+        "source_same_key",
+        "source_different_key"
+      ],
+      "rows": 44694,
+      "members_field": "common_workers",
+      "member_separator": "|",
+      "role": "T/S/C shared-person matching, not ABC fusion teams"
+    },
+    {
+      "file": "results/image/LOBO_IMAGE_PREDICTIONS.csv.gz",
+      "key": [
+        "metric",
+        "method",
+        "image_key"
+      ],
+      "rows": 4248,
+      "role": "whole-building-held-out image mean predictions"
+    },
+    {
+      "file": "results/personal/OOF_Q.csv.gz",
+      "key": [
+        "object_id",
+        "method"
+      ],
+      "rows": 40033,
+      "role": "whole-building-held-out self-excluded relative Q"
+    },
+    {
+      "file": "results/personal/OOF_D10.csv.gz",
+      "key": [
+        "object_id",
+        "method"
+      ],
+      "rows": 40033,
+      "role": "same targets and methods; D10 diagnostic"
+    },
+    {
+      "file": "results/personal/OOF_annotation_turn5.csv.gz",
+      "key": [
+        "object_id",
+        "method"
+      ],
+      "rows": 40033,
+      "role": "relative effective turn count"
+    },
+    {
+      "file": "cases_history/CASE_GEOMETRY.jsonl.gz",
+      "key": [
+        "object_id"
+      ],
+      "rows": 104,
+      "role": "case complete coordinates including reference; original photos in case package"
+    },
+    {
+      "file": "cases_history/CASE_VISUAL_LOCATIONS.json",
+      "role": "image/window/reference-side indices for research-table visual linking"
+    }
+  ],
+  "figures": [
+    "figures/I01_PURPOSE_DIFFICULTY.png",
+    "figures/I02_MATCHED_PURPOSE_SIMILARITY.png",
+    "figures/I03_LOBO_IMAGE_PREDICTION.png",
+    "figures/I04_ALL_THREE_SAME_DIFFICULTY.png",
+    "figures/F_PERSONAL_CROSS_BUILDING_MODELS.png",
+    "cases_history/C01_COMPLETE_ANSWERS.png",
+    "cases_history/C02_COMMON_PERSON_TURNS.png"
+  ],
+  "adoption": {
+    "purpose": "small conditional image-level calibration signal",
+    "personal_history": "adopt stable general history",
+    "person_purpose_interaction": "no useful pooled incremental predictive gain after protecting general baseline",
+    "classification": "existing labels unchanged",
+    "population_curves": "existing Manual256 and historical32 paired policy results referenced only"
+  },
+  "qualification_policy": "No zero fill of Q or invalid time; existing quality and vote flags retained. Descriptive features do not restore formal use.",
+  "evaluation_identity": "internal leave-building-out and finite method comparisons on current observed inventory; not newly collected external validation"
+}

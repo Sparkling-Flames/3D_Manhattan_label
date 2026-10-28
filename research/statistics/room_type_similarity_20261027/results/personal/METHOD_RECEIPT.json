@@ -1,0 +1,49 @@
+{
+  "condition": "manual",
+  "layer": "ordinary",
+  "records": 5719,
+  "images": 177,
+  "buildings": 22,
+  "people": 60,
+  "source_input_sha256": "03f10f887f522455531bcdda9c103cc1b9c81cc9283c038eb108c33781b3045d",
+  "numeric_reference_predictors": [
+    "ref_turn5",
+    "ref_short_edges",
+    "ref_min_horizontal_deg",
+    "ref_radius_p90_h",
+    "ref_H"
+  ],
+  "predictor_availability": "Known worker identity, frozen purpose/difficulty, and known reference structural metadata. Reference-geometry model is diagnostic, not a GT-free deployment claim.",
+  "target_definition": "value minus same-image mean of all OTHER formally evaluable workers; target is evaluation-only",
+  "target_building_exclusion": "entire building from all fit, histories, and hyperparameter selection",
+  "model_definitions": {
+    "person_ridge": [],
+    "person_geometry": [
+      "difficulty",
+      "geometry"
+    ],
+    "person_purpose": [
+      "purpose"
+    ],
+    "person_geometry_purpose": [
+      "difficulty",
+      "geometry",
+      "purpose"
+    ]
+  },
+  "alpha_candidates": [
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "inner_folds": 5,
+  "seed": 2026102703,
+  "prediction_centering": "Subtract mean prediction among known target worker identities without using target outcomes.",
+  "weighting": "Training equal total image weight, normalized to mean record weight one; evaluation mean image errors, separately building equal.",
+  "new_fusion_endpoints": 0,
+  "new_classification": false,
+  "legacy_admission": "No retroactive v1 development gate; formal current v2 quality qualification only.",
+  "D10_sensitivity": "Same records and Q-selected per-fold alpha, no new outcome-specific hyperparameter search."
+}

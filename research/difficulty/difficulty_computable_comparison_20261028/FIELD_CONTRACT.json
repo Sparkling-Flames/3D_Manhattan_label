@@ -1,0 +1,38 @@
+{
+  "schema": "difficulty_computable_comparison_20261028_v1",
+  "input_identity": "object_id unique; pool_id membership exactly matches ACTUAL_POOLS; reference_id equals current target; ordinary_manual only",
+  "source_files": [
+    "research/workers/personnel_population_curves_v2_20261023/design/ACTUAL_POOLS.csv",
+    "research/workers/personnel_population_curves_v2_20261023/inputs/RAW_POOL_MEMBER_FEATURES.csv.gz",
+    "research/workers/personnel_population_curves_v2_20261023/inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv",
+    "research/workers/personnel_population_curves_v2_20261023/inputs/RECORD_ELIGIBILITY_TIME_LINK.csv.gz"
+  ],
+  "outcomes": {
+    "reduced": "saved indicator fewer effective turns than reference; MSE is Brier loss after clipping linear prediction to [0,1]",
+    "turn_deficit": "saved nonnegative effective-turn deficit; MSE in turns squared",
+    "bottom_bias_abs": "absolute signed mean bottom-y bias among <=9degree matched rays, pixels in 1024x512; not mean absolute corner error",
+    "unmatched": "fraction of reference vertices not matched within 9degree; MSE, diagnostic not semantic correspondence",
+    "Q": "saved B8L2, MAE in score points",
+    "time_old": "log positive source-recorded seconds, inherited_v1_audited_source/usable only",
+    "time_new": "log positive source-recorded seconds, user_processed_reported_not_raw_log_replayed/reported_processed only"
+  },
+  "outputs": {
+    "INPUT_RECORDS.csv.gz": "frozen joined 5719 records; raw fields unchanged; additional design/outcome columns",
+    "OOF_PREDICTIONS.csv.gz": "unique object_id/outcome/model; observed, prediction, raw_prediction; mae,mse,bias per record",
+    "IMAGE_LOSS.csv": "outcome/model/building/image_id; within-image mean losses",
+    "BUILDING_LOSS.csv": "outcome/model/building; equal-image mean losses",
+    "SUMMARY.csv": "outcome/model; equal-building mean losses",
+    "COMPARISONS.csv": "model vs reference; improvement=reference_loss-model_loss; positive better; paired building conditional interval; primary loss fixed in PLAN",
+    "SOURCE_SUMMARY.csv": "same OOF predictions, losses aggregated separately within source; not source-only refitting except time",
+    "GRADE_SUMMARY.csv": "same OOF predictions, losses aggregated separately by unchanged grade",
+    "COEFFICIENTS.csv": "training-fold coefficients, numeric per training SD; not causal effects; categorical penalized and not directly comparable to numeric",
+    "SUPPORT.csv": "per-outcome effective support/missing count; time missing count includes other source",
+    "FOLD_SUPPORT.csv": "train/test support and workers unseen outside heldout building",
+    "TIME_SUPPORT.csv": "all records partitioned by source/status",
+    "WORKER_BUILDING_SUPPORT.csv": "existing worker-building observation graph counts",
+    "CHECKS.json": "join, support and fold validation receipt"
+  },
+  "missingness": "No zero-filled outcomes or time. Conditional short span design is zero only for no-short-edge with explicit indicator; missing short span when short edges exist is error. No same-target duration claim for source time.",
+  "model_scope": "22-building retrospective LOBO, ordinary Manual only; no new official difficulty labels; no personnel refit, fusion or scoring",
+  "uncertainty": "5000 paired building resamples of existing OOF losses; overlapping training sets, selected existing buildings, no refitting; descriptive conditional intervals, not causal or fresh external validation"
+}

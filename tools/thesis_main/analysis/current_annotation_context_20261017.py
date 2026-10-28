@@ -11,8 +11,9 @@ ROOT = Path(__file__).resolve().parents[3]
 def apply_difficulty_overrides(records, overrides=None):
     """仅叠加已确认难度；冻结评分、参考、资格和历史快照不回写。"""
     if overrides is None:
-        path = ROOT/'research/difficulty/difficulty_user_revision_20261018/RECEIPT.json'
-        overrides = json.loads(path.read_text(encoding='utf-8'))['records']
+        pointer = json.loads((ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json').read_text(encoding='utf-8'))
+        paths = pointer.get('override_receipts', ['research/difficulty/difficulty_user_revision_20261018/RECEIPT.json'])
+        overrides = [r for path in paths for r in json.loads((ROOT/path).read_text(encoding='utf-8'))['records']]
     result = copy.deepcopy(records)
     for row in result:
         for review in overrides:
@@ -100,7 +101,7 @@ def load_current_context(bundle):
 def build_scored_context(bundle, difficulty_records, reference_catalog, quality_records, binding_records,
                          qualified_records, metadata):
     """读取完整共同评分；严格核对身份、用途掩码和两个指标的共同分母。"""
-    if metadata['version'] not in ('quality_b8l2_d10_20261017_v2','quality_workers_v2_20261019') or (
+    if metadata['version'] not in ('quality_b8l2_d10_20261017_v2','quality_workers_v2_20261019','quality_workers_v21_20261028') or (
             metadata['primary_metric'],metadata['parallel_metric']) != ('B8L2','D10'):
         raise ValueError('unsupported_shared_quality_context')
     quality_records=copy.deepcopy(quality_records); binding_records=copy.deepcopy(binding_records)
@@ -166,6 +167,9 @@ def build_scored_context(bundle, difficulty_records, reference_catalog, quality_
 
 def load_scored_context(bundle, source=None):
     """显式新版消费者入口；共同评分生成器继续使用load_current_context，避免自读循环。"""
+    if bundle['manifest'].get('data_release')=='v2.1' and source is None:
+        source=ROOT/'research/data/releases/v2.1/CROSS_MODULE_INPUTS.json'
+        if not source.exists():raise ValueError('v21_scores_not_run: explicit v2.1 score context required')
     if bundle['manifest'].get('data_release')=='v2' and source is None:
         source=ROOT/'research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json'
         if not source.exists():
@@ -175,7 +179,8 @@ def load_scored_context(bundle, source=None):
     def rows(key):
         with (ROOT/metadata[key]).open(encoding='utf-8-sig',newline='') as stream:return list(csv.DictReader(stream))
     metadata=read(source)
-    if (bundle['manifest'].get('data_release')=='v2') != (metadata['version']=='quality_workers_v2_20261019'):
+    expected={'v2':'quality_workers_v2_20261019','v2.1':'quality_workers_v21_20261028'}.get(bundle['manifest'].get('data_release'),'quality_b8l2_d10_20261017_v2')
+    if metadata['version']!=expected:
         raise ValueError('quality_data_release_mismatch')
     quality, bindings = rows('full_inventory_with_metric_eligibility'), rows('all_pre_score_bindings')
     revision = bundle['manifest'].get('effective_input_revision')
@@ -195,12 +200,15 @@ def load_scored_context(bundle, source=None):
         bindings = [dict(reassessment[row['object_id']]['binding'],
                          target_binding_unique=reassessment[row['object_id']]['policy']['target_binding_unique'])
                     if row['object_id'] in reassessment else row for row in bindings]
-    result = build_scored_context(bundle,read(ROOT/metadata['difficulty_records']),read(ROOT/metadata['reference_catalog']),
+    difficulty=read(ROOT/metadata['difficulty_records'])
+    if isinstance(difficulty,dict):difficulty=difficulty['records']
+    result = build_scored_context(bundle,difficulty,read(ROOT/metadata['reference_catalog']),
         quality, bindings, rows('recommended_qualified_scores'),metadata)
     result['input_revision'] = revision
     result['difficulty_records'] = apply_difficulty_overrides(result['difficulty_records'])
-    result['difficulty_pointer'] = dict(version='difficulty_user_revision_20261018',
-        details='research/difficulty/difficulty_user_revision_20261018/current_261.json')
+    pointer = json.loads((ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json').read_text(encoding='utf-8'))
+    result['difficulty_pointer'] = dict(version=pointer['version'],
+        details=pointer.get('context_details', 'research/difficulty/difficulty_user_revision_20261018/current_261.json'))
     if revision == 'confirmed_coordinate_repair_v1_20261018':
         result['score_context_delta'] = 'research/data/processed_input_review_20261018/quality_delta.csv'
     return result

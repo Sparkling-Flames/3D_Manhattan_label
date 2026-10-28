@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261027_v57_sampling256_room_type_scoping",
-  "inventory_date": "2026-10-27",
+  "catalog_version": "research_catalog_20261028_v61_difficulty_definition_computable_difficulty_difficulty_comparison_wording_dependencies_external_review_scope_structure_sensitivity_accepted",
+  "inventory_date": "2026-10-28",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -9,6 +9,18 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "外部粗审独立核对：失败/版本误读、类别历史Q、多空间12/41曲线覆盖",
+          "path": "research/statistics/external_review_response_20261028/README.md"
+        },
+        {
+          "text": "研究讨论个人讲解稿：研究台路线、具体结果、术语参数与有目的的补实验讨论",
+          "path": "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md"
+        },
+        {
+          "text": "论文撰写资料：数学定义、256/32、各专题完整来源与同用途补充；修订提纲已更新",
+          "path": "docs/thesis_main/论文撰写资料入口_20261027.md"
+        },
         {
           "text": "256条自然曲线与32条历史策略独立审查：新增排列、端点、分项及关键统计复算通过，旧来源保留",
           "path": "research/statistics/pro_return_review_20261023/population256_20261027/README.md"
@@ -340,6 +352,18 @@
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
         {
+          "text": "结构条件曲线与DSTRUCT敏感性已独立核对：均值/低尾分离、名单变化及原团队重聚合",
+          "path": "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.md"
+        },
+        {
+          "text": "已执行177图楼外比较：保留三档工作分层，几何补充结构解释；非自动定档或最优标准，人员方法依赖与重算成本见第7节",
+          "path": "research/difficulty/difficulty_computable_comparison_20261028/README.md"
+        },
+        {
+          "text": "跨领域定义与方法史；人工判定表和独立复核优先为未采用的历史建议，固定面板比较已完成",
+          "path": "docs/thesis_main/topics/difficulty/图片难度定义_跨领域依据与复核建议_20261028.md"
+        },
+        {
           "text": "OOS独立统计与28图复核：斜墙、斜顶、多标高顶/地面和目标范围分别记录；同房斜墙角度不写死",
           "path": "research/difficulty/difficulty_mechanisms_v2_20261020/scope_closeout_20261022/OOS_REVIEW_20261024.md"
         },
@@ -429,6 +453,10 @@
       "description": "多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "结构条件曲线与DSTRUCT敏感性已独立核对：均值/低尾分离、名单变化及原团队重聚合",
+          "path": "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.md"
+        },
         {
           "text": "自然256＋精确边际与历史策略32：新来源归档、只读接口及独立审查",
           "path": "research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/README.md"
@@ -819,8 +847,8 @@
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
         {
-          "text": "同类房间用途相似性初步盘点：覆盖/描述，相关性及预测增量待Pro实算",
-          "path": "research/statistics/room_type_similarity_scoping_20261027/README.md"
+          "text": "同用途房间：关键结果独立复算通过；图片预测有小幅增量，个人用途修正无增量；补充研究归档",
+          "path": "research/statistics/room_type_similarity_20261027/independent_review_20261027/README.md"
         },
         {
           "text": "2026-10-22下载来源归档：1616份选入源文件、七份完整事件流及明确依赖缺口；归档不等于复算",
@@ -12437,12 +12465,12 @@
       "id": "MAT-room_type_similarity_scoping_20261027",
       "title": "同类房间用途相似性：标签覆盖与描述统计初步盘点",
       "theme": "statistics",
-      "type": "preliminary / 后续交Pro实算",
+      "type": "preliminary / 已接续正式返回与独立审查",
       "date": "20261027",
       "source_path": "research/data/releases/v2/analysis_input/data.json.gz",
       "current_path": "research/statistics/room_type_similarity_scoping_20261027",
       "source": "主线程复用既有coarse_type与冻结v2证据，盘点用途标签、普通原答资格、人员和跨建筑图对支持；不同物理房间的同用途与旧同房视角区分",
-      "adoption_status": "preliminary：覆盖和图片等权描述可作为后续设计依据；相关性、个人用途表现重复性及预测增量尚未实算，后续交Pro，不标为完成验证",
+      "adoption_status": "历史前期盘点：覆盖和描述保留；后续相关性与预测研究及独立核对已完成，当前采用建议见同用途正式研究审查入口",
       "verification_status": "主线程SCOPE_CHECK：10439库存/261图；普通Manual5719份177图60人22楼、Semi901份32图59人12楼；主线程报告2项测试通过；本线程仅登记路径及目录核验",
       "availability": "本地README、PRO_TASK、8张CSV与SCOPE_CHECK可读；未修改该专题内容，未新增融合评分分类或预测",
       "relationships": [
@@ -12458,7 +12486,337 @@
         "research/statistics/room_type_similarity_scoping_20261027/CROSS_BUILDING_PAIR_SUPPORT.csv",
         "research/statistics/room_type_similarity_scoping_20261027/SCOPE_CHECK.json",
         "tools/thesis_main/analysis/room_type_similarity_scoping_20261027.py",
-        "tests/test_room_type_similarity_scoping_20261027.py"
+        "tests/test_room_type_similarity_scoping_20261027.py",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/README.md"
+      ]
+    },
+    {
+      "id": "MAT-room_type_similarity_20261027",
+      "title": "同用途房间重复性：四包归档与独立审查",
+      "theme": "statistics",
+      "type": "补充研究 / 独立复算",
+      "date": "20261027",
+      "source_path": "research/statistics/room_type_similarity_20261027/REPORT_ZH.md",
+      "current_path": "research/statistics/room_type_similarity_20261027",
+      "source": "用户提供Pro同用途房间01—04四包；主线程回连冻结v2、重聚合、重拟合关键模型与核对精确匹配。不同物理房间的同用途研究，与同房跨视角分开",
+      "adoption_status": "保留为图片条件补充研究，暂不新增论文主章节：用途使161图均Q预测MAE减少0.379（约8.3%），个人用途修正未胜过一般历史；未应用作者接入补丁",
+      "verification_status": "10439输入回连、4248图片OOF、120099个人OOF目标和误差核对；44694匹配关系、2832严格匹配及79296数值重算；88图片最终模型、22折个人用途保护基线重拟合；252预测增量重抽单元与90难度标准化单元复算。两份未采用临时导出截断，正式结果可读",
+      "availability": "四包279个独立来源文件本地归档；独立脚本与结果可读。未重跑评分、几何特征或融合；未完整重拟合次要模型。作者与审查结论分别保存",
+      "relationships": [
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/README.md",
+        "research/statistics/room_type_similarity_20261027/REPORT_ZH.md",
+        "research/statistics/room_type_similarity_20261027/FIELD_CONTRACT.md",
+        "research/statistics/room_type_similarity_20261027/REPRODUCE.md",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/CORE_CHECK.json",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/MATCHING_CHECK.json",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/MODEL_CHECK.json",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/EXTRA_CHECK.json",
+        "tools/thesis_main/analysis/audit_room_type_return_20261027.py",
+        "research/statistics/room_type_similarity_scoping_20261027/README.md"
+      ]
+    },
+    {
+      "id": "MAT-writing_handoff_20261027",
+      "title": "论文撰写资料与当前版本采用入口",
+      "theme": "coordination",
+      "type": "写作交接 / 文档整合",
+      "date": "20261027",
+      "source_path": "docs/thesis_main/论文撰写资料入口_20261027.md",
+      "current_path": "docs/thesis_main/论文撰写资料入口_20261027.md",
+      "source": "统筹整理既有方法、人员、人数、同房、同用途及OOS结论；不复制原始数据，不改Word正文",
+      "adoption_status": "写作导航：自然256及精确边际、历史策略32；同用途仅图片条件补充。数学定义回到统一模型，提纲按独立修改方案实施",
+      "verification_status": "2026-10-29已接续v2.1主目标及31池分空间补充，当前数字与旧v2身份分开；论文提纲未改",
+      "availability": "资料入口与提纲方案本地可读；总览PNG本机保存，生成器入库。研究台由对应线程接入，实际浏览器验收以最新回执为准",
+      "relationships": [
+        "docs/thesis_main/论文撰写资料入口_20261027.md",
+        "docs/thesis_main/构成方差与DSTRUCT衔接_提纲同步_20261026.md",
+        "docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md",
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/SOP_论文写作_避免AI化与防御性表述_20261027.md",
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
+        "research/statistics/pro_return_review_20261023/population256_20261027/README.md",
+        "research/statistics/room_type_similarity_20261027/independent_review_20261027/README.md",
+        "tools/thesis_main/analysis/build_research_evidence_overview_20261026.py",
+        "docs/thesis_main/论文提纲草稿_v2.1_20261029.docx"
+      ]
+    },
+    {
+      "id": "MAT-latex_outline_20261028",
+      "title": "英文 Elsevier 论文 LaTeX 章节骨架",
+      "theme": "coordination",
+      "type": "论文提纲 / LaTeX 工程",
+      "date": "20261028",
+      "source_path": "docs/thesis_main/论文提纲_LaTeX_20261028/README.md",
+      "current_path": "docs/thesis_main/论文提纲_LaTeX_20261028/README.md",
+      "source": "沿用旧英文 elsarticle 模板，章节依当前提纲结构建立",
+      "adoption_status": "空白英文写作工程，正文由作者撰写",
+      "verification_status": "章节入口和文件结构已检查",
+      "availability": "本地 PDFLaTeX 工程",
+      "relationships": [
+        "docs/thesis_main/论文提纲_LaTeX_20261028/main.tex",
+        "docs/thesis_main/论文撰写资料入口_20261027.md"
+      ]
+    },
+    {
+      "id": "MAT-discussion_guide_20261028",
+      "title": "研究讨论个人讲解稿与术语备查",
+      "theme": "coordination",
+      "type": "讲解材料 / 研究台路线",
+      "date": "20261028",
+      "source_path": "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md",
+      "current_path": "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md",
+      "source": "基于当前方法、已保存结果与研究台导航整理；按用户要求用于本人讲解准备",
+      "adoption_status": "口头讨论材料：40分钟主线与10分钟简版，区分方法贡献、实验发现与条件性补充实验；不改论文提纲",
+      "verification_status": "2026-10-29讲稿更新v2.1数值、7张换类反例、多空间和同用途结果；历史页面/机制与当前结果明确区分，未做浏览器验收",
+      "availability": "本地Markdown，含研究台和证据入口；本轮不重跑科学计算，不作真实浏览器交互验收",
+      "relationships": [
+        "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md",
+        "docs/thesis_main/CONTEXT.md",
+        "docs/thesis_main/论文撰写资料入口_20261027.md",
+        "docs/thesis_main/SOP_论文写作_避免AI化与防御性表述_20261027.md",
+        "research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md",
+        "research/statistics/research_explorer_v1_r2_20261017/index.html"
+      ]
+    },
+    {
+      "id": "MAT-difficulty_definition_literature_20261028",
+      "title": "图片难度定义：跨领域依据与复核建议",
+      "theme": "difficulty",
+      "type": "文献调研 / 方法复核建议",
+      "date": "20261028",
+      "source_path": "docs/thesis_main/topics/difficulty/图片难度定义_跨领域依据与复核建议_20261028.md",
+      "current_path": "docs/thesis_main/topics/difficulty/图片难度定义_跨领域依据与复核建议_20261028.md",
+      "source": "原始论文与官方标注指南，结合本地分层形成记录；三名子智能体分工调研，主线程核查",
+      "adoption_status": "保留文献与历史建议；实证比较已执行，人工判定表与独立复核优先未采用",
+      "verification_status": "核心定义查阅原文方法或官方索引摘录；文献迁移经二读；未复算外部研究或新增人类一致性复核",
+      "availability": "本地Markdown，含原始文献直链和本地历史记录",
+      "relationships": [
+        "docs/thesis_main/topics/difficulty/图片难度全量复核与分层标准_20261010.md",
+        "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md",
+        "research/difficulty/difficulty_user_adoption_20261016/README.md",
+        "research/difficulty/difficulty_mechanisms_v2_20261020/RESULTS_SYNTHESIS.md",
+        "docs/thesis_main/topics/difficulty/图片难度可计算依据与最小比较方案_20261028.md"
+      ]
+    },
+    {
+      "id": "MAT-difficulty_computable_plan_20261028",
+      "title": "图片难度可计算依据与最小实证比较",
+      "theme": "difficulty",
+      "type": "方案 / 描述性盘点",
+      "date": "20261028",
+      "source_path": "docs/thesis_main/topics/difficulty/图片难度可计算依据与最小比较方案_20261028.md",
+      "current_path": "docs/thesis_main/topics/difficulty/图片难度可计算依据与最小比较方案_20261028.md",
+      "source": "现行机会表、ACTUAL_POOLS、几何代码与改档记录的定向读取",
+      "adoption_status": "拟合前方案存档；比较已执行，采用状态见实证报告，不改变正式标签",
+      "verification_status": "177图及Semi支持和字段覆盖重计；未新拟合、评分或融合",
+      "availability": "本地Markdown与既有CSV来源",
+      "relationships": [
+        "research/workers/personnel_population_curves_v2_20261023/inputs/IMAGE_DIFFICULTY_OPPORTUNITIES.csv",
+        "research/workers/personnel_population_curves_v2_20261023/design/ACTUAL_POOLS.csv",
+        "docs/thesis_main/topics/difficulty/图片难度定义_跨领域依据与复核建议_20261028.md",
+        "research/difficulty/difficulty_computable_comparison_20261028/README.md"
+      ]
+    },
+    {
+      "id": "MAT-difficulty_computable_comparison_20261028",
+      "title": "图片难度最小实证比较：二档、三档与连续几何",
+      "theme": "difficulty",
+      "type": "已执行 / 楼外预测比较",
+      "date": "20261028",
+      "source_path": "research/difficulty/difficulty_computable_comparison_20261028/README.md",
+      "current_path": "research/difficulty/difficulty_computable_comparison_20261028/README.md",
+      "source": "保存的ACTUAL_POOLS、人员特征、图片机会表和资格时间连接；普通Manual177图5719份",
+      "adoption_status": "保留三档工作分层并采用几何补充结构解释；非自动规则或最优标准；DSTRUCT/RFUSE等改档依赖已补齐",
+      "verification_status": "3项定向测试通过；22楼留出；236740条预测有限；正式评分和融合0次",
+      "availability": "Markdown、冻结设计、字段合同、逐份预测与逐图逐楼CSV",
+      "relationships": [
+        "research/difficulty/difficulty_computable_comparison_20261028/PLAN.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/FIELD_CONTRACT.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/CHECKS.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/COMPARISONS.csv",
+        "research/difficulty/difficulty_computable_comparison_20261028/SUMMARY.csv",
+        "tools/thesis_main/analysis/difficulty_computable_comparison_20261028.py",
+        "tests/test_difficulty_computable_comparison_20261028.py",
+        "research/difficulty/difficulty_computable_comparison_20261028/DOC_REVISION_CHECK.md"
+      ]
+    },
+    {
+      "id": "MAT-external_review_scope_20261028",
+      "title": "外部粗审独立核对与多空间曲线覆盖",
+      "theme": "coordination",
+      "type": "独立复核 / 保存结果重聚合",
+      "date": "20261028",
+      "source_path": "research/statistics/external_review_response_20261028/README.md",
+      "current_path": "research/statistics/external_review_response_20261028/README.md",
+      "source": "外部粗审24项台账；现有自然256、方法端点、类别中心及v2范围记录",
+      "adoption_status": "保留已复现主结论；补类别历史Q说明与多空间覆盖，不按粗审标签自动增加实验",
+      "verification_status": "22项数值重聚合及41图范围/人员池/曲线连接；未重跑融合评分分类或浏览器",
+      "availability": "Markdown、CSV、JSON及本地审计脚本",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_external_review_scope_20261028.py",
+        "research/statistics/external_review_response_20261028/NUMERIC_CHECKS.csv",
+        "research/statistics/external_review_response_20261028/MULTISPACE_41_COVERAGE.csv",
+        "research/statistics/external_review_response_20261028/SCOPE_COUNTS.csv",
+        "research/statistics/external_review_response_20261028/CHECKS.json"
+      ]
+    },
+    {
+      "id": "MAT-structure_sensitivity_20261028",
+      "title": "结构条件人数曲线与DSTRUCT定义敏感性",
+      "theme": "difficulty",
+      "type": "已执行 / 独立验收",
+      "date": "20261028",
+      "source_path": "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/README.md",
+      "current_path": "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/README.md",
+      "source": "冻结Manual natural256/精确边际、原历史特征及现有有限团队和严格ABC",
+      "adoption_status": "采用结构条件解释与名单敏感性；保留正式三档和DSTRUCT；不以不同合法ABC子集选优",
+      "verification_status": "69组独立SVD/Ward拟合一致；曲线、成员类别构成方差和ABC关系重算通过；5项测试",
+      "availability": "中文报告、PNG、字段合同、完整关联CSV/gz、作者及独立验收记录",
+      "relationships": [
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.md",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/PLAN.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/FIELD_CONTRACT.json",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/LABELS_ALL_LOBO.csv",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/COMPOSITION_SUMMARY.csv",
+        "research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/ABC_FOCUS_SUMMARY.csv",
+        "tools/thesis_main/analysis/audit_structure_sensitivity_20261028.py",
+        "tools/thesis_main/analysis/structure_condition_curves_20261028.py",
+        "tools/thesis_main/analysis/dstruct_definition_sensitivity_20261028.py",
+        "tools/thesis_main/analysis/check_structure_sensitivity_20261028.py",
+        "tests/test_structure_sensitivity_20261028.py"
+      ]
+    },
+    {
+      "id": "MAT-scope_vertical_cut_audit_20261028",
+      "title": "29图竖向裁切参考阻断诊断与完整候选",
+      "theme": "data",
+      "type": "独立几何复核 / 非正式参考候选",
+      "date": "20261028",
+      "source_path": "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/README.md",
+      "current_path": "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/README.md",
+      "source": "冻结v2参考目录、明确源顶平面及41图覆盖表",
+      "adoption_status": "底面与30图顶高已完成人工采用及独立几何验收，已授权全部受影响数据重算；旧资格保留",
+      "verification_status": "30图均高射线独立复核通过；v2.1主要重算完成并独立验收，空间评分链通过；全部合法空间的主分析覆盖另见v2.1独立报告",
+      "availability": "Markdown、CSV、JSON、底面对照图及脚本",
+      "relationships": [
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/MISSING29_GEOMETRY_DIAGNOSIS.csv",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/CANDIDATE_REFERENCES.json",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/CHECKS.json",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/29图范围对照.png",
+        "tools/thesis_main/analysis/audit_scope_vertical_cut_20261028.py",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/height-review.html",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/height-review-data.js",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/HEIGHT_REVIEW_QA.json",
+        "tools/thesis_main/analysis/build_scope_height_review_20261028.py",
+        "tools/thesis_main/analysis/build_scope_height_review_20261028.html",
+        "tests/scope_height_review.test.cjs",
+        "research/data/scope_redundant_vertices_20261016/RECHECK_20261028.json",
+        "tools/thesis_main/analysis/audit_scope_orthogonality_20261028.py",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/ORTHOGONALITY_SCAN_20261028.csv",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/MANUAL_GT30_REFERENCE_INVENTORY.csv",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_adopted_20261028/README.md",
+        "tools/thesis_main/analysis/adopt_ceiling_review_20261028.py",
+        "tests/test_ceiling_adoption_20261028.py",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_adopted_20261028/INDEPENDENT_ACCEPTANCE.json",
+        "research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_adopted_20261028/dependent_recompute/README.md",
+        "tools/thesis_main/analysis/rescore_adopted_references_20261028.py",
+        "tests/test_adopted_reference_rescore_20261028.py",
+        "research/data/releases/v2.1/STAGE_ACCEPTANCE_20261029.md"
+      ]
+    },
+    {
+      "id": "data_release_v21_20261028",
+      "title": "v2.1主目标重算与其它合法空间补充（数值核对通过，扩展采用及浏览器待完成）",
+      "theme": "data",
+      "type": "版本修订与增量复算",
+      "date": "20261028",
+      "source_path": "research/data/releases/v2.1/README.md",
+      "current_path": "research/data/releases/v2.1/README.md",
+      "source": "用户人工参考判断、冻结真人v2及已保存实际团队",
+      "adoption_status": "原主目标及其它空间独立补充可采用；31池全流程采用与浏览器待完成，不切换CURRENT",
+      "verification_status": "原空间路由、当前ABC和主结论已核对；31池7936顺序、19976端点记录、59136前缀、实际k2及276分类比较单元独立核对通过；其它目标难度与受影响选队未全量接续，浏览器未验收",
+      "availability": "JSON、CSV、Python、离线结果页及阶段检查",
+      "relationships": [
+        "research/data/releases/v2.1/RELEASE.json",
+        "research/data/releases/VERSION_POLICY.md",
+        "tools/thesis_main/analysis/rebuild_v21_20261028.py",
+        "tools/thesis_main/analysis/build_v21_pools_20261028.py",
+        "tests/test_v21_inputs_20261028.py",
+        "research/data/releases/v2.1/HANDOFF_20261029.md",
+        "research/data/releases/v2.1/COMPUTATIONAL_COMPLETION.json",
+        "research/data/releases/v2.1/current_exchange_results/README.md",
+        "research/data/releases/v2.1/current_policy_results/README.md",
+        "research/data/releases/v2.1/same_room_current_results/README.md",
+        "research/data/releases/v2.1/d10_formation_sensitivity/README.md",
+        "research/statistics/research_explorer_v1_r2_20261017/v21-results.html",
+        "research/data/releases/v2.1/INDEPENDENT_ACCEPTANCE_REPORT_20261029.md",
+        "research/data/releases/v2.1/FINAL_INDEPENDENT_NUMERIC_CHECKS_20261029.json",
+        "research/data/releases/v2.1/SCOPE_ROUTING_INDEPENDENT_AUDIT_20261029.md",
+        "research/data/releases/v2.1/SCOPE_ROUTING_INDEPENDENT_CHECKS_20261029.json",
+        "research/data/releases/v2.1/ROOM_TYPE_ATTRIBUTION_INDEPENDENT_20261029.md",
+        "research/data/releases/v2.1/CONCLUSION_CHANGES_INDEPENDENT_20261029.md",
+        "research/data/releases/v2.1/NATURAL_CONCLUSION_COMPARISON_INDEPENDENT_20261029.csv",
+        "research/data/releases/v2.1/NATURAL_FAILURE_REPAIR_INDEPENDENT_20261029.json",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/README.md",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/RFUSE_SAME_TEAM_ANALYSIS.md",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/DIFFICULTY_BACKGROUND_ANALYSIS.md",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/SAME_TEAM_CHECKS.json",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/DIFFICULTY_BACKGROUND_CHECKS.json",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/ROOT_DIAGNOSTIC_CHECKS.json",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/SAME_CONDITION_33_IMAGE_METRICS.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/SAME_ABC_IMAGE_RESULTS.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/Q_INTERVAL_POSITION_BY_IMAGE.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/DSTRUCT_FIXED_BLOCK_COMPLETE_PATH_SUPPORT_SIGN_CHANGES.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/JH4_04_SAME_EVENT_GEOMETRY.png",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/recompute_same_team_rfuse.py",
+        "tools/thesis_main/analysis/diagnose_v21_exchange_counterexample_20261029.py",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_MECHANISM_ANALYSIS.md",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_REPLAY_RECEIPT.json",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_REPLAY_CHECKS.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_REPLAY_EXACT_STATES.json.gz",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_GROUP_BLOCK_SUPPORT.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_GROUP_COMMON_D_LINKS.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_IMAGE_SUMMARY.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_TEAM_SUMMARY.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/VOTE_RING_EDGES.csv",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/replay_saved_vote_evidence.py",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/summarize_vote_evidence.py",
+        "research/data/releases/v2.1/rfuse_exception_diagnosis_20261029/TEAM_SCORE_LEVEL_AND_SPREAD.csv",
+        "research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md",
+        "research/data/releases/v2.1/FULL_DELIVERY_INDEPENDENT_CHECKS_20261029.json",
+        "research/data/releases/v2.1/EXTENDED_TARGET_DIFFICULTY_EVIDENCE_20261029.csv",
+        "tools/thesis_main/analysis/audit_v21_full_delivery_20261029.py",
+        "docs/thesis_main/论文撰写资料入口_20261027.md",
+        "docs/thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md",
+        "docs/thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md"
+      ]
+    },
+    {
+      "id": "v21_admitted_space_extension_20261029",
+      "title": "v2.1其它已准入空间：31池231份分空间补充",
+      "theme": "data",
+      "type": "独立分空间范围补充",
+      "date": "20261029",
+      "source_path": "research/data/releases/v2.1/admitted_space_extension/README.md",
+      "current_path": "research/data/releases/v2.1/admitted_space_extension/README.md",
+      "source": "已确认空间绑定、已有完整参考和诊断Q；用户授权补齐其它合法空间",
+      "adoption_status": "独立补充范围；原263池和CURRENT保持；不混合不同目标成员",
+      "verification_status": "31池自然256、实际两人、描述、质量历史/RFUSE拟合与分类比较完成，页面已接入；扩展主分析的难度/选队定义未采用，浏览器待验收",
+      "availability": "JSON、CSV、Python及逐池检查",
+      "relationships": [
+        "research/data/releases/v2.1/admitted_space_extension/SCOPE_CONTRACT.json",
+        "research/data/releases/v2.1/admitted_space_extension/CURVE_CHECKS.json",
+        "research/data/releases/v2.1/admitted_space_extension/descriptive/README.md",
+        "tools/thesis_main/analysis/extend_v21_admitted_spaces_20261029.py",
+        "tools/thesis_main/analysis/summarize_v21_admitted_spaces_20261029.py",
+        "tools/thesis_main/analysis/refit_v21_admitted_space_history_20261029.py",
+        "tests/test_v21_admitted_spaces_20261029.py",
+        "research/data/releases/v2.1/admitted_space_extension/COMPLETION.json",
+        "research/data/releases/v2.1/admitted_space_extension/classification_impact/README.md",
+        "research/data/releases/v2.1/admitted_space_extension/difficulty_evidence/README.md",
+        "research/data/releases/v2.1/admitted_space_extension/difficulty_evidence/MINIMAL_TARGET_REVIEW.csv",
+        "tools/thesis_main/analysis/audit_admitted_target_difficulty_20261029.py"
       ]
     }
   ]

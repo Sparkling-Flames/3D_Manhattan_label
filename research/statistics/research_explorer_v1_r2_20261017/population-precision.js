@@ -16,7 +16,7 @@ const select=(key,title,choices,value)=>`<label>${esc(title)}<select data-precis
 const opts=x=>Object.entries(x);
 const table=(rows,columns)=>`<div class="tablewrap"><table><thead><tr>${columns.map(([,t])=>`<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${columns.map(([key])=>`<td>${esc(typeof key==='function'?key(r):r[key]??'缺失')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const ncol=(k,t)=>[r=>fmt(r[k]),t];
-function estimator(row){return row.estimator==='exact_finite_uniform_marginal'?'精确有限边际':row.estimator==='contract_deferred_k2'?'两人延期：未运行':row.estimator==='contract_deferred_k2'?'两人延期：未运行':'随机256前缀';}
+function estimator(row){return row.estimator==='exact_finite_uniform_marginal'?'精确有限边际':row.estimator==='contract_deferred_k2'?'两人延期：未运行':'随机256前缀';}
 function fixedRows(rows,s){
  const out=rows.filter(r=>r.panel===s.panel&&r.layer===s.layer&&r.difficulty===s.difficulty&&r.metric===s.metric&&r.weighting==='image_equal').sort((a,b)=>a.k-b.k);
  // A missing deferred stage is a gap, never a zero or a joined path segment.

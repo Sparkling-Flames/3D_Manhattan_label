@@ -1,0 +1,208 @@
+{
+  "status": "complete",
+  "regeneration": "re-export from fully parsed saved five-reference-feature fitted models; no fitting and no hyperparameter change",
+  "records": 5719,
+  "images": 177,
+  "buildings": 22,
+  "people": 60,
+  "OOF_rows": 120099,
+  "input_sha256": "03f10f887f522455531bcdda9c103cc1b9c81cc9283c038eb108c33781b3045d",
+  "models": [
+    {
+      "outcome": "Q",
+      "rows": 88,
+      "sha256": "a78ccc19161252d66c3efd6e7ec00abdc318c9fd95201da1b74a49009772e940",
+      "numeric_reference_predictors": [
+        "ref_turn5",
+        "ref_short_edges",
+        "ref_min_horizontal_deg",
+        "ref_radius_p90_h",
+        "ref_H"
+      ]
+    },
+    {
+      "outcome": "D10",
+      "rows": 88,
+      "sha256": "efceb68e283ad95efeb35a5fdb6d0938aae8dac1b06b7fe671cfa23ec4f66dbe",
+      "numeric_reference_predictors": [
+        "ref_turn5",
+        "ref_short_edges",
+        "ref_min_horizontal_deg",
+        "ref_radius_p90_h",
+        "ref_H"
+      ]
+    },
+    {
+      "outcome": "annotation_turn5",
+      "rows": 88,
+      "sha256": "f1a33ea5a7feb01d09bcd0044b09190a4718e78f16fbbb4782544976b8c258d3",
+      "numeric_reference_predictors": [
+        "ref_turn5",
+        "ref_short_edges",
+        "ref_min_horizontal_deg",
+        "ref_radius_p90_h",
+        "ref_H"
+      ]
+    }
+  ],
+  "csv_EOF_checked": [
+    {
+      "file": "CROSS_BUILDING_REPEATABILITY_ROWS.csv.gz",
+      "rows": 17157,
+      "fields": 22,
+      "sha256": "f5f11c38639891476fd2d5ef97e12baeaaba5fec626d28eb59d54bcf37e6ee76"
+    },
+    {
+      "file": "FOLDS_D10.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "99c8b5e0be6e937394d395daa06a4f21c888594ea90fa5f96fd8dd81dc76d790"
+    },
+    {
+      "file": "FOLDS_Q.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "606562502651770a59c8acf6410ee575c12936bca04ba250dae00049830a7f1b"
+    },
+    {
+      "file": "FOLDS_annotation_turn5.csv",
+      "rows": 88,
+      "fields": 14,
+      "sha256": "54a36041e771c130586b9ebba68deb68882069ef7d010cf3bb2e4a40410bdefc"
+    },
+    {
+      "file": "GAIN_BY_DIFFICULTY.csv",
+      "rows": 72,
+      "fields": 10,
+      "sha256": "bccab708c6173690b9b9d91c48712913abfca2e8d8ce2f55fb7dd35ce73d6816"
+    },
+    {
+      "file": "GAIN_BY_PURPOSE.csv",
+      "rows": 264,
+      "fields": 10,
+      "sha256": "296dcad44041eae98695d5b27293d5dc815f34fbdf3409f76cdb08cb08e6fe16"
+    },
+    {
+      "file": "HISTORY_SUPPORT_D10.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "e484b954aed6468ba9fe8231c922f50e30576225755a51668f28b7894d49ec8e"
+    },
+    {
+      "file": "HISTORY_SUPPORT_Q.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "c0d25a5038d9dfcbed7663d3db993dc00995ebcb672be3028e32e4966642c45c"
+    },
+    {
+      "file": "HISTORY_SUPPORT_annotation_turn5.csv.gz",
+      "rows": 5719,
+      "fields": 16,
+      "sha256": "5d016e98d63a38ebaf4b68b8620cc39a2853d38ba53572e44f0c600b81a94ba1"
+    },
+    {
+      "file": "INNER_CV_Q.csv.gz",
+      "rows": 2200,
+      "fields": 9,
+      "sha256": "8fccc767918b0ba7a6e5b493d2d2d42d6a146765c1ba8ec930f726ad6a03f55e"
+    },
+    {
+      "file": "INNER_CV_annotation_turn5.csv.gz",
+      "rows": 2200,
+      "fields": 9,
+      "sha256": "c121c18ff2183cd14fc0359d35fdfb3e3ed81f2073927e5deab4527e8541b59f"
+    },
+    {
+      "file": "METHOD_SUMMARY.csv",
+      "rows": 21,
+      "fields": 9,
+      "sha256": "cbaf4f12d2ef5c04a1e3a3ae24fea47eee3d62209ef058000bd24c40ca21f452"
+    },
+    {
+      "file": "OOF_D10.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "268be7463ab013e5157d1aa3bc29a22b83bac56febf89359a65c8c04420cc0c7"
+    },
+    {
+      "file": "OOF_Q.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "95542a15167be30eb966850bd905d1f70b749f7a833b87ff81c2d613cad0d0f8"
+    },
+    {
+      "file": "OOF_annotation_turn5.csv.gz",
+      "rows": 40033,
+      "fields": 18,
+      "sha256": "f8843472f93f12a49f2d07df46139263f3c404a92a4efb388f4c4e53f62d9a17"
+    },
+    {
+      "file": "PAIRED_GAIN_SUMMARY.csv",
+      "rows": 24,
+      "fields": 18,
+      "sha256": "6acfea9d295137932d3ead96cc6a5865336914fd034e7ed6f518285b2967c959"
+    },
+    {
+      "file": "PAIRED_IMAGE_GAIN.csv.gz",
+      "rows": 4248,
+      "fields": 26,
+      "sha256": "a94623aa9b9945d0a60cab91197eb46683b01ef217fc0261ccd11afec5a2c493"
+    },
+    {
+      "file": "PERSON_PURPOSE_CARDS.csv",
+      "rows": 1752,
+      "fields": 14,
+      "sha256": "f257e2d3970e657d960941ca3217c689023f83f83e8460244a7a5568df0bad56"
+    },
+    {
+      "file": "PER_BUILDING_METHODS.csv",
+      "rows": 462,
+      "fields": 7,
+      "sha256": "72fe2917eca5082b285e6d93c41e2a6d22ab1611c1925bacc5b08604d177692b"
+    },
+    {
+      "file": "PER_IMAGE_METHODS.csv.gz",
+      "rows": 3717,
+      "fields": 15,
+      "sha256": "18866e7e0a943501ade8c815c9b20ca4eb20ea20c6bb7b573468708c3094a093"
+    },
+    {
+      "file": "PER_PERSON_INCREMENTAL_GAIN.csv",
+      "rows": 180,
+      "fields": 19,
+      "sha256": "c561153e792ef5655bdf65b321ca4ef37c0a825a2cd312eabab7ebd260306193"
+    },
+    {
+      "file": "PER_PERSON_METHODS.csv",
+      "rows": 1260,
+      "fields": 10,
+      "sha256": "5ccdcb3d467d16e70bbfd8d4e4e5c0125ab18ae677fbbe2e27066cbfc9351276"
+    },
+    {
+      "file": "PER_PERSON_PURPOSE_METHODS.csv.gz",
+      "rows": 12264,
+      "fields": 13,
+      "sha256": "520ccc6178ee4801c0a9e93c835e37f10fca5e03a73e902cf8ba66b39d0e7346"
+    },
+    {
+      "file": "REPEATABILITY_BY_PURPOSE.csv",
+      "rows": 66,
+      "fields": 13,
+      "sha256": "0af4ba3676061cf26182f4247dc1aef6c0df3d4e207ae48f31c58926c5949a88"
+    }
+  ],
+  "obsolete_output_dir_not_for_packaging": "history_invalid_concurrent_outputs",
+  "initial_design_alias_correction": "Before final-model interpretation, resolved actual frozen field names ref_min_horizontal_deg and ref_radius_p90_h; two export writers overlapped, now both original fit processes confirmed exit0 and no process remains.",
+  "former_fit_tool_sessions": [
+    49443,
+    42181
+  ],
+  "active_fit_processes_before_regeneration": 0,
+  "baseline_peer_target": "excludes target person; other formally evaluable same-image responses used only as evaluation outcome",
+  "target_predictions_centered_abs_max": 7.486075251758198e-16,
+  "validation_receipt": "FINAL_VALIDATION.json",
+  "model_replay_count": 24,
+  "computed_source_commit": "b9bcec809fbaec8ab055931a1abb7baa5db44dac",
+  "adopted_latest_commit": "b2b0898b90bd631df37f1f2e75e8380800a43cf8",
+  "latest_source_byte_equivalent": true
+}

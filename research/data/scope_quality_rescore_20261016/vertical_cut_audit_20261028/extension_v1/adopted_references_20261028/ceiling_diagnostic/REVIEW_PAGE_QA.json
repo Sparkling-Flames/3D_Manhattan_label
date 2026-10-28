@@ -1,0 +1,51 @@
+{
+  "cases": 30,
+  "photos_exist": true,
+  "existing_viewer_reused": true,
+  "test_command": "node tests/ceiling_review.test.cjs",
+  "logic_checks": [
+    "no preselected decision",
+    "navigation",
+    "draft restoration",
+    "30-record export with reference identity and geometry",
+    "clear decision"
+  ],
+  "logic_status": "passed",
+  "real_browser_layout": "not_verified_browser_URL_policy_rejected_file_protocol",
+  "native_download": "not_verified",
+  "formal_reference_changes": 0,
+  "excluded_from_review": [
+    {
+      "image": "wc2JMjhGNzB-14",
+      "target_id": "gt:wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c:export_label/groudTruth.json",
+      "reasons": [
+        "current_gt_error_unresolved",
+        "main_quality_gate:hold_reference_quality",
+        "image_analysis_blocked"
+      ]
+    },
+    {
+      "image": "wc2JMjhGNzB-26",
+      "target_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "reasons": [
+        "historical_not_current"
+      ]
+    },
+    {
+      "image": "7y3sRwLe3Va-16",
+      "target_id": "gt:7y3sRwLe3Va_9bbf903d50da4ffd9e5d1fb7c9f4d69b:export_label/groudTruth.json",
+      "reasons": [
+        "historical_not_current"
+      ]
+    },
+    {
+      "image": "wc2JMjhGNzB-23",
+      "target_id": "mp3d_original_20261028:wc2JMjhGNzB_40ea4145b9e946aab5d56de3ce179c8e",
+      "reasons": [
+        "historical_not_current"
+      ]
+    }
+  ],
+  "selection_source": "../REFERENCE_CATALOG.json",
+  "selection_rule": "current_target and not image_analysis_blocked and no image_analysis_hold_reasons"
+}
