@@ -1,0 +1,53 @@
+# v2.1 受影响依赖重算
+
+状态：原主目标范围的必要计算已完成；31个其它合法空间池的独立补充也已完成并通过数据复核。扩展范围尚未接入全部难度分类及重新选队；真实浏览器及下载验收未完成，`releases/CURRENT.json`仍为v2。v2.1采用用户确认的参考修订，真人原答仍为原有10,439份。最新状态见[完整交付检查](FULL_DELIVERY_REVIEW_20261029.md)。
+
+**2026-10-29独立验收：** [完整结果与新旧结论报告](INDEPENDENT_ACCEPTANCE_REPORT_20261029.md)已核对空间评分链、当前换类层级汇总、策略及同用途归因；验收发现的新空间失败率接合错误已修复并从实际路径复算通过。原人数与换类主发现保留，新增空间的策略方向和同用途预测需按新版结果表述。
+
+**其它合法空间已完成独立补充：** 242份中，236份原先只受主目标范围限制；其中31个至少3人的池、231份作答（Manual30池227份、Semi1池4份）已完成自然256、实际两人、描述统计及质量历史/RFUSE扩展。另5份人数不足、6份有其它排除继续单列。原263池/8,154份保持原范围，两个分析范围去重合计8,385份；未把不同目标的人员混成一队。见[分空间补充](admitted_space_extension/README.md)和[原空间归属核验](SCOPE_ROUTING_INDEPENDENT_AUDIT_20261029.md)。
+
+采用已确认的底面修订、30份顶面判断及pa4-11中等难度。24份采用全点均高，6份按备注代表点所在的近同高组取均值。顶高由top/bottom联合恢复，修订顶面时底点与横坐标保持。既有排除、暂停及OOS边界继续保留。
+
+## 已保存的阶段
+
+- 原答：`quality_inventory.json`、`reference_catalog.json`、`reference_bindings.json`、`difficulty_records.json`。10,439份身份保持；8,154份质量可用，原7,302份加852份。完整测量与正式分析资格分开；不可用分数不填零。
+- 池依赖：`pools/DEPENDENCIES.json`。263池中184池原端点可复用、45池复用几何重评分、34池需要新团队（29 Manual、5 Semi）；原池实际成员未改变。
+- 自然/策略历史端点评分：`historical_population_rescore/` 保存114,688条重测记录；11个无几何团队均为原设计暂缓的两人团队，单列保留。
+- 新增208自然顺序的受影响端点评分：`population256_rescore/` 保存1,025分片、225,660条记录，并补齐参考相关分项。分片计数不代表跨实验唯一团队数。
+- 分类：`condition_classification/`、`fusion_role_classification/`、`joint_history_classification/`、`scope_axis_classification/` 已完成当前参考下的分类接合。V3_BEHAVIOR 的分类输入不变，标签经核对后复用；质量相关方法重新拟合，楼外边界保持。
+- 人数曲线：`natural_inputs/` 保存实际路径接合；`natural_analysis/UPDATED_*` 仅为已更新池，不是全库替换表。均值、分位数及整路径bootstrap保留重复团队频数；精确排列另列，不混作随机抽样。
+- 新参考池：`new_space_natural256/` 按池保存实际256条顺序、唯一团队、完整几何与断点检查。总体完成状态以各池及总`CHECKS.json`为准。
+- 配比端点：`composition_rescore/`。原保存几何缺失的受影响端点按原成员恢复；逐队核对原节点/面积/高度摘要。可与自然端点接合的6队复用几何与评分。
+- 配比方差：`composition_variance/README.md`。原231个面板、每面板924队完整保留；冻结K3标签加更新Q的构成间占比为14.3748%，当前K3标签加更新Q为13.4109%。二者的标签身份不同，不能与严格换类幅度互换解释。
+- 自然曲线接合：`natural_results/` 含原194个Manual池及新增29池，精确有限边际与路径估计分开。159个缺失路径重抽缓存已恢复并与已有64个接合；原有/新增/合并总体带分别保存，路径与建筑不确定性分开。仅1人的Semi池保留库存记录，不进入正式曲线汇总。
+- 历史固定策略：`policy_frozen_design/` 已完成157图、22楼的old16/new16/pooled32重聚合；672512条配对事件身份吻合，固定人数支持没有变化。当前分类重选策略仍单列。
+- 基础统计：`descriptive_statistics/`、`personnel_descriptive/`更新全库存、逐图、逐人、相对质量、难度/场景和既有直接关系表；原答几何分歧复用。初始化评价另补192份当前参考评分，原人员归因边界保持。
+- 显式评分入口：`CROSS_MODULE_INPUTS.json`及`analysis_input/manifest.json`通过完整bundle、身份、用途掩码和绑定核验；不自动推进全局CURRENT。`QUALITY_COMMON_SUPPORT_COMPARISON.csv`分别保存原共同7302份和新增852份，新增范围没有伪造旧值。
+- 同房原支持：`same_room_frozen_design/` 已完成452,593个原端点记录接合，37,536个受影响端点更新；`same_room_current_labels_results/` 完成原1954个有限面板的配比与逐成员替换统计。大块换类保留原实际团队，更新62676个事件及背景/人数路径汇总；当前联合标签重选团队另列，不能将旧设计标成当前选队。
+- 同房当前覆盖：`same_room_current_capacity/` 保留原155对，新增72对已有人工采用的直接关系，其中9对范围可比；原共同人员及结构配比逐对核对。`same_room_current_extended_design/` 和 `same_room_current_large_design/` 为当前选队；493261个所需端点全部接齐，2659个有限面板的响应和精确变化分析已完成，大块62964事件及背景/人数路径汇总已完成。
+- 两人自然前缀：`two_person_natural256/README.md` 已保存独立补充，沿用至少半数支持的MV50及真实256条顺序。主曲线与策略中的历史两人延期身份尚未被本补充自动替换。
+- 同用途：`room_type_similarity/README.md` 保存实际复算及原有/新增支持；主线程另从当前原答核对4944条图片预测目标/误差和90150条三图Q对照，最大差8.53e−14，见`INDEPENDENT_CHECKS.json`。当前Q用途增量不支持主结论升级。`reference_only_attribution/`进一步把原177图与扩展206图、固定配置与原内折选参分开；训练扩展与选参变化不能简单归因于顶高修订。
+- 连续几何／难度档位：`difficulty_computable_comparison/README.md` 已按原七模型和楼外方案复算。保留三档、几何用于结构响应补充解释的采用建议不变；没有追加修改正式难度标签。
+
+- 当前严格换类：`current_exchange_results/README.md` 保存10种前向、4种RFUSE反向方法的当前选队结果；原确认网格与阶段身份保持。
+- 当前策略：`current_policy_results/README.md` 区分原153图共同32路径、新增26图32路径及258池逐角色次要描述。
+- D10形成链：`d10_formation_sensitivity/README.md` 完成46折重新形成、原336面板、共同物理ABC及角色比较，不新增融合。
+- 固定融合方法：`fusion_common_panel/README.md`复用48池138队的三种方法几何，仅更新81个受影响方法端点；Lee顶面不适用状态保持。
+
+## 目标空间与验收边界
+
+自然曲线固定目标参考和兼容人员池；新增29个Manual池扩展了可评价空间，不等于把选择不同目标空间的人员混在一起研究。本轮没有另造跨目标混合比例或统一参考评分。若研究该问题，尚需明确同图各语义目标的成员标签、固定混合团队及对多个允许参考分别评价的规则；问卷scope回答或参考版本不同不能直接替代语义目标标签。
+
+浏览器工具曾明确阻止本地页面访问；真实浏览器交互、布局和原生CSV下载尚未验收。脚本及数据检查不替代该项，CURRENT继续保留v2。
+
+## 计算完成与待验收
+
+当前标签严格ABC的66878个事件、原153图及新增26图策略区间、同房2659有限面板及62964大块事件均完成。两人自然路径区间和离线结果页已接入；D10形成链、固定融合方法对照及同用途归因对照完成。计算检查见`COMPUTATIONAL_COMPLETION.json`，交付边界和定向测试见`HANDOFF_20261029.md`；真实浏览器与原生下载验收尚未完成，不能称整体验收通过。
+
+执行代码位于 `tools/thesis_main/analysis/` 中日期为20261028或20261029且名称含`v21`的脚本。`RELEASE.json`记录阶段状态；`dependency_inventory/`保存已查证的来源、几何覆盖和缺失说明。各`CHECKS.json`只证明本阶段，不替代全流程验收。
+
+## 2026-10-29其它合法空间独立补充
+
+此前仅因主目标口径单列的作答，已有31池231份按各自目标完成自然256、实际两人及描述统计，并接续质量历史/RFUSE拟合与分类影响比较。详见[分空间补充与采用建议](admitted_space_extension/README.md)。原263池与原结论保留；没有将未分级目标直接加入DSTRUCT，也未把旧团队改称扩展分类验证。
+
+10个超过GitHub单文件限制的输出以原字节分片保存在`large_file_parts/`，原件仍保留在本地但不进入Git。克隆后运行`python research/data/releases/v2.1/restore_large_files.py`，按[LARGE_FILES.json](LARGE_FILES.json)校验分片并恢复原路径；已有原件内容不一致时脚本会停止，不覆盖。

@@ -1,0 +1,24 @@
+{
+  "stage": "analysis_code_prepared",
+  "registered_events": 3264,
+  "paths": 286,
+  "transitions": 2978,
+  "cohorts": {
+    "all_available": null,
+    "fixed_capacity_n20": 20,
+    "fixed_capacity_n21": 21
+  },
+  "cohort_rule": "Capacity chosen from design max_n, never from successful scores. Fixed-n20 cohort is shown only through n20; fixed-n21 through n21.",
+  "unit": "Each exact fixed-XYZ path contributes once at each n; paths averaged within image; images and buildings reported separately.",
+  "amplitude": "within=abs(B-A); cross=(abs(C-A)+abs(C-B))/2, jointly evaluable triples for amplitude.",
+  "signed": "BA, CA and CB are separate pairwise changes; C(n)-C(10) and B(n)-B(10) are separately retained.",
+  "net_identity": "[C(n)-B(n)]-[C(10)-B(10)] = [C(n)-C(10)]-[B(n)-B(10)]; a net advantage change is not C itself improving.",
+  "step": "The same one common-background person enters all three arms; n increases by1, m stays7.",
+  "threshold": "ceil(n/2) increase vs unchanged is descriptive, and also shown by exact n; parity/entrant/background changes are not a pure-threshold experiment.",
+  "missing": "Actual fusion failures retained; unmeasured events are not failures; metric-specific valid paths/images/buildings.",
+  "time": "Inventory recorded source seconds; adding a common person adds the same known time to all three teams. Absolute CA/CB seconds should remain fixed, percentages can dilute.",
+  "numerical_sign_tolerance": 1e-09,
+  "large_Q_loss_points": 10,
+  "source_design_sha256": null,
+  "fusion_run": false
+}

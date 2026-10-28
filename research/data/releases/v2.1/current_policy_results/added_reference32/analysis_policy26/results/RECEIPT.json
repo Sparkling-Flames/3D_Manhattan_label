@@ -1,0 +1,22 @@
+{
+  "completed": true,
+  "images": 26,
+  "buildings": 10,
+  "replicates": 2000,
+  "seed": 2026102603,
+  "versions": [
+    "added_first16",
+    "added_second16",
+    "added32"
+  ],
+  "new_fusion_called_by_analysis": false,
+  "policy_labels": "current v2.1 LOBO V3_BEHAVIOR/V3_JOINT_QT; not DSTRUCT/RFUSE",
+  "support": "new-reference cohort, fixed phase k intersected across first16/second16/added32; separate from original cohort",
+  "weighting": [
+    "image_equal",
+    "building_equal"
+  ],
+  "building_resampling": "whole buildings of fixed per-image point estimates, separate from path Monte Carlo",
+  "data_release": "v2.1",
+  "cohort": "added_reference32"
+}

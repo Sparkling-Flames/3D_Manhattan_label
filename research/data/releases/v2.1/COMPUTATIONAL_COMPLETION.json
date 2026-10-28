@@ -1,0 +1,54 @@
+{
+  "data_release": "v2.1",
+  "required_computation_complete": true,
+  "checked_completion_fields": {
+    "current_exchange_endpoints/CHECKS.json": "complete",
+    "current_policy_endpoints/CHECKS.json": "non_k2_complete",
+    "current_same_room_endpoints/CHECKS.json": "complete",
+    "current_policy_inputs/CHECKS.json": "all_non_k2_executed",
+    "current_policy_results/original_common32/analysis_policy26/results/RECEIPT.json": "completed",
+    "current_policy_results/added_reference32/analysis_policy26/results/RECEIPT.json": "completed",
+    "same_room_current_results/finite/exact_changes/ANALYSIS_RECEIPT.json": "all_complete",
+    "same_room_current_results/large/ANALYSIS_COMPLETE.json": "complete",
+    "d10_formation_sensitivity/FORMATION_COMPLETE.json": "complete",
+    "d10_formation_sensitivity/RESPONSE_COMPLETE.json": "complete",
+    "d10_formation_sensitivity/SUMMARY_COMPLETE.json": "complete",
+    "d10_formation_sensitivity/STRUCTURE_COMPLETE.json": "complete"
+  },
+  "browser_acceptance": false,
+  "current_pointer_advanced": false,
+  "hash_checks_requested": false,
+  "source_identity": "same raw10439; current reference, binding, quality and downstream dependencies",
+  "natural_deferred_schema_correction": {
+    "version": "explicit_k2_v1",
+    "pools": 34,
+    "cells": 852,
+    "nondeferred_cells": 819,
+    "deferred_paths": 8448,
+    "source": "saved endpoint status and original paths",
+    "bootstrap": 2000,
+    "new_fusion": 0
+  },
+  "natural_correction_validation": {
+    "pytest": 6,
+    "node": 2,
+    "rates_and_interval_deltas": "saved source counts checked",
+    "bootstrap": "2000 whole path draws checked",
+    "aggregate_added_failure_support": "all capacity images",
+    "browser_acceptance": false
+  },
+  "completion_scope": "original_current_target_263_pools_and_declared_downstream_analyses",
+  "other_admitted_spaces": {
+    "pools": 31,
+    "records": 231,
+    "core_computation_complete": true,
+    "independent_saved_data_checks_passed": true,
+    "full_mainline_adoption": false,
+    "pending": [
+      "target_difficulty_provenance_and_adoption",
+      "affected_DSTRUCT_and_selection_dependencies"
+    ],
+    "review": "FULL_DELIVERY_REVIEW_20261029.md"
+  },
+  "full_mainline_including_other_targets_complete": false
+}

@@ -1,0 +1,97 @@
+{
+  "pool_id": "uNb9QFRL6hY-50__manual__8871891ae6",
+  "metadata": {
+    "pool_id": "uNb9QFRL6hY-50__manual__8871891ae6",
+    "image": "uNb9QFRL6hY-50",
+    "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+    "building": "uNb9QFRL6hY",
+    "condition": "manual",
+    "layer": "ordinary_manual",
+    "difficulty": "困难",
+    "pool_n": 35,
+    "reference_id": "uNb9QFRL6hY-50:primary:floor:66dc16f5202c8891",
+    "reference_version": "user_ceiling_adopted_20261028"
+  },
+  "cohorts": [
+    "old48",
+    "stage1_104",
+    "stage2_104",
+    "new208",
+    "pooled152",
+    "pooled256",
+    "original24"
+  ],
+  "stage": 2,
+  "bootstrap": 2000,
+  "bootstrap_master_seed": 2026102607,
+  "input_rows": 8960,
+  "files": [
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__curves.csv.gz",
+      "rows": 245,
+      "fields": 134
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__intervals.csv.gz",
+      "rows": 84,
+      "fields": 84
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__components.csv.gz",
+      "rows": 3430,
+      "fields": 19
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__status.csv.gz",
+      "rows": 348,
+      "fields": 16
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__curve_bands.csv.gz",
+      "rows": 980,
+      "fields": 20
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__curve_band_summary.csv.gz",
+      "rows": 28,
+      "fields": 22
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-50__manual__8871891ae6__path_strata.csv.gz",
+      "rows": 256,
+      "fields": 9
+    }
+  ],
+  "metric_names": [
+    "Q_mean",
+    "Q_p10",
+    "Q_sd_ddof1",
+    "D10_mean",
+    "floor_turn5_mean",
+    "floor_redundant5_mean",
+    "nodes_mean",
+    "failure_rate",
+    "incomplete_rate",
+    "Q_p10_inverse_cdf",
+    "actual_consensus_failure_rate",
+    "output_unscoreable_rate",
+    "reference_unavailable_rate",
+    "not_executed_rate"
+  ],
+  "interval_metric_names": [
+    "marginal_Q_delta",
+    "Q_p10_delta",
+    "Q_sd_delta",
+    "paired_Q_delta",
+    "paired_D10_delta",
+    "paired_Q_loss_gt5_rate",
+    "paired_Q_gain_gt5_rate",
+    "failure_delta",
+    "incomplete_delta",
+    "floor_turn5_delta",
+    "nodes_delta",
+    "actual_consensus_failure_delta",
+    "output_unscoreable_delta"
+  ],
+  "analysis_schema": "natural_curve_precision_20261026_v1"
+}

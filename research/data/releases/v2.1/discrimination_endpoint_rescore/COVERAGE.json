@@ -1,0 +1,76 @@
+{
+  "affected_pools": 45,
+  "sources": {
+    "screen": {
+      "scalar_file": "02B/results/screen/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "geometry_file": "02B/results/screen/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "scalar_rows": 11346,
+      "geometry_rows": 11346,
+      "missing_geometry": [],
+      "missing_scalar": []
+    },
+    "confirm": {
+      "scalar_file": "04B/results/batch02/ENDPOINT_SCALARS.csv.gz",
+      "geometry_file": "04C/results/batch02/ENDPOINT_GEOMETRY.json.gz",
+      "scalar_rows": 28204,
+      "geometry_rows": 28204,
+      "missing_geometry": [],
+      "missing_scalar": []
+    },
+    "size": {
+      "scalar_file": "05/results/size_paths/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "geometry_file": "05/results/size_paths/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "scalar_rows": 1260,
+      "geometry_rows": 1260,
+      "missing_geometry": [],
+      "missing_scalar": []
+    },
+    "tail": {
+      "scalar_file": "05/results/large_team_ac_tail/NATIVE_ENDPOINT_SCALARS.csv.gz",
+      "geometry_file": "05/results/large_team_ac_tail/NATIVE_ENDPOINT_GEOMETRY.json.gz",
+      "scalar_rows": 548,
+      "geometry_rows": 548,
+      "missing_geometry": [],
+      "missing_scalar": []
+    }
+  },
+  "unique_source_teams": 41142,
+  "geometry_conflicts": [],
+  "event_counts": {
+    "02A/results/screen/EVENT_METRICS.csv.gz": 3808,
+    "04A1/results/confirm/EVENT_METRICS.csv.gz": 5194,
+    "04A2/results/reverse_screen/EVENT_METRICS.csv.gz": 1534,
+    "04A2/results/reverse_confirm/EVENT_METRICS.csv.gz": 2638,
+    "05/results/size_paths/EVENT_METRICS.csv.gz": 420,
+    "05/results/large_team_ac_tail/EVENT_METRICS.csv.gz": 288
+  },
+  "event_unique_teams": 40854,
+  "missing_event_teams": 0,
+  "missing_event_scoreable": 0,
+  "missing_event_identity_unknown": 0,
+  "no_fusion": true,
+  "geometry_teams_available": 41142,
+  "source_pools_with_geometry": 30,
+  "original_status_by_scalar_source": {
+    "04B/results/batch02/ENDPOINT_SCALARS.csv.gz": {
+      "complete_conditional": 27611,
+      "no_connection": 557,
+      "below_four": 36
+    },
+    "02B/results/screen/NATIVE_ENDPOINT_SCALARS.csv.gz": {
+      "complete_conditional": 11094,
+      "below_four": 195,
+      "no_connection": 57
+    },
+    "05/results/size_paths/NATIVE_ENDPOINT_SCALARS.csv.gz": {
+      "complete_conditional": 1221,
+      "no_connection": 16,
+      "below_four": 23
+    },
+    "05/results/large_team_ac_tail/NATIVE_ENDPOINT_SCALARS.csv.gz": {
+      "complete_conditional": 531,
+      "no_connection": 5,
+      "below_four": 12
+    }
+  }
+}

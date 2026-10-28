@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "objects": 10730,
+  "annotations": 10439,
+  "ready_coordinate_objects": 10597,
+  "confirmed_orders": 1382,
+  "research_images": 261,
+  "reference_only_images": 2,
+  "comment_occurrences": 32462,
+  "unresolved_comment_occurrences": 1,
+  "checks": [
+    "完整配对",
+    "周期平均x及y不变",
+    "Matterport数组源点身份",
+    "确认环绑定",
+    "人员/GT/图片引用",
+    "清洗及研究表字段一致",
+    "交叉表ID及计数",
+    "评论来源覆盖"
+  ],
+  "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。",
+  "v1_objects_unchanged": true,
+  "v1_comments_and_confirmed_orders_unchanged": true,
+  "v2_records": 10439,
+  "new_records": 7217,
+  "new_geometry": {
+    "surface_valid": 7206,
+    "representation_limited": 7,
+    "pairing_unavailable": 4
+  },
+  "user_list_11_main_analysis_blocked": true,
+  "quality_input_candidates": 7301,
+  "quality_input_candidate_images": 196,
+  "not_performed": [
+    "v2 scoring",
+    "personnel refit",
+    "fusion rerun",
+    "raw active log replay"
+  ]
+}

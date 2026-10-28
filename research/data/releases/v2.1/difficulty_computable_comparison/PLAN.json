@@ -1,0 +1,41 @@
+{
+  "status": "frozen_before_first_fit_20261028",
+  "scope": "ordinary_manual 177 images, 5719 saved answers; labels unchanged",
+  "evaluation": "leave one building out; train weights sum to one per image; loss mean within image then within building then across buildings",
+  "models": [
+    "baseline",
+    "binary_easy",
+    "binary_hard",
+    "three",
+    "turn_only",
+    "geometry",
+    "three_geometry"
+  ],
+  "baseline": "intercept plus worker and source categorical effects; unknown training categories map to zero effect",
+  "geometry": [
+    "ref_turn5",
+    "ref_H",
+    "ref_short_edges",
+    "ref_min_horizontal_deg",
+    "has_short",
+    "conditional_short_span"
+  ],
+  "missing_short_span": "zero design value only when no short edge, with separate presence indicator; not a measured zero",
+  "estimator": "weighted ridge linear regression; training-only numerical standardization; alpha=1, intercept unpenalized; no tuning; reduced predictions clipped to [0,1]",
+  "primary_losses": {
+    "reduced": "mse",
+    "turn_deficit": "mse",
+    "bottom_bias_abs": "mae",
+    "unmatched": "mse",
+    "Q": "mae",
+    "time_old": "mae",
+    "time_new": "mae"
+  },
+  "time": "source-recorded positive seconds, log transformed; old usable and new reported_processed fitted separately; not target-matched operation time",
+  "comparisons": "all models vs baseline; geometry and three_geometry vs three; geometry vs turn_only and both binary models; three vs both binary models",
+  "uncertainty": "5000 paired building bootstrap resamples of saved out-of-fold losses, seed 20261028; conditional descriptive interval, not independent external validation or full-refit bootstrap",
+  "checks": "source-stratified losses; per-difficulty losses; calibration mean residual; unseen worker counts; per-building support and differences; raw predictions retained",
+  "limits": "previously explored data; no causal identification; no official relabeling, scoring, fusion, personnel refit, or new collection",
+  "data_release": "v2.1",
+  "original_plan": "D:\\Work\\HOHONET\\research\\difficulty\\difficulty_computable_comparison_20261028\\PLAN.json"
+}

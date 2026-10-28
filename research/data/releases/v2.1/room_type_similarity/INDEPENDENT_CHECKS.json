@@ -1,0 +1,25 @@
+{
+  "data_release": "v2.1",
+  "ordinary_manual_records": 6512,
+  "images": 206,
+  "all_prediction_targets_and_errors_checked": 4944,
+  "training_mean_excludes_target_building": true,
+  "paired_three_image_events_checked": 90150,
+  "maximum_Q_contrast_difference": 8.526512829121202e-14,
+  "reported_support_comparison": [
+    {
+      "metric": "Q",
+      "images": 190,
+      "baseline_MAE": 5.1584972047526305,
+      "purpose_MAE": 5.379423940276502
+    },
+    {
+      "metric": "D10",
+      "images": 190,
+      "baseline_MAE": 5.508055727512167,
+      "purpose_MAE": 5.448236151673964
+    }
+  ],
+  "independent_scope": "current raw Q -> image targets / prediction losses / all matched three-image mean-Q contrasts; no refit or fusion",
+  "limitation": "geometry model fitting and nested CV implementation reused; no external validation or new causal claim"
+}

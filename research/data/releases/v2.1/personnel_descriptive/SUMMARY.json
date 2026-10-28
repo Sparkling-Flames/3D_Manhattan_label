@@ -1,0 +1,28 @@
+{
+  "quality_rows": 8154,
+  "quality_images": 225,
+  "quality_workers": 60,
+  "main_rows": 6512,
+  "main_workers": 60,
+  "main_images": 206,
+  "difficulty_candidates": {
+    "no_clear_preference": 33,
+    "hard_relative_drop": 9,
+    "broadly_high": 7,
+    "hard_advantage": 5,
+    "hard_relative_improvement": 4,
+    "insufficient": 1,
+    "nonhard_advantage": 1
+  },
+  "classification": "exploratory_descriptive_not_validated_worker_types",
+  "relative_q": "Same image, condition and reference: (average ascending rank - 1)/(peer workers - 1); then worker mean.",
+  "thresholds": "Exploratory Q thirds; support >=6 tasks, >=3 buildings. T median <60 / 60-180 / >=180 seconds; sensitivity 90/240.",
+  "semi": "Known erroneous initialization unchanged / known erroneous initialization opportunities; edited is not proven corrected.",
+  "scope": "Retained records with independently bound, semantically compatible historical task gold only. Image OOS tags are not person gold; response tendency separate.",
+  "caveats": [
+    "Time provenance differs between cohorts; source time is not necessarily target-matched time.",
+    "描述性画像不替代当前楼外人员分类；融合/换类证据见独立专题。"
+  ],
+  "data_release": "v2.1",
+  "raw_evidence_reused": true
+}

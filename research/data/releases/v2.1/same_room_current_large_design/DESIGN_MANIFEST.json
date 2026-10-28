@@ -1,0 +1,157 @@
+{
+  "design_version": "same_room_strict_abc_rebuilt_20261023_v1",
+  "status": "new_experiment_not_recovered_original",
+  "input_commit": null,
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "seed": "HOHONET-new-strict-ABC-20261023-v1",
+  "anchors": 12,
+  "background_orders": [
+    "fixed_A_nested",
+    "class_round_robin"
+  ],
+  "enumeration_max": 512,
+  "strict_capacity": "m <= min(floor(source_n/2),target_n), m <= n <= N-2*m",
+  "primary_layer": "manual ordinary_comparable V3_BEHAVIOR",
+  "other_layers": "manual other scope/layers and V3_JOINT_QT retained separately; Semi has no m>4 capacity",
+  "history_q": "task-adjusted relative Q; missing values retained; complete block flag required for Q-close subdomain",
+  "history_t": "task-adjusted log time, not seconds",
+  "source_role_semantics": "fold historical center alignment; numeric class_id never pooled across folds without role keys",
+  "receipt": {
+    "design_version": "same_room_strict_abc_rebuilt_20261023_v1",
+    "events": 62964,
+    "unique_endpoint_requests": 310709,
+    "all_events_strict_ABC_valid": true,
+    "all_pair_common_pools_exact_snapshot_intersection": true,
+    "all_configurations_covered": true,
+    "small_spaces_enumeration_verified": true,
+    "source_target_outcome_used_for_selection": false,
+    "unknown_class_allowed_in_D_only": true,
+    "canonical_AB_mirror_deduplicated": true,
+    "fixed_A_paths": 7656,
+    "fixed_A_path_links": 17832,
+    "background_path_links": 66408,
+    "background_path_links_before_exact_dedup": 66408
+  },
+  "input_files": [
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\ADDED_DIRECT_PAIRS.csv",
+      "bytes": 45578,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\CHECKS.json",
+      "bytes": 270,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\CURRENT_MANUAL_FOLD_CENTERS.csv",
+      "bytes": 116897,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\CURRENT_MANUAL_LABELS_LOBO.csv",
+      "bytes": 920256,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\DIRECT_PAIR_CLASS_MEMBERS.csv",
+      "bytes": 1335622,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\DIRECT_PAIR_CURRENT_CLASS_CAPACITY.csv",
+      "bytes": 342517,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\INPUT_SNAPSHOT.json.gz",
+      "bytes": 1701848,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\same_room_current_capacity\\INPUT_SNAPSHOT.json.gz",
+      "bytes": 1701848,
+      "sha256": null,
+      "input_commit": "e92abe8631d7f01dc192ee796b46f295ece37a6d"
+    }
+  ],
+  "output_files": [
+    {
+      "file": "CAPACITY_CONFIGURATIONS.csv",
+      "bytes": 1372049,
+      "sha256": null
+    },
+    {
+      "file": "CAPACITY_DIRECTIONS.csv",
+      "bytes": 1999200,
+      "sha256": null
+    },
+    {
+      "file": "CLASS_ROLES_AND_MEMBERS.csv",
+      "bytes": 89814,
+      "sha256": null
+    },
+    {
+      "file": "CONFIGURATION_COVERAGE.csv",
+      "bytes": 1589143,
+      "sha256": null
+    },
+    {
+      "file": "DESIGN_PATH_LINKS.csv.gz",
+      "bytes": 1371820,
+      "sha256": null
+    },
+    {
+      "file": "ENDPOINT_REQUESTS.csv.gz",
+      "bytes": 9178512,
+      "sha256": null
+    },
+    {
+      "file": "FIXED_A_SCALE_PATHS.csv.gz",
+      "bytes": 517211,
+      "sha256": null
+    },
+    {
+      "file": "FROZEN_COMMON_CLASS_MEMBERS.csv.gz",
+      "bytes": 183320,
+      "sha256": null
+    },
+    {
+      "file": "INPUT_COMMON_POOL_CHECKS.csv",
+      "bytes": 43361,
+      "sha256": null
+    },
+    {
+      "file": "INPUT_INDEX.csv",
+      "bytes": 1212,
+      "sha256": null
+    },
+    {
+      "file": "LEGALITY_RECEIPT.json",
+      "bytes": 606,
+      "sha256": null
+    },
+    {
+      "file": "MEMBER_COVERAGE.csv.gz",
+      "bytes": 630929,
+      "sha256": null
+    },
+    {
+      "file": "STRICT_ABC_EVENTS.csv.gz",
+      "bytes": 10617449,
+      "sha256": null
+    }
+  ],
+  "code_sha256": null,
+  "data_release": "v2.1",
+  "input_source": "current working v2.1 release",
+  "file_hashes_computed": false,
+  "algorithm_source": "frozen same_room_strict_abc_rebuilt_20261023_v1"
+}

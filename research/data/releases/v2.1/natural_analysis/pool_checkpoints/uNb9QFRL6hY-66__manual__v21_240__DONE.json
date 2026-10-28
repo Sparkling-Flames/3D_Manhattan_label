@@ -1,0 +1,92 @@
+{
+  "pool_id": "uNb9QFRL6hY-66__manual__v21_240",
+  "metadata": {
+    "pool_id": "uNb9QFRL6hY-66__manual__v21_240",
+    "image": "uNb9QFRL6hY-66",
+    "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+    "building": "uNb9QFRL6hY",
+    "condition": "manual",
+    "layer": "ordinary_manual",
+    "difficulty": "困难",
+    "pool_n": 27,
+    "reference_id": "uNb9QFRL6hY-66:primary:floor:34fac57783cf9ee2",
+    "reference_version": "user_adopted_reference_20261028"
+  },
+  "cohorts": [
+    "new_space256"
+  ],
+  "stage": 2,
+  "bootstrap": 2000,
+  "bootstrap_master_seed": 2026102607,
+  "input_rows": 6912,
+  "files": [
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__curves.csv.gz",
+      "rows": 27,
+      "fields": 134
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__intervals.csv.gz",
+      "rows": 9,
+      "fields": 84
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__components.csv.gz",
+      "rows": 378,
+      "fields": 19
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__status.csv.gz",
+      "rows": 34,
+      "fields": 16
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__curve_bands.csv.gz",
+      "rows": 108,
+      "fields": 20
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__curve_band_summary.csv.gz",
+      "rows": 4,
+      "fields": 22
+    },
+    {
+      "file": "D:\\Work\\HOHONET\\research\\data\\releases\\v2.1\\natural_analysis\\pool_checkpoints\\uNb9QFRL6hY-66__manual__v21_240__path_strata.csv.gz",
+      "rows": 256,
+      "fields": 9
+    }
+  ],
+  "metric_names": [
+    "Q_mean",
+    "Q_p10",
+    "Q_sd_ddof1",
+    "D10_mean",
+    "floor_turn5_mean",
+    "floor_redundant5_mean",
+    "nodes_mean",
+    "failure_rate",
+    "incomplete_rate",
+    "Q_p10_inverse_cdf",
+    "actual_consensus_failure_rate",
+    "output_unscoreable_rate",
+    "reference_unavailable_rate",
+    "not_executed_rate"
+  ],
+  "interval_metric_names": [
+    "marginal_Q_delta",
+    "Q_p10_delta",
+    "Q_sd_delta",
+    "paired_Q_delta",
+    "paired_D10_delta",
+    "paired_Q_loss_gt5_rate",
+    "paired_Q_gain_gt5_rate",
+    "failure_delta",
+    "incomplete_delta",
+    "floor_turn5_delta",
+    "nodes_delta",
+    "actual_consensus_failure_delta",
+    "output_unscoreable_delta"
+  ],
+  "analysis_schema": "natural_curve_precision_20261026_v1",
+  "deferred_schema": "explicit_k2_v1"
+}

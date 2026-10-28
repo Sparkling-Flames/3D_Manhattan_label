@@ -1,0 +1,34 @@
+{
+  "confirm": {
+    "events": 44476,
+    "strict_members_all_pass": true,
+    "signed_and_ABC_common_magnitude_all_pass": true,
+    "pool_summary_rows": 2108,
+    "hierarchical_reaggregation_max_abs_error": 7.105427357601002e-15,
+    "three_arm_Q": 43494
+  },
+  "reverse_confirm": {
+    "events": 22402,
+    "strict_members_all_pass": true,
+    "signed_and_ABC_common_magnitude_all_pass": true,
+    "pool_summary_rows": 2851,
+    "hierarchical_reaggregation_max_abs_error": 7.105427357601002e-15,
+    "three_arm_Q": 21864
+  },
+  "same_room_current_large": {
+    "events": 62964,
+    "strict_member_partition_all_pass": true,
+    "empty_background_events": 4382
+  },
+  "validation": {
+    "python_tests_passed": 19,
+    "node_tests_passed": 2,
+    "native_full_fusion_rerun": false,
+    "real_browser_acceptance": false,
+    "post_repair_targeted_tests_passed": 6,
+    "test_counts_overlap": true
+  },
+  "aggregation": "background repeats -> quota levels within XYZ -> blocks -> directed source-target pair -> image; independent pandas aggregation checked against saved pool summaries",
+  "support": "within/cross/gap require common ABC scorable support; signed CA/CB/BA retain respective pairs",
+  "natural_failure_repair_receipt": "NATURAL_FAILURE_REPAIR_INDEPENDENT_20261029.json"
+}

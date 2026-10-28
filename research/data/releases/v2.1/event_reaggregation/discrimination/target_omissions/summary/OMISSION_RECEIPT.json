@@ -1,0 +1,17 @@
+{
+  "schema": "target_panel_omission_pairs_v1",
+  "events": 2002,
+  "anchors": 286,
+  "images": 90,
+  "buildings": 22,
+  "phases": {
+    "selection_heldout_building": 966,
+    "screen": 574,
+    "within_building_extension": 462
+  },
+  "panel_enumeration": "all seven six-person subsets of each fixed original seven-person target panel",
+  "causal_comparison": "n stays 10. C7 vs C6 replaces the fixed source member by the named omitted target member; B7 vs B6 replaces the same source member by the fixed dropped Y member.",
+  "aggregation": "Seven omissions equal inside an anchor; anchors equal inside pool; images equal; buildings equal separately.",
+  "missing": "No unavailable score or absent comparison is imputed as zero.",
+  "all_A_exactly_unchanged": true
+}

@@ -1,0 +1,73 @@
+{
+  "teams": 11561,
+  "rows": 11561,
+  "shards": 58,
+  "states": {
+    "complete_conditional": 11310,
+    "original_no_connection": 133,
+    "below_four": 118
+  },
+  "missing_geometry_keys": [],
+  "reference_dependent_diagnostics": "completed_or_not_applicable",
+  "no_fusion": true,
+  "full_working_model_scores": 11310,
+  "working_score_fields": [
+    "WQ",
+    "A10",
+    "B8L2",
+    "D10"
+  ],
+  "source_pools_with_endpoints": 31,
+  "original_to_rescore_state": [
+    {
+      "original": "below_four",
+      "rescore": "below_four",
+      "count": 118
+    },
+    {
+      "original": "complete_conditional",
+      "rescore": "complete_conditional",
+      "count": 11310
+    },
+    {
+      "original": "no_connection",
+      "rescore": "original_no_connection",
+      "count": 133
+    }
+  ],
+  "states_by_source": {
+    "research/workers/personnel_exchange_closure_20261022/delivery/endpoints/ALL_REQUIRED_ENDPOINT_GEOMETRY.csv.gz": {
+      "complete_conditional": 10158,
+      "original_no_connection": 124,
+      "below_four": 118
+    },
+    "research/workers/personnel_exchange_adoption_followup_20261022/structure_followup/background_gradient/ENDPOINT_GEOMETRY.csv.gz": {
+      "complete_conditional": 415,
+      "original_no_connection": 5
+    },
+    "research/workers/personnel_mixture_comparison_20261022/direct_ac/USED_ENDPOINT_GEOMETRY.csv.gz": {
+      "complete_conditional": 771,
+      "original_no_connection": 4
+    }
+  },
+  "affected_pool_ids_without_endpoints_in_three_sources": [
+    "e9zR4mvMWw7-16__manual__d23b7d1ff9",
+    "e9zR4mvMWw7-16__semi__d23b7d1ff9",
+    "q9vSo1VnCiC-01__semi__00b55d1a3c",
+    "q9vSo1VnCiC-04__manual__ad57a04305",
+    "q9vSo1VnCiC-13__manual__3b351071f8",
+    "rPc6DW4iMge-05__manual__1488ef1b7c",
+    "rPc6DW4iMge-22__manual__c9c05c21ea",
+    "uNb9QFRL6hY-06__manual__97fff2cf49",
+    "uNb9QFRL6hY-08__manual__06e274dc0a",
+    "uNb9QFRL6hY-47__manual__83fc76d6c1",
+    "wc2JMjhGNzB-54__semi__f450a46f5c",
+    "yqstnuAEVhm-04__manual__c93631c594",
+    "yqstnuAEVhm-31__manual__7b26e5d3cd",
+    "yqstnuAEVhm-32__manual__085c02c4fa"
+  ],
+  "diagnostic_status": {
+    "complete": 11428,
+    "not_applicable_no_candidate": 133
+  }
+}

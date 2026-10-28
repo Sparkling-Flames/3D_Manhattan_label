@@ -1,0 +1,27 @@
+{
+  "schema": "research_analysis_bundle_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "entrypoints": {
+    "data": "data.json.gz",
+    "research": "research.json.gz",
+    "comments": "comments.json.gz",
+    "final_summary": "final_summary.json.gz",
+    "final_orders": "final_orders.json.gz",
+    "batch_admission": "batch_admission.json.gz",
+    "field_contract": "field_contract.json.gz",
+    "research_field_contract": "research_field_contract.json.gz",
+    "quality_review_metadata": "quality_review_metadata.json.gz",
+    "validation": "validation.json"
+  },
+  "data_release": "v2.1",
+  "effective_input_revision": "reviewed_references_v21_20261028",
+  "base_manifest": "research/data/releases/v2/analysis_input/manifest.json",
+  "annotation_inventory_release": "v2",
+  "raw_annotations_unchanged": true,
+  "status": "current_quality_context_ready_other_stages_in_progress",
+  "score_context": "research/data/releases/v2.1/CROSS_MODULE_INPUTS.json",
+  "reference_catalog": "../reference_catalog.json",
+  "difficulty_records": "../difficulty_records.json",
+  "reference_bindings": "../reference_bindings.json",
+  "consumer_rule": "原始作答/采集和评论复用v2；质量、参考和当前难度须通过load_scored_context读取v2.1。研究统计见各专题收据；本manifest不代表全流程验收。"
+}

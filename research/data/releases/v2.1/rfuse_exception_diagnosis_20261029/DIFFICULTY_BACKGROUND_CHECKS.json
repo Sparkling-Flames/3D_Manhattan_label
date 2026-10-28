@@ -1,0 +1,52 @@
+{
+  "official_data_changed": false,
+  "new_fusion": 0,
+  "reference_traits_recomputed_from_current_catalog": true,
+  "reference_traits_match_saved_features": true,
+  "experiments": [
+    {
+      "identity": "current_DSTRUCT_K3_n18_m7_selection_heldout_building_largest_to_highest_turn",
+      "valid_images": 33,
+      "negative_gap_images": 7,
+      "negative_abs_gap_lt1": 5,
+      "negative_gap_le_minus1": 2,
+      "negative_reference_changed": 0
+    },
+    {
+      "identity": "frozen_DSTRUCT_K3_fixed_capacity_n21_n14_m7_all_phases",
+      "planned_images": 58,
+      "valid_images": 57,
+      "negative_gap_images": 15,
+      "negative_abs_gap_lt1": 10,
+      "negative_gap_le_minus1": 5,
+      "negative_reference_changed": 1
+    }
+  ],
+  "fixed_block_background": {
+    "registered_paths": 116,
+    "n_values": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "registered_path_events": 1392,
+    "complete_ABC_Q_paths": 108,
+    "complete_support_images": 55,
+    "image_gap_changes_sign": 30,
+    "image_gap_both_above_plus1_and_below_minus1": 10,
+    "two_complete_path_images": 53,
+    "two_complete_path_gap_changes_sign": 29,
+    "two_complete_path_gap_both_above_plus1_and_below_minus1": 9
+  },
+  "gap_definition": "mean(abs(QC-QA),abs(QC-QB))-abs(QB-QA)",
+  "one_point_band_is_descriptive_not_significance_test": true
+}
