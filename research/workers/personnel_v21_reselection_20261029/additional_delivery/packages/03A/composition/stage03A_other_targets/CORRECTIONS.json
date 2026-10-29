@@ -1,0 +1,12 @@
+{
+  "revision": 2,
+  "affected_file": "ALL45_COMMON_SUPPORT_METRIC_MATRIX.csv",
+  "correction": "Time convenience columns now preserve their original time-source labels instead of collapsing source rows in pivot_table.",
+  "numerical_result": "All inherited-v1 time shares in this exact dataset are NaN (three one-team panels; total variance zero), so the original collapsed column numerically equaled the new-source values. No Q, geometry, source-separated time value, label, endpoint or fusion result changed.",
+  "new_columns": [
+    "recorded_time_total_seconds__inherited_v1_audited_source",
+    "recorded_time_total_seconds__user_processed_reported_not_raw_log_replayed"
+  ],
+  "source_specific_unknown_preserved": true,
+  "additional_content": "Complete-configuration case PNG/SVG and plotting script."
+}

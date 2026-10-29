@@ -1,0 +1,1144 @@
+{
+  "methods": 45,
+  "gz_tables_read_to_EOF": 225,
+  "all_expected_row_counts_match": true,
+  "removed_partial_temporaries": [
+    "by_method/MSDGEOM_SCOPE_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/OPPSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/TARGET_RFUSE_GEOMQ_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/TARGET_DSTRUCT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/DSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/TARGET_RFUSE_GEOM_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/TARGET_DSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/V3_JOINT_QT_FINE/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/DJOINT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing",
+    "by_method/TARGET_RFUSE_GEOMQ_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz.writing"
+  ],
+  "files": [
+    {
+      "file": "by_method/DBOUNDARY_AXIS2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4662,
+      "rows": 359
+    },
+    {
+      "file": "by_method/DBOUNDARY_AXIS2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 978771,
+      "rows": 16643
+    },
+    {
+      "file": "by_method/DBOUNDARY_AXIS2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1487,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DBOUNDARY_AXIS2/PANEL_VARIANCE.csv.gz",
+      "bytes": 119221,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DBOUNDARY_AXIS2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127650,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DBOUNDARY_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3802,
+      "rows": 259
+    },
+    {
+      "file": "by_method/DBOUNDARY_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 659856,
+      "rows": 11995
+    },
+    {
+      "file": "by_method/DBOUNDARY_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DBOUNDARY_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 96135,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DBOUNDARY_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126630,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DBOUNDARY_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 5318,
+      "rows": 384
+    },
+    {
+      "file": "by_method/DBOUNDARY_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1058891,
+      "rows": 17676
+    },
+    {
+      "file": "by_method/DBOUNDARY_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DBOUNDARY_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 108131,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DBOUNDARY_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128157,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DBOUNDARY_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 8273,
+      "rows": 671
+    },
+    {
+      "file": "by_method/DBOUNDARY_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1917046,
+      "rows": 30729
+    },
+    {
+      "file": "by_method/DBOUNDARY_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DBOUNDARY_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 107606,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DBOUNDARY_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129814,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DJOINT_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3669,
+      "rows": 272
+    },
+    {
+      "file": "by_method/DJOINT_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 704489,
+      "rows": 12636
+    },
+    {
+      "file": "by_method/DJOINT_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DJOINT_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 95122,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/DJOINT_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126289,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DJOINT_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6432,
+      "rows": 570
+    },
+    {
+      "file": "by_method/DJOINT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1534953,
+      "rows": 26298
+    },
+    {
+      "file": "by_method/DJOINT_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DJOINT_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 99600,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/DJOINT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129173,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DJOINT_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7529,
+      "rows": 668
+    },
+    {
+      "file": "by_method/DJOINT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1815196,
+      "rows": 30812
+    },
+    {
+      "file": "by_method/DJOINT_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DJOINT_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 99602,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/DJOINT_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129419,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DSTRUCT_AXIS2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4472,
+      "rows": 322
+    },
+    {
+      "file": "by_method/DSTRUCT_AXIS2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 887638,
+      "rows": 14948
+    },
+    {
+      "file": "by_method/DSTRUCT_AXIS2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DSTRUCT_AXIS2/PANEL_VARIANCE.csv.gz",
+      "bytes": 113452,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DSTRUCT_AXIS2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127733,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DSTRUCT_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3840,
+      "rows": 268
+    },
+    {
+      "file": "by_method/DSTRUCT_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 706009,
+      "rows": 12470
+    },
+    {
+      "file": "by_method/DSTRUCT_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1487,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DSTRUCT_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 108069,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DSTRUCT_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126527,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DSTRUCT_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6787,
+      "rows": 546
+    },
+    {
+      "file": "by_method/DSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1526309,
+      "rows": 25184
+    },
+    {
+      "file": "by_method/DSTRUCT_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1487,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DSTRUCT_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 113790,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DSTRUCT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129441,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/DSTRUCT_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7529,
+      "rows": 605
+    },
+    {
+      "file": "by_method/DSTRUCT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1696633,
+      "rows": 27889
+    },
+    {
+      "file": "by_method/DSTRUCT_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1486,
+      "rows": 67
+    },
+    {
+      "file": "by_method/DSTRUCT_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 113780,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/DSTRUCT_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129876,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3468,
+      "rows": 229
+    },
+    {
+      "file": "by_method/MSDGEOM_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 592225,
+      "rows": 10657
+    },
+    {
+      "file": "by_method/MSDGEOM_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1488,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 99640,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 125950,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4760,
+      "rows": 335
+    },
+    {
+      "file": "by_method/MSDGEOM_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 913905,
+      "rows": 15555
+    },
+    {
+      "file": "by_method/MSDGEOM_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1488,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 109370,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127572,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7196,
+      "rows": 569
+    },
+    {
+      "file": "by_method/MSDGEOM_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1631251,
+      "rows": 26269
+    },
+    {
+      "file": "by_method/MSDGEOM_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1488,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 113978,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129327,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_AXIS2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4542,
+      "rows": 338
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_AXIS2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 909400,
+      "rows": 15644
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_AXIS2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1504,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_AXIS2/PANEL_VARIANCE.csv.gz",
+      "bytes": 119951,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_AXIS2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127394,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3034,
+      "rows": 193
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 458337,
+      "rows": 8957
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 89441,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 125346,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4564,
+      "rows": 320
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 901680,
+      "rows": 14780
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 116175,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126900,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7122,
+      "rows": 555
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1572586,
+      "rows": 25573
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1500,
+      "rows": 67
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 116161,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/MSDGEOM_SCOPE_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128797,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPGEOM_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3745,
+      "rows": 265
+    },
+    {
+      "file": "by_method/OPPGEOM_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 703409,
+      "rows": 12325
+    },
+    {
+      "file": "by_method/OPPGEOM_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1486,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPGEOM_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 107313,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPGEOM_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126398,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPGEOM_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4944,
+      "rows": 356
+    },
+    {
+      "file": "by_method/OPPGEOM_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1003055,
+      "rows": 16446
+    },
+    {
+      "file": "by_method/OPPGEOM_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1486,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPGEOM_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 112032,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPGEOM_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127533,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPGEOM_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 5815,
+      "rows": 421
+    },
+    {
+      "file": "by_method/OPPGEOM_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1180341,
+      "rows": 19411
+    },
+    {
+      "file": "by_method/OPPGEOM_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1486,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPGEOM_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 112738,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPGEOM_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128098,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPJOINT_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3616,
+      "rows": 270
+    },
+    {
+      "file": "by_method/OPPJOINT_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 723124,
+      "rows": 12546
+    },
+    {
+      "file": "by_method/OPPJOINT_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1504,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPJOINT_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 96680,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/OPPJOINT_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126559,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPJOINT_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6192,
+      "rows": 536
+    },
+    {
+      "file": "by_method/OPPJOINT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1477101,
+      "rows": 24720
+    },
+    {
+      "file": "by_method/OPPJOINT_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1504,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPJOINT_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 100018,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/OPPJOINT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129205,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPJOINT_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7239,
+      "rows": 648
+    },
+    {
+      "file": "by_method/OPPJOINT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1736738,
+      "rows": 29888
+    },
+    {
+      "file": "by_method/OPPJOINT_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1504,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPJOINT_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 99860,
+      "rows": 6250
+    },
+    {
+      "file": "by_method/OPPJOINT_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129634,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3651,
+      "rows": 248
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 649754,
+      "rows": 11554
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 108046,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126152,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 5685,
+      "rows": 426
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1193948,
+      "rows": 19724
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 113731,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128399,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 7994,
+      "rows": 651
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1870589,
+      "rows": 29919
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 113592,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129491,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K5/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 9098,
+      "rows": 776
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K5/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 2142464,
+      "rows": 35596
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K5/PANEL_COVERAGE.csv.gz",
+      "bytes": 1484,
+      "rows": 67
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K5/PANEL_VARIANCE.csv.gz",
+      "bytes": 113143,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/OPPSTRUCT_K5/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129835,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/Q_HARD_MEDIAN2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4530,
+      "rows": 336
+    },
+    {
+      "file": "by_method/Q_HARD_MEDIAN2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 926478,
+      "rows": 15540
+    },
+    {
+      "file": "by_method/Q_HARD_MEDIAN2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1485,
+      "rows": 67
+    },
+    {
+      "file": "by_method/Q_HARD_MEDIAN2/PANEL_VARIANCE.csv.gz",
+      "bytes": 113648,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/Q_HARD_MEDIAN2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127604,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/Q_MEDIAN2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 4613,
+      "rows": 343
+    },
+    {
+      "file": "by_method/Q_MEDIAN2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 946337,
+      "rows": 15893
+    },
+    {
+      "file": "by_method/Q_MEDIAN2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1485,
+      "rows": 67
+    },
+    {
+      "file": "by_method/Q_MEDIAN2/PANEL_VARIANCE.csv.gz",
+      "bytes": 111546,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/Q_MEDIAN2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 127838,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3625,
+      "rows": 257
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 693172,
+      "rows": 11981
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1503,
+      "rows": 67
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 107723,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126134,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6389,
+      "rows": 489
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1354426,
+      "rows": 22659
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1503,
+      "rows": 67
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 117322,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/RFUSE_GEOMQ_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128423,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3437,
+      "rows": 233
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 610242,
+      "rows": 10885
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1501,
+      "rows": 67
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 99387,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 125762,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6501,
+      "rows": 505
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1421573,
+      "rows": 23447
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1501,
+      "rows": 67
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 122017,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/RFUSE_GEOM_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128960,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3860,
+      "rows": 273
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 727941,
+      "rows": 12691
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1491,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 109820,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126408,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6561,
+      "rows": 513
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1442640,
+      "rows": 23685
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1491,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 114867,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129064,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K4/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 8762,
+      "rows": 729
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K4/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 2064823,
+      "rows": 33487
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K4/PANEL_COVERAGE.csv.gz",
+      "bytes": 1491,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K4/PANEL_VARIANCE.csv.gz",
+      "bytes": 114650,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_DSTRUCT_K4/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 129798,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3676,
+      "rows": 257
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 695313,
+      "rows": 11981
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1527,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 109109,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 126026,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6344,
+      "rows": 477
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1327436,
+      "rows": 22117
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1527,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 117933,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOMQ_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128096,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K2/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 3487,
+      "rows": 233
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 612192,
+      "rows": 10885
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K2/PANEL_COVERAGE.csv.gz",
+      "bytes": 1525,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K2/PANEL_VARIANCE.csv.gz",
+      "bytes": 101020,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 125649,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K3/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6707,
+      "rows": 527
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1453571,
+      "rows": 24457
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K3/PANEL_COVERAGE.csv.gz",
+      "bytes": 1525,
+      "rows": 67
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K3/PANEL_VARIANCE.csv.gz",
+      "bytes": 123392,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/TARGET_RFUSE_GEOM_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128946,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_COARSE/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6275,
+      "rows": 468
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_COARSE/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1293237,
+      "rows": 21570
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_COARSE/PANEL_COVERAGE.csv.gz",
+      "bytes": 1490,
+      "rows": 67
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_COARSE/PANEL_VARIANCE.csv.gz",
+      "bytes": 112591,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_COARSE/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128424,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_FINE/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 6442,
+      "rows": 468
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_FINE/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 1295223,
+      "rows": 21570
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_FINE/PANEL_COVERAGE.csv.gz",
+      "bytes": 1488,
+      "rows": 67
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_FINE/PANEL_VARIANCE.csv.gz",
+      "bytes": 112518,
+      "rows": 6254
+    },
+    {
+      "file": "by_method/V3_BEHAVIOR_FINE/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 128700,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_COARSE/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 11719,
+      "rows": 1066
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_COARSE/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 2915700,
+      "rows": 48838
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_COARSE/PANEL_COVERAGE.csv.gz",
+      "bytes": 1498,
+      "rows": 67
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_COARSE/PANEL_VARIANCE.csv.gz",
+      "bytes": 105935,
+      "rows": 6252
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_COARSE/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 131804,
+      "rows": 8935
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_FINE/CONFIGURATION_COUNTS.csv.gz",
+      "bytes": 11830,
+      "rows": 1066
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_FINE/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "bytes": 2919524,
+      "rows": 48838
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_FINE/PANEL_COVERAGE.csv.gz",
+      "bytes": 1495,
+      "rows": 67
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_FINE/PANEL_VARIANCE.csv.gz",
+      "bytes": 105850,
+      "rows": 6252
+    },
+    {
+      "file": "by_method/V3_JOINT_QT_FINE/TEAM_CLASS_VECTORS.csv.gz",
+      "bytes": 131428,
+      "rows": 8935
+    }
+  ]
+}
