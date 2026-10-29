@@ -1,0 +1,17 @@
+{
+  "figure": "ALL21_Q_AND_FLOOR_SHAPE.png",
+  "sha256": "e3d7fa43e02b1e82784beddf4682e9733cc6eabae04dc8b622ea39921d6a5bb3",
+  "visual_review_complete": true,
+  "checks": [
+    "All four capacity-preselected images are visible",
+    "All seven coalitions and team sizes visible on both axes",
+    "All 21 upper-triangle comparisons per image present; lower triangle excluded without zero imputation",
+    "Column-minus-row Q direction and symmetric floor 1-IoU are labeled separately",
+    "Shared Q scale -8 to +8 and full theoretical floor distance 0 to 1 scale retained",
+    "Numeric floor labels are rounded to two decimal places; full precision remains in CSV/SVG data source"
+  ],
+  "limitations": [
+    "Small positive floor distances may display as 0.00 after rounding; this does not assert identical geometries",
+    "Full 0-1 floor distance color scale compresses color differences at 0.01-0.13; numeric labels and CSV give exact values"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "scope": "Read-only targeted check of variability denominators and identifiability; no rerun of effects, fitting, fusion or scoring",
+  "all_registered_member_panels": 28751,
+  "full_panel_key": [
+    "pool_id",
+    "panel_id"
+  ],
+  "duplicate_full_panel_keys": 0,
+  "single_physical_pair_panels": 952,
+  "multi_physical_pair_panels": 27799,
+  "multi_pair_panels_Q_valid_zero": 185,
+  "multi_pair_panels_Q_valid_one": 155,
+  "multi_pair_panels_Q_valid_at_least_two": 27459,
+  "Q_sd_span_sign_flip_missing_with_valid_at_least_two": 0,
+  "Q_valid_observations_le_unique_pairs": true,
+  "exact_fixed_D_registered_panels": 562,
+  "exact_fixed_D_all_distinct_D_equals_one": true,
+  "Q_eligible_panels_with_one_arm_unique_in_full_registered_panel": 7848,
+  "multi_pair_panels_with_both_arms_single_unique_team": 0,
+  "event_identity_evidence": "Registry event ID is hash(pool_id, method, physical_pair_id); within each method and pool, distinct event IDs identify distinct unordered physical endpoint pairs.",
+  "allowed_one_arm_variation": "At least one arm must change; one arm may remain fixed. Such a panel cannot separately identify both X-member and Z-member contributions.",
+  "sampling_limit": "Span and sign flip describe the sampled feasible members; no observed flip does not prove permanent stability. Comparing spans across different sample sizes does not by itself rank classifiers.",
+  "valid_count_limit": "At least two finite metric-valid observations is required. Values may be equal; two equal results legitimately give descriptive span zero, unlike a singleton.",
+  "panel_kind_limit": "Exact fixed-D and same-composition but varying-D panels remain separate; the latter includes background-member changes.",
+  "labor_across_panel_source_count_vectors_verified": false,
+  "labor_limit": "Each AC labor delta is already legal under within-pair matched recording-source count vectors. This audit did not establish a shared recording-source vector across different AC values in a member panel; their labor span must not be described as a source-controlled pure member effect.",
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_teams": 0,
+  "sources": [
+    {
+      "path": "stage05_sensitivity/results_v1/MEMBER_PANELS.csv.gz",
+      "sha256": "85c406287719b869df8999b3104017d7cd1842823c01d39cdd0d33e15cd2aa2d"
+    },
+    {
+      "path": "stage05_sensitivity/code/correct_member_variability_denominators.py",
+      "sha256": "8870a9f52f85208794e0f3fb2d37ae9daebd0838d2c43e0fb61f39da90fc0299"
+    },
+    {
+      "path": "stage05_sensitivity/code/analyze_population_sensitivity.py",
+      "sha256": "c1ffc2cd96e5362617c20ca6a7898b59922f0db6276b881e318e60072122eb3b"
+    },
+    {
+      "path": "stage01_design_review/code/register_ac_population.py",
+      "sha256": "2e5b09e968ea9eb25e3c5d5b4a0202d19a94ec3838821791fff4b9c6e3d26fdf"
+    },
+    {
+      "path": "stage05_sensitivity/member_variability_v2/MEMBER_VARIABILITY_DENOMINATOR_RECEIPT.json",
+      "sha256": "7965522a17f7d092ff9c030922b1944c58d5fdae5ccf703a0212c5ada6f780bd"
+    }
+  ]
+}

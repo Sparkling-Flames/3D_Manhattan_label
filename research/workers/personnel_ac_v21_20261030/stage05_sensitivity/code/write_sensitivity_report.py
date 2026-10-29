@@ -1,0 +1,207 @@
+"""Write the final Chinese sensitivity interpretation with numeric row ledger."""
+from pathlib import Path
+import argparse,json,math,hashlib
+import pandas as pd
+from write_preselected_case_report import md_table,f
+
+
+def clean(x):
+    if isinstance(x,dict):return {k:clean(v) for k,v in x.items()}
+    if isinstance(x,list):return [clean(v) for v in x]
+    if isinstance(x,float) and not math.isfinite(x):return None
+    return x.item() if hasattr(x,'item') else x
+
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--base',required=True);a=ap.parse_args();b=Path(a.base)
+    paths={
+        'member':'member_variability_v2/MEMBER_VARIABILITY_VALID_GE2_SUMMARY.csv.gz',
+        'background':'report_tables/BACKGROUND_CHANGES_COMPACT_PRIMARY_MANUAL.csv.gz',
+        'fixed_A':'report_tables/FIXED_A_REPLACEMENT_STEPS_COMPACT_PRIMARY_MANUAL.csv.gz',
+        'fixed_XZ':'report_tables/FIXED_BLOCK_BACKGROUND_STEPS_COMPACT_PRIMARY_MANUAL.csv.gz',
+        'batch':'report_tables/SAMPLING_BATCHES_COMPACT_PRIMARY_MANUAL.csv.gz',
+        'core':'core_members_v2/AC_CELL_CORE_COVERAGE_SUMMARY.csv.gz',
+        'decomposition':'three_leg_common_support_v2/REQUESTED_ALL_OUTSIDE_D_DIRECTIONS_WITH_SIZES.csv.gz'}
+    tables={name:pd.read_csv(b/path) for name,path in paths.items()};ledger=[]
+    def row(name,**filters):
+        d=tables[name];sel=pd.Series(True,index=d.index)
+        for k,v in filters.items():sel&=d[k].eq(v)
+        found=d[sel];assert len(found)==1,(name,filters,len(found))
+        r=found.iloc[0].to_dict();ledger.append(dict(source=paths[name],filters=filters,values=r));return r
+    methods=['TARGET_DSTRUCT_K3','V21_DSTRUCT_RAW3_K3','OPPJOINT_K3','OPPJOINT_K4']
+    labels=['TARGET K3','RAW3 K3','JOINT K3','JOINT K4']
+    fixed=[]
+    for method,label in zip(methods,labels):
+        filt=dict(scope='primary',condition='manual',method=method,panel_kind='exact_fixed_D_member_panel',role_direction='1->2',n=20.,m=10.)
+        q=row('member',**filt,metric='B8L2_CA__span');d=row('member',**filt,metric='D10_CA__span');s=row('member',**filt,metric='B8L2_CA__sign_flip')
+        fixed.append([label,str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),int(q['valid_panels']),f(q['image_mean']),f(d['image_mean']),f(100*s['image_mean'],2)+'%'])
+    backgrounds=[]
+    specifications=[('TARGET_DSTRUCT_K3','TARGET 中→高','2->3',7.)]+[(m,l,'1->2',10.) for m,l in zip(methods,labels)]
+    for method,label,rd,m in specifications:
+        filt=dict(method=method,role_direction=rd,n=20.,m=m,comparison='same_composition_background_members',background_profile='neutral_members_1')
+        q=row('background',**filt,metric='B8L2_CA__effect_difference');d=row('background',**filt,metric='D10_CA__effect_difference')
+        backgrounds.append([label,'20/'+str(int(m)),str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),
+            f(q['image_mean']),f(q['image_balanced_mean_absolute_within_pool']),f(d['image_balanced_mean_absolute_within_pool']),
+            str(int(q['positive_images']))+'/'+str(int(q['negative_images']))])
+    expansions=[]
+    for method,label,rd,lo,hi in [('TARGET_DSTRUCT_K3','TARGET 中→高','2->3',7.,8.),
+        ('OPPJOINT_K3','JOINT3 1→2','1->2',9.,10.),('OPPJOINT_K3','JOINT3 1→2','1->2',10.,12.),
+        ('RFUSE_GEOM_K2','RFUSE 1→2','1->2',3.,4.)]:
+        q=row('fixed_A',method=method,role_direction=rd,n_from=20.,m_from=lo,m_to=hi,metric='B8L2_CA__step_difference')
+        expansions.append([label,str(int(lo))+'→'+str(int(hi)),str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),
+            f(q['image_mean']),f(q['image_balanced_mean_absolute_within_pool']),str(int(q['positive_images']))+'/'+str(int(q['negative_images']))])
+    block=[]
+    for method,label in zip(methods,labels):
+        q=row('fixed_XZ',method=method,role_direction='1->2',n_from=20.,n_to=22.,m_from=10.,m_to=10.,metric='B8L2_CA__step_difference')
+        block.append([label,str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),f(q['image_mean']),f(q['image_balanced_mean_absolute_within_pool']),str(int(q['positive_images']))+'/'+str(int(q['negative_images']))])
+    batches=[]
+    for method,label,rd,m in specifications:
+        q=row('batch',method=method,role_direction=rd,n=20.,m=m,metric='B8L2_CA__direction_agreement')
+        delta=row('batch',method=method,role_direction=rd,n=20.,m=m,metric='B8L2_CA__mean_difference')
+        batches.append([label,'20/'+str(int(m)),str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),f(100*q['image_mean'],2)+'%',f(delta['image_balanced_mean_absolute_within_pool'])])
+    core=[]
+    for method,label in zip(methods,labels):
+        q=row('core',scope='primary',condition='manual',method=method,n=20.,m=10.)
+        core.append([label,str(int(q['images']))+'/'+str(int(q['buildings'])),int(q['cells']),int(q['source_block_fixed_cells']),int(q['target_block_fixed_cells']),int(q['both_blocks_fixed_cells'])])
+    dec=[]
+    x=tables['decomposition'];x=x[x.metric.eq('B8L2_CA')]
+    for q in x.to_dict('records'):
+        ledger.append(dict(source=paths['decomposition'],filters={'method':q['method'],'role_direction':q['role_direction'],'metric':'B8L2_CA'},values=q))
+        dec.append([q['method'],q['role_direction'].replace('->','→'),str(int(q['valid_images']))+'/'+str(int(q['valid_buildings'])),
+            str(int(q['common_valid_n_small_min']))+'～'+str(int(q['common_valid_n_small_max']))+' → '+str(int(q['common_valid_n_large_min']))+'～'+str(int(q['common_valid_n_large_max'])),
+            str(int(q['common_valid_small_class_n_min']))+'～'+str(int(q['common_valid_small_class_n_max'])),
+            f(q['total_image_mean']),f(q['equal_image_mean']),f(q['addition_image_mean']),
+            str(int(q['total_positive_images']))+'/'+str(int(q['total_negative_images']))])
+    doc='''# HOHONET v2.1：具体成员、共同背景、替换规模与整类联盟的敏感性结论
+
+## 研究判断
+
+本轮结果支持继续使用 **TARGET_DSTRUCT K3 作为普通 Manual 的主解释分类，K2 作为粗层**；JOINT、RAW3 与 RFUSE 保持互补用途。直接 AC 和整类实验把“人群类型”具体化为同图、同目标、真实可用成员的团队。类别可以给出有解释的平均响应和多数方向，同时具体成员、共同背景和替换比例仍会显著改变幅度，部分条件会翻转方向。这两层结果应一起报告。
+
+主结构方向 TARGET K3 中→高的 n20/m7 在 85 图、21 楼上有较稳定的两批方向，同时同配比背景换人仍能产生平均绝对约 4.56 的 Q 效果差。JOINT 的大块条件覆盖较广，但 n20/m10 的固定D面板中约四成以上会因具体成员改变而出现正负响应，不能把大容量直接解释为更强的类别决定性。RFUSE 在较小块上仍有可重复的作用，不因没有 m10 容量而失去反向解释价值。
+
+这些判断补充主报告的主效应、原答结构与严格 ABC 证据。本节没有 B 的直接 AC 不能单独证明“跨类比同类更大”；不能依据某一个最大 Q 差、某一种大人数条件或少数成功图重新决定主分类。
+
+## 1. 完成范围与证据单位
+
+全部 258 个测量池均已处理：226 个 Manual 合法池（206 原主目标、20 其它合法目标）和 32 个 Semi 合法池。团队始终在同一图、同一目标空间内组成，OOS不混入这些池。分类、参考、排除、难度和冻结融合没有改动；阶段05只复用已经执行的端点，不新增融合或评分。
+
+完整派生表包含成员面板 28,751 条、固定XZ背景比较 70,448 条、固定XZ扩背景 130,601 步、固定A扩块 15,091 步、不等人数整类三段 63,491 条路径（12,922 父对照）、完整联盟 83,326 条链接、两批抽样 22,616 格、逐人使用 50,254 行及逐池方法重叠 4,759 行。它们是同一批端点的不同分析关系，不是可以相加的独立实验数量。正式测量共 471,758 方法事件、412,839 个不同物理 AC 对；同一人员实体被不同方法使用时按 physical_pair_id 识别。
+
+统计先在图片池内平衡面板、固定块或父对照，再按图片等权；另保留楼等权。一个图片若有多个合法目标，先分别组队与评分，再在相应分析层汇总；没有把不同目标的成员混成队。下列主表均限普通 Manual 原主目标；完整文件仍保留 Semi 和其它目标层。
+
+## 2. 两种绝对幅度及有效分母
+
+设某个背景或扩块比较的效果差为 h。正文的“均|效果差|”先在每次实际比较上取 |h|，再按池和图平衡。另一量“|图均效果差|”先平均同图正负 h 再取绝对值，可能明显更小。总汇 v2 同时保留 `image_balanced_mean_absolute_within_pool` 与 `image_mean_absolute_of_image_mean`，不把抵消当成没有变化。
+
+Q、几何、记录劳动和状态分别保留有效分母。缺 Q 不填0，也不统一称融合失败。成员波动需要至少两个该指标的有效值：28,751 面板中 952 个仅有一个物理对，先排除；其余 27,799 面板中 Q 无有效值 185 个、只有一个有效值 155 个、至少两个有效值 27,459 个。单值的描述性 max−min 虽为0，不用于推断稳定性。最终跨度、SD和翻转表是 `member_variability_v2/`，旧均值及原始端点未改动，独立审查已通过。
+
+固定D与类别计数不变但D成员可变是不同控制。562 个固定D面板的实际D均唯一，其中462有多个物理对；264的A有多个成员版本，316的C有多个版本。全体 Q 可评多对面板中，7,848 个在完整登记面板只改变一侧团队，仍是合法成员敏感性，但不能声称已分别识别 X 与 Z 两侧的贡献。抽样数不同也不宜仅凭跨度对方法排名。
+
+## 3. 同一背景下，具体成员仍改变响应
+
+以下 n20/m10 均为各方法角色1→2；它们的有效图集合不同，表用于明确各方法的实际条件和边界，不是同图公平排名。
+
+'''+md_table(['方法','有效图/楼','有效面板','Q跨度图均','D10跨度图均','面板内正负翻转率'],fixed)+'''
+
+TARGET十人只有3图，面板未翻转只能说明这三个冻结条件。JOINT3、JOINT4和RAW3的固定D面板有约四成到近半发生正负翻转，说明“类别相同”仍不足以确定具体队伍的 Q 调整方向。它与主效应均值、方向比例一起界定可解释性，而不是自动否定分类。
+
+若只固定每队类别计数并允许X/Z及D成员一起变化，TARGET主结构方向 n20/m7 的85图、87个可评面板，Q跨度图均为10.592，图等权的面板翻转比例为34.12%。这包含背景身份变化，不能直接与固定D跨度相减当作背景的方差贡献。该主方向的多数图片响应和两批稳定性仍成立，见第6节。
+
+## 4. 固定X/Z后，共同背景的影响
+
+下面保持同一X/Z、同n/m及实际D类别人数向量，只更换D的具体成员。效果差是新背景下(C−A)减去基线背景下(C−A)；除明确标出的中→高外，m10行均为角色1→2。
+
+'''+md_table(['方法方向','n/m','有效图/楼','Q效果差均值','Q均|效果差|','D10均|效果差|','Q效果差正/负图'],backgrounds)+'''
+
+JOINT3 的有符号均值约−0.034，而逐比较绝对幅度约2.450；TARGET中→高约−0.388与4.564。这是同配比背景成员产生的响应差，并非背景类别数量改变。source_enriched、target_enriched 的实际类别数量改变对照在完整表中单列；若某类已用尽而无法形成预期配比，按实际D计数而不是策略名称解释。
+
+记录劳动的绝对秒数差在固定X/Z时由同一批换入、换出成员决定，D会抵消。所有合法值的数值检查通过，广精确背景对照中的最大残差约2.73×10⁻¹²秒。相对劳动百分比可以只因原队分母改变而变化；它不是X/Z真实劳动量被背景改变。背景对照另要求四队全部记录已知且来源计数向量一致，缺失不由Q或几何是否可评决定。
+
+成员面板的劳动跨度则是每次AC内部同源可比的记录差之描述性波动，跨不同AC未再次固定来源向量，不能直接称为纯成员行为的劳动方差。所有记录劳动都是已有原答的记录总量，不是融合CPU时间或并行团队完成时间。
+
+### 主A/B与“交换类别之外的D”精确匹配
+
+另用已有端点，要求同 pool、method、n、m及完整canonical X/Z名单一致，D实际不同，才连接主A/B neutral与整类等人数中间队。共6,364方法背景对、5,573物理四端点对、209池；原主Manual195图/22楼、5,653方法对，其中5,454对有成对有效Q。原主的132对（8图/5楼）保持D类别配比，5,521对改变D配比，后者不称纯背景换人。
+
+与严格66条件子集的120方法对/108物理对只重叠4对。12个共同指标×4对已核对：本表是 outside−neutral，严格表是 F−B，符号相反、绝对幅度相同。合并去重后的覆盖为6,480方法对、5,677物理对，不把同一四端点当成两份独立证据。严格子集的120对全部改变D类别计数；广样本的同配比子集不能替代严格条件中的可识别性限制。
+
+## 5. 扩大替换块与扩大共同背景
+
+### 固定原队A，n20，X/Z嵌套扩块
+
+以下每条路径的A team_key完全不变。增量是扩大块之后的AC差减去扩大之前的AC差。
+
+'''+md_table(['方向','m变化','有效图/楼','Q增量均值','Q均|增量|','增量正/负图'],expansions)+'''
+
+TARGET的7→8人扩块均值为负，但7/11图增量为正；JOINT3的两段也接近正负各半。不能假定替换越多、效果就按同一方向单调放大。这里没有换用另一批图片比较 m7 与 m12，而是在同A路径上观察嵌套具体成员；新增成员身份仍是这条路径的一部分。RFUSE的小块反向响应在82图/21楼中有66图增量为正，支持继续保留其小块互补用途。
+
+### 固定十人X/Z，n20→22，加入嵌套D
+
+'''+md_table(['方法（角色1→2）','有效图/楼','Q效果增量均值','Q均|增量|','增量正/负图'],block)+'''
+
+这一设计同时增加D的具体成员与n、降低m/n，MV50门槛也由10变11。人数容量表可说明十人块由可独立达到阈值变为不能独立达到阈值；真实哪些节点未过票、位置估计和连接如何变化，仍需完整票账验证，不能只由人数推断。主报告的几何病例承担这一机制层判断。
+
+## 6. 两批抽样、固定核心和共享实体
+
+两个不同种子批次会去除重复X/Z组合，枚举条件不进入这张批次一致率表。它是当前有限抽样的稳定性检查，不是预测准确率；同一成员和楼之间的相关性仍保留。
+
+'''+md_table(['方向','n/m','可比较图/楼','Q均值方向一致率','两批Q均值差的绝对值图均'],batches)+'''
+
+TARGET中→高n20/m7两批方向一致80/85=94.12%，D10为92.94%，同时Q批次差的绝对幅度约2.903。类别方向较稳定与成员明显影响幅度可以同时成立。n20/m10的TARGET三图结果不能替代其主结构方向，也不能借JOINT更大的容量宣称其大块作用覆盖了最高历史Q类别；实际角色方向已在冻结容量表标明。
+
+下表统计 n20/m10 的所有实际方向条件，固定一侧不等于两侧均无扰动。完整核心与频次表有26,887条件，每条给出具体名单、出现次数及是否用尽该图该类全部成员。
+
+'''+md_table(['方法','图/楼','方向条件数','来源块固定','目标块固定','两侧固定'],core)+'''
+
+一个固定核心是注册抽样块的交集，不自动等于自然人群只有这些人。完整换入一个只有8名可用成员的类别时，类别与这8人的作用不能在当前图中进一步拆开。逐人频次是设计曝光次数，不是独立观察数；跨方法实体重叠表也不应将不同方法对的交集再相加当作全局唯一重复数。
+
+## 7. 整类不等人数变化：三段在共同有效支持上解释
+
+整类来源与目标全部互换会同时改变人数。此处每个指标只用总比较、等人数中间队和追加剩余目标成员三段都有效的同一路径；先在父对照内平衡中间队，再按池、图、楼汇总。无D、部分外部D和全部外部D分开，避免把不同背景的效应混为一项。可加指标核对总差=等人数差+追加成员差，面积/高度百分比和几何距离不作这种加法解释。
+
+下列方向按“人数较少的高结构或高历史Q类别整类退出”这一研究问题明确选取，保留相应所有可行方向；不是按最大收益选择。表为全部外部D、neutral0。它包含小来源类，不应冒充固定m10的大块覆盖。
+
+'''+md_table(['方法','整类方向','Q有效图/楼','A人数范围→C人数范围','等人数锚点m范围','总ΔQ','等人数ΔQ','追加成员ΔQ','总差正/负图'],dec)+'''
+
+例如TARGET3高结构角色3→2，197图/22楼的总Q均值−4.722由等人数−7.408与追加目标剩余成员+2.686组成；JOINT3最高Q角色3→1的176图/20楼为−4.547=−6.252+1.705。多数图片下降，同时新增目标成员部分抵消换类下降。第二段是“这些剩余目标成员沿这条路径加入”的作用，不是独立于身份和类别的纯人数因果效应。
+
+不同D层的容量及可评图集合不同，不直接相减作为控制背景的效果。每条父对照的实际 n、m、来源/目标容量、D身份及全部中间队均在原路径表中保留；大小覆盖表同时报告合法登记范围和共同可评范围，缺失没有填成零。
+
+## 8. 完整联盟与人工判读案例
+
+按用户35人、三类8/17/10的例子，算前以容量形状选中 pa4otMbVnkk-06、-42、-44、-11；四图均在同一楼，C1=17、C2=10、C3=8、unknown=0。每图七种非空联盟和全部21对完整保存；三条双类交换边连到四个等人数中间队，共48路径。另有96条同人数纯类锚点。四图报告 `PRESELECTED_FOUR_CASES_REPORT_ZH.md` 展示全部结果而不是仅最佳队。
+
+06体现高分区间的位置/尺度变化：35份原答及七队均四点，身份组全员支持、连接有效。11体现共同表达与当前参考不一致：35份原答及七队全为八点轮廓，而当前参考是四点矩形；全部结构全员支持，没有未选节点或融合失败。C3对当前参考边界较近，Q约29.73，其余多约22，但共同八点凸出/入口表达保留。
+
+11需要人工看原图ERP x≈525～1010和参考r2–r3闭合段，判断目标空间是否包含右侧凸出/入口。研究保持正式参考和资格不变；不能仅凭低Q把完整八点表达当漏结构，也不能自动改参考来消除反例。可交互原图、35份完整原答、参考、七队融合及完整票账见 `../stage06_cases/alliance_pa4_11/PA4_11_ALLIANCE_VIEWER_ZH.html`。
+
+四图的C3八人完全相同；C1四图共享16人、C2四图共享8人，全池共同32人。它们不是四个独立建筑。劳动也有自己的反例：11的C2→C3八条等人数锚点全部升Q，但劳动6减2增，均值却因少数大增加为+10.6445秒，中位数−26.175秒。完整联盟每图只有3/21对、四图12/84对满足同一单来源比较，来源计数严格匹配则0；不把混合来源原始和当可比劳动。
+
+## 9. 实际采用方式与数据入口
+
+普通Manual仍以TARGET K3解释结构人群，K2保留粗层；对主结构角色优先展示有较广跨楼支持的m7及整类条件，再用容量允许的m8等路径观察规模敏感性。TARGET m9/m10大块落在粗层同父类内的低/中结构方向，单列其用途。JOINT用于Q、记录劳动、位置尺度等联合画像及大容量条件，尤其保留整类最高Q小群体的进入/退出；RAW3补充原答特征敏感性和较大块；RFUSE用于从融合响应反看人员，小块证据与结构路线互补。
+
+严格ABC提供有真实同类B的额外比较；直接AC在固定人数、背景和目标下模拟实际跨类调整；整类与完整联盟展示接近真实人员池的人群配置及人数变化。三者回答不同问题，按精确端点串联，不能互相替代。对没有同类B、固定小核心、少楼支持、参考语义不确定或某指标仅一个有效值的条件，报告相应解释边界。
+
+主要可取文件：
+
+- `results_v1/`：完整逐面板、逐背景、逐路径、逐联盟与逐人派生表、每池/每图摘要、主完成与可读性回执。
+- `member_variability_v2/`：成员波动有效≥2的最终统计及独立审查。
+- `report_tables/`：原主目标普通Manual正文紧凑表；不替代其它目标/Semi完整结果。
+- `exact_outside_background_v1/`：全部精确XZ背景匹配、逐对结果、图楼汇总及与strict共享ID反号验证。
+- `three_leg_common_support_v2/`：三段共同有效支持、D层、真实人数范围和所选研究方向的全部指标。
+- `core_members_v2/`、`identity_support/`：每条件核心名单、逐人曝光、方法共享实体。
+- `preselected_four_complete/`、`figures/`：四图完整28队、84对、48路径、96个纯类锚点与全21对图；原图和票账在stage06。
+- `code/`、冻结合同及 `SENSITIVITY_REPORT_NUMERIC_LEDGER.json`：完整复现与本文数字的源表筛选记录。
+
+正式打包可排除 pool_shards/pool_summaries检查点、临时partial和标明中间版的目录，保留完整派生表、最终摘要和回执。逐事件的完整质量分项、完整几何和状态仍直接引用stage04，不另复制全宽事件表。所有已完成表的gzip EOF、CSV宽度及哈希有实际回执；正文数据可以回连精确事件、成员和端点。
+'''
+    (b/'SENSITIVITY_REPORT_ZH.md').write_text(doc,encoding='utf-8')
+    record={'rows':ledger,'source_sha256':{name:hashlib.sha256((b/path).read_bytes()).hexdigest() for name,path in paths.items()},
+        'interpretation':'All selected rows use exact declared design/role conditions; no maximal-effect filtering.'}
+    (b/'SENSITIVITY_REPORT_NUMERIC_LEDGER.json').write_text(json.dumps(clean(record),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+    print(json.dumps({'report':str(b/'SENSITIVITY_REPORT_ZH.md'),'numeric_ledger_rows':len(ledger)},ensure_ascii=False))
+
+
+if __name__=='__main__':main()
