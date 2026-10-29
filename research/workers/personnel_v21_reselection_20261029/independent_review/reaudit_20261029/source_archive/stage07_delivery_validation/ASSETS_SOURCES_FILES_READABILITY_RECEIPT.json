@@ -1,0 +1,90 @@
+{
+  "completed_utc": "2026-10-29T08:58:33.100676+00:00",
+  "root": "/workspace/scratch/2109120ca4e8/HOHONET_v21_reaudit_20261029",
+  "stages": [
+    "stage04_cases",
+    "stage06_reproduction"
+  ],
+  "prefix": "ASSETS_SOURCES",
+  "all_readable": true,
+  "files": 548,
+  "failed_files": 0,
+  "bytes": 256437725,
+  "elapsed_seconds": 9.675577,
+  "totals": {
+    "text_files": 291,
+    "text_lines": 93081,
+    "files": 548,
+    "bytes": 256437725,
+    "json_documents": 107,
+    "gzip_streams": 29,
+    "csv_files": 93,
+    "csv_rows": 1448830,
+    "gzip_uncompressed_bytes": 543112124,
+    "pdf_files": 21,
+    "pdf_pages": 21,
+    "image_files": 28,
+    "image_frames": 28,
+    "binary_files": 2,
+    "csv_blank_rows": 2,
+    "zip_archives": 1,
+    "zip_members": 13,
+    "xml_files": 18
+  },
+  "stage_summary": {
+    "stage04_cases": {
+      "files": 163,
+      "bytes": 123928851,
+      "text_files": 18,
+      "text_lines": 2701,
+      "json_documents": 30,
+      "gzip_streams": 15,
+      "csv_files": 64,
+      "csv_rows": 7638,
+      "gzip_uncompressed_bytes": 9664555,
+      "pdf_files": 21,
+      "pdf_pages": 21,
+      "image_files": 28,
+      "image_frames": 28,
+      "binary_files": 2,
+      "csv_blank_rows": 2
+    },
+    "stage06_reproduction": {
+      "files": 385,
+      "bytes": 132508874,
+      "csv_files": 29,
+      "csv_rows": 1441192,
+      "json_documents": 77,
+      "text_files": 273,
+      "text_lines": 90380,
+      "gzip_streams": 14,
+      "gzip_uncompressed_bytes": 533447569,
+      "zip_archives": 1,
+      "zip_members": 13,
+      "xml_files": 18
+    }
+  },
+  "check_types": {
+    "text_utf8_decode_to_EOF": 280,
+    "json_utf8_parse_complete_document": 107,
+    "gzip_decompress_to_EOF_and_CRC": 29,
+    "csv_utf8_EOF_and_consistent_width": 93,
+    "pdf_open_and_load_every_page": 21,
+    "PIL_verify_and_decode_all_frames": 28,
+    "binary_read_to_EOF": 2,
+    "zip_every_member_read_to_EOF_and_CRC": 1,
+    "XML_parse_complete_document": 18
+  },
+  "ignored_temporary_or_dot_files": 1,
+  "failures": [],
+  "inventory_file": "stage07_delivery_validation/ASSETS_SOURCES_FILES_READABILITY.csv",
+  "inventory_sha256": "49a468915ddcc683a365c32cc4e81a45101148b2651050fb67e5269a8b95fbcc",
+  "script_sha256": "e8e171d095c70979845de5e02e12b82efb3848d288bb9e76cbee2cfabbaa1884",
+  "counting_notes": [
+    "CSV row counts exclude headers and physically blank CSV records; every nonblank row is width-checked.",
+    "JSONL records exclude blank lines. Container members contribute to content counters and are not extra top-level files.",
+    "Python-compatible NaN/Infinity JSON constants, if present in frozen sources, are counted separately without modifying the source.",
+    "ZIP/Office members are read to EOF for CRC, recursively; no archive members are extracted into the delivery.",
+    "Source files and all pre-existing manifests are unchanged; no research calculations, packaging, or upload."
+  ]
+}

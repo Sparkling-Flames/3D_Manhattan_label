@@ -1,0 +1,110 @@
+{
+  "completed_utc": "2026-10-29T08:53:55.465032+00:00",
+  "root": "/workspace/scratch/2109120ca4e8/HOHONET_v21_reaudit_20261029",
+  "stages": [
+    "stage00_intake",
+    "stage01_classification",
+    "stage02_comparison",
+    "stage02_capacity",
+    "stage03_completed_abc"
+  ],
+  "prefix": "CORE",
+  "all_readable": true,
+  "files": 437,
+  "failed_files": 0,
+  "bytes": 281071036,
+  "elapsed_seconds": 19.355461,
+  "totals": {
+    "csv_files": 365,
+    "csv_rows": 3825324,
+    "files": 437,
+    "bytes": 281071036,
+    "json_documents": 36,
+    "text_files": 34,
+    "text_lines": 3972,
+    "gzip_streams": 291,
+    "jsonl_files": 2,
+    "jsonl_records": 16822,
+    "gzip_uncompressed_bytes": 1465277060,
+    "csv_blank_rows": 4
+  },
+  "stage_summary": {
+    "stage00_intake": {
+      "files": 10,
+      "bytes": 185516,
+      "csv_files": 2,
+      "csv_rows": 72,
+      "json_documents": 4,
+      "text_files": 3,
+      "text_lines": 383,
+      "gzip_streams": 1,
+      "jsonl_files": 1,
+      "jsonl_records": 4,
+      "gzip_uncompressed_bytes": 20781
+    },
+    "stage01_classification": {
+      "files": 93,
+      "bytes": 56259099,
+      "json_documents": 9,
+      "text_files": 5,
+      "text_lines": 699,
+      "gzip_streams": 63,
+      "csv_files": 79,
+      "csv_rows": 480368,
+      "gzip_uncompressed_bytes": 198643139
+    },
+    "stage02_capacity": {
+      "files": 69,
+      "bytes": 50443411,
+      "text_files": 13,
+      "text_lines": 1431,
+      "json_documents": 9,
+      "csv_files": 47,
+      "csv_rows": 665942,
+      "gzip_streams": 19,
+      "gzip_uncompressed_bytes": 239484627
+    },
+    "stage02_comparison": {
+      "files": 249,
+      "bytes": 125719291,
+      "json_documents": 8,
+      "csv_files": 228,
+      "csv_rows": 2620770,
+      "text_files": 13,
+      "text_lines": 1459,
+      "gzip_streams": 201,
+      "gzip_uncompressed_bytes": 806339837,
+      "csv_blank_rows": 4
+    },
+    "stage03_completed_abc": {
+      "files": 16,
+      "bytes": 48463719,
+      "json_documents": 6,
+      "gzip_streams": 7,
+      "jsonl_files": 1,
+      "jsonl_records": 16818,
+      "gzip_uncompressed_bytes": 220788676,
+      "csv_files": 9,
+      "csv_rows": 58172
+    }
+  },
+  "check_types": {
+    "csv_utf8_EOF_and_consistent_width": 365,
+    "json_utf8_parse_complete_document": 36,
+    "text_utf8_decode_to_EOF": 34,
+    "jsonl_utf8_parse_each_record_to_EOF": 2,
+    "gzip_decompress_to_EOF_and_CRC": 291
+  },
+  "ignored_temporary_or_dot_files": 0,
+  "failures": [],
+  "inventory_file": "stage07_delivery_validation/CORE_FILES_READABILITY.csv",
+  "inventory_sha256": "c09b0d2f4a40c47cffd205936a1ca51045730fc21bbf9ed7b11a09d28cbbdc4e",
+  "script_sha256": "e8e171d095c70979845de5e02e12b82efb3848d288bb9e76cbee2cfabbaa1884",
+  "counting_notes": [
+    "CSV row counts exclude headers and physically blank CSV records; every nonblank row is width-checked.",
+    "JSONL records exclude blank lines. Container members contribute to content counters and are not extra top-level files.",
+    "Python-compatible NaN/Infinity JSON constants, if present in frozen sources, are counted separately without modifying the source.",
+    "ZIP/Office members are read to EOF for CRC, recursively; no archive members are extracted into the delivery.",
+    "Source files and all pre-existing manifests are unchanged; no research calculations, packaging, or upload."
+  ]
+}

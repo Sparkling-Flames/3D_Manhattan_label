@@ -1,0 +1,127 @@
+{
+  "archives": [
+    {
+      "archive": "HOHONET_v21_reaudit_stage00_intake.zip",
+      "stage": "stage00_intake",
+      "members": 13,
+      "expected_final_files": 10,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "287be3025a194607edc36ee843c32068ffd22da6e211977abbb21c7a36edcabb",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [
+        "code/build_supplement_design.py",
+        "code/run_supplement_native.py",
+        "code/verify_native_parity.py"
+      ],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage01_classification.zip",
+      "stage": "stage01_classification",
+      "members": 93,
+      "expected_final_files": 93,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "555c1d62ef6986614c6a123a6480189d67c349676620dc9d89ddb3ac2554fdd1",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage02_comparison.zip",
+      "stage": "stage02_comparison",
+      "members": 249,
+      "expected_final_files": 249,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "829999bb013b71f24112074b8e76f430b6af00be236a1c3b71a7932aac420058",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage02_capacity.zip",
+      "stage": "stage02_capacity",
+      "members": 69,
+      "expected_final_files": 69,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "9d0c594cb9b22c0a28eb771a84b182caec37d0b3ff3e12accc2bb92ea6f34216",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage03_completed_ABC.zip",
+      "stage": "stage03_completed_abc",
+      "members": 16,
+      "expected_final_files": 16,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "dc845db5036af0eb3d363ddaf661db7e513c03197775eaf6d23fad87d03d0b01",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage04_cases.zip",
+      "stage": "stage04_cases",
+      "members": 163,
+      "expected_final_files": 163,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "8e6be40deb85c8e34386f38cb645e5b84775e723553c8b552213503a7b36b820",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage05_final_synthesis.zip",
+      "stage": "stage05_synthesis",
+      "members": 16,
+      "expected_final_files": 16,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "05f5354da3f2d2545f907cce4c700022dd2fffdda365bca0eae96f0e62dc1240",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_stage06_reproducible_sources.zip",
+      "stage": "stage06_reproduction",
+      "members": 385,
+      "expected_final_files": 385,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "b9042bf9146821310feaa375e62a7201171a3a909a3d3476f46a5ce0b22b7cf3",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    },
+    {
+      "archive": "HOHONET_v21_reaudit_code.zip",
+      "stage": "code",
+      "members": 11,
+      "expected_final_files": 11,
+      "missing": [],
+      "content_mismatches": [],
+      "all_members_CRC_and_SHA_to_EOF": true,
+      "sha256": "295be1fa8f5b9ba0b60620f2172cdf2ef191658b2b26caa1f9267cc7164a0df8",
+      "all_final_stage_files_exact": true,
+      "additional_known_files": [],
+      "additional_files_are_verified_current_code_copies": true
+    }
+  ],
+  "all_final_stages_complete": true,
+  "membership_resolution": "stage00 intentionally also contains three code snapshots; every additional member SHA exactly matches the final validated code file. Exact stage-directory equality was unnecessarily restrictive. No missing or corrupt file was found; original diagnostic retained."
+}
