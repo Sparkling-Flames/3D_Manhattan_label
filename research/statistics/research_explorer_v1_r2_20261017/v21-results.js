@@ -5,7 +5,7 @@
   const releaseLabels={building:'本版仍在收尾。',computational_complete_pending_browser:'原主目标范围的计算和定向检查已完成；真实浏览器与下载验收待完成。'};
   const releaseStatus=releaseLabels[data.release?.status] || `版本状态：${data.release?.status || '未知'}。`;
   document.getElementById('releaseStatus').textContent = data.release?.full_mainline_including_other_targets_complete===false
-    ? `${releaseStatus} 其它合法空间补充已完成核心计算，其难度、DSTRUCT及受影响选队仍待接续。` : releaseStatus;
+    ? `${releaseStatus} 294池的可计算结构条件及TARGET新分类已完成；其它目标的正式人工难度和旧难度下游仍待接续。` : releaseStatus;
   document.getElementById('currentStatus').textContent = data.current ? `生成时全局 CURRENT 为 ${data.current.data_release}；快照时间 ${data.generated_utc}。` : '未取得全局版本收据。';
   const node = (tag, text, cls) => { const el = document.createElement(tag); if (text !== undefined) el.textContent = text; if (cls) el.className = cls; return el; };
   const cellRow = (parent, cells) => { const tr = node('tr'); cells.forEach(x => tr.append(node('td', String(x)))); parent.append(tr); };

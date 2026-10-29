@@ -42,7 +42,7 @@ test('snapshot shows receipt counts and k=2 support, and changes scope', () => {
 test('local page references exist and does not fetch', () => {
   const html=fs.readFileSync(path.join(page,'v21-results.html'),'utf8');
   const refs=[...html.matchAll(/(?:href|src)="([^"]+)"/g)].map(m=>m[1]).filter(x=>!x.startsWith('#'));
-  for (const ref of refs) assert.ok(fs.existsSync(path.resolve(page,ref)),ref);
+  for (const ref of refs) assert.ok(fs.existsSync(path.resolve(page,ref.split('#')[0].replaceAll('&amp;','&'))),ref);
   assert.doesNotMatch(fs.readFileSync(path.join(page,'v21-results.js'),'utf8'),/\bfetch\s*\(/);
   assert.match(fs.readFileSync(path.join(page,'index.html'),'utf8'),/href="v21-results\.html"/);
 });

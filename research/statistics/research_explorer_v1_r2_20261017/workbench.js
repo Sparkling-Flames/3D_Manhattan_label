@@ -490,7 +490,7 @@ async function change(e){try{
  if(el.dataset.check!==undefined){const row=state.viewRows[Number(el.dataset.check)],key=rowKey(row);if(el.checked)state.selected.add(key);else state.selected.delete(key);drawTable();return;}
  if(el.dataset.facet){const field=el.dataset.facet;route({where:[...state.where.filter(w=>!(w.facet&&w.field===field)),{field,op:el.value===''?'any':'eq',val:el.value,facet:true}]});return;}
  switch(el.id){
-  case 'release':{const chosen=window.RESEARCH_DATASETS.find(d=>d.release===el.value);if(!chosen?.available){toast('该数据源尚未接入');return;}location.hash=new URLSearchParams({module:'overview',release:chosen.release}).toString();location.reload();break;}
+  case 'release':{if(el.value==='v2.1'){const topics={personnel_main:'v21-reselection.html',conditions:'v21-results.html#difficulty',fusion:'v21-results.html#population',data:'v21-results.html#data',coverage:'v21-results.html#data'};location.href=topics[state.module]||'v21-results.html';break;}const chosen=window.RESEARCH_DATASETS.find(d=>d.release===el.value);if(!chosen?.available){toast('该数据源尚未接入');return;}location.hash=new URLSearchParams({module:'overview',release:chosen.release}).toString();location.reload();break;}
   case 'tableSelect':setTable(el.value);break;
   case 'metricSelect':state.chartField='';route({metric:el.value});break;
   case 'chartField':state.chartField=el.value;await render();break;
@@ -509,7 +509,7 @@ async function init(){
  try{if(!dataset?.available)throw Error('该数据版本尚未接入；请选择已发布数据源。');
   document.querySelector('.versions>span').textContent=dataset.analysisLabel;
   $('release').title='切换数据源会重新加载并重置当前筛选';
-  $('release').innerHTML=window.RESEARCH_DATASETS.map(d=>`<option value="${d.release}" ${d.release===dataset.release?'selected':''} ${!d.available?'disabled':''}>${esc(d.label)}</option>`).join('');
+  $('release').innerHTML=window.RESEARCH_DATASETS.map(d=>`<option value="${d.release}" ${d.release===dataset.release?'selected':''} ${!d.available?'disabled':''}>${esc(d.label)}</option>`).join('')+'<option value="v2.1">v2.1 · 新版</option>';
   [index,assets,overview]=await Promise.all([read(dataset.tablesIndex),read(dataset.resourcesIndex),read(dataset.overview)]);
   if(index.snapshot_id!==SNAPSHOT||assets.snapshot_id!==SNAPSHOT||overview.metadata?.snapshot_id!==SNAPSHOT||index.data_release!==dataset.release||assets.data_release!==dataset.release)throw Error('数据版本、消费索引、资源与概要快照不一致，停止混合加载。');
   if(dataset.release==='v2'){for(const [id,tabs] of Object.entries(index.module_tabs))modules[id][2]=tabs;modules.workers[1]='绝对 Q、同任务相对 Q、作答用时和不同难度下的表现都是探索性画像。Semi 和 Scope 只在有记录的范围内统计；10-20 的人员工作标签仅作研究参照，不是生产分类。';modules.fusion[1]='v2 已接入低人数到30/35/满员的自然人数结果、类别块替换、普通图及门洞失败几何；各入口保留各自成员、参考与支持。';}
