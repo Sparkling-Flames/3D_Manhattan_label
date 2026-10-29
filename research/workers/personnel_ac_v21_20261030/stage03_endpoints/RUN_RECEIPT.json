@@ -1,0 +1,41 @@
+{
+  "requested_unique_teams": 478012,
+  "endpoint_rows": 478012,
+  "pools": 258,
+  "acquisition_counts": {
+    "reused_full": 1653,
+    "new_physical_team": 474332,
+    "geometry_replay_existing_team": 2027
+  },
+  "truly_new_physical_teams": 474332,
+  "old_entity_geometry_replays": 2027,
+  "full_endpoint_reused": 1653,
+  "native_endpoint_evaluations_core_total": 476359,
+  "native_evaluations_this_run": 465368,
+  "current_pass_acquisition_counts": {
+    "reused_full": 1651,
+    "new_physical_team": 463392,
+    "geometry_replay_existing_team": 1976
+  },
+  "timed_wave_acquisition_counts": {
+    "new_physical_team": 10940,
+    "geometry_replay_existing_team": 51
+  },
+  "full_endpoints_resumed_into_timed_wave": 2,
+  "resumed_endpoints": 10993,
+  "all_complete": true,
+  "core_endpoint_phase_seconds": 3195.6267071859984,
+  "engine_digest": "a6d94d3e8c36d860dae33b1e8fa7ba1edaa1318cc44a5e776c35aec08c0055c4",
+  "current_repository_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "no_label_or_reference_changes": true,
+  "Q_missing_never_imputed": true,
+  "full_geometry_and_failure_states_preserved": true,
+  "geometry_storage": "Authoritative complete pools/<pool_id>/part_*.jsonl.gz shards; no consolidated geometry file is required.",
+  "consolidated_geometry_completed": false,
+  "receipt_finalization": "Generated from all completed pool CHECKS after optional geometry consolidation was intentionally interrupted for disk-space protection.",
+  "consolidation_stop_receipt": "/workspace/scratch/2109120ca4e8/HOHONET_v21_AC_population_20261029/stage02_engine/FINAL_CONSOLIDATION_STOP_RECEIPT.json",
+  "consolidation_stop_receipt_sha256": "e083fc50a2c1fb909612bce83c7cfb9fd25e05e928e5db2c2a3a01aacca95c7f",
+  "original_engine_final_receipt_not_written_because_interrupt_occurred_before_that_line": true,
+  "new_fusions_or_scores_by_finalization": 0,
+  "followup_verification": "finalize_execution_accounting.py independently reads the complete scalar index and revalidates all old-scalar replay outcomes."
+}
