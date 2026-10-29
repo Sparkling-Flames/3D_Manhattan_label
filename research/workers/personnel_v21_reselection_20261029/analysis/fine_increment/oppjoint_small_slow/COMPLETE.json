@@ -1,0 +1,23 @@
+{
+  "method": "OPPJOINT_K4",
+  "parent": "OPPJOINT_K3",
+  "direction": "fast sibling to small slow sibling",
+  "m": 1,
+  "panels": 27,
+  "images": 9,
+  "buildings": 8,
+  "background_target_cases": 5157,
+  "unordered_ABC": 8316,
+  "unique_endpoints": 13326,
+  "new_fusions": 0,
+  "target_workers": [
+    "W015",
+    "W027",
+    "W121"
+  ],
+  "role_rule": "fold slowest log-time class, <=6 persons and log-time center >=0.7; compare its unique same-parent sibling",
+  "complete_in_finite_panel": true,
+  "all_full_pool_combinations": false,
+  "XY_orientation": "unordered source pair stored once; both A/B orientations have half weight; CA=CB in the exact symmetric mean",
+  "time_rule": "full recorded totals available and the same single source for A/B/C; other totals unknown; quality on same time support also saved"
+}
