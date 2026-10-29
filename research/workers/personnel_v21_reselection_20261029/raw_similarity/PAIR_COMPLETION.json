@@ -1,0 +1,28 @@
+{
+  "pairs": 134197,
+  "pools": 294,
+  "unique_object_ids": 8385,
+  "no_cross_target_pairs": true,
+  "pair_geometry_calculated_once": true,
+  "new_quality_scoring": false,
+  "metrics": [
+    "geometry_pair_angle",
+    "geometry_top_angle",
+    "geometry_bottom_angle",
+    "geometry_bev_distance",
+    "geometry_centroid_distance",
+    "geometry_log_area_distance",
+    "turn_difference",
+    "short_edge_difference",
+    "redundancy_difference",
+    "height_log_difference",
+    "Q_difference",
+    "D10_difference",
+    "azimuth_difference_deg_9",
+    "top_difference_deg_9",
+    "bottom_difference_deg_9",
+    "unmatched_fraction_9",
+    "time_peer_log_difference"
+  ],
+  "geometry_formula_source": "old measure_events.py geometry_metrics; original pair Hungarian spherical max(top,bottom), valid raw floor1-IoU; old feature-only azimuth9 separate"
+}
