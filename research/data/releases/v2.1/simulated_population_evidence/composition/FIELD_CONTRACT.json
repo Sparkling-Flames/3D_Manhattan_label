@@ -1,0 +1,70 @@
+{
+  "schema_version": "v21_delivered_composition_evidence_v1",
+  "data_identity": "saved combinations of actual human answers; no new simulated answers",
+  "datasets": {
+    "primary_manual45": "原主目标 Manual 的 45 个候选配置，231 个固定有限面板",
+    "primary_semi4": "原主目标 Semi 自身历史的 4 个配置，105 个固定有限面板",
+    "other_targets_manual45": "其它合法空间 Manual，30 池、67 个面板、45 个配置",
+    "other_targets_semi4": "其它合法空间 Semi，1 池、2 个面板、4 个配置"
+  },
+  "support": {
+    "method_known": "本方法在目标建筑外有完整标签的实际团队",
+    "shared_known": "同一 dataset 内全部候选都具有完整标签的同一实际团队；Manual 45 法，Semi 4 法",
+    "zero_support": "SOURCE_INDEX 仍保留该候选；结果空表不是文件丢失"
+  },
+  "tables": {
+    "SOURCE_INDEX.csv": {
+      "key": ["dataset", "method"],
+      "paths": "所有非空 *_path 为相对仓库根目录的实际文件路径",
+      "vector_storage": "TEAM_CLASS_VECTORS 或 compact 的 index/codes/book 三表；两者择一"
+    },
+    "ALL_METHOD_SUMMARY.csv": {
+      "key": ["dataset", "method", "condition", "support", "metric", "time_source", "summary_axis", "summary_value"],
+      "scope": "所有方法、所有已交付指标的 all/all 汇总；分规模/难度/来源细分保留在 SOURCE_INDEX.summary_path 指向的源表",
+      "origin": "交付源表数值；其中三个关键指标另行从精确成员及冻结端点复算"
+    },
+    "CONFIGURATION_INDEX.csv.gz": {
+      "key": ["dataset", "method", "panel_id", "support", "class_counts"],
+      "class_counts": "完整团队类别人数，包含固定背景 D；保留零人数类",
+      "background_class_counts": "固定背景人数向量",
+      "selected_variable_counts": "变量池被选成员人数向量；与背景逐类相加得到完整向量",
+      "variable_class_capacity": "该支持域内变量池可用人数",
+      "teams": "该面板、该配比、该支持域的实际团队数",
+      "possible_member_sets_on_label_support": "各类组合数的乘积；不能当全人员池空间",
+      "failed_teams": "继承 failure=1-complete_evaluable，完整输出不可评，不等于全部原生融合失败",
+      "member_variation_estimable": "格内尝试团队数大于1；各指标仍须检查 valid_teams"
+    },
+    "KEY_DISTRIBUTIONS.csv.gz": {
+      "key": ["dataset", "method", "panel_id", "support", "class_counts", "metric", "time_source"],
+      "metrics": ["B8L2", "fusion_turn_n", "recorded_time_total_seconds"],
+      "full_distributions": "source_file 指向完整47指标分布表，不复制整套巨表",
+      "denominators": "teams=valid_teams+missing_teams；质量不可评不填0",
+      "quantiles": "对有限有效团队按线性插值计算 minimum/p05/p25/median/p75/p95/maximum",
+      "variation": "sd 为 ddof=0；sd、iqr、range 在 valid_teams<=1 时缺失，不能把单例格当稳定"
+    },
+    "RECOMPUTED_PANEL_KEY_METRICS.csv.gz": {
+      "key": ["dataset", "method", "panel_id", "support", "metric", "time_source"],
+      "identity": "只使用保存团队、正确建筑外标签和保存端点重新汇总；没有重新融合、评分或拟合"
+    },
+    "RECOMPUTE_CHECKS.csv": {
+      "key": ["dataset", "method"],
+      "checks": "标签向量、全队人数、每格条件组合数、三个指标逐面板分解、逐格分布和建筑等权汇总"
+    }
+  },
+  "classification": "类别编号是目标建筑外折内标识；不能跨建筑按 C1/C2 编号直接合并为永久角色",
+  "variance": {
+    "identity": "total_variance=within_variance+between_variance，有限团队 ddof=0",
+    "aggregation": "面板→目标池→图片→建筑，各级均值；最终相除得到 between_share，不平均逐面板比例",
+    "meaning": "构成间方差占比，不是Q提升、节时、预测性能或严格ABC效应",
+    "fine_partition": "真嵌套细分在同团队上的解释比例可能机械提高，不能据此单独选型"
+  },
+  "time": "仅 recorded_time_eligible 且秒数为正；time_source_kinds 按单一来源分别统计；混合来源不合成可比时间",
+  "compact_lookup": [
+    "用 dataset/method 找 SOURCE_INDEX",
+    "TEAM_LINK_INDEX 与 METHOD_VECTOR_CODES 按 team_link_id 对齐",
+    "读取对应 method 的整数码，0 表示未知",
+    "以 method+vector_code 连接 VECTOR_CODEBOOK 得到 class_counts",
+    "以 panel_id+class_counts+支持域筛选 team_key，再连接成员与端点表"
+  ],
+  "boundary": "固定有限面板的完整配比及格内分布；不重新设计策略或同房ABC，不替代旧实验身份"
+}

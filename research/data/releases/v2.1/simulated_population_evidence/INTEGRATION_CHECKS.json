@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-29",
+  "status": "saved_evidence_integrated_and_targeted_checks_passed",
+  "source_archives": 10,
+  "archive_file_versions": 1093,
+  "composition": {
+    "dataset_method_entries": 98,
+    "configuration_cells": 159943,
+    "key_distribution_rows": 415302,
+    "source_distribution_rows": 7388267,
+    "independently_recomputed_metrics": [
+      "B8L2",
+      "fusion_turn_n",
+      "recorded_time_total_seconds"
+    ]
+  },
+  "exchange": {
+    "registered_global_events": 69485,
+    "global_conditions": 7356,
+    "chain_conditions": 19022,
+    "dimension_rows": 360,
+    "formal_difficulty_rows": 12638,
+    "structural_condition_rows": 10626,
+    "method_cases": 90,
+    "chain_cases": 120
+  },
+  "checks": {
+    "pytest_passed": 46,
+    "node_checks": [
+      "v21-population-data.test.cjs",
+      "v21-population.test.cjs",
+      "v21-version-switch.test.cjs"
+    ],
+    "catalog_materials": 700,
+    "source_path_cells_checked": 658398,
+    "source_path_missing": 0,
+    "current_document_links_checked": 1305,
+    "known_preexisting_missing_document": "docs/thesis_main/Panorama_Uncertainty_Paper_Outline_V4_revised_20261025.docx"
+  },
+  "new_fusion_runs": 0,
+  "new_scoring_runs": 0,
+  "new_classification_fits": 0,
+  "new_team_designs": 0,
+  "decision": "use_existing_evidence_first; defer_OPP_large_pool_policy_and_new_same_room_ABC_unless_required_by_paper_claims",
+  "browser_acceptance": "not_run_policy_blocked_no_workaround; programmatic_DOM_and_actual_JS_fragments_only",
+  "native_fusion_replay": "not_run; saved_endpoints_and_key_statistics_checked",
+  "protocol": "consensus_research_20260923_v1_unchanged",
+  "git_commit_or_push": false,
+  "module_checks": [
+    "composition/CHECKS.json",
+    "exchange/CHECKS.json",
+    "../../../../workers/personnel_v21_reselection_20261029/additional_delivery/DOWNSTREAM_PATH_CHECKS.json"
+  ]
+}

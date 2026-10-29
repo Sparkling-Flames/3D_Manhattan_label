@@ -1,0 +1,38 @@
+{
+  "complete": true,
+  "data_release": "v2.1",
+  "methods": [
+    "OPPJOINT_K3",
+    "OPPJOINT_K4"
+  ],
+  "panel_selection_method": "V3_BEHAVIOR",
+  "new_team_selection": 0,
+  "new_classification_fit": 0,
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "panels": 2659,
+  "primary_panels": 542,
+  "direct_pairs": 217,
+  "buildings": 19,
+  "paired_team_rows": 92342,
+  "source_unique_endpoints": 182555,
+  "common_known_team_rows": 63892,
+  "unknown_team_rows": 28450,
+  "both_methods_equal_outcome_denominators": true,
+  "same_total_moments_and_nested_variance_verified": true,
+  "team_members_counts_pool_building_reference_verified": true,
+  "full_team_composition_counts_verified": true,
+  "source_bytes_unchanged": true,
+  "outcome_missingness": "per metric, finite in both views; no zero imputation",
+  "failure_metric": "1 - complete_evaluable: complete-output unevaluable, not necessarily native fusion failure",
+  "time_support": "recorded_time_eligible and positive total seconds in both views",
+  "label_support": "both K3 and K4 all team members known in the target-building-excluded fold",
+  "input_files": [
+    "research/data/releases/v2.1/same_room_current_extended_design/PANELS.csv",
+    "research/data/releases/v2.1/same_room_current_extended_design/PANEL_TEAM_LINKS.csv.gz",
+    "research/data/releases/v2.1/same_room_current_results/finite/native/ENDPOINT_SCALARS.csv.gz",
+    "research/workers/personnel_v21_reselection_20261029/stage07_adoption/PERSONNEL_LOBO_LABELS_AND_SUPPORT.csv.gz",
+    "research/same_room/same_room_current_classes_v2_20261023/code/taxonomy_response/analyze_response.py"
+  ],
+  "scope": "conditional reaggregation on existing V3-selected finite panels, not OPPJOINT-selected strict ABC"
+}

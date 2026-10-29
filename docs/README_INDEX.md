@@ -1,6 +1,14 @@
+- **人员报告按版本分开：** [v2.1 OPPJOINT](thesis_main/人员分类与换人研究_v2.1_OPPJOINT_20261029.md)与[v2冻结报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)分别维护；5人仅为20人队的一项展示，固定A实验另有更大替换块。
+
+- **当前新分类研究台与依赖：** [名单、条件与实际换人](../research/statistics/research_explorer_v1_r2_20261017/v21-reselection.html)；[下游依赖与已有结果复算](../research/data/releases/v2.1/personnel_reselection_dependencies/README.md)。[OPPJOINT同房固定面板](../research/data/releases/v2.1/same_room_oppjoint_fixed_panels/README.md)已重聚合；[完整配比与换人链](../research/data/releases/v2.1/simulated_population_evidence/README.md)已接齐；大池策略/严格同房ABC暂不新增。
+
+- **2026-10-29新分类与换人已采用：** [人员主报告](thesis_main/人员分类与换人研究_v2.1_OPPJOINT_20261029.md)采用OPPJOINT K3/K4及12/6、20/5主条件，结构与RFUSE按用途补充。[五包归档](../research/workers/personnel_v21_reselection_20261029/README.md)及[独立审查](../research/workers/personnel_v21_reselection_20261029/independent_review/README.md)可追溯到实际名单、条件和事件；对象字段已修复，原质量与成员不变。少数反例解释成立条件，同容量Q-only另检验额外价值。
+
+- **2026-10-29完整交接：** [v2基线、v2.1变化、用户要求与新Pro成果验收](thesis_main/交接_v2.1完整研究背景与接续任务_20261029.md)。独立审查与采用已完成；按实际依赖接续研究台、配比和换人结果，旧v2及旧网格保留对照。
+
 - **2026-10-29论文提纲：** [v2.1 修订稿](thesis_main/论文提纲草稿_v2.1_20261029.docx)按当前主目标与其他空间范围更新；旧提纲保留。
-- **当前研究阅读入口（2026-10-29）：** [资料导航](thesis_main/论文撰写资料入口_20261027.md) → [v2.1独立结论与完成范围](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md) → [个人汇报讲稿](thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md)；论文提纲与改动方案本轮未修改。
-- **2026-10-29其它合法空间补充：** [31池231份分空间分析](../research/data/releases/v2.1/admitted_space_extension/README.md)，复用已有Q，新增自然256及独立两人；[完整独立检查](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md)通过数值核对，扩展难度与受影响选队、浏览器仍待完成。保持原263池、既有排除和CURRENT。
+- **当前研究阅读入口（2026-10-29）：** [资料导航](thesis_main/论文撰写资料入口_20261027.md) → [v2.1独立结论与完成范围](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md)。[个人汇报讲稿](thesis_main/研究讨论讲解稿_研究台路线与术语_20261028.md)已接续v2.1主家族与主换人条件，保留有版本的旧例子；Word论文提纲与改动方案本轮未修改。
+- **2026-10-29其它合法空间补充：** [31池231份分空间分析](../research/data/releases/v2.1/admitted_space_extension/README.md)，复用已有Q，新增自然256及独立两人；[完整独立检查](../research/data/releases/v2.1/FULL_DELIVERY_REVIEW_20261029.md)通过数值核对；全部294池目标结构与新分类条件已接续，31池正式人工难度仍未知、旧难度下游未全部迁入；浏览器状态以本轮研究台验收记录为准。保持原263池、既有排除和CURRENT。
 - **2026-10-28多空间参考：** [顶面人工判断采用](../research/data/scope_quality_rescore_20261016/vertical_cut_audit_20261028/extension_v1/adopted_references_20261028/ceiling_adopted_20261028/README.md)：24份全点均高、6份代表点近同高组均值；底面和排除资格保持；[v2.1受影响依赖重算](../research/data/releases/v2.1/README.md)必要计算与定向检查已完成，当前标签换类/策略/同房、D10形成链和自然曲线均已接续；真实浏览器与下载尚待验收，CURRENT未切换。
 - **2026-10-28结构条件与分类敏感性：** [独立验收](../research/difficulty/difficulty_computable_comparison_20261028/structure_sensitivity_v1/INDEPENDENT_ACCEPTANCE.md)完成69组分类重拟合及曲线/构成/ABC复算；保留正式三档与DSTRUCT，采用新增条件解释。
 - **2026-10-28外部审稿与多空间：** [独立核对](../research/statistics/external_review_response_20261028/README.md)重算失败、历史版本、类别Q及41图范围覆盖；确认其中12图进入Manual256，保留原数据和资格。
@@ -39,11 +47,11 @@
 
 **全研究汇报入口：** [各专题发现与证据链](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)，[研究台当前接入任务](thesis_main/v2数据研究台与Pro推进_20261019.md)，[指标与名词释义](thesis_main/CONTEXT.md)。各专题和人员六组图表均已接入；核心研究与OOS独立描述统计已收尾，OOS工作台保持独立。
 
-**固定阅读路线：** [全研究结论与预期完成度](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md) → [整体模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [当前进度](thesis_main/四线程成果与论文主线核对_20261015.md) → [人员主报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。人员主报告包含想法演变、已有发现、完整配比范例与下一步；各原包只负责证据。
+**固定阅读路线：** [全研究结论与预期完成度](../research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md) → [整体模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [当前进度](thesis_main/四线程成果与论文主线核对_20261015.md) → [人员主报告](thesis_main/人员分类与换人研究_v2.1_OPPJOINT_20261029.md)。人员主报告包含想法演变、已有发现、完整配比范例与下一步；各原包只负责证据。
 
 - **2026-10-22混合构成独立核验：** [各分类发现、完整配比、构成内波动与难度连接](../research/workers/personnel_mixture_audit_20261022/README.md)。新补两包逐面板复核、F01成员穷举和旧QTD重算已完成；随机人数曲线的版本与复用安排见人员统一比较清单。
 
-- **2026-10-22人员当前研究组织：** [多套分类、构成不确定性与待补比较](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)。保留各分类用途；同构成换人与改变构成并列，不以升质为唯一标准。已有m5–9及直接AC，m4不是上限；整理、重聚合和新增实验缺口分别列明。
+- **2026-10-22人员当前研究组织：** [多套分类、构成不确定性与待补比较](thesis_main/人员分类与换人研究_v2.1_OPPJOINT_20261029.md)。保留各分类用途；同构成换人与改变构成并列，不以升质为唯一标准。已有m5–9及直接AC，m4不是上限；整理、重聚合和新增实验缺口分别列明。
 
 - **2026-10-22人员实质续研返回：** [本轮采用、独立复核与补件](../research/workers/personnel_exchange_adoption_followup_20261022/README.md)。187来源文件及随后424项报告代码/端点补件已归档；新增研究和Manual主方向已独立核查，101092旧端点与两项交付修复见[完整验收](../research/workers/personnel_exchange_closure_20261022/LOCAL_ACCEPTANCE.md)。
 

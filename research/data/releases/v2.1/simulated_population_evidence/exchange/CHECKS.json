@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "source_version": "v2.1",
+  "computation": "saved-endpoint/read-only reaggregation; no native fusion or classifier refit",
+  "global_screen": {
+    "events": 69485,
+    "pools": 88,
+    "images": 78,
+    "buildings": 17,
+    "frame_selected_pools": 100,
+    "frame_selected_images": 84,
+    "frame_selected_buildings": 17,
+    "methods": 45,
+    "distinct_all_fold_partitions": 44,
+    "endpoint_rows": 142270,
+    "all_events_DXYZ_members_class_reference_checked": true,
+    "all_Q_differences_match_saved_native_scalars": true,
+    "object_id_export_defects": 0,
+    "events_referencing_object_id_defects": 0,
+    "defect_recovery": "none required; all object sequences match trusted worker_id and target pool snapshot",
+    "Q_affected_by_object_string": false
+  },
+  "nested_n": {
+    "pairs": 46851,
+    "fixed_XYZ_nested_D_checked": true,
+    "all_Q_endpoints_match_scalars": true,
+    "shared_four_endpoint_deltas_checked": true
+  },
+  "fixed_A": {
+    "paths": 1947,
+    "pairs": 10184,
+    "actual_max_m": 8,
+    "all_A_and_block_prefixes_checked": true,
+    "shared_four_endpoint_deltas_checked": true
+  },
+  "fixed_XYZ_background": {
+    "pairs": 3252,
+    "identities_checked": true,
+    "Q_from_focused_native_scalars_checked": true
+  },
+  "direct_AC": {
+    "events": 1966,
+    "pools": 191,
+    "images": 190,
+    "buildings": 22,
+    "identities_and_saved_Q_differences_checked": true,
+    "comparison_has_B": false
+  },
+  "oppjoint_12_6": {
+    "events": 172,
+    "images": 56,
+    "buildings": 13,
+    "frame_check": "05B selected pools and realized 05A event images independently agree for all 56 images",
+    "outside_screen": {
+      "valid_events": 93,
+      "valid_images": 30,
+      "valid_buildings": 10,
+      "mean_image": 6.68713869209928,
+      "mean_building": 5.879963420509787,
+      "positive_images": 28,
+      "positive_buildings": 10
+    },
+    "all_CB": {
+      "valid_events": 165,
+      "valid_images": 56,
+      "valid_buildings": 13,
+      "mean_image": 8.051040906167595,
+      "mean_building": 7.145410448583021,
+      "positive_images": 52,
+      "positive_buildings": 13
+    },
+    "all_gap": {
+      "valid_events": 161,
+      "valid_images": 56,
+      "valid_buildings": 13,
+      "mean_image": 5.982662818971341,
+      "mean_building": 4.468813377090307,
+      "positive_images": 47,
+      "positive_buildings": 11
+    }
+  },
+  "boundaries": [
+    "45 configurations are not 45 independent ideas; equivalent partitions retained with identifiers",
+    "global screen is selected 78-image evidence, not exhaustive search across 225 primary images",
+    "case sign is conditional on method, role direction, n, m, target and availability",
+    "no new native fusion, classification, OPP large-pool strategy or same-room ABC experiment",
+    "fixed XYZ nested n changes both background people and vote threshold",
+    "direct AC has no B and cannot establish cross-versus-within or net C-B",
+    "fair Q-only increment remains a distinct future estimand, not a prerequisite for observed majority effects"
+  ],
+  "dimension_tables": {
+    "configurations": 45,
+    "coverage_rows": 360,
+    "all_n_m_rows": 7356,
+    "formal_difficulty_rows": 12638,
+    "structural_condition_rows": 10626,
+    "independent_Q_check": "all 7356 global condition Q means and denominators match saved source summaries; all global event Q contrasts match endpoint scalars",
+    "difficulty_key_check": "three OPPJOINT 12/6 formal difficulty strata independently match means, valid images and positive images",
+    "other_dimensions": "source summary values retained with exact paths; not independently recomputed in full",
+    "method_original_cases": 90,
+    "chain_cases": 120,
+    "preplotted_case_paths": "24 paths normalized to repository root and checked separately"
+  }
+}
