@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HOHONET v2.1 · 普通 Manual 严格 ABC 机制案例</title><style>
+:root{font-family:system-ui,'Noto Sans CJK SC',sans-serif;color:#172737;background:#edf2f5}body{max-width:1260px;margin:auto;padding:30px}h1{font-size:30px}h2{font-size:23px}p{line-height:1.7}a{color:#17668d}nav{display:flex;flex-wrap:wrap;gap:10px}nav a{padding:8px 12px;background:#e4eef4;border-radius:6px}section{background:white;border:1px solid #d4dfe6;border-radius:10px;padding:22px;margin:24px 0}table{border-collapse:collapse;display:block;overflow-x:auto}th,td{padding:9px 12px;border-bottom:1px solid #dce4e8;text-align:left;white-space:nowrap}th{background:#eff5f8}img{display:block;width:100%;height:auto;margin-top:14px;border:1px solid #dce4e8}small,.muted{color:#586a76}code{font-size:.88em;word-break:break-all}summary{cursor:pointer;font-weight:600;padding:12px 0}.tag{display:inline-block;padding:4px 8px;background:#e9f3ef;color:#27664e;border-radius:4px}.links{display:flex;gap:14px;flex-wrap:wrap}
+</style><body><h1>普通 Manual 严格 ABC：六个机制案例</h1>
+<p>全部为 n=16、m=8，D/X/Y/Z 真实互斥，A=D+X、B=D+Y、C=D+Z。类别来自留楼外历史；本页是在完整实验后按机制选出的案例，不代表总体比例。失败 Q 留空，不计零分。</p>
+<p class="links"><a href="CASE_MECHANISM_REVIEW_ZH.md">完整中文机制报告</a><a href="results/CASE_SUMMARY.csv">案例数值总表</a><a href="results/CASE_EXACT_EVENT_ROWS.csv">精确设计与成员</a><a href="results/CASE_EXACT_VOTE_GROUPS.csv">完整票账</a><a href="results/MECHANISM_AUDIT_RECEIPT.json">来源与核验</a></p><nav>
+<a href="#2978172ce6fe180ffe50e2dc">7y3sRwLe3Va-04</a>
+<a href="#8ffd905ec3a4770f8606cd93">B6ByNegPMKs-48</a>
+<a href="#7881ea8d8b010028bc505a47">uNb9QFRL6hY-40</a>
+<a href="#ce5e6ff5c300c3022395c8d6">x8F5xyUWy9e-08</a>
+<a href="#0836672f35ad7742021ab716">jtcxE69GiFV-13</a>
+<a href="#bd186f9502bc8688246f76d7">S9hNv5qa7GM-09</a>
+</nav><section><h2>同类、跨类幅度与方向</h2><table><thead><tr><th>图片</th><th>方法/当前折方向</th><th>Q A/B/C</th><th>B−A</th><th>C−A</th><th>C−B</th><th>对称跨幅度−同类</th></tr></thead><tbody>
+<tr><td>7y3sRwLe3Va-04</td><td>TARGET_DSTRUCT_K3<br>C2→C1</td><td>95.5160 / 95.6950 / 95.4887</td><td>0.1790</td><td>-0.0273</td><td>-0.2063</td><td>-0.0622</td></tr>
+<tr><td>B6ByNegPMKs-48</td><td>V21_DSTRUCT_RAW3_K3<br>C1→C2</td><td>51.3339 / 63.0342 / 54.6487</td><td>11.7003</td><td>3.3149</td><td>-8.3855</td><td>-5.8502</td></tr>
+<tr><td>uNb9QFRL6hY-40</td><td>V21_DSTRUCT_RAW3_K3<br>C2→C1</td><td>48.4411 / 97.3068 / 48.4319</td><td>48.8657</td><td>-0.0092</td><td>-48.8749</td><td>-24.4236</td></tr>
+<tr><td>x8F5xyUWy9e-08</td><td>V21_DSTRUCT_RAW3_K3<br>C2→C1</td><td>97.6518 / 99.0946 / 不可评</td><td>1.4428</td><td>不可评</td><td>不可评</td><td>不可评</td></tr>
+<tr><td>jtcxE69GiFV-13</td><td>TARGET_DSTRUCT_K3<br>C2→C3</td><td>74.4297 / 75.2693 / 92.8731</td><td>0.8396</td><td>18.4434</td><td>17.6038</td><td>17.1840</td></tr>
+<tr><td>S9hNv5qa7GM-09</td><td>TARGET_DSTRUCT_K3<br>C2→C3</td><td>80.6945 / 79.1831 / 不可评</td><td>-1.5113</td><td>不可评</td><td>不可评</td><td>不可评</td></tr>
+</tbody></table><p class="muted">同类 |B−A|；对称跨类 (|C−A|+|C−B|)/2。类别号仅对相应方法和留楼外折有定义。</p></section>
+<section id="2978172ce6fe180ffe50e2dc"><span class="tag">7y3sRwLe3Va-04 · C2→C1</span><h2>高分集中，Q 微变但几何仍响应</h2><p>四角各16票，结构相同；AC 角距和底面差异均大于 AB。无需额外范围裁定。</p><p class="muted">事件 <code>2978172ce6fe180ffe50e2dc</code> · TARGET_DSTRUCT_K3</p>
+<p class="links"><a href="originals/7y3sRwLe3Va-04.png">原始全景图</a><a href="figures/2978172ce6fe180ffe50e2dc/RAW_ANSWERS.csv">原答及人员</a><a href="figures/2978172ce6fe180ffe50e2dc/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/2978172ce6fe180ffe50e2dc/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/2978172ce6fe180ffe50e2dc.json.gz">完整重放状态</a><a href="figures/2978172ce6fe180ffe50e2dc/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/2978172ce6fe180ffe50e2dc/ERP_BEV.png" loading="lazy" alt="7y3sRwLe3Va-04全景及底面实际几何">
+<details><summary>三维代理与完整支持票</summary><img src="figures/2978172ce6fe180ffe50e2dc/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<section id="8ffd905ec3a4770f8606cd93"><span class="tag">B6ByNegPMKs-48 · C1→C2</span><h2>四角满票，定位及顶边共同偏差</h2><p>Q 与 IoU3D 的变化方向不同。人工可核对两端停止边和主顶面/梁底边界；当前参考保持。</p><p class="muted">事件 <code>8ffd905ec3a4770f8606cd93</code> · V21_DSTRUCT_RAW3_K3</p>
+<p class="links"><a href="originals/B6ByNegPMKs-48.png">原始全景图</a><a href="figures/8ffd905ec3a4770f8606cd93/RAW_ANSWERS.csv">原答及人员</a><a href="figures/8ffd905ec3a4770f8606cd93/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/8ffd905ec3a4770f8606cd93/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/8ffd905ec3a4770f8606cd93.json.gz">完整重放状态</a><a href="figures/8ffd905ec3a4770f8606cd93/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/8ffd905ec3a4770f8606cd93/ERP_BEV.png" loading="lazy" alt="B6ByNegPMKs-48全景及底面实际几何">
+<details><summary>三维代理与完整支持票</summary><img src="figures/8ffd905ec3a4770f8606cd93/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<section id="7881ea8d8b010028bc505a47"><span class="tag">uNb9QFRL6hY-40 · C2→C1</span><h2>同类成员在远角上跨过门槛</h2><p>远角 A7、B10、C6票；同类 B 从五角变六角。看缝边 x≈0、4 的远近两条边及遮挡地面落点。</p><p class="muted">事件 <code>7881ea8d8b010028bc505a47</code> · V21_DSTRUCT_RAW3_K3</p>
+<p class="links"><a href="originals/uNb9QFRL6hY-40.png">原始全景图</a><a href="figures/7881ea8d8b010028bc505a47/RAW_ANSWERS.csv">原答及人员</a><a href="figures/7881ea8d8b010028bc505a47/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/7881ea8d8b010028bc505a47/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/7881ea8d8b010028bc505a47.json.gz">完整重放状态</a><a href="figures/7881ea8d8b010028bc505a47/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/7881ea8d8b010028bc505a47/ERP_BEV.png" loading="lazy" alt="uNb9QFRL6hY-40全景及底面实际几何">
+<details open><summary>关键局部与逐组票数</summary><img src="figures/7881ea8d8b010028bc505a47/LOCAL_CRITICAL_VOTES.png" loading="lazy" alt="关键局部和支持门槛"></details>
+<details><summary>三维代理与完整支持票</summary><img src="figures/7881ea8d8b010028bc505a47/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<section id="ce5e6ff5c300c3022395c8d6"><span class="tag">x8F5xyUWy9e-08 · C2→C1</span><h2>两个互斥8人组同时入选，连接失败</h2><p>局部 x≈144、155 两组各8票，没有来源环覆盖全部五个入选组。人工区分同角定位误差与不同边界表达。</p><p class="muted">事件 <code>ce5e6ff5c300c3022395c8d6</code> · V21_DSTRUCT_RAW3_K3</p>
+<p class="links"><a href="originals/x8F5xyUWy9e-08.png">原始全景图</a><a href="figures/ce5e6ff5c300c3022395c8d6/RAW_ANSWERS.csv">原答及人员</a><a href="figures/ce5e6ff5c300c3022395c8d6/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/ce5e6ff5c300c3022395c8d6/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/ce5e6ff5c300c3022395c8d6.json.gz">完整重放状态</a><a href="figures/ce5e6ff5c300c3022395c8d6/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/ce5e6ff5c300c3022395c8d6/ERP_BEV.png" loading="lazy" alt="x8F5xyUWy9e-08全景及底面实际几何">
+<details open><summary>关键局部与逐组票数</summary><img src="figures/ce5e6ff5c300c3022395c8d6/LOCAL_CRITICAL_VOTES.png" loading="lazy" alt="关键局部和支持门槛"></details>
+<details><summary>三维代理与完整支持票</summary><img src="figures/ce5e6ff5c300c3022395c8d6/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<section id="0836672f35ad7742021ab716"><span class="tag">jtcxE69GiFV-13 · C2→C3</span><h2>跨类补短折，伴随共同背景对应调整</h2><p>两个短折达到8/9票；Q 提升18.44分，来源匹配记录劳动量增加12.58%。共同D的W106观测发生重分组。</p><p class="muted">事件 <code>0836672f35ad7742021ab716</code> · TARGET_DSTRUCT_K3</p>
+<p class="links"><a href="originals/jtcxE69GiFV-13.png">原始全景图</a><a href="figures/0836672f35ad7742021ab716/RAW_ANSWERS.csv">原答及人员</a><a href="figures/0836672f35ad7742021ab716/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/0836672f35ad7742021ab716/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/0836672f35ad7742021ab716.json.gz">完整重放状态</a><a href="figures/0836672f35ad7742021ab716/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/0836672f35ad7742021ab716/ERP_BEV.png" loading="lazy" alt="jtcxE69GiFV-13全景及底面实际几何">
+<details open><summary>关键局部与逐组票数</summary><img src="figures/0836672f35ad7742021ab716/LOCAL_CRITICAL_VOTES.png" loading="lazy" alt="关键局部和支持门槛"></details>
+<details><summary>三维代理与完整支持票</summary><img src="figures/0836672f35ad7742021ab716/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<section id="bd186f9502bc8688246f76d7"><span class="tag">S9hNv5qa7GM-09 · C2→C3</span><h2>已固定范围下的旧分支部分过线</h2><p>当前四角目标已由用户裁定。两个旧分支角各8票、另一角7票，当前停止边也8票，最终连接失败。无需重复裁定范围。</p><p class="muted">事件 <code>bd186f9502bc8688246f76d7</code> · TARGET_DSTRUCT_K3</p>
+<p class="links"><a href="originals/S9hNv5qa7GM-09.png">原始全景图</a><a href="figures/bd186f9502bc8688246f76d7/RAW_ANSWERS.csv">原答及人员</a><a href="figures/bd186f9502bc8688246f76d7/VOTE_GROUPS_WITH_BLOCKS.csv">分块票账</a><a href="figures/bd186f9502bc8688246f76d7/COMMON_D_GROUP_LINKS.csv">共同 D 对应关系</a><a href="traces/bd186f9502bc8688246f76d7.json.gz">完整重放状态</a><a href="figures/bd186f9502bc8688246f76d7/ERP_BEV.pdf">PDF</a></p>
+<img src="figures/bd186f9502bc8688246f76d7/ERP_BEV.png" loading="lazy" alt="S9hNv5qa7GM-09全景及底面实际几何">
+<details open><summary>关键局部与逐组票数</summary><img src="figures/bd186f9502bc8688246f76d7/LOCAL_CRITICAL_VOTES.png" loading="lazy" alt="关键局部和支持门槛"></details>
+<details><summary>三维代理与完整支持票</summary><img src="figures/bd186f9502bc8688246f76d7/3D_VOTES.png" loading="lazy" alt="三维及投票"></details></section>
+<p class="muted">图像均由冻结原答和实际融合状态绘制。三维按相机高归一；失败仅画入选点，不补造完整环。六例18臂的标量复现误差≤1.42×10⁻¹⁴。</p></body></html>

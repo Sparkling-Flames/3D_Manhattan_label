@@ -1,0 +1,37 @@
+{
+  "source_sha256": {
+    "events": {
+      "path": "HOHONET_v21_reaudit_20261029/stage03_new_abc/EVENTS_EXACT.csv.gz",
+      "sha256": "e495d1140dbedf621b1b33307956db04fc154a2ee5f99bd5c40436bdc2b2a88c"
+    },
+    "metrics": {
+      "path": "HOHONET_v21_reaudit_20261029/stage03_new_abc/metrics/EVENT_METRICS.csv.gz",
+      "sha256": "6d058356a216b0912e18f2e8da4cae027df727a28d6dc221dfc4ae07a14bf85e"
+    },
+    "original_labels": {
+      "path": "prior_extracted/stage02/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "sha256": "a58e62d2bb30557575a74d2fa26abae197845c54007f3272a3d23f42274ab006"
+    },
+    "new_labels": {
+      "path": "audit_classification/results/NEW_LABELS_ALL_LOBO.csv.gz",
+      "sha256": "6ff1f4af1436eb2f8f9c4f75a89c11c38c94a432c3930e97fbe69e3eae0e4574"
+    },
+    "existing_S9_scope": {
+      "path": "repo/research/workers/personnel_v21_reselection_20261029/stage07_adoption/main_direction_counterexample/S9_09_EXISTING_SCOPE_ADJUDICATION.json",
+      "sha256": "004f0bc9310d9d26c35cbdbdbe3696b49693fa4744de566066a32cd55e510095"
+    }
+  },
+  "case_n": 6,
+  "arms_n": 18,
+  "groups_n": 109,
+  "vote_observations_n": 1285,
+  "additional_physical_teams": 0,
+  "replay_purpose": "trace only, exact scalar parity checked separately",
+  "selection_phase": "after complete new experiment, explanatory selection, no population inference",
+  "cross_symmetric": "(|C-A|+|C-B|)/2",
+  "within": "|B-A|",
+  "cross_direct": "|C-A|",
+  "Q_missing_policy": "missing, never zero",
+  "reference_change": "none",
+  "all_cases_strict_ABC_checks_passed": true
+}
