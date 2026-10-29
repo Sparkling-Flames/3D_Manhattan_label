@@ -1,0 +1,11 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>九/十人严格ABC案例</title>
+<style>body{font:16px system-ui;margin:24px;background:#f4f5f7;color:#17202b}canvas{width:100%;max-width:1200px;background:#222}select{padding:8px;margin:8px}pre{white-space:pre-wrap}table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:5px}</style>
+<h1>九/十人严格 ABC：原答、参考与投票账</h1><p>白色：当前参考；黄色：所选完整原答或融合结果。案例为事后机制展示，不替代全部事件统计。上下点共同决定几何高度。</p>
+<label>案例<select id="case"></select></label><label>显示<select id="view"></select></label><canvas width="1024" height="512" id="canvas"></canvas><pre id="info"></pre><div id="votes"></div>
+<script src="data.js"></script><script>
+const cs=document.getElementById('case'),vs=document.getElementById('view'),ctx=document.getElementById('canvas').getContext('2d');
+CASES.forEach((c,i)=>cs.add(new Option(`${i+1}: ${c.index.image} ${c.index.method} ${c.index.n}/${c.index.m}`,i)));
+function outline(p,color){if(!p)return;ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=1.4;for(let i=0;i<p.length;i+=2){ctx.beginPath();ctx.moveTo(...p[i]);ctx.lineTo(...p[i+1]);ctx.stroke();}for(let k=0;k<2;k++){for(let i=k;i<p.length;i+=2){let a=p[i],b=p[(i+2)%p.length],dx=b[0]-a[0];if(dx>512)dx-=1024;if(dx< -512)dx+=1024;for(let shift of [-1024,0,1024]){ctx.beginPath();ctx.moveTo(a[0]+shift,a[1]);ctx.lineTo(a[0]+dx+shift,b[1]);ctx.stroke();}}}p.forEach((v,i)=>{ctx.beginPath();ctx.arc(v[0],v[1],3,0,7);ctx.fill();if(i%2===0)ctx.fillText(i/2+1,v[0]+4,v[1]-4);});}
+function draw(){const c=CASES[+cs.value],v=vs.value,img=new Image();img.onload=()=>{ctx.drawImage(img,0,0,1024,512);outline(c.reference,'white');outline(v.startsWith('worker:')?c.records.find(r=>r.worker_id===v.slice(7)).points:c.arms[v]?.points,'#ffe600');};img.src=c.photo;document.getElementById('info').textContent=JSON.stringify({...c.index,blocks:c.event,selected:v,Q:c.arms[v]?.Q,status:c.arms[v]?.status},null,2);const arm=c.arms[v];document.getElementById('votes').textContent=arm?JSON.stringify(arm.state,null,2):'原答点号保持输入环序；完整人员与参考保存在对应JSON。';}
+function change(){vs.innerHTML='';for(let a of ['reference','A','B','C'])vs.add(new Option(a,a));CASES[+cs.value].records.forEach(r=>vs.add(new Option(r.worker_id,'worker:'+r.worker_id)));vs.value='A';draw();}cs.onchange=change;vs.onchange=draw;change();
+</script></html>
