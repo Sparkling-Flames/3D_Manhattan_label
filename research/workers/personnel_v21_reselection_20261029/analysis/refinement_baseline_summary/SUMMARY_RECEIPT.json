@@ -1,0 +1,12 @@
+{
+  "events": 438,
+  "methods": 2,
+  "pools": 56,
+  "source_metrics": "analysis/refinement_baseline/EVENT_METRICS.csv.gz",
+  "direction_selection": "All candidate directions retained; screen-supported table uses >=8 valid images and >=4 buildings, no effect-sign filter",
+  "crossfold_roles": "training-history axis ranks within fold; exact class identities and centers linked; raw class numbers never pooled",
+  "weighting": "events within target and condition; equal targets within image; equal images for primary effect; building-equal effect shown separately",
+  "new_fusion": 0,
+  "role_map": "classification/CLASS_ROLES_COMPACT_ALL_LOBO.csv.gz",
+  "reporting_does_not_change_labels": true
+}

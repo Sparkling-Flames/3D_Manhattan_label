@@ -1,0 +1,54 @@
+{
+  "source_commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "data_release": "v2.1",
+  "input_files": [
+    {
+      "path": "analysis/fixed_A_m_paths/EXACT_M_PATH_INCREMENT_METRICS.csv.gz",
+      "rows": 7397,
+      "sha256": "3da13318b54f94f94fe0cfc492cefabd5e98ca702be6d37a4524a13393464d68"
+    },
+    {
+      "path": "analysis/refinement_m_paths/EXACT_M_PATH_INCREMENT_METRICS.csv.gz",
+      "rows": 2787,
+      "sha256": "950592e1edb0efc3723f21272206a49a0a078c4b4aeecc58acfce568dad30f8e"
+    },
+    {
+      "path": "experiment/fixed_A_m_design/PATHS_EXACT.csv.gz",
+      "bytes": 119933,
+      "sha256": "41f1d9cbe709bb8b1965ed891e63af6a045f892db43b19c014ec38e9d272898b"
+    },
+    {
+      "path": "experiment/refinement_m_design/PATHS_EXACT.csv.gz",
+      "bytes": 47311,
+      "sha256": "9ce47f4ad12a3a0fbd8bf6962d7dbbc17cf59c961d547fe5dc8aa8f877cd3441"
+    },
+    {
+      "path": "analysis/focused_contexts/FIXED_XYZ_BACKGROUND_CONTRASTS.csv.gz",
+      "bytes": 718673,
+      "sha256": "0c5a56610283b3ffa3d25f90ece57afcc17c041bd41e913cb0ecb36f7cffa808"
+    },
+    {
+      "path": "analysis/global_size_paths/SIZE_PATH_RESULTS.csv.gz",
+      "bytes": 7101965,
+      "sha256": "921ff8310a51e6d489d641923bbc3d9a4ec5cf6328cdd5edb74de9ef8a429c5e"
+    }
+  ],
+  "fixed_A_path_pairs": 10184,
+  "fixed_A_paths": 1947,
+  "fixed_A_methods": [
+    "OPPGEOM_K3",
+    "OPPJOINT_K4",
+    "TARGET_DSTRUCT_K3"
+  ],
+  "minimum_to_actual_capacity_pairs": 1947,
+  "same_XYZ_background_pairs": 3252,
+  "fixed_XYZ_n_path_selected_conditions": 166,
+  "zero_new_fusions": true,
+  "zero_new_geometry_calculations": true,
+  "zero_new_class_fitting": true,
+  "geometry_duplicated_in_this_summary": false,
+  "weighting": "mean of available paths within target; equal legal targets within image; equal images; separately mean images within building then equal buildings; primary/other scope kept separate",
+  "metric_missing": "unknown retained; main C/B/net increments share identical metric-specific four-endpoint support; amplitude uses five unique endpoints including fixed A",
+  "common_Q_decomposition_max_error": 6.661338147750939e-15,
+  "capacity_policy": "per-path minimum registered m to that path actual mmax; actual m pairs separately listed, never treated as one fixed m"
+}

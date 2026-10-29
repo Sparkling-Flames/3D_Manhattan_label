@@ -1,0 +1,44 @@
+{
+  "commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "data_release": "v2.1",
+  "pools": 294,
+  "records": 8385,
+  "unique_targets": 255,
+  "images": 225,
+  "buildings": 22,
+  "main_records": 8154,
+  "other_records": 231,
+  "all_pool_geometry_status": {
+    "valid_camera_inside": 294
+  },
+  "other_target_grade_status": {
+    "historical_external_exact_target_not_final": 22,
+    "historical_assistant_exact_target_not_final": 5,
+    "no_exact_target_grade": 3
+  },
+  "other_geometry_challenge_pools": 30,
+  "other_plain_pools": 1,
+  "other_challenge_differs_from_primary_pools": 18,
+  "optional_missing_exact_grade_targets": 3,
+  "worker_image_condition_with_multiple_annotated_targets": 0,
+  "number_of_multi_target_image_condition_pairs": 29,
+  "weights_sum_to_one_per_worker_condition": true,
+  "source_time_known_records": 7507,
+  "target_time_known_records": 440,
+  "checks": {
+    "existing_trait_comparison_available": true,
+    "existing_trait_common_pools": 263,
+    "ref_turn5_max_abs_difference": 0.0,
+    "ref_H_max_abs_difference": 0.0,
+    "ref_short_edges_max_abs_difference": 0.0,
+    "ref_min_horizontal_deg_max_abs_difference": 5.728750807065808e-14
+  },
+  "no_change_to": [
+    "GT",
+    "official_difficulty",
+    "space_assignment",
+    "eligibility",
+    "quality_contract",
+    "fusion_contract"
+  ]
+}

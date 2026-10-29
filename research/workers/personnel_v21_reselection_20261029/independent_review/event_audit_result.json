@@ -1,0 +1,337 @@
+{
+  "method": "Read-only exact member/LOBO class/capacity/local snapshot joins; arithmetic from saved endpoint B8L2, not native replay.",
+  "focused_identity": {
+    "events": 10980,
+    "unique_events": 10980,
+    "pools": 187,
+    "images": 187,
+    "buildings": 22,
+    "issues": []
+  },
+  "oppjoint_n12m6": {
+    "events": 172,
+    "images": 56,
+    "buildings": 13,
+    "all_three_valid_events": 161,
+    "CA_valid_events": 166,
+    "CB_valid_events": 165,
+    "CB_loss_over_10_events": 5,
+    "missing_Q_events": {
+      "A": 4,
+      "B": 5,
+      "C": 2
+    },
+    "image_means": {
+      "within": 4.033293996747674,
+      "cross": 10.015956815719013,
+      "gap": 5.982662818971341,
+      "CA": 8.4084842734963,
+      "CB": 8.051040906167595
+    },
+    "image_medians": {
+      "within": 2.0541214480777885,
+      "cross": 5.709202515315859,
+      "gap": 1.5188322165849417,
+      "CA": 3.496839608780183,
+      "CB": 4.618552076247013
+    },
+    "valid_images": {
+      "within": 56,
+      "cross": 56,
+      "gap": 56,
+      "CA": 56,
+      "CB": 56
+    },
+    "positive_images": {
+      "within": 56,
+      "cross": 56,
+      "gap": 47,
+      "CA": 53,
+      "CB": 52
+    },
+    "building_means": {
+      "within": 3.9915674565425836,
+      "cross": 8.46038083363289,
+      "gap": 4.468813377090307,
+      "CA": 6.631085207639064,
+      "CB": 7.145410448583021
+    },
+    "valid_buildings": {
+      "within": 13,
+      "cross": 13,
+      "gap": 13,
+      "CA": 13,
+      "CB": 13
+    },
+    "positive_buildings": {
+      "within": 13,
+      "cross": 13,
+      "gap": 11,
+      "CA": 12,
+      "CB": 13
+    },
+    "stored_effect_max_abs_errors": {
+      "within": 2.842170943040401e-14,
+      "cross": 2.842170943040401e-14,
+      "gap": 4.2743586448068527e-14,
+      "CA": 2.886579864025407e-14,
+      "CB": 2.842170943040401e-14
+    }
+  },
+  "declared_outside_screen": {
+    "provenance_limit": "SCREEN_POOL_FRAME.csv absent from these five packages; membership labels taken from delivered SCREEN_SUPPORT_BY_IMAGE; aggregation independently recalculated.",
+    "groups": {
+      "outside_screen_building": 5,
+      "outside_screen_pool_same_building": 25,
+      "screen_pool": 26
+    },
+    "images": 30,
+    "CB_image_mean": 6.68713869209928,
+    "CB_positive_images": 28
+  },
+  "counterexamples": [
+    {
+      "image": "S9hNv5qa7GM-09",
+      "building": "S9hNv5qa7GM",
+      "within": 2.1322944551314293,
+      "cross": 13.686312312877975,
+      "gap": 11.554017857746546,
+      "CA": -11.076535614196994,
+      "CB": -13.008372589566159,
+      "screen_support": "screen_pool"
+    },
+    {
+      "image": "S9hNv5qa7GM-21",
+      "building": "S9hNv5qa7GM",
+      "within": 4.8416762760003,
+      "cross": 3.74644529889261,
+      "gap": -1.0952309771076898,
+      "CA": 4.284588390751082,
+      "CB": -0.5570878852492172,
+      "screen_support": "outside_screen_pool_same_building"
+    },
+    {
+      "image": "jtcxE69GiFV-03",
+      "building": "jtcxE69GiFV",
+      "within": 1.3414589504571808,
+      "cross": 1.662765497103564,
+      "gap": 0.32130654664638314,
+      "CA": -0.8617385963345541,
+      "CB": -1.2506282652045329,
+      "screen_support": "screen_pool"
+    },
+    {
+      "image": "yqstnuAEVhm-27",
+      "building": "yqstnuAEVhm",
+      "within": 12.447722813359128,
+      "cross": 8.728917600739614,
+      "gap": -3.7188052126195146,
+      "CA": 0.14658126917333902,
+      "CB": -6.69608549328828,
+      "screen_support": "outside_screen_pool_same_building"
+    }
+  ],
+  "oppjoint_time_CB_source_matched": {
+    "events": 102,
+    "images": 40,
+    "image_mean_pct": 11.289030906938786,
+    "positive_images": 31
+  },
+  "fine_identity": {
+    "events": 13544,
+    "unique_events": 13544,
+    "pools": 88,
+    "images": 78,
+    "buildings": 17,
+    "issues": []
+  },
+  "fine_RFUSE_negative": {
+    "events": 43,
+    "images": 43,
+    "buildings": 16,
+    "all_three_valid_events": 40,
+    "CA_valid_events": 40,
+    "CB_valid_events": 40,
+    "CB_loss_over_10_events": 6,
+    "missing_Q_events": {
+      "A": 0,
+      "B": 1,
+      "C": 3
+    },
+    "image_means": {
+      "within": 4.557387452551635,
+      "cross": 6.748019544081624,
+      "gap": 2.1906320915299906,
+      "CA": -4.80205598463557,
+      "CB": -1.7302841967533973
+    },
+    "image_medians": {
+      "within": 2.014221244632651,
+      "cross": 4.612233694280537,
+      "gap": 0.36217600145220175,
+      "CA": -1.424018848931908,
+      "CB": -0.4153788641568923
+    },
+    "valid_images": {
+      "within": 40,
+      "cross": 40,
+      "gap": 40,
+      "CA": 40,
+      "CB": 40
+    },
+    "positive_images": {
+      "within": 40,
+      "cross": 40,
+      "gap": 21,
+      "CA": 11,
+      "CB": 17
+    },
+    "building_means": {
+      "within": 3.6344447840767935,
+      "cross": 6.559189556402293,
+      "gap": 2.9247447723254996,
+      "CA": -5.418158588194533,
+      "CB": -3.1032688587676365
+    },
+    "valid_buildings": {
+      "within": 15,
+      "cross": 15,
+      "gap": 15,
+      "CA": 15,
+      "CB": 15
+    },
+    "positive_buildings": {
+      "within": 15,
+      "cross": 15,
+      "gap": 12,
+      "CA": 2,
+      "CB": 5
+    }
+  },
+  "fine_OPPJOINT_n20m6": {
+    "events": 8,
+    "images": 8,
+    "buildings": 3,
+    "all_three_valid_events": 8,
+    "CA_valid_events": 8,
+    "CB_valid_events": 8,
+    "CB_loss_over_10_events": 0,
+    "missing_Q_events": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "image_means": {
+      "within": 2.2091719201145477,
+      "cross": 5.8148585638821215,
+      "gap": 3.605686643767574,
+      "CA": 5.4674977735771755,
+      "CB": 4.262073931128112
+    },
+    "image_medians": {
+      "within": 0.8534329656737469,
+      "cross": 1.6862000016065117,
+      "gap": 0.034089498954504194,
+      "CA": 0.7694433680906414,
+      "CB": 0.7947342611341099
+    },
+    "valid_images": {
+      "within": 8,
+      "cross": 8,
+      "gap": 8,
+      "CA": 8,
+      "CB": 8
+    },
+    "positive_images": {
+      "within": 8,
+      "cross": 8,
+      "gap": 4,
+      "CA": 6,
+      "CB": 7
+    },
+    "building_means": {
+      "within": 1.779296008561774,
+      "cross": 5.223385731200234,
+      "gap": 3.4440897226384597,
+      "CA": 4.905348049564487,
+      "CB": 3.8589082952024367
+    },
+    "valid_buildings": {
+      "within": 3,
+      "cross": 3,
+      "gap": 3,
+      "CA": 3,
+      "CB": 3
+    },
+    "positive_buildings": {
+      "within": 3,
+      "cross": 3,
+      "gap": 2,
+      "CA": 3,
+      "CB": 3
+    }
+  },
+  "object_id_export_tables": [
+    {
+      "package": "07B",
+      "table": "experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 30166,
+      "malformed_object_ids": 1172,
+      "unresolved": []
+    },
+    {
+      "package": "07B",
+      "table": "experiment/member_sensitivity_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 448,
+      "malformed_object_ids": 0,
+      "unresolved": []
+    },
+    {
+      "package": "07B",
+      "table": "experiment/refinement_baseline_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 1314,
+      "malformed_object_ids": 0,
+      "unresolved": []
+    },
+    {
+      "package": "07C",
+      "table": "experiment/direct_AC_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 2852,
+      "malformed_object_ids": 0,
+      "unresolved": []
+    },
+    {
+      "package": "07C",
+      "table": "experiment/fixed_A_m_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 11693,
+      "malformed_object_ids": 8,
+      "unresolved": []
+    },
+    {
+      "package": "07C",
+      "table": "experiment/refinement_AC_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 635,
+      "malformed_object_ids": 0,
+      "unresolved": []
+    },
+    {
+      "package": "07C",
+      "table": "experiment/refinement_m_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 4647,
+      "malformed_object_ids": 0,
+      "unresolved": []
+    },
+    {
+      "package": "07D",
+      "table": "analysis/fine_increment/oppjoint_small_slow/USED_ENDPOINT_SCALARS_AND_MEMBERS.csv.gz",
+      "identity_fields_present": false
+    }
+  ],
+  "focused_object_id_defect": {
+    "unique_endpoints": 1172,
+    "affected_events": 487,
+    "focus_n12m6_affected_events": 0,
+    "focus_n12m6_affected_endpoints": 0
+  },
+  "unique_malformed_endpoints_all_tables": 1172
+}

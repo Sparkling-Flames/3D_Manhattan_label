@@ -1,0 +1,29 @@
+{
+  "condition": "manual",
+  "methods": [
+    "OPPJOINT_K4"
+  ],
+  "policies": [
+    "more_turn_first",
+    "higher_Q_first",
+    "fast_first"
+  ],
+  "pools": 20,
+  "early_curve_pools": 15,
+  "n_min": 3,
+  "n_max": 9,
+  "used_unique_endpoints": 1081,
+  "new_fusions": 0,
+  "full_endpoint_equality": true,
+  "natural_definition": "exact uniform n-subset marginal of all without-replacement permutations",
+  "priority_definition": "all earlier groups + uniform subset of frontier group; unlabelled histories retained as explicitly unknown last group",
+  "not_the_old_32_path_experiment": true,
+  "does_not_estimate_cross_n_path_covariance": true,
+  "time_sources_separate": [
+    "inherited_v1_audited_source",
+    "user_processed_reported_not_raw_log_replayed"
+  ],
+  "sd_definition": "exact finite policy distribution SD; deterministic singleton=0; member_variation_estimable separately false",
+  "labels_sha256": "a58e62d2bb30557575a74d2fa26abae197845c54007f3272a3d23f42274ab006",
+  "roles_sha256": "7c3e37bdc77e827bfd0de5a77efece54b20602db514dd705b78eed5f1edcc536"
+}
