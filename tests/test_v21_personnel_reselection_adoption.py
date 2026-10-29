@@ -26,6 +26,9 @@ def test_adoption_resolves_conditions_and_lobo_labels_without_relabeling_baselin
                    and row['scope'] == selected['scope']]
         assert len(matches) == 1, selected
         row = matches[0]
+        for field in ('axis', 'rank_direction'):
+            if field in selected:
+                assert row[field] == selected[field]
         assert 0 < int(row['B8L2_CB_valid_images']) <= int(row['images'])
         assert 0 < int(row['ABC_scored_events']) <= int(row['events'])
         assert any(item['method'] == selected['method'] for item in labels)
