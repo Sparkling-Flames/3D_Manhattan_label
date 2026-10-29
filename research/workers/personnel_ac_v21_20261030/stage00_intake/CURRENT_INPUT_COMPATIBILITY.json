@@ -1,0 +1,48 @@
+{
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "previous_commit": "519c7447278dd16c3d69f505b807fb5b53792b36",
+  "unchanged_input_blobs": [
+    {
+      "path": "research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json",
+      "git_blob": "fa42df06d5cf0990d5e3bbd99f68c9f517b349b9",
+      "same_as_previous_commit": true,
+      "local_sha256": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37"
+    },
+    {
+      "path": "research/data/releases/v2.1/admitted_space_extension/pools/INPUT_SNAPSHOT.json",
+      "git_blob": "94d4be6ace7003cf525a9aa603f13c4c74d97f30",
+      "same_as_previous_commit": true,
+      "local_sha256": "f41f68d3d7ca8773d9d7b8fc47b6b829df1554559799ca5bc9b899cb309b23b6"
+    },
+    {
+      "path": "research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "git_blob": "48909affa2902f8b9578baf16be22a62e825a59a",
+      "same_as_previous_commit": true,
+      "local_sha256": "a58e62d2bb30557575a74d2fa26abae197845c54007f3272a3d23f42274ab006"
+    },
+    {
+      "path": "research/workers/personnel_v21_reselection_20261029/classification/CLASS_ROLES_COMPACT_ALL_LOBO.csv.gz",
+      "git_blob": "18559160e772e54af0b3c3b471135c2b515aea26",
+      "same_as_previous_commit": true,
+      "local_sha256": "7c3e37bdc77e827bfd0de5a77efece54b20602db514dd705b78eed5f1edcc536"
+    },
+    {
+      "path": "research/workers/personnel_v21_reselection_20261029/targets/POOL_TARGET_CONDITIONS.csv",
+      "git_blob": "43315834e33875e5aaf7150800c0f9ba1c6a0e09",
+      "same_as_previous_commit": true,
+      "local_sha256": "eec75038a217bb34717726ebd8a95e812ae64af7d635860c1adccdb18f755614"
+    }
+  ],
+  "current_final_TARGET_overlap_exact": true,
+  "merged_label_rows": 9858,
+  "methods": [
+    "TARGET_DSTRUCT_K3",
+    "OPPSTRUCT_K3",
+    "OPPJOINT_K3",
+    "OPPJOINT_K4",
+    "V21_DSTRUCT_RAW3_K3",
+    "RFUSE_GEOM_K2",
+    "TARGET_DSTRUCT_K2"
+  ],
+  "scope": "targeted current-input continuity only; no repeated eligibility or classification audit"
+}

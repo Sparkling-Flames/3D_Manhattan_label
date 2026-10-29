@@ -1,0 +1,86 @@
+{
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "seed": 202610291901,
+  "design_status": "registered_before_outcomes_not_executed",
+  "methods": [
+    "TARGET_DSTRUCT_K3",
+    "TARGET_DSTRUCT_K2",
+    "V21_DSTRUCT_RAW3_K3",
+    "OPPJOINT_K3",
+    "OPPJOINT_K4",
+    "RFUSE_GEOM_K2",
+    "OPPSTRUCT_K3"
+  ],
+  "method_events": 423348,
+  "physical_pairs": 375864,
+  "unique_teams": 465642,
+  "design_links": 502278,
+  "registered_A_B_cells": 25641,
+  "pools": 226,
+  "by_scope": {
+    "primary": 407991,
+    "other_admitted": 15357
+  },
+  "by_method": {
+    "TARGET_DSTRUCT_K3": 52408,
+    "TARGET_DSTRUCT_K2": 10509,
+    "V21_DSTRUCT_RAW3_K3": 62495,
+    "OPPJOINT_K3": 82474,
+    "OPPJOINT_K4": 144356,
+    "RFUSE_GEOM_K2": 17687,
+    "OPPSTRUCT_K3": 53419
+  },
+  "family_links": {
+    "B_equal_whole_class": 145159,
+    "B_unequal_whole_classes": 12922,
+    "B_unequal_equal_size_anchor": 63491,
+    "B_unequal_additional_same_target_members": 63491,
+    "A_equal_AC": 148316,
+    "C_complete_class_alliances": 42656,
+    "D_fixed_A_expand_replacement": 22012,
+    "E_fixed_D_member_sensitivity": 4231
+  },
+  "block_draws": 8,
+  "whole_draws": 4,
+  "enumeration_limit": 16,
+  "background_profiles": 4,
+  "deep_member_draws": 8,
+  "path_reps": 4,
+  "intensive_background_policy": "four profiles only at n20 if legal, otherwise nearest legal anchor to 2m; neutral_members_0 path retained at every n",
+  "registry_memory_policy": "stream payloads to compressed temporary JSONL, retain only identity sets, family tags, and small fixed-D anchors; atomic final gzip CSV writes",
+  "independent_random_batches": 2,
+  "identities_and_disjointness_checked": true,
+  "no_B_or_strict_ABC_registered": true,
+  "all_requests_use_legacy_native_team_key": true,
+  "target_image_quality_time_and_geometry_read": false,
+  "reverse_orientations_not_independent_replicates": true,
+  "all_coalitions_enumerated": true,
+  "small_team_policy": "n<3 held out of new execution and listed separately",
+  "outcome_blind_inputs": [
+    {
+      "path": "stage01_capacity/SCORE_BLIND_POOL_INPUTS.json",
+      "sha256": "60b64a62b96f5aa421f075658b4e95613cac4564fdef274aa2691b982b00f399"
+    },
+    {
+      "path": "stage01_capacity/POOL_METHOD_CAPACITY.csv.gz",
+      "sha256": "1efa6bb7b3a6b42086ba79ae6289f808841a68c11df6af22b027a3a6502208e8"
+    },
+    {
+      "path": "stage01_capacity/ALL_CLASS_ALLIANCE_TEAMS.csv.gz",
+      "sha256": "8ab801264517517f681d6d16d1d853c7e830f5bd721749fdebec19bd7a12d086"
+    },
+    {
+      "path": "stage01_capacity/ALL_CLASS_ALLIANCE_CONTRASTS.csv.gz",
+      "sha256": "59eeaa3442c8a5ef5f3a3f12c775b989380c4b40433bfbb78c56995c69322a1d"
+    },
+    {
+      "path": "stage01_capacity/FROZEN_LABELS_USED_ALL_LOBO.csv.gz",
+      "sha256": "726dffcbdc634f5511e1b6c49132fab802670786c4ba9d4c7ab82061427d8498"
+    },
+    {
+      "path": "stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "sha256": "498fec6c06f29e377498e349b1db0466bfde6531f51bc73631e8a599b3f64010"
+    }
+  ],
+  "elapsed_seconds": 144.78110573800222
+}

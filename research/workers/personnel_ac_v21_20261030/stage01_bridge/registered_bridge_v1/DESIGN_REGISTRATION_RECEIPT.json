@@ -1,0 +1,72 @@
+{
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "seed": 202610291901,
+  "design_status": "registered_before_bridge_outcomes_not_executed",
+  "source_registration": "registered_v2",
+  "methods": [
+    "TARGET_DSTRUCT_K3",
+    "V21_DSTRUCT_RAW3_K3"
+  ],
+  "method_events": 528,
+  "physical_pairs": 496,
+  "unique_teams": 986,
+  "design_links": 528,
+  "registered_A_B_cells": 66,
+  "pools": 24,
+  "by_scope": {
+    "primary": 528
+  },
+  "by_method": {
+    "V21_DSTRUCT_RAW3_K3": 384,
+    "TARGET_DSTRUCT_K3": 144
+  },
+  "family_links": {
+    "F_strict_common_n_bridge": 528
+  },
+  "strict_registered_cells": 66,
+  "max_XZ_blocks_per_cell": 8,
+  "XZ_subsample_rng_token": "strict_common_n_bridge_subsample",
+  "same_selected_XZ_at_all_strict_n": true,
+  "same_v2_neutral_background_prefix": true,
+  "existing_v2_team_requests": 49,
+  "team_requests_not_in_v2": 937,
+  "existing_v2_method_events": 32,
+  "method_events_not_in_v2": 496,
+  "no_B_or_strict_ABC_registered": true,
+  "target_image_quality_time_and_geometry_read": false,
+  "exact_strict_endpoints_are_not_assumed": true,
+  "strict_source_direction_retained_in_links": true,
+  "reason": "Add only existing strict registered n at existing direct-AC XZ blocks so comparisons share pool, target, n, m and role direction.",
+  "source_registration_module_sha256": "2e5b09e968ea9eb25e3c5d5b4a0202d19a94ec3838821791fff4b9c6e3d26fdf",
+  "outcome_blind_inputs": [
+    {
+      "path": "stage05_funnel_bridge/inputs/STRICT_LARGE_CELLS.csv",
+      "sha256": "142eded4e1bc5da892f5e71bfbbf972499bd9e3ca9ad16ff39c59b912c46012a"
+    },
+    {
+      "path": "stage01_capacity/SCORE_BLIND_POOL_INPUTS.json",
+      "sha256": "60b64a62b96f5aa421f075658b4e95613cac4564fdef274aa2691b982b00f399"
+    },
+    {
+      "path": "stage01_capacity/POOL_METHOD_CAPACITY.csv.gz",
+      "sha256": "1efa6bb7b3a6b42086ba79ae6289f808841a68c11df6af22b027a3a6502208e8"
+    },
+    {
+      "path": "stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "sha256": "498fec6c06f29e377498e349b1db0466bfde6531f51bc73631e8a599b3f64010"
+    },
+    {
+      "path": "stage01_design_review/registered_v2/AC_EVENTS.csv.gz",
+      "sha256": "a6bbd799ccbd818eb9b06f6cc1e5eb70c5cdf72d0b22da547f2baa3a68537a18"
+    },
+    {
+      "path": "stage01_design_review/registered_v2/DESIGN_LINKS.csv.gz",
+      "sha256": "6508c225948530ae69ee3dc7daa215feed9d66f6108ee7ebd6ee7357593b1d01"
+    },
+    {
+      "path": "stage01_design_review/registered_v2/TEAM_REQUESTS.csv.gz",
+      "sha256": "9734536c1ae1cb9d591affd16f3af821cf02680a7d6663dfaf135dee6579603e"
+    }
+  ],
+  "elapsed_seconds": 18.935267621000094
+}

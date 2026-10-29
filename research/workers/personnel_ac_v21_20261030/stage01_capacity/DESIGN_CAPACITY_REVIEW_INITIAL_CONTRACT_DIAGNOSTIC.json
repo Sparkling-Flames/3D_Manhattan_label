@@ -1,0 +1,534 @@
+{
+  "status": "failed",
+  "registration_directory": "stage01_design_review/registered_v2",
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "design_mutated": false,
+  "target_outcomes_read": false,
+  "method_events": 423348,
+  "physical_pairs": 375864,
+  "unique_teams": 465642,
+  "design_links": 502278,
+  "registered_A_B_cells": 25641,
+  "family_links": {
+    "B_equal_whole_class": 145159,
+    "B_unequal_whole_classes": 12922,
+    "B_unequal_equal_size_anchor": 63491,
+    "B_unequal_additional_same_target_members": 63491,
+    "A_equal_AC": 148316,
+    "C_complete_class_alliances": 42656,
+    "D_fixed_A_expand_replacement": 22012,
+    "E_fixed_D_member_sensitivity": 4231
+  },
+  "family_unique_method_events": {
+    "B_equal_whole_class": 145159,
+    "B_unequal_whole_classes": 12922,
+    "B_unequal_equal_size_anchor": 63491,
+    "B_unequal_additional_same_target_members": 63464,
+    "C_complete_class_alliances": 42656,
+    "A_equal_AC": 148316,
+    "E_fixed_D_member_sensitivity": 4231,
+    "D_fixed_A_expand_replacement": 21987
+  },
+  "pure_equal_n_equals_m_events_by_method": {
+    "TARGET_DSTRUCT_K3": 3220,
+    "TARGET_DSTRUCT_K2": 1246,
+    "V21_DSTRUCT_RAW3_K3": 4213,
+    "OPPJOINT_K3": 6123,
+    "OPPJOINT_K4": 6980,
+    "RFUSE_GEOM_K2": 1785,
+    "OPPSTRUCT_K3": 3583
+  },
+  "nested_background_paths": 104078,
+  "fixed_A_paths": 6921,
+  "fixed_D_panels": 562,
+  "fixed_D_panels_with_multiple_pairs": 462,
+  "fixed_D_panels_with_multiple_A": 264,
+  "fixed_D_panels_with_multiple_C": 316,
+  "unequal_whole_class_parent_contrasts": 12922,
+  "complete_alliance_links": 42656,
+  "small_team_alliance_omissions": 6175,
+  "small_team_omissions_have_exact_identities": true,
+  "checks": {
+    "registration_frozen_size": 7,
+    "registration_frozen_sha256": 7,
+    "capacity_input_sha256": 6,
+    "pool_LOBO_class_membership": 1652,
+    "pool_unknown_members": 1652,
+    "event_team_sizes": 423348,
+    "event_qualified_pool_members": 423348,
+    "event_exact_D_X_Z": 423348,
+    "unknown_only_background": 423348,
+    "event_correct_LOBO_building": 423348,
+    "ordinary_manual_domain": 423348,
+    "target_scope_and_reference": 423348,
+    "native_team_key": 423348,
+    "physical_and_method_event_identity": 423348,
+    "block_class_ids": 423348,
+    "equal_unequal_size_flags": 423348,
+    "equal_n_m": 311351,
+    "block_size_columns": 423348,
+    "whole_class_exact_pool_members": 423348,
+    "frozen_MV50_denominator": 423348,
+    "team_class_composition": 1270044,
+    "canonical_historical_role_direction": 328139,
+    "event_true_parent_classes": 328139,
+    "registered_equal_whole_definition": 145159,
+    "unequal_not_pooled_as_equal_n_m": 111997,
+    "registered_unequal_whole_definition": 12922,
+    "canonical_nonpure_endpoint_direction": 95209,
+    "receipt_event_total": 1,
+    "receipt_domain_method_totals": 1,
+    "receipt_physical_pair_total": 1,
+    "no_duplicate_or_reverse_method_event": 1,
+    "requested_team_members": 465642,
+    "requested_native_team_key": 465642,
+    "requested_exact_qualified_original_objects": 465642,
+    "requested_team_reference": 465642,
+    "receipt_team_total": 1,
+    "every_A_endpoint_requested": 1,
+    "every_C_endpoint_requested": 1,
+    "no_orphan_team_requests": 1,
+    "every_link_event_exists": 502278,
+    "link_id_unique_sequence": 502278,
+    "link_event_identity": 502278,
+    "link_family_on_event": 502278,
+    "explicit_input_orientation": 502278,
+    "link_exact_background_id": 433379,
+    "explicit_zero_background_flag": 293475,
+    "registered_exact_block_id": 293475,
+    "nested_background_keeps_block": 293475,
+    "nested_background_level_unique": 293475,
+    "one_unequal_full_parent": 12922,
+    "complete_alliance_exact_members": 42656,
+    "fixed_A_path_keeps_original_A": 22012,
+    "fixed_A_nested_X_Z_prefix": 22012,
+    "fixed_D_member_panel_background": 4231,
+    "receipt_design_link_total": 1,
+    "receipt_family_link_totals": 1,
+    "nested_background_members_monotone": 130105,
+    "unequal_parent_exists": 12922,
+    "unequal_decomposition_paired_legs": 12922,
+    "unequal_decomposition_exact_telescoping_teams": 63491,
+    "registered_cell_capacity": 25641,
+    "cell_direction_link_count": 25641,
+    "cell_registered_block_count": 25641,
+    "cell_possible_block_count": 25641,
+    "cell_possible_background_count": 25641,
+    "receipt_registered_cell_total": 1,
+    "small_team_omission_is_small": 6175,
+    "complete_alliance_census_including_small_omissions": 1,
+    "method_overlap_count": 375864,
+    "cross_method_physical_pair_deduplication": 1
+  },
+  "failures": [
+    {
+      "check": "link_exact_background_id",
+      "detail": "27"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "29"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "31"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "33"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "36"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "38"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "40"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "42"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "45"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "47"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "49"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "51"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "78"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "80"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "82"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "84"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "87"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "89"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "91"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "93"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "96"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "98"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "100"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "102"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "233"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "235"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "237"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "239"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "242"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "244"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "246"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "248"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "251"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "253"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "255"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "257"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "372"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "374"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "376"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "378"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "405"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "407"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "409"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "411"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "414"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "416"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "418"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "420"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "423"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "425"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "427"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "429"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "456"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "458"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "460"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "462"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "465"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "467"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "469"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "471"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "474"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "476"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "478"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "480"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "675"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "677"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "679"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "681"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "684"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "686"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "688"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "690"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "693"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "695"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "697"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "699"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "718"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "720"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "722"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "724"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "727"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "729"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "731"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "733"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "736"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "738"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "740"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "742"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "873"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "875"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "877"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "879"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "882"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "884"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "886"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "888"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "919"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "921"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "923"
+    },
+    {
+      "check": "link_exact_background_id",
+      "detail": "925"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 74.03751637099776,
+  "interpretation": [
+    "Capacity and identity validation only; no claim about Q, geometry, time, evaluability or effect direction.",
+    "Reverse links and multiple methods sharing physical endpoints are not independent replications.",
+    "n=m pure-class contrasts are separately counted; shared-background response must use the D_n>0 stratum.",
+    "Member/background coverage is the registered sample, not uniform exhaustive coverage unless the exact count says so."
+  ],
+  "diagnostic_note": "Initial reviewer treated all link background_id values as the actual endpoint intersection; same-target addition legs intentionally retain their parent outside-class D identifier. Corrected reviewer checks that explicit parent relationship; no registration was modified."
+}

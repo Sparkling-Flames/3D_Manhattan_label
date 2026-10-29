@@ -1,0 +1,65 @@
+{
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "input_receipts": [
+    {
+      "path": "repo/research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json",
+      "sha256": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37",
+      "pools": 263
+    },
+    {
+      "path": "repo/research/data/releases/v2.1/admitted_space_extension/pools/INPUT_SNAPSHOT.json",
+      "sha256": "f41f68d3d7ca8773d9d7b8fc47b6b829df1554559799ca5bc9b899cb309b23b6",
+      "pools": 31
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage00_intake/current_source/research/data/releases/v2.1/final_classification_downstream/sources/stage03_completed_ABC/FROZEN_LABELS_ALL_LOBO.csv.gz",
+      "sha256": "449fd8292611dca29cb9b50444feb50f57ef36c0b60fa823af68f77635379e61"
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage00_intake/current_source/research/data/releases/v2.1/final_classification_downstream/USED_FINAL_LOBO_LABELS.csv.gz",
+      "sha256": "bb6dd76f9a8626336b5b69823855461a374ec3555cb0c85ebd96f153d2024d8d"
+    }
+  ],
+  "label_overlap_records_checked": 1364,
+  "label_overlap_matches": true,
+  "all_pool_inventory": 294,
+  "ordinary_manual_pools": 236,
+  "ordinary_primary_pools": 206,
+  "ordinary_other_target_pools": 30,
+  "methods": [
+    "TARGET_DSTRUCT_K3",
+    "TARGET_DSTRUCT_K2",
+    "V21_DSTRUCT_RAW3_K3",
+    "OPPJOINT_K3",
+    "OPPJOINT_K4",
+    "RFUSE_GEOM_K2",
+    "OPPSTRUCT_K3"
+  ],
+  "label_rows": 9548,
+  "pool_method_rows": 1652,
+  "class_rows": 4720,
+  "directed_class_rows": 9440,
+  "all_legal_AC_direction_n_m_cells": 949044,
+  "whole_equal_cells": 187068,
+  "whole_unequal_cells": 89942,
+  "alliance_teams": 12410,
+  "alliance_edges": 48831,
+  "m10_n20_published_matches_all_direction_rows": true,
+  "m10_n20_primary_capacity": {
+    "OPPJOINT_K3": 82,
+    "OPPJOINT_K4": 107,
+    "TARGET_DSTRUCT_K3": 3,
+    "V21_DSTRUCT_RAW3_K3": 19
+  },
+  "fusion_calls": 0,
+  "score_calls": 0,
+  "target_scores_used_for_design": false,
+  "capacity_not_execution": true,
+  "n_min": 3,
+  "background_can_be_empty": true,
+  "unknown_labels_only_allowed_in_D": true,
+  "scope_and_mode_never_mixed": true,
+  "combination_formula": "C(source_n,m)*C(target_n,m)*C(pool_n-2m,n-m); directed AC, reverse is same physical pair with opposite direction",
+  "unequal_whole_class_formula": "X=all source, Z=all target, D subset remaining N-source_n-target_n; min(nA,nC)>=3",
+  "alliance_definition": "union of all available members of each nonempty class subset; optional fixed unknown-background inclusion; no outcome selection"
+}
