@@ -1,0 +1,66 @@
+{
+  "data_release": "v2.1",
+  "source_commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "source_packages": [
+    {
+      "stage": "06",
+      "path": "C:\\Users\\ASUS\\Downloads\\HOHONET_v21_阶段06_真实原答投票融合机制案例_20261029.zip",
+      "file_entries": 149
+    },
+    {
+      "stage": "07B",
+      "path": "C:\\Users\\ASUS\\Downloads\\HOHONET_v21_阶段07B_重点扩展与匹配验证完整数据_20261029.zip",
+      "file_entries": 111
+    },
+    {
+      "stage": "07C",
+      "path": "C:\\Users\\ASUS\\Downloads\\HOHONET_v21_阶段07C_固定A规模背景与大队AC完整数据_20261029.zip",
+      "file_entries": 115
+    },
+    {
+      "stage": "07D",
+      "path": "C:\\Users\\ASUS\\Downloads\\HOHONET_v21_阶段07D_固定父类细分与完整配比例子_20261029.zip",
+      "file_entries": 80
+    },
+    {
+      "stage": "07A",
+      "path": "C:\\Users\\ASUS\\Downloads\\HOHONET_v21_阶段07A_主报告分类采用与复现代码_20261029.zip",
+      "file_entries": 249
+    }
+  ],
+  "import_order": [
+    "06",
+    "07B",
+    "07C",
+    "07D",
+    "07A"
+  ],
+  "source_file_entries": 704,
+  "unique_imported_files": 651,
+  "repair_map": "D:\\Work\\HOHONET\\research\\workers\\personnel_v21_reselection_20261029\\independent_review\\member_object_id_repair_map.csv",
+  "repaired_tables": [
+    {
+      "path": "experiment/fixed_A_m_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 8,
+      "field": "member_object_ids"
+    },
+    {
+      "path": "experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "rows": 1172,
+      "field": "member_object_ids"
+    }
+  ],
+  "repaired_rows": 1180,
+  "source_raw_values_matched": true,
+  "all_other_csv_cells_preserved": true,
+  "quality_values_changed": false,
+  "worker_members_changed": false,
+  "patched_export": "experiment/run_registered.py",
+  "export_patch": "Copy cached row; split string member fields before frozen scalar_row.",
+  "frozen_repository_engine_changed": false,
+  "native_fusion_runs": 0,
+  "sha_calculated": false,
+  "source_zips_changed": false,
+  "independent_review_changed": false,
+  "author_reports": "Original author reports retained as source material; docs main report not overwritten."
+}

@@ -1,0 +1,261 @@
+{
+  "repository_commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "data_release": "v2.1",
+  "current_reference": {
+    "floor_xz_h": [
+      [
+        -0.5597945399690438,
+        0.3117322734454123
+      ],
+      [
+        1.699420655308524,
+        0.31173227344541227
+      ],
+      [
+        1.699420655308524,
+        -0.3018662621338492
+      ],
+      [
+        -0.5597945399690438,
+        -0.30186626213384915
+      ]
+    ],
+    "full_reference_available": true,
+    "points_1024x512": [
+      [
+        173.19230063316792,
+        161.37450137940772
+      ],
+      [
+        173.19230063316792,
+        419.1309199942997
+      ],
+      [
+        797.5664703495372,
+        217.10508738190083
+      ],
+      [
+        797.5664703495372,
+        341.5078551933338
+      ],
+      [
+        739.3498158549658,
+        217.06707431260605
+      ],
+      [
+        739.3498158549658,
+        341.5795897259042
+      ],
+      [
+        336.59884721007575,
+        160.8184788641826
+      ],
+      [
+        336.59884721007575,
+        419.679944531357
+      ]
+    ],
+    "reference_version": "user_adopted_reference_20261028",
+    "target_id": "user_space_20261016:S9hNv5qa7GM-09"
+  },
+  "difficulty_record": {
+    "image": "S9hNv5qa7GM-09",
+    "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+    "current_class": "中等",
+    "conditional_difficulty": "中等",
+    "target_version": "user_space_20261016:S9hNv5qa7GM-09",
+    "selected": {
+      "target_id": "user_space_20261016:S9hNv5qa7GM-09",
+      "role": "confirmed_scope",
+      "floor": [
+        [
+          -0.5597945399690438,
+          0.31173227344541227
+        ],
+        [
+          1.699420655308524,
+          0.31173227344541227
+        ],
+        [
+          1.699420655308524,
+          -0.3018662621338492
+        ],
+        [
+          -0.5597945399690438,
+          -0.3018662621338492
+        ]
+      ],
+      "features": {
+        "N_floor": 4,
+        "N_turn": 4,
+        "straight_vertices_1based": [],
+        "H": 0,
+        "hidden_vertices_1based": [],
+        "geometry_status": "valid_camera_inside",
+        "ring_class": "cyclic_decreasing"
+      }
+    },
+    "candidates": [
+      {
+        "target_id": "gt:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.txt",
+        "role": "selected_gt",
+        "floor": [
+          [
+            1.6994111336510502,
+            -0.3018625900631233
+          ],
+          [
+            1.6994497346541069,
+            0.9816876263370475
+          ],
+          [
+            0.8148040453969954,
+            0.9816132249468139
+          ],
+          [
+            0.814798916269559,
+            0.31172081027108245
+          ],
+          [
+            -0.559797095957489,
+            0.3117440498113732
+          ],
+          [
+            -0.5597919839805985,
+            -0.30186999490593214
+          ]
+        ],
+        "features": {
+          "N_floor": 6,
+          "N_turn": 6,
+          "straight_vertices_1based": [],
+          "H": 2,
+          "hidden_vertices_1based": [
+            2,
+            3
+          ],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "local_backtracking"
+        }
+      },
+      {
+        "target_id": "user_space_20261016:S9hNv5qa7GM-09",
+        "role": "confirmed_scope",
+        "floor": [
+          [
+            -0.5597945399690438,
+            0.31173227344541227
+          ],
+          [
+            1.699420655308524,
+            0.31173227344541227
+          ],
+          [
+            1.699420655308524,
+            -0.3018662621338492
+          ],
+          [
+            -0.5597945399690438,
+            -0.3018662621338492
+          ]
+        ],
+        "features": {
+          "N_floor": 4,
+          "N_turn": 4,
+          "straight_vertices_1based": [],
+          "H": 0,
+          "hidden_vertices_1based": [],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "cyclic_decreasing"
+        }
+      }
+    ],
+    "N_floor": 4,
+    "N_turn": 4,
+    "H": 0,
+    "scene": "unflagged",
+    "oos_subtype": "not_recorded",
+    "doorway_status": "not_recorded",
+    "previous_visual_class": "待复核",
+    "previous_scope_class": "待复核",
+    "external_review": {
+      "image": "S9hNv5qa7GM-09",
+      "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "gt_object_id": "gt:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "困难",
+      "scope": "目标基本一致",
+      "note": "",
+      "updated_at": "2026-10-10T03:51:58.598Z"
+    },
+    "previous_user_review": null,
+    "old_visual_evidence": "窄走道两側开口清楚，但点2、3投影到近墙面而参考跨远端。",
+    "old_visual_question": "需确认GT隐藏小转折及走道停止边。",
+    "previous_reference_issue": "not_newly_adjudicated",
+    "previous_scope_note": "已逐图查看；作答少于3份，不判断“大量人员”或稳定人群范围差异。",
+    "reference_flags": {
+      "scope_explicit_tag": "False",
+      "scope_existing_ledger": "True",
+      "scope_comment_candidate": "True",
+      "gt_substantive_error_mark": "False",
+      "gt_detail_omission_mark": "False"
+    },
+    "selection_reason": "采用本次明确确认的新空间，原空间仅对照",
+    "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.png",
+    "card": "S9hNv5qa7GM-09_pairs.jpg",
+    "old_card": "../difficulty_pair_display_20261016/../difficulty_user_adoption_20261016/../../../analysis_results/image_difficulty_full_review_20261010/all_cards/S9hNv5qa7GM-09.jpg",
+    "scope_comparison": null,
+    "top_boundary_pending": true,
+    "classification_basis": "user_scope_and_grade_adjudication_20261016",
+    "reviewed": true,
+    "review_artifact": "recheck_10.jpg",
+    "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+    "inference_burden": "high",
+    "H_interpretation": "opaque_hidden_evidence",
+    "evidence": "新范围已固定，原跨空间隐藏分支不再计入；四转折H=0仅说明结构简化，按用户裁定为中等。",
+    "question": "",
+    "applicability_note": "范围为整个空间的竖向边界；顶角坐标是否完整是独立的几何表示状态。",
+    "previous_published_class": "困难",
+    "gt_error_excluded": false,
+    "reference_status": "no_unresolved_gt_error_recorded",
+    "latest_user_review": {
+      "image": "S9hNv5qa7GM-09",
+      "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "target_version": "gt:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.txt",
+      "review_version": "scope_preferred_difficulty_received_20261015_v2",
+      "proposed_class": "困难",
+      "conditional_difficulty": "困难",
+      "grade": "",
+      "note": "这个有两个空间",
+      "updated_at": "2026-10-15T10:56:13.356Z"
+    },
+    "review_disagreement": null,
+    "scope_semantics": "whole_space_vertical_boundary",
+    "difficulty_analysis_exclusion": "",
+    "difficulty_analysis_eligible": true,
+    "class_before_user_adoption": "困难",
+    "evidence_before_user_adoption": "GT含近墙背后的狭小转折，必要角线投影被实体墙面遮住，固定范围后仍存在定位推断负担。",
+    "basis_before_user_adoption": "geometry_and_codex_photo_review_not_blind",
+    "user_grade_adopted": false,
+    "evidence_before_scope_resolution": "GT含近墙背后的狭小转折，必要角线投影被实体墙面遮住，固定范围后仍存在定位推断负担。",
+    "space_scope_confirmed": true,
+    "scope_source": "analysis_results\\research_input_20260929\\scope_receipt_20261016.json",
+    "pair_display_status": "source_ceiling_extrapolation_preview",
+    "pair_display_note": "黄色顶点为原顶平面外推预览，未认证新空间完整GT。",
+    "disagreement_resolution": "target_changed_not_same_task_relabel",
+    "followup_user_review": {
+      "grade": "中等",
+      "note": "新范围已固定，原跨空间隐藏分支不再计入；四转折H=0仅说明结构简化，按用户裁定为中等。",
+      "source": "用户本次空间回执及消息"
+    }
+  },
+  "source_files": [
+    "research/data/releases/v2.1/difficulty_records.json",
+    "research/data/releases/v2.1/reference_catalog.json",
+    "research/data/releases/v2.1/reference_bindings.csv"
+  ],
+  "current_pool_target_id": "user_space_20261016:S9hNv5qa7GM-09",
+  "binding_unchanged": true,
+  "interpretation": "Current official pool binds all 35 records to the sole admitted four-corner target. Six-corner local expressions resemble the previous wider GT; retained as scope-expression risk, not a newly admitted target or fictitious structure."
+}

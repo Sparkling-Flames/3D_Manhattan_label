@@ -1,0 +1,227 @@
+{
+  "date": "2026-10-29",
+  "check_scope": "Read-only final source-path existence and Markdown-link audit; no repeated archive CRC, SHA, statistical recomputation or experiment.",
+  "composition": {
+    "module": "composition",
+    "checked": {
+      "ALL_METHOD_SUMMARY.csv": {
+        "rows": 9106,
+        "path_cells": 9106,
+        "fields": [
+          "source_file"
+        ]
+      },
+      "CONFIGURATION_INDEX.csv.gz": {
+        "rows": 159943,
+        "path_cells": 159943,
+        "fields": [
+          "source_file"
+        ]
+      },
+      "KEY_DISTRIBUTIONS.csv.gz": {
+        "rows": 415302,
+        "path_cells": 415302,
+        "fields": [
+          "source_file"
+        ]
+      },
+      "SOURCE_INDEX.csv": {
+        "rows": 98,
+        "path_cells": 1078,
+        "fields": [
+          "counts_path",
+          "distributions_path",
+          "panel_variance_path",
+          "summary_path",
+          "panel_path",
+          "panel_teams_path",
+          "members_path",
+          "endpoints_path",
+          "labels_path",
+          "team_vectors_path",
+          "compact_index_path",
+          "compact_codes_path",
+          "compact_book_path"
+        ]
+      }
+    },
+    "unique_paths": 461,
+    "missing": [],
+    "missing_markdown_links": [],
+    "empty_optional_path_fields": {
+      "team_vectors_path": 49,
+      "compact_index_path": 49,
+      "compact_codes_path": 49,
+      "compact_book_path": 49
+    }
+  },
+  "exchange": {
+    "module": "exchange",
+    "checked": {
+      "ABOVE_HALF_CONDITIONS.csv": {
+        "rows": 575,
+        "path_cells": 575,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "ALL_DIMENSION_N_M_RESULTS.csv": {
+        "rows": 7356,
+        "path_cells": 7356,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "CHAIN_CASES.csv": {
+        "rows": 120,
+        "path_cells": 240,
+        "fields": [
+          "source_table",
+          "original_snapshot"
+        ]
+      },
+      "CHAIN_SUMMARY.csv": {
+        "rows": 19022,
+        "path_cells": 19022,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "DIFFICULTY_KEY_CHECKS.csv": {
+        "rows": 3,
+        "path_cells": 3,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "DIRECT_AC_CONDITIONS.csv": {
+        "rows": 65,
+        "path_cells": 65,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "EXACT_HALF_CONDITIONS.csv": {
+        "rows": 813,
+        "path_cells": 813,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FIXED_A_ACTUAL_PATHS.csv": {
+        "rows": 1947,
+        "path_cells": 1947,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FIXED_A_ALL_M_CONDITIONS.csv": {
+        "rows": 125,
+        "path_cells": 125,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FIXED_XYZ_BACKGROUND_CONDITIONS.csv": {
+        "rows": 32,
+        "path_cells": 32,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FIXED_XYZ_NESTED_N_CONDITIONS.csv": {
+        "rows": 11412,
+        "path_cells": 11412,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FOCUSED_ALL_N_M_CONDITIONS.csv": {
+        "rows": 32,
+        "path_cells": 32,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "FORMAL_DIFFICULTY_RESULTS.csv": {
+        "rows": 12638,
+        "path_cells": 12638,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "GLOBAL_ALL_N_M_CONDITIONS.csv": {
+        "rows": 7356,
+        "path_cells": 7356,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "METHOD_DIMENSION_COVERAGE.csv": {
+        "rows": 360,
+        "path_cells": 360,
+        "fields": [
+          "source_table"
+        ]
+      },
+      "METHOD_EVIDENCE_MATRIX.csv": {
+        "rows": 45,
+        "path_cells": 45,
+        "fields": [
+          "full_condition_table"
+        ]
+      },
+      "METHOD_ORIGINAL_CASES.csv": {
+        "rows": 90,
+        "path_cells": 270,
+        "fields": [
+          "original_snapshot",
+          "source_event_table",
+          "labels_table"
+        ]
+      },
+      "PREPLOTTED_MECHANISM_CASES.csv": {
+        "rows": 8,
+        "path_cells": 32,
+        "fields": [
+          "trace_file",
+          "original_file",
+          "figure_directory",
+          "source_table"
+        ]
+      },
+      "SOURCE_INDEX.csv": {
+        "rows": 20,
+        "path_cells": 20,
+        "fields": [
+          "source_path"
+        ]
+      },
+      "STRUCTURAL_CONDITION_RESULTS.csv": {
+        "rows": 10626,
+        "path_cells": 10626,
+        "fields": [
+          "source_table"
+        ]
+      }
+    },
+    "path_cells": 72969,
+    "unique_paths": 43,
+    "missing": [],
+    "missing_markdown_links": [],
+    "source_zip_size_mismatches": [],
+    "relative_path_rule": "Repository-relative POSIX source paths; METHOD_EVIDENCE_MATRIX.full_condition_table is module-relative navigation."
+  },
+  "total_path_cells": 658398,
+  "passed": true,
+  "resolved_finding": "The exchange owner converted 24 author-relative trace/original/figure paths for 8 preplotted cases to repository-relative paths and retained the source table. Final read-only check passed.",
+  "dependency_refresh": {
+    "rows": 26,
+    "existing_source_rows": 25,
+    "stale_missing_or_report_only_rows": 0,
+    "tests_passed": 8,
+    "generator_aggregation_cells": 3906,
+    "generator_max_error": 7.105427357601002e-15
+  },
+  "unchanged_boundary": "Archive source versions and existing 07A-priority execution code were not overwritten. No new strategy, same-room ABC, scoring, classification fitting or native fusion."
+}

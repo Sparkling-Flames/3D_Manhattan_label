@@ -1,0 +1,163 @@
+#!/usr/bin/env python3
+"""Human-readable frozen three-coarse/four-fine interpretation, no new fitting."""
+from pathlib import Path
+import json
+import pandas as pd
+W=Path(__file__).resolve().parents[2];O=W/'stage07_adoption'
+a=pd.read_csv(O/'PERSONNEL_ALL_MEMBERS.csv');s=pd.read_csv(O/'PERSONNEL_CLASS_SUMMARY_ALL.csv');f=pd.read_csv(O/'PERSONNEL_HIERARCHY_BY_FOLD.csv');rel=pd.read_csv(O/'PERSONNEL_K3_K4_RELATION_ALL.csv')
+names={('OPPJOINT_K3','C1'):'复杂结构机会下较易简化组',('OPPJOINT_K3','C2'):'常规表达混合组',('OPPJOINT_K3','C3'):'较高历史质量、较多转折组',('OPPJOINT_K4','C1'):'常规表达、记录时间较短组',('OPPJOINT_K4','C2'):'复杂结构机会下较易简化组',('OPPJOINT_K4','C3'):'记录时间较长的小组',('OPPJOINT_K4','C4'):'较高历史质量、较多转折组',('TARGET_DSTRUCT_K3','C1'):'困难结构下较多简化、近共线冗余偏多组',('TARGET_DSTRUCT_K3','C2'):'常规结构表达组',('TARGET_DSTRUCT_K3','C3'):'较多保留转折和短边组'}
+dictionary=[]
+for r in s.itertuples():dictionary.append({'method':r.method,'class_id':r.class_id,'label_scope':'ALL_description_only','display_name_zh':names[(r.method,r.class_id)],'workers':r.workers,'members':r.members,'not_a_cross_fold_id':True})
+pd.DataFrame(dictionary).to_csv(O/'PERSONNEL_ALL_ROLE_NAMES.csv',index=False,encoding='utf-8-sig')
+readable=s.copy();readable['role_name_zh']=[names[(r.method,r.class_id)]for r in readable.itertuples()]
+readable[['method','class_id','role_name_zh','workers','members','history_images','history_targets','history_buildings','history_records','m_all_B8L2_mean','m_all_B8L2_p20_mean','m_all_log_time_mean','m_challenge_turn_n_mean','m_all_short_turn_edges_mean','m_all_near_straight_nodes_5deg_mean','m_all_log_area_ratio_mean','m_all_images_min','m_all_images_median','m_all_images_max']].to_csv(O/'PERSONNEL_CLASS_READABLE_ALL.csv',index=False,encoding='utf-8-sig')
+def rows(method):return s[s.method.eq(method)].sort_values('class_id')
+def center_table(method):
+ out=['|ALL类别与名称|人数|相对Q|相对 log 时间|复杂机会转折|短边表达|近共线冗余|相对 log 面积|','|---|---:|---:|---:|---:|---:|---:|---:|']
+ for r in rows(method).itertuples():out.append(f'|{r.class_id} {names[(method,r.class_id)]}|{r.workers}|{r.m_all_B8L2_mean:+.2f}|{r.m_all_log_time_mean:+.3f}|{r.m_challenge_turn_n_mean:+.3f}|{r.m_all_short_turn_edges_mean:+.3f}|{r.m_all_near_straight_nodes_5deg_mean:+.3f}|{r.m_all_log_area_ratio_mean:+.3f}|')
+ return '\n'.join(out)
+def member_sections(method):
+ out=[]
+ for r in rows(method).itertuples():
+  out+=['### '+r.class_id+'：'+names[(method,r.class_id)]+f'（{r.workers} 人）','',r.members.replace('|','、')+'。','']
+ return '\n'.join(out)
+support=['|ALL类|人员|类历史覆盖 图/目标/楼|历史记录|每人图数 中位[最少,最多]|每人楼数 中位[最少,最多]|','|---|---:|---:|---:|---:|---:|']
+for r in rows('OPPJOINT_K4').itertuples():support.append(f'|K4 {r.class_id}|{r.workers}|{r.history_images}/{r.history_targets}/{r.history_buildings}|{r.history_records}|{r.m_all_images_median:g} [{r.m_all_images_min:g},{r.m_all_images_max:g}]|{r.m_all_buildings_median:g} [{r.m_all_buildings_min:g},{r.m_all_buildings_max:g}]|')
+missing=['|人员|Manual 图/楼|有正时间 图/楼|未形成联合类的具体原因|结构类是否可用|','|---|---:|---:|---|---|']
+for r in a[~a.OPPJOINT_K4_known].itertuples():missing.append(f'|{r.worker_id}|{r.m_all_images:g}/{r.m_all_buildings:g}|{r.m_timed_images:g}/{r.m_timed_buildings:g}|{r.OPPJOINT_K4_missing_reason_zh}|{r.TARGET_DSTRUCT_K3_class_id if r.TARGET_DSTRUCT_K3_known else "未知"}|')
+base=pd.read_csv(W/'analysis/joint_baseline_comparison/SAME_SUPPORT_COMPARISON.csv')
+cols=['support','comparison_method','pools','images','buildings','events','B8L2_within_mean_image','B8L2_cross_mean_image','B8L2_CB_mean_image'];base[cols].to_csv(O/'PERSONNEL_K3_K4_Q_BASELINE_REUSED.csv',index=False,encoding='utf-8-sig')
+bt=['|同 56 目标池、n12/m6 的方法|同类绝对变化 W|跨类绝对变化 C|C−B 净Q|','|---|---:|---:|---:|']
+display={'OPPJOINT_K3_exact_parent_direction':'OPPJOINT K3：K4方向的真实父类','OPPJOINT_K4_selected_direction':'OPPJOINT K4：所选低Q→高Q角色','Q_MEDIAN2_low_to_high':'历史Q中位数二分对照'}
+for r in base[base.support.eq('same_target_pool')].itertuples():bt.append(f'|{display[r.comparison_method]}|{r.B8L2_within_mean_image:.3f}|{r.B8L2_cross_mean_image:.3f}|{r.B8L2_CB_mean_image:+.3f}|')
+report='''# 采用的人员家族：OPPJOINT 三粗四细与结构补充名单
+
+**采用一个 OPPJOINT 家族：三粗类承担主要的大块质量差异，四细类增加时间与具体成员角色的辨识。** TARGET_DSTRUCT_K3 另作可见标法补充，用于说明短转折、冗余点和困难结构表达。两者保持各自标签与用途，不拼成同一棵树。
+
+本说明只整理已冻结名单、历史支持和已完成实验。实际读取提交 `a476461d7ede8db95da43de4139e612c05e618bc`，底层 v2.1。没有重新拟合、改标签或新增融合。以下全数据 ALL 名单用于描述人员；实际换人/换类使用目标建筑外的 LOBO 名单。[逐人 ALL 表](PERSONNEL_ALL_MEMBERS.csv) · [逐折标签与支持](PERSONNEL_LOBO_LABELS_AND_SUPPORT.csv.gz) · [来源与完成记录](PERSONNEL_ROLES_PROVENANCE.json)
+
+## 1. 分类输入与实际用途是两件事
+
+OPPJOINT 的“联合”指 **Manual 内四个变量域联合**，不是 Manual＋Semi 联合建类：结构表达对机会的响应、位置/尺度对机会的响应、历史质量水平/低尾/响应、来源内记录时间水平/响应，共 13 个输入特征。机会由合法目标的转折、自遮挡 H、短边计算。自遮挡 H 是底面模型中的射线结构条件，不等于照片里所有视觉遮挡，也不自动等于人工“困难”。
+
+原答特征先按同图、同合法目标、同条件作中位中心化；时间还区分来源批次和时间来源。人员历史按目标内→图片内→建筑内汇总，各建筑等权；同图多个目标不会因目标多而获得更多总权重。楼外折排除目标建筑的所有目标历史。各域稳健缩放后保留最多两个主成分，并归一化为相同域权重；同一折用同一棵 Ward 树切出 K3 与 K4。资格、输入和树都先于本轮团队结果冻结。详见实际 [建类代码](../classification/code/build_target_aware_candidates.py) 和 [配置](../classification/CANDIDATE_CONFIG_BEFORE_TEAM_RESULTS.json)。
+
+类别的用途由之后的团队比较决定。现有共同支持比较表明，主要质量分离已经在三类层面形成：
+
+'''+ '\n'.join(bt)+'''
+
+这里 W＝|B−A|，C＝(|C−A|＋|C−B|)/2，均先按图片汇总。比较固定合法目标池、n/m 与对应角色；它不把不同方法的所有事件声称为同一组 D/X/Y/Z。再限定到共同 56 人历史域的成员块后有 55 池，结论保持。[复用的小表](PERSONNEL_K3_K4_Q_BASELINE_REUSED.csv) · [完整共同支持来源](../analysis/joint_baseline_comparison/SAME_SUPPORT_COMPARISON.csv)
+
+**因此不能把 K4 的约 +8.05 净Q说成“多分出第四类”新带来的收益。** 保存的重点 n12/m6 条件共 172 个登记事件，逐个映射后全部跨越 K3 父类；四类细分的增量用途应从时间辨识、父类内细类替换和成员组织来解释。[172事件的真实父类关系](PERSONNEL_FOCUS_N12M6_PARENT_RELATIONS.csv)
+
+## 2. ALL 描述名单：真实的三粗四细
+
+全体研究人员名单 62 人，其中联合分类可建类 56 人。三粗类和四细类具有以下 **真实集合包含关系**：
+
+|三粗类（ALL）|人数|对应四细类（ALL）|解释用途|
+|---|---:|---|---|
+|K3 C1：复杂结构机会下较易简化组|19|K4 C2，19人，成员完全相同|区别简化/收缩倾向；与常规组Q接近但表达不同|
+|K3 C2：常规表达混合组|29|K4 C1，26人；K4 C3，3人|四细层把来源内记录时间明显较长的小组分开|
+|K3 C3：较高历史质量、较多转折组|8|K4 C4，8人，成员完全相同|大块跨类质量差异的主要目标角色|
+
+上述名称是 ALL 历史中心的可读描述，不是给人员添加永久特征。下面把四个细类全部成员列出；三粗类成员可按上表无歧义地合并。[ALL 父子关联](PERSONNEL_K3_K4_RELATION_ALL.csv)
+
+'''+member_sections('OPPJOINT_K4')+'''
+四细类的历史中心如下。所有列是 **同目标同伴中心化后的历史差异**：相对 Q 的 +14.08 不是原始 Q=14.08；相对 log 时间不是秒数或团队节时百分比；结构列单位是相对节点/边数，面积列是相对 log 比值。
+
+'''+center_table('OPPJOINT_K4')+'''
+
+- **K4 C1 常规、记录较短**：复杂机会下转折略少于同图中位，整体底面范围接近中位；相对 Q 较低，记录时间也较短。它是可用于组织“大来源块”的工作角色，不表示每人每图都快或简化。
+- **K4 C2 较易简化**：复杂机会下的转折差更负（−.606），面积略收缩，结构机会响应斜率也更负（−.711）。它和 C1 的平均相对 Q 仅相差约 .38 分，但实际结构响应不同。两者不能只按高低 Q 合并解释。
+- **K4 C3 记录较长小组**：W027、W036、W121；相对 log 时间 +1.238，显著高于其 ALL 父类中另外 26 人的 −.193。历史相对 Q 为 +2.85，复杂机会转折略多（+.145）。它的价值是区分时间与成员选择的代价，不是把“耗时长”解释为动机或必然更正确。
+- **K4 C4 较高历史 Q、较多转折**：复杂机会转折 +1.389、短边 +.408，近共线冗余仅 +.005；增加的表达主要不是大量近共线点。平均相对 Q +14.08，低尾相对 Q 的 p20 中心 +1.73，高于另外三组。相对 log 时间 +.022 接近同来源中位，不能直接称它为全库最快组。
+
+位置/尺度也有可定位差别：C1/C4 顶点偏移中心分别为 +.229°/−.279°，面积中心约 +.002/+.017；这描述同目标相对位置，不把相对更大一律解释为正确外扩。分类的具体有益方向仍由实际参考分项与融合比较判断。[完整 Q/T、转折、上下界、面积、高度及机会响应中心](PERSONNEL_CLASS_SUMMARY_ALL.csv)
+
+## 3. 历史支持与未知人员
+
+'''+ '\n'.join(support)+'''
+
+类历史覆盖是该类全部成员所见图片/目标/建筑的并集，不等于每个人都看过这些图片。每人支持范围另列，避免用合并后的大分母掩盖个体支持。全部中心按人等权汇总各自建筑等权的历史；每项特征的可用人员数单独保存在小表，缺值未按零计算。以上 206 图表示当前合法普通 Manual 历史的图片并集，包含其它准入目标，不写成“仅原主目标206图”。
+
+未形成 OPPJOINT 类的 6 人保留原因，不强塞到最低质量类：
+
+'''+ '\n'.join(missing)+'''
+
+W014/W018/W034 有足够的结构历史，因此可保留 TARGET_DSTRUCT 结构标签，缺少的时间域不据此填零。W019/W026 在当前普通 Manual 历史中无合格支持，W022 只有 2 图/1 楼。未知分类与正式进队资格是不同字段；能否成为某池成员继续依据既定目标池，不通过本文恢复被筛除资格。[逐人支持与原因](PERSONNEL_ALL_MEMBERS.csv) · [所有折的未知原因](PERSONNEL_MISSING_HISTORY_ALL_LOBO.csv)
+
+## 4. 实际 LOBO：同一树确实嵌套，但分裂位置随历史改变
+
+ALL 加 22 个楼外折共有 92 个 K4 类，每个都完全落在一个 K3 父类中；两层每折均有同样的 56 名已知人员。可以把它作为一个真实层级家族使用，不需要另外拼凑父类。
+
+但 **ALL 的 C2→C1/C3 分裂不能推广到每个楼外折**。实际 22 折中：8 折分裂 K3 C1→K4 C1/C2；3 折分裂 K3 C2→K4 C1/C3；11 折分裂 K3 C3→K4 C3/C4。22 折中有 13 折的最长记录时间类处于这次细分的父类中；其它折的小组可能已在 K3 独立，或由另一种分裂提供细层增量。
+
+这不影响逐折实际操作：在目标楼外历史中找低/高相对 Q、记录时间、结构响应的角色，按该折精确父类表选择成员与容量。各类别仍按该折的历史中心解释，不能把 ALL 的 C1/C2 编号复制过去。举例，主文餐厅 `pa4otMbVnkk-42` 的实际 n12/m6 方向是 K4 C1→C4，对应该折 K3 C1→C3；而 ALL 的低Q常规26人属于 K3 C2。[逐折父子表](PERSONNEL_K3_K4_RELATION_LOBO.csv) · [每折分裂、人数和高Q/长时间角色](PERSONNEL_HIERARCHY_BY_FOLD.csv) · [逐折全部中心与支持](PERSONNEL_CLASS_SUMMARY_LOBO.csv.gz)
+
+小组容量可以较小。ALL 的长时间组只有 3 人，适合以实际小块、父类内或明确直接 AC 设计研究，不把它扩充成假想的 6 人块。相应已完成细类研究另见 [小组机会与实际覆盖](../analysis/fine_increment/oppjoint_small_slow/PANEL_OPPORTUNITY_AND_COVERAGE.csv) 和 [完整细类结果](../analysis/fine_increment/oppjoint_small_slow/SMALL_SLOW_ROLE_SUMMARY.csv)。
+
+## 5. TARGET_DSTRUCT_K3：保留独立的可见结构解释
+
+结构类使用 Manual 的总体结构域和正式难度结构域，包括困难条件与困难−简单的差别；不直接输入 Q/T。其它准入目标的普通总体历史可以贡献结构描述，没有正式目标难度的记录不冒充简单或困难。它和 OPPJOINT 回答不同层面的“怎样标”，因此保留三类标签独立解释，不将其作为联合类的父类。
+
+'''+center_table('TARGET_DSTRUCT_K3')+'''
+
+'''+member_sections('TARGET_DSTRUCT_K3')+'''
+结构组 C1 与 C2 都较常简化，但 C1 的近共线冗余偏差更高（+.087 对 +.016）；这正是不能只看总角点数的原因。C3 复杂机会转折 +1.162、短边 +.342、冗余 +.005，更适合解释保留短转折的群体倾向。
+
+ALL 的结构 C3 有 12 人，包含联合高Q组的全部 8 人，另有 W015、W017、W021、W027；它既不等于“最高质量组”，也不等于“时间最长组”。时间不足的 W014、W018、W034 则保留在结构 C2。[联合/结构交叉成员表](PERSONNEL_JOINT_STRUCTURE_OVERLAP_ALL.csv)
+
+## 6. 这些名单如何连接真实原答和已有案例
+
+### 联合高Q角色：定位改善可以不增加一个点
+
+`pa4otMbVnkk-42` 的冻结楼外 OPPJOINT n12/m6 案例中，X/Y 属于相同源类，Z 是 W102/W109/W112/W115/W126/W130。三队均为四节点、每组12票；C−A +3.653、C−B +3.790，主要通过底面范围、方向和高度改善实现。相对 B 的源记录时间增加 11.00%，相对 A 增加34.26%。它说明联合角色有质量—时间取舍用途，且这条主质量方向跨越 K3 父类。[完整原答—融合图](../stage06_cases/figures/2fa2eea81fbc17d689ffb72f/ERP_BEV.png)
+
+### 结构类：同类中的成员可以贡献不同局部
+
+`jtcxE69GiFV-13` 的 TARGET_DSTRUCT n10/m7 案例补回 RGB 支持的短折返。换入 Z 的7人中，W002/W109/W112/W115/W126/W130六人支持两个局部；W102不支持。共同背景 W108/W122再提供两票，最终8票通过门槛5。W108在 ALL 联合层属于较易简化组，但在这一真实机会确实保留了细节，所以群体中心不能代替该图成员票账。[真实短折返与票数](../stage06_cases/local/STRUCTURE_AND_THRESHOLD_RGB_DETAIL.png)
+
+### 长记录时间小组：有可追溯原答，不从时间推断心理
+
+W121 在同一浴室的人数路径 Y 块中有完整六点原答，源记录时间1254.218秒，个人当前目标Q57.750；他支持两端局部，但不足以让 B 队整体过票。这个实例与其较长历史时间相连，也显示“画了细节、花了时间”不自动变成融合收益。W121还在 `jtcxE69GiFV-03` n20/m5 三队共同 D 中，时间426.122秒；因为三队都保留他，该事件 C−B 的变化不能归于换掉了这个长时间组。[既有完整原答和成员表](../stage06_cases/CASE_EXACT_MEMBERS_AND_BLOCKS.csv)
+
+以下六份原答均来自已保存的同一浴室 n14/m7 案例，可以在完整叠图中定位；该事件仍是 OPPGEOM 实验。附上的联合/结构标签只解释原答人员，不将此事件改称 OPPJOINT 替换验证。
+
+|人员|该楼外联合细类|该楼外结构类|完整底点数|短折返 r2/r3 原答支持|源记录秒|
+|---|---|---|---:|---|---:|
+|W103|C1，常规记录较短角色|C1|4|无/无|133.483|
+|W113|C1，常规记录较短角色|C2|5|有/无|40.734|
+|W108|C2，较易简化角色|C2|6|有/有|51.752|
+|W121|C3，长记录时间角色|C2|6|有/有|1254.218|
+|W122|C4，较高历史Q角色|C3|6|有/有|81.543|
+|W102|C4，较高历史Q角色|C3|4|无/无|115.995|
+
+这同时呈现简化、只保留一端、保留两端以及同类成员的局部差异。群体规律来自跨图历史与全量事件，表中单图提供可见解释。[对象、块、标签与支持关联](PERSONNEL_SAME_IMAGE_MARKING_EXAMPLES.csv)
+
+### 背景与失败：类别是组织条件，票数和环序给出具体机制
+
+同浴室固定 X/Y/Z 的 n14→18 路径中，8票组在门槛升到9后失选，C自身 Q−15.181。另一个 TARGET_DSTRUCT n16/m4 案例中，局部组分别过票，但没有来源环覆盖全部入选组，导致 C 连接失败。这些已保存的反例用于说明背景和规模如何影响同一类别的作用，不据此删除类别。[完整机制说明](../stage06_cases/CASE_MECHANISMS_ZH.md)
+
+每位案例人员的 **该图楼外K3/K4/结构标签** 和 **ALL描述标签** 已并列保存，来源对象、D/X/Y/Z及具体原答不变：[逐人员关联](PERSONNEL_CASE_LABEL_CONNECTIONS.csv) · [每个成员块的完整类别向量](PERSONNEL_CASE_BLOCK_ROLE_VECTORS.csv)。
+
+## 7. 采用方式与文件职责
+
+主方法写作 **OPPJOINT 家族（三粗四细）**。三粗层解释和组织主要大块质量差异；四细层细化时间与成员选择，实际条件表使用 K4 的楼外角色，同时给出对应 K3 父类。不把粗层已有的质量收益重新署名为细分增量。TARGET_DSTRUCT 三类用于可见结构、难度适应与局部补充解释；A2、RFUSE、旧M等仍按主研究各自采用范围保留。
+
+本说明没有把 Semi 终点混入 Manual，也没有宣称此家族已经使用 Manual＋Semi 人员历史联合建类。跨条件或 scope 分类的既有成果保持独立身份。当前这些角色是数据和任务条件下可用的工作分类，成员名单、支持与用法均已具体保存。
+
+文件入口：
+
+- [PERSONNEL_ALL_MEMBERS.csv](PERSONNEL_ALL_MEMBERS.csv)：62人，三种标签、全部缺失原因、质量/时间/结构/尺度历史与支持。
+- [PERSONNEL_CLASS_SUMMARY_ALL.csv](PERSONNEL_CLASS_SUMMARY_ALL.csv)：10个 ALL 类的成员、输入/解释中心、实际图/楼/目标并集、逐人支持范围及指标分母。
+- [PERSONNEL_LOBO_LABELS_AND_SUPPORT.csv.gz](PERSONNEL_LOBO_LABELS_AND_SUPPORT.csv.gz)：三方法×22折×62人，实际使用标签与历史支持。
+- [PERSONNEL_CLASS_SUMMARY_LOBO.csv.gz](PERSONNEL_CLASS_SUMMARY_LOBO.csv.gz)：逐折类成员、中心与支持。
+- [PERSONNEL_K3_K4_RELATION_ALL.csv](PERSONNEL_K3_K4_RELATION_ALL.csv)、[PERSONNEL_K3_K4_RELATION_LOBO.csv](PERSONNEL_K3_K4_RELATION_LOBO.csv)：真实父子关系，独立保存ALL与检验折。
+- [PERSONNEL_FOCUS_N12M6_PARENT_RELATIONS.csv](PERSONNEL_FOCUS_N12M6_PARENT_RELATIONS.csv)：172个重点事件全部映射回实际父类。
+- [PERSONNEL_CASE_LABEL_CONNECTIONS.csv](PERSONNEL_CASE_LABEL_CONNECTIONS.csv)：人员角色与已有原答/融合机制案例逐人相连。
+- [整理代码](code/describe_frozen_personnel_roles.py)、[报告代码](code/write_personnel_roles_report.py)：只读冻结分类、历史与已有结果，无拟合和融合调用。
+
+复算顺序：在研究包根目录运行 `python stage07_adoption/code/describe_frozen_personnel_roles.py`，再运行 `python stage07_adoption/code/write_personnel_roles_report.py`。必要输入路径及SHA256见 [PERSONNEL_ROLES_PROVENANCE.json](PERSONNEL_ROLES_PROVENANCE.json)。本文件负责人员含义与名单；全量方法比较、替换效应、难度及容量以主研究结果表为准，避免在此重写一套总体结果。
+'''
+(O/'PERSONNEL_ROLES_AND_MEMBERS_ZH.md').write_text(report,encoding='utf-8')
+print('saved PERSONNEL_ROLES_AND_MEMBERS_ZH.md and readable ALL role dictionary')
