@@ -1,0 +1,137 @@
+{
+  "selection_phase": "post_focus_main_method_incremental_comparison",
+  "data_release": "v2.1",
+  "source_commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "selection_after_focus": true,
+  "labels_unchanged": true,
+  "labels_sha256": "a58e62d2bb30557575a74d2fa26abae197845c54007f3272a3d23f42274ab006",
+  "focus_events_sha256": "38a4a0c2be23366c812336325158b2d888504f9fe91d63d680e893684dc55e7b",
+  "focus_metrics_sha256": "3f937b1eeb59a385d34d4b080f29aa997bc0206adfc5f92fd154bb55773ca740",
+  "baseline_common_pool_count": 56,
+  "reason": "Completed focus comparison identified OPPJOINT K4 q1→4 n12/m6 as strong discriminating quality-time tradeoff; test its m-capacity paths, large AC tails, and Q/K3 baselines on the same actually supported 56 pools. Not external or blind confirmation.",
+  "specifications": {
+    "FIXED_A_CONDITIONS.csv": [
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_n12_mcapacity",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 12,
+        "m": "capacity",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_n20_mcapacity",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 20,
+        "m": "capacity",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_n26_mcapacity",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 26,
+        "m": "capacity",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      }
+    ],
+    "DIRECT_AC_CONDITIONS.csv": [
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_AC_n28m7",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 28,
+        "m": 7,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_AC_n30m5",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 30,
+        "m": 5,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K4_q1to4_AC_n32m3",
+        "method": "OPPJOINT_K4",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 4,
+        "k": 4,
+        "n": 32,
+        "m": 3,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      }
+    ],
+    "COMMON_BASELINE_CONDITIONS.csv": [
+      {
+        "condition_id": "POSTFOCUS_Q_MEDIAN2_q1to2_n12m6_commonK4",
+        "method": "Q_MEDIAN2",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 2,
+        "k": 2,
+        "n": 12,
+        "m": 6,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K3_q1to3_n12m6_commonK4",
+        "method": "OPPJOINT_K3",
+        "role_axis": "q_rank_asc",
+        "source_rank": 1,
+        "target_rank": 3,
+        "k": 3,
+        "n": 12,
+        "m": 6,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      },
+      {
+        "condition_id": "POSTFOCUS_OPPJOINT_K3_q2to3_n12m6_commonK4",
+        "method": "OPPJOINT_K3",
+        "role_axis": "q_rank_asc",
+        "source_rank": 2,
+        "target_rank": 3,
+        "k": 3,
+        "n": 12,
+        "m": 6,
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "scope": "all"
+      }
+    ]
+  }
+}

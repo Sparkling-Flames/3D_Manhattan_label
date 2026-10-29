@@ -1,0 +1,148 @@
+{
+  "source_commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "data_release": "v2.1",
+  "all_listed_stages_complete": true,
+  "endpoint_stage_rows": 194025,
+  "distinct_actual_team_endpoints": 189514,
+  "distinct_native_fusions": 180367,
+  "new_native_duplicate_across_stages": 0,
+  "event_stage_rows": 90436,
+  "distinct_method_event_ids": 89660,
+  "distinct_ordered_ABC_team_triples": 66750,
+  "distinct_ABC_triples_with_A_B_order_ignored": 66660,
+  "distinct_ordered_direct_AC_pairs": 1912,
+  "endpoint_stages": [
+    {
+      "stage": "global_screen",
+      "requests": 142270,
+      "pools": 88,
+      "new_native": 137146,
+      "reused": 5124,
+      "Q_available": 136781,
+      "Q_missing": 5489,
+      "requests_file": "experiment/global_screen_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/global_screen_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    },
+    {
+      "stage": "focused",
+      "requests": 30166,
+      "pools": 187,
+      "new_native": 22571,
+      "reused": 7595,
+      "Q_available": 29725,
+      "Q_missing": 441,
+      "requests_file": "experiment/focused_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    },
+    {
+      "stage": "fixed_A_m",
+      "requests": 11693,
+      "pools": 196,
+      "new_native": 11540,
+      "reused": 153,
+      "Q_available": 11499,
+      "Q_missing": 194,
+      "requests_file": "experiment/fixed_A_m_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/fixed_A_m_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    },
+    {
+      "stage": "direct_AC",
+      "requests": 2852,
+      "pools": 191,
+      "new_native": 2829,
+      "reused": 23,
+      "Q_available": 2830,
+      "Q_missing": 22,
+      "requests_file": "experiment/direct_AC_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/direct_AC_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    },
+    {
+      "stage": "refinement",
+      "requests": 6596,
+      "pools": 145,
+      "new_native": 5889,
+      "reused": 707,
+      "Q_available": 6501,
+      "Q_missing": 95,
+      "requests_file": "experiment/refinement_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/refinement_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    },
+    {
+      "stage": "member_sensitivity",
+      "requests": 448,
+      "pools": 56,
+      "new_native": 392,
+      "reused": 56,
+      "Q_available": 442,
+      "Q_missing": 6,
+      "requests_file": "experiment/member_sensitivity_design/REQUESTS.csv.gz",
+      "scalars_file": "experiment/member_sensitivity_endpoints/ENDPOINT_SCALARS.csv.gz",
+      "complete": true
+    }
+  ],
+  "event_stages": [
+    {
+      "stage": "global_screen",
+      "events": 69485,
+      "pools": 88,
+      "design": "strict_ABC",
+      "events_file": "experiment/global_screen_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "focused",
+      "events": 10980,
+      "pools": 187,
+      "design": "strict_ABC",
+      "events_file": "experiment/focused_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "fixed_A_m",
+      "events": 5191,
+      "pools": 196,
+      "design": "strict_ABC",
+      "events_file": "experiment/fixed_A_m_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "direct_AC",
+      "events": 1622,
+      "pools": 191,
+      "design": "direct_AC_no_B",
+      "events_file": "experiment/direct_AC_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "refinement_baseline",
+      "events": 438,
+      "pools": 56,
+      "design": "strict_ABC",
+      "events_file": "experiment/refinement_baseline_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "refinement_m",
+      "events": 2040,
+      "pools": 144,
+      "design": "strict_ABC",
+      "events_file": "experiment/refinement_m_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "refinement_AC",
+      "events": 344,
+      "pools": 77,
+      "design": "direct_AC_no_B",
+      "events_file": "experiment/refinement_AC_design/EVENTS_EXACT.csv.gz"
+    },
+    {
+      "stage": "member_sensitivity",
+      "events": 336,
+      "pools": 56,
+      "design": "strict_ABC",
+      "events_file": "experiment/member_sensitivity_design/EVENTS_EXACT.csv.gz"
+    }
+  ],
+  "interpretation": "Events sharing endpoint teams are correlated; these totals are coverage, not independent statistical evidence. Separate methods/phase comparisons remain separate.",
+  "scope": "This ledger covers exchange experiments managed by this round; composition panels, raw-answer pairs, prefix experiments and case-state replays have their own ledgers."
+}

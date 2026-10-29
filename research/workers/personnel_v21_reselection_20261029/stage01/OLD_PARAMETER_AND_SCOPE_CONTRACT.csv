@@ -1,0 +1,28 @@
+﻿scope,parameter,value,interpretation,source
+raw_structure,turn_n,pair_n - near_straight_nodes_5deg,floor local turn<=5deg is redundant,raw_feature_chain/personnel_marking_patterns_20261020.py
+raw_structure,short_turn_edges,edge/perimeter<0.04 and both endpoint turns>=15deg,different from RFUSE floor_short_edge_03_n,raw_feature_chain/personnel_marking_patterns_20261020.py
+matching,unmatched_ref_9,spherical bottom-point Hungarian; accept<=9deg;1-matched/ref_count,not horizontal-only boundary matcher or fusion internal threshold,raw_feature_chain/personnel_marking_patterns_20261020.py
+boundary,matched_boundary,wrapped horizontal azimuth Hungarian<=9deg; y delta*180/512,positive y down; source bottom_bias_9 remains pixels,classifications/code/build_condition_response_classes.py
+centering,peer,"metric-median(image_id,condition)",same person included in peer center,classifications/code/build_condition_response_classes.py
+time,peer,"log(source_active_time_seconds)-median(image,condition,origin,time_source)",missing/nonpositive unknown; recorded labor not new production measurement,classifications/code/build_condition_response_classes.py
+history,geometry_mean,"mean within worker,building,stratum then equal mean buildings",target building removed in both Manual and Semi,classifications/code/build_condition_response_classes.py
+history,quality_low_tail,20th percentile raw available peer residual rows,not equal-building weighted quantile,classifications/code/build_condition_response_classes.py
+history,difficulty,all/easy/medium/hard;hard-easy,only officially graded non-doorway history;111 special-range auxiliary records declared,classifications/code/build_condition_response_classes.py
+support,manual_geometry,all>=12images3buildings;easy>=5images2buildings;hard>=4images2buildings,complete required domain fields,classifications/code/build_condition_response_classes.py
+support,manual_time,easy>=5timed rows;hard>=4timed rows,support field named time_images is count of rows,classifications/code/build_condition_response_classes.py
+support,semi_geometry,>=6images3buildings,no explicit Semi hard/easy support gate,classifications/code/build_condition_response_classes.py
+scaling,robust,center median;scale p85-p15;fallback std then1;clip3,fit independently ALL and each outer LOBO,classifications/code/build_condition_response_classes.py
+embedding,domain_PCA,"min(2,number_features,number_workers-1) PCs",domain RMS Euclidean norm;divide sqrt(number_domains),classifications/code/build_condition_response_classes.py
+clustering,Ward,same tree K2/K3/K4,no forced balance;class semantic reordering;silhouette descriptive,classifications/code/build_condition_response_classes.py
+scope,centering,"rejection-mean(image,condition,origin);peer>=3",response tendency distinct from judged correctness,features_scope/build_scope_features.py
+scope,aggregation,mean supported ordinary rows per condition;equal mean supported Manual/Semi,not building-equal within-condition mean,features_scope/build_scope_features.py
+scope,support,overall>=8images3b percondition;hard>=5images3b;easy>=8images3b,no opportunity stays unknown,features_scope/build_scope_features.py
+reverse,training,"ordinary Manual natural_random;n10,12,14,16,20,24","exclude priority orders,doorway,special;unique endpoints with occurrence weights",reverse/code/prepare_natural_training.py
+reverse,centering,member fraction1/n and outputs centered within image*n,occurrence-weighted,reverse/code/learn_natural_fusion_roles.py
+reverse,weights,building equal;image equal withinbuilding;n equal withinimage;occurrence weighted,duplicate endpoint not independent evidence,reverse/code/learn_natural_fusion_roles.py
+reverse,ridge,"alpha * trace(XTWX)/worker_count;alpha in[0.1,1,10]",nested heldout buildings;balanced normalized output/stratum/domain error,reverse/code/learn_natural_fusion_roles.py
+reverse,support,all8images3b;easy5images2b;hard3images2b,complete geometry+quality training inventory shared by GEOM and GEOMQ,reverse/code/learn_natural_fusion_roles.py
+reverse,representation,all/hard/hard-easy responses;robust PCA2/domain;Ward K2/K3,GEOM omits quality domain;GEOMQ includes it,reverse/code/learn_natural_fusion_roles.py
+design,strict_ABC,A=D+X;B=D+Y;C=D+Z;disjoint equal-size blocks,N>=n+2m;source>=2m;target>=m,register_exchange.py
+design,space_count,"C(S,m)*C(S-m,m)*C(T,m)/2*C(N-3m,n-m)",unordered X/Y;full count not actual complete enumeration,register_exchange.py
+outcome,amplitude,within=abs(B-A);cross=(abs(C-A)+abs(C-B))/2,"signed CA,CB and failure separate",analysis/summarize_exchange.py

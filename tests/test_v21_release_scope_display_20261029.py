@@ -18,7 +18,7 @@ def test_page_separates_primary_scope_from_unfinished_extension():
     html = (PAGE / 'v21-results.html').read_text(encoding='utf8')
     js = (PAGE / 'v21-results.js').read_text(encoding='utf8')
     assert 'FULL_DELIVERY_REVIEW_20261029.md' in html
-    assert '其它目标的难度、DSTRUCT及受影响选队尚未全部接续' in html
-    assert '其它合法空间补充已完成核心计算' in js
+    assert '其它目标的正式人工难度和旧难度下游仍待接续' in html
+    assert '294池的可计算结构条件及TARGET新分类已完成' in js
     assert '原主目标范围的计算和定向检查已完成' in js
     assert '必要计算和定向检查已完成；真实浏览器' not in js

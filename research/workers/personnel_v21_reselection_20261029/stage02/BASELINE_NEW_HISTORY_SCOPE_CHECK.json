@@ -1,0 +1,38 @@
+{
+  "baseline_eligible": 7583,
+  "new_eligible": 7703,
+  "shared_ordinary": 7472,
+  "baseline_only_special": 111,
+  "new_only_admitted_other": 231,
+  "baseline_only_condition_counts": {
+    "manual": 66,
+    "semi": 45
+  },
+  "baseline_only_images": [
+    "e9zR4mvMWw7-16",
+    "jtcxE69GiFV-18"
+  ],
+  "baseline_rule": "non_doorway AND formal difficulty in easy/medium/hard; includes special_range auxiliary history",
+  "new_rule": "ordinary_manual/ordinary_semi legal target records; other target ungraded contributes general/opportunity only",
+  "scope_axes_note": "Official baseline scope and axis controls use the same condition-classification history, with scope domain separately appended",
+  "classification_unchanged": true,
+  "pool_eligibility_unchanged": true,
+  "source_files": [
+    {
+      "file": "research/data/releases/v2.1/condition_classification/RAW_CONDITION_RESPONSE_RECORDS.csv.gz",
+      "sha256": "561db6be8cc5001bdf93349e9692fc2a531e94102d89dee2f33ec7f131e91337"
+    },
+    {
+      "file": "classification/RAW_TARGET_RESPONSE_RECORDS.csv.gz",
+      "sha256": "5f34c90e09d2b5135dd6fffc3db0c74434f8e5a7c39f93c6ee3782af46ec68bc"
+    },
+    {
+      "file": "tools/thesis_main/analysis/refit_v21_condition_classes_20261028.py",
+      "sha256": "c0fa7e178154366b124b490555ac472f4949d36086aa4818e1f162944251fa85"
+    },
+    {
+      "file": "tools/thesis_main/analysis/refit_v21_scope_axes_20261028.py",
+      "sha256": "72585018812d1065850ab208da76a9396986053b9d50033ca6fdee36b7aeb0f7"
+    }
+  ]
+}
