@@ -1,0 +1,264 @@
+{
+  "contract_version": "v2_20261029",
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "seed": 202610291901,
+  "state": "outcome_blind_registered_pending_independent_design_audit",
+  "immutable_sources": [
+    {
+      "path": "stage01_capacity/SCORE_BLIND_POOL_INPUTS.json",
+      "sha256": "60b64a62b96f5aa421f075658b4e95613cac4564fdef274aa2691b982b00f399"
+    },
+    {
+      "path": "stage01_capacity/POOL_METHOD_CAPACITY.csv.gz",
+      "sha256": "1efa6bb7b3a6b42086ba79ae6289f808841a68c11df6af22b027a3a6502208e8"
+    },
+    {
+      "path": "stage01_capacity/ALL_CLASS_ALLIANCE_TEAMS.csv.gz",
+      "sha256": "8ab801264517517f681d6d16d1d853c7e830f5bd721749fdebec19bd7a12d086"
+    },
+    {
+      "path": "stage01_capacity/ALL_CLASS_ALLIANCE_CONTRASTS.csv.gz",
+      "sha256": "59eeaa3442c8a5ef5f3a3f12c775b989380c4b40433bfbb78c56995c69322a1d"
+    },
+    {
+      "path": "stage01_capacity/FROZEN_LABELS_USED_ALL_LOBO.csv.gz",
+      "sha256": "726dffcbdc634f5511e1b6c49132fab802670786c4ba9d4c7ab82061427d8498"
+    },
+    {
+      "path": "stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "sha256": "498fec6c06f29e377498e349b1db0466bfde6531f51bc73631e8a599b3f64010"
+    }
+  ],
+  "method_priority": {
+    "primary": "TARGET_DSTRUCT_K3",
+    "coarse": "TARGET_DSTRUCT_K2",
+    "joint_profiles": [
+      "OPPJOINT_K3",
+      "OPPJOINT_K4"
+    ],
+    "raw_answer_sensitivity": "V21_DSTRUCT_RAW3_K3",
+    "reverse_fusion": "RFUSE_GEOM_K2",
+    "supplementary_opportunity_structure": "OPPSTRUCT_K3"
+  },
+  "classification_changes": false,
+  "reference_changes": false,
+  "exclusion_changes": false,
+  "fusion_changes": false,
+  "new_strict_ABC": false,
+  "population": "ordinary_Manual",
+  "secondary_inputs": "Semi registered separately by root; OOS separate",
+  "pool_rule": "same image + legal target + heldout building; actual eligible raw-answer members",
+  "unknown_class_workers": "allowed only as identical D",
+  "equal_AC": {
+    "m_primary": [
+      7,
+      8,
+      9,
+      10,
+      12
+    ],
+    "m_RFUSE": [
+      3,
+      4
+    ],
+    "m_other_admitted": [
+      3,
+      4
+    ],
+    "n_candidates": [
+      "m",
+      "ceil(1.5*m)",
+      "2*m",
+      "2*m+2",
+      "20",
+      "N-m"
+    ],
+    "constraints": [
+      "n>=3",
+      "m<=n",
+      "n+m<=N",
+      "Ns>=m",
+      "Nt>=m",
+      "D/X/Z pairwise disjoint",
+      "A intersection C equals D"
+    ],
+    "blocks": 8,
+    "batches": 2,
+    "enumerate_if_possible_blocks_at_most": 16,
+    "intensive_background_n": "20 if legal else legal anchor closest to 2*m",
+    "backgrounds_at_intensive_n": [
+      "neutral_members_0",
+      "neutral_members_1",
+      "source_enriched",
+      "target_enriched"
+    ],
+    "other_n_backgrounds": [
+      "neutral_members_0"
+    ],
+    "neutral_0_vs_1": "same class-count quota, different within-class member order",
+    "frontier": "D uniquely determined for fixed X/Z at n=N-m"
+  },
+  "whole_equal": {
+    "m": "min(Ns,Nt)",
+    "cap_at_12": false,
+    "B_only_draws": 4,
+    "n_candidates": [
+      "m",
+      "ceil(1.5*m)",
+      "2*m",
+      "20",
+      "N-m"
+    ],
+    "reverse_source_target_views": "same physical entity contrast, not independent replicate"
+  },
+  "whole_unequal": {
+    "D": "outside both full classes",
+    "D_n": [
+      "0",
+      "floor(otherN/2)",
+      "otherN"
+    ],
+    "D_member_variants": 2,
+    "equal_middle_subset_draws": 4,
+    "decomposition": [
+      "full smaller -> full larger",
+      "full smaller -> equal subset of larger",
+      "equal subset of larger -> full larger"
+    ],
+    "same_support_scalar_identity": "total = equal replacement + same-target-member addition",
+    "interpretation_limit": "addition not generic isolated team-size effect"
+  },
+  "coalitions": {
+    "complete_nonempty_class_unions": true,
+    "complete_unordered_pair_comparisons": true,
+    "unknown_background_variants": "known-only and all-identical-unknown-D, separate",
+    "n_less_than_3": "not executed, identity-bearing omissions saved",
+    "size_difference": "report separately, use matched-size whole-class anchors"
+  },
+  "fixed_A": {
+    "actual_maxm": "min(Ns,Nt)",
+    "m_levels": "priority m <= maxm plus actual maxm, at least two levels",
+    "n": [
+      "20 when legal",
+      "N-maxm"
+    ],
+    "max_block_pairs": 4,
+    "Dmax_member_variants": 2,
+    "nested_member_prefixes": true,
+    "A_unchanged": true,
+    "separate_from_fixed_XZ_background_design": true
+  },
+  "fixed_D_member_panel": {
+    "methods": [
+      "TARGET_DSTRUCT_K3",
+      "V21_DSTRUCT_RAW3_K3",
+      "OPPJOINT_K3",
+      "OPPJOINT_K4"
+    ],
+    "scope": "primary",
+    "n": 20,
+    "m": [
+      9,
+      10,
+      12
+    ],
+    "D_selection": "smallest outcome-blind event_id anchor",
+    "draws": 8,
+    "enumerate_threshold": 16
+  },
+  "registration": {
+    "directory": "registered_v2",
+    "counts": {
+      "method_events": 423348,
+      "physical_pairs": 375864,
+      "unique_teams": 465642,
+      "design_links": 502278,
+      "registered_A_B_cells": 25641,
+      "pools": 226,
+      "by_scope": {
+        "primary": 407991,
+        "other_admitted": 15357
+      },
+      "by_method": {
+        "TARGET_DSTRUCT_K3": 52408,
+        "TARGET_DSTRUCT_K2": 10509,
+        "V21_DSTRUCT_RAW3_K3": 62495,
+        "OPPJOINT_K3": 82474,
+        "OPPJOINT_K4": 144356,
+        "RFUSE_GEOM_K2": 17687,
+        "OPPSTRUCT_K3": 53419
+      },
+      "family_links": {
+        "B_equal_whole_class": 145159,
+        "B_unequal_whole_classes": 12922,
+        "B_unequal_equal_size_anchor": 63491,
+        "B_unequal_additional_same_target_members": 63491,
+        "A_equal_AC": 148316,
+        "C_complete_class_alliances": 42656,
+        "D_fixed_A_expand_replacement": 22012,
+        "E_fixed_D_member_sensitivity": 4231
+      }
+    },
+    "legacy_team_key": "pool_id + __ + SHA256(canonical_JSON(sorted_workers))[:20]",
+    "physical_pair_id": "SHA256(canonical_JSON([pool_id,sorted([A_team_key,C_team_key])]))[:24]",
+    "event_id": "SHA256(canonical_JSON([pool_id,method,physical_pair_id]))[:24]",
+    "orientation": "pure different classes lower->higher frozen role; other pairs lexical team key",
+    "DESIGN_LINKS_input_orientation_sign": "multiply canonical scalar delta by this sign to reconstruct original requested direction",
+    "same_physical_events_multiple_designs": "one endpoint run; multiple design links preserved",
+    "same_physical_events_multiple_methods": "cross-method overlap table, not independent evidence"
+  },
+  "analysis": {
+    "unit_hierarchy": [
+      "event",
+      "fixed member/background/path condition",
+      "pool/target",
+      "image",
+      "building"
+    ],
+    "pool_equal_weighted_primary": true,
+    "building_balanced_sensitivity": true,
+    "signed_and_absolute_change": true,
+    "mean_and_majority_image_direction": true,
+    "tail": "empirical observed tail; small panels cannot estimate population extreme quantiles",
+    "same_composition_member_variation": [
+      "fixed D XZ member panel",
+      "fixed XZ neutral0/1 with same D quota"
+    ],
+    "background_composition_variation": "fixed XZ enriched profiles, differs in members too",
+    "sampling_check": "two batches descriptive consistency; no artificial repeat weighting",
+    "member_frequency": "per class/role/pool and endpoint appearances, mark fixed cores",
+    "denominators": [
+      "registered",
+      "executed",
+      "fusion outcome",
+      "geometry valid",
+      "both endpoint scores valid per metric",
+      "legal same-source recorded labor valid"
+    ],
+    "missing_Q_is_zero": false,
+    "failure_unscorable_missing_distinct": true,
+    "Q_algorithms": [
+      "B8L2",
+      "D10"
+    ],
+    "geometry": [
+      "turns",
+      "short structures",
+      "reference structures",
+      "shape",
+      "position",
+      "scale",
+      "height/top"
+    ],
+    "ABC_bridge": "exact entities and target/n/m required for exact control; otherwise common-condition comparison only"
+  },
+  "budget_revision": {
+    "initial_v1_stopped_before_fusion": true,
+    "reason": "outcome-blind identity count and memory budget",
+    "v1_observed_events": 708405,
+    "v1_observed_teams": 868319,
+    "drop_pools_or_methods_based_on_outcomes": false,
+    "preserved_source": "code/register_ac_population_v1_budget_diagnostic.py"
+  },
+  "source_code_sha256": "2e5b09e968ea9eb25e3c5d5b4a0202d19a94ec3838821791fff4b9c6e3d26fdf"
+}

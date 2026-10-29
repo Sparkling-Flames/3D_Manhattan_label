@@ -1,0 +1,60 @@
+{
+  "status": "sole_identity_rejection_explained",
+  "team_key": "uNb9QFRL6hY-82__manual__8e7ae21c8d__bf85118df1632fe78d8a",
+  "pool_id": "uNb9QFRL6hY-82__manual__8e7ae21c8d",
+  "rejected_source": "repo/research/workers/personnel_v21_reselection_20261029/additional_delivery/packages/07B/experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+  "rejected_source_sha256": "43085b418424a05afcaaa777f314442583ac8ca0130fc103212854a72c8f0738",
+  "rejected_identity_fields": {
+    "pool_id": "uNb9QFRL6hY-82__manual__8e7ae21c8d",
+    "condition": "manual",
+    "reference_id": "gt:uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f.txt",
+    "reference_version": "gt_original",
+    "data_release": "v2.1",
+    "team_key": "uNb9QFRL6hY-82__manual__8e7ae21c8d__bf85118df1632fe78d8a",
+    "member_workers": "W002|W015|W037|W103|W109|W112|W115|W122|W126|W130",
+    "member_object_ids": "6|4|b|f|2|8|6|5|b|f|8|c|c|0|0|a|b|b|b|3|||7|e|a|7|a|f|8|c|d|e|9|3|0|3|d|a|7|5|a|6|||1|a|1|c|2|c|3|1|0|6|4|a|f|d|c|7|4|f|0|7|||v|2|:|n|e|w|:|1|0|5|4|2|1|||v|2|:|n|e|w|:|1|0|5|4|2|6|||v|2|:|n|e|w|:|1|0|5|4|2|8|||v|2|:|n|e|w|:|1|0|5|4|3|0|||v|2|:|n|e|w|:|1|0|5|4|3|6|||v|2|:|n|e|w|:|1|0|5|4|4|0|||v|2|:|n|e|w|:|1|0|5|4|4|4"
+  },
+  "expected_request_identity_fields": {
+    "member_object_ids": "64bf2865bf8cc00abbb3|7ea7af8cde9303da75a6|1a1c2c31064afdc74f07|v2:new:105421|v2:new:105426|v2:new:105428|v2:new:105430|v2:new:105436|v2:new:105440|v2:new:105444",
+    "member_workers": "W002|W015|W037|W103|W109|W112|W115|W122|W126|W130",
+    "pool_id": "uNb9QFRL6hY-82__manual__8e7ae21c8d",
+    "team_key": "uNb9QFRL6hY-82__manual__8e7ae21c8d__bf85118df1632fe78d8a",
+    "endpoint_acquisition": "geometry_replay_existing_team",
+    "prior_source": "/workspace/scratch/2109120ca4e8/repo/research/workers/personnel_v21_reselection_20261029/experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz"
+  },
+  "expected_worker_object_pairs": {
+    "W002": "64bf2865bf8cc00abbb3",
+    "W015": "7ea7af8cde9303da75a6",
+    "W037": "1a1c2c31064afdc74f07",
+    "W103": "v2:new:105421",
+    "W109": "v2:new:105426",
+    "W112": "v2:new:105428",
+    "W115": "v2:new:105430",
+    "W122": "v2:new:105436",
+    "W126": "v2:new:105440",
+    "W130": "v2:new:105444"
+  },
+  "accepted_scalar_source": "repo/research/workers/personnel_v21_reselection_20261029/experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+  "accepted_scalar_source_sha256": "132e6ff0fadb2cb7ac0689c5cae79c2b86efd5b51b5a858de0dd467c2281f66c",
+  "accepted_identity_fields": {
+    "pool_id": "uNb9QFRL6hY-82__manual__8e7ae21c8d",
+    "condition": "manual",
+    "reference_id": "gt:uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f.txt",
+    "reference_version": "gt_original",
+    "data_release": "v2.1",
+    "team_key": "uNb9QFRL6hY-82__manual__8e7ae21c8d__bf85118df1632fe78d8a",
+    "member_workers": "W002|W015|W037|W103|W109|W112|W115|W122|W126|W130",
+    "member_object_ids": "64bf2865bf8cc00abbb3|7ea7af8cde9303da75a6|1a1c2c31064afdc74f07|v2:new:105421|v2:new:105426|v2:new:105428|v2:new:105430|v2:new:105436|v2:new:105440|v2:new:105444"
+  },
+  "expected_and_accepted_object_ids_identical": true,
+  "observed_serialization_transformation_exact": "rejected member_object_ids == \"|\".join(expected member_object_ids string)",
+  "interpretation": "The rejected copy contains character-separated serialization metadata. It does not identify a different qualified team. The frozen plan correctly rejects that record and uses an independently valid scalar source for geometry replay.",
+  "qualification_changed": false,
+  "frozen_design_changed": false,
+  "cache_source_modified": false,
+  "quality_values_read": false,
+  "frozen_plan_rejection_count": {
+    "object_ids": 1
+  },
+  "request_plan_sha256": "db22716ec11fbbaeb0e70274ab35adabe95ca0d9e31cf72409f010a28692e434"
+}

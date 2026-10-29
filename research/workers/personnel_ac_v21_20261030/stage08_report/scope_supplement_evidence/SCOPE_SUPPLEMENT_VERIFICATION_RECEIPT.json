@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "selected_conditions": 15,
+  "metric_source_rows": 450,
+  "unique_source_keys": true,
+  "no_target_result_used_for_selection": true,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_teams": 0,
+  "input_pool_decomposition": {
+    "ordinary_Manual": 236,
+    "ordinary_Semi": 38,
+    "doorway_or_special": 20,
+    "total": 294
+  },
+  "executed_pool_decomposition": {
+    "ordinary_Manual": 226,
+    "ordinary_Semi": 32,
+    "doorway_or_special": 0,
+    "total": 258
+  },
+  "other_admitted_Manual": {
+    "input_pools": 30,
+    "executed_pools": 20,
+    "executed_images": 18,
+    "executed_buildings": 7
+  },
+  "Semi_own_V3_labels": true,
+  "Semi_Manual_labels_applied": false,
+  "Semi_class_ID_direction_is_quality_order": false,
+  "OOS_count_is_existing_audit_statement_not_new_recount": true,
+  "sources": [
+    {
+      "path": "stage05_main/CONDITION_METRIC_SUMMARY.csv.gz",
+      "bytes": 19727920,
+      "sha256": "00b7f504b65a2c6cc91f6bce9dc125ed0207f8309f211592779eeff6802635b5"
+    },
+    {
+      "path": "stage01_capacity/POOL_INVENTORY_ALL_DOMAINS.csv",
+      "bytes": 260351,
+      "sha256": "2fec959237d1a7313ec6814510318343884b086aba37d1baf43d955770dad77c"
+    },
+    {
+      "path": "stage08_report/scope_supplement_evidence/NATIVE_EXECUTION_CHECKS_ALL_DOMAINS.csv",
+      "bytes": 48976,
+      "sha256": "8eb29e968429de9075346e4c4498e770909eb4d7e4e1402c3ab325c736d66217"
+    },
+    {
+      "path": "stage05_funnel_bridge/STATE_DOMAIN_DENOMINATOR_SUMMARY.csv",
+      "bytes": 376,
+      "sha256": "d5c99abf319d5e4dd35d4adba8bd39508cf33ff7166cd770f7dcefe64ab297d9"
+    },
+    {
+      "path": "stage01b_semi/DESIGN_REGISTRATION_RECEIPT.json",
+      "bytes": 949,
+      "sha256": "9876c8373cb9ed7dba1e47ef9c54fd69b3a15297a5e073f7a2a623babaa270af"
+    },
+    {
+      "path": "stage01b_semi/SEMI_BASE_LABELS_ALL_LOBO.csv.gz",
+      "bytes": 208156,
+      "sha256": "3cd61361da9b179713140032f2827cf61516a57b81fcf767af703921bf17653f"
+    },
+    {
+      "path": "stage08_report/scope_supplement_evidence/SCORE_BLIND_SCOPE_SELECTION.json",
+      "bytes": 15212,
+      "sha256": "bc9cf556dd9534577eefa2649949b7cadbb4c391688acf4122f3f3e6dd55011e"
+    },
+    {
+      "path": "stage08_report/scope_supplement_evidence/sources/FROZEN_SCOPE_ROUTING_AUDIT_20261029.md",
+      "bytes": 7194,
+      "sha256": "8a5a1808b3e1bebe7471b8bbaedd773cdc133bf70bd6004bfd8fcee8a1bd9b67"
+    }
+  ]
+}

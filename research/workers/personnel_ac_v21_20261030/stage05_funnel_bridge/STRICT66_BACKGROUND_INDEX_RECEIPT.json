@@ -1,0 +1,45 @@
+{
+  "index_complete": true,
+  "design_uses_scores": false,
+  "strict_conditions": 66,
+  "F_events": 528,
+  "B_events_in_same_conditions": 120,
+  "exact_XZ_event_pair_matches": 120,
+  "different_D_matches": 120,
+  "identical_D_matches": 0,
+  "different_D_physical_comparisons": 108,
+  "conditions_with_B_anchor": 21,
+  "conditions_with_shared_XZ": 21,
+  "conditions_with_exact_different_D": 21,
+  "conditions_where_strict_D_space_equals_outside": 8,
+  "overlapping_broader_main_AB_method_comparisons": 4,
+  "same_D_rows_are_identity_checks_not_background_effects": true,
+  "new_teams": 0,
+  "new_fusions": 0,
+  "sources": [
+    {
+      "path": "stage01_registered/AC_EVENTS.csv.gz",
+      "sha256": "6005b93a6a7a7d950bd5dcf0cdf7866a82d4e02092480aa740c3e069d3e42f9d"
+    },
+    {
+      "path": "stage05_funnel_bridge/inputs/STRICT_LARGE_CELLS.csv",
+      "sha256": "142eded4e1bc5da892f5e71bfbbf972499bd9e3ca9ad16ff39c59b912c46012a"
+    },
+    {
+      "path": "stage05_funnel_bridge/inputs/STRICT_LARGE_EVENTS_EXACT.csv.gz",
+      "sha256": "6bc40d728597c8625e8577678acd99b15f828cc21aecc2c38c4b49e57c64ec0b"
+    },
+    {
+      "path": "stage01_capacity/POOL_METHOD_CAPACITY.csv.gz",
+      "sha256": "1efa6bb7b3a6b42086ba79ae6289f808841a68c11df6af22b027a3a6502208e8"
+    }
+  ],
+  "output_sha256": {
+    "STRICT66_EXACT_F_NEUTRAL_VS_B_OUTSIDE_BACKGROUND_PAIRS.csv.gz": "9cd1627bed9fc13f5f3aeb563bd2c6647a1a15fa0057a3a6307944c4e1820849",
+    "STRICT66_F_VS_B_BACKGROUND_CONDITION_COVERAGE.csv": "57fed839d373b643118028c8cfafb86ad4068021c6f4db4e84e700c2e7d4a9e2",
+    "STRICT66_ACTUAL_STRICT_D_CLASS_COMPOSITIONS.csv": "a2c32d06a1d679e175fc04de01894fe33b1a1cfa6cf5c8863bd27dea8bc24285"
+  },
+  "seconds": 8.152767693998612,
+  "different_D_same_class_quota_comparisons": 0,
+  "different_D_changed_class_quota_comparisons": 120
+}

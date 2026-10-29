@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "passed": true,
+  "complete": true,
+  "blocks": 214,
+  "tables": 36,
+  "declared_sources": 57,
+  "unique_source_files": 48,
+  "source_hashes_and_bytes_passed": 57,
+  "ledger_rows": 415,
+  "ledger_rows_unique_and_full_values_exact": 415,
+  "ledger_compared_fields": {
+    "numeric": 13047,
+    "string": 4004,
+    "null": 916,
+    "boolean": 216
+  },
+  "maximum_numeric_ledger_source_difference": 0.0,
+  "numeric_comparison": "Exact numeric equality after fresh CSV parsing with pandas; no rounding or numeric tolerance. Nulls and strings checked separately.",
+  "csv_parser_version": "2.2.3",
+  "source_reference_occurrences": 169,
+  "report_images_checked": [
+    {
+      "block_index": 32,
+      "path": "stage08_report/figures/FIG01_EQUAL_SIZE_EFFECTS.png",
+      "exists": true,
+      "sha256": "ca9da323e87fc6e5be33fc238b66bdc6903f59f3abdf338a3b59a69379c0dddc"
+    },
+    {
+      "block_index": 53,
+      "path": "stage08_report/figures/FIG02_FROZEN_DIFFICULTY_RESPONSE.png",
+      "exists": true,
+      "sha256": "ef6831da6381c726c9b063ea96d6617255701c54f21e5f2e002a708e5ccad3a5"
+    },
+    {
+      "block_index": 113,
+      "path": "stage06_cases/background_wc2_53/four_endpoint/FOUR_ENDPOINTS_FIXED_XZ.png",
+      "exists": true,
+      "sha256": "e1715a2a952472b2aa4d9ea65a725f5835081596caee28c58c793062f17b994c"
+    },
+    {
+      "block_index": 117,
+      "path": "stage06_cases/representative_cases/fixed_xz_n20_n22/FOUR_ENDPOINTS_FIXED_XZ.png",
+      "exists": true,
+      "sha256": "d509a8bada96296592e6e8b3fda4e8429e2095fd8975501ef494b8a198fdae2e"
+    },
+    {
+      "block_index": 120,
+      "path": "stage06_cases/alliance_pa4_11/figures/SEVEN_ALLIANCES_BEV.png",
+      "exists": true,
+      "sha256": "58b36e13efd3a35ee1f3ab489bf4cfabb247f9b7ea3c2ee880202e88454503c1"
+    }
+  ],
+  "hardcoded_number_spot_checks": 71,
+  "hardcoded_spot_checks_passed": 71,
+  "hardcoded_scope": "Selected registration, reuse, native-evaluation, status, capacity and old strict ABC statements; not a claim to verify every prose sentence.",
+  "docx_zip_members": 24,
+  "docx_xml_parts": 18,
+  "docx_tables_matching_report_blocks": 36,
+  "input_hashes": {
+    "stage08_report/REPORT_BLOCKS.json": "cd5b7a190f7c958f16b9d312d03e4d658dda785f4b4d083301217b41c231caf7",
+    "stage08_report/REPORT_EVIDENCE_INDEX.json": "0fa7428ba74aa0418e1216cc2a0119b9fca0573aab89e12f66911d19fcb406e9",
+    "stage08_report/REPORT_NUMBER_LEDGER.csv": "617e6a09a82bbc701fc39d7cca9ac9e1bf9db7ab1530edbad5294340d4e4b6ca",
+    "stage08_report/HOHONET_v21_AC_population_report_ZH.docx": "67c9a759cc48ca543022681f43a193ec46619d7aefd3028437618fecd1b4ca75"
+  },
+  "source_inputs_unchanged_during_check": true,
+  "verification_code_sha256": "0f8bee640ddfd7e76f79b9056b82186363fdf3e820d0e6f20ad4b8459bd53066",
+  "exceptions": [],
+  "warnings": [],
+  "seconds": 15.0860882449997,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "report_body_or_scientific_sources_modified": false,
+  "pdf_visual_review": "Handled independently by the parent; not claimed here."
+}

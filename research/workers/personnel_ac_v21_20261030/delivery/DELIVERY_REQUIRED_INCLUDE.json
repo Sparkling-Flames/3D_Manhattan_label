@@ -1,0 +1,113 @@
+{
+  "status": "small_addendum_required",
+  "required_include": [
+    "stage01_registered/FINAL_REGISTRATION_DOMAIN_COVERAGE.csv",
+    "stage01_capacity/code/review_registered_design.py",
+    "stage01_capacity/REGISTERED_CELL_MEMBER_BACKGROUND_COVERAGE.csv.gz",
+    "stage01_capacity/REGISTERED_EVENT_BACKGROUND_STRATA.csv",
+    "stage01_capacity/REGISTERED_FIXED_D_PANEL_COVERAGE.csv",
+    "stage01_capacity/BRIDGE_REGISTERED_CELL_MEMBER_BACKGROUND_COVERAGE.csv.gz",
+    "stage01_capacity/BRIDGE_REGISTERED_EVENT_BACKGROUND_STRATA.csv",
+    "stage01_capacity/DESIGN_CAPACITY_REVIEW_INITIAL_CONTRACT_DIAGNOSTIC.json",
+    "stage03_endpoints/RUN_RECEIPT.json",
+    "stage03_endpoints/TIMED_FIRST_WAVE.json",
+    "stage01_design_review/registered_v2_storage_repair/FROZEN_DESIGN_FILES.json"
+  ],
+  "total_files": 11,
+  "total_bytes": 792435,
+  "recommended_package": "Final code/reproduction package; no existing large archive needs rebuilding.",
+  "details": [
+    {
+      "path": "stage01_registered/FINAL_REGISTRATION_DOMAIN_COVERAGE.csv",
+      "bytes": 218,
+      "sha256": "5ba28bd0727928ff45629cc522a4d68c270d1b5b10bb078f536a038ccd427b38",
+      "reason": "Direct source E03 of final report; not in early frozen-design archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/code/review_registered_design.py",
+      "bytes": 23177,
+      "sha256": "539ee71f3b18259026c4dd941851015f1660708b557a4aec52d647adb6e4aba7",
+      "reason": "Complete code for the saved independent frozen-design review.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/REGISTERED_CELL_MEMBER_BACKGROUND_COVERAGE.csv.gz",
+      "bytes": 695368,
+      "sha256": "51a34995cb5655bf2c096655eb1183e03783d8ccda86716c1ae166113dfe406c",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/REGISTERED_EVENT_BACKGROUND_STRATA.csv",
+      "bytes": 3777,
+      "sha256": "0ab19c9084011687ccc6d1f368a39b53205a9d5a45fb967523b2251861de2b3c",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/REGISTERED_FIXED_D_PANEL_COVERAGE.csv",
+      "bytes": 47138,
+      "sha256": "c79a9d260a83df634f73a909ec8bba022cf0f87c2173eee8ff843cb5b0140739",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/BRIDGE_REGISTERED_CELL_MEMBER_BACKGROUND_COVERAGE.csv.gz",
+      "bytes": 2514,
+      "sha256": "4836dbf3e0c6255c46240c944727b8580454f76b4b0c2e49cac0a75ac94f99eb",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/BRIDGE_REGISTERED_EVENT_BACKGROUND_STRATA.csv",
+      "bytes": 151,
+      "sha256": "2a02bf90b7f79887e19041b569e9f2a0a2c9c9ad4a8c8c1977ccad5a95fa226f",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_capacity/DESIGN_CAPACITY_REVIEW_INITIAL_CONTRACT_DIAGNOSTIC.json",
+      "bytes": 13216,
+      "sha256": "7081dca21446d40724627fedef0bbaaa8ddb547fe47bb04cfd1938a13be63ba1",
+      "reason": "Small supporting coverage/diagnostic output of the design-capacity review, generated after the early capacity archive.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage03_endpoints/RUN_RECEIPT.json",
+      "bytes": 2021,
+      "sha256": "faa9391df55efa61d8de170ddeaa629eb025219ab6439dbff82581e803636316",
+      "reason": "Original execution accounting receipt cited by EXECUTION_ACCOUNTING_CLARIFICATION.json; full endpoint content is already delivered.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage03_endpoints/TIMED_FIRST_WAVE.json",
+      "bytes": 3770,
+      "sha256": "2c920ac8d67df29570ba44214f58385adde9898e5faacfed3d455fa7678c6895",
+      "reason": "Original execution accounting receipt cited by EXECUTION_ACCOUNTING_CLARIFICATION.json; full endpoint content is already delivered.",
+      "already_in_checked_or_original_plans": false
+    },
+    {
+      "path": "stage01_design_review/registered_v2_storage_repair/FROZEN_DESIGN_FILES.json",
+      "bytes": 1085,
+      "sha256": "5cdd06ffa120d6a8aa5476c86b684e70cd517bf70a17e5e9ae7eb6b9a9c87fb7",
+      "reason": "Small preserved pre-repair freeze manifest accompanying the already delivered storage repair receipt; provenance only.",
+      "already_in_checked_or_original_plans": false
+    }
+  ],
+  "optional_provenance_not_required_for_scientific_coverage": [
+    "stage01_design_review/AC_EVENT_SCHEMA_PREVIEW.csv",
+    "stage03_endpoints/PROGRESS.json"
+  ],
+  "final_report_root_pdf_must_be_explicitly_included": true,
+  "final_delivery_metadata": [
+    "delivery/DELIVERY_SCIENTIFIC_COVERAGE_REVIEW.json",
+    "delivery/DELIVERY_SCIENTIFIC_COVERAGE_REVIEW.md",
+    "delivery/DELIVERY_REQUIRED_INCLUDE.json",
+    "delivery/STAGING_ARTIFACTS_NOT_FOR_ANALYSIS.json",
+    "delivery/STAGING_ARTIFACTS_NOT_FOR_ANALYSIS.md",
+    "delivery/UPLOAD_RECEIPTS.json",
+    "delivery/*_READABILITY.json"
+  ],
+  "metadata_note": "Include these small metadata in the final report/download folder; final own-archive receipts can be delivered separately after that archive is frozen."
+}

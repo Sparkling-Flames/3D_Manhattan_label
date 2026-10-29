@@ -1,0 +1,115 @@
+--- old/code/package_stage.py
++++ current/code/package_stage.py
+@@ -23,27 +23,39 @@
+     p.add_argument('--root', required=True)
+     p.add_argument('--name', required=True)
+     p.add_argument('--include', nargs='+', required=True)
++    p.add_argument('--exclude', action='append', default=[], help='Relative path prefix or glob to omit explicitly')
+     p.add_argument('--out', required=True)
++    p.add_argument('--verify-existing', action='store_true', help='Read an existing immutable archive and verify it without rewriting')
+     a = p.parse_args()
+     root, out = Path(a.root).resolve(), Path(a.out).resolve()
+     out.mkdir(parents=True, exist_ok=True)
+     target = out / (a.name + '.zip')
+-    if target.exists():
++    if target.exists() and not a.verify_existing:
+         raise FileExistsError('Stage archives are immutable: ' + str(target))
+     files = sorted(set(f for item in a.include for f in
+         ((root / item).rglob('*') if (root / item).is_dir() else [root / item])
+-        if f.is_file() and '__pycache__' not in f.parts and f.suffix != '.pyc'))
+-    manifest = []
+-    with zipfile.ZipFile(target, 'w', allowZip64=True) as z:
+-        for f in files:
+-            rel = str(f.relative_to(root))
+-            manifest.append({'path': rel, 'bytes': f.stat().st_size, 'sha256': file_sha(f)})
+-            z.write(f, rel, compress_type=zipfile.ZIP_STORED if f.suffix in
+-                    {'.gz', '.zip', '.jpg', '.png', '.pdf'} else zipfile.ZIP_DEFLATED)
+-        z.writestr('ARCHIVE_MANIFEST.json', json.dumps(manifest, ensure_ascii=False, indent=2))
++        if f.is_file() and '__pycache__' not in f.parts and f.suffix != '.pyc'
++        and not any(str(f.relative_to(root)).startswith(x.rstrip('/') + '/') or
++                    str(f.relative_to(root)) == x.rstrip('/') or
++                    f.relative_to(root).match(x) for x in a.exclude)))
++    if a.verify_existing:
++        with zipfile.ZipFile(target) as z:
++            manifest=json.loads(z.read('ARCHIVE_MANIFEST.json'))
++        current=[{'path':str(f.relative_to(root)),'bytes':f.stat().st_size,'sha256':file_sha(f)} for f in files]
++        assert manifest==current, 'Existing archive is not an exact match to selected frozen files'
++    else:
++        manifest = []
++        with zipfile.ZipFile(target, 'w', allowZip64=True) as z:
++            for f in files:
++                rel = str(f.relative_to(root))
++                manifest.append({'path': rel, 'bytes': f.stat().st_size, 'sha256': file_sha(f)})
++                z.write(f, rel, compress_type=zipfile.ZIP_STORED if f.suffix in
++                        {'.gz', '.zip', '.jpg', '.png', '.pdf'} else zipfile.ZIP_DEFLATED)
++            z.writestr('ARCHIVE_MANIFEST.json', json.dumps(manifest, ensure_ascii=False, indent=2))
+     checks = []
+     with zipfile.ZipFile(target) as z:
+         assert len(z.namelist()) == len(manifest) + 1
++        assert json.loads(z.read('ARCHIVE_MANIFEST.json')) == manifest
+         for m in manifest:
+             name = m['path']
+             h=hashlib.sha256(); n=0
+@@ -62,11 +74,15 @@
+                             count = sum(1 for line in src if line.strip() and json.loads(line) is not None)
+                             check['jsonl_rows'] = count
+                         else:
+-                            rows=csv.reader(src);header=next(rows,[]);count=0
++                            rows=csv.reader(src);header=next(rows,[]);count=0;empty=0
+                             for row in rows:
++                                if not row:
++                                    empty+=1
++                                    continue
+                                 assert len(row)==len(header),(name,count,len(row),len(header))
+                                 count+=1
+                             check['csv_rows']=count
++                            check['csv_empty_records_preserved']=empty
+                 elif name.endswith('.gz'):
+                     for chunk in iter(lambda:binary.read(1<<20),b''):pass
+                     binary.close()
+
+--- old/stage01_design_review/DESIGN_REVIEW_ZH.md
++++ current/stage01_design_review/DESIGN_REVIEW_ZH.md
+@@ -135,3 +135,11 @@
+ 最终注册目录为 `registered_v2/`。先逐一完整解压读取所有 gzip 到 EOF、检查 CSV 列宽、验证哈希和关键身份；再由容量代理独立审核冻结事件。root 明确冻结后才运行融合。任何压缩文件缺尾、列宽异常或成员不互斥，都必须修复并保留诊断，不能以进程 exit 0 替代文件完整性验证。
+ 
+ 本设计和登记不构成结果结论；它固定了可解释的比较、范围和计算依据，最终采用判断须以逐事件结果、各自有效分母和机制证据为准。
++
++## 13. 独立审阅与既有严格 ABC 共 n 补桥
++
++stage01_capacity/DESIGN_CAPACITY_REVIEW.json 已对 v2 的全部 423,348 个事件逐行核查身份、楼外标签、目标、D/X/Z 关系、整类判断及去重，最终为 PASSED，无失败或警告。审阅同时发现 562 个固定 D 面板中 462 个有多个事件，264 个有多个 A 成员队、316 个有多个 C 成员队；不能把“多事件”一概当作两边都有充分成员扰动。
++
++最新既有严格 ABC 的部分 n（例如 m9 的 n11，TARGET m10 的 n12/14）不在通用 n 锚里。为建立共同条件对照，root 在结果前授权 capacity 代理单独保存 stage01_bridge/registered_bridge_v1：仅对已有 66 个池/方向/n/m 条件复用本登记的 8 套 X/Z 和同一 neutral_members_0 背景前缀，共 528 事件、986 团队；其中 32 事件、49 团队已经在 v2，其余 937 团队是 v2 以外的请求。这是直接 AC 补桥，没有新增 ABC，也没有按已有 Q 或替换收益选型。最后由 root 合并请求并去重，v2 不覆盖重跑。
++
++存储闸门曾发现仅 PHYSICAL_PAIR_METHOD_OVERLAP 表缺 gzip 尾标。它已从完整可读的冻结事件表精确重建全部 375,864 行；事件、人员、n/m 和任何设计身份均未变化。原字节及修复说明保留为 registered_v2_storage_repair 诊断；最终 6 张 gzip 表的 EOF、CSV 列宽、行数和冻结哈希全部通过，见 registered_v2/REGISTRY_FILE_READABILITY_VALIDATION.json。
+
+--- old/stage01_design_review/RECOMMENDED_DESIGN_CONTRACT.json
++++ current/stage01_design_review/RECOMMENDED_DESIGN_CONTRACT.json
+@@ -2,7 +2,7 @@
+   "contract_version": "v2_20261029",
+   "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+   "seed": 202610291901,
+-  "state": "outcome_blind_registered_pending_independent_design_audit",
++  "state": "independently_audited_passed_pending_root_execution_freeze",
+   "immutable_sources": [
+     {
+       "path": "stage01_capacity/SCORE_BLIND_POOL_INPUTS.json",
+@@ -260,5 +260,17 @@
+     "drop_pools_or_methods_based_on_outcomes": false,
+     "preserved_source": "code/register_ac_population_v1_budget_diagnostic.py"
+   },
+-  "source_code_sha256": "2e5b09e968ea9eb25e3c5d5b4a0202d19a94ec3838821791fff4b9c6e3d26fdf"
++  "source_code_sha256": "2e5b09e968ea9eb25e3c5d5b4a0202d19a94ec3838821791fff4b9c6e3d26fdf",
++  "independent_review": "stage01_capacity/DESIGN_CAPACITY_REVIEW.json",
++  "bridge_supplement": {
++    "directory": "stage01_bridge/registered_bridge_v1",
++    "existing_strict_common_conditions": 66,
++    "AC_events": 528,
++    "teams": 986,
++    "events_already_in_v2": 32,
++    "teams_already_in_v2": 49,
++    "new_team_requests_vs_v2": 937,
++    "score_blind": true,
++    "new_ABC": false
++  }
+ }

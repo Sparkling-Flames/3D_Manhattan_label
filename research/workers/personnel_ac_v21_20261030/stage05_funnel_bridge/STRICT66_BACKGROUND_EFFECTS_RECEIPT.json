@@ -1,0 +1,136 @@
+{
+  "complete": true,
+  "pending_pools": [],
+  "measured_background_comparisons": 120,
+  "measured_physical_background_comparisons": 108,
+  "rows": 3000,
+  "metrics": [
+    "B8L2",
+    "D10",
+    "IoU3D100",
+    "S_bottom_deg",
+    "omission",
+    "extension",
+    "fusion_turn_n",
+    "fusion_short_turn_edges",
+    "fusion_redundancy_n",
+    "geometry_area_h2",
+    "height_mean_h",
+    "matched_ref_top_abs_deg",
+    "matched_ref_bottom_abs_deg",
+    "matched_ref_horizontal_abs_deg",
+    "boundary_loss",
+    "direction_loss",
+    "height_loss",
+    "geometry_pair_angle",
+    "geometry_bev_distance",
+    "geometry_centroid_distance",
+    "geometry_log_area_distance",
+    "record_time_pct",
+    "record_time_seconds",
+    "fusion_failure_risk",
+    "incomplete_output_risk"
+  ],
+  "all_four_endpoints_required_for_scalar_difference": true,
+  "missing_values_imputed": false,
+  "labor_difference_requires_same_known_time_source_counts_in_all_four_teams": true,
+  "fixed_XZ_labor_seconds_invariance_valid_pairs": 0,
+  "fixed_XZ_labor_seconds_max_abs_difference": null,
+  "same_XZ_same_n_m_only_background_changed": true,
+  "quality_improvement_direction_only_for": [
+    "B8L2",
+    "D10"
+  ],
+  "new_teams": 0,
+  "new_fusions": 0,
+  "sources": [
+    {
+      "pool_id": "7y3sRwLe3Va-11__manual__feec3565b2",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-11__manual__feec3565b2.csv.gz",
+      "sha256": "fe83d38b054d506d7cb0cdc2143f6d0847f22581e6b1d59288bcdaff571a054b"
+    },
+    {
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-09__manual__1a2b0afff3.csv.gz",
+      "sha256": "d857ee7fd6b9548d2337e8eedab9146ac917712186bbf9adba1931e1f8c2034c"
+    },
+    {
+      "pool_id": "UwV83HsGsw3-17__manual__b27fdc2bc6",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-17__manual__b27fdc2bc6.csv.gz",
+      "sha256": "5c4501cb2562f25bab5c5c638fc3993a4e2b7fb28fc8caa7576d0414e8d68ba3"
+    },
+    {
+      "pool_id": "X7HyMhZNoso-19__manual__4177d22d41",
+      "path": "stage04_metrics/metric_shards/X7HyMhZNoso-19__manual__4177d22d41.csv.gz",
+      "sha256": "a0751b807aa157407515e50d0b6c8b779bf03e87fc10f5f020d22b29897ad9d8"
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-02__manual__1402a46fe0",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-02__manual__1402a46fe0.csv.gz",
+      "sha256": "f12a5b4ff9fe37da81aed03262ec2f66ac6b2ffa5b858a0aece5d73d86a96192"
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-19__manual__3b9450ee54",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-19__manual__3b9450ee54.csv.gz",
+      "sha256": "898cd870b04ab3211dd5a14adbbb13078d8b58309b852248e2aa216e525f708e"
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-34__manual__v21_250",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-34__manual__v21_250.csv.gz",
+      "sha256": "9886b4f577b7adef85ad100ce6fef0de725cc551eb5e1bf85cd4073ef6fc010b"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-01__manual__a8c2a2a06a",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-01__manual__a8c2a2a06a.csv.gz",
+      "sha256": "769e6c81f5894b726cd7b3ab38ac3c3d92d511f6b81f88c52ecfe192c31a14bb"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-20__manual__4564c265d6",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-20__manual__4564c265d6.csv.gz",
+      "sha256": "90465e83858ffcc4daa0f0073702b51c5fa6434d3b2f112e2e1b79e57571ed84"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-45__manual__5dc82190fe",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-45__manual__5dc82190fe.csv.gz",
+      "sha256": "8e7c8bf03e80ef29eff4aea398511d5e9a83673af753bc9d0d79347ebd16521b"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-50__manual__8871891ae6",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-50__manual__8871891ae6.csv.gz",
+      "sha256": "7d68fad6ac80db163db9e3e2eb0505ee92730a4dba700752394f3cfa7ad5295f"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-65__manual__9acb3cd5d4",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-65__manual__9acb3cd5d4.csv.gz",
+      "sha256": "b5b10195dd75bdc4f1e031022dc457b29ea6850c71e3f7a94b035b6875f285bc"
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-72__manual__6049ded157",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-72__manual__6049ded157.csv.gz",
+      "sha256": "0b59085ff05c4fca95e4f8ea1925add4198bffc83d0ec99c2c821134aadf30d5"
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-29__manual__v21_259",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-29__manual__v21_259.csv.gz",
+      "sha256": "a81235d835561752be01b311a87e17430d4315c982aaa68063b1f97ed36e94d6"
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-53__manual__c22e59afe7",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz",
+      "sha256": "59d6bf4153459d210e66cf149f94e2fd7827692bf7e9ab8efdc8f47038ff78c0"
+    },
+    {
+      "pool_id": "x8F5xyUWy9e-08__manual__0b13997fd3",
+      "path": "stage04_metrics/metric_shards/x8F5xyUWy9e-08__manual__0b13997fd3.csv.gz",
+      "sha256": "2190bca8208ac5ac2eb312450da7841a0b1e5d67125e23ed556b1d2689db54c4"
+    },
+    {
+      "pool_id": "yqstnuAEVhm-04__manual__c93631c594",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-04__manual__c93631c594.csv.gz",
+      "sha256": "154cfb27e3be0bed79925b7e043b63e286e6959e1a044f35a74a8fcfc8b7d259"
+    }
+  ],
+  "seconds": 3.3969522549996327,
+  "F_legal_source_count_labor_comparisons": 0,
+  "B_legal_source_count_labor_comparisons": 0
+}

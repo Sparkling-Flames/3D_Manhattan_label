@@ -1,0 +1,40 @@
+{
+  "deleted_only_own_reproducible_stale_partial_files": [
+    {
+      "completed_file": "STRICT_IMAGE_CONDITION_METRICS.csv.gz",
+      "completed_rows": 53466,
+      "completed_sha256": "42642870140b7a2329b6173ec60c1f7f0ba4c16f2bcbe5654d112b98eb46df41",
+      "temporary_file": "STRICT_IMAGE_CONDITION_METRICS.csv.gz.partial",
+      "temporary_bytes": 4120383,
+      "temporary_sha256": "6223c263c12de27f6d3c080a750cffb586cd9f821be12975aa0b87aaa4bd1120",
+      "reason": "stale incomplete intermediate from completed normalizer; verified complete final counterpart retained; no source or registered design modified"
+    },
+    {
+      "completed_file": "STRICT_NORMALIZED_EVENTS.csv.gz",
+      "completed_rows": 18847,
+      "completed_sha256": "39274fe0225170d7def74ff2626f4a742acb8b6e614443b7d0c3f25cebaf8749",
+      "temporary_file": "STRICT_NORMALIZED_EVENTS.csv.gz.partial",
+      "temporary_bytes": 18693863,
+      "temporary_sha256": "b6add59c536f5e1733df0f4989283a05a8ee468481ec37af0ab5304f0ed627de",
+      "reason": "stale incomplete intermediate from completed normalizer; verified complete final counterpart retained; no source or registered design modified"
+    },
+    {
+      "completed_file": "inputs/LATEST_STRICT_M9_M10_INPUT_SUBSET.csv.gz",
+      "completed_rows": 12480,
+      "completed_sha256": "7ba942bf9b9d9521ac6b4d59a3b0a9fccf95bca2fae96ace91f8dba41c9fb5d1",
+      "temporary_file": "inputs/LATEST_STRICT_M9_M10_INPUT_SUBSET.csv.gz.partial",
+      "temporary_bytes": 5732408,
+      "temporary_sha256": "409ed911f03aeda5dc37ce764b78e7eba2646ae2fbd3a4f183f9aa5ecc9c56b6",
+      "reason": "stale incomplete compact-input intermediate from completed preparation; complete final counterpart verified against expected source row count; no source or registered design modified"
+    },
+    {
+      "completed_file": "inputs/PRIOR_STRICT_M7_M8_INPUT_SUBSET.csv.gz",
+      "completed_rows": 6367,
+      "completed_sha256": "fd1aa251fc649d54b20c17a062064f842c881ebffe53b665dd5a552cdaf0b5a7",
+      "temporary_file": "inputs/PRIOR_STRICT_M7_M8_INPUT_SUBSET.csv.gz.partial",
+      "temporary_bytes": 439324,
+      "temporary_sha256": "eff403dd477a9801db26b600e289e2ab53b54853fbe881364a4e79625f4787fc",
+      "reason": "stale incomplete compact-input intermediate from completed preparation; complete final counterpart verified against expected source row count; no source or registered design modified"
+    }
+  ]
+}

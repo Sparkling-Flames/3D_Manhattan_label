@@ -1,0 +1,1668 @@
+﻿block_index,kind,text,normalized_characters,content_order_match,spatial_order_match,passed,accepted_extractor,normalized_match_offset,pages,row_index,column_index,title,own_table_ordered_match,own_table_offset
+0,h,HOHONET v2.1 直接AC与整类人群模拟研究,24,True,True,True,content_order,0,1,,,,,
+1,p,普通 Manual 为主　冻结分类与融合规则　两队比较、整类替换、类别联盟及成员背景敏感性　2026-10-29,51,True,True,True,content_order,24,1,,,,,
+2,h,1 可以实际采用的研究安排,12,True,True,True,content_order,75,1,,,,,
+3,p,继续采用 TARGET_DSTRUCT K3 作为普通 Manual 的主解释分类，K2 保留粗层。主研究应并用两种条件：固定 n20/m7 的中结构角色→高结构角色，及固定 n20、将该图高结构类全部可用成员等量换入。前者把人数和替换量固定，后者把整类人群的含义固定；两者回答不同问题。大块十、十二人替换作为条件研究保留，不因为人数更大就取代覆盖更广的主条件。,172,True,True,True,content_order,87,1,,,,,
+4,p,固定20/7主方向覆盖85图、21楼，B8L2平均+4.576、逐次平均绝对变化5.815，78/85图平均上升。整目标类换入覆盖185图、22楼，m为1–8，B8L2平均+3.615，155/185图上升。这支持研究不同人群如何改变共识，也保留了明确的负向图片。,132,True,True,True,content_order,272,1,,,,,
+5,p,TARGET主方向的结构变化主要集中在有结构挑战的图片；简单图也常在有效转折数不变时升Q，需结合定位、方向和高度分项解释。类别构成有解释作用，具体成员和共同背景也能使方向反转。稳定输出、输出失败、低分完整输出必须分别解释。除另注明，核心结果表均指普通Manual原主目标。,136,True,True,True,content_order,413,1,,,,,
+6,table_title,各方法的正式用途,8,True,True,True,content_order,562,1,,,,,
+6,table_cell,方法,2,True,True,True,content_order,563,1,0,0,各方法的正式用途,True,0
+6,table_cell,采用用途,4,True,True,True,content_order,572,1,0,1,各方法的正式用途,True,2
+6,table_cell,本轮新增证据与限制,9,True,True,True,content_order,576,1,0,2,各方法的正式用途,True,6
+6,table_cell,TARGET K3 与 K2,11,True,True,True,content_order,585,1,1,0,各方法的正式用途,True,15
+6,table_cell,主解释分类；K2说明粗边界，K3保留父内差异,22,True,False,True,content_order,596,1,1,1,各方法的正式用途,True,26
+6,table_cell,20/7及整目标类换入有跨多图多楼的方向支持；K3十人方向仅在K2同一父类内部，覆盖3图。,45,True,False,True,content_order,618,1,1,2,各方法的正式用途,True,48
+6,table_cell,OPPJOINT K3 与 K4,13,True,True,True,content_order,663,1,2,0,各方法的正式用途,True,93
+6,table_cell,联合质量、劳动和标法画像；大块混合人群模拟,21,True,False,True,content_order,676,1,2,1,各方法的正式用途,True,106
+6,table_cell,十、十二人容量较宽；这些大块没有换入最高历史Q类，平均升质弱、双向变化明显。K4用途保留，不能只用可行图更多判断优越。,59,True,False,True,content_order,697,1,2,2,各方法的正式用途,True,127
+6,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,3,0,各方法的正式用途,True,186
+6,table_cell,原答定义敏感性和较大替换块,13,True,True,True,content_order,762,1,3,1,各方法的正式用途,True,192
+6,table_cell,八人高结构方向扩展覆盖；十二人出现同楼四图全负及另一楼两图全正，角色与建筑必须分开。,42,True,False,True,content_order,775,1,3,2,各方法的正式用途,True,205
+6,table_cell,RFUSE GEOM K2,11,True,True,True,content_order,817,1,4,0,各方法的正式用途,True,247
+6,table_cell,从融合响应反看人员作用,11,True,True,True,content_order,828,1,4,1,各方法的正式用途,True,258
+6,table_cell,四人方向在82图有77图升Q，同时输出失败增加；继续作为反向互补，不能担当十人纯类块。,43,True,False,True,content_order,839,1,4,2,各方法的正式用途,True,269
+6,table_cell,OPPSTRUCT K3,11,True,True,True,content_order,882,1,5,0,各方法的正式用途,True,312
+6,table_cell,结构机会响应补充,8,True,True,True,content_order,893,1,5,1,各方法的正式用途,True,323
+6,table_cell,在可计算结构条件下组织对照；有自己的容量与响应，不因本轮主位固定而删去。,36,True,False,True,content_order,901,1,5,2,各方法的正式用途,True,331
+7,h,2 接续的数据与本轮实际新增,13,True,True,True,content_order,972,1,,,,,
+8,p,开始时远端为 ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff，本地旧工作树仍在519c7447278dd16c3d69f505b807fb5b53792b36。本轮从前者导出所需现行来源，已读独立审查README第8、9节、十人容量表、最终下游标签与另线程严格大块结果，没有退回旧参考或补造资格规则。当前完整来源已包含严格九、十人研究，因此仅将其接入比较，没有重复计算。,201,True,True,True,content_order,985,1|2,,,,,
+9,p,数据采用现行v2.1主目标快照及其它准入目标快照；同一图不同合法目标独立组队和评价。W019、W026的排除与原答资格保持不变；没有足够分类历史但有合法原答的人员只能作为未分类背景，不能放进声称纯类的替换块。空间归属不通过最高Q选择。正式难度、冻结LOBO标签、正式参考和融合参数均未改。,144,True,True,True,content_order,1195,2,,,,,
+10,table_title,容量入口与实际执行域,10,True,True,True,content_order,1344,2,,,,,
+10,table_cell,域,1,True,True,True,content_order,1353,2,0,0,容量入口与实际执行域,True,0
+10,table_cell,全部合法池,5,True,True,True,content_order,1355,2,0,1,容量入口与实际执行域,True,1
+10,table_cell,实际执行池,5,True,True,True,content_order,1360,2,0,2,容量入口与实际执行域,True,6
+10,table_cell,说明,2,True,True,True,content_order,604,1,0,3,容量入口与实际执行域,True,11
+10,table_cell,普通Manual主目标,11,True,True,True,content_order,1367,2,1,0,容量入口与实际执行域,True,13
+10,table_cell,206,3,True,True,True,content_order,1378,2,1,1,容量入口与实际执行域,True,24
+10,table_cell,206,3,True,True,True,content_order,1378,2,1,2,容量入口与实际执行域,True,27
+10,table_cell,206独立图片、22楼，主分析,15,True,True,True,content_order,1384,2,1,3,容量入口与实际执行域,True,30
+10,table_cell,普通Manual其它准入目标,14,True,True,True,content_order,1399,2,2,0,容量入口与实际执行域,True,45
+10,table_cell,30,2,True,True,True,content_order,1413,2,2,1,容量入口与实际执行域,True,59
+10,table_cell,20,2,True,True,True,content_order,65,1,2,2,容量入口与实际执行域,True,61
+10,table_cell,实际20池涉及18图、7楼；其余10池只有3–4人，未进入本轮选定设计，逐池保留原因,42,True,False,True,content_order,1417,2,2,3,容量入口与实际执行域,True,63
+10,table_cell,普通Semi主目标,9,True,True,True,content_order,1459,2,3,0,容量入口与实际执行域,True,105
+10,table_cell,37,2,True,True,True,content_order,1073,1,3,1,容量入口与实际执行域,True,114
+10,table_cell,31,2,True,True,True,content_order,1470,2,3,2,容量入口与实际执行域,True,116
+10,table_cell,用已有Semi自身标签，作为次要补充,18,True,True,True,content_order,1472,2,3,3,容量入口与实际执行域,True,118
+10,table_cell,普通Semi其它准入目标,12,True,True,True,content_order,1490,2,4,0,容量入口与实际执行域,True,136
+10,table_cell,1,1,True,True,True,content_order,10,1,4,1,容量入口与实际执行域,True,148
+10,table_cell,1,1,True,True,True,content_order,10,1,4,2,容量入口与实际执行域,True,149
+10,table_cell,独立目标，不与主目标人员混队,14,True,True,True,content_order,1504,2,4,3,容量入口与实际执行域,True,150
+10,table_cell,门口与特殊空间库存,9,True,True,True,content_order,1518,2,5,0,容量入口与实际执行域,True,164
+10,table_cell,20,2,True,True,True,content_order,65,1,5,1,容量入口与实际执行域,True,173
+10,table_cell,0,1,True,True,True,content_order,66,1,5,2,容量入口与实际执行域,True,175
+10,table_cell,17个门口Manual、2个特殊Manual、1个特殊Semi单列；不与普通域混合,41,True,False,True,content_order,1530,2,5,3,容量入口与实际执行域,True,176
+11,p,两个输入快照合计294池＝236普通Manual＋38普通Semi＋20门口/特殊空间。容量材料中的“普通Manual以外58池”包含38个普通Semi，不能把58全部称作OOS或未执行空间；本轮执行258池＝226普通Manual＋32普通Semi。,126,True,True,True,content_order,1602,2,,,,,
+12,p,"最终登记478,012支不同团队、471,758条方法事件、412,839个无向物理端点对、550,794条设计关联。方法事件、设计关联、团队和图片是不同计数；反向展示与多方法命中相同端点不构成独立重复。核心运行474,332支是真正新增实体，2,027支为已有标量而缺完整几何的必要回放，1,653支直接复用已有完整端点。",162,True,True,True,content_order,1728,2,,,,,
+13,p,"核心原生评价476,359次，分为首波10,991次与续算465,368次。2,027次旧标量回放的状态和Q可得性全部一致，数值最大差1.42×10⁻¹³；没有例外。机制追踪32支既有团队和单队最小复现另记，不增加研究样本。本轮没有新增人员、房间、全新同房ABC或256条自然人数曲线。",143,False,True,True,spatial_order,1899,2,,,,,
+14,h,3 比较设计与读数口径,10,True,True,True,content_order,2051,2,,,,,
+15,p,直接AC固定图片、目标、参考、n与m：A=D∪X，C=D∪Z，D完全相同且D/X/Z互不重叠，X与Z是不同冻结类别的等量成员。它估计这次跨类调整的实际效果；没有B队时不估计“跨类比同类更大”。整类是该图该目标该楼外折中的全部合格成员，而非全历史名单。,125,True,True,True,content_order,2061,2,,,,,
+16,table_title,相互补充的设计,7,True,True,True,content_order,2191,3,,,,,
+16,table_cell,设计,2,True,True,True,content_order,1450,2,0,0,相互补充的设计,True,0
+16,table_cell,固定与改变,5,True,True,True,content_order,2200,3,0,1,相互补充的设计,True,2
+16,table_cell,回答的问题,5,True,True,True,content_order,2205,3,0,2,相互补充的设计,True,7
+16,table_cell,等人数AC,5,True,True,True,content_order,2210,3,1,0,相互补充的设计,True,12
+16,table_cell,同D、同n/m；X换成同样大的Z,16,True,True,True,content_order,2215,3,1,1,相互补充的设计,True,17
+16,table_cell,实际跨类调整改变质量、几何、劳动或状态多少,21,True,True,True,content_order,2231,3,1,2,相互补充的设计,True,33
+16,table_cell,整类等量替换,6,True,True,True,content_order,2252,3,2,0,相互补充的设计,True,54
+16,table_cell,来源全出、目标全入、两类等大全换分列,18,True,True,True,content_order,2258,3,2,1,相互补充的设计,True,60
+16,table_cell,完整一个类别进入或退出真实图片池的影响,19,True,True,True,content_order,2276,3,2,2,相互补充的设计,True,78
+16,table_cell,两类全部不等量互换,9,True,True,True,content_order,2295,3,3,0,相互补充的设计,True,97
+16,table_cell,同外部D；两类全员但人数不同,14,True,True,True,content_order,2304,3,3,1,相互补充的设计,True,106
+16,table_cell,人数与类别共同改变的结果；用既有等量中间队分解路径,25,True,False,True,content_order,2318,3,3,2,相互补充的设计,True,120
+16,table_cell,完整类别联盟,6,True,True,True,content_order,2343,3,4,0,相互补充的设计,True,145
+16,table_cell,每个非空类别组合全部成员；必要时另列固定未知背景,24,True,False,True,content_order,2349,3,4,1,相互补充的设计,True,151
+16,table_cell,模拟类1、类2、类3及两两或三类叠加,18,True,True,True,content_order,2373,3,4,2,相互补充的设计,True,175
+16,table_cell,固定D或固定XZ,8,True,True,True,content_order,2391,3,5,0,相互补充的设计,True,193
+16,table_cell,分别改变替换成员、背景成员/配比、背景人数,21,True,True,True,content_order,2399,3,5,1,相互补充的设计,True,201
+16,table_cell,拆开类别、具体成员与共同背景的敏感性,18,True,True,True,content_order,2420,3,5,2,相互补充的设计,True,222
+16,table_cell,固定A扩大块,6,True,True,True,content_order,2438,3,6,0,相互补充的设计,True,240
+16,table_cell,原队和既定嵌套成员顺序固定，逐步扩大m,19,True,True,True,content_order,2444,3,6,1,相互补充的设计,True,246
+16,table_cell,避免把不同图片或不同方向的m7/m12均值当纯比例效应,27,True,False,True,content_order,2463,3,6,2,相互补充的设计,True,265
+17,p,主A面板m取7、8、9、10、12；RFUSE补3、4人，其他准入Manual补3、4人。n由容量事前选取m、ceil(1.5m)、2m、2m+2、20及N−m中的合法值。一般保存8组XZ，分两批不同种子并对跨批组合去重；组合数≤16时枚举。整类方案通常抽4组，支持少时枚举。固定D、固定A及多背景另有独立登记。参数和具体成员选择不依据目标Q或替换收益。,177,True,True,True,content_order,2521,3,,,,,
+18,p,固定人数AC与整类等量主表采用事前登记的neutral_members_0背景路径；联盟、不等人数整类和背景敏感性分析使用各自登记的设计。先在目标池内平均可评成员组合，再按图等权；同图多目标先等权合并，并另报楼等权。覆盖漏斗含所有登记背景，所以其总体均值可能与主效果不同。全部背景结果保留在敏感性表，没有只留下表现好的背景。相同政策名称不保证各方法的实际D类别配比相同。,185,True,True,True,content_order,2698,3,,,,,
+19,p,Δ一律指C−A；B8L2与D10正值为提高，结构、面积、高度和劳动正值只表示增加。平均绝对变化先对每个实际事件取|Δ|再汇总，不能用|平均Δ|替代。Q分项、几何、劳动及状态各有自己的有效分母。缺Q不填0；几何表同时保留可成有效底面的对和双方完整输出的严格子集。BEV距离为1−IoU，无量纲；质心为相机高度h，面积h²，角度为度。,165,True,True,True,content_order,2892,3,,,,,
+20,p,劳动是已有标注记录的劳动量。主劳动比较要求两队全部有记录、各计时来源的人数向量相同；单一同源的其他对照另列。总劳动不是并行团队的墙钟完成时间，也不是程序运行耗时。固定XZ时劳动秒数差不随D改变，百分比仍会因A的分母改变。,110,True,True,True,content_order,3057,3,,,,,
+21,h,4 从合法图片池到大块执行范围,14,True,True,True,content_order,3167,3,,,,,
+22,p,等量AC的容量条件是1≤m≤n、n≥3、N≥n+m、来源类≥m、目标类≥m；未知标签可留D。N−m是固定XZ后最大相同队伍人数。在当前普通Manual的N最大35人池里，24人换12人的AC需要至少36人，实际不可能；23人换12人则可以。整类联盟可用全35人，但全员35人只有一支队，不能在同一个35人池内再做35人等量换人。Semi有自身更大的人员池，另节报告。,183,True,True,True,content_order,3181,3|4,,,,,
+23,table_title,主目标逐图类别容量 这些不是不同分类思想数量,21,True,True,True,content_order,3373,4,,,,,
+23,table_cell,方法,2,True,True,True,content_order,563,1,0,0,主目标逐图类别容量 这些不是不同分类思想数量,True,0
+23,table_cell,m7任意n,5,True,True,True,content_order,3396,4,0,1,主目标逐图类别容量 这些不是不同分类思想数量,True,2
+23,table_cell,m8,2,True,True,True,content_order,3401,4,0,2,主目标逐图类别容量 这些不是不同分类思想数量,True,7
+23,table_cell,m9,2,True,True,True,content_order,3403,4,0,3,主目标逐图类别容量 这些不是不同分类思想数量,True,9
+23,table_cell,m10,3,True,True,True,content_order,3405,4,0,4,主目标逐图类别容量 这些不是不同分类思想数量,True,11
+23,table_cell,m12,3,True,True,True,content_order,2479,3,0,5,主目标逐图类别容量 这些不是不同分类思想数量,True,14
+23,table_cell,20/10,5,True,True,True,content_order,3411,4,0,6,主目标逐图类别容量 这些不是不同分类思想数量,True,17
+23,table_cell,20/12,5,True,True,True,content_order,3416,4,0,7,主目标逐图类别容量 这些不是不同分类思想数量,True,22
+23,table_cell,TARGET K3,8,True,True,True,content_order,585,1,1,0,主目标逐图类别容量 这些不是不同分类思想数量,True,27
+23,table_cell,128,3,True,True,True,content_order,3429,4,1,1,主目标逐图类别容量 这些不是不同分类思想数量,True,35
+23,table_cell,42,2,True,True,True,content_order,1968,2,1,2,主目标逐图类别容量 这些不是不同分类思想数量,True,38
+23,table_cell,10,2,True,True,True,content_order,70,1,1,3,主目标逐图类别容量 这些不是不同分类思想数量,True,40
+23,table_cell,3,1,True,True,True,content_order,106,1,1,4,主目标逐图类别容量 这些不是不同分类思想数量,True,42
+23,table_cell,0,1,True,True,True,content_order,66,1,1,5,主目标逐图类别容量 这些不是不同分类思想数量,True,43
+23,table_cell,3,1,True,True,True,content_order,106,1,1,6,主目标逐图类别容量 这些不是不同分类思想数量,True,44
+23,table_cell,0,1,True,True,True,content_order,66,1,1,7,主目标逐图类别容量 这些不是不同分类思想数量,True,45
+23,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,2,0,主目标逐图类别容量 这些不是不同分类思想数量,True,46
+23,table_cell,124,3,True,True,True,content_order,3446,4,2,1,主目标逐图类别容量 这些不是不同分类思想数量,True,52
+23,table_cell,73,2,True,True,True,content_order,995,1,2,2,主目标逐图类别容量 这些不是不同分类思想数量,True,55
+23,table_cell,41,2,True,True,True,content_order,1758,2,2,3,主目标逐图类别容量 这些不是不同分类思想数量,True,57
+23,table_cell,19,2,True,True,True,content_order,1041,1,2,4,主目标逐图类别容量 这些不是不同分类思想数量,True,59
+23,table_cell,6,1,True,True,True,content_order,68,1,2,5,主目标逐图类别容量 这些不是不同分类思想数量,True,61
+23,table_cell,19,2,True,True,True,content_order,1041,1,2,6,主目标逐图类别容量 这些不是不同分类思想数量,True,62
+23,table_cell,6,1,True,True,True,content_order,68,1,2,7,主目标逐图类别容量 这些不是不同分类思想数量,True,64
+23,table_cell,OPPJOINT K3,10,True,True,True,content_order,663,1,3,0,主目标逐图类别容量 这些不是不同分类思想数量,True,65
+23,table_cell,141,3,True,True,True,content_order,3469,4,3,1,主目标逐图类别容量 这些不是不同分类思想数量,True,75
+23,table_cell,110,3,True,True,True,content_order,3472,4,3,2,主目标逐图类别容量 这些不是不同分类思想数量,True,78
+23,table_cell,99,2,True,True,True,content_order,1921,2,3,3,主目标逐图类别容量 这些不是不同分类思想数量,True,81
+23,table_cell,86,2,True,True,True,content_order,3477,4,3,4,主目标逐图类别容量 这些不是不同分类思想数量,True,83
+23,table_cell,26,2,True,True,True,content_order,67,1,3,5,主目标逐图类别容量 这些不是不同分类思想数量,True,85
+23,table_cell,82,2,True,True,True,content_order,844,1,3,6,主目标逐图类别容量 这些不是不同分类思想数量,True,87
+23,table_cell,25,2,True,True,True,content_order,1702,2,3,7,主目标逐图类别容量 这些不是不同分类思想数量,True,89
+23,table_cell,OPPJOINT K4,10,True,True,True,content_order,3485,4,4,0,主目标逐图类别容量 这些不是不同分类思想数量,True,91
+23,table_cell,156,3,True,True,True,content_order,3495,4,4,1,主目标逐图类别容量 这些不是不同分类思想数量,True,101
+23,table_cell,139,3,True,True,True,content_order,3498,4,4,2,主目标逐图类别容量 这些不是不同分类思想数量,True,104
+23,table_cell,128,3,True,True,True,content_order,3429,4,4,3,主目标逐图类别容量 这些不是不同分类思想数量,True,107
+23,table_cell,110,3,True,True,True,content_order,3472,4,4,4,主目标逐图类别容量 这些不是不同分类思想数量,True,110
+23,table_cell,38,2,True,True,True,content_order,1627,2,4,5,主目标逐图类别容量 这些不是不同分类思想数量,True,113
+23,table_cell,107,3,True,True,True,content_order,3509,4,4,6,主目标逐图类别容量 这些不是不同分类思想数量,True,115
+23,table_cell,36,2,True,True,True,content_order,1078,1,4,7,主目标逐图类别容量 这些不是不同分类思想数量,True,118
+23,table_cell,OPPSTRUCT K3,11,True,True,True,content_order,882,1,5,0,主目标逐图类别容量 这些不是不同分类思想数量,True,120
+23,table_cell,98,2,True,True,True,content_order,3476,4,5,1,主目标逐图类别容量 这些不是不同分类思想数量,True,131
+23,table_cell,41,2,True,True,True,content_order,1758,2,5,2,主目标逐图类别容量 这些不是不同分类思想数量,True,133
+23,table_cell,19,2,True,True,True,content_order,1041,1,5,3,主目标逐图类别容量 这些不是不同分类思想数量,True,135
+23,table_cell,14,2,True,True,True,content_order,3469,4,5,4,主目标逐图类别容量 这些不是不同分类思想数量,True,137
+23,table_cell,10,2,True,True,True,content_order,70,1,5,5,主目标逐图类别容量 这些不是不同分类思想数量,True,139
+23,table_cell,13,2,True,True,True,content_order,559,1,5,6,主目标逐图类别容量 这些不是不同分类思想数量,True,141
+23,table_cell,9,1,True,True,True,content_order,74,1,5,7,主目标逐图类别容量 这些不是不同分类思想数量,True,143
+24,p,20/10的206个合法池中，35池先因总人数退出；剩171池的已分类人员总量均足够。类别分布再使TARGET、RAW3、JOINT3、JOINT4分别退出168、152、89、64池，最终3、19、82、107池全部登记并执行，且各池至少有一个Q可评事件。但所有登记事件都可评的池只有3、17、75、98；不能把“池可评”写成“每次成功”。,171,True,True,True,content_order,3565,4,,,,,
+25,p,TARGET全部m9/m10可行方向均在同一个K2父类内部；其主高结构粗边界最多支持8人。OPPJOINT K3/K4的m10/m12均未涉及最高历史Q类。类别容量更宽说明可研究范围更宽，不说明替换更优。RAW3十二人容量的6图还分为两种方向和两栋楼，不能把所有十二人结果当同一类人变化。,143,True,True,True,content_order,3741,4,,,,,
+26,p,实际23/12前沿已覆盖RAW3 4图1楼、JOINT3 19图6楼、JOINT4 27图10楼；25/10前沿分别覆盖TARGET 1图1楼、RAW3 9图4楼、JOINT3 52图11楼、JOINT4 73图16楼。中间22/12不在所有池的冻结人数网格中：RAW3登记0/4、JOINT3 11/24、JOINT4 16/35。前沿条件已回答较大队问题，未选中间n明确记录为未登记，不称失败或容量不足。,195,True,True,True,content_order,3893,4,,,,,
+27,h,5 固定人数和固定替换块的结果,14,True,True,True,content_order,4093,4,,,,,
+28,table_title,主结构解释与既有七八人条件的连接,16,True,True,True,content_order,4107,4,,,,,
+28,table_cell,方向,2,True,True,True,content_order,279,1,0,0,主结构解释与既有七八人条件的连接,True,0
+28,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,主结构解释与既有七八人条件的连接,True,2
+28,table_cell,可评/登记图；楼,8,True,True,True,content_order,4128,4,0,2,主结构解释与既有七八人条件的连接,True,5
+28,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,主结构解释与既有七八人条件的连接,True,13
+28,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,主结构解释与既有七八人条件的连接,True,18
+28,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,主结构解释与既有七八人条件的连接,True,22
+28,table_cell,Q正向图,4,True,True,True,content_order,4150,4,0,6,主结构解释与既有七八人条件的连接,True,27
+28,table_cell,TARGET K3 中→高,11,True,True,True,content_order,4154,4,1,0,主结构解释与既有七八人条件的连接,True,31
+28,table_cell,14/7,4,True,True,True,content_order,4165,4,1,1,主结构解释与既有七八人条件的连接,True,42
+28,table_cell,84/85；21,8,True,True,True,content_order,4169,4,1,2,主结构解释与既有七八人条件的连接,True,46
+28,table_cell,+5.793,6,True,True,True,content_order,4177,4,1,3,主结构解释与既有七八人条件的连接,True,54
+28,table_cell,+5.372,6,True,True,True,content_order,4183,4,1,4,主结构解释与既有七八人条件的连接,True,60
+28,table_cell,7.360,5,True,True,True,content_order,4189,4,1,5,主结构解释与既有七八人条件的连接,True,66
+28,table_cell,77/84,5,True,True,True,content_order,4194,4,1,6,主结构解释与既有七八人条件的连接,True,71
+28,table_cell,TARGET K3 中→高,11,True,True,True,content_order,4154,4,2,0,主结构解释与既有七八人条件的连接,True,76
+28,table_cell,20/7,4,True,True,True,content_order,274,1,2,1,主结构解释与既有七八人条件的连接,True,87
+28,table_cell,85/85；21,8,True,True,True,content_order,4214,4,2,2,主结构解释与既有七八人条件的连接,True,91
+28,table_cell,+4.576,6,True,True,True,content_order,297,1,2,3,主结构解释与既有七八人条件的连接,True,99
+28,table_cell,+4.372,6,True,True,True,content_order,4228,4,2,4,主结构解释与既有七八人条件的连接,True,105
+28,table_cell,5.815,5,True,True,True,content_order,312,1,2,5,主结构解释与既有七八人条件的连接,True,111
+28,table_cell,78/85,5,True,True,True,content_order,318,1,2,6,主结构解释与既有七八人条件的连接,True,116
+28,table_cell,TARGET K2 粗边界,11,True,True,True,content_order,4244,4,3,0,主结构解释与既有七八人条件的连接,True,121
+28,table_cell,20/7,4,True,True,True,content_order,274,1,3,1,主结构解释与既有七八人条件的连接,True,132
+28,table_cell,85/85；21,8,True,True,True,content_order,4214,4,3,2,主结构解释与既有七八人条件的连接,True,136
+28,table_cell,+4.645,6,True,True,True,content_order,4267,4,3,3,主结构解释与既有七八人条件的连接,True,144
+28,table_cell,+4.361,6,True,True,True,content_order,4273,4,3,4,主结构解释与既有七八人条件的连接,True,150
+28,table_cell,5.751,5,True,True,True,content_order,4279,4,3,5,主结构解释与既有七八人条件的连接,True,156
+28,table_cell,80/85,5,True,True,True,content_order,4284,4,3,6,主结构解释与既有七八人条件的连接,True,161
+28,table_cell,TARGET K3 中→高,11,True,True,True,content_order,4154,4,4,0,主结构解释与既有七八人条件的连接,True,166
+28,table_cell,20/8,4,True,True,True,content_order,4300,4,4,1,主结构解释与既有七八人条件的连接,True,177
+28,table_cell,11/11；9,7,True,True,True,content_order,4304,4,4,2,主结构解释与既有七八人条件的连接,True,181
+28,table_cell,+3.486,6,True,True,True,content_order,4311,4,4,3,主结构解释与既有七八人条件的连接,True,188
+28,table_cell,+3.614,6,True,True,True,content_order,4317,4,4,4,主结构解释与既有七八人条件的连接,True,194
+28,table_cell,5.156,5,True,True,True,content_order,4323,4,4,5,主结构解释与既有七八人条件的连接,True,200
+28,table_cell,10/11,5,True,True,True,content_order,4328,4,4,6,主结构解释与既有七八人条件的连接,True,205
+28,table_cell,RAW3 中→高,7,True,True,True,content_order,4333,4,5,0,主结构解释与既有七八人条件的连接,True,210
+28,table_cell,20/8,4,True,True,True,content_order,4300,4,5,1,主结构解释与既有七八人条件的连接,True,217
+28,table_cell,38/38；15,8,True,True,True,content_order,4344,4,5,2,主结构解释与既有七八人条件的连接,True,221
+28,table_cell,+3.526,6,True,True,True,content_order,4352,4,5,3,主结构解释与既有七八人条件的连接,True,229
+28,table_cell,+3.309,6,True,True,True,content_order,4358,4,5,4,主结构解释与既有七八人条件的连接,True,235
+28,table_cell,5.327,5,True,True,True,content_order,4364,4,5,5,主结构解释与既有七八人条件的连接,True,241
+28,table_cell,29/38,5,True,True,True,content_order,4369,4,5,6,主结构解释与既有七八人条件的连接,True,246
+28,table_cell,OPPJOINT K3 Q1→3,14,True,True,True,content_order,4405,5,6,0,主结构解释与既有七八人条件的连接,True,282
+28,table_cell,20/7,4,True,True,True,content_order,274,1,6,1,主结构解释与既有七八人条件的连接,True,296
+28,table_cell,72/72；15,8,True,True,True,content_order,4423,5,6,2,主结构解释与既有七八人条件的连接,True,300
+28,table_cell,+4.572,6,True,True,True,content_order,4431,5,6,3,主结构解释与既有七八人条件的连接,True,308
+28,table_cell,+4.310,6,True,True,True,content_order,4437,5,6,4,主结构解释与既有七八人条件的连接,True,314
+28,table_cell,5.057,5,True,True,True,content_order,4443,5,6,5,主结构解释与既有七八人条件的连接,True,320
+28,table_cell,68/72,5,True,True,True,content_order,4448,5,6,6,主结构解释与既有七八人条件的连接,True,325
+28,table_cell,OPPSTRUCT 中→高,12,True,True,True,content_order,4453,5,7,0,主结构解释与既有七八人条件的连接,True,330
+28,table_cell,20/7,4,True,True,True,content_order,274,1,7,1,主结构解释与既有七八人条件的连接,True,342
+28,table_cell,41/41；16,8,True,True,True,content_order,4469,5,7,2,主结构解释与既有七八人条件的连接,True,346
+28,table_cell,+3.980,6,True,True,True,content_order,4477,5,7,3,主结构解释与既有七八人条件的连接,True,354
+28,table_cell,+3.861,6,True,True,True,content_order,4483,5,7,4,主结构解释与既有七八人条件的连接,True,360
+28,table_cell,5.149,5,True,True,True,content_order,4489,5,7,5,主结构解释与既有七八人条件的连接,True,366
+28,table_cell,38/41,5,True,True,True,content_order,4494,5,7,6,主结构解释与既有七八人条件的连接,True,371
+28,table_cell,RFUSE 响应1→2,10,True,True,True,content_order,4499,5,8,0,主结构解释与既有七八人条件的连接,True,376
+28,table_cell,20/4,4,True,True,True,content_order,4509,5,8,1,主结构解释与既有七八人条件的连接,True,386
+28,table_cell,82/82；21,8,True,True,True,content_order,4513,5,8,2,主结构解释与既有七八人条件的连接,True,390
+28,table_cell,+2.934,6,True,True,True,content_order,4521,5,8,3,主结构解释与既有七八人条件的连接,True,398
+28,table_cell,+2.890,6,True,True,True,content_order,4527,5,8,4,主结构解释与既有七八人条件的连接,True,404
+28,table_cell,4.424,5,True,True,True,content_order,4533,5,8,5,主结构解释与既有七八人条件的连接,True,410
+28,table_cell,77/82,5,True,True,True,content_order,4538,5,8,6,主结构解释与既有七八人条件的连接,True,415
+29,p,这些是各方法实际覆盖范围上的结果，不是同一组人员的算法竞赛。K2与K3的20/7都覆盖85图，但源类候选与抽到的具体人员不同，不能用4.65与4.58的微小均值差评判粗细层优劣。K3增加的是低、中结构角色及其条件响应的解释；K2提供不再细分低、中角色的粗边界。RAW3八人高结构方向扩展到38图15楼，是容量与定义的补充。,161,True,True,True,content_order,4570,5,,,,,
+30,table_title,十人十二人及较大团队 保留全部实际方向,18,True,True,True,content_order,4740,5,,,,,
+30,table_cell,方向,2,True,True,True,content_order,279,1,0,0,十人十二人及较大团队 保留全部实际方向,True,0
+30,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,十人十二人及较大团队 保留全部实际方向,True,2
+30,table_cell,可评/登记图；楼,8,True,True,True,content_order,4128,4,0,2,十人十二人及较大团队 保留全部实际方向,True,5
+30,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,十人十二人及较大团队 保留全部实际方向,True,13
+30,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,十人十二人及较大团队 保留全部实际方向,True,18
+30,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,十人十二人及较大团队 保留全部实际方向,True,22
+30,table_cell,Q正向图,4,True,True,True,content_order,4150,4,0,6,十人十二人及较大团队 保留全部实际方向,True,27
+30,table_cell,TARGET K3 低→中,11,True,True,True,content_order,4789,5,1,0,十人十二人及较大团队 保留全部实际方向,True,31
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,1,1,十人十二人及较大团队 保留全部实际方向,True,42
+30,table_cell,3/3；2,5,True,True,True,content_order,4805,5,1,2,十人十二人及较大团队 保留全部实际方向,True,47
+30,table_cell,+0.496,6,True,True,True,content_order,4810,5,1,3,十人十二人及较大团队 保留全部实际方向,True,52
+30,table_cell,+0.409,6,True,True,True,content_order,4816,5,1,4,十人十二人及较大团队 保留全部实际方向,True,58
+30,table_cell,1.191,5,True,True,True,content_order,4822,5,1,5,十人十二人及较大团队 保留全部实际方向,True,64
+30,table_cell,2/3,3,True,True,True,content_order,4827,5,1,6,十人十二人及较大团队 保留全部实际方向,True,69
+30,table_cell,RAW3 低→中,7,True,True,True,content_order,4830,5,2,0,十人十二人及较大团队 保留全部实际方向,True,72
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,2,1,十人十二人及较大团队 保留全部实际方向,True,79
+30,table_cell,12/12；5,7,True,True,True,content_order,4842,5,2,2,十人十二人及较大团队 保留全部实际方向,True,84
+30,table_cell,+0.522,6,True,True,True,content_order,4849,5,2,3,十人十二人及较大团队 保留全部实际方向,True,91
+30,table_cell,+0.714,6,True,True,True,content_order,4855,5,2,4,十人十二人及较大团队 保留全部实际方向,True,97
+30,table_cell,4.700,5,True,True,True,content_order,4861,5,2,5,十人十二人及较大团队 保留全部实际方向,True,103
+30,table_cell,8/12,4,True,True,True,content_order,4866,5,2,6,十人十二人及较大团队 保留全部实际方向,True,108
+30,table_cell,RAW3 低→高,7,True,True,True,content_order,4870,5,3,0,十人十二人及较大团队 保留全部实际方向,True,112
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,3,1,十人十二人及较大团队 保留全部实际方向,True,119
+30,table_cell,3/3；1,5,True,True,True,content_order,4882,5,3,2,十人十二人及较大团队 保留全部实际方向,True,124
+30,table_cell,+6.079,6,True,True,True,content_order,4887,5,3,3,十人十二人及较大团队 保留全部实际方向,True,129
+30,table_cell,+6.941,6,True,True,True,content_order,4893,5,3,4,十人十二人及较大团队 保留全部实际方向,True,135
+30,table_cell,8.986,5,True,True,True,content_order,4899,5,3,5,十人十二人及较大团队 保留全部实际方向,True,141
+30,table_cell,2/3,3,True,True,True,content_order,4827,5,3,6,十人十二人及较大团队 保留全部实际方向,True,146
+30,table_cell,RAW3 中→高,7,True,True,True,content_order,4333,4,4,0,十人十二人及较大团队 保留全部实际方向,True,149
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,4,1,十人十二人及较大团队 保留全部实际方向,True,156
+30,table_cell,6/6；3,5,True,True,True,content_order,4919,5,4,2,十人十二人及较大团队 保留全部实际方向,True,161
+30,table_cell,+2.629,6,True,True,True,content_order,4924,5,4,3,十人十二人及较大团队 保留全部实际方向,True,166
+30,table_cell,+2.612,6,True,True,True,content_order,4930,5,4,4,十人十二人及较大团队 保留全部实际方向,True,172
+30,table_cell,4.419,5,True,True,True,content_order,4936,5,4,5,十人十二人及较大团队 保留全部实际方向,True,178
+30,table_cell,5/6,3,True,True,True,content_order,4941,5,4,6,十人十二人及较大团队 保留全部实际方向,True,183
+30,table_cell,JOINT3 Q1→2,10,True,True,True,content_order,4944,5,5,0,十人十二人及较大团队 保留全部实际方向,True,186
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,5,1,十人十二人及较大团队 保留全部实际方向,True,196
+30,table_cell,82/82；11,8,True,True,True,content_order,4959,5,5,2,十人十二人及较大团队 保留全部实际方向,True,201
+30,table_cell,+0.297,6,True,True,True,content_order,4967,5,5,3,十人十二人及较大团队 保留全部实际方向,True,209
+30,table_cell,+0.321,6,True,True,True,content_order,4973,5,5,4,十人十二人及较大团队 保留全部实际方向,True,215
+30,table_cell,3.282,5,True,True,True,content_order,4979,5,5,5,十人十二人及较大团队 保留全部实际方向,True,221
+30,table_cell,42/82,5,True,True,True,content_order,4984,5,5,6,十人十二人及较大团队 保留全部实际方向,True,226
+30,table_cell,JOINT4 Q1→2,10,True,True,True,content_order,4989,5,6,0,十人十二人及较大团队 保留全部实际方向,True,231
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,6,1,十人十二人及较大团队 保留全部实际方向,True,241
+30,table_cell,101/101；15,10,True,True,True,content_order,5004,5,6,2,十人十二人及较大团队 保留全部实际方向,True,246
+30,table_cell,+1.333,6,True,True,True,content_order,5014,5,6,3,十人十二人及较大团队 保留全部实际方向,True,256
+30,table_cell,+1.237,6,True,True,True,content_order,5020,5,6,4,十人十二人及较大团队 保留全部实际方向,True,262
+30,table_cell,3.411,5,True,True,True,content_order,5026,5,6,5,十人十二人及较大团队 保留全部实际方向,True,268
+30,table_cell,55/101,6,True,True,True,content_order,5031,5,6,6,十人十二人及较大团队 保留全部实际方向,True,273
+30,table_cell,JOINT4 Q2→3,10,True,True,True,content_order,5037,5,7,0,十人十二人及较大团队 保留全部实际方向,True,279
+30,table_cell,20/10,5,True,True,True,content_order,3411,4,7,1,十人十二人及较大团队 保留全部实际方向,True,289
+30,table_cell,6/6；1,5,True,True,True,content_order,5052,5,7,2,十人十二人及较大团队 保留全部实际方向,True,294
+30,table_cell,-2.660,6,True,True,True,content_order,5057,5,7,3,十人十二人及较大团队 保留全部实际方向,True,299
+30,table_cell,-2.105,6,True,True,True,content_order,5063,5,7,4,十人十二人及较大团队 保留全部实际方向,True,305
+30,table_cell,3.910,5,True,True,True,content_order,5069,5,7,5,十人十二人及较大团队 保留全部实际方向,True,311
+30,table_cell,3/6,3,True,True,True,content_order,5074,5,7,6,十人十二人及较大团队 保留全部实际方向,True,316
+30,table_cell,RAW3 低→中,7,True,True,True,content_order,4830,5,8,0,十人十二人及较大团队 保留全部实际方向,True,319
+30,table_cell,20/12,5,True,True,True,content_order,3416,4,8,1,十人十二人及较大团队 保留全部实际方向,True,326
+30,table_cell,4/4；1,5,True,True,True,content_order,5089,5,8,2,十人十二人及较大团队 保留全部实际方向,True,331
+30,table_cell,-8.094,6,True,True,True,content_order,5094,5,8,3,十人十二人及较大团队 保留全部实际方向,True,336
+30,table_cell,-7.061,6,True,True,True,content_order,5100,5,8,4,十人十二人及较大团队 保留全部实际方向,True,342
+30,table_cell,8.304,5,True,True,True,content_order,5106,5,8,5,十人十二人及较大团队 保留全部实际方向,True,348
+30,table_cell,0/4,3,True,True,True,content_order,4023,4,8,6,十人十二人及较大团队 保留全部实际方向,True,353
+30,table_cell,RAW3 中→高,7,True,True,True,content_order,4333,4,9,0,十人十二人及较大团队 保留全部实际方向,True,356
+30,table_cell,20/12,5,True,True,True,content_order,3416,4,9,1,十人十二人及较大团队 保留全部实际方向,True,363
+30,table_cell,2/2；1,5,True,True,True,content_order,5126,5,9,2,十人十二人及较大团队 保留全部实际方向,True,368
+30,table_cell,+1.947,6,True,True,True,content_order,5131,5,9,3,十人十二人及较大团队 保留全部实际方向,True,373
+30,table_cell,+1.700,6,True,True,True,content_order,5137,5,9,4,十人十二人及较大团队 保留全部实际方向,True,379
+30,table_cell,1.947,5,True,True,True,content_order,5132,5,9,5,十人十二人及较大团队 保留全部实际方向,True,385
+30,table_cell,2/2,3,True,True,True,content_order,5126,5,9,6,十人十二人及较大团队 保留全部实际方向,True,390
+30,table_cell,JOINT3 Q1→2,10,True,True,True,content_order,4944,5,10,0,十人十二人及较大团队 保留全部实际方向,True,393
+30,table_cell,20/12,5,True,True,True,content_order,3416,4,10,1,十人十二人及较大团队 保留全部实际方向,True,403
+30,table_cell,25/25；6,7,True,True,True,content_order,5166,5,10,2,十人十二人及较大团队 保留全部实际方向,True,408
+30,table_cell,+0.669,6,True,True,True,content_order,5173,5,10,3,十人十二人及较大团队 保留全部实际方向,True,415
+30,table_cell,+0.749,6,True,True,True,content_order,5179,5,10,4,十人十二人及较大团队 保留全部实际方向,True,421
+30,table_cell,4.477,5,True,True,True,content_order,5185,5,10,5,十人十二人及较大团队 保留全部实际方向,True,427
+30,table_cell,14/25,5,True,True,True,content_order,5190,5,10,6,十人十二人及较大团队 保留全部实际方向,True,432
+30,table_cell,JOINT4 Q1→2,10,True,True,True,content_order,4989,5,11,0,十人十二人及较大团队 保留全部实际方向,True,437
+30,table_cell,20/12,5,True,True,True,content_order,3416,4,11,1,十人十二人及较大团队 保留全部实际方向,True,447
+30,table_cell,35/35；9,7,True,True,True,content_order,5210,5,11,2,十人十二人及较大团队 保留全部实际方向,True,452
+30,table_cell,+0.586,6,True,True,True,content_order,5217,5,11,3,十人十二人及较大团队 保留全部实际方向,True,459
+30,table_cell,+0.596,6,True,True,True,content_order,5223,5,11,4,十人十二人及较大团队 保留全部实际方向,True,465
+30,table_cell,3.637,5,True,True,True,content_order,5229,5,11,5,十人十二人及较大团队 保留全部实际方向,True,471
+30,table_cell,18/35,5,True,True,True,content_order,5234,5,11,6,十人十二人及较大团队 保留全部实际方向,True,476
+30,table_cell,JOINT4 Q2→3,10,True,True,True,content_order,5037,5,12,0,十人十二人及较大团队 保留全部实际方向,True,481
+30,table_cell,20/12,5,True,True,True,content_order,3416,4,12,1,十人十二人及较大团队 保留全部实际方向,True,491
+30,table_cell,1/1；1,5,True,True,True,content_order,5254,5,12,2,十人十二人及较大团队 保留全部实际方向,True,496
+30,table_cell,-9.805,6,True,True,True,content_order,5259,5,12,3,十人十二人及较大团队 保留全部实际方向,True,501
+30,table_cell,-8.953,6,True,True,True,content_order,5265,5,12,4,十人十二人及较大团队 保留全部实际方向,True,507
+30,table_cell,11.183,6,True,True,True,content_order,5271,5,12,5,十人十二人及较大团队 保留全部实际方向,True,513
+30,table_cell,0/1,3,True,True,True,content_order,3412,4,12,6,十人十二人及较大团队 保留全部实际方向,True,519
+30,table_cell,RAW3 低→中,7,True,True,True,content_order,4830,5,13,0,十人十二人及较大团队 保留全部实际方向,True,522
+30,table_cell,23/12,5,True,True,True,content_order,3895,4,13,1,十人十二人及较大团队 保留全部实际方向,True,529
+30,table_cell,4/4；1,5,True,True,True,content_order,5089,5,13,2,十人十二人及较大团队 保留全部实际方向,True,534
+30,table_cell,-7.492,6,True,True,True,content_order,5297,5,13,3,十人十二人及较大团队 保留全部实际方向,True,539
+30,table_cell,-6.864,6,True,True,True,content_order,5303,5,13,4,十人十二人及较大团队 保留全部实际方向,True,545
+30,table_cell,7.605,5,True,True,True,content_order,5309,5,13,5,十人十二人及较大团队 保留全部实际方向,True,551
+30,table_cell,0/4,3,True,True,True,content_order,4023,4,13,6,十人十二人及较大团队 保留全部实际方向,True,556
+30,table_cell,JOINT3 Q1→2,10,True,True,True,content_order,4944,5,14,0,十人十二人及较大团队 保留全部实际方向,True,559
+30,table_cell,23/12,5,True,True,True,content_order,3895,4,14,1,十人十二人及较大团队 保留全部实际方向,True,569
+30,table_cell,19/19；6,7,True,True,True,content_order,5332,5,14,2,十人十二人及较大团队 保留全部实际方向,True,574
+30,table_cell,+1.309,6,True,True,True,content_order,5339,5,14,3,十人十二人及较大团队 保留全部实际方向,True,581
+30,table_cell,+1.373,6,True,True,True,content_order,5345,5,14,4,十人十二人及较大团队 保留全部实际方向,True,587
+30,table_cell,4.122,5,True,True,True,content_order,5351,5,14,5,十人十二人及较大团队 保留全部实际方向,True,593
+30,table_cell,12/19,5,True,True,True,content_order,5356,5,14,6,十人十二人及较大团队 保留全部实际方向,True,598
+30,table_cell,JOINT4 Q1→2,10,True,True,True,content_order,4989,5,15,0,十人十二人及较大团队 保留全部实际方向,True,603
+30,table_cell,23/12,5,True,True,True,content_order,3895,4,15,1,十人十二人及较大团队 保留全部实际方向,True,613
+30,table_cell,26/26；9,7,True,True,True,content_order,5376,5,15,2,十人十二人及较大团队 保留全部实际方向,True,618
+30,table_cell,+1.366,6,True,True,True,content_order,5383,5,15,3,十人十二人及较大团队 保留全部实际方向,True,625
+30,table_cell,+1.319,6,True,True,True,content_order,5389,5,15,4,十人十二人及较大团队 保留全部实际方向,True,631
+30,table_cell,3.335,5,True,True,True,content_order,5395,5,15,5,十人十二人及较大团队 保留全部实际方向,True,637
+30,table_cell,15/26,5,True,True,True,content_order,5400,5,15,6,十人十二人及较大团队 保留全部实际方向,True,642
+30,table_cell,JOINT4 Q2→3,10,True,True,True,content_order,5037,5,16,0,十人十二人及较大团队 保留全部实际方向,True,647
+30,table_cell,23/12,5,True,True,True,content_order,3895,4,16,1,十人十二人及较大团队 保留全部实际方向,True,657
+30,table_cell,1/1；1,5,True,True,True,content_order,5254,5,16,2,十人十二人及较大团队 保留全部实际方向,True,662
+30,table_cell,-12.046,7,True,True,True,content_order,5425,5,16,3,十人十二人及较大团队 保留全部实际方向,True,667
+30,table_cell,-10.346,7,True,True,True,content_order,5432,5,16,4,十人十二人及较大团队 保留全部实际方向,True,674
+30,table_cell,12.046,6,True,True,True,content_order,5426,5,16,5,十人十二人及较大团队 保留全部实际方向,True,681
+30,table_cell,0/1,3,True,True,True,content_order,3412,4,16,6,十人十二人及较大团队 保留全部实际方向,True,687
+31,p,OPPJOINT K3的20/10有42/82图升Q、40图下降，均值仅+0.297但平均绝对变化3.282；这是一种双向不确定性，不能写成稳定升质。RAW3的23/12低→中方向4/4图下降，均值−7.492，却只来自B6ByNegPMKs一楼；其20/12中→高的另两图来自q9vSo1VnCiC，均为正。这样的方向与建筑分离比合成一个“十二人好/坏”的结论更准确。,184,True,True,True,content_order,5475,5|6,,,,,
+32,image_caption,图1 重点条件的有符号均值、图片P10–P90与多数方向。线段是分布，不是置信区间；全部方向见前表。,49,True,True,True,content_order,5664,6,,,,,
+33,h,6 整个类别进入或退出怎样改变结果,16,True,True,True,content_order,5713,6,,,,,
+34,table_title,固定n20且等量的三种整类定义,15,True,True,True,content_order,5729,6,,,,,
+34,table_cell,定义与方向,5,True,True,True,content_order,5744,6,0,0,固定n20且等量的三种整类定义,True,0
+34,table_cell,实际m,3,True,False,True,content_order,5749,6,0,1,固定n20且等量的三种整类定义,True,5
+34,table_cell,可评/登记图；楼,8,True,True,True,content_order,4128,4,0,2,固定n20且等量的三种整类定义,True,8
+34,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,固定n20且等量的三种整类定义,True,16
+34,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,固定n20且等量的三种整类定义,True,21
+34,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,固定n20且等量的三种整类定义,True,25
+34,table_cell,Q正向图,4,True,True,True,content_order,4150,4,0,6,固定n20且等量的三种整类定义,True,30
+34,table_cell,TARGET 低→中 来源全出,13,True,True,True,content_order,5778,6,1,0,固定n20且等量的三种整类定义,True,34
+34,table_cell,1–11,4,True,True,True,content_order,5791,6,1,1,固定n20且等量的三种整类定义,True,47
+34,table_cell,186/186；22,10,True,True,True,content_order,5795,6,1,2,固定n20且等量的三种整类定义,True,51
+34,table_cell,+0.491,6,True,True,True,content_order,5805,6,1,3,固定n20且等量的三种整类定义,True,61
+34,table_cell,+0.482,6,True,True,True,content_order,5811,6,1,4,固定n20且等量的三种整类定义,True,67
+34,table_cell,2.960,5,True,True,True,content_order,5817,6,1,5,固定n20且等量的三种整类定义,True,73
+34,table_cell,120/186,7,True,True,True,content_order,5822,6,1,6,固定n20且等量的三种整类定义,True,78
+34,table_cell,TARGET 中→高 目标全入,13,True,True,True,content_order,5829,6,2,0,固定n20且等量的三种整类定义,True,85
+34,table_cell,1–8,3,True,True,True,content_order,348,1,2,1,固定n20且等量的三种整类定义,True,98
+34,table_cell,185/185；22,10,True,True,True,content_order,5845,6,2,2,固定n20且等量的三种整类定义,True,101
+34,table_cell,+3.615,6,True,True,True,content_order,358,1,2,3,固定n20且等量的三种整类定义,True,111
+34,table_cell,+3.426,6,True,True,True,content_order,5861,6,2,4,固定n20且等量的三种整类定义,True,117
+34,table_cell,5.385,5,True,True,True,content_order,5867,6,2,5,固定n20且等量的三种整类定义,True,123
+34,table_cell,155/185,7,True,True,True,content_order,365,1,2,6,固定n20且等量的三种整类定义,True,128
+34,table_cell,TARGET 低→高 来源全出,13,True,True,True,content_order,5879,6,3,0,固定n20且等量的三种整类定义,True,135
+34,table_cell,1–6,3,True,True,True,content_order,5892,6,3,1,固定n20且等量的三种整类定义,True,148
+34,table_cell,122/122；22,10,True,True,True,content_order,5895,6,3,2,固定n20且等量的三种整类定义,True,151
+34,table_cell,+2.712,6,True,True,True,content_order,5905,6,3,3,固定n20且等量的三种整类定义,True,161
+34,table_cell,+2.509,6,True,True,True,content_order,5911,6,3,4,固定n20且等量的三种整类定义,True,167
+34,table_cell,4.111,5,True,True,True,content_order,5917,6,3,5,固定n20且等量的三种整类定义,True,173
+34,table_cell,103/122,7,True,True,True,content_order,5922,6,3,6,固定n20且等量的三种整类定义,True,178
+34,table_cell,TARGET 低→高 目标全入,13,True,True,True,content_order,5929,6,4,0,固定n20且等量的三种整类定义,True,185
+34,table_cell,1–7,3,True,True,True,content_order,5942,6,4,1,固定n20且等量的三种整类定义,True,198
+34,table_cell,57/57；14,8,True,True,True,content_order,5945,6,4,2,固定n20且等量的三种整类定义,True,201
+34,table_cell,+3.942,6,True,True,True,content_order,5953,6,4,3,固定n20且等量的三种整类定义,True,209
+34,table_cell,+3.706,6,True,True,True,content_order,5959,6,4,4,固定n20且等量的三种整类定义,True,215
+34,table_cell,5.213,5,True,True,True,content_order,5965,6,4,5,固定n20且等量的三种整类定义,True,221
+34,table_cell,44/57,5,True,True,True,content_order,5970,6,4,6,固定n20且等量的三种整类定义,True,226
+34,table_cell,TARGET 低→高 两类全换,13,True,True,True,content_order,5975,6,5,0,固定n20且等量的三种整类定义,True,231
+34,table_cell,2–7,3,True,True,True,content_order,5988,6,5,1,固定n20且等量的三种整类定义,True,244
+34,table_cell,6/7；3,5,True,True,True,content_order,5991,6,5,2,固定n20且等量的三种整类定义,True,247
+34,table_cell,+1.105,6,True,True,True,content_order,5996,6,5,3,固定n20且等量的三种整类定义,True,252
+34,table_cell,+1.312,6,True,True,True,content_order,6002,6,5,4,固定n20且等量的三种整类定义,True,258
+34,table_cell,1.432,5,True,True,True,content_order,6008,6,5,5,固定n20且等量的三种整类定义,True,264
+34,table_cell,5/6,3,True,True,True,content_order,4941,5,5,6,固定n20且等量的三种整类定义,True,269
+35,p,推荐的TARGET中→高185图全部属于“整个目标类换入”：来源类抽出等量人员，目标类使用该图全部1–8人。它不是把37人的全局中类全换掉。相反，低→中的186图全部是整个来源类换出，Q均值较弱，但逐事件绝对变化仍约2.96分。低→高又包含来源全出、目标全入和两边全换三种，分别保留。,142,True,True,True,content_order,6043,6,,,,,
+36,table_title,其它解释路线的整类等量结果,13,True,True,True,content_order,6194,7,,,,,
+36,table_cell,方向,2,True,True,True,content_order,279,1,0,0,其它解释路线的整类等量结果,True,0
+36,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,其它解释路线的整类等量结果,True,2
+36,table_cell,可评/登记图；楼,8,True,True,True,content_order,4128,4,0,2,其它解释路线的整类等量结果,True,5
+36,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,其它解释路线的整类等量结果,True,13
+36,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,其它解释路线的整类等量结果,True,18
+36,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,其它解释路线的整类等量结果,True,22
+36,table_cell,Q正向图,4,True,True,True,content_order,4150,4,0,6,其它解释路线的整类等量结果,True,27
+36,table_cell,TARGET K2 粗层,10,True,True,True,content_order,6238,7,1,0,其它解释路线的整类等量结果,True,31
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,1,1,其它解释路线的整类等量结果,True,41
+36,table_cell,185/185；22,10,True,True,True,content_order,5845,6,1,2,其它解释路线的整类等量结果,True,47
+36,table_cell,+4.415,6,True,True,True,content_order,6264,7,1,3,其它解释路线的整类等量结果,True,57
+36,table_cell,+4.193,6,True,True,True,content_order,6270,7,1,4,其它解释路线的整类等量结果,True,63
+36,table_cell,6.189,5,True,True,True,content_order,6276,7,1,5,其它解释路线的整类等量结果,True,69
+36,table_cell,161/185,7,True,True,True,content_order,6281,7,1,6,其它解释路线的整类等量结果,True,74
+36,table_cell,RAW3 中→高,7,True,True,True,content_order,4333,4,2,0,其它解释路线的整类等量结果,True,81
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,2,1,其它解释路线的整类等量结果,True,88
+36,table_cell,188/188；22,10,True,True,True,content_order,6301,7,2,2,其它解释路线的整类等量结果,True,94
+36,table_cell,+3.687,6,True,True,True,content_order,6311,7,2,3,其它解释路线的整类等量结果,True,104
+36,table_cell,+3.502,6,True,True,True,content_order,6317,7,2,4,其它解释路线的整类等量结果,True,110
+36,table_cell,5.362,5,True,True,True,content_order,6323,7,2,5,其它解释路线的整类等量结果,True,116
+36,table_cell,152/188,7,True,True,True,content_order,6328,7,2,6,其它解释路线的整类等量结果,True,121
+36,table_cell,JOINT3 Q1→3,10,True,True,True,content_order,6335,7,3,0,其它解释路线的整类等量结果,True,128
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,3,1,其它解释路线的整类等量结果,True,138
+36,table_cell,181/181；22,10,True,True,True,content_order,6351,7,3,2,其它解释路线的整类等量结果,True,144
+36,table_cell,+3.681,6,True,True,True,content_order,6361,7,3,3,其它解释路线的整类等量结果,True,154
+36,table_cell,+3.490,6,True,True,True,content_order,6367,7,3,4,其它解释路线的整类等量结果,True,160
+36,table_cell,5.717,5,True,True,True,content_order,6373,7,3,5,其它解释路线的整类等量结果,True,166
+36,table_cell,152/181,7,True,True,True,content_order,6378,7,3,6,其它解释路线的整类等量结果,True,171
+36,table_cell,JOINT3 Q2→3,10,True,True,True,content_order,6385,7,4,0,其它解释路线的整类等量结果,True,178
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,4,1,其它解释路线的整类等量结果,True,188
+36,table_cell,183/183；22,10,True,True,True,content_order,6401,7,4,2,其它解释路线的整类等量结果,True,194
+36,table_cell,+3.113,6,True,True,True,content_order,6411,7,4,3,其它解释路线的整类等量结果,True,204
+36,table_cell,+2.953,6,True,True,True,content_order,6417,7,4,4,其它解释路线的整类等量结果,True,210
+36,table_cell,4.592,5,True,True,True,content_order,6423,7,4,5,其它解释路线的整类等量结果,True,216
+36,table_cell,148/183,7,True,True,True,content_order,6428,7,4,6,其它解释路线的整类等量结果,True,221
+36,table_cell,JOINT4 Q2→4,10,True,True,True,content_order,6435,7,5,0,其它解释路线的整类等量结果,True,228
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,5,1,其它解释路线的整类等量结果,True,238
+36,table_cell,187/187；22,10,True,True,True,content_order,6451,7,5,2,其它解释路线的整类等量结果,True,244
+36,table_cell,+3.648,6,True,True,True,content_order,6461,7,5,3,其它解释路线的整类等量结果,True,254
+36,table_cell,+3.415,6,True,True,True,content_order,6467,7,5,4,其它解释路线的整类等量结果,True,260
+36,table_cell,5.626,5,True,True,True,content_order,6473,7,5,5,其它解释路线的整类等量结果,True,266
+36,table_cell,153/187,7,True,True,True,content_order,6478,7,5,6,其它解释路线的整类等量结果,True,271
+36,table_cell,RFUSE 响应1→2,10,True,True,True,content_order,4499,5,6,0,其它解释路线的整类等量结果,True,278
+36,table_cell,20/逐图m,6,True,True,True,content_order,6248,7,6,1,其它解释路线的整类等量结果,True,288
+36,table_cell,180/180；22,10,True,True,True,content_order,6501,7,6,2,其它解释路线的整类等量结果,True,294
+36,table_cell,+2.090,6,True,True,True,content_order,6511,7,6,3,其它解释路线的整类等量结果,True,304
+36,table_cell,+1.956,6,True,True,True,content_order,6517,7,6,4,其它解释路线的整类等量结果,True,310
+36,table_cell,3.717,5,True,True,True,content_order,6523,7,6,5,其它解释路线的整类等量结果,True,316
+36,table_cell,153/180,7,True,True,True,content_order,6528,7,6,6,其它解释路线的整类等量结果,True,321
+37,p,此表采用三种整类定义合并后的覆盖口径；来源全出、目标全入、两类全换各自结果见E08，不能全部解释为整目标类换入。,56,True,True,True,content_order,6562,7,,,,,
+38,p,TARGET中→高的池前沿整目标类换入登记205图，200图22楼有共同可评Q；n为5–32、m为1–8。B8L2平均+2.390、156/200图上升；D10平均+2.206、157/200上升。n随池容量改变，额外图片也不同，不能拿它与n20的均值差当“背景变多导致衰减”。同一XZ改变背景人数的严格嵌套对照另外分析。,161,True,True,True,content_order,6623,7,,,,,
+39,h,7 质量分项几何劳动和失败分别说明什么,18,True,True,True,content_order,6789,7,,,,,
+40,table_title,结构保留与完整输出对的几何变化,15,True,True,True,content_order,6807,7,,,,,
+40,table_cell,条件,2,True,True,True,content_order,139,1,0,0,结构保留与完整输出对的几何变化,True,0
+40,table_cell,Δ有效转折,5,True,True,True,content_order,6824,7,0,1,结构保留与完整输出对的几何变化,True,2
+40,table_cell,Δ节点保留pp,7,True,True,True,content_order,6829,7,0,2,结构保留与完整输出对的几何变化,True,7
+40,table_cell,Δ边保留pp,6,True,True,True,content_order,6836,7,0,3,结构保留与完整输出对的几何变化,True,14
+40,table_cell,BEV距离,5,True,True,True,content_order,3022,3,0,4,结构保留与完整输出对的几何变化,True,20
+40,table_cell,质心距离h,5,True,True,True,content_order,6847,7,0,5,结构保留与完整输出对的几何变化,True,25
+40,table_cell,几何分母,4,True,True,True,content_order,6852,7,0,6,结构保留与完整输出对的几何变化,True,30
+40,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,结构保留与完整输出对的几何变化,True,34
+40,table_cell,+0.221,6,True,True,True,content_order,6866,7,1,1,结构保留与完整输出对的几何变化,True,44
+40,table_cell,+3.98,5,True,True,True,content_order,4477,5,1,2,结构保留与完整输出对的几何变化,True,50
+40,table_cell,+5.58,5,True,True,True,content_order,6877,7,1,3,结构保留与完整输出对的几何变化,True,55
+40,table_cell,0.0415,6,True,True,True,content_order,6882,7,1,4,结构保留与完整输出对的几何变化,True,60
+40,table_cell,0.0499,6,True,True,True,content_order,6888,7,1,5,结构保留与完整输出对的几何变化,True,66
+40,table_cell,659对,4,True,True,True,content_order,6894,7,1,6,结构保留与完整输出对的几何变化,True,72
+40,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,结构保留与完整输出对的几何变化,True,76
+40,table_cell,+0.215,6,True,True,True,content_order,6910,7,2,1,结构保留与完整输出对的几何变化,True,88
+40,table_cell,+3.65,5,True,True,True,content_order,6916,7,2,2,结构保留与完整输出对的几何变化,True,94
+40,table_cell,+4.96,5,True,True,True,content_order,6921,7,2,3,结构保留与完整输出对的几何变化,True,99
+40,table_cell,0.0450,6,True,True,True,content_order,6926,7,2,4,结构保留与完整输出对的几何变化,True,104
+40,table_cell,0.0601,6,True,True,True,content_order,6932,7,2,5,结构保留与完整输出对的几何变化,True,110
+40,table_cell,1051对,5,True,True,True,content_order,6938,7,2,6,结构保留与完整输出对的几何变化,True,116
+40,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,结构保留与完整输出对的几何变化,True,121
+40,table_cell,+0.026,6,True,True,True,content_order,6954,7,3,1,结构保留与完整输出对的几何变化,True,132
+40,table_cell,-0.07,5,True,True,True,content_order,6960,7,3,2,结构保留与完整输出对的几何变化,True,138
+40,table_cell,-0.24,5,True,True,True,content_order,6965,7,3,3,结构保留与完整输出对的几何变化,True,143
+40,table_cell,0.0306,6,True,True,True,content_order,6970,7,3,4,结构保留与完整输出对的几何变化,True,148
+40,table_cell,0.0375,6,True,True,True,content_order,6976,7,3,5,结构保留与完整输出对的几何变化,True,154
+40,table_cell,647对,4,True,True,True,content_order,6982,7,3,6,结构保留与完整输出对的几何变化,True,160
+40,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,结构保留与完整输出对的几何变化,True,164
+40,table_cell,+0.000,6,True,True,True,content_order,6998,7,4,1,结构保留与完整输出对的几何变化,True,176
+40,table_cell,-7.81,5,True,True,True,content_order,7004,7,4,2,结构保留与完整输出对的几何变化,True,182
+40,table_cell,-10.94,6,True,True,True,content_order,7009,7,4,3,结构保留与完整输出对的几何变化,True,187
+40,table_cell,0.0400,6,True,True,True,content_order,7015,7,4,4,结构保留与完整输出对的几何变化,True,193
+40,table_cell,0.0634,6,True,True,True,content_order,7021,7,4,5,结构保留与完整输出对的几何变化,True,199
+40,table_cell,32对,3,True,True,True,content_order,7027,7,4,6,结构保留与完整输出对的几何变化,True,205
+40,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,结构保留与完整输出对的几何变化,True,208
+40,table_cell,+0.284,6,True,True,True,content_order,7039,7,5,1,结构保留与完整输出对的几何变化,True,217
+40,table_cell,+3.18,5,True,True,True,content_order,7045,7,5,2,结构保留与完整输出对的几何变化,True,223
+40,table_cell,+4.37,5,True,True,True,content_order,4228,4,5,3,结构保留与完整输出对的几何变化,True,228
+40,table_cell,0.0328,6,True,True,True,content_order,7055,7,5,4,结构保留与完整输出对的几何变化,True,233
+40,table_cell,0.0384,6,True,True,True,content_order,7061,7,5,5,结构保留与完整输出对的几何变化,True,239
+40,table_cell,640对,4,True,True,True,content_order,7067,7,5,6,结构保留与完整输出对的几何变化,True,245
+41,p,TARGET20/7的85图中只有14图平均有效转折增加，71图均值不变；参考节点保留平均增加3.98个百分点，但质量改善覆盖78图。人员作用因此需要结合定位和边方向指标，不能只用增删节点定义作用。在RAW3低→中20/12的四图中，有效转折数均不变，但5°参考节点保留的图均值下降，方向和高度损失的图均值上升；各图及9°阈值仍有不同响应。,170,True,True,True,content_order,7098,7,,,,,
+42,table_title,已有质量分项 IoU提高为好，其余为误差或分量变化,24,True,True,True,content_order,7273,8,,,,,
+42,table_cell,条件,2,True,True,True,content_order,139,1,0,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,0
+42,table_cell,ΔIoU3D×100,10,True,True,True,content_order,7299,8,0,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,2
+42,table_cell,Δ底面边界角°,7,True,True,True,content_order,7309,8,0,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,12
+42,table_cell,Δ正交残差°,6,True,True,True,content_order,7316,8,0,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,19
+42,table_cell,ΔHmean,6,True,True,True,content_order,7322,8,0,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,25
+42,table_cell,Δ遗漏,3,True,True,True,content_order,7328,8,0,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,31
+42,table_cell,Δ扩展,3,True,True,True,content_order,7331,8,0,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,34
+42,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,37
+42,table_cell,+2.9474,7,True,True,True,content_order,7344,8,1,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,47
+42,table_cell,-0.3794,7,True,True,True,content_order,7351,8,1,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,54
+42,table_cell,-0.9299,7,True,True,True,content_order,7358,8,1,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,61
+42,table_cell,-0.0053,7,True,True,True,content_order,7365,8,1,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,68
+42,table_cell,-0.0172,7,True,True,True,content_order,7372,8,1,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,75
+42,table_cell,-0.0188,7,True,True,True,content_order,7379,8,1,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,82
+42,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,89
+42,table_cell,+2.6626,7,True,True,True,content_order,7398,8,2,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,101
+42,table_cell,-0.3083,7,True,True,True,content_order,7405,8,2,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,108
+42,table_cell,-0.5945,7,True,True,True,content_order,7412,8,2,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,115
+42,table_cell,-0.0062,7,True,True,True,content_order,7419,8,2,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,122
+42,table_cell,-0.0157,7,True,True,True,content_order,7426,8,2,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,129
+42,table_cell,-0.0124,7,True,True,True,content_order,7433,8,2,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,136
+42,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,143
+42,table_cell,+0.3255,7,True,True,True,content_order,7451,8,3,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,154
+42,table_cell,-0.0497,7,True,True,True,content_order,7458,8,3,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,161
+42,table_cell,-0.0367,7,True,True,True,content_order,7465,8,3,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,168
+42,table_cell,+0.0004,7,True,True,True,content_order,7472,8,3,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,175
+42,table_cell,-0.0023,7,True,True,True,content_order,7479,8,3,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,182
+42,table_cell,-0.0020,7,True,True,True,content_order,7486,8,3,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,189
+42,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,196
+42,table_cell,-3.3613,7,True,True,True,content_order,7505,8,4,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,208
+42,table_cell,+0.0890,7,True,True,True,content_order,7512,8,4,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,215
+42,table_cell,+1.5261,7,True,True,True,content_order,7519,8,4,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,222
+42,table_cell,+0.0358,7,True,True,True,content_order,7526,8,4,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,229
+42,table_cell,-0.0074,7,True,True,True,content_order,7533,8,4,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,236
+42,table_cell,+0.0203,7,True,True,True,content_order,7540,8,4,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,243
+42,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,已有质量分项 IoU提高为好，其余为误差或分量变化,True,250
+42,table_cell,+2.3719,7,True,True,True,content_order,7556,8,5,1,已有质量分项 IoU提高为好，其余为误差或分量变化,True,259
+42,table_cell,-0.2818,7,True,True,True,content_order,7563,8,5,2,已有质量分项 IoU提高为好，其余为误差或分量变化,True,266
+42,table_cell,-0.5197,7,True,True,True,content_order,7570,8,5,3,已有质量分项 IoU提高为好，其余为误差或分量变化,True,273
+42,table_cell,-0.0038,7,True,True,True,content_order,7577,8,5,4,已有质量分项 IoU提高为好，其余为误差或分量变化,True,280
+42,table_cell,-0.0147,7,True,True,True,content_order,7584,8,5,5,已有质量分项 IoU提高为好，其余为误差或分量变化,True,287
+42,table_cell,-0.0100,7,True,True,True,content_order,7591,8,5,6,已有质量分项 IoU提高为好，其余为误差或分量变化,True,294
+43,p,dir是各输出相对自身最佳正交轴的方向残差（度），不是对正式参考朝向的角误差；Hmean是周长加权平均高度比的绝对残差，不是实际平均高度。实际高度和面积变化另列。补充WQ的height_loss与原Hmean定义不同，同一事件可以有不同方向，不能统称某个“高度分项”改善。,136,True,True,True,content_order,7625,8,,,,,
+44,table_title,补充质量损失 数值下降表示该损失减小,17,True,True,True,content_order,7766,8,,,,,
+44,table_cell,条件,2,True,True,True,content_order,139,1,0,0,补充质量损失 数值下降表示该损失减小,True,0
+44,table_cell,Δ边界损失,5,True,True,True,content_order,7785,8,0,1,补充质量损失 数值下降表示该损失减小,True,2
+44,table_cell,Δ方向损失,5,True,True,True,content_order,7790,8,0,2,补充质量损失 数值下降表示该损失减小,True,7
+44,table_cell,Δ高度损失,5,True,True,True,content_order,7795,8,0,3,补充质量损失 数值下降表示该损失减小,True,12
+44,table_cell,共同有效对,5,True,True,True,content_order,7800,8,0,4,补充质量损失 数值下降表示该损失减小,True,17
+44,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,补充质量损失 数值下降表示该损失减小,True,22
+44,table_cell,-0.02162,8,True,True,True,content_order,7815,8,1,1,补充质量损失 数值下降表示该损失减小,True,32
+44,table_cell,-0.06794,8,True,True,True,content_order,7823,8,1,2,补充质量损失 数值下降表示该损失减小,True,40
+44,table_cell,-0.00203,8,True,True,True,content_order,7831,8,1,3,补充质量损失 数值下降表示该损失减小,True,48
+44,table_cell,659,3,True,True,True,content_order,6894,7,1,4,补充质量损失 数值下降表示该损失减小,True,56
+44,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,补充质量损失 数值下降表示该损失减小,True,59
+44,table_cell,-0.02446,8,True,True,True,content_order,7854,8,2,1,补充质量损失 数值下降表示该损失减小,True,71
+44,table_cell,-0.04951,8,True,True,True,content_order,7862,8,2,2,补充质量损失 数值下降表示该损失减小,True,79
+44,table_cell,-0.00236,8,True,True,True,content_order,7870,8,2,3,补充质量损失 数值下降表示该损失减小,True,87
+44,table_cell,1051,4,True,True,True,content_order,6938,7,2,4,补充质量损失 数值下降表示该损失减小,True,95
+44,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,补充质量损失 数值下降表示该损失减小,True,99
+44,table_cell,-0.00926,8,True,True,True,content_order,7893,8,3,1,补充质量损失 数值下降表示该损失减小,True,110
+44,table_cell,-0.00833,8,True,True,True,content_order,7901,8,3,2,补充质量损失 数值下降表示该损失减小,True,118
+44,table_cell,-0.00008,8,True,True,True,content_order,7909,8,3,3,补充质量损失 数值下降表示该损失减小,True,126
+44,table_cell,647,3,True,True,True,content_order,5307,5,3,4,补充质量损失 数值下降表示该损失减小,True,134
+44,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,补充质量损失 数值下降表示该损失减小,True,137
+44,table_cell,+0.00278,8,True,True,True,content_order,7932,8,4,1,补充质量损失 数值下降表示该损失减小,True,149
+44,table_cell,+0.20126,8,True,True,True,content_order,7940,8,4,2,补充质量损失 数值下降表示该损失减小,True,157
+44,table_cell,+0.01440,8,True,True,True,content_order,7948,8,4,3,补充质量损失 数值下降表示该损失减小,True,165
+44,table_cell,32,2,True,True,True,content_order,1719,2,4,4,补充质量损失 数值下降表示该损失减小,True,173
+44,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,补充质量损失 数值下降表示该损失减小,True,175
+44,table_cell,-0.02834,8,True,True,True,content_order,7967,8,5,1,补充质量损失 数值下降表示该损失减小,True,184
+44,table_cell,-0.03747,8,True,True,True,content_order,7975,8,5,2,补充质量损失 数值下降表示该损失减小,True,192
+44,table_cell,-0.00166,8,True,True,True,content_order,7983,8,5,3,补充质量损失 数值下降表示该损失减小,True,200
+44,table_cell,640,3,True,True,True,content_order,7067,7,5,4,补充质量损失 数值下降表示该损失减小,True,208
+45,table_title,短结构尺度和上下边界的几何变化,15,True,True,True,content_order,8021,8,,,,,
+45,table_cell,条件,2,True,True,True,content_order,139,1,0,0,短结构尺度和上下边界的几何变化,True,0
+45,table_cell,Δ短边数,4,True,True,True,content_order,8038,8,0,1,短结构尺度和上下边界的几何变化,True,2
+45,table_cell,Δ面积%,4,True,True,True,content_order,8042,8,0,2,短结构尺度和上下边界的几何变化,True,6
+45,table_cell,Δ平均高度%,6,True,True,True,content_order,8046,8,0,3,短结构尺度和上下边界的几何变化,True,10
+45,table_cell,顶部角距离°,6,True,True,True,content_order,8052,8,0,4,短结构尺度和上下边界的几何变化,True,16
+45,table_cell,底部角距离°,6,True,True,True,content_order,8058,8,0,5,短结构尺度和上下边界的几何变化,True,22
+45,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,短结构尺度和上下边界的几何变化,True,28
+45,table_cell,+0.0701,7,True,True,True,content_order,8074,8,1,1,短结构尺度和上下边界的几何变化,True,38
+45,table_cell,+1.3088,7,True,True,True,content_order,8081,8,1,2,短结构尺度和上下边界的几何变化,True,45
+45,table_cell,+0.4720,7,True,True,True,content_order,8088,8,1,3,短结构尺度和上下边界的几何变化,True,52
+45,table_cell,0.5837,6,True,True,True,content_order,8095,8,1,4,短结构尺度和上下边界的几何变化,True,59
+45,table_cell,0.5017,6,True,True,True,content_order,8101,8,1,5,短结构尺度和上下边界的几何变化,True,65
+45,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,短结构尺度和上下边界的几何变化,True,71
+45,table_cell,+0.1041,7,True,True,True,content_order,8119,8,2,1,短结构尺度和上下边界的几何变化,True,83
+45,table_cell,+3.2506,7,True,True,True,content_order,8126,8,2,2,短结构尺度和上下边界的几何变化,True,90
+45,table_cell,+0.5342,7,True,True,True,content_order,8133,8,2,3,短结构尺度和上下边界的几何变化,True,97
+45,table_cell,0.5285,6,True,True,True,content_order,8140,8,2,4,短结构尺度和上下边界的几何变化,True,104
+45,table_cell,0.4599,6,True,True,True,content_order,8146,8,2,5,短结构尺度和上下边界的几何变化,True,110
+45,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,短结构尺度和上下边界的几何变化,True,116
+45,table_cell,-0.0091,7,True,True,True,content_order,8163,8,3,1,短结构尺度和上下边界的几何变化,True,127
+45,table_cell,+1.8594,7,True,True,True,content_order,8170,8,3,2,短结构尺度和上下边界的几何变化,True,134
+45,table_cell,-0.1698,7,True,True,True,content_order,8177,8,3,3,短结构尺度和上下边界的几何变化,True,141
+45,table_cell,0.4512,6,True,True,True,content_order,8184,8,3,4,短结构尺度和上下边界的几何变化,True,148
+45,table_cell,0.4128,6,True,True,True,content_order,8190,8,3,5,短结构尺度和上下边界的几何变化,True,154
+45,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,短结构尺度和上下边界的几何变化,True,160
+45,table_cell,-0.1875,7,True,True,True,content_order,8208,8,4,1,短结构尺度和上下边界的几何变化,True,172
+45,table_cell,+2.5601,7,True,True,True,content_order,8215,8,4,2,短结构尺度和上下边界的几何变化,True,179
+45,table_cell,-3.7662,7,True,True,True,content_order,8222,8,4,3,短结构尺度和上下边界的几何变化,True,186
+45,table_cell,0.9155,6,True,True,True,content_order,8229,8,4,4,短结构尺度和上下边界的几何变化,True,193
+45,table_cell,0.3100,6,True,True,True,content_order,8235,8,4,5,短结构尺度和上下边界的几何变化,True,199
+45,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,短结构尺度和上下边界的几何变化,True,205
+45,table_cell,+0.1494,7,True,True,True,content_order,8250,8,5,1,短结构尺度和上下边界的几何变化,True,214
+45,table_cell,+1.2808,7,True,True,True,content_order,8257,8,5,2,短结构尺度和上下边界的几何变化,True,221
+45,table_cell,+0.1942,7,True,True,True,content_order,8264,8,5,3,短结构尺度和上下边界的几何变化,True,228
+45,table_cell,0.3966,6,True,True,True,content_order,8271,8,5,4,短结构尺度和上下边界的几何变化,True,235
+45,table_cell,0.3430,6,True,True,True,content_order,8277,8,5,5,短结构尺度和上下边界的几何变化,True,241
+46,p,面积、高度的有符号差说明尺度向哪边变化，不自动等于质量升降；百分比为100×(C/A−1)。顶部/底部角距离是两队匈牙利匹配后已匹配角点的角差，非对参考误差；未匹配角点数另外保存，不能因匹配部分角距小就忽略新增或缺失结构。各项全部有效数保存在源表，未要求所有几何字段使用Q共同有效分母。,143,True,True,True,content_order,8310,8,,,,,
+47,table_title,响应分布与低尾 不用均值覆盖负向尝试,17,True,True,True,content_order,8458,9,,,,,
+47,table_cell,条件,2,True,True,True,content_order,139,1,0,0,响应分布与低尾 不用均值覆盖负向尝试,True,0
+47,table_cell,图均ΔQ P10–P90,11,True,True,True,content_order,8477,9,0,1,响应分布与低尾 不用均值覆盖负向尝试,True,2
+47,table_cell,最小图均ΔQ,6,True,True,True,content_order,8488,9,0,2,响应分布与低尾 不用均值覆盖负向尝试,True,13
+47,table_cell,逐图等权降>10分事件比例,13,True,False,True,content_order,8494,9,0,3,响应分布与低尾 不用均值覆盖负向尝试,True,19
+47,table_cell,端点图均Q P10 A→C,11,True,True,True,content_order,8507,9,0,4,响应分布与低尾 不用均值覆盖负向尝试,True,32
+47,table_cell,A/C可评图,6,True,False,True,content_order,8518,9,0,5,响应分布与低尾 不用均值覆盖负向尝试,True,43
+47,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,响应分布与低尾 不用均值覆盖负向尝试,True,49
+47,table_cell,0.231～12.103,12,True,True,True,content_order,8534,9,1,1,响应分布与低尾 不用均值覆盖负向尝试,True,59
+47,table_cell,-6.706,6,True,True,True,content_order,8546,9,1,2,响应分布与低尾 不用均值覆盖负向尝试,True,71
+47,table_cell,2.35%,5,True,True,True,content_order,8552,9,1,3,响应分布与低尾 不用均值覆盖负向尝试,True,77
+47,table_cell,59.786→72.552,13,True,True,True,content_order,8557,9,1,4,响应分布与低尾 不用均值覆盖负向尝试,True,82
+47,table_cell,85/85,5,True,True,True,content_order,4214,4,1,5,响应分布与低尾 不用均值覆盖负向尝试,True,95
+47,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,响应分布与低尾 不用均值覆盖负向尝试,True,100
+47,table_cell,-0.627～11.562,13,True,True,True,content_order,8587,9,2,1,响应分布与低尾 不用均值覆盖负向尝试,True,112
+47,table_cell,-14.175,7,True,True,True,content_order,8600,9,2,2,响应分布与低尾 不用均值覆盖负向尝试,True,125
+47,table_cell,3.02%,5,True,True,True,content_order,8607,9,2,3,响应分布与低尾 不用均值覆盖负向尝试,True,132
+47,table_cell,56.635→61.051,13,True,True,True,content_order,8612,9,2,4,响应分布与低尾 不用均值覆盖负向尝试,True,137
+47,table_cell,185/185,7,True,True,True,content_order,5845,6,2,5,响应分布与低尾 不用均值覆盖负向尝试,True,150
+47,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,响应分布与低尾 不用均值覆盖负向尝试,True,157
+47,table_cell,-3.267～3.553,12,True,True,True,content_order,8643,9,3,1,响应分布与低尾 不用均值覆盖负向尝试,True,168
+47,table_cell,-23.657,7,True,True,True,content_order,8655,9,3,2,响应分布与低尾 不用均值覆盖负向尝试,True,180
+47,table_cell,2.16%,5,True,True,True,content_order,8662,9,3,3,响应分布与低尾 不用均值覆盖负向尝试,True,187
+47,table_cell,65.108→57.818,13,True,True,True,content_order,8667,9,3,4,响应分布与低尾 不用均值覆盖负向尝试,True,192
+47,table_cell,82/82,5,True,True,True,content_order,4513,5,3,5,响应分布与低尾 不用均值覆盖负向尝试,True,205
+47,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,响应分布与低尾 不用均值覆盖负向尝试,True,210
+47,table_cell,-18.075～-0.174,14,True,True,True,content_order,8697,9,4,1,响应分布与低尾 不用均值覆盖负向尝试,True,222
+47,table_cell,-21.308,7,True,True,True,content_order,8711,9,4,2,响应分布与低尾 不用均值覆盖负向尝试,True,236
+47,table_cell,31.25%,6,True,True,True,content_order,8718,9,4,3,响应分布与低尾 不用均值覆盖负向尝试,True,243
+47,table_cell,78.781→60.706,13,True,True,True,content_order,8724,9,4,4,响应分布与低尾 不用均值覆盖负向尝试,True,249
+47,table_cell,4/4,3,True,True,True,content_order,5089,5,4,5,响应分布与低尾 不用均值覆盖负向尝试,True,262
+47,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,响应分布与低尾 不用均值覆盖负向尝试,True,265
+47,table_cell,0.239～9.468,11,True,True,True,content_order,8749,9,5,1,响应分布与低尾 不用均值覆盖负向尝试,True,274
+47,table_cell,-5.143,6,True,True,True,content_order,8760,9,5,2,响应分布与低尾 不用均值覆盖负向尝试,True,285
+47,table_cell,2.93%,5,True,True,True,content_order,8766,9,5,3,响应分布与低尾 不用均值覆盖负向尝试,True,291
+47,table_cell,58.883→64.978,13,True,True,True,content_order,8771,9,5,4,响应分布与低尾 不用均值覆盖负向尝试,True,296
+47,table_cell,82/82,5,True,True,True,content_order,4513,5,5,5,响应分布与低尾 不用均值覆盖负向尝试,True,309
+48,p,响应分布仅用共同Q可评事件，下降超过10分的比例先在每图内部计算再图等权。最后两列为A与C各自可评图片的平均端点Q分布低尾，可能使用不同图集；即使图集相同，各图内有效登记事件也可不同，按事件出现次数汇总而非唯一端点等权。它们属于状态相关的描述，不是匹配低尾的因果效应。全部Q缺失另列，未纳入0分尾部；这些区间是有限图片的描述分布，不是预测区间或统计置信区间。,179,True,True,True,content_order,8816,9,,,,,
+49,table_title,同源记录劳动与所有登记队的缺Q状态,17,True,True,True,content_order,9000,9,,,,,
+49,table_cell,条件,2,True,True,True,content_order,139,1,0,0,同源记录劳动与所有登记队的缺Q状态,True,0
+49,table_cell,劳动秒差,4,True,True,True,content_order,9019,9,0,1,同源记录劳动与所有登记队的缺Q状态,True,2
+49,table_cell,劳动百分比,5,True,True,True,content_order,9023,9,0,2,同源记录劳动与所有登记队的缺Q状态,True,6
+49,table_cell,劳动增加图,5,True,True,True,content_order,9028,9,0,3,同源记录劳动与所有登记队的缺Q状态,True,11
+49,table_cell,劳动有效支持,6,True,True,True,content_order,9033,9,0,4,同源记录劳动与所有登记队的缺Q状态,True,16
+49,table_cell,A→C缺Q图等权率,9,True,True,True,content_order,9039,9,0,5,同源记录劳动与所有登记队的缺Q状态,True,22
+49,table_cell,TARGET 20/7,10,True,True,True,content_order,6856,7,1,0,同源记录劳动与所有登记队的缺Q状态,True,31
+49,table_cell,+149.0,6,True,True,True,content_order,9058,9,1,1,同源记录劳动与所有登记队的缺Q状态,True,41
+49,table_cell,+4.69%,6,True,True,True,content_order,9064,9,1,2,同源记录劳动与所有登记队的缺Q状态,True,47
+49,table_cell,46/65,5,True,True,True,content_order,9070,9,1,3,同源记录劳动与所有登记队的缺Q状态,True,53
+49,table_cell,344对/65图,8,True,True,True,content_order,9075,9,1,4,同源记录劳动与所有登记队的缺Q状态,True,58
+49,table_cell,2.06%→1.03%,11,True,True,True,content_order,9083,9,1,5,同源记录劳动与所有登记队的缺Q状态,True,66
+49,table_cell,TARGET整目标 n20,12,True,True,True,content_order,6898,7,2,0,同源记录劳动与所有登记队的缺Q状态,True,77
+49,table_cell,+165.4,6,True,True,True,content_order,9106,9,2,1,同源记录劳动与所有登记队的缺Q状态,True,89
+49,table_cell,+4.05%,6,True,True,True,content_order,9112,9,2,2,同源记录劳动与所有登记队的缺Q状态,True,95
+49,table_cell,66/104,6,True,True,True,content_order,9118,9,2,3,同源记录劳动与所有登记队的缺Q状态,True,101
+49,table_cell,467对/104图,9,True,True,True,content_order,9124,9,2,4,同源记录劳动与所有登记队的缺Q状态,True,107
+49,table_cell,1.76%→0.68%,11,True,True,True,content_order,9133,9,2,5,同源记录劳动与所有登记队的缺Q状态,True,116
+49,table_cell,JOINT3 20/10,11,True,True,True,content_order,6943,7,3,0,同源记录劳动与所有登记队的缺Q状态,True,127
+49,table_cell,+135.5,6,True,True,True,content_order,9155,9,3,1,同源记录劳动与所有登记队的缺Q状态,True,138
+49,table_cell,+4.65%,6,True,True,True,content_order,9161,9,3,2,同源记录劳动与所有登记队的缺Q状态,True,144
+49,table_cell,23/39,5,True,True,True,content_order,9167,9,3,3,同源记录劳动与所有登记队的缺Q状态,True,150
+49,table_cell,194对/39图,8,True,True,True,content_order,9172,9,3,4,同源记录劳动与所有登记队的缺Q状态,True,155
+49,table_cell,0.76%→0.76%,11,True,True,True,content_order,9180,9,3,5,同源记录劳动与所有登记队的缺Q状态,True,163
+49,table_cell,RAW3低→中 20/12,12,True,True,True,content_order,5077,5,4,0,同源记录劳动与所有登记队的缺Q状态,True,174
+49,table_cell,-76.8,5,True,True,True,content_order,9203,9,4,1,同源记录劳动与所有登记队的缺Q状态,True,186
+49,table_cell,-3.47%,6,True,True,True,content_order,9208,9,4,2,同源记录劳动与所有登记队的缺Q状态,True,191
+49,table_cell,0/3,3,True,True,True,content_order,9214,9,4,3,同源记录劳动与所有登记队的缺Q状态,True,197
+49,table_cell,17对/3图,6,True,True,True,content_order,9217,9,4,4,同源记录劳动与所有登记队的缺Q状态,True,200
+49,table_cell,0.00%→0.00%,11,True,True,True,content_order,9223,9,4,5,同源记录劳动与所有登记队的缺Q状态,True,206
+49,table_cell,RFUSE 20/4,9,True,True,True,content_order,7030,7,5,0,同源记录劳动与所有登记队的缺Q状态,True,217
+49,table_cell,+184.9,6,True,True,True,content_order,9243,9,5,1,同源记录劳动与所有登记队的缺Q状态,True,226
+49,table_cell,+4.40%,6,True,True,True,content_order,9249,9,5,2,同源记录劳动与所有登记队的缺Q状态,True,232
+49,table_cell,55/78,5,True,True,True,content_order,9255,9,5,3,同源记录劳动与所有登记队的缺Q状态,True,238
+49,table_cell,509对/78图,8,True,True,True,content_order,9260,9,5,4,同源记录劳动与所有登记队的缺Q状态,True,243
+49,table_cell,0.76%→1.83%,11,True,True,True,content_order,9268,9,5,5,同源记录劳动与所有登记队的缺Q状态,True,251
+50,p,RFUSE20/4在77/82图升Q，但656个登记对中A端缺Q5次（3次below_four、2次legacy no_connection），C端缺Q12次（9次legacy no_connection、3次invalid_floor）；共同Q可评640对。A缺Q图等权率约0.76%、C约1.83%，须并列报告这一输出风险。TARGET20/7登记680对；Q共同可评659对，有效转折及可用几何669对，双方完整输出的几何比较659对，同源劳动344对、65图，状态比较用全部680对。事件侧出现次数不是独立失败团队数。不同分母保留其真实含义，不用可评事件的质量优势覆盖失败事件。,291,True,True,True,content_order,9306,9,,,,,
+51,p,"所有设计合并的478,012支团队中，471,454支产出complete_conditional，4,635支为legacy no_connection，1,817支below_four，106支invalid_floor，合计6,558支缺Q；没有执行异常或测量异常。这是登记设计内的端点计数，不是自然人群的失败概率。complete_conditional表示按冻结路径形成完整可评价输出，不保证符合参考或人工语义正确。legacy no_connection仅表示未形成可用点序列，不能靠状态名断定纯连接原因。",257,True,True,True,content_order,9602,9|10,,,,,
+52,p,"在412,839个不同物理端点对中，997对两端均缺Q，其中71对的原始状态还不相同。缺Q风险差等于0并不等于两端成功，也不等于几何相同。完整状态迁移与失败类别单列。",83,True,True,True,content_order,9864,10,,,,,
+53,image_caption,图2 正式难度保持原定义。结构响应集中于困难图片，质量响应也可出现在转折不变的简单图。,42,True,True,True,content_order,9952,10,,,,,
+54,p,TARGET20/7的简单、中等、困难层分别60、15、10图；B8L2均值变化为+3.632、+3.168、+12.347，正向57/60、12/15、9/10。有效转折均值分别+0.008、+0.117、+1.654。按可计算条件看，边界自遮挡12图平均Q增加11.616，11/12图为正；无短转折且无边界遮挡65图仅有1图平均转折增加，但61/65图升Q。这支持当前主分类的条件化解释，不要求所有图出现同一种结构响应。,213,True,True,True,content_order,9994,10,,,,,
+55,h,8 类别相同以后，成员背景和替换比例还改变多少,22,True,True,True,content_order,10212,10,,,,,
+56,p,类别作用不能由每图一组人员代表。本轮明确区分五种敏感性：同类别人数但成员可变；精确同D而X/Z成员可变；精确同XZ、同n/m而D成员或配比可变；精确同XZ增加D人数；精确同A嵌套扩大X/Z。以下统计来自全部258池完成后的派生表，主段限普通Manual原主目标。它们是有限已登记组合中的波动，不是新人员的预测准确率。,158,True,True,True,content_order,10234,10,,,,,
+57,p,"成员跨度、标准差与正负翻转至少要求该面板该指标有两个有效值。原表的155个Q面板只有一个可评值，现已从波动分母排除，均值和原始端点不改；所有指标共排除8,078个单值波动条目。固定D的Q面板没有这项缺陷。单一小类块固定、单个可评分组合、多个组合但都缺Q，分别报告，不把无法估计写成稳定零。旧版保留，正文使用member_variability_v2。",175,True,True,True,content_order,10397,10,,,,,
+58,h,8.1 固定同一背景，只改替换块的具体人选,20,True,True,True,content_order,10581,11,,,,,
+59,table_title,固定D，n20/m10，角色1→2的成员面板,22,True,True,True,content_order,10601,11,,,,,
+59,table_cell,方法,2,True,True,True,content_order,563,1,0,0,固定D，n20/m10，角色1→2的成员面板,True,0
+59,table_cell,有效图；楼,5,True,True,True,content_order,10625,11,0,1,固定D，n20/m10，角色1→2的成员面板,True,2
+59,table_cell,有效面板,4,True,True,True,content_order,10630,11,0,2,固定D，n20/m10，角色1→2的成员面板,True,7
+59,table_cell,Q跨度图均,5,True,True,True,content_order,10634,11,0,3,固定D，n20/m10，角色1→2的成员面板,True,11
+59,table_cell,D10跨度图均,7,True,True,True,content_order,10639,11,0,4,固定D，n20/m10，角色1→2的成员面板,True,16
+59,table_cell,面板正负翻转率,7,True,True,True,content_order,10646,11,0,5,固定D，n20/m10，角色1→2的成员面板,True,23
+59,table_cell,TARGET K3,8,True,True,True,content_order,585,1,1,0,固定D，n20/m10，角色1→2的成员面板,True,30
+59,table_cell,3；2,3,True,True,True,content_order,4807,5,1,1,固定D，n20/m10，角色1→2的成员面板,True,38
+59,table_cell,3,1,True,True,True,content_order,106,1,1,2,固定D，n20/m10，角色1→2的成员面板,True,41
+59,table_cell,1.597,5,True,True,True,content_order,10665,11,1,3,固定D，n20/m10，角色1→2的成员面板,True,42
+59,table_cell,1.384,5,True,True,True,content_order,10670,11,1,4,固定D，n20/m10，角色1→2的成员面板,True,47
+59,table_cell,0.00%,5,True,True,True,content_order,9223,9,1,5,固定D，n20/m10，角色1→2的成员面板,True,52
+59,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,2,0,固定D，n20/m10，角色1→2的成员面板,True,57
+59,table_cell,11；5,4,True,True,True,content_order,10686,11,2,1,固定D，n20/m10，角色1→2的成员面板,True,63
+59,table_cell,11,2,True,True,True,content_order,1502,2,2,2,固定D，n20/m10，角色1→2的成员面板,True,67
+59,table_cell,3.819,5,True,True,True,content_order,10692,11,2,3,固定D，n20/m10，角色1→2的成员面板,True,69
+59,table_cell,3.367,5,True,True,True,content_order,10697,11,2,4,固定D，n20/m10，角色1→2的成员面板,True,74
+59,table_cell,45.45%,6,True,True,True,content_order,10702,11,2,5,固定D，n20/m10，角色1→2的成员面板,True,79
+59,table_cell,JOINT K3,7,True,True,True,content_order,666,1,3,0,固定D，n20/m10，角色1→2的成员面板,True,85
+59,table_cell,69；11,5,True,True,True,content_order,10715,11,3,1,固定D，n20/m10，角色1→2的成员面板,True,92
+59,table_cell,69,2,True,True,True,content_order,1058,1,3,2,固定D，n20/m10，角色1→2的成员面板,True,97
+59,table_cell,4.697,5,True,True,True,content_order,10722,11,3,3,固定D，n20/m10，角色1→2的成员面板,True,99
+59,table_cell,4.279,5,True,True,True,content_order,10727,11,3,4,固定D，n20/m10，角色1→2的成员面板,True,104
+59,table_cell,44.93%,6,True,True,True,content_order,10732,11,3,5,固定D，n20/m10，角色1→2的成员面板,True,109
+59,table_cell,JOINT K4,7,True,True,True,content_order,3488,4,4,0,固定D，n20/m10，角色1→2的成员面板,True,115
+59,table_cell,79；14,5,True,True,True,content_order,10745,11,4,1,固定D，n20/m10，角色1→2的成员面板,True,122
+59,table_cell,79,2,True,True,True,content_order,1074,1,4,2,固定D，n20/m10，角色1→2的成员面板,True,127
+59,table_cell,3.811,5,True,True,True,content_order,10752,11,4,3,固定D，n20/m10，角色1→2的成员面板,True,129
+59,table_cell,3.264,5,True,True,True,content_order,10757,11,4,4,固定D，n20/m10，角色1→2的成员面板,True,134
+59,table_cell,40.51%,6,True,True,True,content_order,10762,11,4,5,固定D，n20/m10，角色1→2的成员面板,True,139
+60,p,这里的跨度为一个固定D面板内跨类Δ的最大值减最小值；翻转率是图等权的面板内部同时出现正、负Δ的比例。它衡量同类别人数下换具体人的敏感性，不是严格同类B。TARGET十人的3图未翻转只能描述这3图；JOINT3的69图约44.93%面板翻转，说明其平均接近零的大块条件有相当部分方向取决于具体成员。,148,True,True,True,content_order,10795,11,,,,,
+61,p,这些方法的可评图片集合不同，不能按跨度大小排名分类稳定性。有些面板一侧类别已固定，没有同时扰动X和Z；完整表逐侧保留团队变体数。除明确标出的TARGET中→高20/7外，本节20/10比较均为各方法角色1→2，不代表该方法所有方向。,116,True,True,True,content_order,10948,11,,,,,
+62,p,若只固定两队的实际类别人数，允许替换块和D的具体成员一起变化，TARGET主方向20/7覆盖85图、87个可评面板；Q跨度图均10.592，面板正负翻转率34.12%。这较宽的波动包含D身份变化，不能拿它与上表固定D跨度直接相减当作背景方差贡献。,123,True,True,True,content_order,11073,11,,,,,
+63,h,8.2 固定同一替换块，类别配比不变的背景换人,22,True,True,True,content_order,11201,11,,,,,
+64,table_title,背景效果差＝新背景下(C−A)−基线背景下(C−A),26,True,True,True,content_order,11223,11,,,,,
+64,table_cell,方法方向,4,True,True,True,content_order,11249,11,0,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,0
+64,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,4
+64,table_cell,图；楼,3,True,True,True,content_order,4133,4,0,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,7
+64,table_cell,效果差均值,5,True,True,True,content_order,11259,11,0,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,10
+64,table_cell,Q均|效果差|,7,True,True,True,content_order,11264,11,0,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,15
+64,table_cell,D10均|效果差|,9,True,True,True,content_order,11271,11,0,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,22
+64,table_cell,效果差正/负图,7,True,True,True,content_order,11280,11,0,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,31
+64,table_cell,TARGET 中→高,9,True,True,True,content_order,5829,6,1,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,38
+64,table_cell,20/7,4,True,True,True,content_order,274,1,1,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,47
+64,table_cell,85；21,5,True,True,True,content_order,4172,4,1,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,51
+64,table_cell,-0.388,6,True,True,True,content_order,11305,11,1,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,56
+64,table_cell,4.564,5,True,True,True,content_order,11311,11,1,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,62
+64,table_cell,4.185,5,True,True,True,content_order,11316,11,1,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,67
+64,table_cell,39/46,5,True,True,True,content_order,11321,11,1,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,72
+64,table_cell,TARGET K3,8,True,True,True,content_order,585,1,2,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,77
+64,table_cell,20/10,5,True,True,True,content_order,3411,4,2,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,85
+64,table_cell,3；2,3,True,True,True,content_order,4807,5,2,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,90
+64,table_cell,+0.019,6,True,True,True,content_order,11342,11,2,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,93
+64,table_cell,0.483,5,True,True,True,content_order,11348,11,2,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,99
+64,table_cell,0.423,5,True,True,True,content_order,11353,11,2,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,104
+64,table_cell,2/1,3,True,True,True,content_order,3999,4,2,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,109
+64,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,3,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,112
+64,table_cell,20/10,5,True,True,True,content_order,3411,4,3,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,118
+64,table_cell,11；5,4,True,True,True,content_order,10686,11,3,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,123
+64,table_cell,+0.251,6,True,True,True,content_order,11376,11,3,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,127
+64,table_cell,3.326,5,True,True,True,content_order,11382,11,3,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,133
+64,table_cell,2.724,5,True,True,True,content_order,11387,11,3,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,138
+64,table_cell,8/3,3,True,True,True,content_order,4345,4,3,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,143
+64,table_cell,JOINT K3,7,True,True,True,content_order,666,1,4,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,146
+64,table_cell,20/10,5,True,True,True,content_order,3411,4,4,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,153
+64,table_cell,78；11,5,True,True,True,content_order,11407,11,4,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,158
+64,table_cell,-0.034,6,True,True,True,content_order,11412,11,4,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,163
+64,table_cell,2.450,5,True,True,True,content_order,11418,11,4,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,169
+64,table_cell,2.177,5,True,True,True,content_order,11423,11,4,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,174
+64,table_cell,34/44,5,True,True,True,content_order,11428,11,4,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,179
+64,table_cell,JOINT K4,7,True,True,True,content_order,3488,4,5,0,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,184
+64,table_cell,20/10,5,True,True,True,content_order,3411,4,5,1,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,191
+64,table_cell,97；15,5,True,True,True,content_order,11445,11,5,2,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,196
+64,table_cell,-0.279,6,True,True,True,content_order,11450,11,5,3,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,201
+64,table_cell,1.840,5,True,True,True,content_order,11456,11,5,4,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,207
+64,table_cell,1.595,5,True,True,True,content_order,11461,11,5,5,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,212
+64,table_cell,41/56,5,True,True,True,content_order,11466,11,5,6,背景效果差＝新背景下(C−A)−基线背景下(C−A),True,217
+65,p,这张表要求精确XZ不变、n/m不变、实际D类别人数向量相同，只替换D的具体成员。JOINT3十人的效果差均值约−0.034，看似接近零，但逐次取绝对差后图等权约2.450；TARGET20/7为−0.388与4.564。正负抵消不等于背景无作用。背景类别构成也改变的source_enriched/target_enriched对照另存，不与这张表混合。,177,True,True,True,content_order,11498,11|12,,,,,
+66,p,上表绝对幅度先在每个实际背景比较内取绝对值，再池内平均、图等权。原汇总中的|图平均效果差|是另一描述量，通常更小；正文没有用后者替代逐比较幅度。背景劳动秒差在精确XZ固定且四队合法可比时应保持一致；百分比仍受基线总劳动分母影响，缺记录或来源不匹配的四端点不算合法劳动变化。,136,True,True,True,content_order,11680,12,,,,,
+67,p,"另将精确相同XZ与已有outside背景锚点匹配，209池得到6,364个方法对照、5,573个物理四端点对照，要求n/m相同且D确实不同。与strict66的120方法/108物理对照只有4对身份重叠，去重并集为6,480方法对照、5,677物理四端点对照。重叠的12项指标×4对逐项核对通过：广表为outside−neutral，strict表为F-neutral−B-outside，符号相反，绝对幅度一致。该外部背景匹配不冒充上一张同配比neutral背景表，也不新增融合或团队。",244,True,True,True,content_order,11825,12,,,,,
+68,h,8.3 固定原队扩大替换块，与固定块扩大背景是两种实验,26,True,True,True,content_order,12078,12,,,,,
+69,table_title,精确同A且嵌套扩块 Q效果增量,14,True,True,True,content_order,12104,12,,,,,
+69,table_cell,条件,2,True,True,True,content_order,139,1,0,0,精确同A且嵌套扩块 Q效果增量,True,0
+69,table_cell,人数与块变化,6,True,True,True,content_order,12120,12,0,1,精确同A且嵌套扩块 Q效果增量,True,2
+69,table_cell,图；楼,3,True,True,True,content_order,4133,4,0,2,精确同A且嵌套扩块 Q效果增量,True,8
+69,table_cell,均增量,3,True,True,True,content_order,12129,12,0,3,精确同A且嵌套扩块 Q效果增量,True,11
+69,table_cell,均|增量|,5,True,True,True,content_order,12132,12,0,4,精确同A且嵌套扩块 Q效果增量,True,14
+69,table_cell,增量正/负图,6,True,True,True,content_order,12137,12,0,5,精确同A且嵌套扩块 Q效果增量,True,19
+69,table_cell,TARGET 中→高,9,True,True,True,content_order,5829,6,1,0,精确同A且嵌套扩块 Q效果增量,True,25
+69,table_cell,"n20,m7→8",8,True,True,True,content_order,12152,12,1,1,精确同A且嵌套扩块 Q效果增量,True,34
+69,table_cell,11；9,4,True,True,True,content_order,4307,4,1,2,精确同A且嵌套扩块 Q效果增量,True,42
+69,table_cell,-0.338,6,True,True,True,content_order,12164,12,1,3,精确同A且嵌套扩块 Q效果增量,True,46
+69,table_cell,1.375,5,True,True,True,content_order,12170,12,1,4,精确同A且嵌套扩块 Q效果增量,True,52
+69,table_cell,7/4,3,True,True,True,content_order,12175,12,1,5,精确同A且嵌套扩块 Q效果增量,True,57
+69,table_cell,JOINT3 1→2,9,True,True,True,content_order,12178,12,2,0,精确同A且嵌套扩块 Q效果增量,True,60
+69,table_cell,"n20,m9→10",9,True,True,True,content_order,12187,12,2,1,精确同A且嵌套扩块 Q效果增量,True,69
+69,table_cell,79；11,5,True,True,True,content_order,12196,12,2,2,精确同A且嵌套扩块 Q效果增量,True,78
+69,table_cell,-0.393,6,True,True,True,content_order,12201,12,2,3,精确同A且嵌套扩块 Q效果增量,True,83
+69,table_cell,1.644,5,True,True,True,content_order,12207,12,2,4,精确同A且嵌套扩块 Q效果增量,True,89
+69,table_cell,41/38,5,True,True,True,content_order,12212,12,2,5,精确同A且嵌套扩块 Q效果增量,True,94
+69,table_cell,JOINT3 1→2,9,True,True,True,content_order,12178,12,3,0,精确同A且嵌套扩块 Q效果增量,True,99
+69,table_cell,"n20,m10→12",10,True,True,True,content_order,12226,12,3,1,精确同A且嵌套扩块 Q效果增量,True,108
+69,table_cell,25；6,4,True,True,True,content_order,5169,5,3,2,精确同A且嵌套扩块 Q效果增量,True,118
+69,table_cell,+0.187,6,True,True,True,content_order,12240,12,3,3,精确同A且嵌套扩块 Q效果增量,True,122
+69,table_cell,2.291,5,True,True,True,content_order,12246,12,3,4,精确同A且嵌套扩块 Q效果增量,True,128
+69,table_cell,13/12,5,True,True,True,content_order,12251,12,3,5,精确同A且嵌套扩块 Q效果增量,True,133
+69,table_cell,RFUSE 1→2,8,True,True,True,content_order,12256,12,4,0,精确同A且嵌套扩块 Q效果增量,True,138
+69,table_cell,"n20,m3→4",8,True,True,True,content_order,12264,12,4,1,精确同A且嵌套扩块 Q效果增量,True,146
+69,table_cell,82；21,5,True,True,True,content_order,4516,5,4,2,精确同A且嵌套扩块 Q效果增量,True,154
+69,table_cell,+0.565,6,True,True,True,content_order,12277,12,4,3,精确同A且嵌套扩块 Q效果增量,True,159
+69,table_cell,1.560,5,True,True,True,content_order,12283,12,4,4,精确同A且嵌套扩块 Q效果增量,True,165
+69,table_cell,66/16,5,True,True,True,content_order,12288,12,4,5,精确同A且嵌套扩块 Q效果增量,True,170
+70,p,TARGET20人的7→8人扩块增量均值−0.338，但7/11图为正；JOINT3的9→10人和10→12人也接近正负各半。这里已逐条核对A的team_key相同、X/Z嵌套，所以比跨不同图片直接比较m7和m12均值更能说明替换比例作用，但仍由具体新加入块成员决定。RFUSE3→4人有66/82图效果增量为正，保留小块反向分类的实用性。,170,True,True,True,content_order,12320,12,,,,,
+71,table_title,固定同十人XZ，背景嵌套增加，n20→22,21,True,True,True,content_order,12495,12,,,,,
+71,table_cell,方法,2,True,True,True,content_order,563,1,0,0,固定同十人XZ，背景嵌套增加，n20→22,True,0
+71,table_cell,图；楼,3,True,True,True,content_order,4133,4,0,1,固定同十人XZ，背景嵌套增加，n20→22,True,2
+71,table_cell,均Q效果增量,6,True,True,True,content_order,12521,12,0,2,固定同十人XZ，背景嵌套增加，n20→22,True,5
+71,table_cell,均|增量|,5,True,True,True,content_order,12132,12,0,3,固定同十人XZ，背景嵌套增加，n20→22,True,11
+71,table_cell,增量正/负图,6,True,True,True,content_order,12137,12,0,4,固定同十人XZ，背景嵌套增加，n20→22,True,16
+71,table_cell,TARGET K3,8,True,True,True,content_order,585,1,1,0,固定同十人XZ，背景嵌套增加，n20→22,True,22
+71,table_cell,3；2,3,True,True,True,content_order,4807,5,1,1,固定同十人XZ，背景嵌套增加，n20→22,True,30
+71,table_cell,-0.035,6,True,True,True,content_order,12549,12,1,2,固定同十人XZ，背景嵌套增加，n20→22,True,33
+71,table_cell,0.324,5,True,True,True,content_order,12555,12,1,3,固定同十人XZ，背景嵌套增加，n20→22,True,39
+71,table_cell,2/1,3,True,True,True,content_order,3999,4,1,4,固定同十人XZ，背景嵌套增加，n20→22,True,44
+71,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,2,0,固定同十人XZ，背景嵌套增加，n20→22,True,47
+71,table_cell,10；4,4,True,True,True,content_order,12569,12,2,1,固定同十人XZ，背景嵌套增加，n20→22,True,53
+71,table_cell,+0.489,6,True,True,True,content_order,12573,12,2,2,固定同十人XZ，背景嵌套增加，n20→22,True,57
+71,table_cell,2.412,5,True,True,True,content_order,12579,12,2,3,固定同十人XZ，背景嵌套增加，n20→22,True,63
+71,table_cell,5/5,3,True,True,True,content_order,12584,12,2,4,固定同十人XZ，背景嵌套增加，n20→22,True,68
+71,table_cell,JOINT K3,7,True,True,True,content_order,666,1,3,0,固定同十人XZ，背景嵌套增加，n20→22,True,71
+71,table_cell,72；11,5,True,True,True,content_order,12594,12,3,1,固定同十人XZ，背景嵌套增加，n20→22,True,78
+71,table_cell,-0.165,6,True,True,True,content_order,12599,12,3,2,固定同十人XZ，背景嵌套增加，n20→22,True,83
+71,table_cell,1.368,5,True,True,True,content_order,12605,12,3,3,固定同十人XZ，背景嵌套增加，n20→22,True,89
+71,table_cell,43/29,5,True,True,True,content_order,12610,12,3,4,固定同十人XZ，背景嵌套增加，n20→22,True,94
+71,table_cell,JOINT K4,7,True,True,True,content_order,3488,4,4,0,固定同十人XZ，背景嵌套增加，n20→22,True,99
+71,table_cell,92；15,5,True,True,True,content_order,12622,12,4,1,固定同十人XZ，背景嵌套增加，n20→22,True,106
+71,table_cell,-0.588,6,True,True,True,content_order,12627,12,4,2,固定同十人XZ，背景嵌套增加，n20→22,True,111
+71,table_cell,1.319,5,True,True,True,content_order,5390,5,4,3,固定同十人XZ，背景嵌套增加，n20→22,True,117
+71,table_cell,43/49,5,True,True,True,content_order,12638,12,4,4,固定同十人XZ，背景嵌套增加，n20→22,True,122
+72,p,JOINT3这条背景人数路径在72图上平均−0.165，但43正29负，绝对增量1.368。增加背景同时增加具体人员、降低m/n并可能改变MV50门槛；本表不能单独将变化归因于其中任何一项。S9h-04的完整票账在后节说明一次真实门槛与互斥表达机制。,125,True,True,True,content_order,12670,13,,,,,
+73,h,8.4 两批抽样方向与固定核心人员,16,True,True,True,content_order,12800,13,,,,,
+74,table_title,两个不同种子且跨批组合去重的图片平均响应,20,True,True,True,content_order,12816,13,,,,,
+74,table_cell,方向,2,True,True,True,content_order,279,1,0,0,两个不同种子且跨批组合去重的图片平均响应,True,0
+74,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,两个不同种子且跨批组合去重的图片平均响应,True,2
+74,table_cell,可比较图；楼,6,True,True,True,content_order,12841,13,0,2,两个不同种子且跨批组合去重的图片平均响应,True,5
+74,table_cell,Q均值方向一致率,8,True,True,True,content_order,12847,13,0,3,两个不同种子且跨批组合去重的图片平均响应,True,11
+74,table_cell,两批均值差的绝对值图均,11,True,True,True,content_order,12855,13,0,4,两个不同种子且跨批组合去重的图片平均响应,True,19
+74,table_cell,TARGET 中→高,9,True,True,True,content_order,5829,6,1,0,两个不同种子且跨批组合去重的图片平均响应,True,30
+74,table_cell,20/7,4,True,True,True,content_order,274,1,1,1,两个不同种子且跨批组合去重的图片平均响应,True,39
+74,table_cell,85；21,5,True,True,True,content_order,4172,4,1,2,两个不同种子且跨批组合去重的图片平均响应,True,43
+74,table_cell,94.12%,6,True,True,True,content_order,12884,13,1,3,两个不同种子且跨批组合去重的图片平均响应,True,48
+74,table_cell,2.903,5,True,True,True,content_order,12890,13,1,4,两个不同种子且跨批组合去重的图片平均响应,True,54
+74,table_cell,TARGET K3,8,True,True,True,content_order,585,1,2,0,两个不同种子且跨批组合去重的图片平均响应,True,59
+74,table_cell,20/10,5,True,True,True,content_order,3411,4,2,1,两个不同种子且跨批组合去重的图片平均响应,True,67
+74,table_cell,3；2,3,True,True,True,content_order,4807,5,2,2,两个不同种子且跨批组合去重的图片平均响应,True,72
+74,table_cell,100.00%,7,True,True,True,content_order,12911,13,2,3,两个不同种子且跨批组合去重的图片平均响应,True,75
+74,table_cell,0.182,5,True,True,True,content_order,12918,13,2,4,两个不同种子且跨批组合去重的图片平均响应,True,82
+74,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,3,0,两个不同种子且跨批组合去重的图片平均响应,True,87
+74,table_cell,20/10,5,True,True,True,content_order,3411,4,3,1,两个不同种子且跨批组合去重的图片平均响应,True,93
+74,table_cell,12；5,4,True,True,True,content_order,4845,5,3,2,两个不同种子且跨批组合去重的图片平均响应,True,98
+74,table_cell,83.33%,6,True,True,True,content_order,12938,13,3,3,两个不同种子且跨批组合去重的图片平均响应,True,102
+74,table_cell,2.094,5,True,True,True,content_order,12944,13,3,4,两个不同种子且跨批组合去重的图片平均响应,True,108
+74,table_cell,JOINT K3,7,True,True,True,content_order,666,1,4,0,两个不同种子且跨批组合去重的图片平均响应,True,113
+74,table_cell,20/10,5,True,True,True,content_order,3411,4,4,1,两个不同种子且跨批组合去重的图片平均响应,True,120
+74,table_cell,82；11,5,True,True,True,content_order,4962,5,4,2,两个不同种子且跨批组合去重的图片平均响应,True,125
+74,table_cell,78.05%,6,True,True,True,content_order,12966,13,4,3,两个不同种子且跨批组合去重的图片平均响应,True,130
+74,table_cell,1.733,5,True,True,True,content_order,12972,13,4,4,两个不同种子且跨批组合去重的图片平均响应,True,136
+74,table_cell,JOINT K4,7,True,True,True,content_order,3488,4,5,0,两个不同种子且跨批组合去重的图片平均响应,True,141
+74,table_cell,20/10,5,True,True,True,content_order,3411,4,5,1,两个不同种子且跨批组合去重的图片平均响应,True,148
+74,table_cell,100；15,6,True,True,True,content_order,12989,13,5,2,两个不同种子且跨批组合去重的图片平均响应,True,153
+74,table_cell,85.00%,6,True,True,True,content_order,12995,13,5,3,两个不同种子且跨批组合去重的图片平均响应,True,159
+74,table_cell,1.426,5,True,True,True,content_order,13001,13,5,4,两个不同种子且跨批组合去重的图片平均响应,True,165
+75,p,TARGET主方向20/7的两批方向一致80/85＝94.12%，D10一致92.94%，同时Q批次差的绝对值图均2.903。它支持当前有限抽样下总体方向较稳定，同时幅度受人选影响。两批种子不同、组合跨批去重，人员仍可共享，并非独立人员样本。枚举格不计入两批盲抽验证；一致率不是预测准确率，也不能消除共享成员与楼的相关性。,161,True,True,True,content_order,13033,13,,,,,
+76,table_title,20/10的所有实际方向：某侧在登记样本中没有成员变化,27,True,True,True,content_order,13199,13,,,,,
+76,table_cell,方法,2,True,True,True,content_order,563,1,0,0,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,0
+76,table_cell,图；楼,3,True,True,True,content_order,4133,4,0,1,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,2
+76,table_cell,条件数,3,True,True,True,content_order,13231,13,0,2,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,5
+76,table_cell,来源块固定,5,True,True,True,content_order,13234,13,0,3,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,8
+76,table_cell,目标块固定,5,True,True,True,content_order,13239,13,0,4,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,13
+76,table_cell,两侧都固定,5,True,True,True,content_order,13244,13,0,5,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,18
+76,table_cell,TARGET K3,8,True,True,True,content_order,585,1,1,0,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,23
+76,table_cell,3；2,3,True,True,True,content_order,4807,5,1,1,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,31
+76,table_cell,3,1,True,True,True,content_order,106,1,1,2,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,34
+76,table_cell,2,1,True,True,True,content_order,8,1,1,3,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,35
+76,table_cell,0,1,True,True,True,content_order,66,1,1,4,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,36
+76,table_cell,0,1,True,True,True,content_order,66,1,1,5,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,37
+76,table_cell,RAW3 K3,6,True,True,True,content_order,756,1,2,0,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,38
+76,table_cell,19；7,4,True,True,True,content_order,13270,13,2,1,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,44
+76,table_cell,21,2,True,True,True,content_order,287,1,2,2,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,48
+76,table_cell,4,1,True,True,True,content_order,266,1,2,3,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,50
+76,table_cell,4,1,True,True,True,content_order,266,1,2,4,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,51
+76,table_cell,0,1,True,True,True,content_order,66,1,2,5,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,52
+76,table_cell,JOINT K3,7,True,True,True,content_order,666,1,3,0,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,53
+76,table_cell,82；11,5,True,True,True,content_order,4962,5,3,1,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,60
+76,table_cell,82,2,True,True,True,content_order,844,1,3,2,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,65
+76,table_cell,16,2,True,True,True,content_order,1053,1,3,3,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,67
+76,table_cell,13,2,True,True,True,content_order,559,1,3,4,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,69
+76,table_cell,0,1,True,True,True,content_order,66,1,3,5,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,71
+76,table_cell,JOINT K4,7,True,True,True,content_order,3488,4,4,0,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,72
+76,table_cell,107；16,6,True,True,True,content_order,13305,13,4,1,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,79
+76,table_cell,107,3,True,True,True,content_order,3509,4,4,2,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,85
+76,table_cell,13,2,True,True,True,content_order,559,1,4,3,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,88
+76,table_cell,21,2,True,True,True,content_order,287,1,4,4,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,90
+76,table_cell,0,1,True,True,True,content_order,66,1,4,5,20/10的所有实际方向：某侧在登记样本中没有成员变化,True,92
+77,p,"完整核心表有26,887条件：25,641 Manual、1,246 Semi，逐条给出源/目标固定交集、每个成员在该条件内不同AC事件中的出现次数、是否每次用尽该图该类全部成员。固定核心是已抽样块的交集，不自动等于自然人群只有这些人；若整类只有8人全部进入，其作用无法从当前设计中拆成“类别的独立作用”和这8人的独立贡献。不同方法选中同一物理团队或同一端点对，按精确身份识别重叠，不当独立重复证据。",198,True,True,True,content_order,13346,13,,,,,
+78,h,9 35人池里的完整类别联盟与两两组合,18,True,True,True,content_order,13553,14,,,,,
+79,p,按实际容量在结果出现前指定pa4otMbVnkk的06、11、42、44四图：OPPJOINT K3楼外标签下，C1有17人、C2有10人、C3有8人。每图七种非空类别联盟全部计算，人数为8、10、17、18、25、27、35；七队的21个无向对全部保留，四图合计28队、84对。另有12个同人数纯类条件、96个精确AC对，以及12条不等人数父对照、48条中间路径；都使用已登记执行的端点。,194,True,True,True,content_order,13571,14,,,,,
+80,p,四图同属一楼，不能当四次独立的类别人群复现。C3的固定八人是W102、W109、W112、W115、W121、W122、W126、W130；这八人在完整C3进入时每人使用率100%，该图没有其它C3成员可扰动。C1四图共同16人，C2共同8人，全池共同32人；各图35人并非完全同一名单。历史画像中C3转折/复杂机会转折较多、历史Q较高、来源内劳动较长；这不保证单图Q始终按C1<C2<C3排序。,198,True,True,True,content_order,13782,14,,,,,
+81,table_title,七联盟B8L2 全部结果,11,True,True,True,content_order,13989,14,,,,,
+81,table_cell,图尾号,3,True,True,True,content_order,14000,14,0,0,七联盟B8L2 全部结果,True,0
+81,table_cell,"C3
+8人",4,True,False,True,content_order,14003,14,0,1,七联盟B8L2 全部结果,True,3
+81,table_cell,"C2
+10人",5,True,False,True,content_order,14007,14,0,2,七联盟B8L2 全部结果,True,7
+81,table_cell,"C1
+17人",5,True,False,True,content_order,14012,14,0,3,七联盟B8L2 全部结果,True,12
+81,table_cell,"C2+C3
+18人",8,True,False,True,content_order,14017,14,0,4,七联盟B8L2 全部结果,True,17
+81,table_cell,"C1+C3
+25人",8,True,False,True,content_order,14025,14,0,5,七联盟B8L2 全部结果,True,25
+81,table_cell,"C1+C2
+27人",8,True,False,True,content_order,14033,14,0,6,七联盟B8L2 全部结果,True,33
+81,table_cell,"C1+C2+C3
+35人",11,True,False,True,content_order,14041,14,0,7,七联盟B8L2 全部结果,True,41
+81,table_cell,06,2,True,True,True,content_order,1379,2,1,0,七联盟B8L2 全部结果,True,52
+81,table_cell,99.300,6,True,True,True,content_order,14054,14,1,1,七联盟B8L2 全部结果,True,54
+81,table_cell,91.986,6,True,True,True,content_order,14060,14,1,2,七联盟B8L2 全部结果,True,60
+81,table_cell,96.693,6,True,True,True,content_order,14066,14,1,3,七联盟B8L2 全部结果,True,66
+81,table_cell,98.844,6,True,True,True,content_order,14072,14,1,4,七联盟B8L2 全部结果,True,72
+81,table_cell,98.925,6,True,True,True,content_order,14078,14,1,5,七联盟B8L2 全部结果,True,78
+81,table_cell,96.773,6,True,True,True,content_order,14084,14,1,6,七联盟B8L2 全部结果,True,84
+81,table_cell,98.180,6,True,True,True,content_order,14090,14,1,7,七联盟B8L2 全部结果,True,90
+81,table_cell,11,2,True,True,True,content_order,1502,2,2,0,七联盟B8L2 全部结果,True,96
+81,table_cell,29.725,6,True,True,True,content_order,14098,14,2,1,七联盟B8L2 全部结果,True,98
+81,table_cell,22.289,6,True,True,True,content_order,14104,14,2,2,七联盟B8L2 全部结果,True,104
+81,table_cell,21.984,6,True,True,True,content_order,14110,14,2,3,七联盟B8L2 全部结果,True,110
+81,table_cell,23.265,6,True,True,True,content_order,14116,14,2,4,七联盟B8L2 全部结果,True,116
+81,table_cell,22.439,6,True,True,True,content_order,14122,14,2,5,七联盟B8L2 全部结果,True,122
+81,table_cell,21.984,6,True,True,True,content_order,14110,14,2,6,七联盟B8L2 全部结果,True,128
+81,table_cell,22.367,6,True,True,True,content_order,14134,14,2,7,七联盟B8L2 全部结果,True,134
+81,table_cell,42,2,True,True,True,content_order,1968,2,3,0,七联盟B8L2 全部结果,True,140
+81,table_cell,99.093,6,True,True,True,content_order,14142,14,3,1,七联盟B8L2 全部结果,True,142
+81,table_cell,96.363,6,True,True,True,content_order,14148,14,3,2,七联盟B8L2 全部结果,True,148
+81,table_cell,95.206,6,True,True,True,content_order,14154,14,3,3,七联盟B8L2 全部结果,True,154
+81,table_cell,98.607,6,True,True,True,content_order,14160,14,3,4,七联盟B8L2 全部结果,True,160
+81,table_cell,98.092,6,True,True,True,content_order,14166,14,3,5,七联盟B8L2 全部结果,True,166
+81,table_cell,94.869,6,True,True,True,content_order,14172,14,3,6,七联盟B8L2 全部结果,True,172
+81,table_cell,98.199,6,True,True,True,content_order,14178,14,3,7,七联盟B8L2 全部结果,True,178
+81,table_cell,44,2,True,True,True,content_order,1045,1,4,0,七联盟B8L2 全部结果,True,184
+81,table_cell,99.303,6,True,True,True,content_order,14186,14,4,1,七联盟B8L2 全部结果,True,186
+81,table_cell,97.138,6,True,True,True,content_order,14192,14,4,2,七联盟B8L2 全部结果,True,192
+81,table_cell,94.092,6,True,True,True,content_order,14198,14,4,3,七联盟B8L2 全部结果,True,198
+81,table_cell,98.945,6,True,True,True,content_order,14204,14,4,4,七联盟B8L2 全部结果,True,204
+81,table_cell,98.464,6,True,True,True,content_order,14210,14,4,5,七联盟B8L2 全部结果,True,210
+81,table_cell,97.322,6,True,True,True,content_order,14216,14,4,6,七联盟B8L2 全部结果,True,216
+81,table_cell,98.504,6,True,True,True,content_order,14222,14,4,7,七联盟B8L2 全部结果,True,222
+82,table_title,七联盟D10 全部结果,10,True,True,True,content_order,14255,14,,,,,
+82,table_cell,图尾号,3,True,True,True,content_order,14000,14,0,0,七联盟D10 全部结果,True,0
+82,table_cell,"C3
+8人",4,True,False,True,content_order,14003,14,0,1,七联盟D10 全部结果,True,3
+82,table_cell,"C2
+10人",5,True,False,True,content_order,14007,14,0,2,七联盟D10 全部结果,True,7
+82,table_cell,"C1
+17人",5,True,False,True,content_order,14012,14,0,3,七联盟D10 全部结果,True,12
+82,table_cell,"C2+C3
+18人",8,True,False,True,content_order,14017,14,0,4,七联盟D10 全部结果,True,17
+82,table_cell,"C1+C3
+25人",8,True,False,True,content_order,14025,14,0,5,七联盟D10 全部结果,True,25
+82,table_cell,"C1+C2
+27人",8,True,False,True,content_order,14033,14,0,6,七联盟D10 全部结果,True,33
+82,table_cell,"C1+C2+C3
+35人",11,True,False,True,content_order,14041,14,0,7,七联盟D10 全部结果,True,41
+82,table_cell,06,2,True,True,True,content_order,1379,2,1,0,七联盟D10 全部结果,True,52
+82,table_cell,99.307,6,True,True,True,content_order,14319,14,1,1,七联盟D10 全部结果,True,54
+82,table_cell,93.385,6,True,True,True,content_order,14325,14,1,2,七联盟D10 全部结果,True,60
+82,table_cell,97.051,6,True,True,True,content_order,14331,14,1,3,七联盟D10 全部结果,True,66
+82,table_cell,98.852,6,True,True,True,content_order,14337,14,1,4,七联盟D10 全部结果,True,72
+82,table_cell,98.950,6,True,True,True,content_order,14343,14,1,5,七联盟D10 全部结果,True,78
+82,table_cell,96.997,6,True,True,True,content_order,14349,14,1,6,七联盟D10 全部结果,True,84
+82,table_cell,98.258,6,True,True,True,content_order,14355,14,1,7,七联盟D10 全部结果,True,90
+82,table_cell,11,2,True,True,True,content_order,1502,2,2,0,七联盟D10 全部结果,True,96
+82,table_cell,29.740,6,True,True,True,content_order,14363,14,2,1,七联盟D10 全部结果,True,98
+82,table_cell,22.298,6,True,True,True,content_order,14369,14,2,2,七联盟D10 全部结果,True,104
+82,table_cell,21.999,6,True,True,True,content_order,14375,14,2,3,七联盟D10 全部结果,True,110
+82,table_cell,23.276,6,True,True,True,content_order,14381,14,2,4,七联盟D10 全部结果,True,116
+82,table_cell,22.453,6,True,True,True,content_order,14387,14,2,5,七联盟D10 全部结果,True,122
+82,table_cell,21.998,6,True,True,True,content_order,14393,14,2,6,七联盟D10 全部结果,True,128
+82,table_cell,22.380,6,True,True,True,content_order,14399,14,2,7,七联盟D10 全部结果,True,134
+82,table_cell,42,2,True,True,True,content_order,1968,2,3,0,七联盟D10 全部结果,True,140
+82,table_cell,99.097,6,True,True,True,content_order,14407,14,3,1,七联盟D10 全部结果,True,142
+82,table_cell,96.530,6,True,True,True,content_order,14413,14,3,2,七联盟D10 全部结果,True,148
+82,table_cell,95.227,6,True,True,True,content_order,14419,14,3,3,七联盟D10 全部结果,True,154
+82,table_cell,98.608,6,True,True,True,content_order,14425,14,3,4,七联盟D10 全部结果,True,160
+82,table_cell,98.094,6,True,True,True,content_order,14431,14,3,5,七联盟D10 全部结果,True,166
+82,table_cell,94.878,6,True,True,True,content_order,14437,14,3,6,七联盟D10 全部结果,True,172
+82,table_cell,98.200,6,True,True,True,content_order,14443,14,3,7,七联盟D10 全部结果,True,178
+82,table_cell,44,2,True,True,True,content_order,1045,1,4,0,七联盟D10 全部结果,True,184
+82,table_cell,99.315,6,True,True,True,content_order,14451,14,4,1,七联盟D10 全部结果,True,186
+82,table_cell,97.234,6,True,True,True,content_order,14457,14,4,2,七联盟D10 全部结果,True,192
+82,table_cell,94.681,6,True,True,True,content_order,14463,14,4,3,七联盟D10 全部结果,True,198
+82,table_cell,99.037,6,True,True,True,content_order,14469,14,4,4,七联盟D10 全部结果,True,204
+82,table_cell,98.558,6,True,True,True,content_order,14475,14,4,5,七联盟D10 全部结果,True,210
+82,table_cell,97.330,6,True,True,True,content_order,14481,14,4,6,七联盟D10 全部结果,True,216
+82,table_cell,98.576,6,True,True,True,content_order,14487,14,4,7,七联盟D10 全部结果,True,222
+83,p,28队全部产出可评分完整输出。06、42、44每队四节点，11每队八节点；这组联盟间的差异不能用节点数增减解释。06、42、44中C3单类比分更多人的全部35人更高，但这不是人数本身的独立效应。11所有联盟共同低分（约21.98–29.73），全35人也未消除与当前参考的共同差异。,141,True,True,True,content_order,14520,14,,,,,
+84,h,9.1 同人数纯类锚点保留具体成员的不确定性,21,True,True,True,content_order,14666,15,,,,,
+85,table_title,D为空，来源抽样八组，目标小类全部换入,19,True,True,True,content_order,14687,15,,,,,
+85,table_cell,图,1,True,True,True,content_order,172,1,0,0,D为空，来源抽样八组，目标小类全部换入,True,0
+85,table_cell,整类方向,4,True,True,True,content_order,14707,15,0,1,D为空，来源抽样八组，目标小类全部换入,True,1
+85,table_cell,n=m,3,True,True,True,content_order,14711,15,0,2,D为空，来源抽样八组，目标小类全部换入,True,5
+85,table_cell,均ΔQ,3,True,True,True,content_order,8478,9,0,3,D为空，来源抽样八组，目标小类全部换入,True,8
+85,table_cell,均ΔD10,5,True,True,True,content_order,14717,15,0,4,D为空，来源抽样八组，目标小类全部换入,True,11
+85,table_cell,ΔQ全范围,5,True,True,True,content_order,14722,15,0,5,D为空，来源抽样八组，目标小类全部换入,True,16
+85,table_cell,Q增加对,4,True,True,True,content_order,14727,15,0,6,D为空，来源抽样八组，目标小类全部换入,True,21
+85,table_cell,06,2,True,True,True,content_order,1379,2,1,0,D为空，来源抽样八组，目标小类全部换入,True,25
+85,table_cell,C1→C2,5,True,True,True,content_order,14733,15,1,1,D为空，来源抽样八组，目标小类全部换入,True,27
+85,table_cell,10,2,True,True,True,content_order,70,1,1,2,D为空，来源抽样八组，目标小类全部换入,True,32
+85,table_cell,-3.457,6,True,True,True,content_order,14740,15,1,3,D为空，来源抽样八组，目标小类全部换入,True,34
+85,table_cell,-3.148,6,True,True,True,content_order,14746,15,1,4,D为空，来源抽样八组，目标小类全部换入,True,40
+85,table_cell,-5.821～-1.253,13,True,True,True,content_order,14752,15,1,5,D为空，来源抽样八组，目标小类全部换入,True,46
+85,table_cell,0/8,3,True,True,True,content_order,4285,4,1,6,D为空，来源抽样八组，目标小类全部换入,True,59
+85,table_cell,06,2,True,True,True,content_order,1379,2,2,0,D为空，来源抽样八组，目标小类全部换入,True,62
+85,table_cell,C1→C3,5,True,True,True,content_order,14770,15,2,1,D为空，来源抽样八组，目标小类全部换入,True,64
+85,table_cell,8,1,True,True,True,content_order,270,1,2,2,D为空，来源抽样八组，目标小类全部换入,True,69
+85,table_cell,+6.196,6,True,True,True,content_order,14776,15,2,3,D为空，来源抽样八组，目标小类全部换入,True,70
+85,table_cell,+4.519,6,True,True,True,content_order,14782,15,2,4,D为空，来源抽样八组，目标小类全部换入,True,76
+85,table_cell,1.661～12.568,12,True,True,True,content_order,14788,15,2,5,D为空，来源抽样八组，目标小类全部换入,True,82
+85,table_cell,8/8,3,True,True,True,content_order,319,1,2,6,D为空，来源抽样八组，目标小类全部换入,True,94
+85,table_cell,06,2,True,True,True,content_order,1379,2,3,0,D为空，来源抽样八组，目标小类全部换入,True,97
+85,table_cell,C2→C3,5,True,True,True,content_order,14805,15,3,1,D为空，来源抽样八组，目标小类全部换入,True,99
+85,table_cell,8,1,True,True,True,content_order,270,1,3,2,D为空，来源抽样八组，目标小类全部换入,True,104
+85,table_cell,+7.883,6,True,True,True,content_order,14811,15,3,3,D为空，来源抽样八组，目标小类全部换入,True,105
+85,table_cell,+6.824,6,True,True,True,content_order,14817,15,3,4,D为空，来源抽样八组，目标小类全部换入,True,111
+85,table_cell,4.765～19.221,12,True,True,True,content_order,14823,15,3,5,D为空，来源抽样八组，目标小类全部换入,True,117
+85,table_cell,8/8,3,True,True,True,content_order,319,1,3,6,D为空，来源抽样八组，目标小类全部换入,True,129
+85,table_cell,11,2,True,True,True,content_order,1502,2,4,0,D为空，来源抽样八组，目标小类全部换入,True,132
+85,table_cell,C1→C2,5,True,True,True,content_order,14733,15,4,1,D为空，来源抽样八组，目标小类全部换入,True,134
+85,table_cell,10,2,True,True,True,content_order,70,1,4,2,D为空，来源抽样八组，目标小类全部换入,True,139
+85,table_cell,+0.468,6,True,True,True,content_order,14847,15,4,3,D为空，来源抽样八组，目标小类全部换入,True,141
+85,table_cell,+0.460,6,True,True,True,content_order,14853,15,4,4,D为空，来源抽样八组，目标小类全部换入,True,147
+85,table_cell,0.256～0.731,11,True,True,True,content_order,14859,15,4,5,D为空，来源抽样八组，目标小类全部换入,True,153
+85,table_cell,8/8,3,True,True,True,content_order,319,1,4,6,D为空，来源抽样八组，目标小类全部换入,True,164
+85,table_cell,11,2,True,True,True,content_order,1502,2,5,0,D为空，来源抽样八组，目标小类全部换入,True,167
+85,table_cell,C1→C3,5,True,True,True,content_order,14770,15,5,1,D为空，来源抽样八组，目标小类全部换入,True,169
+85,table_cell,8,1,True,True,True,content_order,270,1,5,2,D为空，来源抽样八组，目标小类全部换入,True,174
+85,table_cell,+8.061,6,True,True,True,content_order,14881,15,5,3,D为空，来源抽样八组，目标小类全部换入,True,175
+85,table_cell,+8.056,6,True,True,True,content_order,14887,15,5,4,D为空，来源抽样八组，目标小类全部换入,True,181
+85,table_cell,7.681～8.782,11,True,True,True,content_order,14893,15,5,5,D为空，来源抽样八组，目标小类全部换入,True,187
+85,table_cell,8/8,3,True,True,True,content_order,319,1,5,6,D为空，来源抽样八组，目标小类全部换入,True,198
+85,table_cell,11,2,True,True,True,content_order,1502,2,6,0,D为空，来源抽样八组，目标小类全部换入,True,201
+85,table_cell,C2→C3,5,True,True,True,content_order,14805,15,6,1,D为空，来源抽样八组，目标小类全部换入,True,203
+85,table_cell,8,1,True,True,True,content_order,270,1,6,2,D为空，来源抽样八组，目标小类全部换入,True,208
+85,table_cell,+7.507,6,True,True,True,content_order,14915,15,6,3,D为空，来源抽样八组，目标小类全部换入,True,209
+85,table_cell,+7.511,6,True,True,True,content_order,14921,15,6,4,D为空，来源抽样八组，目标小类全部换入,True,215
+85,table_cell,7.074～7.984,11,True,True,True,content_order,14927,15,6,5,D为空，来源抽样八组，目标小类全部换入,True,221
+85,table_cell,8/8,3,True,True,True,content_order,319,1,6,6,D为空，来源抽样八组，目标小类全部换入,True,232
+85,table_cell,42,2,True,True,True,content_order,1968,2,7,0,D为空，来源抽样八组，目标小类全部换入,True,235
+85,table_cell,C1→C2,5,True,True,True,content_order,14733,15,7,1,D为空，来源抽样八组，目标小类全部换入,True,237
+85,table_cell,10,2,True,True,True,content_order,70,1,7,2,D为空，来源抽样八组，目标小类全部换入,True,242
+85,table_cell,+1.399,6,True,True,True,content_order,14950,15,7,3,D为空，来源抽样八组，目标小类全部换入,True,244
+85,table_cell,+1.417,6,True,True,True,content_order,14956,15,7,4,D为空，来源抽样八组，目标小类全部换入,True,250
+85,table_cell,-1.431～2.974,12,True,True,True,content_order,14962,15,7,5,D为空，来源抽样八组，目标小类全部换入,True,256
+85,table_cell,6/8,3,True,True,True,content_order,12465,12,7,6,D为空，来源抽样八组，目标小类全部换入,True,268
+85,table_cell,42,2,True,True,True,content_order,1968,2,8,0,D为空，来源抽样八组，目标小类全部换入,True,271
+85,table_cell,C1→C3,5,True,True,True,content_order,14770,15,8,1,D为空，来源抽样八组，目标小类全部换入,True,273
+85,table_cell,8,1,True,True,True,content_order,270,1,8,2,D为空，来源抽样八组，目标小类全部换入,True,278
+85,table_cell,+6.091,6,True,True,True,content_order,14985,15,8,3,D为空，来源抽样八组，目标小类全部换入,True,279
+85,table_cell,+4.951,6,True,True,True,content_order,14991,15,8,4,D为空，来源抽样八组，目标小类全部换入,True,285
+85,table_cell,1.616～18.577,12,True,True,True,content_order,14997,15,8,5,D为空，来源抽样八组，目标小类全部换入,True,291
+85,table_cell,8/8,3,True,True,True,content_order,319,1,8,6,D为空，来源抽样八组，目标小类全部换入,True,303
+85,table_cell,42,2,True,True,True,content_order,1968,2,9,0,D为空，来源抽样八组，目标小类全部换入,True,306
+85,table_cell,C2→C3,5,True,True,True,content_order,14805,15,9,1,D为空，来源抽样八组，目标小类全部换入,True,308
+85,table_cell,8,1,True,True,True,content_order,270,1,9,2,D为空，来源抽样八组，目标小类全部换入,True,313
+85,table_cell,+3.880,6,True,True,True,content_order,15020,15,9,3,D为空，来源抽样八组，目标小类全部换入,True,314
+85,table_cell,+3.553,6,True,True,True,content_order,15026,15,9,4,D为空，来源抽样八组，目标小类全部换入,True,320
+85,table_cell,1.807～6.236,11,True,True,True,content_order,15032,15,9,5,D为空，来源抽样八组，目标小类全部换入,True,326
+85,table_cell,8/8,3,True,True,True,content_order,319,1,9,6,D为空，来源抽样八组，目标小类全部换入,True,337
+85,table_cell,44,2,True,True,True,content_order,1045,1,10,0,D为空，来源抽样八组，目标小类全部换入,True,340
+85,table_cell,C1→C2,5,True,True,True,content_order,14733,15,10,1,D为空，来源抽样八组，目标小类全部换入,True,342
+85,table_cell,10,2,True,True,True,content_order,70,1,10,2,D为空，来源抽样八组，目标小类全部换入,True,347
+85,table_cell,+4.045,6,True,True,True,content_order,15055,15,10,3,D为空，来源抽样八组，目标小类全部换入,True,349
+85,table_cell,+3.327,6,True,True,True,content_order,15061,15,10,4,D为空，来源抽样八组，目标小类全部换入,True,355
+85,table_cell,-0.521～18.390,13,True,True,True,content_order,15067,15,10,5,D为空，来源抽样八组，目标小类全部换入,True,361
+85,table_cell,6/8,3,True,True,True,content_order,12465,12,10,6,D为空，来源抽样八组，目标小类全部换入,True,374
+85,table_cell,44,2,True,True,True,content_order,1045,1,11,0,D为空，来源抽样八组，目标小类全部换入,True,377
+85,table_cell,C1→C3,5,True,True,True,content_order,14770,15,11,1,D为空，来源抽样八组，目标小类全部换入,True,379
+85,table_cell,8,1,True,True,True,content_order,270,1,11,2,D为空，来源抽样八组，目标小类全部换入,True,384
+85,table_cell,+10.360,7,True,True,True,content_order,15091,15,11,3,D为空，来源抽样八组，目标小类全部换入,True,385
+85,table_cell,+8.720,6,True,True,True,content_order,15098,15,11,4,D为空，来源抽样八组，目标小类全部换入,True,392
+85,table_cell,2.202～22.532,12,True,True,True,content_order,15104,15,11,5,D为空，来源抽样八组，目标小类全部换入,True,398
+85,table_cell,8/8,3,True,True,True,content_order,319,1,11,6,D为空，来源抽样八组，目标小类全部换入,True,410
+85,table_cell,44,2,True,True,True,content_order,1045,1,12,0,D为空，来源抽样八组，目标小类全部换入,True,413
+85,table_cell,C2→C3,5,True,True,True,content_order,14805,15,12,1,D为空，来源抽样八组，目标小类全部换入,True,415
+85,table_cell,8,1,True,True,True,content_order,270,1,12,2,D为空，来源抽样八组，目标小类全部换入,True,420
+85,table_cell,+3.021,6,True,True,True,content_order,15127,15,12,3,D为空，来源抽样八组，目标小类全部换入,True,421
+85,table_cell,+2.709,6,True,True,True,content_order,15133,15,12,4,D为空，来源抽样八组，目标小类全部换入,True,427
+85,table_cell,1.565～5.055,11,True,True,True,content_order,15139,15,12,5,D为空，来源抽样八组，目标小类全部换入,True,433
+85,table_cell,8/8,3,True,True,True,content_order,319,1,12,6,D为空，来源抽样八组，目标小类全部换入,True,444
+86,p,四图的C3整类换入在所有已抽来源组合中均升Q，幅度仍明显受成员影响：44的C1→C3约+2.20至+22.53。相反，06的C1→C2八对全部降Q，42与44的同方向同时有正负结果。这些是固定人数、固定空背景下的类别与具体成员共同作用；没有B队，不由此估计“跨类超过同类”。,137,True,True,True,content_order,15180,15,,,,,
+87,table_title,C2→完整C3，n=m=8的合法记录劳动,20,True,True,True,content_order,15322,15,,,,,
+87,table_cell,图,1,True,True,True,content_order,172,1,0,0,C2→完整C3，n=m=8的合法记录劳动,True,0
+87,table_cell,有效对,3,True,True,True,content_order,7802,8,0,1,C2→完整C3，n=m=8的合法记录劳动,True,1
+87,table_cell,均Δ秒,3,True,True,True,content_order,15346,15,0,2,C2→完整C3，n=m=8的合法记录劳动,True,4
+87,table_cell,中位Δ秒,4,True,True,True,content_order,15349,15,0,3,C2→完整C3，n=m=8的合法记录劳动,True,7
+87,table_cell,增加/减少对,6,True,True,True,content_order,15353,15,0,4,C2→完整C3，n=m=8的合法记录劳动,True,11
+87,table_cell,Δ秒全范围,5,True,True,True,content_order,15359,15,0,5,C2→完整C3，n=m=8的合法记录劳动,True,17
+87,table_cell,06,2,True,True,True,content_order,1379,2,1,0,C2→完整C3，n=m=8的合法记录劳动,True,22
+87,table_cell,8,1,True,True,True,content_order,270,1,1,1,C2→完整C3，n=m=8的合法记录劳动,True,24
+87,table_cell,+563.7,6,True,True,True,content_order,15367,15,1,2,C2→完整C3，n=m=8的合法记录劳动,True,25
+87,table_cell,+571.6,6,True,True,True,content_order,15373,15,1,3,C2→完整C3，n=m=8的合法记录劳动,True,31
+87,table_cell,8/0,3,True,True,True,content_order,15379,15,1,4,C2→完整C3，n=m=8的合法记录劳动,True,37
+87,table_cell,492.9～635.0,11,True,True,True,content_order,15382,15,1,5,C2→完整C3，n=m=8的合法记录劳动,True,40
+87,table_cell,11,2,True,True,True,content_order,1502,2,2,0,C2→完整C3，n=m=8的合法记录劳动,True,51
+87,table_cell,8,1,True,True,True,content_order,270,1,2,1,C2→完整C3，n=m=8的合法记录劳动,True,53
+87,table_cell,+10.6,5,True,True,True,content_order,15396,15,2,2,C2→完整C3，n=m=8的合法记录劳动,True,54
+87,table_cell,-26.2,5,True,True,True,content_order,15401,15,2,3,C2→完整C3，n=m=8的合法记录劳动,True,59
+87,table_cell,2/6,3,True,True,True,content_order,15406,15,2,4,C2→完整C3，n=m=8的合法记录劳动,True,64
+87,table_cell,-125.1～376.6,12,True,True,True,content_order,15409,15,2,5,C2→完整C3，n=m=8的合法记录劳动,True,67
+87,table_cell,42,2,True,True,True,content_order,1968,2,3,0,C2→完整C3，n=m=8的合法记录劳动,True,79
+87,table_cell,8,1,True,True,True,content_order,270,1,3,1,C2→完整C3，n=m=8的合法记录劳动,True,81
+87,table_cell,+1004.4,7,True,True,True,content_order,15424,15,3,2,C2→完整C3，n=m=8的合法记录劳动,True,82
+87,table_cell,+1005.1,7,True,True,True,content_order,15431,15,3,3,C2→完整C3，n=m=8的合法记录劳动,True,89
+87,table_cell,8/0,3,True,True,True,content_order,15379,15,3,4,C2→完整C3，n=m=8的合法记录劳动,True,96
+87,table_cell,972.1～1031.4,12,True,True,True,content_order,15441,15,3,5,C2→完整C3，n=m=8的合法记录劳动,True,99
+87,table_cell,44,2,True,True,True,content_order,1045,1,4,0,C2→完整C3，n=m=8的合法记录劳动,True,111
+87,table_cell,8,1,True,True,True,content_order,270,1,4,1,C2→完整C3，n=m=8的合法记录劳动,True,113
+87,table_cell,+571.4,6,True,True,True,content_order,15456,15,4,2,C2→完整C3，n=m=8的合法记录劳动,True,114
+87,table_cell,+579.1,6,True,True,True,content_order,15462,15,4,3,C2→完整C3，n=m=8的合法记录劳动,True,120
+87,table_cell,8/0,3,True,True,True,content_order,15379,15,4,4,C2→完整C3，n=m=8的合法记录劳动,True,126
+87,table_cell,513.5～648.1,11,True,True,True,content_order,15471,15,4,5,C2→完整C3，n=m=8的合法记录劳动,True,129
+88,p,11这8对Q全升，但劳动6减2增，中位差−26.175秒、均差+10.645秒；少数增加值改变均值。06、42、44则8对劳动全部增加。完整联盟人数不同，每图严格来源计数匹配为0/21对；只有C2、C3和C2+C3三支单来源队之间每图3/21对，可按单一来源规则另看不等人数总劳动，四图合计12/84对。06的完整C2十人总劳动1084.741秒，完整C3八人1451.845秒，多367.104秒（33.84%），尽管人数更少且Q更高。记录劳动不等于同步标注墙钟速度。,235,True,True,True,content_order,15509,15|16,,,,,
+89,h,9.2 整类人数不等时，沿明确中间队拆开变化,21,True,True,True,content_order,15757,16,,,,,
+90,table_title,全部12个父对照 父差计一次，中间两段平均4条路径,24,True,True,True,content_order,15778,16,,,,,
+90,table_cell,图,1,True,True,True,content_order,172,1,0,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,0
+90,table_cell,整类方向,4,True,True,True,content_order,14707,15,0,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,1
+90,table_cell,团队n,3,True,True,True,content_order,15807,16,0,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,5
+90,table_cell,总ΔQ,3,True,True,True,content_order,15810,16,0,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,8
+90,table_cell,等量段,3,True,True,True,content_order,15813,16,0,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,11
+90,table_cell,等量段范围,5,True,True,True,content_order,15816,16,0,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,14
+90,table_cell,追加段,3,True,True,True,content_order,15821,16,0,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,19
+90,table_cell,06,2,True,True,True,content_order,1379,2,1,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,22
+90,table_cell,2→1,3,True,True,True,content_order,15826,16,1,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,24
+90,table_cell,18→25,5,True,True,True,content_order,15829,16,1,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,27
+90,table_cell,+0.081,6,True,True,True,content_order,15834,16,1,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,32
+90,table_cell,+0.274,6,True,True,True,content_order,15840,16,1,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,38
+90,table_cell,0.139～0.458,11,True,True,True,content_order,15846,16,1,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,44
+90,table_cell,-0.193,6,True,True,True,content_order,15857,16,1,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,55
+90,table_cell,06,2,True,True,True,content_order,1379,2,2,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,61
+90,table_cell,3→1,3,True,True,True,content_order,15865,16,2,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,63
+90,table_cell,18→27,5,True,True,True,content_order,15868,16,2,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,66
+90,table_cell,-2.071,6,True,True,True,content_order,15873,16,2,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,71
+90,table_cell,-2.478,6,True,True,True,content_order,15879,16,2,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,77
+90,table_cell,-3.263～-1.467,13,True,True,True,content_order,15885,16,2,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,83
+90,table_cell,+0.407,6,True,True,True,content_order,15898,16,2,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,96
+90,table_cell,06,2,True,True,True,content_order,1379,2,3,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,102
+90,table_cell,3→2,3,True,True,True,content_order,15906,16,3,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,104
+90,table_cell,25→27,5,True,True,True,content_order,15909,16,3,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,107
+90,table_cell,-2.152,6,True,True,True,content_order,15914,16,3,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,112
+90,table_cell,-2.390,6,True,True,True,content_order,15920,16,3,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,118
+90,table_cell,-2.511～-2.306,13,True,True,True,content_order,15926,16,3,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,124
+90,table_cell,+0.238,6,True,True,True,content_order,15939,16,3,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,137
+90,table_cell,11,2,True,True,True,content_order,1502,2,4,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,143
+90,table_cell,2→1,3,True,True,True,content_order,15826,16,4,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,145
+90,table_cell,18→25,5,True,True,True,content_order,15829,16,4,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,148
+90,table_cell,-0.826,6,True,True,True,content_order,15955,16,4,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,153
+90,table_cell,-0.563,6,True,True,True,content_order,15961,16,4,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,159
+90,table_cell,-0.657～-0.453,13,True,True,True,content_order,15967,16,4,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,165
+90,table_cell,-0.263,6,True,True,True,content_order,15980,16,4,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,178
+90,table_cell,11,2,True,True,True,content_order,1502,2,5,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,184
+90,table_cell,3→1,3,True,True,True,content_order,15865,16,5,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,186
+90,table_cell,18→27,5,True,True,True,content_order,15868,16,5,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,189
+90,table_cell,-1.281,6,True,True,True,content_order,15996,16,5,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,194
+90,table_cell,-1.179,6,True,True,True,content_order,16002,16,5,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,200
+90,table_cell,-1.388～-1.054,13,True,True,True,content_order,16008,16,5,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,206
+90,table_cell,-0.102,6,True,True,True,content_order,16021,16,5,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,219
+90,table_cell,11,2,True,True,True,content_order,1502,2,6,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,225
+90,table_cell,3→2,3,True,True,True,content_order,15906,16,6,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,227
+90,table_cell,25→27,5,True,True,True,content_order,15909,16,6,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,230
+90,table_cell,-0.455,6,True,True,True,content_order,16037,16,6,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,235
+90,table_cell,-0.439,6,True,True,True,content_order,16043,16,6,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,241
+90,table_cell,-0.532～-0.367,13,True,True,True,content_order,16049,16,6,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,247
+90,table_cell,-0.015,6,True,True,True,content_order,7426,8,6,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,260
+90,table_cell,42,2,True,True,True,content_order,1968,2,7,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,266
+90,table_cell,2→1,3,True,True,True,content_order,15826,16,7,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,268
+90,table_cell,18→25,5,True,True,True,content_order,15829,16,7,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,271
+90,table_cell,-0.515,6,True,True,True,content_order,16078,16,7,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,276
+90,table_cell,+0.012,6,True,True,True,content_order,16084,16,7,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,282
+90,table_cell,-0.644～0.546,12,True,True,True,content_order,16090,16,7,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,288
+90,table_cell,-0.528,6,True,True,True,content_order,16102,16,7,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,300
+90,table_cell,42,2,True,True,True,content_order,1968,2,8,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,306
+90,table_cell,3→1,3,True,True,True,content_order,15865,16,8,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,308
+90,table_cell,18→27,5,True,True,True,content_order,15868,16,8,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,311
+90,table_cell,-3.739,6,True,True,True,content_order,16118,16,8,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,316
+90,table_cell,-3.479,6,True,True,True,content_order,16124,16,8,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,322
+90,table_cell,-7.402～-0.271,13,True,True,True,content_order,16130,16,8,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,328
+90,table_cell,-0.260,6,True,True,True,content_order,16143,16,8,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,341
+90,table_cell,42,2,True,True,True,content_order,1968,2,9,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,347
+90,table_cell,3→2,3,True,True,True,content_order,15906,16,9,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,349
+90,table_cell,25→27,5,True,True,True,content_order,15909,16,9,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,352
+90,table_cell,-3.223,6,True,True,True,content_order,16159,16,9,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,357
+90,table_cell,-2.965,6,True,True,True,content_order,16165,16,9,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,363
+90,table_cell,-3.586～-2.307,13,True,True,True,content_order,16171,16,9,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,369
+90,table_cell,-0.259,6,True,True,True,content_order,16184,16,9,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,382
+90,table_cell,44,2,True,True,True,content_order,1045,1,10,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,388
+90,table_cell,2→1,3,True,True,True,content_order,15826,16,10,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,390
+90,table_cell,18→25,5,True,True,True,content_order,15829,16,10,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,393
+90,table_cell,-0.480,6,True,True,True,content_order,16200,16,10,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,398
+90,table_cell,+0.091,6,True,True,True,content_order,16206,16,10,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,404
+90,table_cell,-0.660～0.608,12,True,True,True,content_order,16212,16,10,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,410
+90,table_cell,-0.571,6,True,True,True,content_order,16224,16,10,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,422
+90,table_cell,44,2,True,True,True,content_order,1045,1,11,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,428
+90,table_cell,3→1,3,True,True,True,content_order,15865,16,11,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,430
+90,table_cell,18→27,5,True,True,True,content_order,15868,16,11,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,433
+90,table_cell,-1.623,6,True,True,True,content_order,16240,16,11,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,438
+90,table_cell,-1.935,6,True,True,True,content_order,16246,16,11,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,444
+90,table_cell,-3.115～-0.741,13,True,True,True,content_order,16252,16,11,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,450
+90,table_cell,+0.312,6,True,True,True,content_order,16265,16,11,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,463
+90,table_cell,44,2,True,True,True,content_order,1045,1,12,0,全部12个父对照 父差计一次，中间两段平均4条路径,True,469
+90,table_cell,3→2,3,True,True,True,content_order,15906,16,12,1,全部12个父对照 父差计一次，中间两段平均4条路径,True,471
+90,table_cell,25→27,5,True,True,True,content_order,15909,16,12,2,全部12个父对照 父差计一次，中间两段平均4条路径,True,474
+90,table_cell,-1.142,6,True,True,True,content_order,16281,16,12,3,全部12个父对照 父差计一次，中间两段平均4条路径,True,479
+90,table_cell,-1.770,6,True,True,True,content_order,16287,16,12,4,全部12个父对照 父差计一次，中间两段平均4条路径,True,485
+90,table_cell,-3.969～-0.694,13,True,True,True,content_order,16293,16,12,5,全部12个父对照 父差计一次，中间两段平均4条路径,True,491
+90,table_cell,+0.628,6,True,True,True,content_order,16306,16,12,6,全部12个父对照 父差计一次，中间两段平均4条路径,True,504
+91,p,每条路径先等量换类，再加入目标类剩余成员；父对照D固定为第三个完整类别，追加段的共享人员还包括已换入的目标子集。质量标量满足总差＝等人数段＋追加成员段，48条路径的B8L2闭合误差最大5×10⁻¹⁶。42和44在D=C3、C2十人换C1十七人时，总Q分别−0.515、−0.480，但等人数段均值为+0.012、+0.091；追加七名具体C1成员段为−0.528、−0.571。等量段内部仍有正负路径。不能把追加段称作与身份无关的纯人数因果效应，也不能让同一父差因四条路径被重复加权四次。百分比按端点比值复合，几何距离不满足这种标量加法。,269,False,True,True,spatial_order,16339,16,,,,,
+92,h,9.3 全范围整类不等人数互换：小类退出和追加大类成员,26,True,True,True,content_order,16617,16,,,,,
+93,p,"全范围保存12,922个不等人数父对照、63,491条等人数中间路径。为了让“总差＝两段之和”有共同统计含义，每个指标要求同一路径三段全部有效，先中间队平均到父对照，再池/图/楼等权；无D、部分外部D、全部外部D分开。这里按“完整较高结构或较高历史Q的小类退出”这个问题，展示TARGET/RAW3的3→2、JOINT3的3→1与3→2、JOINT4最高角色4退出的全部三个方向，没有按最大收益筛选。其它方向完整保留。",209,True,True,True,content_order,16643,16|17,,,,,
+94,table_title,固定该图全部外部D：小类全出，大类全入，人数不等,24,True,True,True,content_order,16861,17,,,,,
+94,table_cell,方向,2,True,True,True,content_order,279,1,0,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,0
+94,table_cell,Q有效/登记图；楼,9,True,False,True,content_order,16887,17,0,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,2
+94,table_cell,共同可评n/m范围,9,True,True,True,content_order,16896,17,0,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,11
+94,table_cell,总ΔQ,3,True,True,True,content_order,15810,16,0,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,20
+94,table_cell,等量ΔQ,4,True,True,True,content_order,16908,17,0,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,23
+94,table_cell,追加ΔQ,4,True,True,True,content_order,16912,17,0,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,27
+94,table_cell,总ΔD10,5,True,True,True,content_order,16916,17,0,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,31
+94,table_cell,Q负向图,4,True,True,True,content_order,16921,17,0,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,36
+94,table_cell,TARGET 3→2,9,True,True,True,content_order,16925,17,1,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,40
+94,table_cell,197/202；22,10,True,True,True,content_order,16934,17,1,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,49
+94,table_cell,"n3–17→5–32
+m1–8",14,True,False,True,content_order,16944,17,1,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,59
+94,table_cell,-4.722,6,True,True,True,content_order,16958,17,1,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,73
+94,table_cell,-7.408,6,True,True,True,content_order,16964,17,1,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,79
+94,table_cell,+2.686,6,True,True,True,content_order,16970,17,1,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,85
+94,table_cell,-4.435,6,True,True,True,content_order,16976,17,1,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,91
+94,table_cell,145/197,7,True,True,True,content_order,16982,17,1,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,97
+94,table_cell,RAW3 3→2,7,True,True,True,content_order,16989,17,2,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,104
+94,table_cell,191/197；22,10,True,True,True,content_order,16996,17,2,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,111
+94,table_cell,"n3–24→4–33
+m1–11",15,True,False,True,content_order,17006,17,2,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,121
+94,table_cell,-4.372,6,True,True,True,content_order,17021,17,2,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,136
+94,table_cell,-7.632,6,True,True,True,content_order,17027,17,2,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,142
+94,table_cell,+3.260,6,True,True,True,content_order,17033,17,2,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,148
+94,table_cell,-4.172,6,True,True,True,content_order,17039,17,2,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,154
+94,table_cell,142/191,7,True,True,True,content_order,17045,17,2,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,160
+94,table_cell,JOINT3 3→1,9,True,True,True,content_order,17052,17,3,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,167
+94,table_cell,176/179；20,10,True,True,True,content_order,17061,17,3,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,176
+94,table_cell,"n3–27→7–31
+m1–9",14,True,False,True,content_order,17071,17,3,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,186
+94,table_cell,-4.547,6,True,True,True,content_order,17085,17,3,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,200
+94,table_cell,-6.252,6,True,True,True,content_order,17091,17,3,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,206
+94,table_cell,+1.705,6,True,True,True,content_order,17097,17,3,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,212
+94,table_cell,-4.229,6,True,True,True,content_order,17103,17,3,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,218
+94,table_cell,135/176,7,True,True,True,content_order,17109,17,3,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,224
+94,table_cell,JOINT3 3→2,9,True,True,True,content_order,17116,17,4,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,231
+94,table_cell,136/140；16,10,True,True,True,content_order,17125,17,4,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,240
+94,table_cell,"n3–29→7–31
+m1–9",14,True,False,True,content_order,17135,17,4,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,250
+94,table_cell,-3.720,6,True,True,True,content_order,17149,17,4,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,264
+94,table_cell,-3.958,6,True,True,True,content_order,17155,17,4,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,270
+94,table_cell,+0.238,6,True,True,True,content_order,15939,16,4,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,276
+94,table_cell,-3.653,6,True,True,True,content_order,17167,17,4,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,282
+94,table_cell,101/136,7,True,True,True,content_order,17173,17,4,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,288
+94,table_cell,JOINT4 4→1,9,True,True,True,content_order,17180,17,5,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,295
+94,table_cell,144/147；16,10,True,True,True,content_order,17189,17,5,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,304
+94,table_cell,"n6–28→7–33
+m1–8",14,True,False,True,content_order,17199,17,5,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,314
+94,table_cell,-3.050,6,True,True,True,content_order,17213,17,5,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,328
+94,table_cell,-3.316,6,True,True,True,content_order,17219,17,5,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,334
+94,table_cell,+0.266,6,True,True,True,content_order,17225,17,5,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,340
+94,table_cell,-2.831,6,True,True,True,content_order,17231,17,5,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,346
+94,table_cell,105/144,7,True,True,True,content_order,17237,17,5,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,352
+94,table_cell,JOINT4 4→2,9,True,True,True,content_order,17244,17,6,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,359
+94,table_cell,190/195；22,10,True,True,True,content_order,17253,17,6,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,368
+94,table_cell,"n3–27→7–33
+m1–8",14,True,False,True,content_order,17263,17,6,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,378
+94,table_cell,-3.576,6,True,True,True,content_order,17277,17,6,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,392
+94,table_cell,-4.185,6,True,True,True,content_order,17283,17,6,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,398
+94,table_cell,+0.609,6,True,True,True,content_order,17289,17,6,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,404
+94,table_cell,-3.373,6,True,True,True,content_order,17295,17,6,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,410
+94,table_cell,141/190,7,True,True,True,content_order,17301,17,6,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,416
+94,table_cell,JOINT4 4→3,9,True,True,True,content_order,17308,17,7,0,固定该图全部外部D：小类全出，大类全入，人数不等,True,423
+94,table_cell,26/27；8,7,True,True,True,content_order,17317,17,7,1,固定该图全部外部D：小类全出，大类全入，人数不等,True,432
+94,table_cell,"n7–31→8–32
+m1–7",14,True,False,True,content_order,17324,17,7,2,固定该图全部外部D：小类全出，大类全入，人数不等,True,439
+94,table_cell,-1.592,6,True,True,True,content_order,17338,17,7,3,固定该图全部外部D：小类全出，大类全入，人数不等,True,453
+94,table_cell,-3.253,6,True,True,True,content_order,17344,17,7,4,固定该图全部外部D：小类全出，大类全入，人数不等,True,459
+94,table_cell,+1.660,6,True,True,True,content_order,17350,17,7,5,固定该图全部外部D：小类全出，大类全入，人数不等,True,465
+94,table_cell,-1.425,6,True,True,True,content_order,17356,17,7,6,固定该图全部外部D：小类全出，大类全入，人数不等,True,471
+94,table_cell,14/26,5,True,True,True,content_order,17362,17,7,7,固定该图全部外部D：小类全出，大类全入，人数不等,True,477
+95,p,TARGET3→2有197图、22楼共同可评，145图总Q下降：总差−4.722＝等人数段−7.408＋追加剩余目标成员+2.686。JOINT3的3→1为176图、20楼，135图下降，总−4.547＝−6.252＋1.705。追加更多具体大类成员可以部分抵消等量换类的退化，但平均未恢复原小类输出。这个结果将“完整类别退出”的负向作用扩展到多图多楼，并与前文整目标高角色换入的正向作用形成互补。,199,True,True,True,content_order,17394,17,,,,,
+96,p,这些方向的来源小类常只有1–8人，属于整类研究，不等于十人或十二人大块覆盖；n范围随实际池改变。对照的另一个合法方向可从端点反向读取，但不会作为第二个独立样本。三段统计共同有效不等于所有父对照可评，原始失败仍保留。不同D层的图片和人数范围也不同，不能把层间均值差直接当成纯背景因果效应。,143,True,True,True,content_order,17598,17,,,,,
+97,h,10 为什么会变化：原答分组定位连接三层证据,21,True,True,True,content_order,17750,17,,,,,
+98,p,案例包含9图、32支既有唯一团队、51条展示事件、252个完整身份组。四个离线HTML查看器嵌入原图、完整原答、正式参考、融合输出、所有入选和未选组、来源顺序与逐边票账。14个代表端点完整几何哈希相同；全32队中只有wc2背景①A的一个派生footprint坐标回放相差1 ULP（4.44×10⁻¹⁶），ERP点、节点身份顺序与拓扑相同，原核心端点保留。这些追踪不增加物理样本。,189,False,True,True,spatial_order,17771,17|18,,,,,
+99,p,正、负、小变化代表从完整研究结果按确定性规则选取，靠近相应条件的图片均值或中位响应；候选全集保存。容量预选的四图联盟另列。选例可以说明机制，发生频率必须回到逐图全结果，不以几个展示事件替代总体统计。,99,True,True,True,content_order,17965,18,,,,,
+100,table_title,代表事件均为原规范方向C−A 缺Q保持缺失,20,True,True,True,content_order,18069,18,,,,,
+100,table_cell,图片,2,True,True,True,content_order,401,1,0,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,0
+100,table_cell,条件,2,True,True,True,content_order,139,1,0,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,2
+100,table_cell,n/m,3,True,True,True,content_order,2219,3,0,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,4
+100,table_cell,节点,2,True,True,True,content_order,6830,7,0,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,7
+100,table_cell,B8L2 A→C,7,True,True,True,content_order,18098,18,0,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,9
+100,table_cell,ΔQ,2,True,True,True,content_order,4147,4,0,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,16
+100,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,18
+100,table_cell,劳动Δ秒,4,True,True,True,content_order,18111,18,0,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,22
+100,table_cell,VFuaQ6m2Qom-07,14,True,True,True,content_order,18115,18,1,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,26
+100,table_cell,TARGET 正,7,True,True,True,content_order,18129,18,1,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,40
+100,table_cell,20/7,4,True,True,True,content_order,274,1,1,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,47
+100,table_cell,8→9,3,True,True,True,content_order,18140,18,1,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,51
+100,table_cell,57.767→62.783,13,True,True,True,content_order,18143,18,1,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,54
+100,table_cell,+5.016,6,True,True,True,content_order,18156,18,1,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,67
+100,table_cell,+5.379,6,True,True,True,content_order,18162,18,1,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,73
+100,table_cell,不可比,3,True,True,True,content_order,18168,18,1,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,79
+100,table_cell,x8F5xyUWy9e-03,14,True,True,True,content_order,18171,18,2,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,82
+100,table_cell,TARGET 负,7,True,True,True,content_order,18185,18,2,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,96
+100,table_cell,20/7,4,True,True,True,content_order,274,1,2,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,103
+100,table_cell,4→5,3,True,True,True,content_order,18196,18,2,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,107
+100,table_cell,90.961→89.773,13,True,True,True,content_order,18199,18,2,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,110
+100,table_cell,-1.188,6,True,True,True,content_order,18212,18,2,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,123
+100,table_cell,-0.897,6,True,True,True,content_order,18218,18,2,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,129
+100,table_cell,不可比,3,True,True,True,content_order,18168,18,2,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,135
+100,table_cell,uNb9QFRL6hY-56,14,True,True,True,content_order,18227,18,3,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,138
+100,table_cell,TARGET 小变化,9,True,False,True,content_order,18241,18,3,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,152
+100,table_cell,20/7,4,True,True,True,content_order,274,1,3,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,161
+100,table_cell,4→4,3,True,True,True,content_order,17010,17,3,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,165
+100,table_cell,98.024→98.111,13,True,True,True,content_order,18257,18,3,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,168
+100,table_cell,+0.086,6,True,True,True,content_order,18270,18,3,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,181
+100,table_cell,+0.115,6,True,True,True,content_order,18276,18,3,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,187
+100,table_cell,-266.9,6,True,True,True,content_order,18282,18,3,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,193
+100,table_cell,B6ByNegPMKs-22,14,True,True,True,content_order,18288,18,4,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,199
+100,table_cell,RAW3 降质,6,True,True,True,content_order,18302,18,4,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,213
+100,table_cell,20/12,5,True,True,True,content_order,3416,4,4,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,219
+100,table_cell,4→4,3,True,True,True,content_order,17010,17,4,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,224
+100,table_cell,86.749→75.832,13,True,True,True,content_order,18316,18,4,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,227
+100,table_cell,-10.917,7,True,True,True,content_order,18329,18,4,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,240
+100,table_cell,-7.567,6,True,True,True,content_order,18336,18,4,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,247
+100,table_cell,-196.5,6,True,True,True,content_order,18342,18,4,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,253
+100,table_cell,uNb9QFRL6hY-14,14,True,True,True,content_order,18348,18,5,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,259
+100,table_cell,JOINT 正,6,True,True,True,content_order,18362,18,5,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,273
+100,table_cell,20/12,5,True,True,True,content_order,3416,4,5,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,279
+100,table_cell,4→4,3,True,True,True,content_order,17010,17,5,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,284
+100,table_cell,93.997→94.869,13,True,True,True,content_order,18376,18,5,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,287
+100,table_cell,+0.872,6,True,True,True,content_order,18389,18,5,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,300
+100,table_cell,+1.013,6,True,True,True,content_order,18395,18,5,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,306
+100,table_cell,不可比,3,True,True,True,content_order,18168,18,5,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,312
+100,table_cell,S9hNv5qa7GM-04,14,True,True,True,content_order,18404,18,6,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,315
+100,table_cell,JOINT n20,8,True,True,True,content_order,18418,18,6,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,329
+100,table_cell,20/10,5,True,True,True,content_order,3411,4,6,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,337
+100,table_cell,6→4,3,True,True,True,content_order,18431,18,6,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,342
+100,table_cell,不可评→98.697,10,True,True,True,content_order,18434,18,6,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,345
+100,table_cell,不可评,3,True,True,True,content_order,18434,18,6,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,355
+100,table_cell,不可评,3,True,True,True,content_order,18434,18,6,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,358
+100,table_cell,-44.0,5,True,True,True,content_order,18450,18,6,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,361
+100,table_cell,S9hNv5qa7GM-04,14,True,True,True,content_order,18404,18,7,0,代表事件均为原规范方向C−A 缺Q保持缺失,True,366
+100,table_cell,JOINT n22,8,True,True,True,content_order,18469,18,7,1,代表事件均为原规范方向C−A 缺Q保持缺失,True,380
+100,table_cell,22/10,5,True,True,True,content_order,18477,18,7,2,代表事件均为原规范方向C−A 缺Q保持缺失,True,388
+100,table_cell,4→4,3,True,True,True,content_order,17010,17,7,3,代表事件均为原规范方向C−A 缺Q保持缺失,True,393
+100,table_cell,58.407→98.639,13,True,True,True,content_order,18485,18,7,4,代表事件均为原规范方向C−A 缺Q保持缺失,True,396
+100,table_cell,+40.232,7,True,True,True,content_order,18498,18,7,5,代表事件均为原规范方向C−A 缺Q保持缺失,True,409
+100,table_cell,+39.808,7,True,True,True,content_order,18505,18,7,6,代表事件均为原规范方向C−A 缺Q保持缺失,True,416
+100,table_cell,-44.0,5,True,True,True,content_order,18450,18,7,7,代表事件均为原规范方向C−A 缺Q保持缺失,True,423
+101,p,S9的两行劳动−44.028秒按相同来源计数向量可比，但两队均含旧、新混合来源，不称单一来源。VFua与x8来源计数不匹配；uNb-14还含未知劳动记录，均保持不可比。,84,True,True,True,content_order,18544,18,,,,,
+102,h,10.1 结构保留增加可以伴随升Q或降Q,19,True,True,True,content_order,18637,18,,,,,
+103,p,VFuaQ6m2Qom-07：TARGET中→高20/7，换入该图全部七名C3。七人本身达不到MV50=10；参考r3（ERP横向约992）附近，A的两个相关组各6票，C出现5D＋6Z＝11票的新对应组。节点8→9，5°参考点8/16→9/16、边5/16→7/16，Q+5.016。但r9–r14密集小结构仍有4–9票未选，不能称完整恢复。共同D的归组也改变，不是固定旧组直接加七票。,193,True,True,True,content_order,18656,18,,,,,
+104,p,x8F5xyUWy9e-03：同一TARGET方向、同样整类七人换入，r5（u≈403.8）由9票到恰好10票，邻近r4（u≈391）仍9票未选。节点4→5，参考点4/6→5/6、边3/6→4/6；Q却−1.188。底面角误差0.552°→0.623°、方向误差1.845°→2.014°，补充WQ诊断height_loss略降，而原Hmean分项略增。参考结构保留改善与Q下降同时出现；新增一个点没有恢复成对转折，也未保证整体几何质量提高。参考点边保留不是B8L2的加法评分分项，不能据总Q下跌否认结构分类产生了作用。,260,True,True,True,content_order,18858,18,,,,,
+105,h,10.2 同一基本结构里，位置和劳动仍会变,20,True,True,True,content_order,19127,19,,,,,
+106,p,uNb9QFRL6hY-56：两队四组与四条边均全20人支持，没有未选组；D13人的实际组支持已超过门槛10。Q98.024→98.111，底面1−IoU仅0.003208、质心差0.000252h，但同源劳动少266.940秒。它属于高分结构内的细微位置/顶部变化。这里证实的是当前组内D已足票，没有另运行纯D队，不把它说成独立D反事实。,170,True,True,True,content_order,19147,19,,,,,
+107,p,RAW3的B6ByNegPMKs-22：20/12，两队都四组全员支持，来源环和边也全员支持；12人块在每组都能独立达门槛10。Q−10.917而IoU3D×100只−0.282，方向误差2.217°→3.974°，底面角误差0.390°→0.564°。长窄空间中的位置偏移放大方向损失，高度补充损失反而改善；记录劳动少196.510秒。它是降质、省记录劳动、同节点数的几何变化，不是融合失败。,197,True,True,True,content_order,19330,19,,,,,
+108,p,OPPJOINT的uNb9QFRL6hY-14：20/12只抽部分C1/C2，非整类；两队四点保留均完整。参考r1主表达支持12→17，另一未选表达8→3，共同D也改变归组，定位/高度改善，Q+0.872。劳动记录不全且来源计数不匹配，劳动差留空。,124,True,True,True,content_order,19540,19,,,,,
+109,h,10.3 同一九人块只换两人背景，响应可以反向,22,True,True,True,content_order,19673,19,,,,,
+110,p,wc2JMjhGNzB-53，TARGET n11/m9，X/Z九人固定，门槛6。D从W027/W122（两名C3）换成W017/W126（C2＋C3），同时改变身份和类别构成。背景①Q差−2.756，背景②+30.702，差33.458；所选值最接近该图该条件六个可评物理背景候选的均值31.646，未选最大76.236。这不是整个背景研究的平均差。,175,True,True,True,content_order,19695,19,,,,,
+111,p,关键在ERP拼接边界r3（u≈16.23）附近。同一Z成员W034的一份原始观测从旧2票组移入W008/W013/W029三观测组，新组得到4Z＋2D＝6票，恰好过门槛；C从四点变五点。固定Z43个观测的903对同组关系中，13对新增同组、4对解除。A也有归组变动，并非完全不变。九人块人数大于门槛，不等于对这个局部节点已有九张一致票。,168,True,True,True,content_order,19875,19,,,,,
+112,p,新五点输出只有W034的一条完整投影来源环，某条边直接/投影支持均3票，低于节点门槛6。冻结规则选支持最多的完整来源环，不要求每条边都获MV50。Q大幅改善并不意味着所有连接得到多数支持；参考边保留仍25%，扩展和高度损失还变差。两种背景劳动均不可比，保持缺失。,131,True,True,True,content_order,20048,19,,,,,
+113,image_caption,图3 固定九人X/Z与n11，只改变两人背景。四端点和全部票数同时展示，背景身份与类别构成均改变。完整大图见案例包。,57,True,True,True,content_order,20184,20,,,,,
+114,h,10.4 两种互斥表达同时过票，及增加背景后的低分恢复,26,True,True,True,content_order,20241,20,,,,,
+115,p,S9hNv5qa7GM-04，JOINT K4，固定十人X/Z。n20的A含两套各10人的四角位置表达：两节点共同20票，另外两对互斥位置各10票。MV50接受正好半数，六节点全部入选且位置均确定，但没有任何完整来源环同时经过六节点，原生原因no_source_ring_covering_all_selected_nodes，因此Q缺失。不能当Q=0后计算改善。,181,True,True,True,content_order,20267,20,,,,,
+116,p,D加入W113/W121后n22、门槛11。两人支持更远离参考的那套位置，使其12票通过，近参考一对仍10票落选；A恢复四节点完整输出，Q仅58.407。C维持近参考一对15票，Q98.639。因此恢复输出不等于恢复高质量。该过程同时改变具体D成员、人数和票门槛，不能只归因于替换比例下降。全登记候选中这类所选恢复条件只涉及一图，未当普遍发生率。,173,True,True,True,content_order,20461,20,,,,,
+117,image_caption,图4 固定十人替换块，从n20到n22，互斥表达和MV50门槛共同决定输出；左上缺Q没有画成0分。,48,True,True,True,content_order,20643,21,,,,,
+118,h,10.5 七联盟共同低分：需要人工判断目标范围的具体位置,27,True,True,True,content_order,20691,21,,,,,
+119,p,pa4otMbVnkk-11的35份完整原答均八点，七队56个对应组全员支持，来源环和八条边也全部有效；正式参考却是四点矩形。Q21.984–29.725来自共同八点外伸表达及底面位置偏差，既非漏掉过票节点，也非融合失败。C3更接近当前参考，仍保留同一八点轮廓；不能仅据现有Q认定所有人的语义表达都错误。,152,True,True,True,content_order,20718,21,,,,,
+120,image_caption,图5 pa4-11七队均八点，当前正式参考为四点。坐标统一，没有按队单独缩放；共同外伸与整体偏移同时存在。,52,True,True,True,content_order,20879,21,,,,,
+121,table_title,可直接人工检查的具体问题,12,True,True,True,content_order,20931,22,,,,,
+121,table_cell,图片,2,True,True,True,content_order,401,1,0,0,可直接人工检查的具体问题,True,0
+121,table_cell,位置或结构,5,True,True,True,content_order,20945,22,0,1,可直接人工检查的具体问题,True,2
+121,table_cell,需要判断什么,6,True,True,True,content_order,20950,22,0,2,可直接人工检查的具体问题,True,7
+121,table_cell,pa4otMbVnkk-11,14,True,True,True,content_order,20718,21,1,0,可直接人工检查的具体问题,True,13
+121,table_cell,ERP x约525–1010；参考r2→r3闭合边,24,True,True,True,content_order,20970,22,1,1,可直接人工检查的具体问题,True,27
+121,table_cell,当前目标是否包含入口/外伸轮廓？保持正式参考，先判断空间语义。,31,True,False,True,content_order,20994,22,1,2,可直接人工检查的具体问题,True,51
+121,table_cell,VFuaQ6m2Qom-07,14,True,True,True,content_order,18115,18,2,0,可直接人工检查的具体问题,True,82
+121,table_cell,r3 u约992；r9–r14 u约417–466,23,True,True,True,content_order,21039,22,2,1,可直接人工检查的具体问题,True,96
+121,table_cell,新增角和仍未保留的密集小转折应如何表达，是否有可接受简化？,29,True,False,True,content_order,21062,22,2,2,可直接人工检查的具体问题,True,119
+121,table_cell,wc2JMjhGNzB-53,14,True,True,True,content_order,19695,19,3,0,可直接人工检查的具体问题,True,148
+121,table_cell,拼接处r3/r4 u约16–18；五点输出u约939.7短接,29,True,False,True,content_order,21105,22,3,1,可直接人工检查的具体问题,True,162
+121,table_cell,新增组是否对应目标真实角，残留短接是否遗漏真实结构？,26,True,True,True,content_order,21134,22,3,2,可直接人工检查的具体问题,True,191
+121,table_cell,S9hNv5qa7GM-04,14,True,True,True,content_order,18404,18,4,0,可直接人工检查的具体问题,True,217
+121,table_cell,u约171/223与359/412两对位置,21,True,True,True,content_order,21174,22,4,1,可直接人工检查的具体问题,True,231
+121,table_cell,柜体/墙体附近哪套位置表达符合冻结目标空间？,22,True,True,True,content_order,21195,22,4,2,可直接人工检查的具体问题,True,252
+122,p,这些人工问题不会触发本轮改参考、改空间或改类别。完整原图与全部原答都在案例查看器中，人工判断后若需修订正式目标，应作为另一个明确版本，而非选择最高Q参考消除反例。,81,True,True,True,content_order,21252,22,,,,,
+123,h,11 与严格ABC串联，以及Semi和其它合法目标的边界,27,True,True,True,content_order,21338,22,,,,,
+124,h,11.1 三类设计分别回答什么,14,True,True,True,content_order,21365,22,,,,,
+125,table_title,应并用的证据链,7,True,True,True,content_order,21379,22,,,,,
+125,table_cell,设计,2,True,True,True,content_order,1450,2,0,0,应并用的证据链,True,0
+125,table_cell,可以回答,4,True,True,True,content_order,21388,22,0,1,应并用的证据链,True,2
+125,table_cell,保留的限制,5,True,True,True,content_order,21392,22,0,2,应并用的证据链,True,6
+125,table_cell,严格ABC,5,True,True,True,content_order,21341,22,1,0,应并用的证据链,True,11
+125,table_cell,同类具体成员变化为基线，估计跨类额外幅度GA或GS,25,True,False,True,content_order,21402,22,1,1,应并用的证据链,True,16
+125,table_cell,D/X/Y/Z真实互斥；需n+2m人，来源类需2m人，容量较窄,31,True,False,True,content_order,21427,22,1,2,应并用的证据链,True,41
+125,table_cell,直接AC,4,True,True,True,content_order,11,1,2,0,应并用的证据链,True,72
+125,table_cell,同图同目标同n/m同D的实际类别调整结果,20,True,True,True,content_order,21462,22,2,1,应并用的证据链,True,76
+125,table_cell,只需n+m人，更宽覆盖；没有B不估计跨类超过同类,24,True,True,True,content_order,21482,22,2,2,应并用的证据链,True,96
+125,table_cell,整类等量及类别联盟,9,True,True,True,content_order,21506,22,3,0,应并用的证据链,True,120
+125,table_cell,模拟完整类别进入/退出、真实混合人群接近全池的结果,25,True,False,True,content_order,21515,22,3,1,应并用的证据链,True,129
+125,table_cell,m或n可以随图改变；不等人数路径须与等量锚点分开,24,True,True,True,content_order,21540,22,3,2,应并用的证据链,True,154
+126,p,已独立核验的TARGET主方向严格ABC：14/7登记85图、三队共同可评83图，平均同类|ΔQ|4.577、跨类|ΔQ|8.089，GA=+3.512，61/83图GA>0；20/7登记72图、三队共同可评70图，同类3.533、跨类4.998，GA=+1.465，54/70图GA>0。对称GS的多数比例分别62/83、47/70，不能只选一个定义。新直接AC在同样20/7有85图，实际Q平均+4.576、78/85图正向；这是新的成员/背景设计，没有把旧GA解释成新85图的GA。严格14/7适合展示额外区分，AC20/7与整类n20适合展示实际调整与广覆盖。,284,True,True,True,content_order,21595,22,,,,,
+127,p,"本轮接入18,847个旧严格事件：m7/m8为6,367，m9/m10为12,480；已合并的旧源含此前6,548条，不重复叠加。旧AC/BC去重35,051个物理对，与本轮登记的完整AC端点对交集为0；单个端点仍精确复用。2,037个旧有向条件得到相容新AC参照，未新增B或严格ABC。",144,True,True,True,content_order,21888,22,,,,,
+128,table_title,十人共同条件 方向沿用原严格登记,15,True,True,True,content_order,22037,23,,,,,
+128,table_cell,图,1,True,True,True,content_order,172,1,0,0,十人共同条件 方向沿用原严格登记,True,0
+128,table_cell,方法,2,True,True,True,content_order,563,1,0,1,十人共同条件 方向沿用原严格登记,True,1
+128,table_cell,n/m,3,True,True,True,content_order,2219,3,0,2,十人共同条件 方向沿用原严格登记,True,3
+128,table_cell,原严格方向,5,True,True,True,content_order,22058,23,0,3,十人共同条件 方向沿用原严格登记,True,6
+128,table_cell,旧严格ΔQ,5,True,True,True,content_order,22063,23,0,4,十人共同条件 方向沿用原严格登记,True,11
+128,table_cell,旧同类|ΔQ|,7,True,True,True,content_order,22068,23,0,5,十人共同条件 方向沿用原严格登记,True,16
+128,table_cell,旧GA,3,True,True,True,content_order,21825,22,0,6,十人共同条件 方向沿用原严格登记,True,23
+128,table_cell,新ACΔQ,5,True,True,True,content_order,22078,23,0,7,十人共同条件 方向沿用原严格登记,True,26
+128,table_cell,q9vSo1VnCiC-34,14,True,True,True,content_order,22083,23,1,0,十人共同条件 方向沿用原严格登记,True,31
+128,table_cell,RAW3,4,True,True,True,content_order,756,1,1,1,十人共同条件 方向沿用原严格登记,True,45
+128,table_cell,12/10,5,True,True,True,content_order,22101,23,1,2,十人共同条件 方向沿用原严格登记,True,49
+128,table_cell,2/3->3/3,8,True,True,True,content_order,22106,23,1,3,十人共同条件 方向沿用原严格登记,True,54
+128,table_cell,+8.763,6,True,True,True,content_order,22114,23,1,4,十人共同条件 方向沿用原严格登记,True,62
+128,table_cell,5.917,5,True,True,True,content_order,22120,23,1,5,十人共同条件 方向沿用原严格登记,True,68
+128,table_cell,+2.849,6,True,True,True,content_order,22125,23,1,6,十人共同条件 方向沿用原严格登记,True,73
+128,table_cell,+7.488,6,True,True,True,content_order,22131,23,1,7,十人共同条件 方向沿用原严格登记,True,79
+128,table_cell,q9vSo1VnCiC-34,14,True,True,True,content_order,22083,23,2,0,十人共同条件 方向沿用原严格登记,True,85
+128,table_cell,RAW3,4,True,True,True,content_order,756,1,2,1,十人共同条件 方向沿用原严格登记,True,99
+128,table_cell,15/10,5,True,True,True,content_order,22155,23,2,2,十人共同条件 方向沿用原严格登记,True,103
+128,table_cell,2/3->3/3,8,True,True,True,content_order,22106,23,2,3,十人共同条件 方向沿用原严格登记,True,108
+128,table_cell,+7.393,6,True,True,True,content_order,22168,23,2,4,十人共同条件 方向沿用原严格登记,True,116
+128,table_cell,4.015,5,True,True,True,content_order,22174,23,2,5,十人共同条件 方向沿用原严格登记,True,122
+128,table_cell,+3.377,6,True,True,True,content_order,22179,23,2,6,十人共同条件 方向沿用原严格登记,True,127
+128,table_cell,+7.172,6,True,True,True,content_order,22185,23,2,7,十人共同条件 方向沿用原严格登记,True,133
+128,table_cell,yqstnuAEVhm-04,14,True,True,True,content_order,22191,23,3,0,十人共同条件 方向沿用原严格登记,True,139
+128,table_cell,TARGET,6,True,True,True,content_order,91,1,3,1,十人共同条件 方向沿用原严格登记,True,153
+128,table_cell,12/10,5,True,True,True,content_order,22101,23,3,2,十人共同条件 方向沿用原严格登记,True,159
+128,table_cell,2/3->1/3,8,True,True,True,content_order,22216,23,3,3,十人共同条件 方向沿用原严格登记,True,164
+128,table_cell,+1.861,6,True,True,True,content_order,22224,23,3,4,十人共同条件 方向沿用原严格登记,True,172
+128,table_cell,2.907,5,True,True,True,content_order,22230,23,3,5,十人共同条件 方向沿用原严格登记,True,178
+128,table_cell,-0.641,6,True,True,True,content_order,22235,23,3,6,十人共同条件 方向沿用原严格登记,True,183
+128,table_cell,+0.648,6,True,True,True,content_order,22241,23,3,7,十人共同条件 方向沿用原严格登记,True,189
+128,table_cell,yqstnuAEVhm-04,14,True,True,True,content_order,22191,23,4,0,十人共同条件 方向沿用原严格登记,True,195
+128,table_cell,TARGET,6,True,True,True,content_order,91,1,4,1,十人共同条件 方向沿用原严格登记,True,209
+128,table_cell,14/10,5,True,True,True,content_order,22267,23,4,2,十人共同条件 方向沿用原严格登记,True,215
+128,table_cell,2/3->1/3,8,True,True,True,content_order,22216,23,4,3,十人共同条件 方向沿用原严格登记,True,220
+128,table_cell,+2.332,6,True,True,True,content_order,22280,23,4,4,十人共同条件 方向沿用原严格登记,True,228
+128,table_cell,3.370,5,True,True,True,content_order,22286,23,4,5,十人共同条件 方向沿用原严格登记,True,234
+128,table_cell,-0.640,6,True,True,True,content_order,22291,23,4,6,十人共同条件 方向沿用原严格登记,True,239
+128,table_cell,+0.614,6,True,True,True,content_order,22297,23,4,7,十人共同条件 方向沿用原严格登记,True,245
+129,p,TARGET这张图十人旧GA为负，RAW3那张为正；分别只有一图，不能据此重排主方法。新AC与旧ABC的均值差也不能直接归因于取消B，因为具体XZ和D可不同。严格方向在TARGET这里是中→低，与主表低→中相反，符号已保留。,112,True,True,True,content_order,22330,23,,,,,
+130,p,66个严格条件里按相同pool/method/n/m和精确XZ匹配F-neutral与B-outside，得到120个方法对照、108个唯一物理四端点对照，覆盖21/66条件。Q四端点可评99对、16图9楼；18个物理对照使跨类Q效果反向，涉及8图。此严格子集120对全部同时改变D类别人数向量，不属于同配比只换背景成员；本轮更宽的固定XZ敏感性另有后一种对照。,181,True,True,True,content_order,22447,23,,,,,
+131,p,108个登记物理背景对照中，99个四端点共同Q可评者的Q效果差绝对值均值5.187、中位数1.633，其余9个不可评者未进入分布。这是可评四端点对的描述分布，不能当图等权总体值。劳动作差没有合法共同有效对，保留缺失。F−B方向与更宽敏感性表B−F的符号相反，引用时先核对方向。,138,True,True,True,content_order,22637,23,,,,,
+132,h,11.2 其它准入目标：保留全部方向与输出状态,22,True,True,True,content_order,22784,23,,,,,
+133,table_title,其它合法目标TARGET K3 逐图等权，合法目标不混队,26,True,True,True,content_order,22806,23,,,,,
+133,table_cell,方向与条件,5,True,True,True,content_order,22832,23,0,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,0
+133,table_cell,Q有效/登记对,7,True,True,True,content_order,22837,23,0,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,5
+133,table_cell,图有效/登记；楼,8,True,True,True,content_order,22844,23,0,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,12
+133,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,20
+133,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,25
+133,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,29
+133,table_cell,正/负/零图,6,True,True,True,content_order,22866,23,0,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,34
+133,table_cell,6/3 1->2,7,True,True,True,content_order,22872,23,1,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,40
+133,table_cell,33/44,5,True,True,True,content_order,22879,23,1,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,47
+133,table_cell,6/6；3,5,True,True,True,content_order,4919,5,1,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,52
+133,table_cell,+4.783,6,True,True,True,content_order,22889,23,1,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,57
+133,table_cell,+4.328,6,True,True,True,content_order,22895,23,1,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,63
+133,table_cell,10.610,6,True,True,True,content_order,22901,23,1,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,69
+133,table_cell,5/1/0,5,True,True,True,content_order,22907,23,1,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,75
+133,table_cell,6/3 1->3,7,True,True,True,content_order,22912,23,2,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,80
+133,table_cell,16/19,5,True,True,True,content_order,22919,23,2,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,87
+133,table_cell,3/4；2,5,True,True,True,content_order,22924,23,2,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,92
+133,table_cell,+24.595,7,True,True,True,content_order,22929,23,2,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,97
+133,table_cell,+24.993,7,True,True,True,content_order,22936,23,2,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,104
+133,table_cell,26.347,6,True,True,True,content_order,22943,23,2,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,111
+133,table_cell,3/0/0,5,True,True,True,content_order,22949,23,2,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,117
+133,table_cell,6/3 2->3,7,True,True,True,content_order,22954,23,3,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,122
+133,table_cell,26/48,5,True,True,True,content_order,22961,23,3,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,129
+133,table_cell,5/5；3,5,True,True,True,content_order,22966,23,3,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,134
+133,table_cell,+24.302,7,True,True,True,content_order,22971,23,3,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,139
+133,table_cell,+24.253,7,True,True,True,content_order,22978,23,3,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,146
+133,table_cell,24.302,6,True,True,True,content_order,22972,23,3,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,153
+133,table_cell,5/0/0,5,True,True,True,content_order,22991,23,3,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,159
+133,table_cell,整类前沿 1->2,8,True,True,True,content_order,22996,23,4,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,164
+133,table_cell,76/79,5,True,True,True,content_order,23004,23,4,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,172
+133,table_cell,15/15；6,7,True,True,True,content_order,23009,23,4,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,177
+133,table_cell,+0.625,6,True,True,True,content_order,23016,23,4,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,184
+133,table_cell,-0.150,6,True,True,True,content_order,23022,23,4,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,190
+133,table_cell,10.934,6,True,True,True,content_order,23028,23,4,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,196
+133,table_cell,7/8/0,5,True,True,True,content_order,23034,23,4,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,202
+133,table_cell,整类前沿 1->3,8,True,True,True,content_order,23039,23,5,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,207
+133,table_cell,50/50,5,True,True,True,content_order,23047,23,5,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,215
+133,table_cell,15/15；6,7,True,True,True,content_order,23009,23,5,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,220
+133,table_cell,+9.137,6,True,True,True,content_order,23059,23,5,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,227
+133,table_cell,+8.963,6,True,True,True,content_order,23065,23,5,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,233
+133,table_cell,11.042,6,True,True,True,content_order,23071,23,5,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,239
+133,table_cell,12/3/0,6,True,True,True,content_order,23077,23,5,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,245
+133,table_cell,整类前沿 2->3,8,True,True,True,content_order,23083,23,6,0,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,251
+133,table_cell,103/107,7,True,True,True,content_order,23091,23,6,1,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,259
+133,table_cell,17/17；6,7,True,True,True,content_order,23098,23,6,2,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,266
+133,table_cell,+10.848,7,True,True,True,content_order,23105,23,6,3,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,273
+133,table_cell,+11.030,7,True,True,True,content_order,23112,23,6,4,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,280
+133,table_cell,14.445,6,True,True,True,content_order,23119,23,6,5,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,287
+133,table_cell,13/4/0,6,True,True,True,content_order,23125,23,6,6,其它合法目标TARGET K3 逐图等权，合法目标不混队,True,293
+134,p,其它准入目标30个Manual入口池实际执行20池、18图、7楼；同图不同目标分别组队评分，图汇总才目标等权。TARGET中→高整类前沿登记18池、17图，17池103/107对Q可评，13正4负。固定6/3同方向虽然5图全正，但只26/48对可评；全部尝试A→C缺Q图等权率38.75%→5.00%。成功对的升Q与可形成完整输出的变化分别报告。其劳动只有4对1图，不能代表整个目标域。,193,True,True,True,content_order,23158,23|24,,,,,
+135,h,11.3 普通Semi：自身冻结V3分类的次要结果,24,True,True,True,content_order,23364,24,,,,,
+136,table_title,Semi整类前沿 方向是类别ID，不是历史Q排名,23,True,True,True,content_order,23388,24,,,,,
+136,table_cell,自身分类与方向,7,True,True,True,content_order,23411,24,0,0,Semi整类前沿 方向是类别ID，不是历史Q排名,True,0
+136,table_cell,Q有效/登记对,7,True,True,True,content_order,22837,23,0,1,Semi整类前沿 方向是类别ID，不是历史Q排名,True,7
+136,table_cell,图有效/登记；楼,8,True,True,True,content_order,22844,23,0,2,Semi整类前沿 方向是类别ID，不是历史Q排名,True,14
+136,table_cell,ΔB8L2,5,True,True,True,content_order,4136,4,0,3,Semi整类前沿 方向是类别ID，不是历史Q排名,True,22
+136,table_cell,ΔD10,4,True,True,True,content_order,4141,4,0,4,Semi整类前沿 方向是类别ID，不是历史Q排名,True,27
+136,table_cell,均|ΔQ|,5,True,True,True,content_order,4145,4,0,5,Semi整类前沿 方向是类别ID，不是历史Q排名,True,31
+136,table_cell,正/负/零图,6,True,True,True,content_order,22866,23,0,6,Semi整类前沿 方向是类别ID，不是历史Q排名,True,36
+136,table_cell,行为粗 S1→S2,8,True,True,True,content_order,23453,24,1,0,Semi整类前沿 方向是类别ID，不是历史Q排名,True,42
+136,table_cell,106/114,7,True,True,True,content_order,23461,24,1,1,Semi整类前沿 方向是类别ID，不是历史Q排名,True,50
+136,table_cell,27/28；12,8,True,True,True,content_order,23468,24,1,2,Semi整类前沿 方向是类别ID，不是历史Q排名,True,57
+136,table_cell,-2.612,6,True,True,True,content_order,23476,24,1,3,Semi整类前沿 方向是类别ID，不是历史Q排名,True,65
+136,table_cell,-2.585,6,True,True,True,content_order,23482,24,1,4,Semi整类前沿 方向是类别ID，不是历史Q排名,True,71
+136,table_cell,3.077,5,True,True,True,content_order,23488,24,1,5,Semi整类前沿 方向是类别ID，不是历史Q排名,True,77
+136,table_cell,4/11/12,7,True,True,True,content_order,23493,24,1,6,Semi整类前沿 方向是类别ID，不是历史Q排名,True,82
+136,table_cell,行为细 S1.1→S2.1,12,True,True,True,content_order,23500,24,2,0,Semi整类前沿 方向是类别ID，不是历史Q排名,True,89
+136,table_cell,94/100,6,True,True,True,content_order,23512,24,2,1,Semi整类前沿 方向是类别ID，不是历史Q排名,True,101
+136,table_cell,26/27；12,8,True,True,True,content_order,23518,24,2,2,Semi整类前沿 方向是类别ID，不是历史Q排名,True,107
+136,table_cell,-2.126,6,True,True,True,content_order,23526,24,2,3,Semi整类前沿 方向是类别ID，不是历史Q排名,True,115
+136,table_cell,-2.097,6,True,True,True,content_order,23532,24,2,4,Semi整类前沿 方向是类别ID，不是历史Q排名,True,121
+136,table_cell,2.557,5,True,True,True,content_order,23538,24,2,5,Semi整类前沿 方向是类别ID，不是历史Q排名,True,127
+136,table_cell,4/12/10,7,True,True,True,content_order,23543,24,2,6,Semi整类前沿 方向是类别ID，不是历史Q排名,True,132
+136,table_cell,QT粗 K1→K2,8,True,True,True,content_order,23550,24,3,0,Semi整类前沿 方向是类别ID，不是历史Q排名,True,139
+136,table_cell,113/119,7,True,True,True,content_order,23558,24,3,1,Semi整类前沿 方向是类别ID，不是历史Q排名,True,147
+136,table_cell,25/25；12,8,True,True,True,content_order,23565,24,3,2,Semi整类前沿 方向是类别ID，不是历史Q排名,True,154
+136,table_cell,-2.159,6,True,True,True,content_order,23573,24,3,3,Semi整类前沿 方向是类别ID，不是历史Q排名,True,162
+136,table_cell,-2.134,6,True,True,True,content_order,23579,24,3,4,Semi整类前沿 方向是类别ID，不是历史Q排名,True,168
+136,table_cell,2.801,5,True,True,True,content_order,23585,24,3,5,Semi整类前沿 方向是类别ID，不是历史Q排名,True,174
+136,table_cell,6/9/10,6,True,True,True,content_order,23590,24,3,6,Semi整类前沿 方向是类别ID，不是历史Q排名,True,179
+136,table_cell,QT细 K1.1→K2.1,12,True,True,True,content_order,23596,24,4,0,Semi整类前沿 方向是类别ID，不是历史Q排名,True,185
+136,table_cell,104/112,7,True,True,True,content_order,23608,24,4,1,Semi整类前沿 方向是类别ID，不是历史Q排名,True,197
+136,table_cell,25/25；12,8,True,True,True,content_order,23565,24,4,2,Semi整类前沿 方向是类别ID，不是历史Q排名,True,204
+136,table_cell,-1.865,6,True,True,True,content_order,23623,24,4,3,Semi整类前沿 方向是类别ID，不是历史Q排名,True,212
+136,table_cell,-1.831,6,True,True,True,content_order,23629,24,4,4,Semi整类前沿 方向是类别ID，不是历史Q排名,True,218
+136,table_cell,2.429,5,True,True,True,content_order,23635,24,4,5,Semi整类前沿 方向是类别ID，不是历史Q排名,True,224
+136,table_cell,8/7/10,6,True,True,True,content_order,23640,24,4,6,Semi整类前沿 方向是类别ID，不是历史Q排名,True,229
+137,p,Semi用V3_BEHAVIOR_COARSE/FINE与V3_JOINT_QT_COARSE/FINE，没有套用Manual的TARGET。粗层按登记图支持最多的方向、细层按对应方向选取，未按收益选型。固定n20通常仅1–2图，故报告池前沿；行为粗层n3–42、m1–13，QT粗层n3–43、m1–13。行为粗层Q均值−2.612，但4正、11负、12近零，不是多数图下降；其A→C缺Q率7.143%→0，质量均值降低与输出更常可评同时存在。劳动−15.846%仅16对6图4楼，不和27图Q合成整体质量—时间权衡。,260,True,True,True,content_order,23673,24,,,,,
+138,p,"普通Semi共38池执行32池；其它准入目标只有uNb9QFRL6hY-68一个Semi池（N4），8个不同物理对均可评分，单列而不声称多图规律。门口/特殊20池没有新增执行。当前提交的既有空间审查另有1,222份OOS或待定OOS原答仍无正式质量准入；单位是原答库存，非池，不与294入口池或20特殊池相加，本轮未重做其审查或解除资格。",169,True,True,True,content_order,23942,24,,,,,
+139,h,12 分类解释具体人员和共同图片比较,17,True,True,True,content_order,24120,24,,,,,
+140,p,本轮保持既有分类定义，没有用这次团队结果重新选择特征或调整标签。TARGET与RAW3的低/中/高主角色按楼外困难图有效转折历史排序，OPPSTRUCT按复杂结构机会响应排序；OPPJOINT按对应楼外折历史Q角色对齐，RFUSE按原有融合响应排序。标签编号不等于永久能力等级，实际标法解释同时看短结构、近共线冗余、相对面积/高度、质量和合法记录劳动。,176,True,True,True,content_order,24137,24,,,,,
+141,table_title,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,29,True,True,True,content_order,24318,24,,,,,
+141,table_cell,类,1,True,True,True,content_order,17,1,0,0,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,0
+141,table_cell,原始历史标法与伴随画像,11,True,True,True,content_order,24348,24,0,1,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,1
+141,table_cell,C1,2,True,True,True,content_order,13626,14,1,0,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,12
+141,table_cell,人数最少类；复杂机会转折较少；历史Q较低；来源内记录时间较长；相对面积较小；相对高度较高；近共线冗余较多,52,True,True,True,content_order,24361,24,1,1,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,14
+141,table_cell,C2,2,True,True,True,content_order,13633,14,2,0,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,66
+141,table_cell,人数最多类；总体转折较少；相对高度较低,19,True,True,True,content_order,24415,24,2,1,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,68
+141,table_cell,C3,2,True,True,True,content_order,13640,14,3,0,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,99
+141,table_cell,中间容量类；总体转折较多；复杂机会转折较多；历史Q较高；来源内记录时间较短；相对面积较大；近共线冗余较少,52,True,True,True,content_order,24448,25,3,1,一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom,True,101
+142,p,这是VFua楼外折的历史群体画像，不是对目标图原答的逐人承诺。wc2中W027属高结构类却在该图只有四点，W017/W126各有八点，就是类别与单图具体行为不可等同的直接例子。TARGET未因此被改成质量分类；Q/T伴随差异作为画像信息保留。,121,True,True,True,content_order,24527,25,,,,,
+143,table_title,共同图片目标n/m下的描述性比较 左/右对应方法顺序,25,True,True,True,content_order,24657,25,,,,,
+143,table_cell,方法左/右,5,True,True,True,content_order,24682,25,0,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,0
+143,table_cell,n/m,3,True,True,True,content_order,2219,3,0,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,5
+143,table_cell,共同图；楼,5,True,True,True,content_order,24690,25,0,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,8
+143,table_cell,左均|ΔQ|,6,True,True,True,content_order,24695,25,0,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,13
+143,table_cell,右均|ΔQ|,6,True,True,True,content_order,24701,25,0,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,19
+143,table_cell,右幅度更大图,6,True,True,True,content_order,24707,25,0,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,25
+143,table_cell,TARGET K2 / TARGET K3,17,True,True,True,content_order,24713,25,1,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,31
+143,table_cell,20/7,4,True,True,True,content_order,274,1,1,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,48
+143,table_cell,85；21,5,True,True,True,content_order,4172,4,1,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,52
+143,table_cell,5.751,5,True,True,True,content_order,4279,4,1,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,57
+143,table_cell,5.779,5,True,True,True,content_order,24744,25,1,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,62
+143,table_cell,42/85,5,True,True,True,content_order,24749,25,1,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,67
+143,table_cell,TARGET K3 / RAW3 K3,15,True,True,True,content_order,24754,25,2,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,72
+143,table_cell,20/7,4,True,True,True,content_order,274,1,2,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,87
+143,table_cell,114；22,6,True,True,True,content_order,24773,25,2,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,91
+143,table_cell,5.584,5,True,True,True,content_order,24779,25,2,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,97
+143,table_cell,5.400,5,True,True,True,content_order,24784,25,2,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,102
+143,table_cell,34/114,6,True,True,True,content_order,24789,25,2,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,107
+143,table_cell,JOINT K3 / TARGET K3,16,True,True,True,content_order,24795,25,3,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,113
+143,table_cell,20/7,4,True,True,True,content_order,274,1,3,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,129
+143,table_cell,93；19,5,True,True,True,content_order,24815,25,3,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,133
+143,table_cell,4.562,5,True,True,True,content_order,24820,25,3,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,138
+143,table_cell,4.475,5,True,True,True,content_order,24825,25,3,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,143
+143,table_cell,52/93,5,True,True,True,content_order,24830,25,3,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,148
+143,table_cell,JOINT K3 / JOINT K4,15,True,True,True,content_order,24835,25,4,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,153
+143,table_cell,20/10,5,True,True,True,content_order,3411,4,4,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,168
+143,table_cell,79；11,5,True,True,True,content_order,12196,12,4,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,173
+143,table_cell,3.308,5,True,True,True,content_order,24860,25,4,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,178
+143,table_cell,3.150,5,True,True,True,content_order,24865,25,4,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,183
+143,table_cell,35/79,5,True,True,True,content_order,24870,25,4,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,188
+143,table_cell,JOINT K3 / JOINT K4,15,True,True,True,content_order,24835,25,5,0,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,193
+143,table_cell,20/12,5,True,True,True,content_order,3416,4,5,1,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,208
+143,table_cell,21；6,4,True,True,True,content_order,24895,25,5,2,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,213
+143,table_cell,4.800,5,True,True,True,content_order,24899,25,5,3,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,217
+143,table_cell,5.032,5,True,True,True,content_order,24904,25,5,4,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,222
+143,table_cell,12/21,5,True,True,True,content_order,24909,25,5,5,共同图片目标n/m下的描述性比较 左/右对应方法顺序,True,227
+144,p,共同图片比较每个方法内部对可用角色方向等权，不保证具体成员、类别语义及D配比一致；因而控制了图片目标和n/m，却不能把右侧更大的幅度等同分类更好，也不是控制历史Q后结构的独立增益。本轮没有重复已核验的Q二分、Q/T匹配与父子分类实验。JOINT新增的是联合解释和较大混合人群容量，RAW3新增的是特征定义/大块敏感性，RFUSE保留从融合响应解释的反向互补。,179,True,True,True,content_order,24941,25,,,,,
+145,h,12.1 名单可以直接使用，但组队必须回到逐图楼外折,25,True,True,True,content_order,25129,25,,,,,
+146,table_title,TARGET K3 ALL描述名单 此表不是每图容量,23,True,True,True,content_order,25154,25,,,,,
+146,table_cell,类,1,True,True,True,content_order,17,1,0,0,TARGET K3 ALL描述名单 此表不是每图容量,True,0
+146,table_cell,人数,2,True,True,True,content_order,191,1,0,1,TARGET K3 ALL描述名单 此表不是每图容量,True,1
+146,table_cell,名单,2,True,True,True,content_order,2183,2,0,2,TARGET K3 ALL描述名单 此表不是每图容量,True,3
+146,table_cell,C1,2,True,True,True,content_order,13626,14,1,0,TARGET K3 ALL描述名单 此表不是每图容量,True,5
+146,table_cell,10,2,True,True,True,content_order,70,1,1,1,TARGET K3 ALL描述名单 此表不是每图容量,True,7
+146,table_cell,W001、W028、W030、W031、W032、W035、W037、W103、W105、W125,49,True,True,True,content_order,25186,25,1,2,TARGET K3 ALL描述名单 此表不是每图容量,True,9
+146,table_cell,C2,2,True,True,True,content_order,13633,14,2,0,TARGET K3 ALL描述名单 此表不是每图容量,True,58
+146,table_cell,37,2,True,True,True,content_order,1073,1,2,1,TARGET K3 ALL描述名单 此表不是每图容量,True,60
+146,table_cell,W006、W008、W010、W011、W012、W013、W014、W018、W029、W033、W034、W036、W100、W101、W104、W106、W107、W108、W110、W111、W113、W114、W116、W117、W118、W119、W120、W121、W123、W124、W127、W128、W129、W131、W132、W133、W134,184,True,False,True,content_order,25239,25,2,2,TARGET K3 ALL描述名单 此表不是每图容量,True,62
+146,table_cell,C3,2,True,True,True,content_order,13640,14,3,0,TARGET K3 ALL描述名单 此表不是每图容量,True,246
+146,table_cell,12,2,True,True,True,content_order,555,1,3,1,TARGET K3 ALL描述名单 此表不是每图容量,True,248
+146,table_cell,W002、W015、W017、W021、W027、W102、W109、W112、W115、W122、W126、W130,59,True,True,True,content_order,25427,25,3,2,TARGET K3 ALL描述名单 此表不是每图容量,True,250
+147,p,ALL中W019/W026仍排除，不得加入背景；W022历史不足但有合法原答时可作为未分类D。其它方法及所有楼外折的完整名单已保存。实际组队唯一使用POOL_CLASS_MEMBERS.csv.gz中的图/目标/折/原答ID，不从这张ALL表推断某图有十名或十二名可换人员。,137,True,True,True,content_order,25513,25,,,,,
+148,table_title,VFuaQ6m2Qom-07整类七人换入的精确成员,25,True,True,True,content_order,25659,26,,,,,
+148,table_cell,块,1,True,True,True,content_order,223,1,0,0,VFuaQ6m2Qom-07整类七人换入的精确成员,True,0
+148,table_cell,人数,2,True,True,True,content_order,191,1,0,1,VFuaQ6m2Qom-07整类七人换入的精确成员,True,1
+148,table_cell,实际人员,4,True,True,True,content_order,25687,26,0,2,VFuaQ6m2Qom-07整类七人换入的精确成员,True,3
+148,table_cell,D，共同背景,6,True,True,True,content_order,25691,26,1,0,VFuaQ6m2Qom-07整类七人换入的精确成员,True,7
+148,table_cell,13,2,True,True,True,content_order,559,1,1,1,VFuaQ6m2Qom-07整类七人换入的精确成员,True,13
+148,table_cell,W006、W011、W012、W013、W031、W036、W037、W100、W110、W114、W117、W129、W134,64,True,False,True,content_order,25699,26,1,2,VFuaQ6m2Qom-07整类七人换入的精确成员,True,15
+148,table_cell,X，C2换出,6,True,True,True,content_order,25763,26,2,0,VFuaQ6m2Qom-07整类七人换入的精确成员,True,79
+148,table_cell,7,1,True,True,True,content_order,149,1,2,1,VFuaQ6m2Qom-07整类七人换入的精确成员,True,85
+148,table_cell,W008、W015、W030、W111、W113、W128、W131,34,True,True,True,content_order,25770,26,2,2,VFuaQ6m2Qom-07整类七人换入的精确成员,True,86
+148,table_cell,Z，该图全部C3,8,True,True,True,content_order,25804,26,3,0,VFuaQ6m2Qom-07整类七人换入的精确成员,True,120
+148,table_cell,7,1,True,True,True,content_order,149,1,3,1,VFuaQ6m2Qom-07整类七人换入的精确成员,True,128
+148,table_cell,W001、W002、W017、W033、W109、W112、W126,34,True,True,True,content_order,25813,26,3,2,VFuaQ6m2Qom-07整类七人换入的精确成员,True,129
+149,p,"全部471,758条方法事件都保存同等级的精确成员、类别、n/m、背景、合法目标和两个team_key。核心成员频次表按26,887个实际条件列出固定交集、各侧可用人数和逐人出现次数；同一端点跨方法选中仅为多重解释，不累计为独立人员证据。",119,True,True,True,content_order,25874,26,,,,,
+150,h,13 采用方案的保留新增与复现,14,True,True,True,content_order,25998,26,,,,,
+151,p,保留主分类TARGET K3、K2粗层及OPPJOINT、RAW3、RFUSE的既定分工。本轮新增的采用建议是：把n20整目标类换入作为广覆盖的主要人群模拟，与固定20/7及既有严格ABC并列；按逐图容量可行的具体角色方向研究十、十二人纯类块、较大团队和背景敏感性，其中TARGET九、十人方向仍限于K2父内低、中细分。不能因某个最大Q差或可行图更多重新决定主分类。,182,True,True,True,content_order,26012,26,,,,,
+152,p,既有独立审查已回答分类参数来源、v2.1重算、RAW3定义敏感性、Q/QT基线控制、有限配比解释及严格同类B问题，本轮不重复这些计算。新增的是冻结标签下的完整容量登记、实际直接AC、整类三种定义、完整类别联盟、成员和背景变化、较大队及其完整几何与机制。正反向分类的互补性仍保留；不为名称对称再造反向方法。,152,True,True,True,content_order,26194,26,,,,,
+153,p,全部结果针对现有有限人员和图片池。楼外标签避免把目标楼历史用于拟合，并不把本轮方法选择变成新人员或新建筑的外部预测验证。多个图片反复使用同一小类核心人员，必须与成员频率一起解释。Q序、历史结构角色也不是每图每人的永久顺序。,111,True,True,True,content_order,26346,26,,,,,
+154,p,交付按阶段保存：容量及来源、冻结设计、四批完整原生端点、两批逐事件指标、全部图楼汇总与敏感性、九图机制案例、最小复现源码和本综合报告。源包与旧版本保留。大文件冗余总拼接不作为唯一数据源，完整逐池分片已逐项验证并交付；分片可以恢复全部端点与事件。源代码复现使用当前提交导出的142项文件，无需重新获取整个大仓库。,155,True,True,True,content_order,26457,26,,,,,
+155,p,最小复现已实际运行一支登记团队：23个数值字段、状态和完整几何与保存结果完全一致。报告表格的实际源行、筛选键和完整精度写入REPORT_NUMBER_LEDGER.csv，研究图都有精确CSV数据。各压缩包均逐文件读取、哈希校验，内部gzip读至EOF并校验CRC，CSV检查行宽，JSON/JSONL完整解析。准确文件名、SHA-256与下载链接见DOWNLOAD_INDEX_ZH。,193,True,True,True,content_order,26617,26,,,,,
+156,h,14 证据文件索引,8,True,True,True,content_order,26815,27,,,,,
+157,p,[E01] 开始时远端提交、旧本地工作树与冻结来源。stage00_intake/SOURCE_COMMIT.json,58,True,True,True,content_order,26823,27,,,,,
+158,p,[E02] 逐图真实原答与楼外标签的全容量。stage01_capacity/MAIN_SCALE_BRIEF.csv,58,True,True,True,content_order,26881,27,,,,,
+159,p,[E03] 最终设计覆盖，方法事件和物理对分开。stage01_registered/FINAL_REGISTRATION_DOMAIN_COVERAGE.csv,80,True,True,True,content_order,26939,27,,,,,
+160,p,[E04] 完整直接AC及整类主结果；逐指标分母，图等权与楼等权。stage05_main/CONDITION_METRIC_SUMMARY.csv.gz,76,True,True,True,content_order,27019,27,,,,,
+161,p,[E05] 既有正式难度与结构条件下的响应。stage05_context_common/FROZEN_CONTEXT_EFFECT_SUMMARY.csv.gz,80,True,True,True,content_order,27095,27,,,,,
+162,p,[E06] 相同图片目标人数替换量的描述性方法比较。stage05_context_common/COMMON_POOL_METHOD_COMPARISONS.csv.gz,85,True,True,True,content_order,27175,27,,,,,
+163,p,[E07] 合法容量到登记执行可评与方向的完整漏斗。stage05_funnel_bridge/MAIN_SCALE_FUNNEL_BRIEF.csv,74,True,True,True,content_order,27260,27,,,,,
+164,p,[E08] 整来源换出、整目标换入、等大两类全换的独立拆分。stage05_funnel_bridge/independent_main_summary_check/WHOLE_DEFINITION_SPLIT_SUMMARY.csv,116,True,True,True,content_order,27334,27,,,,,
+165,p,[E09] 已有严格ABC九十人及本轮AC的共同条件参照。stage05_funnel_bridge/STRICT_M10_COMMON_CONDITION_BRIEF.csv,87,True,True,True,content_order,27450,27,,,,,
+166,p,[E10] 目标域、物理对与团队状态分母。stage05_funnel_bridge/STATE_DOMAIN_DENOMINATOR_SUMMARY.csv,78,True,True,True,content_order,27537,27,,,,,
+167,p,[E11] 严格桥接中的同精确XZ背景对照及物理去重。stage05_funnel_bridge/STRICT66_BACKGROUND_PHYSICAL_SUPPORT_SUMMARY.csv,96,True,True,True,content_order,27615,27,,,,,
+168,p,[E12] 51个机制展示事件与原始方向、所有质量和几何分项。stage06_cases/CASE_EVENT_SUMMARY.csv,66,True,True,True,content_order,27711,27,,,,,
+169,p,[E13] 32支独立既有团队的全组票账、定位和来源环。stage06_cases/CASE_ENDPOINT_SUMMARY.csv,66,True,True,True,content_order,27777,27,,,,,
+170,p,[E14] 容量事前指定四图的七联盟完整结果。stage05_sensitivity/preselected_four_complete/compact_tables_v2/SEVEN_TEAM_Q_BY_IMAGE.csv.gz,114,True,True,True,content_order,27843,27,,,,,
+171,p,[E15] 四图已有同人数纯类锚，质量与同源劳动。stage05_sensitivity/preselected_four_complete/compact_tables_v2/PURE_WHOLE_EQUAL_ANCHOR_SUMMARY.csv.gz,126,True,True,True,content_order,27957,27,,,,,
+172,p,[E16] 12个不等人数父对照与48个等人数中间路径。stage05_sensitivity/preselected_four_complete/compact_tables_v2/TWELVE_PARENT_DECOMPOSITION_SUMMARY.csv.gz,133,True,True,True,content_order,28083,27,,,,,
+173,p,[E17] 逐图逐目标逐楼外折的实际类别成员和原答ID。stage01_capacity/POOL_CLASS_MEMBERS.csv.gz,69,True,True,True,content_order,28216,27,,,,,
+174,p,[E18] 冻结ALL描述名单，不能代替逐图容量。stage08_report/FROZEN_ALL_DESCRIPTIVE_CLASS_MEMBERS.csv,79,True,True,True,content_order,28285,27,,,,,
+175,p,[E19] 新增实体、完整端点复用与旧标量回放的精确记账。stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json,82,True,True,True,content_order,28364,27,,,,,
+176,p,[E20] 最小导出源码实际复现一队的完整数值与几何验证。stage07_reproduction/verification/REPRODUCTION_PARITY.json,86,True,True,True,content_order,28446,27,,,,,
+177,p,[S01] 成员波动最终分母：每项至少两个有效值才估计跨度标准差翻转。stage05_sensitivity/member_variability_v2/MEMBER_VARIABILITY_VALID_GE2_SUMMARY.csv.gz,119,True,True,True,content_order,28532,27,,,,,
+178,p,[S02] 单可评值不记为零波动的定向修正回执。stage05_sensitivity/member_variability_v2/MEMBER_VARIABILITY_DENOMINATOR_RECEIPT.json,108,True,True,True,content_order,28651,27,,,,,
+179,p,[S03] 全部258池完成后固定精确XZ、同n/m的背景敏感性。stage05_sensitivity/report_tables/BACKGROUND_CHANGES_COMPACT_PRIMARY_MANUAL.csv.gz,114,True,True,True,content_order,28759,27,,,,,
+180,p,[S04] 精确固定A、嵌套扩大替换块的效果增量。stage05_sensitivity/report_tables/FIXED_A_REPLACEMENT_STEPS_COMPACT_PRIMARY_MANUAL.csv.gz,113,True,True,True,content_order,28873,27,,,,,
+181,p,[S05] 精确固定XZ、嵌套扩大共同背景人数的效果增量。stage05_sensitivity/report_tables/FIXED_BLOCK_BACKGROUND_STEPS_COMPACT_PRIMARY_MANUAL.csv.gz,120,True,True,True,content_order,28986,27,,,,,
+182,p,[S06] 两个独立种子批次的均值方向与幅度一致性。stage05_sensitivity/report_tables/SAMPLING_BATCHES_COMPACT_PRIMARY_MANUAL.csv.gz,105,True,True,True,content_order,29106,27,,,,,
+183,p,[S07] 逐条件两侧固定成员块与全部成员必用的覆盖统计。stage05_sensitivity/core_members_v2/AC_CELL_CORE_COVERAGE_SUMMARY.csv.gz,100,True,True,True,content_order,29211,27,,,,,
+184,p,[S08] 26887条件的精确固定核心名单与逐人事件出现频次。stage05_sensitivity/core_members_v2/AC_CELL_MEMBER_CORES_AND_FREQUENCIES.csv.gz,110,True,True,True,content_order,29311,27,,,,,
+185,p,[S09] 全部258池已完成的紧凑图楼汇总回执。stage05_sensitivity/report_tables/COMPACT_FULL_POOL_RECEIPT.json,88,True,True,True,content_order,29421,28,,,,,
+186,p,[S10] 更宽的精确XZ与外部背景锚点匹配，209池6364方法对照。stage05_sensitivity/exact_outside_background_v1/EXACT_BACKGROUND_RECEIPT.json,112,True,True,True,content_order,29509,28,,,,,
+187,p,[S11] 外部背景与strict66四端点身份重叠及相反符号的逐项验证。stage05_sensitivity/exact_outside_background_v1/STRICT_BACKGROUND_OVERLAP_VALIDATION.json,125,True,True,True,content_order,29621,28,,,,,
+188,p,[A01] 四图七种完整类别联盟的28支精确团队。stage05_sensitivity/preselected_four_complete/PRESELECTED_8_17_10_TEAMS.csv.gz,102,True,True,True,content_order,29746,28,,,,,
+189,p,[A02] 96个既有同人数纯类锚点的逐图12条件结果，劳动中位数与方向保留。stage05_sensitivity/preselected_four_complete/compact_tables_v2/PURE_WHOLE_EQUAL_ANCHOR_SUMMARY.csv.gz,140,True,True,True,content_order,29848,28,,,,,
+190,p,[A03] 12条整类父对照，每条4个等人数中间路径。stage05_sensitivity/preselected_four_complete/compact_tables_v2/TWELVE_PARENT_DECOMPOSITION_SUMMARY.csv.gz,132,True,True,True,content_order,29988,28,,,,,
+191,p,[A04] 四图全部联盟、纯类锚点、路径与精确人员的完整解释。stage05_sensitivity/PRESELECTED_FOUR_CASES_REPORT_ZH.md,85,True,True,True,content_order,30120,28,,,,,
+192,p,[A05] 读取结果前按17/10/8容量形状指定的四图及成员。stage05_sensitivity/PRESELECTED_8_17_10_CASES.json,81,True,True,True,content_order,30205,28,,,,,
+193,p,[A06] 完整较高角色小类退出的预定七方向，三段共同有效并按父对照等权，含实际人数范围。stage05_sensitivity/three_leg_common_support_v2/REQUESTED_ALL_OUTSIDE_D_DIRECTIONS_WITH_SIZES.csv.gz,144,True,True,True,content_order,30286,28,,,,,
+194,p,[A07] 全部不等人数整类路径按共同有效支持与外部背景分层的验证。stage05_sensitivity/three_leg_common_support_v2/COMMON_VALID_DECOMPOSITION_RECEIPT.json,120,True,True,True,content_order,30430,28,,,,,
+195,p,[C01] 51个展示事件与质量几何劳动的完整精确行。stage06_cases/CASE_EVENT_SUMMARY.csv,62,True,True,True,content_order,30550,28,,,,,
+196,p,[C02] 32支去重团队的未选组、定位、来源环和全部边票。stage06_cases/CASE_ENDPOINT_SUMMARY.csv,68,True,True,True,content_order,30612,28,,,,,
+197,p,[C03] 正负微变和固定十人块扩大背景的全状态机制核查。stage06_cases/representative_cases/REPORT_REPRESENTATIVE_MECHANISMS_ZH.md,101,True,True,True,content_order,30680,28,,,,,
+198,p,[C04] 固定九人块、两人背景改变的逐观测与连接机制。stage06_cases/background_wc2_53/REPORT_BACKGROUND_WC2_53_ZH.md,89,True,True,True,content_order,30781,28,,,,,
+199,p,[C05] 共同八点表达和现行四点参考的可检查案例。stage06_cases/alliance_pa4_11/REPORT_ALLIANCE_PA4_11_ZH.md,83,True,True,True,content_order,30870,28,,,,,
+200,p,[C06] 七联盟同一四点结构的位置尺度高度和劳动变化。stage06_cases/alliance_pa4_06/REPORT_ALLIANCE_PA4_06_ZH.md,85,True,True,True,content_order,30953,28,,,,,
+201,p,[C07] 9图32队51事件全读、图形渲染和离线查看器验收。stage06_cases/CASE_DELIVERY_VALIDATION.json,73,True,True,True,content_order,31038,28,,,,,
+202,p,[C08] 全结果后机制选例的规则与所选事件，不参与团队设计。stage06_cases/representative_selection/SELECTED_EVENT_IDS.csv,91,True,True,True,content_order,31111,28,,,,,
+203,p,[R00] 现行独立审查已确认的主方法与严格七八人结果，本轮不重复计算。stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md,162,True,True,True,content_order,31202,28,,,,,
+204,p,[R01] 旧严格十人和新AC同条件参照。stage05_funnel_bridge/STRICT_M10_COMMON_CONDITION_BRIEF.csv,79,True,True,True,content_order,31364,28,,,,,
+205,p,[R02] 66严格条件内精确固定XZ的108物理背景对照。stage05_funnel_bridge/STRICT66_BACKGROUND_PHYSICAL_SUPPORT_SUMMARY.csv,99,True,True,True,content_order,31443,28,,,,,
+206,p,[R03] 完整容量漏斗、旧ABC规范化、共同条件与背景匹配的口径。stage05_funnel_bridge/README_ZH.md,67,True,True,True,content_order,31542,28,,,,,
+207,p,[R04] 按登记支持选定的15个补充域条件、质量几何劳动独立分母。stage08_report/scope_supplement_evidence/SCOPE_SELECTED_CONDITION_BRIEF.csv,108,True,True,True,content_order,31609,28,,,,,
+208,p,[R05] 普通Semi、其它准入目标及OOS已有状态的独立补充核验。stage08_report/SCOPE_SUPPLEMENT_VERIFIED_ZH.md,80,True,True,True,content_order,31717,28,,,,,
+209,p,[R06] 294入口与258执行池全域核验和450个原始指标行。stage08_report/scope_supplement_evidence/SCOPE_SUPPLEMENT_VERIFICATION_RECEIPT.json,115,True,True,True,content_order,31797,28,,,,,
+210,p,[R07] 同图片目标n/m的描述性方法比较，具体成员与类别语义未固定。stage05_context_common/COMMON_POOL_METHOD_COMPARISONS.csv.gz,95,True,True,True,content_order,31912,28,,,,,
+211,p,[R08] ALL描述性名单，不能代替LOBO逐图容量。stage08_report/FROZEN_ALL_DESCRIPTIVE_CLASS_MEMBERS.csv,82,True,True,True,content_order,32007,28,,,,,
+212,p,[R09] 各楼外折类别的原有历史标法语义、角色轴与父类映射。stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv,82,True,True,True,content_order,32089,28,,,,,
+213,p,[R10] 代表图精确D/X/Z与该图类别可用人数。stage06_cases/CASE_EVENT_SUMMARY.csv,61,True,True,True,content_order,32171,28,,,,,

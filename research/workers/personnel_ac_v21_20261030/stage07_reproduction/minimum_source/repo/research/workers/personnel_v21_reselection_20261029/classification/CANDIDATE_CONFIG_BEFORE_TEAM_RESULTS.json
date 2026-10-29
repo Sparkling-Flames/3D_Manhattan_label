@@ -1,0 +1,164 @@
+{
+  "commit": "a476461d7ede8db95da43de4139e612c05e618bc",
+  "data_release": "v2.1",
+  "formation_frozen_before_new_team_comparison": true,
+  "families": {
+    "TARGET_DSTRUCT": {
+      "ks": [
+        2,
+        3,
+        4
+      ],
+      "domains": [
+        "M_STRUCTURE_LEVEL",
+        "M_STRUCTURE_DIFFICULTY"
+      ],
+      "gates": [
+        "manual_all",
+        "manual_difficulty"
+      ],
+      "sort": [
+        "m_hard_turn_n",
+        "m_hard_short_turn_edges",
+        "m_all_turn_n"
+      ]
+    },
+    "OPPSTRUCT": {
+      "ks": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "domains": [
+        "M_STRUCTURE_LEVEL",
+        "M_STRUCTURE_CHALLENGE",
+        "M_STRUCTURE_OPP_RESPONSE"
+      ],
+      "gates": [
+        "manual_all",
+        "manual_challenge",
+        "manual_opportunity"
+      ],
+      "sort": [
+        "m_challenge_turn_n",
+        "m_all_turn_n",
+        "m_challenge_short_turn_edges"
+      ]
+    },
+    "OPPGEOM": {
+      "ks": [
+        2,
+        3,
+        4
+      ],
+      "domains": [
+        "M_STRUCTURE_LEVEL",
+        "M_STRUCTURE_OPP_RESPONSE",
+        "M_BOUNDARY_LEVEL",
+        "M_BOUNDARY_OPP_RESPONSE"
+      ],
+      "gates": [
+        "manual_all",
+        "manual_opportunity"
+      ],
+      "sort": [
+        "m_all_turn_n",
+        "m_all_matched_bottom_bias_deg",
+        "m_all_log_area_ratio"
+      ]
+    },
+    "OPPJOINT": {
+      "ks": [
+        2,
+        3,
+        4
+      ],
+      "domains": [
+        "M_STRUCTURE_OPP_RESPONSE",
+        "M_BOUNDARY_OPP_RESPONSE",
+        "M_QUALITY_OPP_RESPONSE",
+        "M_TIME_OPP_RESPONSE"
+      ],
+      "gates": [
+        "manual_all",
+        "manual_opportunity",
+        "manual_time"
+      ],
+      "sort": [
+        "m_all_B8L2",
+        "m_challenge_turn_n",
+        "m_all_log_time"
+      ]
+    }
+  },
+  "domains": {
+    "M_STRUCTURE_LEVEL": [
+      "m_all_turn_n",
+      "m_all_short_turn_edges",
+      "m_all_near_straight_nodes_5deg",
+      "m_all_unmatched_ref_9"
+    ],
+    "M_STRUCTURE_DIFFICULTY": [
+      "m_hard_turn_n",
+      "m_hard_short_turn_edges",
+      "m_hard_near_straight_nodes_5deg",
+      "m_hard_unmatched_ref_9",
+      "m_hard_minus_easy_turn_n",
+      "m_hard_minus_easy_short_turn_edges",
+      "m_hard_minus_easy_near_straight_nodes_5deg",
+      "m_hard_minus_easy_unmatched_ref_9"
+    ],
+    "M_STRUCTURE_CHALLENGE": [
+      "m_challenge_turn_n",
+      "m_challenge_short_turn_edges",
+      "m_challenge_near_straight_nodes_5deg",
+      "m_challenge_unmatched_ref_9"
+    ],
+    "M_STRUCTURE_OPP_RESPONSE": [
+      "m_opp_slope_turn_n",
+      "m_opp_slope_short_turn_edges",
+      "m_opp_slope_near_straight_nodes_5deg",
+      "m_opp_slope_unmatched_ref_9"
+    ],
+    "M_BOUNDARY_LEVEL": [
+      "m_all_matched_top_bias_deg",
+      "m_all_matched_bottom_bias_deg",
+      "m_all_log_area_ratio",
+      "m_all_log_height"
+    ],
+    "M_BOUNDARY_OPP_RESPONSE": [
+      "m_opp_slope_matched_top_bias_deg",
+      "m_opp_slope_matched_bottom_bias_deg",
+      "m_opp_slope_log_area_ratio",
+      "m_opp_slope_log_height"
+    ],
+    "M_QUALITY_OPP_RESPONSE": [
+      "m_all_B8L2",
+      "m_all_B8L2_p20",
+      "m_opp_slope_B8L2"
+    ],
+    "M_TIME_OPP_RESPONSE": [
+      "m_all_log_time",
+      "m_opp_slope_log_time"
+    ]
+  },
+  "feature_centering": "median by image_id,reference_id,condition; time also origin,time_source",
+  "history": "metric-valid records averaged within worker-target; targets equal within worker-image; images equal within worker-building; buildings equal; each LOBO recomputes supports",
+  "history_scope": "ordinary_manual and ordinary_semi legal target pools; doorway and special-range excluded from new fit, retained in inventory",
+  "opportunity_inputs": [
+    "log1p(max(ref_turn5-4,0))",
+    "log1p(ref_H)",
+    "log1p(ref_short_edges)"
+  ],
+  "opportunity_scaling": "training unique targets, equal image/building weighting; median,p85-p15(fallbackstd),clip3; equal-axis sum/sqrt(3)",
+  "opportunity_response": "weighted within-person covariance(peer residual,opportunity score)/weighted variance; no quality-outcome tuning",
+  "opportunity_support": "all>=12images3buildings;score variation>1e-5;at least2 distinct score levels; challenge-specific domain>=4images2buildings",
+  "known_difficulty": "only official target-aligned grades; unknown targets contribute all/opportunity, never easy/hard",
+  "manual_difficulty_support": "easy>=5images2buildings;hard>=4images2buildings",
+  "time_support": "at least12 positively timed images and3 buildings; variation in opportunity score",
+  "low_tail": "weighted empirical p20 using same hierarchical history weights on available quality rows",
+  "embedding": "per-domain median,p85-p15 fallbackstd then1,clip3,PCA<=2,domain RMS and equal-domain normalization",
+  "cluster": "Ward, one tree per family/fold; all registered K retained, no minimum class balance",
+  "new_fusion_for_label_formation": false
+}

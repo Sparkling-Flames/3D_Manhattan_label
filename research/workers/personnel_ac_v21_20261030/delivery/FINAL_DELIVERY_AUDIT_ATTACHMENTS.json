@@ -1,0 +1,28 @@
+{
+  "status": "all_local_files_exist_ready_for_final_report_package",
+  "purpose": "Small late delivery audit receipts and verification-only script; include in final report package without changing frozen science or code archive.",
+  "required_include": [
+    "code/verify_clean_design_sources.py",
+    "delivery/DELIVERY_REQUIRED_INCLUDE.json",
+    "delivery/DELIVERY_SCIENTIFIC_COVERAGE_REVIEW.json",
+    "delivery/DELIVERY_SCIENTIFIC_COVERAGE_REVIEW.md",
+    "delivery/HOHONET_v21_AC_stage02_frozen_design_clean_READABILITY.json",
+    "delivery/STAGING_ARTIFACTS_NOT_FOR_ANALYSIS.json",
+    "delivery/STAGING_ARTIFACTS_NOT_FOR_ANALYSIS.md",
+    "delivery/clean_design_source_verification/CLEAN_DESIGN_INCLUDE_PATHS.json",
+    "delivery/clean_design_source_verification/CLEAN_DESIGN_REPACK_RECEIPT.json",
+    "delivery/clean_design_source_verification/CLEAN_EXPECTED_SOURCE_MANIFEST.json",
+    "delivery/clean_design_source_verification/CURRENT_VS_OLD_SOURCE_DIFFS.patch",
+    "delivery/clean_design_source_verification/FAILED_DOWNLOAD_STAGING_CLEANUP.json",
+    "delivery/clean_design_source_verification/OLD_ARCHIVE_MANIFEST.json",
+    "delivery/clean_design_source_verification/OLD_ARCHIVE_SOURCE_COMPARISON.json",
+    "delivery/clean_design_source_verification/old_changed_sources/code/package_stage.py",
+    "delivery/clean_design_source_verification/old_changed_sources/stage01_design_review/DESIGN_REVIEW_ZH.md",
+    "delivery/clean_design_source_verification/old_changed_sources/stage01_design_review/RECOMMENDED_DESIGN_CONTRACT.json"
+  ],
+  "files": 17,
+  "bytes": 144768,
+  "exclude_downloaded_zip_duplicates": true,
+  "also_include_this_list": true,
+  "explicit_path_list_only_do_not_recursively_include_transfer_staging": true
+}

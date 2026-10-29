@@ -1,0 +1,1404 @@
+{
+  "status": "passed",
+  "source_selection": "frozen registry links, no target-outcome selection",
+  "independent_implementation": "No import of main analysis; Python dictionaries and math.fsum implement event -> pool -> image -> building balancing",
+  "neutral_profile": "neutral_members_0",
+  "representative_conditions": 3,
+  "representative_metric_rows": 6,
+  "representative_selected_unique_events": 1368,
+  "whole_definition_selected_view_events": 45436,
+  "whole_definition_selected_unique_events": 45130,
+  "whole_definition_summary_rows": 288,
+  "whole_modes": [
+    "whole_source_out_only",
+    "whole_target_in_only",
+    "both_whole_equal"
+  ],
+  "whole_modes_relative_to_canonical_direction": true,
+  "pure_n_equals_m_separate": true,
+  "metrics": [
+    "B8L2_CA",
+    "D10_CA"
+  ],
+  "missing_Q_zero_filled": false,
+  "main_comparison_field_rows": 3328,
+  "maximum_absolute_difference": 7.105427357601002e-15,
+  "all_checked_fields_passed": true,
+  "whole_merged_definitions_reproduce_parent_without_overwriting": true,
+  "original_funnel_files_unchanged": true,
+  "new_teams": 0,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "inputs": [
+    {
+      "path": "stage01_registered/AC_EVENTS.csv.gz",
+      "sha256": "6005b93a6a7a7d950bd5dcf0cdf7866a82d4e02092480aa740c3e069d3e42f9d"
+    },
+    {
+      "path": "stage01_registered/DESIGN_LINKS.csv.gz",
+      "sha256": "48127e034187aa1086762b595e86f2be47fc6c6a105d41f459cd1bb721fbc77f"
+    },
+    {
+      "path": "stage05_main/CONDITION_METRIC_SUMMARY.csv.gz",
+      "sha256": "00b7f504b65a2c6cc91f6bce9dc125ed0207f8309f211592779eeff6802635b5"
+    }
+  ],
+  "metric_sources": [
+    {
+      "pool_id": "2t7WUuJeko7-02__manual__80761d0f32",
+      "path": "stage04_metrics/metric_shards/2t7WUuJeko7-02__manual__80761d0f32.csv.gz",
+      "sha256": "1125e820cf27cac8b0dd97772d5d64a06d858f26c5cb3ea00f4443efc39495bf",
+      "selected_events": 45
+    },
+    {
+      "pool_id": "2t7WUuJeko7-03__manual__5ca7b0b788",
+      "path": "stage04_metrics/metric_shards/2t7WUuJeko7-03__manual__5ca7b0b788.csv.gz",
+      "sha256": "8bbd2b67f9cb64d742ecd1ee07e2d9a582dd0a3ade581f04c4d2e88a515e73c7",
+      "selected_events": 32
+    },
+    {
+      "pool_id": "2t7WUuJeko7-06__manual__9b197d01a2",
+      "path": "stage04_metrics/metric_shards/2t7WUuJeko7-06__manual__9b197d01a2.csv.gz",
+      "sha256": "b53828b3990e50b2839012b022649f20cf4dc6169548fd59dba318bc78fc05c8",
+      "selected_events": 222
+    },
+    {
+      "pool_id": "2t7WUuJeko7-09__manual__ffdf364fb7",
+      "path": "stage04_metrics/metric_shards/2t7WUuJeko7-09__manual__ffdf364fb7.csv.gz",
+      "sha256": "5d13ce3933291a32c1cb1d0e4b69e0e91fbe1ab53f637cae1998dfae4677e094",
+      "selected_events": 230
+    },
+    {
+      "pool_id": "2t7WUuJeko7-13__manual__ec0d05ae55",
+      "path": "stage04_metrics/metric_shards/2t7WUuJeko7-13__manual__ec0d05ae55.csv.gz",
+      "sha256": "3b6ab4b8fc95fd71322f0ebff4c67519d5a21f203ceeef20bc93f880eb48d360",
+      "selected_events": 254
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-03__manual__21c720698a",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-03__manual__21c720698a.csv.gz",
+      "sha256": "6949763dbd72133ea000e2c517c8cbcce2bdd742ba46d635bde53da5e51e54b9",
+      "selected_events": 186
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-04__manual__d7b320ab08",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-04__manual__d7b320ab08.csv.gz",
+      "sha256": "8e408981d04d9e67de63815a1aa91b3e1fcc2f5fb709d770f52ca654674fed19",
+      "selected_events": 210
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-11__manual__feec3565b2",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-11__manual__feec3565b2.csv.gz",
+      "sha256": "fe83d38b054d506d7cb0cdc2143f6d0847f22581e6b1d59288bcdaff571a054b",
+      "selected_events": 192
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-13__manual__5b6c87b5f3",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-13__manual__5b6c87b5f3.csv.gz",
+      "sha256": "c12cf803408d25320a8e6d87741435f985617e3ac1c9ae77eea4e4c1055832da",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-19__manual__cde87da031",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-19__manual__cde87da031.csv.gz",
+      "sha256": "fcdc2c083ff03bbf50a8dcce47e03e67814af0c88c8780c3fe4b1fc568d53e47",
+      "selected_events": 144
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-21__manual__d48c756085",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-21__manual__d48c756085.csv.gz",
+      "sha256": "7d4a38c699b22b01fe1a7d1a76debb145b4edfb485096cac97e13791071abd78",
+      "selected_events": 212
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-23__manual__0e28c733e4",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-23__manual__0e28c733e4.csv.gz",
+      "sha256": "a44bbc5294dc4e392d0a0823e1e4d7b6bdfc1c156e151a0161353ba8e727aaad",
+      "selected_events": 168
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-26__manual__c9d0cbdd90",
+      "path": "stage04_metrics/metric_shards/7y3sRwLe3Va-26__manual__c9d0cbdd90.csv.gz",
+      "sha256": "5c1154e29bd7de0382d5f95fb581cec4bf45ebc1430c898795260cee1486468f",
+      "selected_events": 252
+    },
+    {
+      "pool_id": "B6ByNegPMKs-10__manual__2a73346a88",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-10__manual__2a73346a88.csv.gz",
+      "sha256": "2d054fce172f23ca5e6ce555b684b86def4bb71208fa0ceb6c0bebe19b8e7aa7",
+      "selected_events": 234
+    },
+    {
+      "pool_id": "B6ByNegPMKs-11__manual__f3a7523e7c",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-11__manual__f3a7523e7c.csv.gz",
+      "sha256": "f5707f0dd61019c561a669eece78a3d116da6a1731c026c5175aaf82b0a80748",
+      "selected_events": 204
+    },
+    {
+      "pool_id": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-18__manual__ba2dd293b0.csv.gz",
+      "sha256": "91933a970657467e9094452372de3abd925c64d8aa6a335e352434e11e643057",
+      "selected_events": 234
+    },
+    {
+      "pool_id": "B6ByNegPMKs-21__manual__5f07be7326",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-21__manual__5f07be7326.csv.gz",
+      "sha256": "d8f590c551f12884f070b8c8dcb04a4066277c2216841760f1065d432f9c457c",
+      "selected_events": 202
+    },
+    {
+      "pool_id": "B6ByNegPMKs-22__manual__5070de2f55",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-22__manual__5070de2f55.csv.gz",
+      "sha256": "5fa9dc46de68141bb47db427f87ee8d2db3438546bbaf5e6cde1672acaacee5e",
+      "selected_events": 234
+    },
+    {
+      "pool_id": "B6ByNegPMKs-33__manual__c5a0f2370f",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-33__manual__c5a0f2370f.csv.gz",
+      "sha256": "9f42e6db3cdcc357efd01e5ea1874115c5b8a10e66d490db0e298ab42b8a7566",
+      "selected_events": 194
+    },
+    {
+      "pool_id": "B6ByNegPMKs-37__manual__other_space_0",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-37__manual__other_space_0.csv.gz",
+      "sha256": "5d7b1817df8948aaf00dbcff9f8d9c839dea23e3eb6931bea45a826913ac7c22",
+      "selected_events": 3
+    },
+    {
+      "pool_id": "B6ByNegPMKs-37__manual__v21_246",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-37__manual__v21_246.csv.gz",
+      "sha256": "7926bc78f7eb0c4536fc49dcdffc7a72ff6f1df24ca7fba24e3bb4d3cf9a868e",
+      "selected_events": 148
+    },
+    {
+      "pool_id": "B6ByNegPMKs-40__manual__19077f2fe3",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-40__manual__19077f2fe3.csv.gz",
+      "sha256": "2f980b31d340e2be9b89fcedd69aa945e22f2c9c5f205d6236336c299567e12a",
+      "selected_events": 167
+    },
+    {
+      "pool_id": "B6ByNegPMKs-47__manual__9eae4a3584",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-47__manual__9eae4a3584.csv.gz",
+      "sha256": "5f0327d8cb427fa05f6f936c1f40b1f2c89d127bec9720a5fb4295f8f1e30c46",
+      "selected_events": 214
+    },
+    {
+      "pool_id": "B6ByNegPMKs-48__manual__51abd0a06d",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-48__manual__51abd0a06d.csv.gz",
+      "sha256": "37c5e60fe43865e7a0eb4d18e24535a2d1264d082272263bdb7c0b615c61e022",
+      "selected_events": 154
+    },
+    {
+      "pool_id": "B6ByNegPMKs-50__manual__66ebac0de6",
+      "path": "stage04_metrics/metric_shards/B6ByNegPMKs-50__manual__66ebac0de6.csv.gz",
+      "sha256": "a3f45610a9a2ab260441613e967e7899770e13b01f96c8f5a920f82cb730fa9e",
+      "selected_events": 146
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-04__manual__c93fe8a825",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-04__manual__c93fe8a825.csv.gz",
+      "sha256": "a83b23b17aeee36dfdf3069a937f9f1e6633cca3e97b2ce08ce9149bb9db1fcc",
+      "selected_events": 274
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-05__manual__3078185fd7",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-05__manual__3078185fd7.csv.gz",
+      "sha256": "3833eca2411cd6ca3741c0969f555412e33950cc860dcfb7208ce92058ea7e1b",
+      "selected_events": 232
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-06__manual__b53e2c2f71",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-06__manual__b53e2c2f71.csv.gz",
+      "sha256": "eb46d1c19a1276d090866ec0fa45d4d570a5e6bcb67539f5d8bbe5a4a74d15f2",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-09__manual__v21_254",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-09__manual__v21_254.csv.gz",
+      "sha256": "0d48841434527b575575e1fcb4b11f3c1e2f7f745a3f6202428b74d86c8abde7",
+      "selected_events": 284
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-10__manual__38e19faf10",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-10__manual__38e19faf10.csv.gz",
+      "sha256": "7782ba13ccafb4c4f8904003915fd8b3eeb9218eacdd821af3d5c1143f06484c",
+      "selected_events": 218
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-12__manual__eec3a285d1",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-12__manual__eec3a285d1.csv.gz",
+      "sha256": "783012e733b6fd52b5e8688568b59f78697d18fbaca246276a196217ee08e8b9",
+      "selected_events": 278
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-15__manual__3c51a634b9",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-15__manual__3c51a634b9.csv.gz",
+      "sha256": "2ebfd0429b12a60bcaafc6ae7eda32b394b3596552e51f82e0c5f200cb9890d0",
+      "selected_events": 270
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-17__manual__e525b4e1d7",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-17__manual__e525b4e1d7.csv.gz",
+      "sha256": "63fde91c989163303319756b9d4e158dd27eea3a108cffb5e2d85fe01293728b",
+      "selected_events": 224
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-18__manual__7d3da846c6",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-18__manual__7d3da846c6.csv.gz",
+      "sha256": "c4ab9b24cba8420fa9bebc343fb66c38da9e4afbcfe87a7ed8883695a26acf2c",
+      "selected_events": 282
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-19__manual__c6b86cae13",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-19__manual__c6b86cae13.csv.gz",
+      "sha256": "9fdcdd455394a86b295b456d98df1c9a72ee93764a523cb86d64e550e7835ee1",
+      "selected_events": 242
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-21__manual__605071dbd5",
+      "path": "stage04_metrics/metric_shards/S9hNv5qa7GM-21__manual__605071dbd5.csv.gz",
+      "sha256": "405ee1a05a2d398aea116f919c458d2d06461772b3102de64f1146a5ca871197",
+      "selected_events": 248
+    },
+    {
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-09__manual__1a2b0afff3.csv.gz",
+      "sha256": "d857ee7fd6b9548d2337e8eedab9146ac917712186bbf9adba1931e1f8c2034c",
+      "selected_events": 186
+    },
+    {
+      "pool_id": "UwV83HsGsw3-10__manual__other_space_1",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-10__manual__other_space_1.csv.gz",
+      "sha256": "0f998d105f733cab478a401ada81ed065102b5cd5db44f4e5ee3728cd3a3f966",
+      "selected_events": 77
+    },
+    {
+      "pool_id": "UwV83HsGsw3-10__manual__v21_248",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-10__manual__v21_248.csv.gz",
+      "sha256": "ca7f6c8ffc182183016ee75f4441091fa1146d92d2aed5179e63c139b945d4f2",
+      "selected_events": 211
+    },
+    {
+      "pool_id": "UwV83HsGsw3-12__manual__66a7b558e6",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-12__manual__66a7b558e6.csv.gz",
+      "sha256": "7184b73b5b1cb2957e7858326a1459b2f6ccd0760fe7b227e3c4a4fbe133bae8",
+      "selected_events": 132
+    },
+    {
+      "pool_id": "UwV83HsGsw3-17__manual__b27fdc2bc6",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-17__manual__b27fdc2bc6.csv.gz",
+      "sha256": "5c4501cb2562f25bab5c5c638fc3993a4e2b7fb28fc8caa7576d0414e8d68ba3",
+      "selected_events": 186
+    },
+    {
+      "pool_id": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "path": "stage04_metrics/metric_shards/UwV83HsGsw3-22__manual__f3e5ed92db.csv.gz",
+      "sha256": "aa904d939bdb0e4bf37065c7b583ae36a3860b734abfc4a24ac9e0359b6fe901",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "VFuaQ6m2Qom-01__manual__5b146df96f",
+      "path": "stage04_metrics/metric_shards/VFuaQ6m2Qom-01__manual__5b146df96f.csv.gz",
+      "sha256": "8e0334034f441ffb13859426c87d6623bd98d45b56d432295b188d567b3815f7",
+      "selected_events": 238
+    },
+    {
+      "pool_id": "VFuaQ6m2Qom-03__manual__02147a8f0c",
+      "path": "stage04_metrics/metric_shards/VFuaQ6m2Qom-03__manual__02147a8f0c.csv.gz",
+      "sha256": "0ed435008f8881e76ee480a3bb60b3138f612c89fada4705e2763a15f36c8a12",
+      "selected_events": 240
+    },
+    {
+      "pool_id": "VFuaQ6m2Qom-04__manual__fbe40a551f",
+      "path": "stage04_metrics/metric_shards/VFuaQ6m2Qom-04__manual__fbe40a551f.csv.gz",
+      "sha256": "5285c92a8319c3e0f099991b3f8878f9a025edc147cc3bb5cece207fc91a64e4",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "VFuaQ6m2Qom-07__manual__3362ee2227",
+      "path": "stage04_metrics/metric_shards/VFuaQ6m2Qom-07__manual__3362ee2227.csv.gz",
+      "sha256": "ef45b687fa7049f39796fd9aedabcc696eacfdc55df84a2bc788aeb6b8227691",
+      "selected_events": 198
+    },
+    {
+      "pool_id": "VFuaQ6m2Qom-10__manual__52845fa120",
+      "path": "stage04_metrics/metric_shards/VFuaQ6m2Qom-10__manual__52845fa120.csv.gz",
+      "sha256": "3046a2b47890d2f0875a2e02ac767dde7df91f3f0ac88374ec11d3cead1dca3f",
+      "selected_events": 268
+    },
+    {
+      "pool_id": "VLzqgDo317F-02__manual__5c35a52ccc",
+      "path": "stage04_metrics/metric_shards/VLzqgDo317F-02__manual__5c35a52ccc.csv.gz",
+      "sha256": "a3f483d43590507b2e6808bb2f9845f9f3d2d92513ba4448190f6e3bad27060c",
+      "selected_events": 304
+    },
+    {
+      "pool_id": "X7HyMhZNoso-05__manual__5212c0d241",
+      "path": "stage04_metrics/metric_shards/X7HyMhZNoso-05__manual__5212c0d241.csv.gz",
+      "sha256": "a634dd332acd2e692176355c68f6d37e9463d4ed1b2c69777a37bc97979c8649",
+      "selected_events": 196
+    },
+    {
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "path": "stage04_metrics/metric_shards/X7HyMhZNoso-07__manual__dd2275185f.csv.gz",
+      "sha256": "05a467b8e4ee624e5abebf1f8467315929a6f22f2ceefb4415fdce3918571039",
+      "selected_events": 164
+    },
+    {
+      "pool_id": "X7HyMhZNoso-13__manual__373442ac7c",
+      "path": "stage04_metrics/metric_shards/X7HyMhZNoso-13__manual__373442ac7c.csv.gz",
+      "sha256": "305bcb51e8abd5ae93c712636f3f77651f0e6928473769ab59b674137f622808",
+      "selected_events": 218
+    },
+    {
+      "pool_id": "X7HyMhZNoso-19__manual__4177d22d41",
+      "path": "stage04_metrics/metric_shards/X7HyMhZNoso-19__manual__4177d22d41.csv.gz",
+      "sha256": "a0751b807aa157407515e50d0b6c8b779bf03e87fc10f5f020d22b29897ad9d8",
+      "selected_events": 216
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-02__manual__1402a46fe0",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-02__manual__1402a46fe0.csv.gz",
+      "sha256": "f12a5b4ff9fe37da81aed03262ec2f66ac6b2ffa5b858a0aece5d73d86a96192",
+      "selected_events": 206
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-03__manual__9f0ad84f43",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-03__manual__9f0ad84f43.csv.gz",
+      "sha256": "ceeed5a8dbba50192187cd06b5ce34a1f750a67fc4c356ef09f11ddc8c97832d",
+      "selected_events": 256
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-06__manual__0151bd7edf",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-06__manual__0151bd7edf.csv.gz",
+      "sha256": "7af4e002531382f74a1c581b6e36c383998d20640efd2a1186ad8fe4499bbf77",
+      "selected_events": 236
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-08__manual__046839c2de",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-08__manual__046839c2de.csv.gz",
+      "sha256": "68f53ec03ec5e59fa66b8444755c1f9eaf145c6790610f793fa56f310e9bfa13",
+      "selected_events": 250
+    },
+    {
+      "pool_id": "Z6MFQCViBuw-10__manual__6b973e35d3",
+      "path": "stage04_metrics/metric_shards/Z6MFQCViBuw-10__manual__6b973e35d3.csv.gz",
+      "sha256": "423cc03326ea1dfe92e739ff6cb6ca1f8ef64a826015359004becd098d932e4d",
+      "selected_events": 256
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-07__manual__3eefa592b6",
+      "path": "stage04_metrics/metric_shards/b8cTxDM8gDG-07__manual__3eefa592b6.csv.gz",
+      "sha256": "002d6373d809ad0c97307417fb015181d396d4d62db0ec9f8efb9ea7bcd1afe2",
+      "selected_events": 284
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-17__manual__64a912ca10",
+      "path": "stage04_metrics/metric_shards/b8cTxDM8gDG-17__manual__64a912ca10.csv.gz",
+      "sha256": "1c0645700930bdad93dbc391353d3c862b6bcd7908959c2516870d8b0524926a",
+      "selected_events": 260
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-18__manual__other_space_2",
+      "path": "stage04_metrics/metric_shards/b8cTxDM8gDG-18__manual__other_space_2.csv.gz",
+      "sha256": "8bd09d8b7ac7b6aad8d7112079ce4634816506753128f819529826cdaeb301e6",
+      "selected_events": 103
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-18__manual__v21_1",
+      "path": "stage04_metrics/metric_shards/b8cTxDM8gDG-18__manual__v21_1.csv.gz",
+      "sha256": "e43e333f6218a89bd545cc4e2cbf0445131910265d2ed20821ceb862c1c3f9e6",
+      "selected_events": 184
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-02__manual__727235294b",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-02__manual__727235294b.csv.gz",
+      "sha256": "de97fcda3aae13fd293f4cbfc71373941230f450ffb87a4a4d3441c6291d15ba",
+      "selected_events": 208
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-03__manual__8bf3d02cab",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-03__manual__8bf3d02cab.csv.gz",
+      "sha256": "df77d100c30af84f0a97af9135ec8b92ac7ec2a06b18efab44040affeafad3e5",
+      "selected_events": 290
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-09__manual__other_space_3",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-09__manual__other_space_3.csv.gz",
+      "sha256": "51868038f17d452c86bd17cf558feb054af2c9cafaf42a4547c96b5be64c56c2",
+      "selected_events": 113
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-09__manual__v21_2",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-09__manual__v21_2.csv.gz",
+      "sha256": "ee39fbb788e9c8912b6dafd6728c6c034d4d24f998b131726b772dcba6651d15",
+      "selected_events": 100
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-10__manual__ecf22b00ab",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-10__manual__ecf22b00ab.csv.gz",
+      "sha256": "fcac42b6b6ac9de6c4cff25657e01024a8b68b4f6af3e2c7d083a82dfbda0f8a",
+      "selected_events": 290
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-15__manual__64c3e640b7",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-15__manual__64c3e640b7.csv.gz",
+      "sha256": "ba6999bc86d616225e9b28b8f8d41b9363bf964e66073133e7d1d59ba9138a0e",
+      "selected_events": 232
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-17__manual__v21_3",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-17__manual__v21_3.csv.gz",
+      "sha256": "89d41b0a2b0bb7cc2542b6fee98709aed4e9dc5ed3df829be0eb288da8685086",
+      "selected_events": 216
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-19__manual__3b9450ee54",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-19__manual__3b9450ee54.csv.gz",
+      "sha256": "898cd870b04ab3211dd5a14adbbb13078d8b58309b852248e2aa216e525f708e",
+      "selected_events": 216
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-26__manual__1b2aa0a6e7",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-26__manual__1b2aa0a6e7.csv.gz",
+      "sha256": "df07dc3e405879e03940aece6d9df408ca0dd6cbef71744259a933b457395919",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-28__manual__3975e135c7",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-28__manual__3975e135c7.csv.gz",
+      "sha256": "97324cce9dce0d19ab6a64f6a37dc960349689c710404098b329b48a774d8bea",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-32__manual__111c2ddfac",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-32__manual__111c2ddfac.csv.gz",
+      "sha256": "bd1f9420afcab16ceb2af61a9b2d98eb856ecba823dd59100ffb1686075e3239",
+      "selected_events": 290
+    },
+    {
+      "pool_id": "e9zR4mvMWw7-39__manual__9326cbf6d2",
+      "path": "stage04_metrics/metric_shards/e9zR4mvMWw7-39__manual__9326cbf6d2.csv.gz",
+      "sha256": "84e70f37e14f402496a9b44db9fd9330b3f227a5e2fe52614949233afc57b562",
+      "selected_events": 290
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-02__manual__8c0c47789e",
+      "path": "stage04_metrics/metric_shards/jh4fc5c5qoQ-02__manual__8c0c47789e.csv.gz",
+      "sha256": "b12d73cf20ad9f813e08d4c22d6b7ffe87e2bd83fceaaa9c7eaf99a8dc8ee3ad",
+      "selected_events": 202
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-04__manual__928d5032f2",
+      "path": "stage04_metrics/metric_shards/jh4fc5c5qoQ-04__manual__928d5032f2.csv.gz",
+      "sha256": "f02e4112d9f649fc4d7700a8fb02fecc00074e71cf0ee62086e7360932827b1c",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-10__manual__069105f01a",
+      "path": "stage04_metrics/metric_shards/jh4fc5c5qoQ-10__manual__069105f01a.csv.gz",
+      "sha256": "66cebd8d73a04c99060d5403caf7cd860c461392a69d558417512506df6c2b2b",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-12__manual__c7ac014dc3",
+      "path": "stage04_metrics/metric_shards/jh4fc5c5qoQ-12__manual__c7ac014dc3.csv.gz",
+      "sha256": "e96c58f48a068d30503219df8353c4187aa93309e61ea4e5c25ca0b6642a6383",
+      "selected_events": 140
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-13__manual__274d69d1f7",
+      "path": "stage04_metrics/metric_shards/jh4fc5c5qoQ-13__manual__274d69d1f7.csv.gz",
+      "sha256": "fdc7596ab66a989b8e7c5b52a32864506783639f4855133bcd7090e23021ccd5",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "jtcxE69GiFV-03__manual__cff6e9a2b3",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-03__manual__cff6e9a2b3.csv.gz",
+      "sha256": "b0f89a4bc564630527324bfe82a91df55bc21accbd5f51fc5f49a1d2407db41b",
+      "selected_events": 242
+    },
+    {
+      "pool_id": "jtcxE69GiFV-04__manual__628a7c6a3a",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-04__manual__628a7c6a3a.csv.gz",
+      "sha256": "ad02f14d6b947de3d16de5c1655ff0c2545a1b89880043aafe4699d093a16c55",
+      "selected_events": 216
+    },
+    {
+      "pool_id": "jtcxE69GiFV-09__manual__751e8c357b",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-09__manual__751e8c357b.csv.gz",
+      "sha256": "a3c9f2c42a7c45a87482bf0b03002ec17feb0f5c2003467de8006a65ba8f3e44",
+      "selected_events": 196
+    },
+    {
+      "pool_id": "jtcxE69GiFV-10__manual__9353efd9c9",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-10__manual__9353efd9c9.csv.gz",
+      "sha256": "7050f982111cc1a0d7509e0ef4a794b015c8787cb41c00d57845ae1d3485a3ef",
+      "selected_events": 260
+    },
+    {
+      "pool_id": "jtcxE69GiFV-13__manual__8809c22f6e",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-13__manual__8809c22f6e.csv.gz",
+      "sha256": "be6a619c1e7ca8240c81ecbd047fa9146bca8ef6cc4e5314f3d0125eed6377e4",
+      "selected_events": 298
+    },
+    {
+      "pool_id": "jtcxE69GiFV-22__manual__70a3575644",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-22__manual__70a3575644.csv.gz",
+      "sha256": "97baf58b891ad7d08730b7a0e63540aaa283ae4e8af1dfef044ab1a728d8f12a",
+      "selected_events": 280
+    },
+    {
+      "pool_id": "jtcxE69GiFV-23__manual__c9d4c2c03b",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-23__manual__c9d4c2c03b.csv.gz",
+      "sha256": "321b54d33bc7f495ae87d8b02904f93a598b0d62431eaa6d16797c7919b0f2b4",
+      "selected_events": 298
+    },
+    {
+      "pool_id": "jtcxE69GiFV-26__manual__7ff2cf23aa",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-26__manual__7ff2cf23aa.csv.gz",
+      "sha256": "aa9f419958a4260be6fef4c7ca5191286087d0c401b76e0b23fef07ae021c34f",
+      "selected_events": 222
+    },
+    {
+      "pool_id": "jtcxE69GiFV-28__manual__19653e8bc7",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-28__manual__19653e8bc7.csv.gz",
+      "sha256": "ee2965d4e904552b36a4c3ea594f51394bef9e8abc17106fcde836ec9c5eefe0",
+      "selected_events": 248
+    },
+    {
+      "pool_id": "jtcxE69GiFV-30__manual__d0ce5ff4e1",
+      "path": "stage04_metrics/metric_shards/jtcxE69GiFV-30__manual__d0ce5ff4e1.csv.gz",
+      "sha256": "5a34dfbabb58d91279a8299a88a20b12ae5cba18277fe9acd0ad0aaf78fc890b",
+      "selected_events": 294
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-02__manual__v21_219",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-02__manual__v21_219.csv.gz",
+      "sha256": "67ce5b7e5cccd4fa052ac7d4b017ee3767be45d85bcdbf11e7e4c3497ac83be3",
+      "selected_events": 178
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-04__manual__da07b79cf0",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-04__manual__da07b79cf0.csv.gz",
+      "sha256": "5ce937b7ed89561e137c022e64b0bcdc207265eec90f9039087b021db99d837c",
+      "selected_events": 218
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-05__manual__bd34c00b46",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-05__manual__bd34c00b46.csv.gz",
+      "sha256": "e06066369a02bdd1aa8592962d55ab5e05a44f97f854e7eaa701cf7e27e494a9",
+      "selected_events": 284
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-06__manual__3b04cf9a1d",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-06__manual__3b04cf9a1d.csv.gz",
+      "sha256": "a88fb38beb0be0f96a91d56fc4369312996885ea38a417cbda8c0e24b90f69d2",
+      "selected_events": 264
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-07__manual__e8409547b5",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-07__manual__e8409547b5.csv.gz",
+      "sha256": "3fe1d3865f62e8d07b19036e480177bc05d547c4a0777e88740a568a2c5b145f",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-10__manual__cb00db271c",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-10__manual__cb00db271c.csv.gz",
+      "sha256": "c67f60e2c6fe3496f90c2b57915578940a8e358fc9070012329c088221241a72",
+      "selected_events": 254
+    },
+    {
+      "pool_id": "pRbA3pwrgk9-14__manual__c4667a1d8c",
+      "path": "stage04_metrics/metric_shards/pRbA3pwrgk9-14__manual__c4667a1d8c.csv.gz",
+      "sha256": "979cfe16975bd3084b7c184b212ca66bb3cff4b07e1655aa2556ea3facf07a5a",
+      "selected_events": 254
+    },
+    {
+      "pool_id": "pa4otMbVnkk-05__manual__420a0b6ed3",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-05__manual__420a0b6ed3.csv.gz",
+      "sha256": "7b8d486783936f993e67f15edc20ec0892aab5fffbd97663e50c71f7f9f9e639",
+      "selected_events": 274
+    },
+    {
+      "pool_id": "pa4otMbVnkk-06__manual__48064bc2d8",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-06__manual__48064bc2d8.csv.gz",
+      "sha256": "5671e5b6d1c91997520c63eef1694a1ffa94a21b6fe654932a5426b8679a045d",
+      "selected_events": 288
+    },
+    {
+      "pool_id": "pa4otMbVnkk-09__manual__7b9cc79111",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-09__manual__7b9cc79111.csv.gz",
+      "sha256": "53cb9743ebeaed365d19fdf81195f6c7e816af3321f33fbd628b8304e699b67a",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "pa4otMbVnkk-10__manual__28cf269def",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-10__manual__28cf269def.csv.gz",
+      "sha256": "ffe4998a56e5018868ca191e8320ed549bec37b64f8f746dffa387a70e4b1772",
+      "selected_events": 294
+    },
+    {
+      "pool_id": "pa4otMbVnkk-11__manual__v21_249",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-11__manual__v21_249.csv.gz",
+      "sha256": "3e00489e859ad2109c5737bcde2297db982539b63c7743a29e2bb9eeaca9b89e",
+      "selected_events": 280
+    },
+    {
+      "pool_id": "pa4otMbVnkk-14__manual__1ee397d26d",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-14__manual__1ee397d26d.csv.gz",
+      "sha256": "a662ed038939a9d717d18eb59607963ed3c8578cd93ea02a4e0d81b7f76cc907",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "pa4otMbVnkk-17__manual__d9ca524aff",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-17__manual__d9ca524aff.csv.gz",
+      "sha256": "5c6c98c596ea01b32a23d1eaa8e797379691a75ebfbd8c0d434d5d13a026b304",
+      "selected_events": 286
+    },
+    {
+      "pool_id": "pa4otMbVnkk-18__manual__bbb972aaa9",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-18__manual__bbb972aaa9.csv.gz",
+      "sha256": "0410937a4df2b2aa9269fce2920951d514ed433a17a6a992b12ba60b3e26e4bc",
+      "selected_events": 248
+    },
+    {
+      "pool_id": "pa4otMbVnkk-42__manual__d6e0ab41ee",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-42__manual__d6e0ab41ee.csv.gz",
+      "sha256": "16aaa4395023a370a3817dd0925afe28bf910550783026c1d469418ba5ba06e4",
+      "selected_events": 262
+    },
+    {
+      "pool_id": "pa4otMbVnkk-44__manual__2787d70dcb",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-44__manual__2787d70dcb.csv.gz",
+      "sha256": "18576dc69ce250f7062604698b9589adcc1736a08c45d7ed1abc5d15d3f9d9d5",
+      "selected_events": 262
+    },
+    {
+      "pool_id": "pa4otMbVnkk-48__manual__ec437a76cb",
+      "path": "stage04_metrics/metric_shards/pa4otMbVnkk-48__manual__ec437a76cb.csv.gz",
+      "sha256": "7c20c45a4264d4869a81775c307c04dd81b328f7c6147c8042c619e8a3577ec2",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-01__manual__00b55d1a3c",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-01__manual__00b55d1a3c.csv.gz",
+      "sha256": "1e925c0ea259b7485a6c7d3e18edcac8781ca8d9ace0188b824f1b78a0074014",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-02__manual__25b2a3db5d",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-02__manual__25b2a3db5d.csv.gz",
+      "sha256": "c0d210e918fbad254aa2c6d1ab4c289b92d3482de72c94dd7d77dfb1fdb9d205",
+      "selected_events": 196
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-03__manual__2bff6c4167",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-03__manual__2bff6c4167.csv.gz",
+      "sha256": "cd7b0d1250141750c9dd8b9164bcf2f6601114e0157969b52fade31cfe9e56f7",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-11__manual__v21_221",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-11__manual__v21_221.csv.gz",
+      "sha256": "f80aa413094a263dcac286135d5d4d1e6fbaf1103d02a7a0376c31e63d188746",
+      "selected_events": 198
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-12__manual__v21_222",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-12__manual__v21_222.csv.gz",
+      "sha256": "09dd4ed45da17c6f26b2c522a2837648c8bb63e1d3dcf410402dbd2324edd757",
+      "selected_events": 188
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-15__manual__6d5ae69ee8",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-15__manual__6d5ae69ee8.csv.gz",
+      "sha256": "26ce3fea85adb1243cbb694a1313bbe2602e16c35870e706db3b5f7fe6803935",
+      "selected_events": 292
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-16__manual__v21_225",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-16__manual__v21_225.csv.gz",
+      "sha256": "4bce882e09f89fb6da856e5e1284d6eaf6ceb9862b096f884f25828468dc74a8",
+      "selected_events": 298
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-23__manual__fc6ea88ba2",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-23__manual__fc6ea88ba2.csv.gz",
+      "sha256": "a2c9879a029101d11ef010316b29c199df729ff3e5f18504f53830ac624514f7",
+      "selected_events": 118
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-29__manual__v21_227",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-29__manual__v21_227.csv.gz",
+      "sha256": "9f6ced1f5b48d3eb27fed8be7cbb509a6139e3cc2018ad741807ad86c52c04c3",
+      "selected_events": 204
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-30__manual__4ca90db796",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-30__manual__4ca90db796.csv.gz",
+      "sha256": "24de13deae805e59ef175f5f35836b50426eb7dea76c1975b8960bf62518be99",
+      "selected_events": 272
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-32__manual__b919efebcf",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-32__manual__b919efebcf.csv.gz",
+      "sha256": "25da8f7856155b3b59a967458b9f588e3ec65dde4de5cfe53ffd24181af2f96f",
+      "selected_events": 232
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-34__manual__v21_250",
+      "path": "stage04_metrics/metric_shards/q9vSo1VnCiC-34__manual__v21_250.csv.gz",
+      "sha256": "9886b4f577b7adef85ad100ce6fef0de725cc551eb5e1bf85cd4073ef6fc010b",
+      "selected_events": 240
+    },
+    {
+      "pool_id": "rPc6DW4iMge-01__manual__25b44e9036",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-01__manual__25b44e9036.csv.gz",
+      "sha256": "2835e9104b3adfdb326865db5ca18b53a263fd936d89ef5dc9d08a28bda1ba82",
+      "selected_events": 194
+    },
+    {
+      "pool_id": "rPc6DW4iMge-05__manual__1488ef1b7c",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-05__manual__1488ef1b7c.csv.gz",
+      "sha256": "bffaf817faa90fb3f76ea7b50e54e9a15e7b3e8953eb87ae61bb2ab1171c95ab",
+      "selected_events": 79
+    },
+    {
+      "pool_id": "rPc6DW4iMge-05__manual__other_space_9",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-05__manual__other_space_9.csv.gz",
+      "sha256": "187ddd7289b46f76c30ea89c4881db6de8509c89f3fd2acdd75d1978f2eb7447",
+      "selected_events": 96
+    },
+    {
+      "pool_id": "rPc6DW4iMge-06__manual__34216003a1",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-06__manual__34216003a1.csv.gz",
+      "sha256": "42da64c4054443270f8b921bf9e01836cc9b3762e4cda6e137c9b61894bf0115",
+      "selected_events": 178
+    },
+    {
+      "pool_id": "rPc6DW4iMge-06__manual__other_space_10",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-06__manual__other_space_10.csv.gz",
+      "sha256": "e563af6ea28d3abd6f1ea76fd6405fcf53eba160501e3a8403cd51f3e0edfe80",
+      "selected_events": 56
+    },
+    {
+      "pool_id": "rPc6DW4iMge-09__manual__104df2b507",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-09__manual__104df2b507.csv.gz",
+      "sha256": "9e616829a6aa170b4a036ae2fb29ef64292b73ba853dea9a0625e68ed003d20c",
+      "selected_events": 156
+    },
+    {
+      "pool_id": "rPc6DW4iMge-13__manual__d183e8f454",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-13__manual__d183e8f454.csv.gz",
+      "sha256": "745cdb53153c715c28def96fc41b8bf01ebea43f961cf16f5ae14313ebf63466",
+      "selected_events": 236
+    },
+    {
+      "pool_id": "rPc6DW4iMge-15__manual__8d8f5ed033",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-15__manual__8d8f5ed033.csv.gz",
+      "sha256": "6fc81137fe2b91399a9e55d7c0e03aa9ed91f72a49257f3ada26524af5f77fa7",
+      "selected_events": 162
+    },
+    {
+      "pool_id": "rPc6DW4iMge-16__manual__e75a57549b",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-16__manual__e75a57549b.csv.gz",
+      "sha256": "072018a80540ee019d6e767dbba0ace971e916cfb9c1671b4b7d30f587e4bd71",
+      "selected_events": 122
+    },
+    {
+      "pool_id": "rPc6DW4iMge-17__manual__4c161a9011",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-17__manual__4c161a9011.csv.gz",
+      "sha256": "0209683b95b16840309eaf5faaedc98e578711dd33fd52f986796d64b59299c2",
+      "selected_events": 156
+    },
+    {
+      "pool_id": "rPc6DW4iMge-20__manual__43a4f6717a",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-20__manual__43a4f6717a.csv.gz",
+      "sha256": "5b6401168a340e5af18843883352c723c3a20039b61df70f61d61e75101fc530",
+      "selected_events": 162
+    },
+    {
+      "pool_id": "rPc6DW4iMge-22__manual__c9c05c21ea",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-22__manual__c9c05c21ea.csv.gz",
+      "sha256": "014f4daba274eaf526182bda652dc4394220f9ad63dce3eed0d25714512ffe5d",
+      "selected_events": 95
+    },
+    {
+      "pool_id": "rPc6DW4iMge-22__manual__other_space_11",
+      "path": "stage04_metrics/metric_shards/rPc6DW4iMge-22__manual__other_space_11.csv.gz",
+      "sha256": "869c77b7e3ef712a3d025899963abc04ebd314409f70a4b65cd8243282361919",
+      "selected_events": 113
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-01__manual__a8c2a2a06a",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-01__manual__a8c2a2a06a.csv.gz",
+      "sha256": "769e6c81f5894b726cd7b3ab38ac3c3d92d511f6b81f88c52ecfe192c31a14bb",
+      "selected_events": 268
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-03__manual__273b3289c1",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-03__manual__273b3289c1.csv.gz",
+      "sha256": "1e79bf9af2583b9da61ec2796b093e44adfadac25cc8aa873ec355730a6f4e2e",
+      "selected_events": 98
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-04__manual__1a0a2ad3cd",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-04__manual__1a0a2ad3cd.csv.gz",
+      "sha256": "9fcb6efe3d041d3442256f0b1b77372950c8952415851b54f2ffa28bf034f4ea",
+      "selected_events": 172
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-06__manual__97fff2cf49",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-06__manual__97fff2cf49.csv.gz",
+      "sha256": "064c883bca253296127fb56e870dc4198213c605ec7d176be74a87a0729d0f7c",
+      "selected_events": 62
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-07__manual__52a0da301c",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-07__manual__52a0da301c.csv.gz",
+      "sha256": "9ca607faa08293fc0b8a3d6419c3adca389d4800109667320907f9bf536221b3",
+      "selected_events": 270
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-08__manual__06e274dc0a",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-08__manual__06e274dc0a.csv.gz",
+      "sha256": "9f3f45c23aa7c2357e9c21a69fd4b77f165b9b224e6d0d745000e2f84e2f897d",
+      "selected_events": 57
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-09__manual__16e55b5482",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-09__manual__16e55b5482.csv.gz",
+      "sha256": "9043f465d90693a86fa5b12edac5d4e431d26332ccfc495565ac847e1764a9fd",
+      "selected_events": 214
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-12__manual__15a1012a90.csv.gz",
+      "sha256": "9431768b58d30e9a4d879c7393597fdfefb9e17988db014303fee57c1a588b05",
+      "selected_events": 246
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-14__manual__a49483b09b",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-14__manual__a49483b09b.csv.gz",
+      "sha256": "e85be4871f753bc410d2bde84e6064db22a9c1a840cd755827db46b942afa9ed",
+      "selected_events": 224
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-18__manual__other_space_12",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-18__manual__other_space_12.csv.gz",
+      "sha256": "3df41eaf8f0c1b0cad396ed22460b5b38b277d5bb037f93e6de1fbe484e72e02",
+      "selected_events": 102
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-18__manual__v21_231",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-18__manual__v21_231.csv.gz",
+      "sha256": "4e4d017defe8127dc406894b3b868d4650e273093fda3948aa4ad0fdd8626d77",
+      "selected_events": 121
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-19__manual__2a971cbaff",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-19__manual__2a971cbaff.csv.gz",
+      "sha256": "44cf48a60f068a65f646ca980faf92f62cfe92fe39868115e7e567cce6cff8ed",
+      "selected_events": 101
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-20__manual__4564c265d6",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-20__manual__4564c265d6.csv.gz",
+      "sha256": "90465e83858ffcc4daa0f0073702b51c5fa6434d3b2f112e2e1b79e57571ed84",
+      "selected_events": 286
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-26__manual__other_space_13",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-26__manual__other_space_13.csv.gz",
+      "sha256": "8f38c424bf4824817673435812a767b0057d73a8459fcb372a080594b0bb5534",
+      "selected_events": 129
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-26__manual__v21_232",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-26__manual__v21_232.csv.gz",
+      "sha256": "4e5af8c89d8f31cbbb3ed73d790936ca529a38a20c9002b691d0ed74f1c05aa0",
+      "selected_events": 71
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-29__manual__bccd00a58a",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-29__manual__bccd00a58a.csv.gz",
+      "sha256": "feb37c96dd4975193799967561e9084b2915b421629f83638c40c1c6cccc2824",
+      "selected_events": 222
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-40__manual__dbb73fc912",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-40__manual__dbb73fc912.csv.gz",
+      "sha256": "d38240d0b3380b685f1ec9f5a9b33b78ed65d2697bbc6e65c8f6e071de7c6c36",
+      "selected_events": 206
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-41__manual__other_space_14",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-41__manual__other_space_14.csv.gz",
+      "sha256": "5f9b530aa9d2f128f032ce90fb772e22f7ba5d8d6f27019de3c04a8a0fcc204e",
+      "selected_events": 119
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-41__manual__v21_233",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-41__manual__v21_233.csv.gz",
+      "sha256": "4855b0e09776cef2e7d16b024039b83352b8c3d5289387ab5d7859266649dc10",
+      "selected_events": 82
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-43__manual__4646114ccd",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-43__manual__4646114ccd.csv.gz",
+      "sha256": "d050273831e9a93ef4abf5da635538330f9b2d42ac8bb2f1e149e444b266d87d",
+      "selected_events": 236
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-44__manual__other_space_15",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-44__manual__other_space_15.csv.gz",
+      "sha256": "9592250d1175a59a296203b0c2bdbeba42c4495652cd10d1e39d2dbc7c3d34d6",
+      "selected_events": 27
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-44__manual__v21_234",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-44__manual__v21_234.csv.gz",
+      "sha256": "f9c25b6c2123856964368c93e3076a943ffbb212ecb38b462400902389cece70",
+      "selected_events": 174
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-45__manual__5dc82190fe",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-45__manual__5dc82190fe.csv.gz",
+      "sha256": "8e7c8bf03e80ef29eff4aea398511d5e9a83673af753bc9d0d79347ebd16521b",
+      "selected_events": 194
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-48__manual__5a1d61d7e4",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-48__manual__5a1d61d7e4.csv.gz",
+      "sha256": "2ea79c163b3d2e34c47e4251a634b52f9bd83ed26f8185475660e35b6652d2e5",
+      "selected_events": 292
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-50__manual__8871891ae6",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-50__manual__8871891ae6.csv.gz",
+      "sha256": "7d68fad6ac80db163db9e3e2eb0505ee92730a4dba700752394f3cfa7ad5295f",
+      "selected_events": 202
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-53__manual__db68acead6",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-53__manual__db68acead6.csv.gz",
+      "sha256": "868d596f5cea93d7670f3085d97243e7f7d88285de120110313bce9ab1e205f2",
+      "selected_events": 208
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-54__manual__v21_251",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-54__manual__v21_251.csv.gz",
+      "sha256": "a429a4f963ca987cffeabd57c6c43ddc6e2facd0c5817763c9f74465da3ebb98",
+      "selected_events": 268
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-55__manual__v21_237",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-55__manual__v21_237.csv.gz",
+      "sha256": "aed2feba7586661cd7afc300f84560b35cc04941816d3d911af6a4af1477cc9d",
+      "selected_events": 73
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-56__manual__f53b4c68f3",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-56__manual__f53b4c68f3.csv.gz",
+      "sha256": "5b9830ae912f097778e1c928278c0702365b3a8954a1fce8ac01b2cf23a54efe",
+      "selected_events": 248
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-58__manual__e314581953",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-58__manual__e314581953.csv.gz",
+      "sha256": "3e3493f4f14acba9a0d3434050fc9e351c9128e18e137463aa6cd67a5ca69fce",
+      "selected_events": 93
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-59__manual__other_space_16",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-59__manual__other_space_16.csv.gz",
+      "sha256": "9af58398d8a9a68810a9a8bc4bb349a28b02333f47c04e16ccb906d3abeb2919",
+      "selected_events": 102
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-59__manual__v21_238",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-59__manual__v21_238.csv.gz",
+      "sha256": "b5d065b40f1974e323f5c91b16b5812f73b6f4137c84955d44fb796f77fc82ae",
+      "selected_events": 140
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-60__manual__21954e0443",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-60__manual__21954e0443.csv.gz",
+      "sha256": "4cd5905ab42c8ae0ff1d71b3eefa8214dc806d09360cc17942339d81fc4e33c9",
+      "selected_events": 170
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-65__manual__9acb3cd5d4",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-65__manual__9acb3cd5d4.csv.gz",
+      "sha256": "b5b10195dd75bdc4f1e031022dc457b29ea6850c71e3f7a94b035b6875f285bc",
+      "selected_events": 194
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-66__manual__other_space_17",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-66__manual__other_space_17.csv.gz",
+      "sha256": "e5c53809c9e0be89ace378e0aec6c8ec7048c4548e6ce066ad25c67fb2e215ec",
+      "selected_events": 64
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-66__manual__v21_240",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-66__manual__v21_240.csv.gz",
+      "sha256": "33ebfd9094bdf9af3fdd8606c56f81e275d59275538903cd166aad13933b2e37",
+      "selected_events": 238
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-67__manual__other_space_18",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-67__manual__other_space_18.csv.gz",
+      "sha256": "79fa36af25b16f92d83c4abe2e5309bc94e58bd717b9333beca5cd4f678945c6",
+      "selected_events": 82
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-67__manual__v21_241",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-67__manual__v21_241.csv.gz",
+      "sha256": "e7493f72ab3d145e0c987e02244ab00113504b69e07df98ff18c5ccd7d136852",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-68__manual__v21_242",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-68__manual__v21_242.csv.gz",
+      "sha256": "70ac5d1bbedb11c5c6b14f56bae39894660b18dd4c1841b5e964dad87b2be517",
+      "selected_events": 146
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-70__manual__92e05f16ae",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-70__manual__92e05f16ae.csv.gz",
+      "sha256": "5f3667600a788f4feefeee8375ffb48e784cc7a7412a0a160e84715bd56261ce",
+      "selected_events": 78
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-72__manual__6049ded157",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-72__manual__6049ded157.csv.gz",
+      "sha256": "0b59085ff05c4fca95e4f8ea1925add4198bffc83d0ec99c2c821134aadf30d5",
+      "selected_events": 244
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-78__manual__dfd88df676",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-78__manual__dfd88df676.csv.gz",
+      "sha256": "5b6c3637d41160d23d5154977c61ee733901b0d0ab1e08270dd9abda955c6834",
+      "selected_events": 256
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-79__manual__c6b8ad6031",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-79__manual__c6b8ad6031.csv.gz",
+      "sha256": "727001076e96498a3757ddbda885ba364940df708ffceb155b50f727cb1c0096",
+      "selected_events": 258
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-81__manual__other_space_21",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-81__manual__other_space_21.csv.gz",
+      "sha256": "94f23e931b2158225e1fb5d8a6a69100ec372d208509880bce41a7973b03a53f",
+      "selected_events": 39
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-81__manual__v21_244",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-81__manual__v21_244.csv.gz",
+      "sha256": "29ed1a1dbb47578f9d10c65a4775a9c0cfddec1b73ebcb9ec2e32cc6a2fe9090",
+      "selected_events": 212
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-82__manual__8e7ae21c8d",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-82__manual__8e7ae21c8d.csv.gz",
+      "sha256": "c1d4be7c1d2c7580525f0d62309a6f2187b62d4321407321b82d9ea1e7130db4",
+      "selected_events": 238
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-86__manual__v21_253",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-86__manual__v21_253.csv.gz",
+      "sha256": "4f5db7b498856873e686cfb84a25febf81904cdfe8630edcc7864fcd784eb05d",
+      "selected_events": 240
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-87__manual__6519a307c9",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-87__manual__6519a307c9.csv.gz",
+      "sha256": "00cabeb65fb70753496663806c505d2dc07c968062edf91aa4f13b9e411e5d4a",
+      "selected_events": 246
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-88__manual__other_space_22",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-88__manual__other_space_22.csv.gz",
+      "sha256": "e8e54d0de5c49c2b250fce0d9a82835be6dd43895db2cf7b55dddf3a15d63b0b",
+      "selected_events": 32
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-88__manual__other_space_29",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-88__manual__other_space_29.csv.gz",
+      "sha256": "6a1cb97422f1d242a2d3ff38d3783876716e374f4ec3963e49492287eb260356",
+      "selected_events": 26
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-88__manual__other_space_30",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-88__manual__other_space_30.csv.gz",
+      "sha256": "803902156c4ff55847e143b30745fda66fe89f34ba5739a5c3d609d8f37b437a",
+      "selected_events": 124
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-88__manual__v21_245",
+      "path": "stage04_metrics/metric_shards/uNb9QFRL6hY-88__manual__v21_245.csv.gz",
+      "sha256": "739073f303d0ac7bb1d7fa3e4edc556a471e286651a2a5c3f5ac39daa1a4f15b",
+      "selected_events": 82
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-03__manual__004c4aa3e8",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-03__manual__004c4aa3e8.csv.gz",
+      "sha256": "bcae7f7848043676636190c2393e4fff1b6f44d4500631895a8878546de41633",
+      "selected_events": 180
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-03__manual__other_space_23",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-03__manual__other_space_23.csv.gz",
+      "sha256": "f414ba70b0851d4bd3f2d91952dbedc2884f9eac0f24fccaec96d715dda2ced0",
+      "selected_events": 33
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-15__manual__717700d501",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-15__manual__717700d501.csv.gz",
+      "sha256": "92144f182f31b6c84882035e632514b30688ff5d54e686b3ff4e6c33f879c314",
+      "selected_events": 220
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-18__manual__d4949d0b37",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-18__manual__d4949d0b37.csv.gz",
+      "sha256": "b42e63a2e58546d6d7ce49b47225ff76981ced033dd14eb088e9467d87ab50b0",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-20__manual__fbde0b8a63",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-20__manual__fbde0b8a63.csv.gz",
+      "sha256": "4d949d2390bf4410bfd84897e947c4c13e824082c8634b08a438becbed41fa60",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-22__manual__v21_257",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-22__manual__v21_257.csv.gz",
+      "sha256": "42f9419b2a7bcf7acfe2b6585d8f7d99aadf190719fffee13b300c45a0d1e7b0",
+      "selected_events": 93
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-26__manual__a5ad9a2ba2",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-26__manual__a5ad9a2ba2.csv.gz",
+      "sha256": "9a1e51c881e8ed90844f215ac1caa112fe86668d966d8d73f11a03f98fc75677",
+      "selected_events": 124
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-26__manual__other_space_25",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-26__manual__other_space_25.csv.gz",
+      "sha256": "09b3ca9651ff804c4865f90c862bab13db3145c0ea119cc991ac7a3c2eaa5119",
+      "selected_events": 133
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-29__manual__v21_259",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-29__manual__v21_259.csv.gz",
+      "sha256": "a81235d835561752be01b311a87e17430d4315c982aaa68063b1f97ed36e94d6",
+      "selected_events": 190
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-30__manual__a9dacebdfb",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-30__manual__a9dacebdfb.csv.gz",
+      "sha256": "f2853e578a4eacb3ee771622d9f6b8b4d6447db92bf0355d876a23ebb154e47d",
+      "selected_events": 206
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-40__manual__573680f8c8",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-40__manual__573680f8c8.csv.gz",
+      "sha256": "fdc0a68f7768b99dfff05658c325e9da2fc1b3ce7216400393b914394d5e7b4b",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-46__manual__ddafdd7484",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-46__manual__ddafdd7484.csv.gz",
+      "sha256": "ce4a37fd7eeea20a23970119d9766f8d4743e3e8940e9da44871f6cdfcaef4d2",
+      "selected_events": 206
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-53__manual__c22e59afe7",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz",
+      "sha256": "59d6bf4153459d210e66cf149f94e2fd7827692bf7e9ab8efdc8f47038ff78c0",
+      "selected_events": 214
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-54__manual__f450a46f5c",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-54__manual__f450a46f5c.csv.gz",
+      "sha256": "6424e273fcda000017f10ee36271cefdefd62de0a4c118ca102a75cccefbc7fd",
+      "selected_events": 224
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-56__manual__55ecaa1ae3",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-56__manual__55ecaa1ae3.csv.gz",
+      "sha256": "b6f7273156d2009f6d9fd3e73acd6a7294e90c26241f74e6883126e5b67c5bce",
+      "selected_events": 276
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-59__manual__76ce9865d1",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-59__manual__76ce9865d1.csv.gz",
+      "sha256": "590546d7f9d336443737d333d464dd58066578158cb7d34d9411a61ca6ac8295",
+      "selected_events": 198
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-60__manual__b962d8eaa6",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-60__manual__b962d8eaa6.csv.gz",
+      "sha256": "a0bbdfb9e66e2ee78e54d6205bff2cd08bd6d8c2142b7c107f99b545bf7a934d",
+      "selected_events": 224
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-61__manual__045f83744e",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-61__manual__045f83744e.csv.gz",
+      "sha256": "8f9cc35f14aeda2d57564cd2d7520eb821ade6c9f0302bbdf5057b6741fb901a",
+      "selected_events": 264
+    },
+    {
+      "pool_id": "wc2JMjhGNzB-67__manual__cd09bc8ccc",
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-67__manual__cd09bc8ccc.csv.gz",
+      "sha256": "db357478a59bf40b42bbece49bcb28e4c0fd3431729f12b125f91775aaa83814",
+      "selected_events": 292
+    },
+    {
+      "pool_id": "x8F5xyUWy9e-03__manual__ec015dc331",
+      "path": "stage04_metrics/metric_shards/x8F5xyUWy9e-03__manual__ec015dc331.csv.gz",
+      "sha256": "00a2a5f5debb5c4b26e4f33c2e6de9a7e16df0a56e98dc3773ee8550498429cd",
+      "selected_events": 262
+    },
+    {
+      "pool_id": "x8F5xyUWy9e-08__manual__0b13997fd3",
+      "path": "stage04_metrics/metric_shards/x8F5xyUWy9e-08__manual__0b13997fd3.csv.gz",
+      "sha256": "2190bca8208ac5ac2eb312450da7841a0b1e5d67125e23ed556b1d2689db54c4",
+      "selected_events": 272
+    },
+    {
+      "pool_id": "yqstnuAEVhm-01__manual__36b313c914",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-01__manual__36b313c914.csv.gz",
+      "sha256": "d0a6f8249a0ebab04222d2a4b7bc173a7329dba5e2823cd6fdeb17bc2e48f6b0",
+      "selected_events": 226
+    },
+    {
+      "pool_id": "yqstnuAEVhm-02__manual__a65088884b",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-02__manual__a65088884b.csv.gz",
+      "sha256": "e96ce836924a23ec79addfa06b105b0eb2b454c73f4d6e59f9ee70f32d19ef4b",
+      "selected_events": 206
+    },
+    {
+      "pool_id": "yqstnuAEVhm-04__manual__c93631c594",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-04__manual__c93631c594.csv.gz",
+      "sha256": "154cfb27e3be0bed79925b7e043b63e286e6959e1a044f35a74a8fcfc8b7d259",
+      "selected_events": 208
+    },
+    {
+      "pool_id": "yqstnuAEVhm-05__manual__b5861fa0fb",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-05__manual__b5861fa0fb.csv.gz",
+      "sha256": "8950e4e802201c7cc809a4ad78282fbcebede7225db9b276fc9c9e93366dda49",
+      "selected_events": 214
+    },
+    {
+      "pool_id": "yqstnuAEVhm-06__manual__66ac89aa0b",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-06__manual__66ac89aa0b.csv.gz",
+      "sha256": "9f834d9d14cadcf59b8744d629463f8288056401047b1354ed30ffce1d21ca22",
+      "selected_events": 274
+    },
+    {
+      "pool_id": "yqstnuAEVhm-07__manual__8e3106a4a2",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-07__manual__8e3106a4a2.csv.gz",
+      "sha256": "8ab26cd8beb0fcc9ff27f4aa8faff2d050d980cb5eefd97d3a418c87926d491b",
+      "selected_events": 160
+    },
+    {
+      "pool_id": "yqstnuAEVhm-08__manual__192666967f",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-08__manual__192666967f.csv.gz",
+      "sha256": "763bdd28c1c5273005b917c2a4b4d35df841c4d3add6433c7b80346a8128648a",
+      "selected_events": 216
+    },
+    {
+      "pool_id": "yqstnuAEVhm-09__manual__41ac53fd26",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-09__manual__41ac53fd26.csv.gz",
+      "sha256": "983dbf18927f9ddad4f1fa3dfe783345c0dc0518af5d40e075c25eb912a190ff",
+      "selected_events": 218
+    },
+    {
+      "pool_id": "yqstnuAEVhm-10__manual__a1e4e9ee47",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-10__manual__a1e4e9ee47.csv.gz",
+      "sha256": "aa2e3e83049fb6fa5c1c731bab8a1f1888adaae75d29d7159680ebff47b31563",
+      "selected_events": 260
+    },
+    {
+      "pool_id": "yqstnuAEVhm-24__manual__a74bf1910b",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-24__manual__a74bf1910b.csv.gz",
+      "sha256": "c0106a395035986f0ec1221319e1674e17a19456a2fa1ad2b8fe849e804e7082",
+      "selected_events": 268
+    },
+    {
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-25__manual__72b3cd9b76.csv.gz",
+      "sha256": "bf7502c30ccc9ada47cbb5f7545cc3fd671ba56d0d05a6cbc78ecad6d1b60898",
+      "selected_events": 202
+    },
+    {
+      "pool_id": "yqstnuAEVhm-26__manual__11c1ecd733",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-26__manual__11c1ecd733.csv.gz",
+      "sha256": "59a0e57fd9d7dde3ca04230c69f7423a530bb83f6b97a478f0bf714d68ccd08f",
+      "selected_events": 79
+    },
+    {
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-27__manual__36afe2b79d.csv.gz",
+      "sha256": "01810a2deab5d16496c652bf3235476b97d65040907b80cb2d80af90f55066e6",
+      "selected_events": 256
+    },
+    {
+      "pool_id": "yqstnuAEVhm-29__manual__4e672d5f71",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-29__manual__4e672d5f71.csv.gz",
+      "sha256": "07870af05f99aeee98d88d900a3ca555e46f5751e8e9b594b9a565a2795502fe",
+      "selected_events": 256
+    },
+    {
+      "pool_id": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-31__manual__7b26e5d3cd.csv.gz",
+      "sha256": "e56d2f169dde4faf2970b6cff789028562d8f67c8c5243665000c80fcc5c41d4",
+      "selected_events": 182
+    },
+    {
+      "pool_id": "yqstnuAEVhm-32__manual__085c02c4fa",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-32__manual__085c02c4fa.csv.gz",
+      "sha256": "e5292974de20cb48c02eb1882e46bad3026eac482778ece8e39868a65bda1bc3",
+      "selected_events": 182
+    },
+    {
+      "pool_id": "yqstnuAEVhm-34__manual__cdcf90233b",
+      "path": "stage04_metrics/metric_shards/yqstnuAEVhm-34__manual__cdcf90233b.csv.gz",
+      "sha256": "e9740ed2e247a9f4f2f56e755b65ed00a29178a89885e186ac55adeb4447588f",
+      "selected_events": 184
+    },
+    {
+      "pool_id": "zsNo4HB9uLZ-02__manual__d9ae55b158",
+      "path": "stage04_metrics/metric_shards/zsNo4HB9uLZ-02__manual__d9ae55b158.csv.gz",
+      "sha256": "9de02e1490ad94c497607a38d98725cadd3907bfd5a0d6466c941f3660801600",
+      "selected_events": 228
+    },
+    {
+      "pool_id": "zsNo4HB9uLZ-09__manual__2b1196fa29",
+      "path": "stage04_metrics/metric_shards/zsNo4HB9uLZ-09__manual__2b1196fa29.csv.gz",
+      "sha256": "30753503d162a5fe58ee60b5a2add8f7fd88d281d0ade4ec99ddfce26710020d",
+      "selected_events": 204
+    },
+    {
+      "pool_id": "zsNo4HB9uLZ-11__manual__3876207f58",
+      "path": "stage04_metrics/metric_shards/zsNo4HB9uLZ-11__manual__3876207f58.csv.gz",
+      "sha256": "6fa32990199effeea7bb3e39d8aa57e2e44213373dbf07c3d292d9c3b49acd2f",
+      "selected_events": 236
+    },
+    {
+      "pool_id": "zsNo4HB9uLZ-13__manual__v21_255",
+      "path": "stage04_metrics/metric_shards/zsNo4HB9uLZ-13__manual__v21_255.csv.gz",
+      "sha256": "e2e8e6736b4047857a08358aedc5e88bd5fab4bfc5b9b16997f8695ec5ba2601",
+      "selected_events": 252
+    },
+    {
+      "pool_id": "zsNo4HB9uLZ-16__manual__7e980a16d1",
+      "path": "stage04_metrics/metric_shards/zsNo4HB9uLZ-16__manual__7e980a16d1.csv.gz",
+      "sha256": "6fa8675fd067f111b40959338a24e38b1ee8bc9a7e189c17dedfd675a325709e",
+      "selected_events": 236
+    }
+  ]
+}

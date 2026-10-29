@@ -1,0 +1,50 @@
+{
+  "status": "passed_uploaded_clean_design_complete",
+  "recommended_design_archive": "HOHONET_v21_AC_stage02_frozen_design_clean.zip",
+  "archive_bytes": 188661197,
+  "archive_sha256": "18efb296e4202a8c130dd8ef021f2eac7521581f12e0ed37934bf4c7797932b2",
+  "library_file_id": "libfile_f9a432969844819183c0321a8e72b859",
+  "payload_files": 52,
+  "generated_archive_manifest_files": 1,
+  "old_archive_name": "HOHONET_v21_AC_stage02_frozen_design.zip",
+  "old_archive_sha256_verified": "c88249be80671c62fc3edd253d812db80de8efeef9c70f292e2b1b6140476a69",
+  "original_payload_files": 53,
+  "excluded_paths": [
+    "stage01b_semi/AC_EVENTS.csv.gz.partial"
+  ],
+  "exact_original_path_set_minus_exclusions": true,
+  "unchanged_included_files": 49,
+  "changed_included_non_scientific_files": 3,
+  "changes_explained": {
+    "code/package_stage.py": "Packaging validation utility added exclusion/verify-existing options and explicit preservation/counting of empty CSV records; no scientific computation.",
+    "stage01_design_review/DESIGN_REVIEW_ZH.md": "Appended independent-review, existing strict common-n bridge and overlap-table repair history; no frozen event or membership changes.",
+    "stage01_design_review/RECOMMENDED_DESIGN_CONTRACT.json": "Updated review state and appended independent-audit/bridge metadata; registration parameters and source-code SHA unchanged."
+  },
+  "all_registered_events_team_requests_links_labels_and_frozen_hashes_unchanged": true,
+  "actual_clean_manifest_matched_source_hashes_in_independent_read_before_local_duplicate_removal": true,
+  "full_zip_bytes_hash_verified": true,
+  "all_inner_gzip_crc_and_eof_verified": true,
+  "all_csv_widths_and_json_records_parsed": true,
+  "formal_row_counts": {
+    "stage01_registered/AC_EVENTS.csv.gz": 471758,
+    "stage01_registered/DESIGN_LINKS.csv.gz": 550794,
+    "stage01_registered/TEAM_REQUESTS.csv.gz": 478012,
+    "stage01b_semi/AC_EVENTS.csv.gz": 47914
+  },
+  "no_scientific_source_or_old_durable_archive_removed": true,
+  "temporary_downloaded_duplicate_removed_after_full_archive_sha_verification": true,
+  "downloaded_duplicate_cleanup_authorized_by_parent": true,
+  "science_files_modified": 0,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "readability_path": "delivery/HOHONET_v21_AC_stage02_frozen_design_clean_READABILITY.json",
+  "old_source_comparison_path": "delivery/clean_design_source_verification/OLD_ARCHIVE_SOURCE_COMPARISON.json",
+  "old_manifest_and_changed_text_versions_and_unified_diffs_retained": true,
+  "old_uploaded_design_is_history_only_clean_is_only_recommended_design_download": true,
+  "eleven_small_scientific_addenda_all_present_in_verified_uploaded_code_package": true,
+  "code_package_bytes": 71636384,
+  "code_package_sha256": "9599e7f3ab7a04791872d337f80c155072b1dee8766a62162b57a1a868c58315",
+  "code_package_library_file_id": "libfile_94d549716de08191813ada2ffeade991",
+  "remaining_delivery_step": "Parent includes final report, audit receipts and late packaging-verification script in the final report package; frozen code archive remains unchanged.",
+  "failed_download_staging_cleanup_receipt": "delivery/clean_design_source_verification/FAILED_DOWNLOAD_STAGING_CLEANUP.json"
+}

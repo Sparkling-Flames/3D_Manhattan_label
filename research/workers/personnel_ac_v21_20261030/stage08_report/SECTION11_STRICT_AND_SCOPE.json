@@ -1,0 +1,675 @@
+{
+  "blocks": [
+    {
+      "kind": "h",
+      "text": "11 与严格ABC串联，以及Semi和其它合法目标的边界",
+      "level": 1
+    },
+    {
+      "kind": "h",
+      "text": "11.1 三类设计分别回答什么",
+      "level": 2
+    },
+    {
+      "kind": "table",
+      "title": "应并用的证据链",
+      "headers": [
+        "设计",
+        "可以回答",
+        "保留的限制"
+      ],
+      "rows": [
+        [
+          "严格ABC",
+          "同类具体成员变化为基线，估计跨类额外幅度GA或GS",
+          "D/X/Y/Z真实互斥；需n+2m人，来源类需2m人，容量较窄"
+        ],
+        [
+          "直接AC",
+          "同图同目标同n/m同D的实际类别调整结果",
+          "只需n+m人，更宽覆盖；没有B不估计跨类超过同类"
+        ],
+        [
+          "整类等量及类别联盟",
+          "模拟完整类别进入/退出、真实混合人群接近全池的结果",
+          "m或n可以随图改变；不等人数路径须与等量锚点分开"
+        ]
+      ],
+      "source": "R00/R03",
+      "widths": [
+        3.2,
+        6.5,
+        7.5
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "已独立核验的TARGET主方向严格ABC：14/7登记85图、三队共同可评83图，平均同类|ΔQ|4.577、跨类|ΔQ|8.089，GA=+3.512，61/83图GA>0；20/7登记72图、三队共同可评70图，同类3.533、跨类4.998，GA=+1.465，54/70图GA>0。对称GS的多数比例分别62/83、47/70，不能只选一个定义。新直接AC在同样20/7有85图，实际Q平均+4.576、78/85图正向；这是新的成员/背景设计，没有把旧GA解释成新85图的GA。严格14/7适合展示额外区分，AC20/7与整类n20适合展示实际调整与广覆盖。",
+      "source": "R00/R03"
+    },
+    {
+      "kind": "p",
+      "text": "本轮接入18,847个旧严格事件：m7/m8为6,367，m9/m10为12,480；已合并的旧源含此前6,548条，不重复叠加。旧AC/BC去重35,051个物理对，与本轮登记的完整AC端点对交集为0；单个端点仍精确复用。2,037个旧有向条件得到相容新AC参照，未新增B或严格ABC。",
+      "source": "R03"
+    },
+    {
+      "kind": "table",
+      "title": "十人共同条件 方向沿用原严格登记",
+      "headers": [
+        "图",
+        "方法",
+        "n/m",
+        "原严格方向",
+        "旧严格ΔQ",
+        "旧同类|ΔQ|",
+        "旧GA",
+        "新ACΔQ"
+      ],
+      "rows": [
+        [
+          "q9vSo1VnCiC-34",
+          "RAW3",
+          "12/10",
+          "2/3->3/3",
+          "+8.763",
+          "5.917",
+          "+2.849",
+          "+7.488"
+        ],
+        [
+          "q9vSo1VnCiC-34",
+          "RAW3",
+          "15/10",
+          "2/3->3/3",
+          "+7.393",
+          "4.015",
+          "+3.377",
+          "+7.172"
+        ],
+        [
+          "yqstnuAEVhm-04",
+          "TARGET",
+          "12/10",
+          "2/3->1/3",
+          "+1.861",
+          "2.907",
+          "-0.641",
+          "+0.648"
+        ],
+        [
+          "yqstnuAEVhm-04",
+          "TARGET",
+          "14/10",
+          "2/3->1/3",
+          "+2.332",
+          "3.370",
+          "-0.640",
+          "+0.614"
+        ]
+      ],
+      "source": "R01",
+      "widths": [
+        3.2,
+        1.6,
+        1.3,
+        2.5,
+        2.2,
+        2.3,
+        2.0,
+        2.1
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "TARGET这张图十人旧GA为负，RAW3那张为正；分别只有一图，不能据此重排主方法。新AC与旧ABC的均值差也不能直接归因于取消B，因为具体XZ和D可不同。严格方向在TARGET这里是中→低，与主表低→中相反，符号已保留。",
+      "source": "R01"
+    },
+    {
+      "kind": "p",
+      "text": "66个严格条件里按相同pool/method/n/m和精确XZ匹配F-neutral与B-outside，得到120个方法对照、108个唯一物理四端点对照，覆盖21/66条件。Q四端点可评99对、16图9楼；18个物理对照使跨类Q效果反向，涉及8图。此严格子集120对全部同时改变D类别人数向量，不属于同配比只换背景成员；本轮更宽的固定XZ敏感性另有后一种对照。",
+      "source": "R02/R03"
+    },
+    {
+      "kind": "p",
+      "text": "108个登记物理背景对照中，99个四端点共同Q可评者的Q效果差绝对值均值5.187、中位数1.633，其余9个不可评者未进入分布。这是可评四端点对的描述分布，不能当图等权总体值。劳动作差没有合法共同有效对，保留缺失。F−B方向与更宽敏感性表B−F的符号相反，引用时先核对方向。",
+      "source": "R02/R03"
+    },
+    {
+      "kind": "h",
+      "text": "11.2 其它准入目标：保留全部方向与输出状态",
+      "level": 2
+    },
+    {
+      "kind": "table",
+      "title": "其它合法目标TARGET K3 逐图等权，合法目标不混队",
+      "headers": [
+        "方向与条件",
+        "Q有效/登记对",
+        "图有效/登记；楼",
+        "ΔB8L2",
+        "ΔD10",
+        "均|ΔQ|",
+        "正/负/零图"
+      ],
+      "rows": [
+        [
+          "6/3 1->2",
+          "33/44",
+          "6/6；3",
+          "+4.783",
+          "+4.328",
+          "10.610",
+          "5/1/0"
+        ],
+        [
+          "6/3 1->3",
+          "16/19",
+          "3/4；2",
+          "+24.595",
+          "+24.993",
+          "26.347",
+          "3/0/0"
+        ],
+        [
+          "6/3 2->3",
+          "26/48",
+          "5/5；3",
+          "+24.302",
+          "+24.253",
+          "24.302",
+          "5/0/0"
+        ],
+        [
+          "整类前沿 1->2",
+          "76/79",
+          "15/15；6",
+          "+0.625",
+          "-0.150",
+          "10.934",
+          "7/8/0"
+        ],
+        [
+          "整类前沿 1->3",
+          "50/50",
+          "15/15；6",
+          "+9.137",
+          "+8.963",
+          "11.042",
+          "12/3/0"
+        ],
+        [
+          "整类前沿 2->3",
+          "103/107",
+          "17/17；6",
+          "+10.848",
+          "+11.030",
+          "14.445",
+          "13/4/0"
+        ]
+      ],
+      "source": "R04",
+      "widths": [
+        3.1,
+        2.7,
+        2.9,
+        2.1,
+        2.1,
+        2.1,
+        2.2
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "其它准入目标30个Manual入口池实际执行20池、18图、7楼；同图不同目标分别组队评分，图汇总才目标等权。TARGET中→高整类前沿登记18池、17图，17池103/107对Q可评，13正4负。固定6/3同方向虽然5图全正，但只26/48对可评；全部尝试A→C缺Q图等权率38.75%→5.00%。成功对的升Q与可形成完整输出的变化分别报告。其劳动只有4对1图，不能代表整个目标域。",
+      "source": "R04/R05/R06"
+    },
+    {
+      "kind": "h",
+      "text": "11.3 普通Semi：自身冻结V3分类的次要结果",
+      "level": 2
+    },
+    {
+      "kind": "table",
+      "title": "Semi整类前沿 方向是类别ID，不是历史Q排名",
+      "headers": [
+        "自身分类与方向",
+        "Q有效/登记对",
+        "图有效/登记；楼",
+        "ΔB8L2",
+        "ΔD10",
+        "均|ΔQ|",
+        "正/负/零图"
+      ],
+      "rows": [
+        [
+          "行为粗 S1→S2",
+          "106/114",
+          "27/28；12",
+          "-2.612",
+          "-2.585",
+          "3.077",
+          "4/11/12"
+        ],
+        [
+          "行为细 S1.1→S2.1",
+          "94/100",
+          "26/27；12",
+          "-2.126",
+          "-2.097",
+          "2.557",
+          "4/12/10"
+        ],
+        [
+          "QT粗 K1→K2",
+          "113/119",
+          "25/25；12",
+          "-2.159",
+          "-2.134",
+          "2.801",
+          "6/9/10"
+        ],
+        [
+          "QT细 K1.1→K2.1",
+          "104/112",
+          "25/25；12",
+          "-1.865",
+          "-1.831",
+          "2.429",
+          "8/7/10"
+        ]
+      ],
+      "source": "R04",
+      "widths": [
+        3.1,
+        2.7,
+        2.9,
+        2.1,
+        2.1,
+        2.1,
+        2.2
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "Semi用V3_BEHAVIOR_COARSE/FINE与V3_JOINT_QT_COARSE/FINE，没有套用Manual的TARGET。粗层按登记图支持最多的方向、细层按对应方向选取，未按收益选型。固定n20通常仅1–2图，故报告池前沿；行为粗层n3–42、m1–13，QT粗层n3–43、m1–13。行为粗层Q均值−2.612，但4正、11负、12近零，不是多数图下降；其A→C缺Q率7.143%→0，质量均值降低与输出更常可评同时存在。劳动−15.846%仅16对6图4楼，不和27图Q合成整体质量—时间权衡。",
+      "source": "R04/R05"
+    },
+    {
+      "kind": "p",
+      "text": "普通Semi共38池执行32池；其它准入目标只有uNb9QFRL6hY-68一个Semi池（N4），8个不同物理对均可评分，单列而不声称多图规律。门口/特殊20池没有新增执行。当前提交的既有空间审查另有1,222份OOS或待定OOS原答仍无正式质量准入；单位是原答库存，非池，不与294入口池或20特殊池相加，本轮未重做其审查或解除资格。",
+      "source": "R05/R06"
+    },
+    {
+      "kind": "h",
+      "text": "12 分类解释具体人员和共同图片比较",
+      "level": 1
+    },
+    {
+      "kind": "p",
+      "text": "本轮保持既有分类定义，没有用这次团队结果重新选择特征或调整标签。TARGET与RAW3的低/中/高主角色按楼外困难图有效转折历史排序，OPPSTRUCT按复杂结构机会响应排序；OPPJOINT按对应楼外折历史Q角色对齐，RFUSE按原有融合响应排序。标签编号不等于永久能力等级，实际标法解释同时看短结构、近共线冗余、相对面积/高度、质量和合法记录劳动。",
+      "source": "R09"
+    },
+    {
+      "kind": "table",
+      "title": "一个具体楼外折的TARGET原有画像 VFuaQ6m2Qom",
+      "headers": [
+        "类",
+        "原始历史标法与伴随画像"
+      ],
+      "rows": [
+        [
+          "C1",
+          "人数最少类；复杂机会转折较少；历史Q较低；来源内记录时间较长；相对面积较小；相对高度较高；近共线冗余较多"
+        ],
+        [
+          "C2",
+          "人数最多类；总体转折较少；相对高度较低"
+        ],
+        [
+          "C3",
+          "中间容量类；总体转折较多；复杂机会转折较多；历史Q较高；来源内记录时间较短；相对面积较大；近共线冗余较少"
+        ]
+      ],
+      "source": "R09",
+      "widths": [
+        1.8,
+        15.4
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "这是VFua楼外折的历史群体画像，不是对目标图原答的逐人承诺。wc2中W027属高结构类却在该图只有四点，W017/W126各有八点，就是类别与单图具体行为不可等同的直接例子。TARGET未因此被改成质量分类；Q/T伴随差异作为画像信息保留。",
+      "source": "R09/R10"
+    },
+    {
+      "kind": "table",
+      "title": "共同图片目标n/m下的描述性比较 左/右对应方法顺序",
+      "headers": [
+        "方法左/右",
+        "n/m",
+        "共同图；楼",
+        "左均|ΔQ|",
+        "右均|ΔQ|",
+        "右幅度更大图"
+      ],
+      "rows": [
+        [
+          "TARGET K2 / TARGET K3",
+          "20/7",
+          "85；21",
+          "5.751",
+          "5.779",
+          "42/85"
+        ],
+        [
+          "TARGET K3 / RAW3 K3",
+          "20/7",
+          "114；22",
+          "5.584",
+          "5.400",
+          "34/114"
+        ],
+        [
+          "JOINT K3 / TARGET K3",
+          "20/7",
+          "93；19",
+          "4.562",
+          "4.475",
+          "52/93"
+        ],
+        [
+          "JOINT K3 / JOINT K4",
+          "20/10",
+          "79；11",
+          "3.308",
+          "3.150",
+          "35/79"
+        ],
+        [
+          "JOINT K3 / JOINT K4",
+          "20/12",
+          "21；6",
+          "4.800",
+          "5.032",
+          "12/21"
+        ]
+      ],
+      "source": "R07",
+      "widths": [
+        4.7,
+        1.4,
+        2.4,
+        2.4,
+        2.4,
+        3.9
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "共同图片比较每个方法内部对可用角色方向等权，不保证具体成员、类别语义及D配比一致；因而控制了图片目标和n/m，却不能把右侧更大的幅度等同分类更好，也不是控制历史Q后结构的独立增益。本轮没有重复已核验的Q二分、Q/T匹配与父子分类实验。JOINT新增的是联合解释和较大混合人群容量，RAW3新增的是特征定义/大块敏感性，RFUSE保留从融合响应解释的反向互补。",
+      "source": "R00/R07"
+    },
+    {
+      "kind": "h",
+      "text": "12.1 名单可以直接使用，但组队必须回到逐图楼外折",
+      "level": 2
+    },
+    {
+      "kind": "table",
+      "title": "TARGET K3 ALL描述名单 此表不是每图容量",
+      "headers": [
+        "类",
+        "人数",
+        "名单"
+      ],
+      "rows": [
+        [
+          "C1",
+          "10",
+          "W001、W028、W030、W031、W032、W035、W037、W103、W105、W125"
+        ],
+        [
+          "C2",
+          "37",
+          "W006、W008、W010、W011、W012、W013、W014、W018、W029、W033、W034、W036、W100、W101、W104、W106、W107、W108、W110、W111、W113、W114、W116、W117、W118、W119、W120、W121、W123、W124、W127、W128、W129、W131、W132、W133、W134"
+        ],
+        [
+          "C3",
+          "12",
+          "W002、W015、W017、W021、W027、W102、W109、W112、W115、W122、W126、W130"
+        ]
+      ],
+      "source": "R08",
+      "widths": [
+        1.1,
+        1.1,
+        15.0
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "ALL中W019/W026仍排除，不得加入背景；W022历史不足但有合法原答时可作为未分类D。其它方法及所有楼外折的完整名单已保存。实际组队唯一使用POOL_CLASS_MEMBERS.csv.gz中的图/目标/折/原答ID，不从这张ALL表推断某图有十名或十二名可换人员。",
+      "source": "R08/R09"
+    },
+    {
+      "kind": "table",
+      "title": "VFuaQ6m2Qom-07整类七人换入的精确成员",
+      "headers": [
+        "块",
+        "人数",
+        "实际人员"
+      ],
+      "rows": [
+        [
+          "D，共同背景",
+          "13",
+          "W006、W011、W012、W013、W031、W036、W037、W100、W110、W114、W117、W129、W134"
+        ],
+        [
+          "X，C2换出",
+          "7",
+          "W008、W015、W030、W111、W113、W128、W131"
+        ],
+        [
+          "Z，该图全部C3",
+          "7",
+          "W001、W002、W017、W033、W109、W112、W126"
+        ]
+      ],
+      "source": "R10",
+      "widths": [
+        3.7,
+        1.2,
+        12.3
+      ]
+    },
+    {
+      "kind": "p",
+      "text": "全部471,758条方法事件都保存同等级的精确成员、类别、n/m、背景、合法目标和两个team_key。核心成员频次表按26,887个实际条件列出固定交集、各侧可用人数和逐人出现次数；同一端点跨方法选中仅为多重解释，不累计为独立人员证据。",
+      "source": "R10"
+    }
+  ],
+  "sources": {
+    "R00": {
+      "relative_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+      "description": "现行独立审查已确认的主方法与严格七八人结果，本轮不重复计算"
+    },
+    "R01": {
+      "relative_path": "stage05_funnel_bridge/STRICT_M10_COMMON_CONDITION_BRIEF.csv",
+      "description": "旧严格十人和新AC同条件参照"
+    },
+    "R02": {
+      "relative_path": "stage05_funnel_bridge/STRICT66_BACKGROUND_PHYSICAL_SUPPORT_SUMMARY.csv",
+      "description": "66严格条件内精确固定XZ的108物理背景对照"
+    },
+    "R03": {
+      "relative_path": "stage05_funnel_bridge/README_ZH.md",
+      "description": "完整容量漏斗、旧ABC规范化、共同条件与背景匹配的口径"
+    },
+    "R04": {
+      "relative_path": "stage08_report/scope_supplement_evidence/SCOPE_SELECTED_CONDITION_BRIEF.csv",
+      "description": "按登记支持选定的15个补充域条件、质量几何劳动独立分母"
+    },
+    "R05": {
+      "relative_path": "stage08_report/SCOPE_SUPPLEMENT_VERIFIED_ZH.md",
+      "description": "普通Semi、其它准入目标及OOS已有状态的独立补充核验"
+    },
+    "R06": {
+      "relative_path": "stage08_report/scope_supplement_evidence/SCOPE_SUPPLEMENT_VERIFICATION_RECEIPT.json",
+      "description": "294入口与258执行池全域核验和450个原始指标行"
+    },
+    "R07": {
+      "relative_path": "stage05_context_common/COMMON_POOL_METHOD_COMPARISONS.csv.gz",
+      "description": "同图片目标n/m的描述性方法比较，具体成员与类别语义未固定"
+    },
+    "R08": {
+      "relative_path": "stage08_report/FROZEN_ALL_DESCRIPTIVE_CLASS_MEMBERS.csv",
+      "description": "ALL描述性名单，不能代替LOBO逐图容量"
+    },
+    "R09": {
+      "relative_path": "stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "description": "各楼外折类别的原有历史标法语义、角色轴与父类映射"
+    },
+    "R10": {
+      "relative_path": "stage06_cases/CASE_EVENT_SUMMARY.csv",
+      "description": "代表图精确D/X/Z与该图类别可用人数"
+    }
+  },
+  "ledger": [
+    {
+      "source": "R01",
+      "filters": "{\"image\": \"q9vSo1VnCiC-34\", \"method\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 12, \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\"}",
+      "values": "{\"image\": \"q9vSo1VnCiC-34\", \"method\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 12, \"m\": 10, \"strict_role_direction\": \"2/3->3/3\", \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\", \"registered_ABC_events\": 1024, \"strict_signed_CA_mean\": 8.762567745513277, \"absolute_CA_mean\": 8.766123353966856, \"within_AB_mean\": 5.916926759213617, \"G_A_mean\": 2.84919659475324, \"G_S_mean\": 2.634443200774818, \"ABC_valid_events\": 1024, \"new_registered_direct_AC_events\": 8.0, \"new_valid_events\": 8.0, \"new_valid_blocks\": 8.0, \"new_strict_direction_signed_or_distance_mean\": 7.488102239983819, \"new_absolute_change_mean\": 7.488102239983819}"
+    },
+    {
+      "source": "R01",
+      "filters": "{\"image\": \"q9vSo1VnCiC-34\", \"method\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 15, \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\"}",
+      "values": "{\"image\": \"q9vSo1VnCiC-34\", \"method\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 15, \"m\": 10, \"strict_role_direction\": \"2/3->3/3\", \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\", \"registered_ABC_events\": 256, \"strict_signed_CA_mean\": 7.392534025042549, \"absolute_CA_mean\": 7.392534025042549, \"within_AB_mean\": 4.015400468494212, \"G_A_mean\": 3.3771335565483365, \"G_S_mean\": 3.239222252716057, \"ABC_valid_events\": 256, \"new_registered_direct_AC_events\": 8.0, \"new_valid_events\": 8.0, \"new_valid_blocks\": 8.0, \"new_strict_direction_signed_or_distance_mean\": 7.172358229071095, \"new_absolute_change_mean\": 7.280487064058844}"
+    },
+    {
+      "source": "R01",
+      "filters": "{\"image\": \"yqstnuAEVhm-04\", \"method\": \"TARGET_DSTRUCT_K3\", \"n\": 12, \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\"}",
+      "values": "{\"image\": \"yqstnuAEVhm-04\", \"method\": \"TARGET_DSTRUCT_K3\", \"n\": 12, \"m\": 10, \"strict_role_direction\": \"2/3->1/3\", \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\", \"registered_ABC_events\": 1024, \"strict_signed_CA_mean\": 1.86072831207817, \"absolute_CA_mean\": 2.265824402459831, \"within_AB_mean\": 2.907057246388371, \"G_A_mean\": -0.6412328439285405, \"G_S_mean\": -0.7223114997171589, \"ABC_valid_events\": 1024, \"new_registered_direct_AC_events\": 8.0, \"new_valid_events\": 8.0, \"new_valid_blocks\": 8.0, \"new_strict_direction_signed_or_distance_mean\": 0.648374928810263, \"new_absolute_change_mean\": 1.48723531369831}"
+    },
+    {
+      "source": "R01",
+      "filters": "{\"image\": \"yqstnuAEVhm-04\", \"method\": \"TARGET_DSTRUCT_K3\", \"n\": 14, \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\"}",
+      "values": "{\"image\": \"yqstnuAEVhm-04\", \"method\": \"TARGET_DSTRUCT_K3\", \"n\": 14, \"m\": 10, \"strict_role_direction\": \"2/3->1/3\", \"metric\": \"B8L2\", \"new_reference_set\": \"F_neutral_common_n\", \"registered_ABC_events\": 256, \"strict_signed_CA_mean\": 2.3319573522973656, \"absolute_CA_mean\": 2.729759926317078, \"within_AB_mean\": 3.369534289494988, \"G_A_mean\": -0.6397743631779096, \"G_S_mean\": -0.6120788437659692, \"ABC_valid_events\": 256, \"new_registered_direct_AC_events\": 8.0, \"new_valid_events\": 8.0, \"new_valid_blocks\": 8.0, \"new_strict_direction_signed_or_distance_mean\": 0.6144256061658844, \"new_absolute_change_mean\": 1.1706520431931864}"
+    },
+    {
+      "source": "R02",
+      "filters": "{\"metric\": \"B8L2\"}",
+      "values": "{\"metric\": \"B8L2\", \"registered_physical_background_comparisons\": 108, \"metric_valid_physical_comparisons\": 99, \"valid_target_pools\": 16, \"valid_images\": 16, \"valid_buildings\": 9, \"effect_sign_flips\": 18.0, \"target_pools_with_effect_sign_flip\": 8.0, \"median_abs_background_effect_difference\": 1.6331269645353927, \"mean_abs_background_effect_difference\": 5.187139079444, \"estimand\": \"physical four-endpoint descriptive distribution; pairs can share workers/teams and are not independent subjects\"}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_fixed_1\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"A_fixed_n\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"1->2\", \"n_condition\": \"6\", \"m_condition\": \"3\", \"selection_id\": \"other_target_fixed_1\", \"registered_pools\": 6, \"registered_images\": 6, \"registered_buildings\": 3, \"registered_pairs\": 44, \"actual_n_A_min\": 6, \"actual_n_A_max\": 6, \"actual_m_X_min\": 3, \"actual_m_X_max\": 3, \"B8L2_valid_pairs\": 33, \"B8L2_valid_pools\": 6, \"B8L2_valid_images\": 6, \"B8L2_valid_buildings\": 3, \"B8L2_image_mean\": 4.78298781686552, \"B8L2_image_balanced_mean_absolute\": 10.60968818278898, \"B8L2_positive_images\": 5, \"B8L2_negative_images\": 1, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 2, \"B8L2_negative_buildings\": 1, \"B8L2_building_balanced_mean\": 3.297243926186048, \"B8L2_image_p10\": -0.4311379971425615, \"B8L2_image_p90\": 10.139240855520852, \"D10_valid_pairs\": 33, \"D10_valid_pools\": 6, \"D10_valid_images\": 6, \"D10_valid_buildings\": 3, \"D10_image_mean\": 4.327555598513023, \"D10_image_balanced_mean_absolute\": 10.694660064457857, \"D10_positive_images\": 4, \"D10_negative_images\": 2, \"D10_tied_images\": 0, \"D10_positive_buildings\": 2, \"D10_negative_buildings\": 1, \"D10_building_balanced_mean\": 2.9622587180601214, \"D10_image_p10\": -1.2011419820765457, \"D10_image_p90\": 9.594634817806796, \"A_missing_image_mean\": 0.1875, \"A_missing_valid_pairs\": 44, \"A_missing_valid_images\": 6, \"A_missing_valid_buildings\": 3, \"A_missing_positive_images\": 3, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 3, \"C_missing_image_mean\": 0.0833333333333333, \"C_missing_valid_pairs\": 44, \"C_missing_valid_images\": 6, \"C_missing_valid_buildings\": 3, \"C_missing_positive_images\": 2, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 4, \"turns_image_mean\": 0.1398809523809523, \"turns_valid_pairs\": 33, \"turns_valid_images\": 6, \"turns_valid_buildings\": 3, \"turns_positive_images\": 2, \"turns_negative_images\": 2, \"turns_tied_images\": 2, \"complete_BEV_image_mean\": 0.1096285676562783, \"complete_BEV_valid_pairs\": 33, \"complete_BEV_valid_images\": 6, \"complete_BEV_valid_buildings\": 3, \"complete_BEV_positive_images\": 6, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": 4.148604715029217, \"record_labor_pct_valid_pairs\": 12, \"record_labor_pct_valid_images\": 2, \"record_labor_pct_valid_buildings\": 2, \"record_labor_pct_positive_images\": 1, \"record_labor_pct_negative_images\": 1, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_fixed_2\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"A_fixed_n\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"1->3\", \"n_condition\": \"6\", \"m_condition\": \"3\", \"selection_id\": \"other_target_fixed_2\", \"registered_pools\": 4, \"registered_images\": 4, \"registered_buildings\": 2, \"registered_pairs\": 19, \"actual_n_A_min\": 6, \"actual_n_A_max\": 6, \"actual_m_X_min\": 3, \"actual_m_X_max\": 3, \"B8L2_valid_pairs\": 16, \"B8L2_valid_pools\": 3, \"B8L2_valid_images\": 3, \"B8L2_valid_buildings\": 2, \"B8L2_image_mean\": 24.594691594561613, \"B8L2_image_balanced_mean_absolute\": 26.34652482451932, \"B8L2_positive_images\": 3, \"B8L2_negative_images\": 0, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 2, \"B8L2_negative_buildings\": 0, \"B8L2_building_balanced_mean\": 23.211165001237177, \"B8L2_image_p10\": 13.247462964470277, \"B8L2_image_p90\": 38.15556277397206, \"D10_valid_pairs\": 16, \"D10_valid_pools\": 3, \"D10_valid_images\": 3, \"D10_valid_buildings\": 2, \"D10_image_mean\": 24.992522413041844, \"D10_image_balanced_mean_absolute\": 26.63016350590563, \"D10_positive_images\": 3, \"D10_negative_images\": 0, \"D10_tied_images\": 0, \"D10_positive_buildings\": 2, \"D10_negative_buildings\": 0, \"D10_building_balanced_mean\": 24.05952359571424, \"D10_image_p10\": 12.841238353030556, \"D10_image_p90\": 38.6366045807773, \"A_missing_image_mean\": 0.3375, \"A_missing_valid_pairs\": 19, \"A_missing_valid_images\": 4, \"A_missing_valid_buildings\": 2, \"A_missing_positive_images\": 3, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 1, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 19, \"C_missing_valid_images\": 4, \"C_missing_valid_buildings\": 2, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 4, \"turns_image_mean\": 1.8333333333333333, \"turns_valid_pairs\": 16, \"turns_valid_images\": 3, \"turns_valid_buildings\": 2, \"turns_positive_images\": 3, \"turns_negative_images\": 0, \"turns_tied_images\": 0, \"complete_BEV_image_mean\": 0.167984225551884, \"complete_BEV_valid_pairs\": 16, \"complete_BEV_valid_images\": 3, \"complete_BEV_valid_buildings\": 2, \"complete_BEV_positive_images\": 3, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": 24.80022510582845, \"record_labor_pct_valid_pairs\": 1, \"record_labor_pct_valid_images\": 1, \"record_labor_pct_valid_buildings\": 1, \"record_labor_pct_positive_images\": 1, \"record_labor_pct_negative_images\": 0, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_fixed_3\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"A_fixed_n\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"2->3\", \"n_condition\": \"6\", \"m_condition\": \"3\", \"selection_id\": \"other_target_fixed_3\", \"registered_pools\": 5, \"registered_images\": 5, \"registered_buildings\": 3, \"registered_pairs\": 48, \"actual_n_A_min\": 6, \"actual_n_A_max\": 6, \"actual_m_X_min\": 3, \"actual_m_X_max\": 3, \"B8L2_valid_pairs\": 26, \"B8L2_valid_pools\": 5, \"B8L2_valid_images\": 5, \"B8L2_valid_buildings\": 3, \"B8L2_image_mean\": 24.30205713091859, \"B8L2_image_balanced_mean_absolute\": 24.30205713091859, \"B8L2_positive_images\": 5, \"B8L2_negative_images\": 0, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 3, \"B8L2_negative_buildings\": 0, \"B8L2_building_balanced_mean\": 26.3244703219379, \"B8L2_image_p10\": 13.734564675916326, \"B8L2_image_p90\": 36.58949172253832, \"D10_valid_pairs\": 26, \"D10_valid_pools\": 5, \"D10_valid_images\": 5, \"D10_valid_buildings\": 3, \"D10_image_mean\": 24.253453371239736, \"D10_image_balanced_mean_absolute\": 24.253453371239736, \"D10_positive_images\": 5, \"D10_negative_images\": 0, \"D10_tied_images\": 0, \"D10_positive_buildings\": 3, \"D10_negative_buildings\": 0, \"D10_building_balanced_mean\": 26.59739697207744, \"D10_image_p10\": 11.113429622184624, \"D10_image_p90\": 38.025825549306205, \"A_missing_image_mean\": 0.3875, \"A_missing_valid_pairs\": 48, \"A_missing_valid_images\": 5, \"A_missing_valid_buildings\": 3, \"A_missing_positive_images\": 4, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 1, \"C_missing_image_mean\": 0.05, \"C_missing_valid_pairs\": 48, \"C_missing_valid_images\": 5, \"C_missing_valid_buildings\": 3, \"C_missing_positive_images\": 1, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 4, \"turns_image_mean\": 1.55, \"turns_valid_pairs\": 26, \"turns_valid_images\": 5, \"turns_valid_buildings\": 3, \"turns_positive_images\": 3, \"turns_negative_images\": 0, \"turns_tied_images\": 2, \"complete_BEV_image_mean\": 0.1419453517234093, \"complete_BEV_valid_pairs\": 26, \"complete_BEV_valid_images\": 5, \"complete_BEV_valid_buildings\": 3, \"complete_BEV_positive_images\": 5, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": 27.044514660333675, \"record_labor_pct_valid_pairs\": 4, \"record_labor_pct_valid_images\": 1, \"record_labor_pct_valid_buildings\": 1, \"record_labor_pct_positive_images\": 1, \"record_labor_pct_negative_images\": 0, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_frontier_1\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"whole_equal_pool_frontier\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"1->2\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"other_target_frontier_1\", \"registered_pools\": 16, \"registered_images\": 15, \"registered_buildings\": 6, \"registered_pairs\": 79, \"actual_n_A_min\": 3, \"actual_n_A_max\": 14, \"actual_m_X_min\": 1, \"actual_m_X_max\": 5, \"B8L2_valid_pairs\": 76, \"B8L2_valid_pools\": 16, \"B8L2_valid_images\": 15, \"B8L2_valid_buildings\": 6, \"B8L2_image_mean\": 0.6253840126805528, \"B8L2_image_balanced_mean_absolute\": 10.934319978678335, \"B8L2_positive_images\": 7, \"B8L2_negative_images\": 8, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 3, \"B8L2_negative_buildings\": 3, \"B8L2_building_balanced_mean\": 1.3655565970223804, \"B8L2_image_p10\": -9.141542542239195, \"B8L2_image_p90\": 15.001422123885924, \"D10_valid_pairs\": 76, \"D10_valid_pools\": 16, \"D10_valid_images\": 15, \"D10_valid_buildings\": 6, \"D10_image_mean\": -0.1503964844361021, \"D10_image_balanced_mean_absolute\": 10.682295570848352, \"D10_positive_images\": 7, \"D10_negative_images\": 8, \"D10_tied_images\": 0, \"D10_positive_buildings\": 3, \"D10_negative_buildings\": 3, \"D10_building_balanced_mean\": 0.169206713770064, \"D10_image_p10\": -10.18871830724344, \"D10_image_p90\": 12.88395016264434, \"A_missing_image_mean\": 0.0277777777777777, \"A_missing_valid_pairs\": 79, \"A_missing_valid_images\": 15, \"A_missing_valid_buildings\": 6, \"A_missing_positive_images\": 2, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 13, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 79, \"C_missing_valid_images\": 15, \"C_missing_valid_buildings\": 6, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 15, \"turns_image_mean\": 0.2277777777777778, \"turns_valid_pairs\": 76, \"turns_valid_images\": 15, \"turns_valid_buildings\": 6, \"turns_positive_images\": 4, \"turns_negative_images\": 2, \"turns_tied_images\": 9, \"complete_BEV_image_mean\": 0.0831059051391702, \"complete_BEV_valid_pairs\": 76, \"complete_BEV_valid_images\": 15, \"complete_BEV_valid_buildings\": 6, \"complete_BEV_positive_images\": 15, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": 2.489543631139678, \"record_labor_pct_valid_pairs\": 14, \"record_labor_pct_valid_images\": 3, \"record_labor_pct_valid_buildings\": 3, \"record_labor_pct_positive_images\": 2, \"record_labor_pct_negative_images\": 1, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_frontier_2\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"whole_equal_pool_frontier\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"1->3\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"other_target_frontier_2\", \"registered_pools\": 15, \"registered_images\": 15, \"registered_buildings\": 6, \"registered_pairs\": 50, \"actual_n_A_min\": 4, \"actual_n_A_max\": 14, \"actual_m_X_min\": 1, \"actual_m_X_max\": 3, \"B8L2_valid_pairs\": 50, \"B8L2_valid_pools\": 15, \"B8L2_valid_images\": 15, \"B8L2_valid_buildings\": 6, \"B8L2_image_mean\": 9.136991701833722, \"B8L2_image_balanced_mean_absolute\": 11.042129113427531, \"B8L2_positive_images\": 12, \"B8L2_negative_images\": 3, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 5, \"B8L2_negative_buildings\": 1, \"B8L2_building_balanced_mean\": 9.7388734957509, \"B8L2_image_p10\": -2.9096405400869934, \"B8L2_image_p90\": 27.18880852444165, \"D10_valid_pairs\": 50, \"D10_valid_pools\": 15, \"D10_valid_images\": 15, \"D10_valid_buildings\": 6, \"D10_image_mean\": 8.963339419083432, \"D10_image_balanced_mean_absolute\": 10.977783637653406, \"D10_positive_images\": 12, \"D10_negative_images\": 3, \"D10_tied_images\": 0, \"D10_positive_buildings\": 5, \"D10_negative_buildings\": 1, \"D10_building_balanced_mean\": 9.373028891838516, \"D10_image_p10\": -2.6907448259396665, \"D10_image_p90\": 27.98372461944314, \"A_missing_image_mean\": 0.0, \"A_missing_valid_pairs\": 50, \"A_missing_valid_images\": 15, \"A_missing_valid_buildings\": 6, \"A_missing_positive_images\": 0, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 15, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 50, \"C_missing_valid_images\": 15, \"C_missing_valid_buildings\": 6, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 15, \"turns_image_mean\": 0.5333333333333333, \"turns_valid_pairs\": 50, \"turns_valid_images\": 15, \"turns_valid_buildings\": 6, \"turns_positive_images\": 5, \"turns_negative_images\": 1, \"turns_tied_images\": 9, \"complete_BEV_image_mean\": 0.0935003483508414, \"complete_BEV_valid_pairs\": 50, \"complete_BEV_valid_images\": 15, \"complete_BEV_valid_buildings\": 6, \"complete_BEV_positive_images\": 15, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": -1.2997930009600842, \"record_labor_pct_valid_pairs\": 13, \"record_labor_pct_valid_images\": 4, \"record_labor_pct_valid_buildings\": 3, \"record_labor_pct_positive_images\": 2, \"record_labor_pct_negative_images\": 2, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"other_target_frontier_3\"}",
+      "values": "{\"scope\": \"other_admitted\", \"condition\": \"manual\", \"analysis_view\": \"whole_equal_pool_frontier\", \"method\": \"TARGET_DSTRUCT_K3\", \"role_direction\": \"2->3\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"other_target_frontier_3\", \"registered_pools\": 18, \"registered_images\": 17, \"registered_buildings\": 6, \"registered_pairs\": 107, \"actual_n_A_min\": 3, \"actual_n_A_max\": 13, \"actual_m_X_min\": 1, \"actual_m_X_max\": 5, \"B8L2_valid_pairs\": 103, \"B8L2_valid_pools\": 17, \"B8L2_valid_images\": 17, \"B8L2_valid_buildings\": 6, \"B8L2_image_mean\": 10.847950146209463, \"B8L2_image_balanced_mean_absolute\": 14.445261878850332, \"B8L2_positive_images\": 13, \"B8L2_negative_images\": 4, \"B8L2_tied_images\": 0, \"B8L2_positive_buildings\": 5, \"B8L2_negative_buildings\": 1, \"B8L2_building_balanced_mean\": 15.043991403885364, \"B8L2_image_p10\": -6.263762454458411, \"B8L2_image_p90\": 34.56321709846852, \"D10_valid_pairs\": 103, \"D10_valid_pools\": 17, \"D10_valid_images\": 17, \"D10_valid_buildings\": 6, \"D10_image_mean\": 11.02997268536948, \"D10_image_balanced_mean_absolute\": 14.363507170896076, \"D10_positive_images\": 13, \"D10_negative_images\": 4, \"D10_tied_images\": 0, \"D10_positive_buildings\": 5, \"D10_negative_buildings\": 1, \"D10_building_balanced_mean\": 15.734309288777816, \"D10_image_p10\": -4.417196410845563, \"D10_image_p90\": 35.57732344575941, \"A_missing_image_mean\": 0.0294117647058823, \"A_missing_valid_pairs\": 107, \"A_missing_valid_images\": 17, \"A_missing_valid_buildings\": 6, \"A_missing_positive_images\": 1, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 16, \"C_missing_image_mean\": 0.0098039215686274, \"C_missing_valid_pairs\": 107, \"C_missing_valid_images\": 17, \"C_missing_valid_buildings\": 6, \"C_missing_positive_images\": 1, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 16, \"turns_image_mean\": 1.0132352941176472, \"turns_valid_pairs\": 103, \"turns_valid_images\": 17, \"turns_valid_buildings\": 6, \"turns_positive_images\": 7, \"turns_negative_images\": 1, \"turns_tied_images\": 9, \"complete_BEV_image_mean\": 0.1273619425536443, \"complete_BEV_valid_pairs\": 103, \"complete_BEV_valid_images\": 17, \"complete_BEV_valid_buildings\": 6, \"complete_BEV_positive_images\": 17, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 0, \"record_labor_pct_image_mean\": 2.2366278441346554, \"record_labor_pct_valid_pairs\": 35, \"record_labor_pct_valid_images\": 6, \"record_labor_pct_valid_buildings\": 4, \"record_labor_pct_positive_images\": 4, \"record_labor_pct_negative_images\": 2, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"semi_behavior_coarse\"}",
+      "values": "{\"scope\": \"primary\", \"condition\": \"semi\", \"analysis_view\": \"Semi_whole_equal_pool_frontier\", \"method\": \"V3_BEHAVIOR_COARSE\", \"role_direction\": \"S1->S2\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"semi_behavior_coarse\", \"registered_pools\": 28, \"registered_images\": 28, \"registered_buildings\": 12, \"registered_pairs\": 114, \"actual_n_A_min\": 3, \"actual_n_A_max\": 42, \"actual_m_X_min\": 1, \"actual_m_X_max\": 13, \"B8L2_valid_pairs\": 106, \"B8L2_valid_pools\": 27, \"B8L2_valid_images\": 27, \"B8L2_valid_buildings\": 12, \"B8L2_image_mean\": -2.6119216060668915, \"B8L2_image_balanced_mean_absolute\": 3.0773985442945064, \"B8L2_positive_images\": 4, \"B8L2_negative_images\": 11, \"B8L2_tied_images\": 12, \"B8L2_positive_buildings\": 3, \"B8L2_negative_buildings\": 7, \"B8L2_building_balanced_mean\": -2.991453615797873, \"B8L2_image_p10\": -0.9567830784125496, \"B8L2_image_p90\": 0.0842901620742042, \"D10_valid_pairs\": 106, \"D10_valid_pools\": 27, \"D10_valid_images\": 27, \"D10_valid_buildings\": 12, \"D10_image_mean\": -2.585428598607619, \"D10_image_balanced_mean_absolute\": 3.062976032434093, \"D10_positive_images\": 4, \"D10_negative_images\": 11, \"D10_tied_images\": 12, \"D10_positive_buildings\": 3, \"D10_negative_buildings\": 7, \"D10_building_balanced_mean\": -2.955811147904785, \"D10_image_p10\": -0.9614786927016964, \"D10_image_p90\": 0.0951345441225033, \"A_missing_image_mean\": 0.0714285714285714, \"A_missing_valid_pairs\": 114, \"A_missing_valid_images\": 28, \"A_missing_valid_buildings\": 12, \"A_missing_positive_images\": 3, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 25, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 114, \"C_missing_valid_images\": 28, \"C_missing_valid_buildings\": 12, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 28, \"turns_image_mean\": 0.0458333333333333, \"turns_valid_pairs\": 113, \"turns_valid_images\": 28, \"turns_valid_buildings\": 12, \"turns_positive_images\": 2, \"turns_negative_images\": 1, \"turns_tied_images\": 25, \"complete_BEV_image_mean\": 0.0172485752636788, \"complete_BEV_valid_pairs\": 106, \"complete_BEV_valid_images\": 27, \"complete_BEV_valid_buildings\": 12, \"complete_BEV_positive_images\": 15, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 12, \"record_labor_pct_image_mean\": -15.846428010531165, \"record_labor_pct_valid_pairs\": 16, \"record_labor_pct_valid_images\": 6, \"record_labor_pct_valid_buildings\": 4, \"record_labor_pct_positive_images\": 1, \"record_labor_pct_negative_images\": 5, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"semi_behavior_fine\"}",
+      "values": "{\"scope\": \"primary\", \"condition\": \"semi\", \"analysis_view\": \"Semi_whole_equal_pool_frontier\", \"method\": \"V3_BEHAVIOR_FINE\", \"role_direction\": \"S1.1->S2.1\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"semi_behavior_fine\", \"registered_pools\": 27, \"registered_images\": 27, \"registered_buildings\": 12, \"registered_pairs\": 100, \"actual_n_A_min\": 3, \"actual_n_A_max\": 42, \"actual_m_X_min\": 1, \"actual_m_X_max\": 10, \"B8L2_valid_pairs\": 94, \"B8L2_valid_pools\": 26, \"B8L2_valid_images\": 26, \"B8L2_valid_buildings\": 12, \"B8L2_image_mean\": -2.126149431401359, \"B8L2_image_balanced_mean_absolute\": 2.5565052962433645, \"B8L2_positive_images\": 4, \"B8L2_negative_images\": 12, \"B8L2_tied_images\": 10, \"B8L2_positive_buildings\": 3, \"B8L2_negative_buildings\": 7, \"B8L2_building_balanced_mean\": -1.862575368911921, \"B8L2_image_p10\": -0.3416447211783786, \"B8L2_image_p90\": 0.3085646018023186, \"D10_valid_pairs\": 94, \"D10_valid_pools\": 26, \"D10_valid_images\": 26, \"D10_valid_buildings\": 12, \"D10_image_mean\": -2.0972406738510627, \"D10_image_balanced_mean_absolute\": 2.5531037913238626, \"D10_positive_images\": 4, \"D10_negative_images\": 12, \"D10_tied_images\": 10, \"D10_positive_buildings\": 3, \"D10_negative_buildings\": 7, \"D10_building_balanced_mean\": -1.819918396452653, \"D10_image_p10\": -0.3411382014825885, \"D10_image_p90\": 0.3628426412769893, \"A_missing_image_mean\": 0.0555555555555555, \"A_missing_valid_pairs\": 100, \"A_missing_valid_images\": 27, \"A_missing_valid_buildings\": 12, \"A_missing_positive_images\": 2, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 25, \"C_missing_image_mean\": 0.0092592592592592, \"C_missing_valid_pairs\": 100, \"C_missing_valid_images\": 27, \"C_missing_valid_buildings\": 12, \"C_missing_positive_images\": 1, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 26, \"turns_image_mean\": 0.0388888888888888, \"turns_valid_pairs\": 100, \"turns_valid_images\": 27, \"turns_valid_buildings\": 12, \"turns_positive_images\": 2, \"turns_negative_images\": 1, \"turns_tied_images\": 24, \"complete_BEV_image_mean\": 0.0141817617778801, \"complete_BEV_valid_pairs\": 94, \"complete_BEV_valid_images\": 26, \"complete_BEV_valid_buildings\": 12, \"complete_BEV_positive_images\": 15, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 11, \"record_labor_pct_image_mean\": -15.257119069206574, \"record_labor_pct_valid_pairs\": 13, \"record_labor_pct_valid_images\": 6, \"record_labor_pct_valid_buildings\": 4, \"record_labor_pct_positive_images\": 1, \"record_labor_pct_negative_images\": 5, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"semi_joint_coarse\"}",
+      "values": "{\"scope\": \"primary\", \"condition\": \"semi\", \"analysis_view\": \"Semi_whole_equal_pool_frontier\", \"method\": \"V3_JOINT_QT_COARSE\", \"role_direction\": \"K1->K2\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"semi_joint_coarse\", \"registered_pools\": 25, \"registered_images\": 25, \"registered_buildings\": 12, \"registered_pairs\": 119, \"actual_n_A_min\": 3, \"actual_n_A_max\": 43, \"actual_m_X_min\": 1, \"actual_m_X_max\": 13, \"B8L2_valid_pairs\": 113, \"B8L2_valid_pools\": 25, \"B8L2_valid_images\": 25, \"B8L2_valid_buildings\": 12, \"B8L2_image_mean\": -2.159046433654589, \"B8L2_image_balanced_mean_absolute\": 2.8010579503962907, \"B8L2_positive_images\": 6, \"B8L2_negative_images\": 9, \"B8L2_tied_images\": 10, \"B8L2_positive_buildings\": 4, \"B8L2_negative_buildings\": 6, \"B8L2_building_balanced_mean\": -4.470322580827154, \"B8L2_image_p10\": -1.8941430293316104, \"B8L2_image_p90\": 0.7433501751895727, \"D10_valid_pairs\": 113, \"D10_valid_pools\": 25, \"D10_valid_images\": 25, \"D10_valid_buildings\": 12, \"D10_image_mean\": -2.1341856783479427, \"D10_image_balanced_mean_absolute\": 2.7546919212605507, \"D10_positive_images\": 6, \"D10_negative_images\": 9, \"D10_tied_images\": 10, \"D10_positive_buildings\": 4, \"D10_negative_buildings\": 6, \"D10_building_balanced_mean\": -4.435565177838058, \"D10_image_p10\": -1.6883241190770368, \"D10_image_p90\": 0.4529302067728396, \"A_missing_image_mean\": 0.0557142857142857, \"A_missing_valid_pairs\": 119, \"A_missing_valid_images\": 25, \"A_missing_valid_buildings\": 12, \"A_missing_positive_images\": 3, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 22, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 119, \"C_missing_valid_images\": 25, \"C_missing_valid_buildings\": 12, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 25, \"turns_image_mean\": 0.03, \"turns_valid_pairs\": 118, \"turns_valid_images\": 25, \"turns_valid_buildings\": 12, \"turns_positive_images\": 3, \"turns_negative_images\": 1, \"turns_tied_images\": 21, \"complete_BEV_image_mean\": 0.0177713126151179, \"complete_BEV_valid_pairs\": 113, \"complete_BEV_valid_images\": 25, \"complete_BEV_valid_buildings\": 12, \"complete_BEV_positive_images\": 14, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 11, \"record_labor_pct_image_mean\": -1.1146268754199466, \"record_labor_pct_valid_pairs\": 20, \"record_labor_pct_valid_images\": 4, \"record_labor_pct_valid_buildings\": 3, \"record_labor_pct_positive_images\": 2, \"record_labor_pct_negative_images\": 2, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R04",
+      "filters": "{\"selection_id\": \"semi_joint_fine\"}",
+      "values": "{\"scope\": \"primary\", \"condition\": \"semi\", \"analysis_view\": \"Semi_whole_equal_pool_frontier\", \"method\": \"V3_JOINT_QT_FINE\", \"role_direction\": \"K1.1->K2.1\", \"n_condition\": \"N_minus_m\", \"m_condition\": \"whole_class_actual_m\", \"selection_id\": \"semi_joint_fine\", \"registered_pools\": 25, \"registered_images\": 25, \"registered_buildings\": 12, \"registered_pairs\": 112, \"actual_n_A_min\": 3, \"actual_n_A_max\": 43, \"actual_m_X_min\": 1, \"actual_m_X_max\": 6, \"B8L2_valid_pairs\": 104, \"B8L2_valid_pools\": 25, \"B8L2_valid_images\": 25, \"B8L2_valid_buildings\": 12, \"B8L2_image_mean\": -1.8648688960489064, \"B8L2_image_balanced_mean_absolute\": 2.4285574963048973, \"B8L2_positive_images\": 8, \"B8L2_negative_images\": 7, \"B8L2_tied_images\": 10, \"B8L2_positive_buildings\": 5, \"B8L2_negative_buildings\": 5, \"B8L2_building_balanced_mean\": -4.070073412931577, \"B8L2_image_p10\": -0.3462514767916053, \"B8L2_image_p90\": 0.6359065714179992, \"D10_valid_pairs\": 104, \"D10_valid_pools\": 25, \"D10_valid_images\": 25, \"D10_valid_buildings\": 12, \"D10_image_mean\": -1.8305490749383564, \"D10_image_balanced_mean_absolute\": 2.432534138025917, \"D10_positive_images\": 8, \"D10_negative_images\": 7, \"D10_tied_images\": 10, \"D10_positive_buildings\": 6, \"D10_negative_buildings\": 4, \"D10_building_balanced_mean\": -4.028798490475654, \"D10_image_p10\": -0.3461378057090775, \"D10_image_p90\": 0.5348402169376963, \"A_missing_image_mean\": 0.059047619047619, \"A_missing_valid_pairs\": 112, \"A_missing_valid_images\": 25, \"A_missing_valid_buildings\": 12, \"A_missing_positive_images\": 3, \"A_missing_negative_images\": 0, \"A_missing_tied_images\": 22, \"C_missing_image_mean\": 0.0, \"C_missing_valid_pairs\": 112, \"C_missing_valid_images\": 25, \"C_missing_valid_buildings\": 12, \"C_missing_positive_images\": 0, \"C_missing_negative_images\": 0, \"C_missing_tied_images\": 25, \"turns_image_mean\": 0.0333333333333333, \"turns_valid_pairs\": 111, \"turns_valid_images\": 25, \"turns_valid_buildings\": 12, \"turns_positive_images\": 3, \"turns_negative_images\": 1, \"turns_tied_images\": 21, \"complete_BEV_image_mean\": 0.0153658944670242, \"complete_BEV_valid_pairs\": 104, \"complete_BEV_valid_images\": 25, \"complete_BEV_valid_buildings\": 12, \"complete_BEV_positive_images\": 14, \"complete_BEV_negative_images\": 0, \"complete_BEV_tied_images\": 11, \"record_labor_pct_image_mean\": -0.9241046538042168, \"record_labor_pct_valid_pairs\": 20, \"record_labor_pct_valid_images\": 4, \"record_labor_pct_valid_buildings\": 3, \"record_labor_pct_positive_images\": 2, \"record_labor_pct_negative_images\": 2, \"record_labor_pct_tied_images\": 0}"
+    },
+    {
+      "source": "R09",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C1\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C1\", \"k\": 3, \"workers\": 5, \"members\": \"W028|W031|W032|W037|W105\", \"semantic_training_role\": \"人数最少类；复杂机会转折较少；历史Q较低；来源内记录时间较长；相对面积较小；相对高度较高；近共线冗余较多\", \"turn_rank_asc\": 2.0, \"hard_turn_rank_asc\": 1.0, \"challenge_turn_rank_asc\": 1.0, \"q_rank_asc\": 1.0, \"time_rank_asc\": 3.0, \"area_rank_asc\": 1.0, \"height_rank_asc\": 3.0, \"redundancy_rank_asc\": 3.0, \"response_hard_turn_rank_asc\": null, \"response_turn_rank_asc\": null, \"response_q_rank_asc\": null, \"m_all_turn_n\": 0.0187165618212114, \"m_hard_turn_n\": -0.4578571428571428, \"m_challenge_turn_n\": -0.49321016285302, \"m_all_B8L2\": -6.994744971132401, \"m_all_log_time\": 0.2924688206431632, \"parent_method\": \"TARGET_DSTRUCT_K2\", \"parent_class\": \"C1\", \"parent_mapping_exact\": true, \"TARGET_K2_global_crosswalk\": \"{\\\"C1\\\":5}\", \"all_members_in_one_TARGET_K2_class\": true, \"TARGET_K2_class\": \"C1\", \"primary_role_axis\": \"hard_turn_rank_asc\", \"primary_role_rank\": 1.0}"
+    },
+    {
+      "source": "R09",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C2\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C2\", \"k\": 3, \"workers\": 41, \"members\": \"W006|W008|W010|W011|W012|W013|W014|W015|W018|W029|W030|W034|W035|W036|W100|W101|W103|W104|W106|W107|W108|W110|W111|W113|W114|W116|W117|W118|W119|W120|W121|W123|W124|W125|W127|W128|W129|W131|W132|W133|W134\", \"semantic_training_role\": \"人数最多类；总体转折较少；相对高度较低\", \"turn_rank_asc\": 1.0, \"hard_turn_rank_asc\": 2.0, \"challenge_turn_rank_asc\": 2.0, \"q_rank_asc\": 2.0, \"time_rank_asc\": 2.0, \"area_rank_asc\": 2.0, \"height_rank_asc\": 1.0, \"redundancy_rank_asc\": 2.0, \"response_hard_turn_rank_asc\": null, \"response_turn_rank_asc\": null, \"response_q_rank_asc\": null, \"m_all_turn_n\": -0.0786601233451826, \"m_hard_turn_n\": -0.2722934827464444, \"m_challenge_turn_n\": -0.2796959738101942, \"m_all_B8L2\": -2.724557790450316, \"m_all_log_time\": -0.0311596712407144, \"parent_method\": \"TARGET_DSTRUCT_K2\", \"parent_class\": \"C1\", \"parent_mapping_exact\": true, \"TARGET_K2_global_crosswalk\": \"{\\\"C1\\\":41}\", \"all_members_in_one_TARGET_K2_class\": true, \"TARGET_K2_class\": \"C1\", \"primary_role_axis\": \"hard_turn_rank_asc\", \"primary_role_rank\": 2.0}"
+    },
+    {
+      "source": "R09",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C3\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"heldout_building\": \"VFuaQ6m2Qom\", \"class_id\": \"C3\", \"k\": 3, \"workers\": 13, \"members\": \"W001|W002|W017|W021|W027|W033|W102|W109|W112|W115|W122|W126|W130\", \"semantic_training_role\": \"中间容量类；总体转折较多；复杂机会转折较多；历史Q较高；来源内记录时间较短；相对面积较大；近共线冗余较少\", \"turn_rank_asc\": 3.0, \"hard_turn_rank_asc\": 3.0, \"challenge_turn_rank_asc\": 3.0, \"q_rank_asc\": 3.0, \"time_rank_asc\": 1.0, \"area_rank_asc\": 3.0, \"height_rank_asc\": 2.0, \"redundancy_rank_asc\": 1.0, \"response_hard_turn_rank_asc\": null, \"response_turn_rank_asc\": null, \"response_q_rank_asc\": null, \"m_all_turn_n\": 0.4698664501493259, \"m_hard_turn_n\": 1.940864355424795, \"m_challenge_turn_n\": 1.3182351145586442, \"m_all_B8L2\": 10.026410389146616, \"m_all_log_time\": -0.0442900463935847, \"parent_method\": \"TARGET_DSTRUCT_K2\", \"parent_class\": \"C2\", \"parent_mapping_exact\": true, \"TARGET_K2_global_crosswalk\": \"{\\\"C2\\\":13}\", \"all_members_in_one_TARGET_K2_class\": true, \"TARGET_K2_class\": \"C2\", \"primary_role_axis\": \"hard_turn_rank_asc\", \"primary_role_rank\": 3.0}"
+    },
+    {
+      "source": "R07",
+      "filters": "{\"method_left\": \"TARGET_DSTRUCT_K2\", \"method_right\": \"TARGET_DSTRUCT_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\"}",
+      "values": "{\"method_left\": \"TARGET_DSTRUCT_K2\", \"method_right\": \"TARGET_DSTRUCT_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\", \"common_registered_pools\": 85, \"valid_common_images\": 85, \"valid_common_buildings\": 21, \"left_image_mean_absolute_change\": 5.75092252136286, \"right_image_mean_absolute_change\": 5.778717392498265, \"right_minus_left_absolute_change\": 0.0277948711354069, \"right_absolute_larger_images\": 42, \"left_full_coverage_pools\": 85, \"right_full_coverage_pools\": 128, \"common_pool_ids\": \"2t7WUuJeko7-13__manual__ec0d05ae55|7y3sRwLe3Va-03__manual__21c720698a|7y3sRwLe3Va-04__manual__d7b320ab08|7y3sRwLe3Va-13__manual__5b6c87b5f3|7y3sRwLe3Va-21__manual__d48c756085|7y3sRwLe3Va-26__manual__c9d0cbdd90|B6ByNegPMKs-10__manual__2a73346a88|B6ByNegPMKs-11__manual__f3a7523e7c|B6ByNegPMKs-18__manual__ba2dd293b0|B6ByNegPMKs-21__manual__5f07be7326|B6ByNegPMKs-22__manual__5070de2f55|B6ByNegPMKs-40__manual__19077f2fe3|B6ByNegPMKs-47__manual__9eae4a3584|B6ByNegPMKs-50__manual__66ebac0de6|S9hNv5qa7GM-04__manual__c93fe8a825|S9hNv5qa7GM-05__manual__3078185fd7|S9hNv5qa7GM-06__manual__b53e2c2f71|S9hNv5qa7GM-09__manual__v21_254|S9hNv5qa7GM-10__manual__38e19faf10|S9hNv5qa7GM-12__manual__eec3a285d1|S9hNv5qa7GM-18__manual__7d3da846c6|S9hNv5qa7GM-19__manual__c6b86cae13|VFuaQ6m2Qom-01__manual__5b146df96f|VFuaQ6m2Qom-03__manual__02147a8f0c|VFuaQ6m2Qom-04__manual__fbe40a551f|VFuaQ6m2Qom-07__manual__3362ee2227|VLzqgDo317F-02__manual__5c35a52ccc|X7HyMhZNoso-05__manual__5212c0d241|X7HyMhZNoso-07__manual__dd2275185f|X7HyMhZNoso-13__manual__373442ac7c|X7HyMhZNoso-19__manual__4177d22d41|Z6MFQCViBuw-03__manual__9f0ad84f43|Z6MFQCViBuw-06__manual__0151bd7edf|Z6MFQCViBuw-10__manual__6b973e35d3|b8cTxDM8gDG-07__manual__3eefa592b6|e9zR4mvMWw7-03__manual__8bf3d02cab|e9zR4mvMWw7-10__manual__ecf22b00ab|e9zR4mvMWw7-32__manual__111c2ddfac|e9zR4mvMWw7-39__manual__9326cbf6d2|jh4fc5c5qoQ-02__manual__8c0c47789e|jh4fc5c5qoQ-04__manual__928d5032f2|jh4fc5c5qoQ-10__manual__069105f01a|jh4fc5c5qoQ-12__manual__c7ac014dc3|jh4fc5c5qoQ-13__manual__274d69d1f7|jtcxE69GiFV-03__manual__cff6e9a2b3|jtcxE69GiFV-04__manual__628a7c6a3a|jtcxE69GiFV-10__manual__9353efd9c9|jtcxE69GiFV-13__manual__8809c22f6e|jtcxE69GiFV-22__manual__70a3575644|jtcxE69GiFV-23__manual__c9d4c2c03b|jtcxE69GiFV-30__manual__d0ce5ff4e1|pRbA3pwrgk9-05__manual__bd34c00b46|pRbA3pwrgk9-07__manual__e8409547b5|pRbA3pwrgk9-10__manual__cb00db271c|pRbA3pwrgk9-14__manual__c4667a1d8c|pa4otMbVnkk-05__manual__420a0b6ed3|pa4otMbVnkk-06__manual__48064bc2d8|pa4otMbVnkk-09__manual__7b9cc79111|pa4otMbVnkk-11__manual__v21_249|pa4otMbVnkk-14__manual__1ee397d26d|pa4otMbVnkk-42__manual__d6e0ab41ee|pa4otMbVnkk-44__manual__2787d70dcb|q9vSo1VnCiC-15__manual__6d5ae69ee8|q9vSo1VnCiC-16__manual__v21_225|q9vSo1VnCiC-34__manual__v21_250|rPc6DW4iMge-13__manual__d183e8f454|rPc6DW4iMge-17__manual__4c161a9011|uNb9QFRL6hY-04__manual__1a0a2ad3cd|uNb9QFRL6hY-07__manual__52a0da301c|uNb9QFRL6hY-29__manual__bccd00a58a|uNb9QFRL6hY-48__manual__5a1d61d7e4|uNb9QFRL6hY-56__manual__f53b4c68f3|uNb9QFRL6hY-82__manual__8e7ae21c8d|wc2JMjhGNzB-18__manual__d4949d0b37|wc2JMjhGNzB-20__manual__fbde0b8a63|wc2JMjhGNzB-40__manual__573680f8c8|wc2JMjhGNzB-56__manual__55ecaa1ae3|wc2JMjhGNzB-67__manual__cd09bc8ccc|x8F5xyUWy9e-03__manual__ec015dc331|x8F5xyUWy9e-08__manual__0b13997fd3|yqstnuAEVhm-27__manual__36afe2b79d|zsNo4HB9uLZ-02__manual__d9ae55b158|zsNo4HB9uLZ-09__manual__2b1196fa29|zsNo4HB9uLZ-11__manual__3876207f58|zsNo4HB9uLZ-16__manual__7e980a16d1\", \"interpretation\": \"same image target n m; own class directions averaged equally; members and meanings differ; descriptive contrast, not method superiority\"}"
+    },
+    {
+      "source": "R07",
+      "filters": "{\"method_left\": \"TARGET_DSTRUCT_K3\", \"method_right\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\"}",
+      "values": "{\"method_left\": \"TARGET_DSTRUCT_K3\", \"method_right\": \"V21_DSTRUCT_RAW3_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\", \"common_registered_pools\": 114, \"valid_common_images\": 114, \"valid_common_buildings\": 22, \"left_image_mean_absolute_change\": 5.583845597874586, \"right_image_mean_absolute_change\": 5.3999729942736, \"right_minus_left_absolute_change\": -0.1838726036009852, \"right_absolute_larger_images\": 34, \"left_full_coverage_pools\": 128, \"right_full_coverage_pools\": 124, \"common_pool_ids\": \"2t7WUuJeko7-13__manual__ec0d05ae55|7y3sRwLe3Va-03__manual__21c720698a|7y3sRwLe3Va-04__manual__d7b320ab08|7y3sRwLe3Va-11__manual__feec3565b2|7y3sRwLe3Va-13__manual__5b6c87b5f3|7y3sRwLe3Va-21__manual__d48c756085|7y3sRwLe3Va-26__manual__c9d0cbdd90|B6ByNegPMKs-10__manual__2a73346a88|B6ByNegPMKs-11__manual__f3a7523e7c|B6ByNegPMKs-18__manual__ba2dd293b0|B6ByNegPMKs-21__manual__5f07be7326|B6ByNegPMKs-22__manual__5070de2f55|B6ByNegPMKs-40__manual__19077f2fe3|B6ByNegPMKs-47__manual__9eae4a3584|B6ByNegPMKs-50__manual__66ebac0de6|S9hNv5qa7GM-04__manual__c93fe8a825|S9hNv5qa7GM-05__manual__3078185fd7|S9hNv5qa7GM-06__manual__b53e2c2f71|S9hNv5qa7GM-09__manual__v21_254|S9hNv5qa7GM-10__manual__38e19faf10|S9hNv5qa7GM-12__manual__eec3a285d1|S9hNv5qa7GM-15__manual__3c51a634b9|S9hNv5qa7GM-17__manual__e525b4e1d7|S9hNv5qa7GM-18__manual__7d3da846c6|S9hNv5qa7GM-19__manual__c6b86cae13|UwV83HsGsw3-09__manual__1a2b0afff3|UwV83HsGsw3-17__manual__b27fdc2bc6|VFuaQ6m2Qom-01__manual__5b146df96f|VFuaQ6m2Qom-03__manual__02147a8f0c|VFuaQ6m2Qom-04__manual__fbe40a551f|VFuaQ6m2Qom-07__manual__3362ee2227|VLzqgDo317F-02__manual__5c35a52ccc|X7HyMhZNoso-05__manual__5212c0d241|X7HyMhZNoso-07__manual__dd2275185f|X7HyMhZNoso-13__manual__373442ac7c|X7HyMhZNoso-19__manual__4177d22d41|Z6MFQCViBuw-03__manual__9f0ad84f43|Z6MFQCViBuw-06__manual__0151bd7edf|Z6MFQCViBuw-08__manual__046839c2de|Z6MFQCViBuw-10__manual__6b973e35d3|b8cTxDM8gDG-07__manual__3eefa592b6|e9zR4mvMWw7-02__manual__727235294b|e9zR4mvMWw7-03__manual__8bf3d02cab|e9zR4mvMWw7-10__manual__ecf22b00ab|e9zR4mvMWw7-15__manual__64c3e640b7|e9zR4mvMWw7-17__manual__v21_3|e9zR4mvMWw7-19__manual__3b9450ee54|e9zR4mvMWw7-26__manual__1b2aa0a6e7|e9zR4mvMWw7-28__manual__3975e135c7|e9zR4mvMWw7-32__manual__111c2ddfac|e9zR4mvMWw7-39__manual__9326cbf6d2|jh4fc5c5qoQ-02__manual__8c0c47789e|jh4fc5c5qoQ-04__manual__928d5032f2|jh4fc5c5qoQ-10__manual__069105f01a|jh4fc5c5qoQ-12__manual__c7ac014dc3|jh4fc5c5qoQ-13__manual__274d69d1f7|jtcxE69GiFV-13__manual__8809c22f6e|jtcxE69GiFV-23__manual__c9d4c2c03b|pRbA3pwrgk9-02__manual__v21_219|pRbA3pwrgk9-05__manual__bd34c00b46|pRbA3pwrgk9-07__manual__e8409547b5|pRbA3pwrgk9-10__manual__cb00db271c|pRbA3pwrgk9-14__manual__c4667a1d8c|pa4otMbVnkk-05__manual__420a0b6ed3|pa4otMbVnkk-06__manual__48064bc2d8|pa4otMbVnkk-09__manual__7b9cc79111|pa4otMbVnkk-11__manual__v21_249|pa4otMbVnkk-14__manual__1ee397d26d|pa4otMbVnkk-42__manual__d6e0ab41ee|pa4otMbVnkk-44__manual__2787d70dcb|q9vSo1VnCiC-02__manual__25b2a3db5d|q9vSo1VnCiC-15__manual__6d5ae69ee8|q9vSo1VnCiC-16__manual__v21_225|q9vSo1VnCiC-32__manual__b919efebcf|q9vSo1VnCiC-34__manual__v21_250|rPc6DW4iMge-01__manual__25b44e9036|uNb9QFRL6hY-01__manual__a8c2a2a06a|uNb9QFRL6hY-04__manual__1a0a2ad3cd|uNb9QFRL6hY-12__manual__15a1012a90|uNb9QFRL6hY-14__manual__a49483b09b|uNb9QFRL6hY-20__manual__4564c265d6|uNb9QFRL6hY-29__manual__bccd00a58a|uNb9QFRL6hY-40__manual__dbb73fc912|uNb9QFRL6hY-43__manual__4646114ccd|uNb9QFRL6hY-45__manual__5dc82190fe|uNb9QFRL6hY-50__manual__8871891ae6|uNb9QFRL6hY-53__manual__db68acead6|uNb9QFRL6hY-65__manual__9acb3cd5d4|uNb9QFRL6hY-72__manual__6049ded157|uNb9QFRL6hY-78__manual__dfd88df676|uNb9QFRL6hY-82__manual__8e7ae21c8d|uNb9QFRL6hY-86__manual__v21_253|uNb9QFRL6hY-87__manual__6519a307c9|wc2JMjhGNzB-15__manual__717700d501|wc2JMjhGNzB-18__manual__d4949d0b37|wc2JMjhGNzB-20__manual__fbde0b8a63|wc2JMjhGNzB-29__manual__v21_259|wc2JMjhGNzB-40__manual__573680f8c8|wc2JMjhGNzB-53__manual__c22e59afe7|wc2JMjhGNzB-56__manual__55ecaa1ae3|wc2JMjhGNzB-59__manual__76ce9865d1|wc2JMjhGNzB-60__manual__b962d8eaa6|wc2JMjhGNzB-61__manual__045f83744e|wc2JMjhGNzB-67__manual__cd09bc8ccc|x8F5xyUWy9e-03__manual__ec015dc331|x8F5xyUWy9e-08__manual__0b13997fd3|yqstnuAEVhm-04__manual__c93631c594|yqstnuAEVhm-25__manual__72b3cd9b76|yqstnuAEVhm-32__manual__085c02c4fa|yqstnuAEVhm-34__manual__cdcf90233b|zsNo4HB9uLZ-02__manual__d9ae55b158|zsNo4HB9uLZ-09__manual__2b1196fa29|zsNo4HB9uLZ-11__manual__3876207f58|zsNo4HB9uLZ-16__manual__7e980a16d1\", \"interpretation\": \"same image target n m; own class directions averaged equally; members and meanings differ; descriptive contrast, not method superiority\"}"
+    },
+    {
+      "source": "R07",
+      "filters": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"TARGET_DSTRUCT_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\"}",
+      "values": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"TARGET_DSTRUCT_K3\", \"n\": 20, \"m\": 7, \"metric\": \"B8L2_CA\", \"common_registered_pools\": 93, \"valid_common_images\": 93, \"valid_common_buildings\": 19, \"left_image_mean_absolute_change\": 4.5620984741741095, \"right_image_mean_absolute_change\": 4.4751094826868565, \"right_minus_left_absolute_change\": -0.0869889914872518, \"right_absolute_larger_images\": 52, \"left_full_coverage_pools\": 131, \"right_full_coverage_pools\": 128, \"common_pool_ids\": \"2t7WUuJeko7-13__manual__ec0d05ae55|B6ByNegPMKs-10__manual__2a73346a88|B6ByNegPMKs-22__manual__5070de2f55|B6ByNegPMKs-47__manual__9eae4a3584|S9hNv5qa7GM-04__manual__c93fe8a825|S9hNv5qa7GM-05__manual__3078185fd7|S9hNv5qa7GM-09__manual__v21_254|S9hNv5qa7GM-12__manual__eec3a285d1|S9hNv5qa7GM-18__manual__7d3da846c6|UwV83HsGsw3-09__manual__1a2b0afff3|UwV83HsGsw3-17__manual__b27fdc2bc6|VFuaQ6m2Qom-01__manual__5b146df96f|VFuaQ6m2Qom-03__manual__02147a8f0c|VFuaQ6m2Qom-04__manual__fbe40a551f|VLzqgDo317F-02__manual__5c35a52ccc|X7HyMhZNoso-05__manual__5212c0d241|X7HyMhZNoso-07__manual__dd2275185f|X7HyMhZNoso-19__manual__4177d22d41|Z6MFQCViBuw-03__manual__9f0ad84f43|Z6MFQCViBuw-08__manual__046839c2de|Z6MFQCViBuw-10__manual__6b973e35d3|b8cTxDM8gDG-07__manual__3eefa592b6|e9zR4mvMWw7-03__manual__8bf3d02cab|e9zR4mvMWw7-10__manual__ecf22b00ab|e9zR4mvMWw7-15__manual__64c3e640b7|e9zR4mvMWw7-32__manual__111c2ddfac|e9zR4mvMWw7-39__manual__9326cbf6d2|jtcxE69GiFV-03__manual__cff6e9a2b3|jtcxE69GiFV-04__manual__628a7c6a3a|jtcxE69GiFV-10__manual__9353efd9c9|jtcxE69GiFV-13__manual__8809c22f6e|jtcxE69GiFV-22__manual__70a3575644|jtcxE69GiFV-23__manual__c9d4c2c03b|jtcxE69GiFV-30__manual__d0ce5ff4e1|pRbA3pwrgk9-02__manual__v21_219|pRbA3pwrgk9-05__manual__bd34c00b46|pRbA3pwrgk9-07__manual__e8409547b5|pRbA3pwrgk9-10__manual__cb00db271c|pRbA3pwrgk9-14__manual__c4667a1d8c|pa4otMbVnkk-05__manual__420a0b6ed3|pa4otMbVnkk-06__manual__48064bc2d8|pa4otMbVnkk-09__manual__7b9cc79111|pa4otMbVnkk-11__manual__v21_249|pa4otMbVnkk-14__manual__1ee397d26d|pa4otMbVnkk-42__manual__d6e0ab41ee|pa4otMbVnkk-44__manual__2787d70dcb|q9vSo1VnCiC-02__manual__25b2a3db5d|q9vSo1VnCiC-15__manual__6d5ae69ee8|q9vSo1VnCiC-16__manual__v21_225|q9vSo1VnCiC-32__manual__b919efebcf|q9vSo1VnCiC-34__manual__v21_250|rPc6DW4iMge-01__manual__25b44e9036|rPc6DW4iMge-13__manual__d183e8f454|rPc6DW4iMge-17__manual__4c161a9011|uNb9QFRL6hY-01__manual__a8c2a2a06a|uNb9QFRL6hY-04__manual__1a0a2ad3cd|uNb9QFRL6hY-07__manual__52a0da301c|uNb9QFRL6hY-12__manual__15a1012a90|uNb9QFRL6hY-14__manual__a49483b09b|uNb9QFRL6hY-20__manual__4564c265d6|uNb9QFRL6hY-29__manual__bccd00a58a|uNb9QFRL6hY-40__manual__dbb73fc912|uNb9QFRL6hY-43__manual__4646114ccd|uNb9QFRL6hY-45__manual__5dc82190fe|uNb9QFRL6hY-48__manual__5a1d61d7e4|uNb9QFRL6hY-50__manual__8871891ae6|uNb9QFRL6hY-53__manual__db68acead6|uNb9QFRL6hY-56__manual__f53b4c68f3|uNb9QFRL6hY-65__manual__9acb3cd5d4|uNb9QFRL6hY-72__manual__6049ded157|uNb9QFRL6hY-78__manual__dfd88df676|uNb9QFRL6hY-82__manual__8e7ae21c8d|uNb9QFRL6hY-86__manual__v21_253|uNb9QFRL6hY-87__manual__6519a307c9|wc2JMjhGNzB-15__manual__717700d501|wc2JMjhGNzB-18__manual__d4949d0b37|wc2JMjhGNzB-20__manual__fbde0b8a63|wc2JMjhGNzB-29__manual__v21_259|wc2JMjhGNzB-40__manual__573680f8c8|wc2JMjhGNzB-53__manual__c22e59afe7|wc2JMjhGNzB-56__manual__55ecaa1ae3|wc2JMjhGNzB-59__manual__76ce9865d1|wc2JMjhGNzB-60__manual__b962d8eaa6|wc2JMjhGNzB-61__manual__045f83744e|wc2JMjhGNzB-67__manual__cd09bc8ccc|x8F5xyUWy9e-03__manual__ec015dc331|x8F5xyUWy9e-08__manual__0b13997fd3|yqstnuAEVhm-04__manual__c93631c594|yqstnuAEVhm-05__manual__b5861fa0fb|yqstnuAEVhm-25__manual__72b3cd9b76|yqstnuAEVhm-27__manual__36afe2b79d|yqstnuAEVhm-32__manual__085c02c4fa|yqstnuAEVhm-34__manual__cdcf90233b\", \"interpretation\": \"same image target n m; own class directions averaged equally; members and meanings differ; descriptive contrast, not method superiority\"}"
+    },
+    {
+      "source": "R07",
+      "filters": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"OPPJOINT_K4\", \"n\": 20, \"m\": 10, \"metric\": \"B8L2_CA\"}",
+      "values": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"OPPJOINT_K4\", \"n\": 20, \"m\": 10, \"metric\": \"B8L2_CA\", \"common_registered_pools\": 79, \"valid_common_images\": 79, \"valid_common_buildings\": 11, \"left_image_mean_absolute_change\": 3.307590861827575, \"right_image_mean_absolute_change\": 3.150373802048598, \"right_minus_left_absolute_change\": -0.1572170597789763, \"right_absolute_larger_images\": 35, \"left_full_coverage_pools\": 82, \"right_full_coverage_pools\": 107, \"common_pool_ids\": \"UwV83HsGsw3-09__manual__1a2b0afff3|UwV83HsGsw3-17__manual__b27fdc2bc6|UwV83HsGsw3-22__manual__f3e5ed92db|VLzqgDo317F-02__manual__5c35a52ccc|b8cTxDM8gDG-07__manual__3eefa592b6|jtcxE69GiFV-03__manual__cff6e9a2b3|jtcxE69GiFV-04__manual__628a7c6a3a|jtcxE69GiFV-09__manual__751e8c357b|jtcxE69GiFV-10__manual__9353efd9c9|jtcxE69GiFV-13__manual__8809c22f6e|jtcxE69GiFV-22__manual__70a3575644|jtcxE69GiFV-23__manual__c9d4c2c03b|jtcxE69GiFV-26__manual__7ff2cf23aa|jtcxE69GiFV-28__manual__19653e8bc7|jtcxE69GiFV-30__manual__d0ce5ff4e1|pRbA3pwrgk9-02__manual__v21_219|pRbA3pwrgk9-04__manual__da07b79cf0|pRbA3pwrgk9-05__manual__bd34c00b46|pRbA3pwrgk9-06__manual__3b04cf9a1d|pRbA3pwrgk9-07__manual__e8409547b5|pRbA3pwrgk9-10__manual__cb00db271c|pRbA3pwrgk9-14__manual__c4667a1d8c|pa4otMbVnkk-05__manual__420a0b6ed3|pa4otMbVnkk-06__manual__48064bc2d8|pa4otMbVnkk-09__manual__7b9cc79111|pa4otMbVnkk-10__manual__28cf269def|pa4otMbVnkk-11__manual__v21_249|pa4otMbVnkk-14__manual__1ee397d26d|pa4otMbVnkk-17__manual__d9ca524aff|pa4otMbVnkk-18__manual__bbb972aaa9|pa4otMbVnkk-42__manual__d6e0ab41ee|pa4otMbVnkk-44__manual__2787d70dcb|pa4otMbVnkk-48__manual__ec437a76cb|q9vSo1VnCiC-01__manual__00b55d1a3c|q9vSo1VnCiC-11__manual__v21_221|q9vSo1VnCiC-15__manual__6d5ae69ee8|q9vSo1VnCiC-16__manual__v21_225|q9vSo1VnCiC-30__manual__4ca90db796|q9vSo1VnCiC-34__manual__v21_250|uNb9QFRL6hY-01__manual__a8c2a2a06a|uNb9QFRL6hY-04__manual__1a0a2ad3cd|uNb9QFRL6hY-07__manual__52a0da301c|uNb9QFRL6hY-09__manual__16e55b5482|uNb9QFRL6hY-12__manual__15a1012a90|uNb9QFRL6hY-14__manual__a49483b09b|uNb9QFRL6hY-20__manual__4564c265d6|uNb9QFRL6hY-29__manual__bccd00a58a|uNb9QFRL6hY-40__manual__dbb73fc912|uNb9QFRL6hY-43__manual__4646114ccd|uNb9QFRL6hY-44__manual__v21_234|uNb9QFRL6hY-48__manual__5a1d61d7e4|uNb9QFRL6hY-50__manual__8871891ae6|uNb9QFRL6hY-53__manual__db68acead6|uNb9QFRL6hY-54__manual__v21_251|uNb9QFRL6hY-56__manual__f53b4c68f3|uNb9QFRL6hY-60__manual__21954e0443|uNb9QFRL6hY-68__manual__v21_242|uNb9QFRL6hY-72__manual__6049ded157|uNb9QFRL6hY-78__manual__dfd88df676|uNb9QFRL6hY-79__manual__c6b8ad6031|uNb9QFRL6hY-82__manual__8e7ae21c8d|uNb9QFRL6hY-86__manual__v21_253|uNb9QFRL6hY-87__manual__6519a307c9|wc2JMjhGNzB-18__manual__d4949d0b37|wc2JMjhGNzB-20__manual__fbde0b8a63|wc2JMjhGNzB-29__manual__v21_259|wc2JMjhGNzB-40__manual__573680f8c8|wc2JMjhGNzB-56__manual__55ecaa1ae3|wc2JMjhGNzB-60__manual__b962d8eaa6|wc2JMjhGNzB-67__manual__cd09bc8ccc|x8F5xyUWy9e-03__manual__ec015dc331|x8F5xyUWy9e-08__manual__0b13997fd3|yqstnuAEVhm-02__manual__a65088884b|yqstnuAEVhm-05__manual__b5861fa0fb|yqstnuAEVhm-08__manual__192666967f|yqstnuAEVhm-10__manual__a1e4e9ee47|yqstnuAEVhm-25__manual__72b3cd9b76|yqstnuAEVhm-31__manual__7b26e5d3cd|yqstnuAEVhm-34__manual__cdcf90233b\", \"interpretation\": \"same image target n m; own class directions averaged equally; members and meanings differ; descriptive contrast, not method superiority\"}"
+    },
+    {
+      "source": "R07",
+      "filters": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"OPPJOINT_K4\", \"n\": 20, \"m\": 12, \"metric\": \"B8L2_CA\"}",
+      "values": "{\"method_left\": \"OPPJOINT_K3\", \"method_right\": \"OPPJOINT_K4\", \"n\": 20, \"m\": 12, \"metric\": \"B8L2_CA\", \"common_registered_pools\": 21, \"valid_common_images\": 21, \"valid_common_buildings\": 6, \"left_image_mean_absolute_change\": 4.7996499165419415, \"right_image_mean_absolute_change\": 5.031757516667672, \"right_minus_left_absolute_change\": 0.2321076001257309, \"right_absolute_larger_images\": 12, \"left_full_coverage_pools\": 25, \"right_full_coverage_pools\": 36, \"common_pool_ids\": \"jtcxE69GiFV-30__manual__d0ce5ff4e1|pRbA3pwrgk9-04__manual__da07b79cf0|pRbA3pwrgk9-05__manual__bd34c00b46|pRbA3pwrgk9-06__manual__3b04cf9a1d|pa4otMbVnkk-14__manual__1ee397d26d|pa4otMbVnkk-48__manual__ec437a76cb|q9vSo1VnCiC-30__manual__4ca90db796|uNb9QFRL6hY-01__manual__a8c2a2a06a|uNb9QFRL6hY-04__manual__1a0a2ad3cd|uNb9QFRL6hY-12__manual__15a1012a90|uNb9QFRL6hY-14__manual__a49483b09b|uNb9QFRL6hY-20__manual__4564c265d6|uNb9QFRL6hY-43__manual__4646114ccd|uNb9QFRL6hY-48__manual__5a1d61d7e4|uNb9QFRL6hY-50__manual__8871891ae6|uNb9QFRL6hY-53__manual__db68acead6|uNb9QFRL6hY-72__manual__6049ded157|uNb9QFRL6hY-79__manual__c6b8ad6031|uNb9QFRL6hY-86__manual__v21_253|uNb9QFRL6hY-87__manual__6519a307c9|yqstnuAEVhm-25__manual__72b3cd9b76\", \"interpretation\": \"same image target n m; own class directions averaged equally; members and meanings differ; descriptive contrast, not method superiority\"}"
+    },
+    {
+      "source": "R08",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C1\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C1\", \"people\": 10, \"workers\": \"W001|W028|W030|W031|W032|W035|W037|W103|W105|W125\", \"use\": \"descriptive ALL only; actual pool capacity uses target-building-held-out labels and eligible originals\"}"
+    },
+    {
+      "source": "R08",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C2\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C2\", \"people\": 37, \"workers\": \"W006|W008|W010|W011|W012|W013|W014|W018|W029|W033|W034|W036|W100|W101|W104|W106|W107|W108|W110|W111|W113|W114|W116|W117|W118|W119|W120|W121|W123|W124|W127|W128|W129|W131|W132|W133|W134\", \"use\": \"descriptive ALL only; actual pool capacity uses target-building-held-out labels and eligible originals\"}"
+    },
+    {
+      "source": "R08",
+      "filters": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C3\"}",
+      "values": "{\"method\": \"TARGET_DSTRUCT_K3\", \"class_id\": \"C3\", \"people\": 12, \"workers\": \"W002|W015|W017|W021|W027|W102|W109|W112|W115|W122|W126|W130\", \"use\": \"descriptive ALL only; actual pool capacity uses target-building-held-out labels and eligible originals\"}"
+    },
+    {
+      "source": "R10",
+      "filters": "{\"event_id\": \"bded3837a41e1443a8d3e0c0\"}",
+      "values": "{\"event_id\": \"bded3837a41e1443a8d3e0c0\", \"pool_id\": \"VFuaQ6m2Qom-07__manual__3362ee2227\", \"image\": \"VFuaQ6m2Qom-07\", \"method\": \"TARGET_DSTRUCT_K3\", \"n_A\": 20, \"n_C\": 20, \"m_X\": 7, \"m_Z\": 7, \"source_class\": \"C2\", \"target_class\": \"C3\", \"source_class_available_n\": 23.0, \"target_class_available_n\": 7.0, \"whole_source\": false, \"whole_target\": true, \"design_family\": \"A_equal_AC|B_equal_whole_class\", \"D_workers\": \"W006|W011|W012|W013|W031|W036|W037|W100|W110|W114|W117|W129|W134\", \"X_workers\": \"W008|W015|W030|W111|W113|W128|W131\", \"Z_workers\": \"W001|W002|W017|W033|W109|W112|W126\", \"A_team_key\": \"VFuaQ6m2Qom-07__manual__3362ee2227__ea7170f6b013189458e2\", \"C_team_key\": \"VFuaQ6m2Qom-07__manual__3362ee2227__d3f942fc6b3c4d9389fa\", \"case_directory\": \"representative_cases\", \"A_B8L2\": 57.76691377063559, \"A_D10\": 63.55644315302561, \"A_IoU3D100\": 83.09060966547503, \"A_S_bottom_deg\": 0.7987726767818322, \"A_dir\": 7.546259453922351, \"A_Hmean\": 0.0669618219223141, \"A_boundary_loss\": 0.0199386809116629, \"A_direction_loss\": 0.904421774423207, \"A_height_loss\": 0.009902723652019, \"A_nodes\": 8, \"A_fusion_turn_n\": 8.0, \"A_fusion_short_turn_edges\": 2.0, \"A_ref_node_recall_5\": 0.5, \"A_ref_edge_recall_5\": 0.3125, \"A_ref_node_recall_9\": 0.5, \"A_ref_edge_recall_9\": 0.3125, \"A_geometry_area_h2\": 10.050136996657002, \"A_height_mean_h\": 1.71469183804542, \"A_centroid_x_h\": -0.8601339381146659, \"A_centroid_z_h\": -0.4474907767353815, \"A_score_status\": \"complete_conditional\", \"A_complete_projected_source_rings_n\": 5, \"A_all_groups_n\": 23, \"A_unselected_n\": 15, \"A_minimum_support\": 10, \"C_B8L2\": 62.78251153040315, \"C_D10\": 68.93571659706006, \"C_IoU3D100\": 84.91212968121314, \"C_S_bottom_deg\": 0.717638693773727, \"C_dir\": 6.259710053695451, \"C_Hmean\": 0.0574318550191033, \"C_boundary_loss\": 0.0160939154625394, \"C_direction_loss\": 0.7664699019621841, \"C_height_loss\": 0.0077577657122428, \"C_nodes\": 9, \"C_fusion_turn_n\": 9, \"C_fusion_short_turn_edges\": 3, \"C_ref_node_recall_5\": 0.5625, \"C_ref_edge_recall_5\": 0.4375, \"C_ref_node_recall_9\": 0.5625, \"C_ref_edge_recall_9\": 0.4375, \"C_geometry_area_h2\": 10.074027987649789, \"C_height_mean_h\": 1.7391016906879824, \"C_centroid_x_h\": -0.8632294311538684, \"C_centroid_z_h\": -0.4365871450413856, \"C_score_status\": \"complete_conditional\", \"C_complete_projected_source_rings_n\": 8, \"C_all_groups_n\": 20, \"C_unselected_n\": 11, \"C_minimum_support\": 10, \"B8L2_C_minus_A\": 5.015597759767559, \"D10_C_minus_A\": 5.379273444034453, \"IoU3D100_C_minus_A\": 1.821520015738116, \"S_bottom_deg_C_minus_A\": -0.0811339830081051, \"dir_C_minus_A\": -1.2865494002269005, \"Hmean_C_minus_A\": -0.0095299669032108, \"boundary_loss_C_minus_A\": -0.0038447654491235, \"direction_loss_C_minus_A\": -0.1379518724610229, \"height_loss_C_minus_A\": -0.0021449579397762, \"nodes_C_minus_A\": 1, \"fusion_turn_n_C_minus_A\": 1.0, \"fusion_short_turn_edges_C_minus_A\": 1.0, \"ref_node_recall_5_C_minus_A\": 0.0625, \"ref_edge_recall_5_C_minus_A\": 0.125, \"ref_node_recall_9_C_minus_A\": 0.0625, \"ref_edge_recall_9_C_minus_A\": 0.125, \"geometry_area_h2_C_minus_A\": 0.0238909909927862, \"height_mean_h_C_minus_A\": 0.0244098526425624, \"centroid_x_h_C_minus_A\": -0.0030954930392025, \"centroid_z_h_C_minus_A\": 0.0109036316939958, \"geometry_bev_distance_AC\": 0.0141380859708011, \"geometry_centroid_distance_AC\": 0.011334516367012, \"time_comparable_source_count_AC\": false, \"time_comparable_single_source_AC\": false, \"record_time_CA_seconds_source_matched\": null, \"record_time_CA_pct_source_matched\": null, \"record_time_CA_seconds_single_source\": null, \"record_time_CA_pct_single_source\": null}"
+    }
+  ]
+}

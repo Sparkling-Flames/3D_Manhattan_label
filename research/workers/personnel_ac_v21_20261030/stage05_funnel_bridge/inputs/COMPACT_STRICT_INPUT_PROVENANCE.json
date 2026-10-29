@@ -1,0 +1,38 @@
+{
+  "selection": "Only already completed ordinary Manual current-method m7/8 and m9/10 identities and required existing metrics; no fusion or scoring.",
+  "previous_full_identity_overlap_counts": {
+    "old_integrated_event_rows": 19480,
+    "completed_stage03_rows": 6548,
+    "completed_stage03_already_in_integrated": 6548
+  },
+  "source_sha256_receipts": [
+    {
+      "path": "HOHONET_v21_reaudit_20261029/stage02_comparison/abc_integrated/COMBINED_UNION_EVENTS_WITH_ROLES.csv.gz",
+      "sha256": "3020c8adede084538450fb060c815a8b69d6134ee95f7ac71d8d01293241aa92"
+    },
+    {
+      "path": "HOHONET_v21_reaudit_20261029/stage03_completed_abc/EVENT_METRICS.csv.gz",
+      "sha256": "6d058356a216b0912e18f2e8da4cae027df727a28d6dc221dfc4ae07a14bf85e"
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage05_funnel_bridge/inputs/STRICT_LARGE_EVENT_METRICS.csv.gz",
+      "sha256": "e62fc1d1e9c6c08f329dc9eee981f67033201ffb7f4bdb805516467745b53a10"
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "sha256": "498fec6c06f29e377498e349b1db0466bfde6531f51bc73631e8a599b3f64010"
+    }
+  ],
+  "compact_inputs": [
+    {
+      "file": "PRIOR_STRICT_M7_M8_INPUT_SUBSET.csv.gz",
+      "bytes": 3276587,
+      "sha256": "fd1aa251fc649d54b20c17a062064f842c881ebffe53b665dd5a552cdaf0b5a7"
+    },
+    {
+      "file": "LATEST_STRICT_M9_M10_INPUT_SUBSET.csv.gz",
+      "bytes": 7652745,
+      "sha256": "7ba942bf9b9d9521ac6b4d59a3b0a9fccf95bca2fae96ace91f8dba41c9fb5d1"
+    }
+  ]
+}

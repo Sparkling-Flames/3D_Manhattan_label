@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "pending_pools": [],
+  "measured_target_pools": 258,
+  "method_events": 471758,
+  "physical_pairs": 412839,
+  "unique_teams": 478012,
+  "design_family_event_orientation_occurrences": 550742,
+  "pool_method_n_m_state_cells": 135041,
+  "family_input_direction_state_cells": 145255,
+  "global_physical_state_cells": 27,
+  "both_Q_missing_method_events": 1188,
+  "both_Q_missing_physical_pairs": 997,
+  "both_Q_missing_different_output_states_physical_pairs": 71,
+  "raw_score_status_codes": [
+    "below_four",
+    "complete_conditional",
+    "invalid_floor",
+    "no_connection"
+  ],
+  "physical_and_team_state_identity_consistency_passed": true,
+  "no_Q_imputation": true,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "legacy_no_connection_means_no_usable_candidate_points_not_proof_of_pure_connection_failure": true,
+  "denominator_notes": [
+    "Pool/method table counts canonical method events.",
+    "Design-family table deduplicates event/family/input-sign links, restores the design input orientation, and is not additive across families.",
+    "Global table counts each unordered physical endpoint pair once; its low/high key order has no treatment meaning.",
+    "Unique-team table counts each requested native endpoint once; pairs sharing that endpoint are not independent teams.",
+    "Two missing-Q arms can have zero risk change, including distinct failure or reference/measurement states; raw output-state combinations remain explicit."
+  ],
+  "seconds": 59.67552978400272
+}

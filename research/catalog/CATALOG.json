@@ -13101,6 +13101,110 @@
         "tools/thesis_main/analysis/strict_large_block_cases_v21_20261029.py",
         "tests/test_strict_large_blocks_v21.py"
       ]
+    },
+    {
+      "id": "MAT-doorway_review_20261030",
+      "title": "门洞交界人工空间审核",
+      "theme": "data",
+      "type": "人工审核工作台",
+      "date": "20261030",
+      "source_path": "research/data/doorway_review_20261030",
+      "current_path": "research/data/doorway_review_20261030",
+      "source": "v2.1库存与冻结原答；用户首审",
+      "adoption_status": "待人工审核，不改变参考与评分",
+      "verification_status": "20图双边界预切与原图静态投影检查；Node测试通过；浏览器连接超时，交互验收未完成",
+      "availability": "本地离线页面",
+      "relationships": [
+        "tools/thesis_main/analysis/build_doorway_review_20261030.py",
+        "tools/thesis_main/analysis/build_doorway_review_20261030.js",
+        "tests/doorway_review.test.cjs"
+      ]
+    },
+    {
+      "id": "MAT-v21_ac_population_questions_review_20261030",
+      "title": "直接AC与完整类别组合独立核对：混合人群、方向和成员背景",
+      "theme": "workers",
+      "type": "独立审查 / 混合人群解释",
+      "date": "20261030",
+      "source_path": "research/workers/personnel_ac_review_20261030/README.md",
+      "current_path": "research/workers/personnel_ac_review_20261030/README.md",
+      "source": "HOHONET_v21_AC系列13科研包与当前原主目标/其它合法空间人员池",
+      "adoption_status": "支持完整类别组合、定向AC与同配比成员背景解释；不替代严格ABC或原参考语义裁定",
+      "verification_status": "12410组合成员；42656 Manual组合容量/执行键；83326有向结果键及差；28原生保存端点；四重点条件与背景重聚合；未重跑原生融合",
+      "availability": "报告、复算CSV和脚本在仓库；源ZIP仍在Downloads",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_ac_population_questions_20261030.py",
+        "research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_ac_population_archive_20261030",
+      "title": "v2.1完整类别组合、直接AC与整类人群13包归档",
+      "theme": "workers",
+      "type": "科研源表、名单、几何、复现与版本映射",
+      "date": "20261030",
+      "source_path": "research/workers/personnel_ac_v21_20261030/README.md",
+      "current_path": "research/workers/personnel_ac_v21_20261030/README.md",
+      "source": "已核AC主表、13包作者原件及既有v2.1下游",
+      "adoption_status": "TARGET主结构解释，OPPJOINT画像、RFUSE反向、RAW3补充；旧v2保留",
+      "verification_status": "定向统计审查沿用原回执，归档/数据接合与交互逻辑检查；真实浏览器未完成",
+      "availability": "仓库离线文件，无下载目录复算依赖",
+      "relationships": [
+        "research/workers/personnel_ac_v21_20261030/IMPORT_RECEIPT.json",
+        "research/workers/personnel_ac_v21_20261030/WORKBENCH_CHECKS.json",
+        "research/workers/personnel_ac_review_20261030/README.md",
+        "tools/thesis_main/analysis/import_v21_ac_20261030.py",
+        "tools/thesis_main/analysis/build_v21_ac_workbench_20261030.py",
+        "tests/test_v21_ac_archive.py",
+        "tests/v21_ac_workbench.test.cjs",
+        "docs/thesis_main/论文提纲改动方案_v2.1_20261030.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_ac_population_workbench_20261030",
+      "title": "v2.1模拟不同类型人群离线研究页",
+      "theme": "workers",
+      "type": "离线页面与指标/名单接入",
+      "date": "20261030",
+      "source_path": "research/statistics/research_explorer_v1_r2_20261017/v21-population-study.html",
+      "current_path": "research/statistics/research_explorer_v1_r2_20261017/v21-population-study.html",
+      "source": "已核AC主表、13包作者原件及既有v2.1下游",
+      "adoption_status": "TARGET主结构解释，OPPJOINT画像、RFUSE反向、RAW3补充；旧v2保留",
+      "verification_status": "定向统计审查沿用原回执，归档/数据接合与交互逻辑检查；真实浏览器未完成",
+      "availability": "仓库离线文件，无下载目录复算依赖",
+      "relationships": [
+        "research/workers/personnel_ac_v21_20261030/IMPORT_RECEIPT.json",
+        "research/workers/personnel_ac_v21_20261030/WORKBENCH_CHECKS.json",
+        "research/workers/personnel_ac_review_20261030/README.md",
+        "tools/thesis_main/analysis/import_v21_ac_20261030.py",
+        "tools/thesis_main/analysis/build_v21_ac_workbench_20261030.py",
+        "tests/test_v21_ac_archive.py",
+        "tests/v21_ac_workbench.test.cjs",
+        "docs/thesis_main/论文提纲改动方案_v2.1_20261030.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_population_lecture_20261030",
+      "title": "v2.1独立讲解、v2变化与Word提纲调整方案",
+      "theme": "workers",
+      "type": "讲解材料与写作交接",
+      "date": "20261030",
+      "source_path": "docs/thesis_main/研究讲解_v2.1_人群构成与共识_20261030.md",
+      "current_path": "docs/thesis_main/研究讲解_v2.1_人群构成与共识_20261030.md",
+      "source": "已核AC主表、13包作者原件及既有v2.1下游",
+      "adoption_status": "TARGET主结构解释，OPPJOINT画像、RFUSE反向、RAW3补充；旧v2保留",
+      "verification_status": "定向统计审查沿用原回执，归档/数据接合与交互逻辑检查；真实浏览器未完成",
+      "availability": "仓库离线文件，无下载目录复算依赖",
+      "relationships": [
+        "research/workers/personnel_ac_v21_20261030/IMPORT_RECEIPT.json",
+        "research/workers/personnel_ac_v21_20261030/WORKBENCH_CHECKS.json",
+        "research/workers/personnel_ac_review_20261030/README.md",
+        "tools/thesis_main/analysis/import_v21_ac_20261030.py",
+        "tools/thesis_main/analysis/build_v21_ac_workbench_20261030.py",
+        "tests/test_v21_ac_archive.py",
+        "tests/v21_ac_workbench.test.cjs",
+        "docs/thesis_main/论文提纲改动方案_v2.1_20261030.md"
+      ]
     }
   ]
 }

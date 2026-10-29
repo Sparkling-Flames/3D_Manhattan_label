@@ -1,0 +1,125 @@
+{
+  "status": "passed",
+  "scope": "fixed-XZ four-endpoint mechanism; no eligibility/reference/label reaudit",
+  "physical_background_comparison_id": "5dc840756afc850b8193a1c5",
+  "same_XZ": true,
+  "n": 11,
+  "m": 9,
+  "D_each": 2,
+  "MV50_minimum": 6,
+  "same_Z_original_observations_checked": 43,
+  "same_Z_original_coordinates_identical": true,
+  "all_four_original_native_geometries_preserved_exactly": true,
+  "immutable_core_coassignment_summary": [
+    {
+      "arm": "A",
+      "immutable_observations": 50,
+      "all_unordered_observation_pairs": 1225,
+      "new_coassignments": 0,
+      "removed_coassignments": 8,
+      "B_selected_core_support_json": "[6, 7, 9, 9]",
+      "F_selected_core_support_json": "[6, 7, 8, 9]"
+    },
+    {
+      "arm": "C",
+      "immutable_observations": 43,
+      "all_unordered_observation_pairs": 903,
+      "new_coassignments": 13,
+      "removed_coassignments": 4,
+      "B_selected_core_support_json": "[5, 7, 7, 9]",
+      "F_selected_core_support_json": "[4, 7, 7, 7, 9]"
+    }
+  ],
+  "common_C_node005_center_and_observation_members_exactly_equal": true,
+  "all_group_centers_resolved": true,
+  "old_C_selected_nodes": 4,
+  "new_C_selected_nodes": 5,
+  "mechanism": "W034/source_pair0 changes identity-group coassignment; four unchanged Z observations plus two F-background observations produce support 6 at the new selected group. Identity regrouping and crossing the full-team MV50 threshold both occur.",
+  "old_group0_workers": [
+    "W008",
+    "W013",
+    "W029"
+  ],
+  "old_group9_workers": [
+    "W034",
+    "W122"
+  ],
+  "new_group0_workers": [
+    "W008",
+    "W013",
+    "W017",
+    "W029",
+    "W034",
+    "W126"
+  ],
+  "old_C_complete_projected_source_ring_workers": [
+    "W014",
+    "W034"
+  ],
+  "new_C_complete_projected_source_ring_workers": [
+    "W034"
+  ],
+  "selected_edge005_to000_direct_and_projected_support": 3,
+  "all_edges_majority_supported": false,
+  "reference_nodes": 8,
+  "old_C_ref_node_recall9": 0.375,
+  "new_C_ref_node_recall9": 0.5,
+  "reference_edge_recall9_unchanged": 0.25,
+  "improvements": [
+    "B8L2",
+    "D10",
+    "omission_decreased",
+    "boundary_loss_decreased",
+    "direction_loss_decreased"
+  ],
+  "adverse_components": [
+    "extension_increased",
+    "height_loss_increased"
+  ],
+  "residual_interpretation": "A higher scored conditional output still omits reference structure; one complete source ring and sub-majority edge supports are not evidence of majority support for the whole cycle.",
+  "one_ulp_scope": "B_A derived footprint[0][1] only; ERP points, topology/IDs and other geometry fields exactly identical; exported native geometry remains original; full_state retains the raw trace candidate.",
+  "one_ulp_absolute_difference": 4.440892098500626e-16,
+  "derived_geometry_json_hash_identical": false,
+  "no_counterfactual_claim_that_removing_one_person_at_changed_n_would_remove_node": true,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_teams": 0,
+  "source_files": [
+    {
+      "path": "stage05_funnel_bridge/BACKGROUND_WC2_53_REPRESENTATIVE_SELECTION.json",
+      "sha256": "6a8b98ff3300d221e10b424d9c50cdfd1c4ce3dfc4aa851ec8ed55dfbc40eb8f"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_diagnostics/before_saved.json.gz",
+      "sha256": "399ab90ba2d17af9677b98ff54125a14320b98b90691da35fec5a399182dd14b"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_diagnostics/after_trace.json.gz",
+      "sha256": "e7084f99a3196e886091b46f716870b4694ef7d23cdd9761fb19133a3952535c"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_endpoints/wc2JMjhGNzB-53__manual__c22e59afe7__ed99944b911083a8cc98.json.gz",
+      "sha256": "ad2cc4abb78c970378be6ed7b63f70d8413ee827179624988abcf7cdea2b062d"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_endpoints/wc2JMjhGNzB-53__manual__c22e59afe7__bbd89064907df937d8d5.json.gz",
+      "sha256": "a9c64eb42784da32f1ad3a9da59aa214d84ec60ef9e0b075d1cd271df3be9cdf"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_endpoints/wc2JMjhGNzB-53__manual__c22e59afe7__ce1c034870d4a0d07b61.json.gz",
+      "sha256": "408a43ef85c893640001c9203fe56688b0e32f0bb0cef905b803d7faee3d52f5"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/trace_endpoints/wc2JMjhGNzB-53__manual__c22e59afe7__09302abfd444a62e3290.json.gz",
+      "sha256": "e5d1315f96ec7e00af6f4a6189d91a4a3fbd39aaff8d830f6c44a4e347ee0621"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/traces/a2a4d60db38fc97514fc4787.json.gz",
+      "sha256": "e1c4a1c2d957430d498897ad418ba64b76837d0715eb65d1a4ded5d44cb20f52"
+    },
+    {
+      "path": "stage06_cases/background_wc2_53/traces/d9b7c93f6401a538bc2d7d36.json.gz",
+      "sha256": "d12e1b5ae9a63a2b484d84f40b86559a6cd134b89604b3909699448fae21622c"
+    }
+  ]
+}

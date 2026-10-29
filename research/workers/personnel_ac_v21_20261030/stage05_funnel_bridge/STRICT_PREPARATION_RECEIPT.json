@@ -1,0 +1,39 @@
+{
+  "status": "completed_existing_results_normalization_only",
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "old_integrated_event_rows": 19480,
+  "completed_stage03_rows": 6548,
+  "completed_stage03_already_in_integrated": 6548,
+  "selected_prior_m7_m8_rows": 6367,
+  "selected_latest_m9_m10_rows": 12480,
+  "normalized_strict_events": 18847,
+  "physical_ABC_duplicates_removed": 0,
+  "strict_AC_BC_index_rows": 37694,
+  "strict_unique_physical_AC_BC_pairs": 35051,
+  "new_registered_method_events_matching_strict_pair": 0,
+  "new_registered_physical_pairs_matching_strict_pair": 0,
+  "new_to_strict_link_rows": 0,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_labels": 0,
+  "new_AC_does_not_estimate_cross_minus_within": true,
+  "current_inputs": [
+    {
+      "path": "HOHONET_v21_reaudit_20261029/stage02_comparison/abc_integrated/COMBINED_UNION_EVENTS_WITH_ROLES.csv.gz",
+      "sha256": "3020c8adede084538450fb060c815a8b69d6134ee95f7ac71d8d01293241aa92"
+    },
+    {
+      "path": "HOHONET_v21_reaudit_20261029/stage03_completed_abc/EVENT_METRICS.csv.gz",
+      "sha256": "6d058356a216b0912e18f2e8da4cae027df727a28d6dc221dfc4ae07a14bf85e"
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage05_funnel_bridge/inputs/STRICT_LARGE_EVENT_METRICS.csv.gz",
+      "sha256": "e62fc1d1e9c6c08f329dc9eee981f67033201ffb7f4bdb805516467745b53a10"
+    },
+    {
+      "path": "HOHONET_v21_AC_population_20261029/stage01_capacity/FROZEN_ROLE_PARENT_MAP_ALL_LOBO.csv",
+      "sha256": "498fec6c06f29e377498e349b1db0466bfde6531f51bc73631e8a599b3f64010"
+    }
+  ],
+  "aggregation": "Average available backgrounds within each exact block, then equal-weight blocks within pool/method/direction/n/m; retain metric-specific valid denominators."
+}

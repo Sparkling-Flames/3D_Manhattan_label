@@ -1,0 +1,401 @@
+{
+  "status": "selection_frozen_before_effect_extraction",
+  "source": "stage05_main/CONDITION_METRIC_SUMMARY.csv.gz",
+  "source_sha256": "00b7f504b65a2c6cc91f6bce9dc125ed0207f8309f211592779eeff6802635b5",
+  "no_target_effect_used_to_select": true,
+  "no_new_fusion_or_score": true,
+  "semi_classes_are_lexical_not_Q_order": true,
+  "small_single_other_semi_is_inventory_only": true,
+  "selections": [
+    {
+      "selection_id": "other_target_fixed_1",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->2",
+        "n_condition": "6",
+        "m_condition": "3"
+      },
+      "selection_reason": "Preserve adopted Manual main classification; smallest registered half-team fixed condition n6/m3; retain all three directions regardless of outcomes.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->2",
+        "n_condition": "6",
+        "m_condition": "3",
+        "registered_pools": 6,
+        "registered_pairs": 44,
+        "registered_images": 6,
+        "registered_buildings": 3
+      }
+    },
+    {
+      "selection_id": "other_target_frontier_1",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Same adopted method and all three directions at each pool maximum common n; show supported wider actual target scope; aggregate of whole definitions, not a fixed-m comparison.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 16,
+        "registered_pairs": 79,
+        "registered_images": 15,
+        "registered_buildings": 6
+      }
+    },
+    {
+      "selection_id": "other_target_fixed_2",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->3",
+        "n_condition": "6",
+        "m_condition": "3"
+      },
+      "selection_reason": "Preserve adopted Manual main classification; smallest registered half-team fixed condition n6/m3; retain all three directions regardless of outcomes.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->3",
+        "n_condition": "6",
+        "m_condition": "3",
+        "registered_pools": 4,
+        "registered_pairs": 19,
+        "registered_images": 4,
+        "registered_buildings": 2
+      }
+    },
+    {
+      "selection_id": "other_target_frontier_2",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Same adopted method and all three directions at each pool maximum common n; show supported wider actual target scope; aggregate of whole definitions, not a fixed-m comparison.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 15,
+        "registered_pairs": 50,
+        "registered_images": 15,
+        "registered_buildings": 6
+      }
+    },
+    {
+      "selection_id": "other_target_fixed_3",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_condition": "6",
+        "m_condition": "3"
+      },
+      "selection_reason": "Preserve adopted Manual main classification; smallest registered half-team fixed condition n6/m3; retain all three directions regardless of outcomes.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "A_fixed_n",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_condition": "6",
+        "m_condition": "3",
+        "registered_pools": 5,
+        "registered_pairs": 48,
+        "registered_images": 5,
+        "registered_buildings": 3
+      }
+    },
+    {
+      "selection_id": "other_target_frontier_3",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Same adopted method and all three directions at each pool maximum common n; show supported wider actual target scope; aggregate of whole definitions, not a fixed-m comparison.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "analysis_view": "whole_equal_pool_frontier",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 18,
+        "registered_pairs": 107,
+        "registered_images": 17,
+        "registered_buildings": 6
+      }
+    },
+    {
+      "selection_id": "semi_behavior_coarse",
+      "source_key": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_COARSE",
+        "role_direction": "S1->S2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Use each existing Semi V3 coarse method direction with greatest registered image coverage, and its corresponding main fine pair; selected by registration support only, never Q sign/magnitude.",
+      "registration_only": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_COARSE",
+        "role_direction": "S1->S2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 28,
+        "registered_pairs": 114,
+        "registered_images": 28,
+        "registered_buildings": 12
+      }
+    },
+    {
+      "selection_id": "semi_behavior_fine",
+      "source_key": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S2.1",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Use each existing Semi V3 coarse method direction with greatest registered image coverage, and its corresponding main fine pair; selected by registration support only, never Q sign/magnitude.",
+      "registration_only": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S2.1",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 27,
+        "registered_pairs": 100,
+        "registered_images": 27,
+        "registered_buildings": 12
+      }
+    },
+    {
+      "selection_id": "semi_joint_coarse",
+      "source_key": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_COARSE",
+        "role_direction": "K1->K2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Use each existing Semi V3 coarse method direction with greatest registered image coverage, and its corresponding main fine pair; selected by registration support only, never Q sign/magnitude.",
+      "registration_only": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_COARSE",
+        "role_direction": "K1->K2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 25,
+        "registered_pairs": 119,
+        "registered_images": 25,
+        "registered_buildings": 12
+      }
+    },
+    {
+      "selection_id": "semi_joint_fine",
+      "source_key": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_FINE",
+        "role_direction": "K1.1->K2.1",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Use each existing Semi V3 coarse method direction with greatest registered image coverage, and its corresponding main fine pair; selected by registration support only, never Q sign/magnitude.",
+      "registration_only": {
+        "scope": "primary",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_FINE",
+        "role_direction": "K1.1->K2.1",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 25,
+        "registered_pairs": 112,
+        "registered_images": 25,
+        "registered_buildings": 12
+      }
+    },
+    {
+      "selection_id": "semi_other_inventory_1",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S1.3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Retain all existing whole-frontier directions in the sole admitted other-target Semi pool as one-image inventory, not general support.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S1.3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 1,
+        "registered_pairs": 1,
+        "registered_images": 1,
+        "registered_buildings": 1
+      }
+    },
+    {
+      "selection_id": "semi_other_inventory_2",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S1.2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Retain all existing whole-frontier directions in the sole admitted other-target Semi pool as one-image inventory, not general support.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.1->S1.2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 1,
+        "registered_pairs": 2,
+        "registered_images": 1,
+        "registered_buildings": 1
+      }
+    },
+    {
+      "selection_id": "semi_other_inventory_3",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.2->S1.3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Retain all existing whole-frontier directions in the sole admitted other-target Semi pool as one-image inventory, not general support.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_BEHAVIOR_FINE",
+        "role_direction": "S1.2->S1.3",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 1,
+        "registered_pairs": 2,
+        "registered_images": 1,
+        "registered_buildings": 1
+      }
+    },
+    {
+      "selection_id": "semi_other_inventory_4",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_COARSE",
+        "role_direction": "K4->K5",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Retain all existing whole-frontier directions in the sole admitted other-target Semi pool as one-image inventory, not general support.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_COARSE",
+        "role_direction": "K4->K5",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 1,
+        "registered_pairs": 1,
+        "registered_images": 1,
+        "registered_buildings": 1
+      }
+    },
+    {
+      "selection_id": "semi_other_inventory_5",
+      "source_key": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_FINE",
+        "role_direction": "K4.1->K5.2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m"
+      },
+      "selection_reason": "Retain all existing whole-frontier directions in the sole admitted other-target Semi pool as one-image inventory, not general support.",
+      "registration_only": {
+        "scope": "other_admitted",
+        "condition": "semi",
+        "analysis_view": "Semi_whole_equal_pool_frontier",
+        "method": "V3_JOINT_QT_FINE",
+        "role_direction": "K4.1->K5.2",
+        "n_condition": "N_minus_m",
+        "m_condition": "whole_class_actual_m",
+        "registered_pools": 1,
+        "registered_pairs": 1,
+        "registered_images": 1,
+        "registered_buildings": 1
+      }
+    }
+  ]
+}

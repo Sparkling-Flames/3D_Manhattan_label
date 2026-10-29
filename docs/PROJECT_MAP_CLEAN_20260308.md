@@ -1,6 +1,8 @@
 - **半队替换接续：** [逐图难度、幅度/升降/不可评诊断](../research/data/releases/v2.1/simulated_population_evidence/exchange/README.md)与[原答距离恢复](../research/workers/personnel_v21_reselection_20261029/raw_similarity/RAW_ANSWER_SIMILARITY_ZH.md)已提供；分类方法仍待Pro研究。
 
 
+- [v2.1混合人群讲解](thesis_main/研究讲解_v2.1_人群构成与共识_20261030.md)与[AC完整归档](../research/workers/personnel_ac_v21_20261030/README.md)：完整类别组合、整类/较大团队、八维结果及新研究页；[Word提纲仅改动方案](thesis_main/论文提纲改动方案_v2.1_20261030.md)。
+
 - [v2.1最终分类下游接续](../research/data/releases/v2.1/final_classification_downstream/README.md)：TARGET主分类的同房重聚合、旧ABC适用性、成员敏感性与研究台接入说明；旧v2独立保留。
 - **人员报告按版本分开：** [v2.1 OPPJOINT](thesis_main/人员分类与换人研究_v2.1_OPPJOINT_20261029.md)与[v2冻结报告](thesis_main/人员分类与构成不确定性_研究组织与比较清单_20261022.md)分别维护；5人仅为20人队的一项展示，固定A实验另有更大替换块。
 
@@ -378,3 +380,5 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - **2026-10-24融合/质量方法验证：** [固定共同面板](../research/fusion/fusion_common_panel_20261024/README.md)和[25对人工页](../research/quality/quality_independent_validation_20261024/README.md)各自归档；新增两个Python入口、浏览器QA脚本与关键几何测试，正式算法/评分/资格不变；25题答案与comment视觉复核已接回主题包，未作全局效度认证。
 
 2026-10-24：[D10形成链与融合共同面板独立验收](../research/statistics/research_closeout_20261022/METHOD_SUPPLEMENT_ACCEPTANCE_20261024.md)已完成，含常数η²修复与真实重算边界；接入安排沿用主线研究台任务文档。
+
+- [门洞交界人工空间审核](../research/data/doorway_review_20261030/README.md)：20图708份，离线切分与四项分类，研究草稿，不采用新评分。

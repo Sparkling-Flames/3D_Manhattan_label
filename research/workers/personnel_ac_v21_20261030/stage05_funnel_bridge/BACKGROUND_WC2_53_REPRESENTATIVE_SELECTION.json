@@ -1,0 +1,123 @@
+{
+  "status": "selected_from_complete_registered_substudy",
+  "purpose": "one mechanism example close to cell-average background effect, not maximum effect",
+  "substudy_registered_method_comparisons": 120,
+  "substudy_physical_comparisons": 108,
+  "cell_registered_method_background_comparisons": 8,
+  "cell_joint_Q_evaluable_unique_physical_comparisons": 6,
+  "cell_average_F_minus_B_B8L2": 31.64622246121768,
+  "selection_rule": "Among four-endpoint B8L2-evaluable unique physical comparisons in this pool/n11/m9, minimize absolute distance to the frozen per-condition mean; tie by physical ID. Prefer TARGET label when the physical comparison is also RAW.",
+  "selection_uses_results_for_mechanism_case_only": true,
+  "new_design_or_teams": false,
+  "selected_background_comparison": {
+    "pool_id": "wc2JMjhGNzB-53__manual__c22e59afe7",
+    "method": "TARGET_DSTRUCT_K3",
+    "n": 11,
+    "m": 9,
+    "canonical_source_class": "C1",
+    "canonical_target_class": "C2",
+    "image": "wc2JMjhGNzB-53",
+    "building": "wc2JMjhGNzB",
+    "background_comparison_id": "cc0560dc291fb5106d5445d9",
+    "physical_background_comparison_id": "5dc840756afc850b8193a1c5",
+    "F_event_id": "d9b7c93f6401a538bc2d7d36",
+    "B_event_id": "a2a4d60db38fc97514fc4787",
+    "F_physical_pair_id": "99b7df5326765738ac2e67db",
+    "B_physical_pair_id": "5c11ad86fe66f194cccc32a1",
+    "X_workers": "W001|W018|W028|W030|W031|W032|W037|W103|W125",
+    "Z_workers": "W008|W010|W012|W013|W014|W029|W034|W120|W128",
+    "F_D_workers": "W017|W126",
+    "B_D_workers": "W027|W122",
+    "F_D_class_counts": "{\"C2\":1,\"C3\":1}",
+    "B_D_class_counts": "{\"C3\":2}",
+    "D_identity_equal": false,
+    "D_class_composition_equal": false,
+    "F_A_team_key": "wc2JMjhGNzB-53__manual__c22e59afe7__ce1c034870d4a0d07b61",
+    "F_C_team_key": "wc2JMjhGNzB-53__manual__c22e59afe7__09302abfd444a62e3290",
+    "B_A_team_key": "wc2JMjhGNzB-53__manual__c22e59afe7__ed99944b911083a8cc98",
+    "B_C_team_key": "wc2JMjhGNzB-53__manual__c22e59afe7__bbd89064907df937d8d5",
+    "F_has_main_A_or_B_equal_link": false,
+    "B_has_main_A_or_B_equal_link": false,
+    "overlaps_broader_main_AB_background_study": false,
+    "strict_to_canonical_sign": -1,
+    "strict_source_class": "C2",
+    "strict_target_class": "C1",
+    "strict_background_space_equals_outside_classes": false
+  },
+  "selected_F_B8L2_delta_canonical": 30.70234352441357,
+  "selected_B_B8L2_delta_canonical": -2.7559665849052166,
+  "selected_F_minus_B_B8L2": 33.45831010931879,
+  "distance_to_cell_mean": 1.8120876481011088,
+  "maximum_candidate_F_minus_B_not_selected": 76.236154310768,
+  "duplicate_method_views": [
+    {
+      "method": "TARGET_DSTRUCT_K3",
+      "background_comparison_id": "cc0560dc291fb5106d5445d9",
+      "F_event_id": "d9b7c93f6401a538bc2d7d36",
+      "B_event_id": "a2a4d60db38fc97514fc4787"
+    },
+    {
+      "method": "V21_DSTRUCT_RAW3_K3",
+      "background_comparison_id": "5e985be1ecfccb7e0a392659",
+      "F_event_id": "782e04eae3c51e37e1c36539",
+      "B_event_id": "3f27faebddd96b72c7d69594"
+    }
+  ],
+  "canonical_direction": "C1 -> C2 (historical effective-turn rank 1 -> 2 in these frozen partitions)",
+  "historical_strict_source_direction": "C2 -> C1; strict_to_canonical_sign = -1",
+  "original_design_links": [
+    {
+      "bridge_strict_source_class": null,
+      "bridge_strict_target_class": null,
+      "design_family": "B_unequal_equal_size_anchor",
+      "event_id": "a2a4d60db38fc97514fc4787",
+      "input_orientation_sign": 1
+    },
+    {
+      "bridge_strict_source_class": "C2",
+      "bridge_strict_target_class": "C1",
+      "design_family": "F_strict_common_n_bridge",
+      "event_id": "d9b7c93f6401a538bc2d7d36",
+      "input_orientation_sign": 1
+    }
+  ],
+  "both_AC_events_are_new_registered_events_not_prior_strict_endpoints": true,
+  "D_changed_people_and_class_composition": true,
+  "F_D_class_counts": {
+    "C2": 1,
+    "C3": 1
+  },
+  "B_D_class_counts": {
+    "C3": 2
+  },
+  "minimum_support_for_all_four_teams": 6,
+  "replacement_block_size": 9,
+  "background_size": 2,
+  "block_capacity_alone_does_not_prove_node_identity_or_connection": true,
+  "source_hashes": [
+    {
+      "path": "stage05_funnel_bridge/STRICT66_EXACT_BACKGROUND_EFFECTS.csv.gz",
+      "sha256": "49a2c4e9e789a8f4b38bbf8d410ecac5d8e0efcc05d09f6cb89ec437bdf45c74"
+    },
+    {
+      "path": "stage05_funnel_bridge/STRICT66_EXACT_F_NEUTRAL_VS_B_OUTSIDE_BACKGROUND_PAIRS.csv.gz",
+      "sha256": "9cd1627bed9fc13f5f3aeb563bd2c6647a1a15fa0057a3a6307944c4e1820849"
+    },
+    {
+      "path": "stage04_metrics/metric_shards/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz",
+      "sha256": "59d6bf4153459d210e66cf149f94e2fd7827692bf7e9ab8efdc8f47038ff78c0"
+    },
+    {
+      "path": "stage03_endpoints/pools/wc2JMjhGNzB-53__manual__c22e59afe7/part_00001.jsonl.gz",
+      "sha256": "37b05736a12def2aa676a3e2e3f76bd15a873986fb2ba5ccd3f83cf61aebe089"
+    },
+    {
+      "path": "stage03_endpoints/pools/wc2JMjhGNzB-53__manual__c22e59afe7/part_00005.jsonl.gz",
+      "sha256": "9c4c346417c59a1130f4a07e7785f009650642f27327792d2b82b48a3ef1d3ba"
+    },
+    {
+      "path": "stage03_endpoints/pools/wc2JMjhGNzB-53__manual__c22e59afe7/part_00020.jsonl.gz",
+      "sha256": "c633e0f864c5d2a3d3721b5039c3ac144ffae498f8bf7b5b68c705d3e0b8e368"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "status": "historical_staging_excluded_from_recommended_clean_archive",
+  "source_immutable": true,
+  "artifacts": [
+    {
+      "archive": "HOHONET_v21_AC_stage02_frozen_design.zip",
+      "path": "stage01b_semi/AC_EVENTS.csv.gz.partial",
+      "category": "preserved_staging_artifact",
+      "use_for_analysis": false,
+      "authoritative_replacement": "stage01b_semi/AC_EVENTS.csv.gz",
+      "replacement_complete_csv_rows": 47914,
+      "formal_merged_design": "stage01_registered/AC_EVENTS.csv.gz",
+      "what_was_verified": "ZIP member bytes/hash only for the .partial file; it was not treated as a formal inner gzip/CSV.",
+      "what_is_not_claimed": "No claim that the staging file is a complete parseable scientific dataset.",
+      "action": "Ignore this member in the historical archive. Download the clean archive for analysis; it includes the complete official CSV and excludes staging. Never concatenate staging with the official CSV."
+    }
+  ],
+  "no_scientific_record_removed_or_replaced": true,
+  "no_new_fusion_or_scoring": true,
+  "recommended_design_archive": "HOHONET_v21_AC_stage02_frozen_design_clean.zip",
+  "recommended_archive_sha256": "18efb296e4202a8c130dd8ef021f2eac7521581f12e0ed37934bf4c7797932b2",
+  "recommended_archive_bytes": 188661197,
+  "recommended_archive_complete_readback_passed": true,
+  "recommended_archive_upload_status": "uploaded_sha_matches_readability",
+  "recommended_archive_library_file_id": "libfile_f9a432969844819183c0321a8e72b859",
+  "old_archive_role": "history_only_not_recommended_for_new_analysis",
+  "old_archive_retained_unchanged": true,
+  "source_staging_file_retained": true,
+  "clean_repack_receipt": "delivery/clean_design_source_verification/CLEAN_DESIGN_REPACK_RECEIPT.json"
+}

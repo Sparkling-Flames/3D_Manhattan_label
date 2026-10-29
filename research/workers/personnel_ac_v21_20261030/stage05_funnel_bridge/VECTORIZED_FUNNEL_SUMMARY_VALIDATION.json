@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "matched_nonempty_cohorts": 35652,
+  "fields": {
+    "mean_change": {
+      "passed": true,
+      "max_abs_diff": 2.2737367544323206e-13
+    },
+    "median_change": {
+      "passed": true,
+      "max_abs_diff": 2.2737367544323206e-13
+    },
+    "valid_pools": {
+      "passed": true,
+      "max_abs_diff": 0.0
+    },
+    "mean_absolute_change_over_pools": {
+      "passed": true,
+      "max_abs_diff": 2.2737367544323206e-13
+    },
+    "metric_valid_events": {
+      "passed": true,
+      "max_abs_diff": 0.0
+    },
+    "p10_change": {
+      "passed": true,
+      "max_abs_diff": 4.547473508864641e-13
+    },
+    "p90_change": {
+      "passed": true,
+      "max_abs_diff": 4.547473508864641e-13
+    }
+  },
+  "purpose": "Validate the faster vectorized cohort summary against the already completed loop-based preview; no new fusion, score, or research condition."
+}

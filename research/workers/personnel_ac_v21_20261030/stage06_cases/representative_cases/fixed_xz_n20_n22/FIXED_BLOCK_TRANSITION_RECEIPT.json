@@ -1,0 +1,58 @@
+{
+  "pool_id": "S9hNv5qa7GM-04__manual__c93fe8a825",
+  "first_event": "1883f7c444eec56b77d2bee9",
+  "second_event": "c9d196878be82330b752a7fc",
+  "X_workers": [
+    "W101",
+    "W104",
+    "W105",
+    "W107",
+    "W128",
+    "W129",
+    "W131",
+    "W132",
+    "W133",
+    "W134"
+  ],
+  "Z_workers": [
+    "W106",
+    "W110",
+    "W114",
+    "W116",
+    "W117",
+    "W118",
+    "W120",
+    "W123",
+    "W124",
+    "W127"
+  ],
+  "common_D_workers": [
+    "W011",
+    "W100",
+    "W102",
+    "W108",
+    "W109",
+    "W111",
+    "W115",
+    "W122",
+    "W125",
+    "W126"
+  ],
+  "first_only_D_workers": [],
+  "second_only_D_workers": [
+    "W113",
+    "W121"
+  ],
+  "background_change_kind": "nested_background_expansion",
+  "first_n": 20,
+  "second_n": 22,
+  "m": 10,
+  "first_block_can_reach_MV50": true,
+  "second_block_can_reach_MV50": false,
+  "actual_node_supports_saved": true,
+  "no_local_group_id_equation_across_teams": true,
+  "new_teams": 0,
+  "new_fusions": 0,
+  "new_scoring": 0,
+  "interpretation": "背景人数与门槛同时改变，逐组检查实际支持而不只看块人数。Mechanism requires exact group observations and output state, not block size alone."
+}

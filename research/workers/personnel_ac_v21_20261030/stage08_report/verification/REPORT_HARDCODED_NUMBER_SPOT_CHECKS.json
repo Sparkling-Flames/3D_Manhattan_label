@@ -1,0 +1,641 @@
+[
+  {
+    "name": "registered_teams",
+    "report_value": 478012,
+    "source_value": 478012,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "frozen_requested_unique_teams",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "registered_method_events",
+    "report_value": 471758,
+    "source_value": 471758,
+    "source_path": "stage01_registered/FROZEN_MERGED_DESIGN.json",
+    "source_key": "outputs.AC_EVENTS.csv.gz.rows",
+    "source_sha256": "553c7b7c5af39dab07db85df5969ea0a93873cfd7688517b0711488e9af19faf",
+    "passed": true
+  },
+  {
+    "name": "physical_endpoint_pairs",
+    "report_value": 412839,
+    "source_value": 412839,
+    "source_path": "stage04_metrics/MEASUREMENT_RECEIPT.json",
+    "source_key": "unique_physical_pairs",
+    "source_sha256": "c1b21f7b0674d8933e3834f4b51661b2c806ed93bc8d8fae910938487c27cd7a",
+    "passed": true
+  },
+  {
+    "name": "design_links",
+    "report_value": 550794,
+    "source_value": 550794,
+    "source_path": "stage01_registered/FROZEN_MERGED_DESIGN.json",
+    "source_key": "outputs.DESIGN_LINKS.csv.gz.rows",
+    "source_sha256": "553c7b7c5af39dab07db85df5969ea0a93873cfd7688517b0711488e9af19faf",
+    "passed": true
+  },
+  {
+    "name": "new_physical_teams",
+    "report_value": 474332,
+    "source_value": 474332,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "new_physical_teams",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "old_physical_entities_replayed_for_geometry",
+    "report_value": 2027,
+    "source_value": 2027,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "old_physical_entities_replayed_for_geometry",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "full_existing_endpoint_reuse",
+    "report_value": 1653,
+    "source_value": 1653,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "full_existing_endpoint_reuse",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "native_endpoint_evaluations_in_core_endpoint_run",
+    "report_value": 476359,
+    "source_value": 476359,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "native_endpoint_evaluations_in_core_endpoint_run",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "native_endpoint_evaluations_in_first_timed_wave",
+    "report_value": 10991,
+    "source_value": 10991,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "native_endpoint_evaluations_in_first_timed_wave",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "native_endpoint_evaluations_in_continued_full_pass",
+    "report_value": 465368,
+    "source_value": 465368,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "native_endpoint_evaluations_in_continued_full_pass",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "endpoint_state_complete_conditional",
+    "report_value": 471454,
+    "source_value": 471454,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "score_status_counts.complete_conditional",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "endpoint_state_no_connection",
+    "report_value": 4635,
+    "source_value": 4635,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "score_status_counts.no_connection",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "endpoint_state_below_four",
+    "report_value": 1817,
+    "source_value": 1817,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "score_status_counts.below_four",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "endpoint_state_invalid_floor",
+    "report_value": 106,
+    "source_value": 106,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "score_status_counts.invalid_floor",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "Q_missing",
+    "report_value": 6558,
+    "source_value": 6558,
+    "source_path": "stage02_engine/EXECUTION_ACCOUNTING_CLARIFICATION.json",
+    "source_key": "Q_missing_rows",
+    "source_sha256": "01c2708007538042de3b280f0eed4c25536bc336479e198141e038cd74e1efc8",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_7_any_n_pools",
+    "report_value": 128,
+    "source_value": 128,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=7;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_8_any_n_pools",
+    "report_value": 42,
+    "source_value": 42,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=8;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_9_any_n_pools",
+    "report_value": 10,
+    "source_value": 10,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=9;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_10_any_n_pools",
+    "report_value": 3,
+    "source_value": 3,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=10;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_12_any_n_pools",
+    "report_value": 0,
+    "source_value": 0,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=12;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_10_n20_pools",
+    "report_value": 3,
+    "source_value": 3,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=10;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_TARGET_DSTRUCT_K3_12_n20_pools",
+    "report_value": 0,
+    "source_value": 0,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=TARGET_DSTRUCT_K3,m=12;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_7_any_n_pools",
+    "report_value": 124,
+    "source_value": 124,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=7;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_8_any_n_pools",
+    "report_value": 73,
+    "source_value": 73,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=8;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_9_any_n_pools",
+    "report_value": 41,
+    "source_value": 41,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=9;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_10_any_n_pools",
+    "report_value": 19,
+    "source_value": 19,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=10;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_12_any_n_pools",
+    "report_value": 6,
+    "source_value": 6,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=12;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_10_n20_pools",
+    "report_value": 19,
+    "source_value": 19,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=10;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_V21_DSTRUCT_RAW3_K3_12_n20_pools",
+    "report_value": 6,
+    "source_value": 6,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=V21_DSTRUCT_RAW3_K3,m=12;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_7_any_n_pools",
+    "report_value": 141,
+    "source_value": 141,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=7;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_8_any_n_pools",
+    "report_value": 110,
+    "source_value": 110,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=8;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_9_any_n_pools",
+    "report_value": 99,
+    "source_value": 99,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=9;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_10_any_n_pools",
+    "report_value": 86,
+    "source_value": 86,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=10;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_12_any_n_pools",
+    "report_value": 26,
+    "source_value": 26,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=12;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_10_n20_pools",
+    "report_value": 82,
+    "source_value": 82,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=10;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K3_12_n20_pools",
+    "report_value": 25,
+    "source_value": 25,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K3,m=12;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_7_any_n_pools",
+    "report_value": 156,
+    "source_value": 156,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=7;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_8_any_n_pools",
+    "report_value": 139,
+    "source_value": 139,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=8;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_9_any_n_pools",
+    "report_value": 128,
+    "source_value": 128,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=9;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_10_any_n_pools",
+    "report_value": 110,
+    "source_value": 110,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=10;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_12_any_n_pools",
+    "report_value": 38,
+    "source_value": 38,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=12;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_10_n20_pools",
+    "report_value": 107,
+    "source_value": 107,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=10;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPJOINT_K4_12_n20_pools",
+    "report_value": 36,
+    "source_value": 36,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPJOINT_K4,m=12;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_7_any_n_pools",
+    "report_value": 98,
+    "source_value": 98,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=7;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_8_any_n_pools",
+    "report_value": 41,
+    "source_value": 41,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=8;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_9_any_n_pools",
+    "report_value": 19,
+    "source_value": 19,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=9;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_10_any_n_pools",
+    "report_value": 14,
+    "source_value": 14,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=10;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_12_any_n_pools",
+    "report_value": 10,
+    "source_value": 10,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=12;any_n_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_10_n20_pools",
+    "report_value": 13,
+    "source_value": 13,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=10;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "capacity_OPPSTRUCT_K3_12_n20_pools",
+    "report_value": 9,
+    "source_value": 9,
+    "source_path": "stage01_capacity/MAIN_SCALE_BRIEF.csv",
+    "source_key": "method=OPPSTRUCT_K3,m=12;n20_pools",
+    "source_sha256": "2b36cb4c2f25f7e57558f4d5a7e8e96d21cd20939ce2372d975ea18f46368a5e",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_registered_images",
+    "report_value": 85,
+    "source_value": 85,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;registered_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_joint_scored_images",
+    "report_value": 83,
+    "source_value": 83,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;joint_scored_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_within_absQ",
+    "report_value": 4.577,
+    "source_value": 4.577,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;within_absQ",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_cross_absQ",
+    "report_value": 8.089,
+    "source_value": 8.089,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;cross_absQ",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_GA",
+    "report_value": 3.512,
+    "source_value": 3.512,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;GA",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_positive_GA_images",
+    "report_value": "61/83",
+    "source_value": "61/83",
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;positive_GA_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_registered_images",
+    "report_value": 72,
+    "source_value": 72,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;registered_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_joint_scored_images",
+    "report_value": 70,
+    "source_value": 70,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;joint_scored_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_within_absQ",
+    "report_value": 3.533,
+    "source_value": 3.533,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;within_absQ",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_cross_absQ",
+    "report_value": 4.998,
+    "source_value": 4.998,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;cross_absQ",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_GA",
+    "report_value": 1.465,
+    "source_value": 1.465,
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;GA",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_positive_GA_images",
+    "report_value": "54/70",
+    "source_value": "54/70",
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;positive_GA_images",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_14_7_positive_GS",
+    "report_value": "62/83",
+    "source_value": "62/83",
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，14人换7人;GS_positive",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "old_ABC_20_7_positive_GS",
+    "report_value": "47/70",
+    "source_value": "47/70",
+    "source_path": "stage00_intake/current_source/research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "source_key": "TARGET K3，20人换7人;GS_positive",
+    "source_sha256": "bbd3f3ccc262fe101233d09cf12632d542d1bfc1d74099b609f163a7d1d19a06",
+    "passed": true
+  },
+  {
+    "name": "strict_normalized_strict_events",
+    "report_value": 18847,
+    "source_value": 18847,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "normalized_strict_events",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_selected_prior_m7_m8_rows",
+    "report_value": 6367,
+    "source_value": 6367,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "selected_prior_m7_m8_rows",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_selected_latest_m9_m10_rows",
+    "report_value": 12480,
+    "source_value": 12480,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "selected_latest_m9_m10_rows",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_completed_stage03_already_in_integrated",
+    "report_value": 6548,
+    "source_value": 6548,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "completed_stage03_already_in_integrated",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_strict_unique_physical_AC_BC_pairs",
+    "report_value": 35051,
+    "source_value": 35051,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "strict_unique_physical_AC_BC_pairs",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_new_registered_physical_pairs_matching_strict_pair",
+    "report_value": 0,
+    "source_value": 0,
+    "source_path": "stage05_funnel_bridge/STRICT_PREPARATION_RECEIPT.json",
+    "source_key": "new_registered_physical_pairs_matching_strict_pair",
+    "source_sha256": "b8cbb9875e6b29e6540b8c0900c310e0a5e962567b1fe29949a3606d4f35102c",
+    "passed": true
+  },
+  {
+    "name": "strict_compatible_directed_conditions",
+    "report_value": 2037,
+    "source_value": 2037,
+    "source_path": "stage05_funnel_bridge/FUNNEL_AND_STRICT_BRIDGE_RECEIPT.json",
+    "source_key": "strict_directed_conditions_with_new_same_condition",
+    "source_sha256": "e141ef9f000163548ad46cc2462f02064c7d87afac8192638ba3b63bb7d6e13a",
+    "passed": true
+  }
+]
