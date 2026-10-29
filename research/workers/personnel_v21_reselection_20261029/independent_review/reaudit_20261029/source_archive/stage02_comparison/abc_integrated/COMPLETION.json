@@ -1,0 +1,70 @@
+{
+  "existing_events": 12932,
+  "new_events": 6548,
+  "new_ids_already_existing": 0,
+  "duplicate_oriented_registrations": 0,
+  "combined_events": 19480,
+  "stages": [
+    "existing_only",
+    "new_only",
+    "combined_union"
+  ],
+  "retained_n_m_grids": [
+    [
+      10,
+      7
+    ],
+    [
+      12,
+      4
+    ],
+    [
+      12,
+      6
+    ],
+    [
+      12,
+      8
+    ],
+    [
+      14,
+      7
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      18,
+      7
+    ],
+    [
+      20,
+      4
+    ],
+    [
+      20,
+      5
+    ],
+    [
+      20,
+      6
+    ],
+    [
+      20,
+      7
+    ],
+    [
+      24,
+      4
+    ],
+    [
+      26,
+      3
+    ]
+  ],
+  "aggregation": "mean backgrounds within exact XYZ block, blocks within pool, pools within image, images within building",
+  "quality_patterns": "same jointly scored event support for BA and CA, descriptive epsilon 0.1/1/2 Q; not a validated meaningful-difference threshold",
+  "same_origin_magnitude": "abs(C-A)-abs(B-A); original symmetric cross retained",
+  "new_fusions_in_this_script": 0
+}
