@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "target_status": "complete_conditional",
+      "Q_missing": false,
+      "floor_geometry_pair": true
+    },
+    {
+      "target_status": "no_connection",
+      "Q_missing": true,
+      "floor_geometry_pair": false
+    },
+    {
+      "target_status": "below_four",
+      "Q_missing": true,
+      "floor_geometry_pair": true
+    },
+    {
+      "target_status": "invalid_floor",
+      "Q_missing": true,
+      "floor_geometry_pair": false
+    }
+  ],
+  "actual_design_schema_columns": 49,
+  "measured_columns_with_full_schema": 431,
+  "duplicate_registered_derived_fields_checked": true,
+  "deliberate_pair_id_disagreement_rejected": true,
+  "streaming_column_union_gzip_verified": {
+    "rows": 2,
+    "columns": 3,
+    "acquisition_counts": {}
+  },
+  "fusion_calls": 0,
+  "score_calls": 0,
+  "classification_fits": 0,
+  "new_teams": 0,
+  "scope": "Interface validation using archived exact endpoints; these synthetic validation metadata are excluded from study events."
+}

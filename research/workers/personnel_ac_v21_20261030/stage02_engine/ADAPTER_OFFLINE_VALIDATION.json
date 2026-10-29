@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "target_status": "complete_conditional",
+      "columns": 388,
+      "Q_missing": false,
+      "observed_fusion_failure": false,
+      "geometry_floor_pair": true,
+      "event_used_only_for_interface_validation": true
+    },
+    {
+      "target_status": "no_connection",
+      "columns": 380,
+      "Q_missing": true,
+      "observed_fusion_failure": true,
+      "geometry_floor_pair": false,
+      "event_used_only_for_interface_validation": true
+    },
+    {
+      "target_status": "below_four",
+      "columns": 388,
+      "Q_missing": true,
+      "observed_fusion_failure": true,
+      "geometry_floor_pair": true,
+      "event_used_only_for_interface_validation": true
+    },
+    {
+      "target_status": "invalid_floor",
+      "columns": 385,
+      "Q_missing": true,
+      "observed_fusion_failure": true,
+      "geometry_floor_pair": false,
+      "event_used_only_for_interface_validation": true
+    }
+  ],
+  "source_contract_files": 135,
+  "source_contract_pool_count": 294,
+  "fusion_calls": 0,
+  "score_calls": 0,
+  "classification_fits": 0,
+  "new_teams": 0
+}

@@ -1,0 +1,17 @@
+{
+  "action": "interrupt_only_redundant_final_consolidation_after_all_pools_complete",
+  "endpoint_pools_complete": 258,
+  "endpoint_rows": 478012,
+  "metric_pools_complete": 258,
+  "event_rows": 471758,
+  "signal": "SIGINT",
+  "processes": [
+    {
+      "pid": 37309,
+      "script": "/workspace/scratch/2109120ca4e8/HOHONET_v21_AC_population_20261029/stage02_engine/code/ac_endpoint_runtime.py",
+      "signal_sent": true
+    }
+  ],
+  "science_shards_untouched": true,
+  "reason": "Disk space protection; root explicitly authorized stopping final redundant merges."
+}

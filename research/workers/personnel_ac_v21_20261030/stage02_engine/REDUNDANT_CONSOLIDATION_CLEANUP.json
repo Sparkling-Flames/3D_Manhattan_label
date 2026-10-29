@@ -1,0 +1,29 @@
+{
+  "purpose": "Remove only new regenerable incomplete or stale consolidated duplicates after native consolidation interrupted and metrics completed",
+  "authoritative_endpoint_pools_preserved": 258,
+  "authoritative_metric_pools_preserved": 258,
+  "formal_scalar_and_event_metric_files_preserved": true,
+  "removed": [
+    {
+      "path": "stage03_endpoints/ENDPOINT_GEOMETRY.jsonl.gz.writing",
+      "bytes": 390901380,
+      "mtime_ns": 1793278036211034932,
+      "open_fd_holders": []
+    },
+    {
+      "path": "stage04_metrics/EVENT_METRICS.csv.gz.writing",
+      "bytes": 637988794,
+      "mtime_ns": 1793277995678118210,
+      "open_fd_holders": []
+    },
+    {
+      "path": "stage03_endpoints/.ENDPOINT_GEOMETRY.jsonl.gz.writing.taCZPR",
+      "bytes": 267911168,
+      "mtime_ns": 1793277997875984320,
+      "open_fd_holders": []
+    }
+  ],
+  "skipped_open_files": [],
+  "freed_logical_bytes": 1296801342,
+  "free_bytes_after": 906113024
+}

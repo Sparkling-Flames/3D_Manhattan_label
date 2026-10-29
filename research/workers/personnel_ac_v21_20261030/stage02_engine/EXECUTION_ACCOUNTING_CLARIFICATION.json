@@ -1,0 +1,42 @@
+{
+  "frozen_requested_unique_teams": 478012,
+  "full_existing_endpoint_reuse": 1653,
+  "new_physical_teams": 474332,
+  "old_physical_entities_replayed_for_geometry": 2027,
+  "native_endpoint_evaluations_in_core_endpoint_run": 476359,
+  "native_endpoint_evaluations_in_first_timed_wave": 10991,
+  "native_endpoint_evaluations_in_continued_full_pass": 465368,
+  "resumed_endpoints_in_continued_pass": 10993,
+  "resumed_endpoints_are_not_fused_or_scored_again": true,
+  "original_receipt_field_native_evaluations_this_run_means": "Native evaluations newly performed in the continued full pass; per-pool acquisition counts exclude previously saved resumed endpoints.",
+  "provisional_interpretation_correction": "An earlier provisional concern that this field would include the first wave was rejected by inspecting the actual per-pool counts. Seven fully resumed pilot pools have empty current-pass acquisition counts. There is no counting defect in that native receipt formula.",
+  "native_count_scope": "Core registered endpoint execution only. Excludes later case full_state replay, mechanism or QA reproduction, and separate minimal-input reproduction. Those evaluate already existing physical teams and add no new team samples.",
+  "original_run_receipt_sha256": "faa9391df55efa61d8de170ddeaa629eb025219ab6439dbff82581e803636316",
+  "original_timed_wave_receipt_sha256": "2c920ac8d67df29570ba44214f58385adde9898e5faacfed3d455fa7678c6895",
+  "old_entity_replay_parity_checks": 2027,
+  "max_replay_numeric_difference": 1.4210854715202004e-13,
+  "max_saved_scalar_revalidation_difference": 1.4210854715202004e-13,
+  "old_entity_replay_state_and_Q_availability_exceptions": [],
+  "old_entity_replay_status_compared_n": 2027,
+  "old_entity_replay_prior_missing_Q_n": 71,
+  "old_entity_replay_numeric_field_count_distribution": {
+    "15": 30,
+    "21": 1908,
+    "1": 66,
+    "13": 5,
+    "18": 18
+  },
+  "old_entity_replay_parity_definition": "All available pre-existing scalar fields listed in SCORE_PARITY_FIELDS compared within 1e-7; native score_status and Q availability preserved, and final exported scalar CSV independently revalidated. Missing pre-existing components are not imputed.",
+  "score_status_counts": {
+    "complete_conditional": 471454,
+    "no_connection": 4635,
+    "invalid_floor": 106,
+    "below_four": 1817
+  },
+  "Q_missing_rows": 6558,
+  "scalar_file_read_to_gzip_EOF": true,
+  "scalar_unique_identity_set_and_csv_width_verified": true,
+  "trace_only_full_state_replays": "Case mechanism export receipts separately count later trace-only replays of existing endpoints; they create zero new physical teams.",
+  "resource_incident": "The initial ENOSPC attempt failed before any native team evaluation; two existing full endpoints were preserved. It is not a fusion failure.",
+  "original_receipts_unchanged": true
+}
