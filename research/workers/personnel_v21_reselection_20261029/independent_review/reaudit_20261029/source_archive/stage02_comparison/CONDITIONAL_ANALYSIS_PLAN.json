@@ -1,0 +1,19 @@
+{
+  "purpose": "Evaluate descriptive composition information beyond the already implemented Q median split using the same saved finite teams, fixed panel background and candidate set; no new fusion and no prediction or causal-independence claim.",
+  "frozen_before_new_results": true,
+  "primary_scope": "ordinary_manual primary-target finite panels; doorway and special-range excluded",
+  "methods": ["DSTRUCT_K3", "TARGET_DSTRUCT_K2", "TARGET_DSTRUCT_K3", "TARGET_DSTRUCT_K4", "OPPSTRUCT_K3", "OPPJOINT_K3", "OPPJOINT_K4", "RFUSE_GEOM_K2", "V3_JOINT_QT_COARSE"],
+  "baseline": "Q_MEDIAN2 exact full team count vector within each panel",
+  "shared_team_domain": "All 45 frozen Manual methods known for every team member; each metric compared on the same finite teams",
+  "quantities": ["total variance", "within exact Q composition variance", "within Q plus candidate composition variance", "candidate incremental share of total", "remaining within-composition variation", "within-configuration SD and 10-90 range"],
+  "controls": ["same panorama and target reference", "same fixed background D", "same variable candidate pool", "same n", "same exact endpoint set", "same Q high/low count"],
+  "not_controlled": ["continuous historical Q within each Q bin", "individual worker identity", "all members outside the frozen panel", "prospective generalization"],
+  "coarse_Q_limitation": "If an increment exists, it is extra information beyond this specific coarse Q-count descriptor; it need not be independent of continuous Q or low-tail Q.",
+  "complexity_diagnostic": "128 fixed-seed permutations of candidate labels within Q_MEDIAN2 worker strata separately for each panel; preserves candidate class size within Q strata. Report aggregate randomized-label reference, not independent-sample p-values.",
+  "permutation_count": 128,
+  "seed": 20261029,
+  "weighting": "panel equal within target pool, target equal within image, image equal within building; ratio after variance aggregation; image weighting also retained",
+  "metrics": ["B8L2", "fusion_turn_n", "fusion_short_turn_edges", "geometry_area_h2", "height_mean_h", "failure", "record_time_single_source"],
+  "missing": "Each metric uses finite values only; no missing Q=0; zero-total-variance ratios remain missing; singleton groups cannot be described as stable.",
+  "relationship_to_ABC": "This supplements existing strict ABC and does not replace or relabel it. No new A/B/C events are claimed."
+}

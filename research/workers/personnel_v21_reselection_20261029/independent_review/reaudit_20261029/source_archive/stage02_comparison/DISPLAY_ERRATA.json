@@ -1,0 +1,75 @@
+{
+  "purpose": "仅两处显示取整更正；冻结原文及原哈希清单不变",
+  "original_file": "stage02_comparison/EVIDENCE_REVIEW_ZH.md",
+  "original_sha256": "1725431b142b880161d9605c7d2bf7ff6002351c37b51e22e45f560556f3a1e6",
+  "final_file": "stage02_comparison/FINAL_EVIDENCE_REVIEW_ZH.md",
+  "final_sha256": "31513cf6859e74f54c8561a83f8ec1135550b76408806376ad2a51e3f8e26af6",
+  "edits": [
+    {
+      "old": "| OPPJOINT K3 | 17.34% | 10.50% | 10.15% | 5.90% |",
+      "new": "| OPPJOINT K3 | 17.35% | 10.50% | 10.15% | 5.90% |",
+      "source": "stage02_comparison/conditional_results/CONDITIONAL_METHOD_SUMMARY.csv",
+      "filters": {
+        "method": "OPPJOINT_K3",
+        "metric": "B8L2",
+        "model": "exact_Q_quota",
+        "weighting": "building_equal"
+      },
+      "field": "candidate_extra_share_total",
+      "exact": "0.1734511102643704",
+      "explanation": "比例17.345111026437042%显示两位小数为17.35%。",
+      "source_sha256": "698f6e94ece27b0a008b1c526e2a0d508b84dcfe5bf56373fbfca764e3bd40de",
+      "source_csv_record_1based": 325,
+      "source_exact_cell": "0.17345111026437046"
+    },
+    {
+      "old": "|20/7，54共同池中Q共评52图18楼|1.992|−0.936|44/52|30/52|4.766|2.524|",
+      "new": "|20/7，54共同池中Q共评52图18楼|1.991|−0.936|44/52|30/52|4.766|2.524|",
+      "source": "stage02_comparison/abc_integrated/MAIN_HARD23_COMMON_POOL_READING.csv",
+      "filters": {
+        "stage": "combined_union",
+        "n": "20",
+        "m": "7",
+        "role": "hard_turn_rank_asc:2/3->3/3",
+        "metric": "B8L2_same_origin_gap"
+      },
+      "field": "T",
+      "exact": "1.991497283958946",
+      "explanation": "保存值直接显示三位小数为1.991，避免先显示五位再二次取整。",
+      "source_sha256": "a6a544ddab813f6e29c3f095ab0ab3af8d259c0a2a8c21e37d1c71d06e8576b6",
+      "source_csv_record_1based": 33,
+      "source_exact_cell": "1.991497283958946"
+    }
+  ],
+  "changed_content_lines": 2,
+  "other_original_content_unchanged": true,
+  "original_manifests_unchanged": {
+    "DELIVERY_READABILITY_INVENTORY.csv": "eec923e7768ee58dd129c2ab8c275a0685a67d38c1abaa0882c638f2fc34deee",
+    "DELIVERY_READABILITY_RECEIPT.json": "5d0276a15799bbb5a95639f67ab3a4d680d2be93c41331cdbc6b7153bbf94571"
+  },
+  "reading_table": {
+    "file": "stage05_synthesis/MAIN_COMPARISON_READING_TABLES.csv",
+    "sha256": "f436d2db9d1f7641efa64f82c82329699428debac8ce82a8e3b5d11b1b505540",
+    "rows": 2404,
+    "columns": 31,
+    "groups": {
+      "Q_quota_label_randomization_reference": 28,
+      "four_grid_capacity_funnel": 460,
+      "same_pool_TARGET_RAW3_comparison": 312,
+      "same_team_history_Q_QT_control": 420,
+      "strict_ABC_common_three_Q": 1184
+    },
+    "all_values_roundtrip_to_exact_source_cell": true,
+    "source_csv_record_definition": "1-based data record excluding header; metadata values and count denominators are copied directly",
+    "value_definition": "value preserves the exact source CSV cell; display_value is a convenience rendering, fractions shown as percent",
+    "sources": {
+      "stage02_comparison/conditional_results/CONDITIONAL_METHOD_SUMMARY.csv": "698f6e94ece27b0a008b1c526e2a0d508b84dcfe5bf56373fbfca764e3bd40de",
+      "stage02_comparison/abc_integrated/MAIN_HARD23_COMMON_POOL_READING.csv": "a6a544ddab813f6e29c3f095ab0ab3af8d259c0a2a8c21e37d1c71d06e8576b6",
+      "stage02_comparison/abc_integrated/MAIN_CONDITIONS_JOINT_Q.csv": "301637f3cf69f18d2665a9c953bee08f5d8e361b8d011bbea5d0f00aadc54e6d",
+      "stage02_capacity/completed_supplement/FINAL_COMPETITIVE_N_M_FUNNEL.csv": "23e893bb8f37f96686fae2e2cd3d5408a4e667cc0673662e900bd5eefa934021",
+      "stage02_comparison/conditional_results/LABEL_RANDOMIZATION_REFERENCE.csv": "4a0aef2d86e976e8fdc66dbd261934e5294fe0ee57a71839647b1ef5cec268c3"
+    }
+  },
+  "research_recalculations": 0,
+  "archives_created": 0
+}
