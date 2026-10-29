@@ -1,0 +1,55 @@
+{
+  "snapshot_pools": 294,
+  "snapshots_exact_equal": true,
+  "history_n": 8385,
+  "history_ids_equal_authorized": true,
+  "history_layer_counts": {
+    "ordinary_manual": 6739,
+    "ordinary_semi": 964,
+    "doorway_manual": 571,
+    "special_manual": 66,
+    "special_semi": 45
+  },
+  "history_excluded_workers": [],
+  "history_bad_cleaning": 0,
+  "history_non_independent": 0,
+  "history_other_exclusions": 0,
+  "history_identity_reference_mismatch": 0,
+  "history_Q_max_error": 1.4210854715202004e-14,
+  "events": 6548,
+  "endpoints": 16818,
+  "request_key_match": true,
+  "missing_Q": 192,
+  "missing_Q_reasons": {
+    "NA": 191,
+    "[[{\"code\": \"self_intersection\", \"category\": \"annotation_geometry_invalid\", \"kind\": \"invalid_geometry\", \"role\": \"annotation\", \"component\": \"footprint_2d\", \"message\": \"\\u975e\\u76f8\\u90bb\\u8fb9\\u53d1\\u751f\\u4e25\\u683c\\u4ea4\\u53c9\\u3002\", \"evidence\": {\"edge_indices\": [3, 5], \"edge_vertices\": [[3, 4], [5, 6]], \"relation\": \"proper_crossing\", \"point_xz\": [-0.3525139334346083, -1.3618975844395598]}}], []]": 1
+  },
+  "used_records": 6277,
+  "used_workers": 60,
+  "excluded_workers_in_endpoints": [],
+  "new_design_issues": [],
+  "inventory_cleaning_counts": {
+    "retained": 10196,
+    "historical_not_accepted": 133,
+    "excluded_by_review": 99,
+    "retained_pending": 11
+  },
+  "combined_events": 19480,
+  "missing_endpoint_keys": 0,
+  "combined_eligibility_issues": [],
+  "combined_missing_member_checks": 0,
+  "Q_difference_checks": {
+    "BA": {
+      "missing_mismatch": 0,
+      "max_error": 2.9753977059954195e-14
+    },
+    "CA": {
+      "missing_mismatch": 0,
+      "max_error": 2.9753977059954195e-14
+    },
+    "CB": {
+      "missing_mismatch": 0,
+      "max_error": 2.930988785010413e-14
+    }
+  }
+}
