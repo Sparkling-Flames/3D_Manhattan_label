@@ -12950,7 +12950,7 @@
     },
     {
       "id": "MAT-v21_OPPJOINT_personnel_report_20261029",
-      "title": "v2.1 OPPJOINT人员分类与换人独立报告",
+      "title": "v2.1 TARGET结构主分类、OPPJOINT画像与换人独立报告",
       "theme": "workers",
       "type": "版本独立主报告",
       "date": "20261029",
@@ -13028,14 +13028,78 @@
       "source_path": "research/data/releases/v2.1/simulated_population_evidence/exchange/README.md",
       "current_path": "research/data/releases/v2.1/simulated_population_evidence/exchange/README.md",
       "source": "已归档的阶段03/05和06/07原始保存结果",
-      "adoption_status": "完整已有证据接续；v2与v2.1分开，大池策略和新选队同房ABC本轮不启动",
+      "adoption_status": "已有证据接续及半队诊断；最终TARGET主分析另见下游报告，旧事件不改身份",
       "verification_status": "69485广筛事件、46851人数配对、10184固定A配对、3252背景配对及1966直接AC事件核对，具体检查见CHECKS",
       "availability": "仓库结果、来源路径、核验回执与离线研究台",
       "relationships": [
         "research/data/releases/v2.1/RELEASE.json",
         "tools/thesis_main/analysis/build_v21_exchange_evidence_20261029.py",
         "tests/test_v21_exchange_evidence_20261029.py",
-        "research/data/releases/v2.1/simulated_population_evidence/exchange/CHECKS.json"
+        "research/data/releases/v2.1/simulated_population_evidence/exchange/CHECKS.json",
+        "tools/thesis_main/analysis/audit_v21_half_replacement_20261029.py",
+        "tests/test_v21_half_replacement.py",
+        "research/data/releases/v2.1/simulated_population_evidence/exchange/HALF_REPLACEMENT_CHECKS.json",
+        "research/workers/personnel_v21_reselection_20261029/raw_similarity/RAW_ANSWER_SIMILARITY_ZH.md",
+        "research/workers/personnel_v21_reselection_20261029/raw_similarity/RESTORATION_CHECKS.json"
+      ]
+    },
+    {
+      "id": "MAT-v21_personnel_reaudit_eligibility_selection_20261029",
+      "title": "v2.1最新分类独立审查：排除资格、分区复算、主方法与反例",
+      "theme": "workers",
+      "type": "独立审查 / 分类采用建议 / 逐图结果",
+      "date": "20261029",
+      "source_path": "research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+      "current_path": "research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+      "source": "本轮reaudit交付、当前v2.1资格与294池快照、已归档历史端点",
+      "adoption_status": "审查建议TARGET_DSTRUCT为普通Manual主结构分类；保留OPPJOINT联合画像、RAW3八人补充、RFUSE反向解释；未自动改写正式采用入口",
+      "verification_status": "8385原答资格、6548新增设计及19480综合事件、414历史项、207分区独立拟合、Q差与两种幅度重算；未重跑原生融合或全部原始几何特征",
+      "availability": "本审查结果与脚本在仓库；源ZIP保留Downloads；不声称完整源包重新归档",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_personnel_reaudit_eligibility_20261029.py",
+        "tools/thesis_main/analysis/audit_personnel_reaudit_refit_20261029.py",
+        "research/workers/personnel_v21_reselection_20261029/independent_review/README.md",
+        "research/data/releases/v2.1/simulated_population_evidence/README.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_final_classification_downstream_20261029",
+      "title": "v2.1最终工作分类同房、旧ABC适用性与成员敏感性",
+      "theme": "workers",
+      "type": "已有团队重聚合 / 逐事件适用性 / 删样本敏感性",
+      "date": "20261029",
+      "source_path": "research/data/releases/v2.1/final_classification_downstream/README.md",
+      "current_path": "research/data/releases/v2.1/final_classification_downstream/README.md",
+      "source": "已验收最终楼外标签、综合事件及仓库同房固定团队和端点",
+      "adoption_status": "TARGET主工作分类下游接续；保留旧v2及前轮实验身份，未新增选队或融合",
+      "verification_status": "团队/池/参考关联及新标签核对、分层重聚合、定向测试；浏览器尚未接入",
+      "availability": "结果、实际标签、所需源CSV及复现代码均在仓库",
+      "relationships": [
+        "research/data/releases/v2.1/final_classification_downstream/CHECKS.json",
+        "research/data/releases/v2.1/final_classification_downstream/ADOPTED_CONDITIONS.csv",
+        "tools/thesis_main/analysis/continue_v21_final_classification_20261029.py",
+        "tests/test_v21_final_classification_downstream.py"
+      ]
+    },
+    {
+      "id": "MAT-v21_strict_large_blocks_20261029",
+      "title": "v2.1 九人、十人严格 ABC 补充",
+      "theme": "workers",
+      "type": "strict ABC m9/m10 supplement",
+      "date": "20261029",
+      "source_path": "research/workers/strict_large_blocks_v21_20261029/README.md",
+      "current_path": "research/workers/strict_large_blocks_v21_20261029/README.md",
+      "source": "Frozen final LOBO labels and v2.1 eligible primary pools",
+      "adoption_status": "Limited capacity and mechanism supplement; TARGET main m7 evidence retained",
+      "verification_status": "12480 exact events; 28945 endpoints; 2 tests; 18 trace parity checks; selected static figures inspected; browser interaction not checked",
+      "availability": "repository",
+      "relationships": [
+        "research/workers/strict_large_blocks_v21_20261029/design/DESIGN.json",
+        "research/workers/strict_large_blocks_v21_20261029/results/CHECKS.json",
+        "research/workers/strict_large_blocks_v21_20261029/cases/index.html",
+        "tools/thesis_main/analysis/strict_large_blocks_v21_20261029.py",
+        "tools/thesis_main/analysis/strict_large_block_cases_v21_20261029.py",
+        "tests/test_strict_large_blocks_v21.py"
       ]
     }
   ]

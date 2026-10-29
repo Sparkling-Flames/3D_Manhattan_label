@@ -31,7 +31,8 @@
     "other_admitted_spaces": "core_curves_history_and_target_structural_reselection_complete_formal_difficulty_unknown",
     "personnel_reselection": "five_packages_imported_fields_repaired_independently_checked_and_adopted",
     "same_room_oppjoint_fixed_panels": "complete_existing_2659_panels_common_known_support_separate_from_new_ABC",
-    "simulated_population_evidence": "existing_composition_and_exchange_chain_complete_no_new_experiment"
+    "simulated_population_evidence": "existing_composition_and_exchange_chain_complete_no_new_experiment",
+    "final_classification_downstream": "complete_fixed_team_reaggregation_ABC_applicability_member_sensitivity_browser_not_updated"
   },
   "recompute_policy": "仅重算受影响依赖；不因版本更新而重复融合或重算相同输入。",
   "known_limits": [
@@ -60,42 +61,32 @@
     "status": "adopted_for_main_exchange_and_declared_classification_dependent_results",
     "source_root": "research/workers/personnel_v21_reselection_20261029",
     "import_receipt": "research/workers/personnel_v21_reselection_20261029/IMPORT_RECEIPT.json",
-    "independent_review": "research/workers/personnel_v21_reselection_20261029/independent_review/README.md",
-    "conditions": "research/workers/personnel_v21_reselection_20261029/stage07_adoption/EFFECTIVE_EXCHANGE_CONDITIONS.csv",
-    "image_results": "research/workers/personnel_v21_reselection_20261029/stage07_adoption/RECOMMENDED_CONDITIONS_ALL_IMAGES.csv",
-    "labels": "research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+    "independent_review": "research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md",
+    "conditions": "research/data/releases/v2.1/final_classification_downstream/ADOPTED_CONDITIONS.csv",
+    "image_results": "research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/TARGET_MAIN_IMAGES.csv",
+    "labels": "research/data/releases/v2.1/final_classification_downstream/USED_FINAL_LOBO_LABELS.csv.gz",
     "main_family": [
-      "OPPJOINT_K3",
-      "OPPJOINT_K4"
+      "TARGET_DSTRUCT_K2",
+      "TARGET_DSTRUCT_K3"
     ],
     "main_exchange_conditions": [
-      {
-        "method": "OPPJOINT_K4",
-        "n": 12,
-        "m": 6,
-        "scope": "primary",
-        "use": "main_large_replacement"
-      },
-      {
-        "method": "OPPJOINT_K4",
-        "n": 20,
-        "m": 5,
-        "scope": "primary",
-        "use": "main_larger_team"
-      },
       {
         "method": "TARGET_DSTRUCT_K3",
         "n": 14,
         "m": 7,
         "scope": "primary",
-        "use": "structure_supplement"
+        "axis": "hard_turn_rank_asc",
+        "rank_direction": "2/3->3/3",
+        "use": "main_half_replacement"
       },
       {
-        "method": "RFUSE_GEOM_K2",
-        "n": 12,
-        "m": 4,
+        "method": "TARGET_DSTRUCT_K3",
+        "n": 20,
+        "m": 7,
         "scope": "primary",
-        "use": "quality_directed_supplement"
+        "axis": "hard_turn_rank_asc",
+        "rank_direction": "2/3->3/3",
+        "use": "larger_background_comparison"
       }
     ],
     "frozen_baseline": "research/data/releases/v2.1/current_exchange_results/README.md",
@@ -106,7 +97,9 @@
       "scale_background_and_parent_refinement": "complete_saved_global_nested_n_fixed_A_background_direct_AC_and_parent_refinement",
       "large_pool_class_priority_policy32": "not_rebuilt_for_new_family_existing_V3_results_retained",
       "same_room_new_family": "not_rebuilt_for_newly_selected_strict_ABC_fixed_panel_reaggregation_available",
-      "same_room_fixed_panels": "complete_OPPJOINT_K3_K4_reaggregation_2659_existing_panels_no_new_teams"
+      "same_room_fixed_panels": "complete_TARGET_K2_K3_RFUSE_K2_and_previous_OPPJOINT_existing_panels_no_new_selection",
+      "old_ABC_applicability": "complete_10980_focus_and_62964_same_room_events_under_three_final_label_sets",
+      "member_sensitivity": "complete_TARGET_14_7_and_20_7_saved_event_omission"
     },
     "unaffected_by_label_change": [
       "raw_annotations",
@@ -118,11 +111,53 @@
     "full_downstream_reclassified": false,
     "dependency_report": "research/data/releases/v2.1/personnel_reselection_dependencies/README.md",
     "dependency_table": "research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv",
-    "adopted_results": "research/data/releases/v2.1/personnel_reselection_dependencies/ADOPTED_CONDITION_RESULTS.csv",
+    "adopted_results": "research/data/releases/v2.1/final_classification_downstream/ADOPTED_CONDITIONS.csv",
     "workbench": "research/statistics/research_explorer_v1_r2_20261017/v21-reselection.html",
-    "same_room_fixed_panels": "research/data/releases/v2.1/same_room_oppjoint_fixed_panels/README.md",
+    "same_room_fixed_panels": "research/data/releases/v2.1/final_classification_downstream/README.md",
     "simulated_population_evidence": "research/data/releases/v2.1/simulated_population_evidence/README.md",
     "additional_delivery": "research/workers/personnel_v21_reselection_20261029/additional_delivery/README.md",
-    "new_experiment_decision": "defer_OPP_large_pool_policy_and_new_same_room_ABC_until_paper_claim_requires_them"
+    "new_experiment_decision": "defer_OPP_large_pool_policy_and_new_same_room_ABC_until_paper_claim_requires_them",
+    "previous_stage07_adoption": {
+      "main_family": [
+        "OPPJOINT_K3",
+        "OPPJOINT_K4"
+      ],
+      "main_exchange_conditions": [
+        {
+          "method": "OPPJOINT_K4",
+          "n": 12,
+          "m": 6,
+          "scope": "primary",
+          "use": "main_large_replacement"
+        },
+        {
+          "method": "OPPJOINT_K4",
+          "n": 20,
+          "m": 5,
+          "scope": "primary",
+          "use": "main_larger_team"
+        },
+        {
+          "method": "TARGET_DSTRUCT_K3",
+          "n": 14,
+          "m": 7,
+          "scope": "primary",
+          "use": "structure_supplement"
+        },
+        {
+          "method": "RFUSE_GEOM_K2",
+          "n": 12,
+          "m": 4,
+          "scope": "primary",
+          "use": "quality_directed_supplement"
+        }
+      ],
+      "conditions": "research/workers/personnel_v21_reselection_20261029/stage07_adoption/EFFECTIVE_EXCHANGE_CONDITIONS.csv",
+      "image_results": "research/workers/personnel_v21_reselection_20261029/stage07_adoption/RECOMMENDED_CONDITIONS_ALL_IMAGES.csv",
+      "labels": "research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "same_room_fixed_panels": "research/data/releases/v2.1/same_room_oppjoint_fixed_panels/README.md",
+      "adopted_results": "research/data/releases/v2.1/personnel_reselection_dependencies/ADOPTED_CONDITION_RESULTS.csv"
+    },
+    "final_classification_downstream": "research/data/releases/v2.1/final_classification_downstream/README.md"
   }
 }

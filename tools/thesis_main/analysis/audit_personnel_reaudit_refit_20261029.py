@@ -1,17 +1,22 @@
-"""Audit the v2.1 reaudit delivery; run from repository root with source ZIPs in Downloads."""
+"""Audit the v2.1 reaudit delivery from its repository source archive."""
 import os
 os.environ['OMP_NUM_THREADS']='1';os.environ['OPENBLAS_NUM_THREADS']='1'
 from pathlib import Path
-import json,zipfile
+import json
 import pandas as pd,numpy as np
 from scipy.optimize import linear_sum_assignment
 from scipy.cluster.hierarchy import linkage,cut_tree
 from sklearn.decomposition import PCA
 from sklearn.metrics import adjusted_rand_score
-O=Path('research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029');V=Path('research/data/releases/v2.1');B=(Path.home()/'Downloads')
-def read(z,s):
- n=next(n for n in z.namelist() if n.endswith('/'+s));return pd.read_csv(z.open(n),compression='gzip' if n.endswith('.gz') else None,low_memory=False)
-z=zipfile.ZipFile(B/'HOHONET_v21_reaudit_stage06_reproducible_sources.zip');raw=read(z,'RAW_TARGET_RESPONSE_RECORDS.csv.gz');h=read(z,'HISTORY_FEATURES_ALL_LOBO.csv.gz');nz=zipfile.ZipFile(B/'HOHONET_v21_reaudit_stage01_classification.zip');labels=read(nz,'NEW_LABELS_ALL_LOBO.csv.gz')
+O=Path('research/workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029');V=Path('research/data/releases/v2.1');ROOT=Path.cwd();A=O/'source_archive';M=pd.read_csv(A/'SOURCE_ARCHIVE_MAP.csv')
+def source_file(stage,suffix):
+ rows=M[(M.source_zip_name==f'HOHONET_v21_reaudit_{stage}.zip')&M.member_path.str.endswith(suffix)];assert len(rows)==1,(stage,suffix,len(rows))
+ p=rows.iloc[0].repository_or_local_path
+ if p.startswith('git:'):p=p.split(':',2)[2]
+ p=ROOT/p;assert p.is_file(),p;return p
+def read(stage,s):
+ p=source_file(stage,s);return pd.read_csv(p,compression='gzip' if s.endswith('.gz') else None,low_memory=False)
+raw=read('stage06_reproducible_sources','RAW_TARGET_RESPONSE_RECORDS.csv.gz');h=read('stage06_reproducible_sources','HISTORY_FEATURES_ALL_LOBO.csv.gz');labels=read('stage01_classification','NEW_LABELS_ALL_LOBO.csv.gz')
 ST=['turn_n','short_turn_edges','near_straight_nodes_5deg','unmatched_ref_9'];ordinary=raw[raw.layer.eq('ordinary_manual')].copy();rs=[];hist=[];fits=[]
 # Independent reconstruction of all feature history from eligible records, held-out building removed.
 for fold,hh in h.groupby('heldout_building'):

@@ -1,5 +1,7 @@
 # v2.1 人员重新选型：五包独立审查
 
+**最新再审查（2026-10-29）：** [排除资格、207分区独立重拟合、两种换类幅度与反例分项](reaudit_20261029/README.md)已完成；建议普通Manual以TARGET_DSTRUCT家族为主解释，保留OPPJOINT联合画像、RAW3八人补充和RFUSE反向解释。此处是最新审查建议；下面五包审查保留当时的采用记录。
+
 **后续补齐：** 新增十包已接入[完整模拟人群证据](../../../data/releases/v2.1/simulated_population_evidence/README.md)，原文所述配比、广筛及人数路径缺件已解决，并进行了关键统计和逐事件复核。下文保留五包首次审查时点；没有重新执行全部原生融合。
 
 **审查后的接续状态（2026-10-29）：** 五包已归档至上级目录，07B的1,172行及07C的8行对象字段已按本审查映射修复，质量与成员不变，见[导入回执](../IMPORT_RECEIPT.json)。OPPJOINT主家族及主换人条件已采用，[下游依赖复核](../../../data/releases/v2.1/personnel_reselection_dependencies/README.md)区分已接结果、缺件与新设计，[新研究台](../../../statistics/research_explorer_v1_r2_20261017/v21-reselection.html)已提供名单及事件。下文的“尚未修复/下一步”保留首次独立审查时点，不再表示当前导入副本仍有该字段缺陷。

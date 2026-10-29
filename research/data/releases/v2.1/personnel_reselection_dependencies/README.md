@@ -4,7 +4,7 @@
 
 原五包导入回执为 `research/workers/personnel_v21_reselection_20261029/IMPORT_RECEIPT.json`，源提交 `a476461d7ede8db95da43de4139e612c05e618bc`。本目录只消费保存结果；原始作答、正式难度、排除资格和旧结果均未改变，没有新增融合、评分、分类拟合或SHA校验。
 
-采用口径来自本轮协调任务：OPPJOINT K3/K4 为联合主家族，K4 的12/6与20/5为主换类条件；TARGET_DSTRUCT K3 14/7为结构补充；RFUSE_GEOM K2 12/4为反推对照。同容量 Q-only 的额外增益仍未隔离，但不作为此次采用阻断条件。报告中旧的用途建议保持来源身份，不自动覆盖该采用口径。
+以下为前轮阶段07的采用与依赖记录；最新TARGET主分类及同房、旧ABC适用性、成员敏感性已在[最终分类下游](../final_classification_downstream/README.md)接续。本页旧条件保持原身份：OPPJOINT K3/K4 为当时联合主家族，K4 的12/6与20/5为主换类条件；TARGET_DSTRUCT K3 14/7为结构补充；RFUSE_GEOM K2 12/4为反推对照。同容量 Q-only 的额外增益仍未隔离，但不作为此次采用阻断条件。报告中旧的用途建议保持来源身份，不自动覆盖该采用口径。
 
 ## 可以直接接入的结果
 
