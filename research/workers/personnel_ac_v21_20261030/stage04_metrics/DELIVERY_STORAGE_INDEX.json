@@ -1,0 +1,14 @@
+{
+  "authoritative_event_data": "metric_shards/*.csv.gz",
+  "complete_pools": 258,
+  "events": 471758,
+  "columns": 431,
+  "removed_reproducible_merged_duplicate": {
+    "name": "EVENT_METRICS.csv.gz",
+    "bytes": 653407923
+  },
+  "all_registered_events_retained": true,
+  "all_metric_columns_retained": true,
+  "reason": "Avoid a second 653MB copy while preserving all complete per-pool event rows; analysis uses these shards.",
+  "original_measurement_receipt_preserved": true
+}

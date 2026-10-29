@@ -1,0 +1,112 @@
+{
+  "data_release": "v2.1",
+  "difference_orientation": "C minus A; positive is a numerical increase, not universally improvement",
+  "missing": "Missing metric remains missing; no Q=0 imputation. Pair deltas require both values; status transitions use all executed pairs.",
+  "direct_AC_limit": "No B team: this table does not estimate cross-class amplitude above same-class replacement amplitude.",
+  "geometry_bev_distance_AC": {
+    "definition": "1 - intersection-over-union of valid floor polygons",
+    "unit": "dimensionless",
+    "range": [
+      0,
+      1
+    ],
+    "correction": "This is NOT camera-height units; old outputs are preserved."
+  },
+  "geometry_centroid_distance_AC": {
+    "definition": "Distance between floor polygon centroids",
+    "unit": "h (normalized camera height)"
+  },
+  "geometry_area_h2_CA": {
+    "definition": "C floor area minus A floor area",
+    "unit": "h^2"
+  },
+  "centroid_x_h_CA / centroid_z_h_CA": {
+    "definition": "Signed change in floor centroid coordinates",
+    "unit": "h"
+  },
+  "geometry_log_area_distance_AC": {
+    "definition": "Absolute log(C area / A area)",
+    "unit": "dimensionless"
+  },
+  "geometry_area_h2_log_ratio_CA": {
+    "definition": "Signed log(C area / A area)",
+    "unit": "dimensionless"
+  },
+  "geometry_pair_angle_AC / geometry_top_angle_AC / geometry_bottom_angle_AC": {
+    "definition": "Unchanged Hungarian-matched ray angular differences",
+    "unit": "degree",
+    "caution": "Matching is per pair; unmatched cardinality is reported separately."
+  },
+  "geometry_floor_pair": "Both floor polygons valid; includes partial below-four output. Complete-output-only metrics have separate columns.",
+  "fusion_structural_failure": "score_status fusion_exception/below_four/no_connection (or explicit below_four flag)",
+  "output_invalid_geometry": "score_status invalid_floor or invalid_full_geometry",
+  "fusion_failure_observed": "Explicit structural failure or invalid geometry; excludes measurement exception, missing reference and unexplained missing Q.",
+  "Q_missing": "B8L2 unavailable, independent of its cause; always report score_status.",
+  "other_Q_missing": "Missing B8L2 not explained by defined structural/geometry/measurement/reference/two-person statuses.",
+  "source_matched_time": "Both teams have all known logged values and the identical per-source record-count vector.",
+  "single_source_time": "Both teams have all known logged values from the same single recording source. For unequal n the total also changes with team size; per-member values accompany it.",
+  "recorded_time": "Observed annotation labor, not fusion CPU duration and not a new prospective speed measurement.",
+  "MV50_size_flags": "Necessary capacity check only. A block of m persons can independently reach threshold by size if m>=minimum_support; actual vote-group support needs full trace.",
+  "physical_pair_id": "Unordered exact A/C pair; common across methods. Do not count repeats as independent evidence.",
+  "metrics_retained_from_previous_v21_adapter": [
+    "B8L2",
+    "D10",
+    "IoU3D100",
+    "iou_2d",
+    "S_bottom_deg",
+    "dir",
+    "Hmean",
+    "Hcenter",
+    "omission",
+    "extension",
+    "height_mean_ratio",
+    "nodes",
+    "fusion_turn_n",
+    "fusion_short_turn_edges",
+    "fusion_redundancy_n",
+    "geometry_area_h2",
+    "height_mean_h",
+    "height_min_h",
+    "height_max_h",
+    "centroid_x_h",
+    "centroid_z_h",
+    "ref_node_recall_5",
+    "ref_node_recall_9",
+    "ref_edge_recall_5",
+    "ref_edge_recall_9",
+    "reference_node_shortfall",
+    "reference_node_excess",
+    "top_y_mean_px",
+    "bottom_y_mean_px",
+    "matched_ref_top_abs_deg",
+    "matched_ref_bottom_abs_deg",
+    "matched_ref_horizontal_abs_deg",
+    "matched_ref_pair_fraction",
+    "boundary_loss",
+    "direction_loss",
+    "global_height_loss",
+    "local_height_loss",
+    "height_loss",
+    "floor_WQ",
+    "WQ",
+    "WQ_no_D",
+    "WQ_no_B",
+    "WQ_no_H",
+    "height_drop_current",
+    "diag_wall_coverage_03",
+    "diag_wall_coverage_05",
+    "diag_corner_recall_05",
+    "source_time_total_seconds",
+    "recorded_time_total_seconds",
+    "minimum_support",
+    "identity_groups_n",
+    "unselected_groups_n",
+    "half_vote_nodes",
+    "selected_support_min",
+    "target_individual_B8L2_mean",
+    "target_individual_B8L2_min"
+  ],
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_labels": 0
+}

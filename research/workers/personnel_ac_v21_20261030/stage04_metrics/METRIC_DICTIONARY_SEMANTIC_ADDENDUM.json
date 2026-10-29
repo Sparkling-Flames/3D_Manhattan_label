@@ -1,0 +1,65 @@
+{
+  "addendum_version": "20261029_no_connected_points_semantics",
+  "original_dictionary": "METRIC_DICTIONARY.json",
+  "original_dictionary_sha256": "beab5e5f07ad55d4202cf2bc0c6c6b989dbf213aca256071f44312937566b3c4",
+  "original_dictionary_and_metric_values_unchanged": true,
+  "no_fusion_scoring_or_full_study_trace_replay_performed": true,
+  "source_commit": "ec0973ad46fcfa64d3cdbedfeeef1fee180c4cff",
+  "verified_source_files": [
+    {
+      "path": "tools/thesis_main/analysis/wall_consensus_quality_20261015.py",
+      "functions": "classify_output / measured",
+      "sha256": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25"
+    },
+    {
+      "path": "tools/thesis_main/analysis/ring_correspondence_20261007.py",
+      "functions": "source_ring / assemble_fusion",
+      "sha256": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe"
+    }
+  ],
+  "fields": {
+    "score_status=no_connection": {
+      "recommended_zh": "未形成可用点序列（legacy no_connection）",
+      "exact_native_definition": "For the registered n>=3 pipeline: selected node count >=4 and candidate.points is None.",
+      "not_a_unique_mechanistic_cause": true,
+      "mechanism_requires_full_state": [
+        "Whether a complete projected source ring exists under the exact native criterion",
+        "Whether every selected group has a resolved center",
+        "Native ring_diagnostics.reason, node_consensus.status and candidate.reason"
+      ],
+      "code_level_possible_paths": [
+        "No complete projected source ring covering every selected node exactly once",
+        "Selected-node location unresolved, preventing assembly despite an available order"
+      ],
+      "observation_limit": "The code-level branches are not claims that both were observed in this study. Individual examples are interpreted only from saved full_state."
+    },
+    "A_connection_failure / C_connection_failure": {
+      "definition": "Existing boolean is exactly score_status == no_connection; retain its values and name for file compatibility.",
+      "recommended_zh": "未形成可用点序列标志（legacy no_connection）",
+      "must_not_label": "Do not report this boolean alone as proof of a purely ring-connection cause."
+    },
+    "A_fusion_structural_failure / C_fusion_structural_failure": {
+      "definition": "fusion_exception OR below_four OR no_connection, using the stored native status.",
+      "interpretation": "A descriptive grouped incomplete-output indicator; no_connection inside it remains mechanistically unresolved without full_state."
+    },
+    "A_fusion_failure_observed / C_fusion_failure_observed": {
+      "definition": "The preceding grouped indicator OR invalid_floor OR invalid_full_geometry.",
+      "interpretation": "Keeps observed output failure distinct from measurement_exception, floor_only_reference and other missing-Q states; it is not a unique mechanism diagnosis."
+    },
+    "geometry_bev_distance_AC": {
+      "definition": "1 - valid floor polygon IoU",
+      "unit": "dimensionless"
+    },
+    "geometry_centroid_distance_AC": {
+      "definition": "Euclidean distance between valid floor polygon centroids",
+      "unit": "camera height h"
+    }
+  },
+  "exact_source_ring_criterion": "Retained selected node count >=3, projected source sequence length equals retained count, and projected set equals retained set. Subset inclusion alone is insufficient.",
+  "case_tables_added_explanatory_fields": [
+    "selected_unresolved_location_groups_n",
+    "native_ring_reason",
+    "native_candidate_reason",
+    "no_connected_points_mechanism"
+  ]
+}
