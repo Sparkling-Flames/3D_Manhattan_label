@@ -1,0 +1,19 @@
+{
+  "source_capacity_rows_checked": 11475,
+  "source_capacity_mismatches": 0,
+  "event_identity_violations": 0,
+  "existing_unique_events": 89660,
+  "unique_ABC_events": 87694,
+  "unique_AC_events": 1966,
+  "ordinary_manual_primary_pools": 206,
+  "ordinary_manual_other_pools": 30,
+  "doorway_manual_pools": 17,
+  "special_manual_pools": 2,
+  "maximum_pool_n": 35,
+  "ABC_n20_m8_possible": false,
+  "capacity_formulas": {
+    "ABC": "N >= n+2m, S >= 2m, T >= m; X/Y same pure class, Z distinct pure class",
+    "AC": "N >= n+m, S >= m, T >= m; no same-class B"
+  },
+  "phase": "Existing evidence only; later supplement kept separate"
+}

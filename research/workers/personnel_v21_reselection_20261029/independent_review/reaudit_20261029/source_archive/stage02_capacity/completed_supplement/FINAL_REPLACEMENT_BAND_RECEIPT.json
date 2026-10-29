@@ -1,0 +1,31 @@
+{
+  "methods": [
+    "TARGET_DSTRUCT_K3",
+    "V21_DSTRUCT_RAW3_K3",
+    "OPPSTRUCT_K3",
+    "OPPJOINT_K3",
+    "OPPJOINT_K4"
+  ],
+  "ordinary_pools": 236,
+  "distinct_images": 206,
+  "distinct_buildings": 22,
+  "primary_pools": 206,
+  "other_admitted_pools": 30,
+  "other_admitted_maximum_N": 17,
+  "pool_band_rows": 9440,
+  "summary_rows": 120,
+  "bands": 8,
+  "distinct_source_event_identities": 25208,
+  "duplicate_event_identities_removed": 0,
+  "registered_direction_cells_outside_capacity": 0,
+  "all_registered_events_executed": true,
+  "independent_closed_form_capacity_checks": 9440,
+  "independent_closed_form_capacity_checks_pass": true,
+  "all_n_m_universe": "n>=3, 1<=m<=n, N<=35; require N>=n+2m for ABC, N>=n+m for AC; D may be empty",
+  "scope_warning": "236 pools are not 236 independent images: primary206+other30 share206images22buildings.",
+  "band_union_warning": "Any-n bands count pools once if ANY eligible n/m is possible; they do not imply every feasible n/m is registered.",
+  "direction_warning": "Pure-source and pure-target classes only; mixed-composition source blocks have different capacity constraints.",
+  "Q_warning": "ABC primary=pairwise C-B; triple Q separately; AC primary=pairwise C-A, no B/triple; missing Q never zero.",
+  "other_scope_warning": "Other-admitted 30 all N<=17, exclude m7/m8 ABC; small-m half/over-half can have real capacity.",
+  "coverage_limit": "Only the four prespecified grids are direction-complete for five methods; other theoretical n/m/directions remain intentionally unregistered."
+}
