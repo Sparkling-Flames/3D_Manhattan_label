@@ -1,0 +1,416 @@
+[
+  {
+    "image": "q9vSo1VnCiC-13",
+    "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.18400262341683765,
+            -100
+          ],
+          [
+            -0.18400262341683765,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.04829319146561308,
+            -100
+          ],
+          [
+            0.04829319146561308,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            62,
+            438
+          ],
+          [
+            448,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            531,
+            443
+          ],
+          [
+            1008,
+            443
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": false,
+    "notes": "卧室侧白色墙口的两条竖边与入口侧墙口分别取边；不是右侧远处木门。门口底端接近模糊遮罩，深度有数像素不确定性。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "q9vSo1VnCiC-24",
+    "image_id": "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "宽白色立柱两边",
+        "points": [
+          [
+            528,
+            72
+          ],
+          [
+            589,
+            101
+          ],
+          [
+            528,
+            439
+          ],
+          [
+            589,
+            439
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "可见墙柱的图像范围，不是已知地面交点"
+      }
+    ],
+    "confidence": "low",
+    "needs_human": true,
+    "notes": "逐图原图视觉检查：厨房与玄关之间是宽墙柱/顶梁过渡，不是单扇木门。两端均接近全景模糊顶底；厨房侧被冰箱/橱柜挡住。保持用户待定，不借GT转折制造可靠门框深度。"
+  },
+  {
+    "image": "uNb9QFRL6hY-21",
+    "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.04023070720507326,
+            -100
+          ],
+          [
+            -0.04023070720507326,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.0835980273047792,
+            -100
+          ],
+          [
+            0.0835980273047792,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            7.5,
+            437
+          ],
+          [
+            493,
+            437
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            541,
+            439
+          ],
+          [
+            996,
+            439
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": false,
+    "notes": "浴室侧白色收口与木色门套外侧分别定位；中央木色厚门框及全景接缝处为同一门洞两端。镜内像不作为房间边界。底端落在模糊带附近。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "uNb9QFRL6hY-25",
+    "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.09814579135394327
+          ],
+          [
+            100,
+            -0.09814579135394327
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.11999757616509041
+          ],
+          [
+            100,
+            0.11999757616509041
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            287,
+            438
+          ],
+          [
+            733,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            220,
+            438
+          ],
+          [
+            813,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": false,
+    "notes": "浴室侧白色墙口约x574/1466，过渡区另一侧约x440/1626；旧两条负z窄切线未覆盖整个白色门洞厚度。左侧储藏间门不是本次主分界。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "uNb9QFRL6hY-47",
+    "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.0936896019964899
+          ],
+          [
+            100,
+            0.0936896019964899
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.195613334533095
+          ],
+          [
+            100,
+            0.195613334533095
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            222,
+            440
+          ],
+          [
+            799,
+            440
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            184,
+            440
+          ],
+          [
+            835,
+            440
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": false,
+    "notes": "浴室侧白色收口约x444/1598，木门框另一面约x368/1670；旧切分的宽度明显过窄。浴室镜像不计。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "uNb9QFRL6hY-83",
+    "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.09919814561987365
+          ],
+          [
+            100,
+            -0.09919814561987365
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.044178239803308386
+          ],
+          [
+            100,
+            0.044178239803308386
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            291,
+            441
+          ],
+          [
+            733,
+            441
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            246,
+            441
+          ],
+          [
+            789,
+            441
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": false,
+    "notes": "中央卫浴/衣帽过渡区与左右卧室走廊间的大门洞；左门套x492..582，右门套x1466..1578。门板的自由边不作墙口。底部模糊所以候选深度为估计。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    }
+  }
+]

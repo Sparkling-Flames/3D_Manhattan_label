@@ -1,0 +1,834 @@
+[
+  {
+    "image": "b8cTxDM8gDG-08",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "status": "reviewed_candidate",
+    "rgb_reviewed": true,
+    "bev_reviewed": true,
+    "issues": [
+      "空间1保留两侧远端凹进，属于原GT大房间与近入口连接的拓扑，不应一律矩形化。",
+      "当前x=-.0105比GT前壁-.01048略向内约0.00002，为数值量级，不是可见门框宽度。",
+      "空间2现为四边形；原图近门框厚度仍按条件性尺度解释。"
+    ],
+    "source_judgement": "true_nonrectangular_room_plausible; tiny_numeric_offset; no_visual_proof_gt_error",
+    "minimal_change": "保留两条候选与空间1非矩形轮廓，仅做相邻重复点/共线点的数值清理；不删除远端凹角。",
+    "suggested_cuts": null,
+    "suspected_gt": false,
+    "current_cuts": [
+      {
+        "line": [
+          [
+            -0.0105,
+            -100
+          ],
+          [
+            -0.0105,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.15,
+            -100
+          ],
+          [
+            0.15,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "geometry_checks": [
+      {
+        "valid": true,
+        "area": 11.579665258083049,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      },
+      {
+        "valid": true,
+        "area": 0.4150101747514007,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      }
+    ],
+    "between_spaces_overlap": 0.0,
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.0105,
+            -100
+          ],
+          [
+            -0.0105,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.15,
+            -100
+          ],
+          [
+            0.15,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "action": "keep_geometry_numeric_cleanup_only",
+    "space_polygons": [
+      [
+        [
+          -0.010499999999999954,
+          0.32675673411312234
+        ],
+        [
+          -0.010500000000000176,
+          -0.8455616704556724
+        ],
+        [
+          -1.5190464913705743,
+          -0.8455718211759657
+        ],
+        [
+          -1.5188978517763596,
+          -1.71329157178249
+        ],
+        [
+          -5.100060050841419,
+          -1.7133410981483468
+        ],
+        [
+          -5.0989053379770635,
+          1.0406063648491073
+        ],
+        [
+          -1.588183104665249,
+          1.040732161133494
+        ],
+        [
+          -1.5882912529802227,
+          0.32678552106494213
+        ]
+      ],
+      [
+        [
+          0.15,
+          -0.17123905855788513
+        ],
+        [
+          0.15000000000000002,
+          0.32675380577532204
+        ],
+        [
+          0.9833763158618285,
+          0.3267386007449942
+        ],
+        [
+          0.9833607401524997,
+          -0.1712508901435316
+        ]
+      ]
+    ],
+    "adoption_scope": "派生裁剪候选；不覆盖GT或人工标签",
+    "outside_GT_tolerance_area": 1e-12,
+    "final_outside_GT_area": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "image": "jh4fc5c5qoQ-09",
+    "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+    "status": "reviewed_candidate",
+    "rgb_reviewed": true,
+    "bev_reviewed": true,
+    "issues": [
+      "空间2近门洞处存在宽约0.04292的短肩：闭合线z=.17，左侧继承GT前沿z=.21292，形成额外两顶点。",
+      "空间2其余大幅折线对应洗衣、厨房入口及卫浴可见多空间结构，不属于同一短肩问题。",
+      "短肩来自裁剪线与GT局部前沿不共面；是否真实墙面退台未由RGB确定。"
+    ],
+    "source_judgement": "derived_cut_vs_parent_GT_local_shoulder; physical_cause_unconfirmed",
+    "minimal_change": "若当前目标为不含门框通行带的保守内部区域，把空间2停止线推至z=.21294，可移除短肩而不外扩GT；保留其余非矩形结构。原z=.17可保留视觉深度敏感性候选，不能宣称修正真实GT。",
+    "suggested_cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.075
+          ],
+          [
+            100,
+            -0.075
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.21294
+          ],
+          [
+            100,
+            0.21294
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "suspected_gt": true,
+    "current_cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.075
+          ],
+          [
+            100,
+            -0.075
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.17
+          ],
+          [
+            100,
+            0.17
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "geometry_checks": [
+      {
+        "valid": true,
+        "area": 3.7014491045737765,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      },
+      {
+        "valid": true,
+        "area": 3.294883765817348,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      }
+    ],
+    "between_spaces_overlap": 0.0,
+    "shoulder_depth": 0.042920648772125564,
+    "suggested_space_polygons": [
+      [
+        [
+          1.5137404645624124,
+          -1.7620471675869038
+        ],
+        [
+          1.5136487544657087,
+          -0.07499999999999996
+        ],
+        [
+          -0.6805001282707605,
+          -0.07500000000000001
+        ],
+        [
+          -0.6804802336890968,
+          -1.7618246474200911
+        ]
+      ],
+      [
+        [
+          0.2778302966076385,
+          0.21293999999999996
+        ],
+        [
+          0.27789715284666133,
+          1.2842654509338505
+        ],
+        [
+          -0.6804610945295941,
+          1.2842144839239986
+        ],
+        [
+          -0.6805217385137473,
+          0.7034521209795548
+        ],
+        [
+          -0.8764509366748523,
+          0.7034065964952689
+        ],
+        [
+          -0.8764842325087182,
+          1.8118651076939127
+        ],
+        [
+          -2.209245178578549,
+          1.8117199280172525
+        ],
+        [
+          -2.2092348574910328,
+          0.21294000000000013
+        ]
+      ]
+    ],
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.075
+          ],
+          [
+            100,
+            -0.075
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.21294
+          ],
+          [
+            100,
+            0.21294
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "action": "adjust_stop_face",
+    "space_polygons": [
+      [
+        [
+          1.5137404645624124,
+          -1.7620471675869038
+        ],
+        [
+          -0.6804802336890968,
+          -1.7618246474200911
+        ],
+        [
+          -0.6805001282707605,
+          -0.07500000000000001
+        ],
+        [
+          1.5136487544657087,
+          -0.07499999999999996
+        ]
+      ],
+      [
+        [
+          0.2778302966076385,
+          0.21293999999999996
+        ],
+        [
+          -2.2092348574910328,
+          0.21294000000000013
+        ],
+        [
+          -2.209245178578549,
+          1.8117199280172525
+        ],
+        [
+          -0.8764842325087182,
+          1.8118651076939127
+        ],
+        [
+          -0.8764509366748523,
+          0.7034065964952689
+        ],
+        [
+          -0.6805217385137473,
+          0.7034521209795548
+        ],
+        [
+          -0.6804610945295941,
+          1.2842144839239986
+        ],
+        [
+          0.27789715284666133,
+          1.2842654509338505
+        ]
+      ]
+    ],
+    "adoption_scope": "派生裁剪候选；不覆盖GT或人工标签",
+    "outside_GT_tolerance_area": 1e-12,
+    "final_outside_GT_area": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "image": "jh4fc5c5qoQ-14",
+    "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+    "status": "reviewed_candidate",
+    "rgb_reviewed": true,
+    "bev_reviewed": true,
+    "issues": [
+      "空间1当前为近矩形，无旧-.142切进卧室问题。",
+      "空间2明显L形来自近端走道及远端厨房/洗衣区域，RGB可见中央大墙遮住后部，不应抹掉L形。",
+      "门框对侧x978方位与继承GT长墙深z=.635不完全一致，推算停止面约.184而中央约.118；局部框突出/遗漏角点为待查解释。"
+    ],
+    "source_judgement": "large_L_supported_by_RGB; local_GT_shoulder_suspected_not_confirmed",
+    "minimal_change": "保留-.058/.12及空间2大L形；不把整段长墙移到停止面，不生成未经核实的新GT角点。局部门框GT待补证据后单独修订。",
+    "suggested_cuts": null,
+    "suspected_gt": true,
+    "current_cuts": [
+      {
+        "line": [
+          [
+            -0.058,
+            -100
+          ],
+          [
+            -0.058,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.12,
+            -100
+          ],
+          [
+            0.12,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "geometry_checks": [
+      {
+        "valid": true,
+        "area": 4.258132708882646,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      },
+      {
+        "valid": true,
+        "area": 8.9871008829262,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      }
+    ],
+    "between_spaces_overlap": 0.0,
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.058,
+            -100
+          ],
+          [
+            -0.058,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.12,
+            -100
+          ],
+          [
+            0.12,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "action": "keep_geometry_numeric_cleanup_only",
+    "space_polygons": [
+      [
+        [
+          -0.05799999999999983,
+          0.6346908983941976
+        ],
+        [
+          -0.05800000000000005,
+          -1.8164830050121359
+        ],
+        [
+          -1.7952099376886452,
+          -1.8167077675237604
+        ],
+        [
+          -1.7949931947537938,
+          0.6346902959550459
+        ]
+      ],
+      [
+        [
+          0.12000000000000002,
+          -0.4462997285935709
+        ],
+        [
+          0.120000000000001,
+          0.6346909601297123
+        ],
+        [
+          4.948394403560217,
+          0.6346926347556331
+        ],
+        [
+          4.948391167148005,
+          -1.519997645373111
+        ],
+        [
+          1.4396697747690785,
+          -1.5201436574124845
+        ],
+        [
+          1.4395824464673603,
+          -0.4463566584376931
+        ]
+      ]
+    ],
+    "adoption_scope": "派生裁剪候选；不覆盖GT或人工标签",
+    "outside_GT_tolerance_area": 1e-12,
+    "final_outside_GT_area": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "image": "jtcxE69GiFV-12",
+    "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+    "status": "reviewed_candidate",
+    "rgb_reviewed": true,
+    "bev_reviewed": true,
+    "issues": [
+      "当前两侧裁剪均近矩形，没有明显细条残留。",
+      "原始整图GT是入口长条接卧室的L形；原图中央白色宽门洞将入口凹位与卧室相连，保留勉强可标身份。",
+      "停止面宽度仍继承初审，不是本轮重新测得的真实门框厚度。"
+    ],
+    "source_judgement": "no_new_clipping_defect; borderline_scope_retained",
+    "minimal_change": "不改现有切分和图级身份；单列切分宽度不确定性，不因完整GT为L形就把两个区域都扩成大矩形。",
+    "suggested_cuts": null,
+    "suspected_gt": false,
+    "current_cuts": [
+      {
+        "line": [
+          [
+            0.054752695773824786,
+            -100
+          ],
+          [
+            0.054752695773824786,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.16036775645909385,
+            -100
+          ],
+          [
+            0.16036775645909385,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "geometry_checks": [
+      {
+        "valid": true,
+        "area": 1.0583817502053845,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      },
+      {
+        "valid": true,
+        "area": 8.80253703955085,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 0
+      }
+    ],
+    "between_spaces_overlap": 0.0,
+    "cuts": [
+      {
+        "line": [
+          [
+            0.054752695773824786,
+            -100
+          ],
+          [
+            0.054752695773824786,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.16036775645909385,
+            -100
+          ],
+          [
+            0.16036775645909385,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "action": "keep_geometry_numeric_cleanup_only",
+    "space_polygons": [
+      [
+        [
+          0.05475269577382477,
+          0.3673629995199509
+        ],
+        [
+          0.05475269577382447,
+          -0.3108175951574804
+        ],
+        [
+          -1.5057687534012176,
+          -0.31086628835885083
+        ],
+        [
+          -1.5058100046756777,
+          0.36738145936635774
+        ]
+      ],
+      [
+        [
+          2.7182191476504007,
+          -0.31073448658607755
+        ],
+        [
+          0.16036775645909396,
+          -0.310814299633782
+        ],
+        [
+          0.1603677564590935,
+          3.130025239525957
+        ],
+        [
+          2.7187924227350853,
+          3.1304135822519163
+        ]
+      ]
+    ],
+    "adoption_scope": "派生裁剪候选；不覆盖GT或人工标签",
+    "outside_GT_tolerance_area": 1e-12,
+    "final_outside_GT_area": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "image": "pRbA3pwrgk9-01",
+    "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+    "status": "excluded_diagnostic_only",
+    "rgb_reviewed": true,
+    "bev_reviewed": false,
+    "issues": [
+      "复杂浴室/卧室结构和近门框存在，但用户已指定OOS。"
+    ],
+    "source_judgement": "user_OOS",
+    "minimal_change": "仅保留诊断记录，不恢复门洞资格，不生成评分参考。",
+    "suggested_cuts": null,
+    "suspected_gt": false,
+    "current_cuts": null,
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "cuts": null,
+    "action": "excluded_keep",
+    "space_polygons": null
+  },
+  {
+    "image": "pRbA3pwrgk9-11",
+    "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+    "status": "excluded_diagnostic_only",
+    "rgb_reviewed": true,
+    "bev_reviewed": false,
+    "issues": [
+      "近门框清楚，但用户已指定OOS；形状可裁剪不等于门洞主分析应纳入。"
+    ],
+    "source_judgement": "user_OOS",
+    "minimal_change": "仅保留诊断记录，不恢复门洞资格，不强行矩形化原GT。",
+    "suggested_cuts": null,
+    "suspected_gt": false,
+    "current_cuts": null,
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "cuts": null,
+    "action": "excluded_keep",
+    "space_polygons": null
+  },
+  {
+    "image": "q9vSo1VnCiC-04",
+    "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "status": "reviewed_candidate",
+    "rgb_reviewed": true,
+    "bev_reviewed": true,
+    "issues": [
+      "用户指出门框一端多出一截。原GT空间2相应两肩x=.03702与x=.09004不共面，相差约.05302。",
+      "当前停止线已推至x=.090043，裁剪后那段连接条不再作为空间2突出部；但结果含连续重复点及共线点。",
+      "单纯几何不共面不能判定真实墙体退台；RGB棕色门套上下进入模糊区，局部GT转折准确性仍存疑。"
+    ],
+    "source_judgement": "suspected_GT_local_step_from_user_and_geometry; no_visual_confirmation_of_physical_offset",
+    "minimal_change": "保留当前空间2保守停止线x=.090043，明确这只是将争议连接条留在过渡带的派生选择；去除连续重复点/冗余共线点。登记suspectedGT，不把多出一截解释为已确认真实门框错位，也不静默改原GT。",
+    "suggested_cuts": null,
+    "suspected_gt": true,
+    "current_cuts": [
+      {
+        "line": [
+          [
+            -0.03942069134395648,
+            -100
+          ],
+          [
+            -0.03942069134395648,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.09004306876495304,
+            -100
+          ],
+          [
+            0.09004306876495304,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "reference_adopted": false,
+    "human_answer_labels_preserved": true,
+    "geometry_checks": [
+      {
+        "valid": true,
+        "area": 1.979760761472605,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 2
+      },
+      {
+        "valid": true,
+        "area": 2.36678391820096,
+        "outside_GT_area": 0.0,
+        "adjacent_duplicate_count": 2
+      }
+    ],
+    "between_spaces_overlap": 0.0,
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.03942069134395648,
+            -100
+          ],
+          [
+            -0.03942069134395648,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.09004306876495304,
+            -100
+          ],
+          [
+            0.09004306876495304,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "action": "keep_geometry_numeric_cleanup_only",
+    "space_polygons": [
+      [
+        [
+          -1.8374985860974693,
+          0.3361297460867485
+        ],
+        [
+          -0.03942069134395647,
+          0.33615313037020944
+        ],
+        [
+          -0.03942069134395654,
+          -0.7648940769597558
+        ],
+        [
+          -1.8374842668068139,
+          -0.7649174610569922
+        ]
+      ],
+      [
+        [
+          0.09004306876495302,
+          -0.7235398641159696
+        ],
+        [
+          0.09004306876495316,
+          1.20989449828834
+        ],
+        [
+          1.3141651059496242,
+          1.2099104181863556
+        ],
+        [
+          1.3141902505650538,
+          -0.7235239438909445
+        ]
+      ]
+    ],
+    "adoption_scope": "派生裁剪候选；不覆盖GT或人工标签",
+    "outside_GT_tolerance_area": 1e-12,
+    "final_outside_GT_area": [
+      0.0,
+      0.0
+    ]
+  }
+]

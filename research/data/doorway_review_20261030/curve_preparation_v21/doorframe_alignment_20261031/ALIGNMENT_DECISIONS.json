@@ -1,0 +1,1594 @@
+[
+  {
+    "image": "2t7WUuJeko7-07",
+    "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            267,
+            437
+          ],
+          [
+            729,
+            447
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            225,
+            440
+          ],
+          [
+            797,
+            444
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "左右深色门框和白色宽门套形成过渡带；右侧厨房柜边不是门框止边。底部接触点近模糊带，约有3—6像素定位误差。GT右门框缺转折不能用于对齐。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.4945620531643745,
+            -0.03343132423012707
+          ],
+          [
+            0.4094118025402231,
+            -0.0998866424263357
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.4644343212867743,
+            0.08942281836768433
+          ],
+          [
+            0.4362703292188367,
+            0.07846057473872459
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "preview": "2t7WUuJeko7-07_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    },
+    "peer_review": {
+      "image": "2t7WUuJeko7-07",
+      "downgrade": true,
+      "reason": [
+        "两侧白门套及深木边竖向方位可见，但所取y437—447落点紧贴底部模糊遮罩；右木边部分下沿可见，不等于两侧四个真实墙地接触点均可见。",
+        "先前声称3—6像素定位误差缺乏深度证据，应撤回；不能以统一接近模糊边界的y反演可靠距离。",
+        "保留门框方位与条件性投影候选，不能称为已对齐真实止面或已修复GT。"
+      ]
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "7y3sRwLe3Va-06",
+    "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            496,
+            443
+          ],
+          [
+            12,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            584,
+            439
+          ],
+          [
+            970,
+            436
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "当前相机所在门洞跨ERP首尾，中央白色门套两侧分别面向走廊与卧室；不要沿打开的门扇斜边切。底部模糊，使用可见门套竖边落地估计。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            1.6788156149546176,
+            -99.98591436626674
+          ],
+          [
+            -1.7560965803762278,
+            99.98458690382148
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            1.9023517773374718,
+            -99.98207466448378
+          ],
+          [
+            -1.5325604179933736,
+            99.98842660560445
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "7y3sRwLe3Va-06_evidence.png",
+    "unconstrained_endpoint_cuts": [
+      {
+        "line": [
+          [
+            -0.04416958025652768,
+            -0.44846127429368987
+          ],
+          [
+            -0.03315048658864016,
+            0.4494101819052327
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.20543818166595204,
+            -0.43436254059046164
+          ],
+          [
+            0.1637474403838332,
+            0.4759787282169019
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "fit": "同一物理门框两侧作平行止面拟合；方向由四个原图脚点共同估计，不使用GT方向。",
+    "fit_max_residual_camera_heights": 0.013219008247616671,
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    },
+    "peer_review": {
+      "image": "7y3sRwLe3Va-06",
+      "downgrade": true,
+      "reason": [
+        "中央白门套底端与接缝侧白门框均在底部模糊区附近；所取y436—443主要是可见竖边终止，不足以证明地面接触。",
+        "共同平行拟合只能消除端点噪声造成的几何冲突，不能从遮挡处恢复实际深度；拟合残差不是门框定位精度。",
+        "方位和门洞厚度存在性可信，定量BEV止面仍属条件性假设。"
+      ]
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "7y3sRwLe3Va-10",
+    "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            498,
+            443
+          ],
+          [
+            17,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            580,
+            440
+          ],
+          [
+            977,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "头顶滑门轨道与中央宽门套确定真实厚度，地面左瓷砖/右未完工地面支持两侧身份。门扇或轨道内黑缝不是完整门框范围。落地点接近模糊带。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.03866294467121085,
+            -0.4489695346797028
+          ],
+          [
+            -0.04692045542534063,
+            0.4481818126874813
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.19166486726027407,
+            -0.4323890122239788
+          ],
+          [
+            0.12816290597927282,
+            0.4320216845160738
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "7y3sRwLe3Va-10_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    },
+    "peer_review": {
+      "image": "7y3sRwLe3Va-10",
+      "downgrade": true,
+      "reason": [
+        "门套、滑门轨道、瓷砖与未完工地面可辨，但四个候选脚点y440—443落在下沿模糊覆盖附近。",
+        "中央金属构件与轨道/门扇底端不可替代固定门套墙地接触；不能以它们确认墙厚平面。",
+        "方位证据保留，反投影距离和两止面间距降级为条件性。"
+      ]
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "7y3sRwLe3Va-18",
+    "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.8519445094870794,
+            0.0052275316444990415
+          ],
+          [
+            0.8519445094870794,
+            0.0052275316444990415
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.8411418566661388,
+            0.1353408707542391
+          ],
+          [
+            0.8385081690701348,
+            0.15080061251508514
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            255,
+            397
+          ],
+          [
+            769,
+            397
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": false
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            230,
+            397
+          ],
+          [
+            797,
+            397
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": false
+      }
+    ],
+    "confidence": "high",
+    "notes": "餐厅前宽开口的两根方柱与上方横梁：面向餐厅内边为255/769，外侧柱边230/797。两条线必须贴柱脚，旧0.145到0.538过渡带明显过宽。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "7y3sRwLe3Va-18_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "B6ByNegPMKs-42",
+    "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            519,
+            412
+          ],
+          [
+            1017,
+            440
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            541,
+            437
+          ],
+          [
+            982,
+            444
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "low",
+    "notes": "门洞在中央及ERP接缝处；金色打开门扇遮挡了中心门框远侧落脚。近侧可定位，远侧只能由露出的门框和铰链侧近似推测，不能确认完整两条停止线。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            0.030240532444624872,
+            -0.7036299234639066
+          ],
+          [
+            0.020308283068398297,
+            0.47252857360453915
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.08773934731230401,
+            -0.4878637973893455
+          ],
+          [
+            0.11297417704036772,
+            0.428631190263955
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "B6ByNegPMKs-42_evidence.png"
+  },
+  {
+    "image": "B6ByNegPMKs-43",
+    "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            442,
+            440
+          ],
+          [
+            25,
+            438
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            520,
+            444
+          ],
+          [
+            1022,
+            435
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "low",
+    "notes": "中部厚白墙/门套及接缝处门框组成办公室—走廊过渡；左侧大木门是门扇，不把其外缘当门洞边。中央内外墙面宽度明显大于旧等宽启发式。底部模糊，左门框近侧有门扇遮挡。 按图像拟合边界裁当前GT后空间1不能形成单一有效环，说明当前GT平面与可见门框不能直接兼容；需结合原图修订参考，不把切线挪回GT来伪装有效。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -5.7213967057975985,
+            -99.83628795687734
+          ],
+          [
+            5.447793166949596,
+            99.8515914889882
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            -5.572531821144623,
+            -99.84461445203914
+          ],
+          [
+            5.596658051602572,
+            99.84326499382641
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "B6ByNegPMKs-43_evidence.png",
+    "unconstrained_endpoint_cuts": [
+      {
+        "line": [
+          [
+            -0.19695651356609994,
+            -0.43000443136997235
+          ],
+          [
+            -0.0745757548653405,
+            0.4823390822955836
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.021750204146869827,
+            -0.4427355763484708
+          ],
+          [
+            0.006271642057359311,
+            0.5110337162492827
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "fit": "同一物理门框两侧作平行止面拟合；方向由四个原图脚点共同估计，不使用GT方向。",
+    "fit_max_residual_camera_heights": 0.03561954064157724,
+    "validation": {
+      "clip_valid": false,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "S9hNv5qa7GM-08",
+    "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            318,
+            439
+          ],
+          [
+            698,
+            438
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            260,
+            443
+          ],
+          [
+            767,
+            447
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "洗衣间—卫生间折叠门两侧门套及头顶轨道清楚；空间1为卫生间，空间2为洗衣间。左洗衣机与右马桶不是门框边；两个止面沿白色门套两侧，落地点近模糊带。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.4461427398930091,
+            -0.17841613939095305
+          ],
+          [
+            0.44373781181697547,
+            -0.20324686439737166
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.45049546493901327,
+            -0.011059042930572497
+          ],
+          [
+            0.4214127182374138,
+            -0.002585788505529294
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "preview": "S9hNv5qa7GM-08_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    },
+    "peer_review": {
+      "image": "S9hNv5qa7GM-08",
+      "downgrade": true,
+      "reason": [
+        "白色折叠门套及头顶轨道方位清楚，但y438—447处底部模糊覆盖；左门套脚还邻近洗衣机遮挡。",
+        "右侧门套部分底端可见，不能由一两个可见构件终止推出四个完整真实脚点。",
+        "门框方位可信，地面接触深度与过渡带厚度未证实；撤回已可靠对齐的表述，保留条件候选。"
+      ]
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "b8cTxDM8gDG-08",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            499,
+            76
+          ],
+          [
+            499,
+            434
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            620,
+            68
+          ],
+          [
+            620,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            648,
+            69
+          ],
+          [
+            648,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            958,
+            91
+          ],
+          [
+            958,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            993,
+            94
+          ],
+          [
+            993,
+            440
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "前景中央白色宽墙/门套在x499至675，门扇在更右侧；另一侧接近全景接缝。x140附近是打开的门扇/窗边，不应拿来作对侧门框。当前GT近端落地y484位于模糊带，无法从原图验证真实深度。",
+    "needs_human": true,
+    "human_question": "需要可见门槛/原始未模糊极区，或明确允许条件性高度重建；仅原图无法可靠给两个地面停止面。",
+    "evidence_preview": "b8cTxDM8gDG-08_evidence.png"
+  },
+  {
+    "image": "jh4fc5c5qoQ-09",
+    "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            208,
+            104
+          ],
+          [
+            208,
+            443
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            278,
+            76
+          ],
+          [
+            278,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            292,
+            108
+          ],
+          [
+            292,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            746,
+            75
+          ],
+          [
+            746,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            773,
+            73
+          ],
+          [
+            773,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            828,
+            109
+          ],
+          [
+            828,
+            440
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "卧室在画面中间，洗衣/卫浴区域在两边。两侧近相机门套为左208至292、右746至828，不能用远处厨房或浴室小门。上端门套轮廓清晰，底端落入模糊带，GT右近角y467不可直接验证。",
+    "needs_human": true,
+    "human_question": "需确认门套内口还是外包线为停止面，并提供极区落点或允许条件性重建；中间/两边空间身份应保留。",
+    "evidence_preview": "jh4fc5c5qoQ-09_evidence.png"
+  },
+  {
+    "image": "jh4fc5c5qoQ-14",
+    "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            493,
+            75
+          ],
+          [
+            493,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            554,
+            92
+          ],
+          [
+            554,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            25,
+            100
+          ],
+          [
+            25,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            978,
+            101
+          ],
+          [
+            978,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "estimated_floor_contacts_at_edge_of_blur",
+        "points": [
+          [
+            493,
+            441
+          ],
+          [
+            25,
+            441
+          ],
+          [
+            554,
+            440
+          ],
+          [
+            978,
+            442
+          ]
+        ],
+        "uncertainty_pixels": 5
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "medium_candidate_only",
+    "notes": "空间1为左侧卧室，空间2为右侧洗衣区域。采用卧室侧近框边x493和25、洗衣侧x554和978，保留门套厚度。底端紧邻模糊区，坐标仅中等精度候选，约±5像素，不作为毫米级真值。这些线是依据原图新定位，未吸附GT，需在父级俯视/原图叠加检查后采用。 接缝侧区分门扇与门套：x36为门扇近铰链边，不采用，候选改取x25固定门框边。",
+    "needs_human": true,
+    "human_question": null,
+    "evidence_preview": "jh4fc5c5qoQ-14_evidence.png",
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.05414375283208525,
+            -0.46231821908194876
+          ],
+          [
+            -0.07112371395032302,
+            0.4600120639502396
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.12054247957724269,
+            -0.457345809919908
+          ],
+          [
+            0.12757139922029154,
+            0.4399095284295199
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "peer_review": {
+      "image": "jh4fc5c5qoQ-14",
+      "recommendation": "same_standard_review_own_b_candidate",
+      "reason": "B组候选也在模糊边缘；虽门框脚附近轮廓较好，不足以把±5px当已验证界限。建议父级同样仅保留条件性草案，不称精细BEV已确认。"
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "jtcxE69GiFV-12",
+    "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            510,
+            77
+          ],
+          [
+            510,
+            435
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            582,
+            94
+          ],
+          [
+            582,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            2,
+            97
+          ],
+          [
+            2,
+            439
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            974,
+            118
+          ],
+          [
+            974,
+            441
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "左侧狭长入口与右侧卧室由近相机宽白色门洞侧壁连接。中心x510至582与接缝x974至2为可见门洞厚度区域；左侧x224至280的远门不是本次界面。顶部可辨，但底部边界进入模糊区，且两个空间可能只是同一卧室入口凹位，保留用户勉强可标身份。",
+    "needs_human": true,
+    "human_question": "只需进一步确定近门洞底端/停止面；不因视觉疑问推翻用户勉强可标分类。",
+    "evidence_preview": "jtcxE69GiFV-12_evidence.png"
+  },
+  {
+    "image": "pRbA3pwrgk9-01",
+    "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+    "status": "excluded",
+    "cuts": null,
+    "evidence_pixels": [],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "not_applicable",
+    "notes": "已逐图看原图，存在近门框及复杂室内结构；按用户已确认OOS身份，不进入门洞分析，不重新切分。",
+    "needs_human": false
+  },
+  {
+    "image": "pRbA3pwrgk9-11",
+    "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+    "status": "excluded",
+    "cuts": null,
+    "evidence_pixels": [],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "not_applicable",
+    "notes": "已逐图看原图，存在近门框及复杂室内结构；按用户已确认OOS身份，不进入门洞分析，不重新切分。",
+    "needs_human": false
+  },
+  {
+    "image": "q9vSo1VnCiC-04",
+    "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            457,
+            76
+          ],
+          [
+            457,
+            443
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            564,
+            77
+          ],
+          [
+            564,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            18,
+            80
+          ],
+          [
+            18,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            979,
+            78
+          ],
+          [
+            979,
+            443
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "左侧卫生间和右侧入口厅；近相机棕色门套中央x457至564，接缝两侧x979至18。GT中央转折顶点y26、底点y493均在模糊极区，不能凭这些转折作真实门框。可见竖边能定位方位，但不确定真实地面接点。",
+    "needs_human": true,
+    "human_question": "需原始极区或可解释的高度重建；不能直接把y443模糊边缘当落地点。",
+    "evidence_preview": "q9vSo1VnCiC-04_evidence.png"
+  },
+  {
+    "image": "q9vSo1VnCiC-13",
+    "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            62,
+            438
+          ],
+          [
+            448,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            531,
+            443
+          ],
+          [
+            1008,
+            443
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": true,
+    "notes": "卧室侧白色墙口的两条竖边与入口侧墙口分别取边；不是右侧远处木门。门口底端接近模糊遮罩，深度有数像素不确定性。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    },
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.18400262341683765,
+            -100
+          ],
+          [
+            -0.18400262341683765,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.04829319146561308,
+            -100
+          ],
+          [
+            0.04829319146561308,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "peer_review": {
+      "image": "q9vSo1VnCiC-13",
+      "recommendation": "downgrade_uncertain",
+      "screen_alignment": "visible_jamb_azimuth_useful",
+      "metric_alignment": "ground_depth_unverified",
+      "reason": "可见的是中央宽白墙口与接缝侧竖边；左侧踢脚线/地砖提供一定地面趋势，但四端均紧贴模糊区，无法证明统一y438/443为真实接点。不能由此给确定深度及±4px界限。",
+      "retain_proposed_cuts_as": "conditional_draft_only_not_adopted",
+      "reviewed_original": true
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "q9vSo1VnCiC-24",
+    "image_id": "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "宽白色立柱两边",
+        "points": [
+          [
+            528,
+            72
+          ],
+          [
+            589,
+            101
+          ],
+          [
+            528,
+            439
+          ],
+          [
+            589,
+            439
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "可见墙柱的图像范围，不是已知地面交点"
+      }
+    ],
+    "confidence": "low",
+    "needs_human": true,
+    "notes": "逐图原图视觉检查：厨房与玄关之间是宽墙柱/顶梁过渡，不是单扇木门。两端均接近全景模糊顶底；厨房侧被冰箱/橱柜挡住。保持用户待定，不借GT转折制造可靠门框深度。"
+  },
+  {
+    "image": "uNb9QFRL6hY-21",
+    "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            7.5,
+            437
+          ],
+          [
+            493,
+            437
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            541,
+            439
+          ],
+          [
+            996,
+            439
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": true,
+    "notes": "浴室侧白色收口与木色门套外侧分别定位；中央木色厚门框及全景接缝处为同一门洞两端。镜内像不作为房间边界。底端落在模糊带附近。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    },
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -0.04023070720507326,
+            -100
+          ],
+          [
+            -0.04023070720507326,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.0835980273047792,
+            -100
+          ],
+          [
+            0.0835980273047792,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "peer_review": {
+      "image": "uNb9QFRL6hY-21",
+      "recommendation": "downgrade_uncertain",
+      "screen_alignment": "visible_jamb_azimuth_useful",
+      "metric_alignment": "ground_depth_unverified",
+      "reason": "中央门套下部有短黑影，仍无法确定黑影为木框接地而非遮罩过渡；左接缝端受台盆遮挡，另端靠木柜。四个落点并非独立可见的地面接点。",
+      "retain_proposed_cuts_as": "conditional_draft_only_not_adopted",
+      "reviewed_original": true
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "uNb9QFRL6hY-25",
+    "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            287,
+            438
+          ],
+          [
+            733,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            220,
+            438
+          ],
+          [
+            813,
+            438
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": true,
+    "notes": "浴室侧白色墙口约x574/1466，过渡区另一侧约x440/1626；旧两条负z窄切线未覆盖整个白色门洞厚度。左侧储藏间门不是本次主分界。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    },
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.09814579135394327
+          ],
+          [
+            100,
+            -0.09814579135394327
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.11999757616509041
+          ],
+          [
+            100,
+            0.11999757616509041
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "peer_review": {
+      "image": "uNb9QFRL6hY-25",
+      "recommendation": "downgrade_uncertain",
+      "screen_alignment": "visible_jamb_azimuth_useful",
+      "metric_alignment": "ground_depth_unverified",
+      "reason": "左近框脚周围有白色踢脚线，右框与柜体底部进入模糊带。四点全部强制y438缺乏逐点视觉支撑，不能视为四点均已定位。",
+      "retain_proposed_cuts_as": "conditional_draft_only_not_adopted",
+      "reviewed_original": true
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "uNb9QFRL6hY-47",
+    "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            222,
+            440
+          ],
+          [
+            799,
+            440
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            184,
+            440
+          ],
+          [
+            835,
+            440
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": true,
+    "notes": "浴室侧白色收口约x444/1598，木门框另一面约x368/1670；旧切分的宽度明显过窄。浴室镜像不计。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    },
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.0936896019964899
+          ],
+          [
+            100,
+            0.0936896019964899
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.195613334533095
+          ],
+          [
+            100,
+            0.195613334533095
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "peer_review": {
+      "image": "uNb9QFRL6hY-47",
+      "recommendation": "downgrade_uncertain",
+      "screen_alignment": "visible_jamb_azimuth_useful",
+      "metric_alignment": "ground_depth_unverified",
+      "reason": "门框方位清楚，但左框脚进入遮罩、右框脚有短黑缝/柜底遮挡；统一y440推导两平面只能是假设。",
+      "retain_proposed_cuts_as": "conditional_draft_only_not_adopted",
+      "reviewed_original": true
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  },
+  {
+    "image": "uNb9QFRL6hY-83",
+    "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "feature": "空间1侧门框底端候选",
+        "points": [
+          [
+            291,
+            441
+          ],
+          [
+            733,
+            441
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      },
+      {
+        "feature": "空间2侧门框底端候选",
+        "points": [
+          [
+            246,
+            441
+          ],
+          [
+            789,
+            441
+          ]
+        ],
+        "coordinate_system": "1024x512",
+        "role": "竖边在模糊带入口的估计落地点；非GT点",
+        "pixel_uncertainty_y": 4,
+        "pixel_uncertainty_x": 3
+      }
+    ],
+    "confidence": "medium",
+    "needs_human": true,
+    "notes": "中央卫浴/衣帽过渡区与左右卧室走廊间的大门洞；左门套x492..582，右门套x1466..1578。门板的自由边不作墙口。底部模糊所以候选深度为估计。 已逐图查看2048x1024原图。候选使用近轴墙口两端的平均深度；地面平面与竖直门框假设，非精密测量。",
+    "geometry_check": {
+      "both_clipped_regions_valid": true,
+      "overlap_area": 0.0
+    },
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.09919814561987365
+          ],
+          [
+            100,
+            -0.09919814561987365
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.044178239803308386
+          ],
+          [
+            100,
+            0.044178239803308386
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "peer_review": {
+      "image": "uNb9QFRL6hY-83",
+      "recommendation": "downgrade_uncertain",
+      "screen_alignment": "visible_jamb_azimuth_useful",
+      "metric_alignment": "ground_depth_unverified",
+      "reason": "中间近木门扇与固定门框有重叠，右内侧x733可能受门扇遮挡；四底点在y441遮罩上缘，方位证据不等于确定地面深度。",
+      "retain_proposed_cuts_as": "conditional_draft_only_not_adopted",
+      "reviewed_original": true
+    },
+    "superseded_claims": "原分组中的落地误差数值及精确对齐表述撤回；方位证据保留，条件性深度不得作为已确认GT。"
+  }
+]

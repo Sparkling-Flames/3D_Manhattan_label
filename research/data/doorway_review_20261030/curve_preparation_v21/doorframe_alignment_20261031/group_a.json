@@ -1,0 +1,638 @@
+[
+  {
+    "image": "2t7WUuJeko7-07",
+    "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.4945620531643745,
+            -0.03343132423012707
+          ],
+          [
+            0.4094118025402231,
+            -0.0998866424263357
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.4644343212867743,
+            0.08942281836768433
+          ],
+          [
+            0.4362703292188367,
+            0.07846057473872459
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            267,
+            437
+          ],
+          [
+            729,
+            447
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            225,
+            440
+          ],
+          [
+            797,
+            444
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "左右深色门框和白色宽门套形成过渡带；右侧厨房柜边不是门框止边。底部接触点近模糊带，约有3—6像素定位误差。GT右门框缺转折不能用于对齐。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "2t7WUuJeko7-07_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "7y3sRwLe3Va-06",
+    "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            1.6788156149546176,
+            -99.98591436626674
+          ],
+          [
+            -1.7560965803762278,
+            99.98458690382148
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            1.9023517773374718,
+            -99.98207466448378
+          ],
+          [
+            -1.5325604179933736,
+            99.98842660560445
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            496,
+            443
+          ],
+          [
+            12,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            584,
+            439
+          ],
+          [
+            970,
+            436
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "当前相机所在门洞跨ERP首尾，中央白色门套两侧分别面向走廊与卧室；不要沿打开的门扇斜边切。底部模糊，使用可见门套竖边落地估计。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "7y3sRwLe3Va-06_evidence.png",
+    "unconstrained_endpoint_cuts": [
+      {
+        "line": [
+          [
+            -0.04416958025652768,
+            -0.44846127429368987
+          ],
+          [
+            -0.03315048658864016,
+            0.4494101819052327
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.20543818166595204,
+            -0.43436254059046164
+          ],
+          [
+            0.1637474403838332,
+            0.4759787282169019
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "fit": "同一物理门框两侧作平行止面拟合；方向由四个原图脚点共同估计，不使用GT方向。",
+    "fit_max_residual_camera_heights": 0.013219008247616671,
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "7y3sRwLe3Va-10",
+    "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.03866294467121085,
+            -0.4489695346797028
+          ],
+          [
+            -0.04692045542534063,
+            0.4481818126874813
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.19166486726027407,
+            -0.4323890122239788
+          ],
+          [
+            0.12816290597927282,
+            0.4320216845160738
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            498,
+            443
+          ],
+          [
+            17,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            580,
+            440
+          ],
+          [
+            977,
+            443
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "头顶滑门轨道与中央宽门套确定真实厚度，地面左瓷砖/右未完工地面支持两侧身份。门扇或轨道内黑缝不是完整门框范围。落地点接近模糊带。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "7y3sRwLe3Va-10_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "7y3sRwLe3Va-18",
+    "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.8519445094870794,
+            0.0052275316444990415
+          ],
+          [
+            0.8519445094870794,
+            0.0052275316444990415
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.8411418566661388,
+            0.1353408707542391
+          ],
+          [
+            0.8385081690701348,
+            0.15080061251508514
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            255,
+            397
+          ],
+          [
+            769,
+            397
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": false
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            230,
+            397
+          ],
+          [
+            797,
+            397
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": false
+      }
+    ],
+    "confidence": "high",
+    "notes": "餐厅前宽开口的两根方柱与上方横梁：面向餐厅内边为255/769，外侧柱边230/797。两条线必须贴柱脚，旧0.145到0.538过渡带明显过宽。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "7y3sRwLe3Va-18_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "B6ByNegPMKs-42",
+    "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            519,
+            412
+          ],
+          [
+            1017,
+            440
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            541,
+            437
+          ],
+          [
+            982,
+            444
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "low",
+    "notes": "门洞在中央及ERP接缝处；金色打开门扇遮挡了中心门框远侧落脚。近侧可定位，远侧只能由露出的门框和铰链侧近似推测，不能确认完整两条停止线。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            0.030240532444624872,
+            -0.7036299234639066
+          ],
+          [
+            0.020308283068398297,
+            0.47252857360453915
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.08773934731230401,
+            -0.4878637973893455
+          ],
+          [
+            0.11297417704036772,
+            0.428631190263955
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "B6ByNegPMKs-42_evidence.png"
+  },
+  {
+    "image": "B6ByNegPMKs-43",
+    "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            442,
+            440
+          ],
+          [
+            25,
+            438
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            520,
+            444
+          ],
+          [
+            1022,
+            435
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "low",
+    "notes": "中部厚白墙/门套及接缝处门框组成办公室—走廊过渡；左侧大木门是门扇，不把其外缘当门洞边。中央内外墙面宽度明显大于旧等宽启发式。底部模糊，左门框近侧有门扇遮挡。 按图像拟合边界裁当前GT后空间1不能形成单一有效环，说明当前GT平面与可见门框不能直接兼容；需结合原图修订参考，不把切线挪回GT来伪装有效。",
+    "needs_human": true,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            -5.7213967057975985,
+            -99.83628795687734
+          ],
+          [
+            5.447793166949596,
+            99.8515914889882
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            -5.572531821144623,
+            -99.84461445203914
+          ],
+          [
+            5.596658051602572,
+            99.84326499382641
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "preview": "B6ByNegPMKs-43_evidence.png",
+    "unconstrained_endpoint_cuts": [
+      {
+        "line": [
+          [
+            -0.19695651356609994,
+            -0.43000443136997235
+          ],
+          [
+            -0.0745757548653405,
+            0.4823390822955836
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.021750204146869827,
+            -0.4427355763484708
+          ],
+          [
+            0.006271642057359311,
+            0.5110337162492827
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "fit": "同一物理门框两侧作平行止面拟合；方向由四个原图脚点共同估计，不使用GT方向。",
+    "fit_max_residual_camera_heights": 0.03561954064157724,
+    "validation": {
+      "clip_valid": false,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  },
+  {
+    "image": "S9hNv5qa7GM-08",
+    "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.4461427398930091,
+            -0.17841613939095305
+          ],
+          [
+            0.44373781181697547,
+            -0.20324686439737166
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -0.45049546493901327,
+            -0.011059042930572497
+          ],
+          [
+            0.4214127182374138,
+            -0.002585788505529294
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "face": 1,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            318,
+            439
+          ],
+          [
+            698,
+            438
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      },
+      {
+        "face": 2,
+        "erp_size": [
+          1024,
+          512
+        ],
+        "floor_endpoints": [
+          [
+            260,
+            443
+          ],
+          [
+            767,
+            447
+          ]
+        ],
+        "basis": "原图门套竖边落地，非GT转折",
+        "estimated_floor_near_blur": true
+      }
+    ],
+    "confidence": "medium",
+    "notes": "洗衣间—卫生间折叠门两侧门套及头顶轨道清楚；空间1为卫生间，空间2为洗衣间。左洗衣机与右马桶不是门框边；两个止面沿白色门套两侧，落地点近模糊带。",
+    "needs_human": false,
+    "provisional_cuts": null,
+    "preview": "S9hNv5qa7GM-08_evidence.png",
+    "validation": {
+      "clip_valid": true,
+      "both_nonzero": true,
+      "overlap_area": 0.0
+    }
+  }
+]

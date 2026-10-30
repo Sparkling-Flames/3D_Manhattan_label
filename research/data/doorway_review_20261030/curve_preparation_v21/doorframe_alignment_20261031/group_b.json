@@ -1,0 +1,442 @@
+[
+  {
+    "image": "b8cTxDM8gDG-08",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            499,
+            76
+          ],
+          [
+            499,
+            434
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            620,
+            68
+          ],
+          [
+            620,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            648,
+            69
+          ],
+          [
+            648,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            958,
+            91
+          ],
+          [
+            958,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            993,
+            94
+          ],
+          [
+            993,
+            440
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "前景中央白色宽墙/门套在x499至675，门扇在更右侧；另一侧接近全景接缝。x140附近是打开的门扇/窗边，不应拿来作对侧门框。当前GT近端落地y484位于模糊带，无法从原图验证真实深度。",
+    "needs_human": true,
+    "human_question": "需要可见门槛/原始未模糊极区，或明确允许条件性高度重建；仅原图无法可靠给两个地面停止面。",
+    "evidence_preview": "b8cTxDM8gDG-08_evidence.png"
+  },
+  {
+    "image": "jh4fc5c5qoQ-09",
+    "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            208,
+            104
+          ],
+          [
+            208,
+            443
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            278,
+            76
+          ],
+          [
+            278,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            292,
+            108
+          ],
+          [
+            292,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            746,
+            75
+          ],
+          [
+            746,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            773,
+            73
+          ],
+          [
+            773,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            828,
+            109
+          ],
+          [
+            828,
+            440
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "卧室在画面中间，洗衣/卫浴区域在两边。两侧近相机门套为左208至292、右746至828，不能用远处厨房或浴室小门。上端门套轮廓清晰，底端落入模糊带，GT右近角y467不可直接验证。",
+    "needs_human": true,
+    "human_question": "需确认门套内口还是外包线为停止面，并提供极区落点或允许条件性重建；中间/两边空间身份应保留。",
+    "evidence_preview": "jh4fc5c5qoQ-09_evidence.png"
+  },
+  {
+    "image": "jh4fc5c5qoQ-14",
+    "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+    "status": "aligned",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.05414375283208525,
+            -0.46231821908194876
+          ],
+          [
+            -0.07112371395032302,
+            0.4600120639502396
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.12054247957724269,
+            -0.457345809919908
+          ],
+          [
+            0.12757139922029154,
+            0.4399095284295199
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            493,
+            75
+          ],
+          [
+            493,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            554,
+            92
+          ],
+          [
+            554,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            25,
+            100
+          ],
+          [
+            25,
+            441
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            978,
+            101
+          ],
+          [
+            978,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "estimated_floor_contacts_at_edge_of_blur",
+        "points": [
+          [
+            493,
+            441
+          ],
+          [
+            25,
+            441
+          ],
+          [
+            554,
+            440
+          ],
+          [
+            978,
+            442
+          ]
+        ],
+        "uncertainty_pixels": 5
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "medium_candidate_only",
+    "notes": "空间1为左侧卧室，空间2为右侧洗衣区域。采用卧室侧近框边x493和25、洗衣侧x554和978，保留门套厚度。底端紧邻模糊区，坐标仅中等精度候选，约±5像素，不作为毫米级真值。这些线是依据原图新定位，未吸附GT，需在父级俯视/原图叠加检查后采用。 接缝侧区分门扇与门套：x36为门扇近铰链边，不采用，候选改取x25固定门框边。",
+    "needs_human": false,
+    "human_question": null,
+    "evidence_preview": "jh4fc5c5qoQ-14_evidence.png"
+  },
+  {
+    "image": "jtcxE69GiFV-12",
+    "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            510,
+            77
+          ],
+          [
+            510,
+            435
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            582,
+            94
+          ],
+          [
+            582,
+            440
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            2,
+            97
+          ],
+          [
+            2,
+            439
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            974,
+            118
+          ],
+          [
+            974,
+            441
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "左侧狭长入口与右侧卧室由近相机宽白色门洞侧壁连接。中心x510至582与接缝x974至2为可见门洞厚度区域；左侧x224至280的远门不是本次界面。顶部可辨，但底部边界进入模糊区，且两个空间可能只是同一卧室入口凹位，保留用户勉强可标身份。",
+    "needs_human": true,
+    "human_question": "只需进一步确定近门洞底端/停止面；不因视觉疑问推翻用户勉强可标分类。",
+    "evidence_preview": "jtcxE69GiFV-12_evidence.png"
+  },
+  {
+    "image": "pRbA3pwrgk9-01",
+    "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+    "status": "excluded",
+    "cuts": null,
+    "evidence_pixels": [],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "not_applicable",
+    "notes": "已逐图看原图，存在近门框及复杂室内结构；按用户已确认OOS身份，不进入门洞分析，不重新切分。",
+    "needs_human": false
+  },
+  {
+    "image": "pRbA3pwrgk9-11",
+    "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+    "status": "excluded",
+    "cuts": null,
+    "evidence_pixels": [],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "not_applicable",
+    "notes": "已逐图看原图，存在近门框及复杂室内结构；按用户已确认OOS身份，不进入门洞分析，不重新切分。",
+    "needs_human": false
+  },
+  {
+    "image": "q9vSo1VnCiC-04",
+    "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "status": "uncertain",
+    "cuts": null,
+    "evidence_pixels": [
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            457,
+            76
+          ],
+          [
+            457,
+            443
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            564,
+            77
+          ],
+          [
+            564,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            18,
+            80
+          ],
+          [
+            18,
+            442
+          ]
+        ]
+      },
+      {
+        "kind": "visible_jamb_vertical_segment_not_floor_endpoint",
+        "segment": [
+          [
+            979,
+            78
+          ],
+          [
+            979,
+            443
+          ]
+        ]
+      }
+    ],
+    "pixel_coordinate_system": "1024x512 ERP; original image downscaled by 2",
+    "confidence": "visible_azimuth_high_ground_depth_low",
+    "notes": "左侧卫生间和右侧入口厅；近相机棕色门套中央x457至564，接缝两侧x979至18。GT中央转折顶点y26、底点y493均在模糊极区，不能凭这些转折作真实门框。可见竖边能定位方位，但不确定真实地面接点。",
+    "needs_human": true,
+    "human_question": "需原始极区或可解释的高度重建；不能直接把y443模糊边缘当落地点。",
+    "evidence_preview": "q9vSo1VnCiC-04_evidence.png"
+  }
+]

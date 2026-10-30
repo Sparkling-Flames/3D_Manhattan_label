@@ -1,0 +1,815 @@
+[
+  {
+    "image": "2t7WUuJeko7-07",
+    "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.021056447112111965
+          ],
+          [
+            100,
+            0.021056447112111965
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.08811059962315529
+          ],
+          [
+            100,
+            0.08811059962315529
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "7y3sRwLe3Va-06",
+    "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.08246683796507179,
+            -100
+          ],
+          [
+            -0.08246683796507179,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            -0.026032416883435446,
+            -100
+          ],
+          [
+            -0.026032416883435446,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "7y3sRwLe3Va-10",
+    "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.13261885302785803,
+            -100
+          ],
+          [
+            -0.13261885302785803,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.050294225422577,
+            -100
+          ],
+          [
+            0.050294225422577,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "以固定墙口和顶部轨道方向定位；中央伸出的门扇及拉手不是空间止边。撤回上轮自由斜线，保留ZIP两条平行x停止边。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "7y3sRwLe3Va-18",
+    "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.14475211237448768
+          ],
+          [
+            100,
+            0.14475211237448768
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.5379232080595241
+          ],
+          [
+            100,
+            0.5379232080595241
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审与最新用户切分；复核固定柱角和侧板外端",
+    "notes": "撤回旧带过宽的结论。近侧柱角支持z约0.145，侧板外端支持z约0.538；保留整个墙口厚度，不收窄为柱子前脸。",
+    "evidence_pixels": [
+      {
+        "points": [
+          [
+            230,
+            397
+          ],
+          [
+            797,
+            397
+          ]
+        ],
+        "role": "近侧柱角"
+      },
+      {
+        "points": [
+          [
+            171,
+            380
+          ],
+          [
+            856,
+            380
+          ]
+        ],
+        "role": "侧板外端；不能只取柱前脸厚度"
+      }
+    ],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "B6ByNegPMKs-42",
+    "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            0.022453955495470402,
+            -100
+          ],
+          [
+            0.022453955495470402,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.125,
+            -100
+          ],
+          [
+            0.125,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "最新用户导出覆盖ZIP旧横切；保留用户纵切与已再确认分类",
+    "notes": "固定x=0.022453955495470402与x=0.125；第二面仍保留原暂拟身份。禁止用上一轮门扇/斜线候选覆盖。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "B6ByNegPMKs-43",
+    "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.03421442926181348,
+            -100
+          ],
+          [
+            -0.03421442926181348,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.04588751599909267,
+            -100
+          ],
+          [
+            0.04588751599909267,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "S9hNv5qa7GM-08",
+    "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.12354301930894075
+          ],
+          [
+            100,
+            -0.12354301930894075
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            -0.010222705126671559
+          ],
+          [
+            100,
+            -0.010222705126671559
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "b8cTxDM8gDG-08",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.08653147828938222,
+            -100
+          ],
+          [
+            -0.08653147828938222,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.065554430878199,
+            -100
+          ],
+          [
+            0.065554430878199,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "jh4fc5c5qoQ-09",
+    "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.0424301615768405
+          ],
+          [
+            100,
+            -0.0424301615768405
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.21292064877212558
+          ],
+          [
+            100,
+            0.21292064877212558
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "jh4fc5c5qoQ-14",
+    "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.14226136541753442,
+            -100
+          ],
+          [
+            -0.14226136541753442,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.026328743113687117,
+            -100
+          ],
+          [
+            0.026328743113687117,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "jtcxE69GiFV-12",
+    "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            0.054752695773824786,
+            -100
+          ],
+          [
+            0.054752695773824786,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.16036775645909385,
+            -100
+          ],
+          [
+            0.16036775645909385,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "pRbA3pwrgk9-01",
+    "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+    "status": "excluded",
+    "cuts": null,
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "pRbA3pwrgk9-11",
+    "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+    "status": "excluded",
+    "cuts": null,
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "q9vSo1VnCiC-04",
+    "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.03942069134395648,
+            -100
+          ],
+          [
+            -0.03942069134395648,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.037012254682126704,
+            -100
+          ],
+          [
+            0.037012254682126704,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "q9vSo1VnCiC-13",
+    "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.14131110309646422,
+            -100
+          ],
+          [
+            -0.14131110309646422,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.04066410042870815,
+            -100
+          ],
+          [
+            0.04066410042870815,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "q9vSo1VnCiC-24",
+    "image_id": "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+    "status": "uncertain",
+    "cuts": null,
+    "provisional_cuts": [
+      {
+        "line": [
+          [
+            0.041189045000133685,
+            -100
+          ],
+          [
+            0.041189045000133685,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            0.17185468352300273,
+            -100
+          ],
+          [
+            0.17185468352300273,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": true,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "uNb9QFRL6hY-21",
+    "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -0.052075430846048876,
+            -100
+          ],
+          [
+            -0.052075430846048876,
+            100
+          ]
+        ],
+        "side": 1
+      },
+      {
+        "line": [
+          [
+            -0.005159047533817542,
+            -100
+          ],
+          [
+            -0.005159047533817542,
+            100
+          ]
+        ],
+        "side": -1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "x",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "uNb9QFRL6hY-25",
+    "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            -0.06275084633429695
+          ],
+          [
+            100,
+            -0.06275084633429695
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            -0.030677547599869456
+          ],
+          [
+            100,
+            -0.030677547599869456
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "uNb9QFRL6hY-47",
+    "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.04930914709232667
+          ],
+          [
+            100,
+            0.04930914709232667
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.06430499277310722
+          ],
+          [
+            100,
+            0.06430499277310722
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  },
+  {
+    "image": "uNb9QFRL6hY-83",
+    "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+    "status": "manhattan",
+    "cuts": [
+      {
+        "line": [
+          [
+            -100,
+            0.014200097893227539
+          ],
+          [
+            100,
+            0.014200097893227539
+          ]
+        ],
+        "side": -1
+      },
+      {
+        "line": [
+          [
+            -100,
+            0.05344254609297318
+          ],
+          [
+            100,
+            0.05344254609297318
+          ]
+        ],
+        "side": 1
+      }
+    ],
+    "provisional_cuts": null,
+    "source": "ZIP初审切分，与最新用户导出一致",
+    "notes": "保留既有方向与位置；门框宽度仍为工作候选，不以模糊端点旋转或扩大切分。",
+    "evidence_pixels": [],
+    "needs_human": false,
+    "scope_pending": false,
+    "reference_adopted": false,
+    "manhattan_axis": "z",
+    "human_answer_labels_preserved": true
+  }
+]

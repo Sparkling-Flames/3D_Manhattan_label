@@ -1,0 +1,9 @@
+﻿name,title,caption,source
+U01_space_difficulty,"Annotation and consensus quality for additional legal spaces
+by confirmed image difficulty",Manual additional targets only. Targets are equally weighted within each image. Individual scores and conditional scoreable team means are different estimands. The same image grade is used for every target; references and personnel pools remain separate. No score or fusion was recomputed.,DESCRIPTION_BY_DIFFICULTY.csv;CURVES_BY_DIFFICULTY.csv
+U02_half_sensitivity,"Quality contrasts under frozen and updated working labels
+for seven-member replacement",TARGET K3 remains a working classification. Frozen n14/n20: 197/82 events and 83/70 valid images. Updated-label legal subset: 147/61 events and 67/52 valid images. Saved scores are unchanged. Different support prevents interpreting the mean difference as the causal effect of grade revision.,HALF_SUMMARY.csv;HALF_EVENT_LEGALITY.csv.gz
+U03_speed_difficulty,"Structural-expression contrasts between slower and faster annotators
+after updating difficulty-dependent working labels",Outside-building history and matching rules are fixed. Current TARGET K3 support changes from 105 to 100 pairs; weak average contrasts remain. This comparison does not alter the frozen v2 63-pair evidence.,speed_difficulty/CURRENT_SAME_PEOPLE_SUMMARY.csv
+U04_same_room,"Cross-view quality differences under half-team replacement
+using updated TARGET K3 working labels","Ordinary comparable Manual, direction C2 to C3. The saved event archive is filtered under updated labels and physically deduplicated. 10/5: 322 events, 295 six-endpoint scoreable, 19 pairs; 14/7: 10 events, 6 scoreable, 2 pairs. No new teams or fusion; 14/7 still has one incoming seven-member block.",SAME_ROOM_HALF_PAIRS.csv;SAME_ROOM_HALF_EVENTS.csv.gz
