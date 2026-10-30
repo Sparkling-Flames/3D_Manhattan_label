@@ -1,0 +1,86 @@
+{
+  "source_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "inputs": [
+    {
+      "path": "stage03_speed_difficulty/inputs/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "bytes": 259079,
+      "sha256": "e9fdd9f95f2775a88c3f2dfbeebc6c035dbb423d7d2e75f05001e24b5ae0526d"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "bytes": 796515,
+      "sha256": "a58e62d2bb30557575a74d2fa26abae197845c54007f3272a3d23f42274ab006"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/RAW_TARGET_RESPONSE_RECORDS.csv.gz",
+      "bytes": 2184461,
+      "sha256": "95a838a5f163492953c79bbf1d04a3a0e81aa490652ae08a55cf2f69a29a5702"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/SOURCE_RECEIPT.json",
+      "bytes": 3087,
+      "sha256": "694b106c8e99e1f2ebd58226a722bc76e508553562049b19145d492eb7a28faf"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/USED_FINAL_LOBO_LABELS.csv.gz",
+      "bytes": 24642,
+      "sha256": "bb6dd76f9a8626336b5b69823855461a374ec3555cb0c85ebd96f153d2024d8d"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/V2_README.md",
+      "bytes": 18753,
+      "sha256": "bafae6c8747905d46ef67ec201c41406b025d934a8228979ff646fe917add5ca"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_analyze_difficulty.py",
+      "bytes": 15177,
+      "sha256": "2da79a4dcebb75256ebfe4ee0b56d3ccecc55b17121a942fdd50d6955e8d8a53"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_discover_joint_qt.py",
+      "bytes": 11502,
+      "sha256": "69b229000e2d59ea5ee895ef278c82ea9168cf41ba5b58eea2507dfa8ad4afa9"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_record_opportunity_index.csv.gz",
+      "bytes": 972097,
+      "sha256": "7d280b19509da3873769052ae9f41634f174b8e134b3d2a8b7425c61fa7beb1e"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_same_class_nearQ_speed_pairs.csv.gz",
+      "bytes": 1244053,
+      "sha256": "9d7bc1531327c9a6437a1ebeffea5ade3f124ef03e9e84c047e5248f55fe0f7e"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_same_class_nearQ_speed_summary.csv",
+      "bytes": 442030,
+      "sha256": "6865e374c8417b125c752f51373831146e6dd5ee983bfd64045a48b3b91eaa0d"
+    },
+    {
+      "path": "stage03_speed_difficulty/inputs/v2_same_people_speed_difficulty.csv",
+      "bytes": 306930,
+      "sha256": "defbc92b575f72b2bbdaec7ce80afe973b94f65509184977c378def68a843632"
+    },
+    {
+      "path": "source/research/data/releases/v2.1/quality_inventory.csv",
+      "bytes": 11262378,
+      "sha256": "6e3eefc2595feab0bbe9875de37e9a9fdfd0796c87ce38a169e19e0eedbb5184"
+    },
+    {
+      "path": "source/research/data/releases/v2.1/reference_catalog.json",
+      "bytes": 1864416,
+      "sha256": "d641c10ae95c340fe38555236f351afb725d54daf8ed53478d7cd555fdcaa24f"
+    },
+    {
+      "path": "source/research/data/releases/v2.1/joint_history_classification/BEHAVIOR_RECORDS.csv.gz",
+      "bytes": 1398896,
+      "sha256": "fa1e3ad585dc5251c9a949c6c8b83671575231f8d58b03408454ee4eee8db280"
+    }
+  ],
+  "matching": "existing v2.1 own-condition LOBO Q/T panels, same class/source, |Q gap|<=3, time ratio>=1.5",
+  "classification_status": "working analysis only",
+  "new_fusion": 0,
+  "new_scores": 0,
+  "new_people": 0,
+  "new_labels": 0
+}

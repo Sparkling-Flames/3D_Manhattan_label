@@ -1,0 +1,23 @@
+{
+  "source_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "study": "within-class near-history-Q speed pairs across difficulty",
+  "new_fusion": 0,
+  "new_scoring": 0,
+  "classification_status": "working analysis objects; no final selection decision",
+  "main_condition": "ordinary Manual, primary target, current legal source records",
+  "secondary_condition": "ordinary Semi with its own current V3_JOINT_QT labels",
+  "work_methods": ["TARGET_DSTRUCT_K3", "TARGET_DSTRUCT_K2", "OPPJOINT_K3", "OPPJOINT_K4", "V3_JOINT_QT_FINE", "V3_JOINT_QT_COARSE"],
+  "history_source": "v2.1/joint_history_classification/ALL_METHOD_LABELS_LOBO.csv.gz; existing own-condition q_history,t_history,qt_supported; actual heldout building",
+  "max_absolute_history_Q_gap": 3.0,
+  "min_history_time_ratio": 1.5,
+  "time_pair_same_origin": true,
+  "time_pair_same_source_kind": true,
+  "matching_uses_target_image_outcomes": false,
+  "minimum_easy_hard_images_per_directed_person_pair": 2,
+  "main_weighting": "member-pair differences within image, then image means within building; image-equal and building-equal means both saved",
+  "fixed_people_weighting": "same directed people pair; equal image within each building, equal buildings within difficulty; differences paired across difficulty",
+  "support_sets": ["v2 frozen exact pairs", "same exact pairs rescored under v2.1 with current legality", "old and current jointly scorable exact pairs", "newly Q-scorable old exact pairs", "current matched pairs on v2 formal image support", "current matched pairs on expanded quality image support", "current matched pairs all support"],
+  "missing_values": "metric-specific denominators; missing Q never zero; unscored raw-expression evidence separate from legal team qualification",
+  "same_building_control": "same directed people pair in same building with both easy and hard observations, kept separate from two-per-difficulty main paired contrast",
+  "membership_sensitivity": "one-worker exclusion, one-building exclusion on fixed-pair contrasts; no independence claim for overlapping person pairs"
+}

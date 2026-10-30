@@ -1,0 +1,38 @@
+{
+  "data_release": "v2.1",
+  "repository_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "selection": {
+    "identity": "Original direct-room candidate pools and original Q/QT algorithms; fixed old selections rescored and current histories reselected on the same candidates are separate",
+    "n": [3, 4, 5, 6, 7, 9, 13],
+    "main_n": 5,
+    "domains": ["all", "new", "new_timed_history"],
+    "policies": ["outside_Q", "source_Q", "half_Q", "outside_Q_outside_T_fast", "outside_Q_source_T_fast", "random_0", "random_1", "random_2"],
+    "source_of_policy_parameters": "frozen native_teams/study.py from the v2 closeout",
+    "quality_history": "mean leave-one-person-out relative Q on available images outside the entire target building; minimum 8 images and 3 buildings",
+    "time_history": "mean log-time relative to peers in the same image, condition, target, origin and logging semantics; minimum 8 images and 3 buildings",
+    "fast_constraint": "greedy labor reduction subject to historical team-mean relative Q no more than 2 points below the outside_Q team; this is not a bound on actual target quality loss",
+    "random_seed": 2026102143,
+    "main_weighting": "source contexts and repeated random choices within target image, then images within building, then equal buildings",
+    "old_class_enforcement_policy": "half_Q_structure is not relabeled or presented as a newly selected class policy",
+    "target_Q_used_to_select": false,
+    "new_direct_room_relations": 0,
+    "prospective_calendar_history": false
+  },
+  "stopping": {
+    "identity": "Keep original group panels, exact common people, 256 existing orders where present, original smaller-pool exhaustive orders and all original source budgets",
+    "main_policy": "source_within2_min3_geometry",
+    "baseline": "fixed_7_geometry",
+    "source_choice": "earliest k at least 3 within 2 points of the maximum already-observed complete source-mean curve",
+    "target_topup": "continue only until complete output geometry, without inspecting target Q",
+    "maximum_history": "N minus 1 source views in the originally supported declared group",
+    "original_two_person_status": "deferred, never assigned Q=0 or newly evaluated here",
+    "history_cost": "full original common pool on every source view once, reused across all order replays; comparison to all views using fixed 7 with identical geometry-only topup",
+    "lawful_cost_support": "all team members have new-origin reported activity with complete same-semantics records across every source and target",
+    "reference_creation_cost": "unrecorded, excluded from observed annotation labor rather than filled with zero",
+    "new_natural_order_curves": 0,
+    "target_Q_used_to_stop": false
+  },
+  "missing_policy": "Q, D10, geometry and lawful labor keep separate valid denominators; failed, unscorable and other missing states are separately retained",
+  "selection_reason": "restore the original v2 uses chain under current qualification/reference/history, independent of current target gain",
+  "classification_adoption": "not addressed or finalized by these utility analyses"
+}

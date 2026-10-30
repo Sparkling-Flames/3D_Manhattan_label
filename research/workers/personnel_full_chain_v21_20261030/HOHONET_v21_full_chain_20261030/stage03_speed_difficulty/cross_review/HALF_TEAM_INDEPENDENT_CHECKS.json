@@ -1,0 +1,59 @@
+{
+  "status": "targeted independent checks passed",
+  "events_14_7": 197,
+  "registered_images": 85,
+  "joint_ABC_scored_events": 185,
+  "BC_scored_events": 187,
+  "BC_additional_when_A_unscored": [
+    {
+      "event_id": "39e890309e25ecaf273b6412",
+      "image": "VFuaQ6m2Qom-01",
+      "CB": 13.256662209955977
+    },
+    {
+      "event_id": "78e59a8279efd95d1ddfbddc",
+      "image": "zsNo4HB9uLZ-16",
+      "CB": 24.853171416941848
+    }
+  ],
+  "image_results": {
+    "GA_check": {
+      "valid": 83,
+      "positive": 61,
+      "nonpositive": 22,
+      "mean": 3.511868747723054
+    },
+    "GS_check": {
+      "valid": 83,
+      "positive": 62,
+      "nonpositive": 21,
+      "mean": 3.3971346197463643
+    },
+    "CB_check": {
+      "valid": 83,
+      "positive": 76,
+      "nonpositive": 7,
+      "mean": 6.577500548285898
+    }
+  },
+  "maximum_image_error": {
+    "GA_check": 2.1538326677728037e-14,
+    "GS_check": 2.4646951146678475e-14,
+    "CB_check": 2.1316282072803006e-14
+  },
+  "GS_nonpositive_list_exact": true,
+  "all_exception_images": 36,
+  "exact_XYZ_links": 100,
+  "exact_XYZ_images": 72,
+  "nested_D_links": 56,
+  "complete_arms_checked": 348,
+  "local_vote_counts_and_threshold_checks": true,
+  "mechanism_wording_review": "Nearest-reference distances are explicitly diagnostic. Disjoint supporters are not equated with physical mutually exclusive walls. D/block-alone counts are conditional on the saved endpoint groups, not separate D-alone fusion experiments.",
+  "denominator_note": "GA/GS use 185 ABC-scoreable events; C-B uses 187 BC-scoreable events. Their image denominator is 83 in both cases, but the event support is different.",
+  "source_hashes": {
+    "EVENTS_METRIC_SPECIFIC_SUPPORT.csv.gz": "9ba9c5bcaf65a987a5aa15bb5909a0865b83e59b3f463e28b559ab60b1d5b969",
+    "ALL_36_CASE_READING_INDEX.csv": "a08b92ba432686ab7ffa0d7b78fdf64c61a123b4fb6925a2c7e0be4b3c92511e",
+    "EXACT_XYZ_14_7_TO_20_7.csv": "7acb6dff159573d5caedd58bfed6db10124291c6ee62ca4815b5f9433b8a6d62",
+    "mechanism_tables/ARM_MECHANISM_FACTS.csv": "b87d3854b7291305cde5f47a46b21c98f80347e34326fc230e41d81c9f3ff9af"
+  }
+}

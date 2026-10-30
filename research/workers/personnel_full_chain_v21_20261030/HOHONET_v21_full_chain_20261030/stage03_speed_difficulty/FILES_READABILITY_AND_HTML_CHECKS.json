@@ -1,0 +1,386 @@
+{
+  "all_tables_and_json_readable": true,
+  "checks": [
+    {
+      "path": "CASES_EXACT_PAIRS.csv",
+      "rows": 6,
+      "columns": 65,
+      "read_ok": true
+    },
+    {
+      "path": "CASES_MINIMUM_RAW_GEOMETRY.json.gz",
+      "json_bytes": 49099,
+      "read_ok": true
+    },
+    {
+      "path": "CASE_INDEX.csv",
+      "rows": 3,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "CASE_VALIDATION.json",
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_MATCHED_BUILDINGS.csv.gz",
+      "rows": 59484,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_MATCHED_IMAGES.csv.gz",
+      "rows": 173980,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_MATCHED_PAIRS.csv.gz",
+      "rows": 52851,
+      "columns": 64,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_MATCHED_SUMMARY.csv",
+      "rows": 10602,
+      "columns": 24,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_PICTURES.csv.gz",
+      "rows": 22383,
+      "columns": 66,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_PICTURES_BUILDINGS.csv.gz",
+      "rows": 16466,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_PICTURES_IMAGES.csv.gz",
+      "rows": 52326,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_PICTURES_SUMMARY.csv",
+      "rows": 2356,
+      "columns": 24,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_SAME_PEOPLE.csv.gz",
+      "rows": 11253,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_ON_V2_FINE_PAIR_SAME_PEOPLE_SUMMARY.csv",
+      "rows": 372,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_SAME_PEOPLE.csv.gz",
+      "rows": 22134,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_SAME_PEOPLE_SAME_BUILDING.csv.gz",
+      "rows": 134633,
+      "columns": 18,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_SAME_PEOPLE_SAME_BUILDING_SUMMARY.csv",
+      "rows": 372,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "CURRENT_SAME_PEOPLE_SUMMARY.csv",
+      "rows": 372,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "DESIGN_BEFORE_RESULTS.json",
+      "read_ok": true
+    },
+    {
+      "path": "FIXED_PEOPLE_LEAVE_ONE_BUILDING.csv",
+      "rows": 2240,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "FIXED_PEOPLE_LEAVE_ONE_WORKER.csv",
+      "rows": 2439,
+      "columns": 11,
+      "read_ok": true
+    },
+    {
+      "path": "HISTORIES_USED.csv.gz",
+      "rows": 2728,
+      "columns": 11,
+      "read_ok": true
+    },
+    {
+      "path": "LABELS_USED.csv.gz",
+      "rows": 10912,
+      "columns": 6,
+      "read_ok": true
+    },
+    {
+      "path": "MATCH_METHOD_OVERLAP.csv.gz",
+      "rows": 14528,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "MEMBER_USAGE.csv",
+      "rows": 669,
+      "columns": 6,
+      "read_ok": true
+    },
+    {
+      "path": "OLD_NEW_MATCHING_BRIDGE_SUPPORT.csv",
+      "rows": 48,
+      "columns": 9,
+      "read_ok": true
+    },
+    {
+      "path": "PAPER_FIXED_PEOPLE_BRIDGE.csv",
+      "rows": 12,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "PAPER_MEMBER_BUILDING_SENSITIVITY.csv",
+      "rows": 16,
+      "columns": 6,
+      "read_ok": true
+    },
+    {
+      "path": "PAPER_TARGET_K3_DIFFICULTY.csv",
+      "rows": 18,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "PAPER_V2_CURRENT_Q_SUPPORT.csv",
+      "rows": 12,
+      "columns": 9,
+      "read_ok": true
+    },
+    {
+      "path": "RECORDS_CURRENT_WITH_PROVENANCE.csv.gz",
+      "rows": 9217,
+      "columns": 61,
+      "read_ok": true
+    },
+    {
+      "path": "RECORD_SUPPORT.csv",
+      "rows": 36,
+      "columns": 11,
+      "read_ok": true
+    },
+    {
+      "path": "REPORT_VALIDATION.json",
+      "read_ok": true
+    },
+    {
+      "path": "RUN_MANIFEST.json",
+      "read_ok": true
+    },
+    {
+      "path": "SAME_PEOPLE_SAME_BUILDING_BUILDING_EFFECTS.csv",
+      "rows": 4055,
+      "columns": 7,
+      "read_ok": true
+    },
+    {
+      "path": "SAME_PEOPLE_SAME_BUILDING_BUILDING_SUMMARY.csv",
+      "rows": 372,
+      "columns": 11,
+      "read_ok": true
+    },
+    {
+      "path": "STRICT_TWO_VALID_IMAGES_PER_DIFFICULTY.csv",
+      "rows": 572,
+      "columns": 11,
+      "read_ok": true
+    },
+    {
+      "path": "V21_FIXED_V2_PAIRS_BUILDINGS.csv.gz",
+      "rows": 20761,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "V21_FIXED_V2_PAIRS_IMAGES.csv.gz",
+      "rows": 59869,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "V21_FIXED_V2_PAIRS_SUMMARY.csv",
+      "rows": 3658,
+      "columns": 24,
+      "read_ok": true
+    },
+    {
+      "path": "V21_FIXED_V2_SAME_PEOPLE.csv.gz",
+      "rows": 4712,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "V21_FIXED_V2_SAME_PEOPLE_SUMMARY.csv",
+      "rows": 124,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FIXED_PAIR_CURRENT_RESULTS.csv.gz",
+      "rows": 10339,
+      "columns": 91,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FROZEN_BUILDINGS.csv.gz",
+      "rows": 4134,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FROZEN_IMAGES.csv.gz",
+      "rows": 12208,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FROZEN_SAME_PEOPLE.csv.gz",
+      "rows": 2888,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FROZEN_SAME_PEOPLE_SUMMARY.csv",
+      "rows": 76,
+      "columns": 17,
+      "read_ok": true
+    },
+    {
+      "path": "V2_FROZEN_SUMMARY.csv",
+      "rows": 646,
+      "columns": 24,
+      "read_ok": true
+    },
+    {
+      "path": "V2_ON_CURRENT_SUPPORT_BUILDINGS.csv.gz",
+      "rows": 12418,
+      "columns": 8,
+      "read_ok": true
+    },
+    {
+      "path": "V2_ON_CURRENT_SUPPORT_IMAGES.csv.gz",
+      "rows": 35140,
+      "columns": 10,
+      "read_ok": true
+    },
+    {
+      "path": "V2_ON_CURRENT_SUPPORT_SUMMARY.csv",
+      "rows": 2242,
+      "columns": 24,
+      "read_ok": true
+    },
+    {
+      "path": "V2_PAIRS_CURRENT_SUPPORT_AND_MATCHING.csv",
+      "rows": 56,
+      "columns": 9,
+      "read_ok": true
+    },
+    {
+      "path": "VALIDATION.json",
+      "read_ok": true
+    },
+    {
+      "path": "cross_review/HALF_TEAM_INDEPENDENT_CHECKS.json",
+      "read_ok": true
+    },
+    {
+      "path": "cross_review/HALF_TEAM_INDEPENDENT_IMAGE_VALUES.csv",
+      "rows": 85,
+      "columns": 5,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/ALL_METHOD_LABELS_LOBO.csv.gz",
+      "rows": 5704,
+      "columns": 41,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "rows": 64170,
+      "columns": 63,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/RAW_TARGET_RESPONSE_RECORDS.csv.gz",
+      "rows": 8385,
+      "columns": 69,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/SOURCE_RECEIPT.json",
+      "read_ok": true
+    },
+    {
+      "path": "inputs/USED_FINAL_LOBO_LABELS.csv.gz",
+      "rows": 4092,
+      "columns": 65,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/v2_record_opportunity_index.csv.gz",
+      "rows": 9217,
+      "columns": 47,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/v2_same_class_nearQ_speed_pairs.csv.gz",
+      "rows": 10339,
+      "columns": 41,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/v2_same_class_nearQ_speed_summary.csv",
+      "rows": 2394,
+      "columns": 23,
+      "read_ok": true
+    },
+    {
+      "path": "inputs/v2_same_people_speed_difficulty.csv",
+      "rows": 2888,
+      "columns": 13,
+      "read_ok": true
+    },
+    {
+      "path": "originals/ORIGINALS_RECEIPT.json",
+      "read_ok": true
+    },
+    {
+      "path": "source/release_IMAGE_INDEX.csv",
+      "rows": 263,
+      "columns": 9,
+      "read_ok": true
+    }
+  ],
+  "standalone_viewer_script_parse_ok": true,
+  "html_external_dependencies": 0
+}
