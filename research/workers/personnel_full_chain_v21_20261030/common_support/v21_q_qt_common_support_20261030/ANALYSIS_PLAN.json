@@ -1,0 +1,54 @@
+{
+  "title": "v2.1 连续Q/QT选队的严格共同支持规模分析",
+  "created_utc": "2026-10-29T19:30:51.145774+00:00",
+  "source_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "gap": "Pro stage05 4.3按n报告但各n支持不同，尚未建立固定上下文共同支持；不重做已完成G01-G05。",
+  "population": "ordinary_manual, scope_comparable, no_pending_direct_relations, new_timed_history, v21_history_reselected_fixed_candidates",
+  "policies": [
+    "outside_Q",
+    "outside_Q_outside_T_fast"
+  ],
+  "primary_sizes": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    13
+  ],
+  "secondary_sizes": [
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "context_identity": [
+    "pair_id",
+    "source_pool_id",
+    "target_pool_id",
+    "domain"
+  ],
+  "support": "每个上下文必须所有尺寸两政策已执行，候选名单精确一致；不按结果筛选主要支持。",
+  "aggregation": "先同目标图内上下文等权，再楼内图等权，最后建筑等权。每个指标按实际有效分母独立计算；失败/未知不填0。",
+  "missing": "质量差只对两端有Q；失败率全设计；另报跨全尺寸两政策全可评分完整交集用于规模比较，明确其条件性筛选。",
+  "uncertainty": "建筑簇bootstrap 20000次 seed 20261030，同一重复中的n同步；删一楼敏感性；不假定事件独立，不宣称总体随机样本推断。",
+  "planned_outputs": [
+    "原可变支持复算核对",
+    "全人数共同上下文规模曲线",
+    "3至7共同支持敏感性",
+    "各n楼等权置信区间和删楼",
+    "相邻n在相同可评分上下文的配对变化及成员嵌套率",
+    "坏尾与劳动联合风险",
+    "中英文图与中文研究说明"
+  ],
+  "non_goals": [
+    "不重新融合",
+    "不增策略",
+    "不确定最优n",
+    "不改变分类或参考",
+    "不估计未定义跨楼采集成本",
+    "不把记录劳动当等待时间"
+  ]
+}

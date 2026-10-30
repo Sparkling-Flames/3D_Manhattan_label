@@ -1,0 +1,17 @@
+{
+  "expected_exit_code": 2,
+  "actual_exit_code": 2,
+  "parallel_file_unchanged": true,
+  "error": {
+    "ok": false,
+    "reason": "Document SHA256 guard blocked differing files. Preserve the parallel version and review/rebase the dated addition; no files were changed.",
+    "detail": [
+      {
+        "path": "RESEARCH_ANALYSIS_INDEX.md",
+        "state": "conflict",
+        "base_sha256": "1a5f8b591927459181bd07d1770e4a1a4f72b7b4151b2a5b280469367fe7b3e7",
+        "actual_sha256": "a0272928dc18fcd3a8ef8719e1fe76ffdb736068b0dd65baa5edeb940d29e157"
+      }
+    ]
+  }
+}

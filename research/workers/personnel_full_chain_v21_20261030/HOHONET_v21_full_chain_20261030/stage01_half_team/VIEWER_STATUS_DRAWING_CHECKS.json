@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "validation": "Instrumented canvas stroke paths by team color: every non-complete endpoint must have zero connecting/closed strokes in both panorama and floor; complete consensus and real reference/raw rings remain.",
+  "images": 36,
+  "events": 116,
+  "endpoints": 348,
+  "complete_endpoints_with_rings": 330,
+  "incomplete_endpoints_points_only": 18,
+  "status_counts": {
+    "complete_conditional": 330,
+    "no_connection": 16,
+    "below_four": 2
+  },
+  "raw_ring_checks_on_incomplete_endpoints": 18,
+  "anchor_below_four": [
+    {
+      "image": "S9hNv5qa7GM-12",
+      "event_id": "3541b27a4eff744938462e2b",
+      "arm": "A",
+      "score_status": "below_four",
+      "selected_nodes": 3,
+      "pano_connection_strokes": 0,
+      "floor_connection_strokes": 0
+    },
+    {
+      "image": "S9hNv5qa7GM-12",
+      "event_id": "3541b27a4eff744938462e2b",
+      "arm": "B",
+      "score_status": "below_four",
+      "selected_nodes": 3,
+      "pano_connection_strokes": 0,
+      "floor_connection_strokes": 0
+    }
+  ],
+  "scientific_files_unchanged": [
+    {
+      "file": "ALL_36_CASE_READING_INDEX.csv",
+      "sha256": "a0ef2ad148698ea241c7f56ae3b2e4d410b55ad9bb93c3242d4971ba17ecce81",
+      "unchanged": true
+    },
+    {
+      "file": "ALL_36_CASES_ZH.md",
+      "sha256": "fdaa62e951b68101a2ef682b9538bec5e591fe4321d2403fb2f23957a926b6f7",
+      "unchanged": true
+    },
+    {
+      "file": "CASE_ANCHOR_SELECTION.csv",
+      "sha256": "0729139e491631d73488c9864c67817ce0ce024f92a99e03f4beb187e9378e8d",
+      "unchanged": true
+    },
+    {
+      "file": "EVENTS_METRIC_SPECIFIC_SUPPORT.csv.gz",
+      "sha256": "9ba9c5bcaf65a987a5aa15bb5909a0865b83e59b3f463e28b559ab60b1d5b969",
+      "unchanged": true
+    },
+    {
+      "file": "SAVED_ENDPOINT_SCALARS.csv.gz",
+      "sha256": "658384cfef9a83a63ce5c5c2d43874d2e9452c33d91e934dd707c91413625adf",
+      "unchanged": true
+    },
+    {
+      "file": "ALL_36_EXCEPTION_NUMERIC_AND_MECHANISM_INDEX.csv",
+      "sha256": "4bee813494bd178521436ce1f1be1a3d9999790c942144e1a8dd5c8c8768e296",
+      "unchanged": true
+    }
+  ],
+  "reference_and_raw_geometry_unchanged": true,
+  "new_fusion_or_scoring": 0,
+  "browser_visual_acceptance": false,
+  "method_scope": "This receipt validates all saved endpoint drawing paths in a Node VM canvas shim; it does not claim real-browser visual acceptance.",
+  "browser_acceptance_record": "stage06_synthesis/browser_acceptance/BROWSER_EXECUTION_CHECKS.json"
+}

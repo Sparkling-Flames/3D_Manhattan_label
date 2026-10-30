@@ -1,0 +1,372 @@
+{
+  "stage": "stage02_abc",
+  "archive": "STAGE02A_SAME_ROOM_ABC.zip",
+  "bytes": 215870525,
+  "sha256": "746658313c09da227c9d3b195b850426169d6efafb1badc5d84d559cf7d39b27",
+  "source_files": 44,
+  "archive_members": 45,
+  "full_read_and_crc_passed": true,
+  "nested_gzip_json_csv_images_validated": true,
+  "all_source_hashes_match": true,
+  "verification": [
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/EXISTING_VALID_EVENT_SOURCE.csv.gz",
+      "bytes": 66313674,
+      "sha256": "33e7270d353724817e5585e7e00454065e7c31817824c8f3657087b892bb7d19",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 27860,
+      "columns": 625
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/VALID_CLASS_RELATION_SOURCE.csv.gz",
+      "bytes": 444821,
+      "sha256": "e7c30dfbd1cd0102d77244021e1b690d8329a2db49c5d3c685dcf00af39e9f72",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 37354,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/BUILDING_METRICS.csv.gz",
+      "bytes": 11037114,
+      "sha256": "f393e5358832d5357abeaf54b9f92ddeb2ef10636701d916bca1983dbd7be543",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 78925,
+      "columns": 42
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/CAPACITY_SUFFICIENT_UNEXECUTED_MAIN_HALF_PAIRS.csv",
+      "bytes": 10073,
+      "sha256": "9133c9b7dc4c6ed7352f43a228fb23d6d76f51edcfb20b336b4735bda138f715",
+      "format": "csv",
+      "rows": 15,
+      "columns": 34
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/CHECKS.json",
+      "bytes": 804,
+      "sha256": "c16dd1c91642b66bc648a1c76af57c904322b03db6447f2852035c61d218dc50",
+      "format": "json",
+      "top_items": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/CONDITION_ENDPOINT_STATUS_COUNTS.csv",
+      "bytes": 31052,
+      "sha256": "0c9eabc4bb94cf4f9eaefe6ecf04582035a3ef617b24a1b5b5d50fe6a893acd0",
+      "format": "csv",
+      "rows": 304,
+      "columns": 19
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/CONDITION_METRICS.csv.gz",
+      "bytes": 7228093,
+      "sha256": "173695ac3969309cd4470299b7f4e28981148be8bda797d43a633c2abda9036b",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 54040,
+      "columns": 47
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/ENDPOINT_STATUS_SOURCE_RECEIPT.json",
+      "bytes": 4944,
+      "sha256": "cf62649abfc6173e16b6378ecae3702809189f29919234e4bcfcd425d70fa501",
+      "format": "json",
+      "top_items": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/EVENT_ENDPOINT_STATES.csv.gz",
+      "bytes": 7178775,
+      "sha256": "832e4fb520940bff026937047f87d76ac4abb2d8352a6fdc8236f8d19148547a",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 37354,
+      "columns": 69
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/EVENT_IDENTITIES.csv.gz",
+      "bytes": 8619176,
+      "sha256": "8c64a4e42e8d808a937683ee0a3fbead4296e3d5b7eb979f6fc9e864a5a71ade",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 37354,
+      "columns": 49
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/EXISTING_ENDPOINT_STATUS_COMPONENTS.csv.gz",
+      "bytes": 34806493,
+      "sha256": "17817cbeb0cbf8d5f3417ae47d0054e6fcaf856ad319e70cac0745ad304f3873",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 143194,
+      "columns": 50
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/EXISTING_GEOMETRY_SOURCE.csv.gz",
+      "bytes": 33472797,
+      "sha256": "65e51c31afeab198ab523044ecd5dcbb56ac59687d7874b4908368d632aec387",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 167160,
+      "columns": 47
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/FINAL_JOIN_CHECKS.json",
+      "bytes": 550,
+      "sha256": "b5f8e1aca74818be622a233eefb683e0e4907a910e4e4d8ab1821d672a849dc0",
+      "format": "json",
+      "top_items": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/HALF_CAPACITY_ALL_DIRECTIONS.csv.gz",
+      "bytes": 229418,
+      "sha256": "ec8472593a26e1f49b4d1a8e6028849963242d6850ba979e57252d3d02af1846",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 27360,
+      "columns": 34
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/HALF_CAPACITY_RECEIPT.json",
+      "bytes": 344,
+      "sha256": "b361c0093e239edb8e9e334ac687c49fe11b7c3efd33af20e362d37bba613421",
+      "format": "json",
+      "top_items": 6
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "bytes": 16527,
+      "sha256": "0eb5365680ef52af8f60f6d60b43617edeb1f17b9664d6605c630aae3b71c3e4",
+      "format": "csv",
+      "rows": 240,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/IMAGE_METRICS.csv.gz",
+      "bytes": 5951833,
+      "sha256": "67badf4fa9c1137686d8f3b31da17ab8d2b336463ee09b9bf84dbe4169538092",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 108080,
+      "columns": 21
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/MAIN_HALF_MEMBER_FREQUENCY.csv",
+      "bytes": 6824,
+      "sha256": "745ba11025a368473f08bd3e41cebb340ba6ede7250d381afc98a43a5719cd68",
+      "format": "csv",
+      "rows": 272,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/PAIRED_CASE_ENDPOINT_STATES.csv.gz",
+      "bytes": 3763,
+      "sha256": "7568e46836080e7039b83bb91d034fa61c13e7f008320e882ce8c4da1debde98",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 14,
+      "columns": 69
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/PAIRED_CASE_EVENTS.csv.gz",
+      "bytes": 9891,
+      "sha256": "8cc6d80137b8be0b1530c41ba37b1fe1a7eca9b450ac489fca28277e4d326a94",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 14,
+      "columns": 104
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/PAIR_METRICS.csv.gz",
+      "bytes": 16881578,
+      "sha256": "863c899007e5ccbf89fe68e3c36eae25e219a9234a952a9531067208b79260d2",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 123585,
+      "columns": 44
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/PAIR_VIEW_REPETITION.csv",
+      "bytes": 3469115,
+      "sha256": "055563c782428016cf30ed9b819b3a63ed038fdefd536277d071fbb5eb820eba",
+      "format": "csv",
+      "rows": 22260,
+      "columns": 39
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/PHYSICAL_EVENT_OVERLAP.csv.gz",
+      "bytes": 1127292,
+      "sha256": "6431aa870fffe672ae972e9fe1772e28c7e1a772dee21ad81b24baa366f98f9e",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 37354,
+      "columns": 5
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/Q_COMPONENT_CONDITIONS.csv.gz",
+      "bytes": 1983090,
+      "sha256": "080389b205db56fa72235d7bbcb183dc433bb169fe8e88293344d563de730f24",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 10808,
+      "columns": 32
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/Q_COMPONENT_SUMMARY.csv",
+      "bytes": 1974876,
+      "sha256": "bd7b35662e6157231651f145a8257db11fe62f769dd0ef0bc871f1b6f5f7b069",
+      "format": "csv",
+      "rows": 2408,
+      "columns": 55
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/SUMMARY.csv",
+      "bytes": 23005542,
+      "sha256": "e152d6ba6b9eaf6e6af0a44c88a595307668ec350869b66877857e5f2f4c6878",
+      "format": "csv",
+      "rows": 22260,
+      "columns": 93
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/SUPPORT_STATUS.csv",
+      "bytes": 33587,
+      "sha256": "51d372617b2c7df4b57200cb2eb0b5a9dd84a2b5f40e803a8a27dad0e7cd1947",
+      "format": "csv",
+      "rows": 304,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/UNIQUE_ENDPOINT_STATUS_COUNTS.csv",
+      "bytes": 237,
+      "sha256": "38f7a32e9b14a97fee3f7e6ed5e62d3cf92a07d6aa0c5846b1acc170695700d0",
+      "format": "csv",
+      "rows": 5,
+      "columns": 5
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CACHED_GEOMETRY_RECEIPT.csv",
+      "bytes": 58999,
+      "sha256": "1729a7d7035b389dc3bab98509fa4587fcdea19a13bfdaa9adca2fcab37acfb2",
+      "format": "csv",
+      "rows": 84,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CASE_ENDPOINT_MECHANISM_INDEX.csv",
+      "bytes": 29038,
+      "sha256": "24ec733b25d9e24ad4227a296d3f9246b01b4793718ba1bb856eb06eedd8b25b",
+      "format": "csv",
+      "rows": 84,
+      "columns": 19
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CASE_NODE_VOTE_LEDGER.csv.gz",
+      "bytes": 31036,
+      "sha256": "54f79af2b49e1eb342a3c677e26d20ebae45154097cefe192fc2296e6e8882c4",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 444,
+      "columns": 25
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CASE_RAW_GEOMETRY_IDENTITY_CHECK.csv.gz",
+      "bytes": 30089,
+      "sha256": "1c7cba997c8f54c9beaa351f7fabd2ee57cc13961ebe92988d6f2295820fb776",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 4959,
+      "columns": 6
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CASE_RING_SUPPORT_DIAGNOSTICS.csv.gz",
+      "bytes": 8040,
+      "sha256": "9d5b044b35e822f866fec782f33207ce0987ec4077ffd8f7bf8397efba63c75e",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 467,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/CASE_VIEWER.html",
+      "bytes": 903827,
+      "sha256": "5964ccaeffc036eb045d449dd44e04ce703e1dcad8d6e13b0f6a7257d3e592f1",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/ORIGINAL_PANORAMA_RECEIPT.csv",
+      "bytes": 1558,
+      "sha256": "22b509a9d74fe5870bdc56bbeab95f4ce388681b8d5ca4de98ae483523d6b1f3",
+      "format": "csv",
+      "rows": 6,
+      "columns": 6
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/PAIRED_CASE_CACHED_GEOMETRY_AND_TRACE.jsonl.gz",
+      "bytes": 262343,
+      "sha256": "cb2d156598240dfc974a06aa52e597c031c1f8f695b953007c14a8e1d4fea494",
+      "gzip_crc_and_footer": "passed",
+      "format": "jsonl",
+      "rows": 84
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/PAIRED_CASE_INPUTS.json.gz",
+      "bytes": 40720,
+      "sha256": "bd6e41a19703bbc1491258fbb95d3a9b33efdef8dbd6ce384f6ffc2f8af68537",
+      "gzip_crc_and_footer": "passed",
+      "format": "json",
+      "top_items": 3
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/VIEWER_EXECUTION_CHECK.json",
+      "bytes": 1962,
+      "sha256": "ade719b41622f2426ee7ae94371cf1fe853d3b82b6251522f804e469dee285c2",
+      "format": "json",
+      "top_items": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/S9hNv5qa7GM-05.png",
+      "bytes": 2063958,
+      "sha256": "e89a15c82a2a1d5f8584cf95c5a0511d756506b59ee3fa9d6dc7d878dfac2698",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/S9hNv5qa7GM-10.png",
+      "bytes": 1912578,
+      "sha256": "9780b7ec341b644b6c8551fde8cc0021374b74e2f5ea5029453cec119d4e99f5",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/S9hNv5qa7GM-12.png",
+      "bytes": 1827506,
+      "sha256": "0c26446ce54b99ac7061757674aa7e33ae97a29cb157f5053ed46255fa9f0f44",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/S9hNv5qa7GM-19.png",
+      "bytes": 2020659,
+      "sha256": "61067ad4836e964c0e5112ab07eb3df68b4a435e24927f0017146a24fa66139e",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/pa4otMbVnkk-42.png",
+      "bytes": 2471291,
+      "sha256": "0f6b3ae62027b67d252b6b4d0e9dba51a83c38542d3d68ab20455ac361ab5c48",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc/cases/images/pa4otMbVnkk-44.png",
+      "bytes": 2452624,
+      "sha256": "51c2c4a85ef83045497e143c805e14ca8dc9d82c6a751abcc7092de83213593a",
+      "format": "image_verified"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/delivery_manifests/stage02_abc_MANIFEST.csv",
+      "bytes": 5556,
+      "sha256": "00566b9e818a4f0734ed645ee313a76b5d60d27e0fa9d5cd1841da22bc8d1d01",
+      "format": "csv",
+      "rows": 44,
+      "columns": 3
+    }
+  ]
+}

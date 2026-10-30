@@ -1,0 +1,1637 @@
+{
+  "identity": "Illustrative cases after full frozen-policy analysis; not used for policy selection",
+  "row": {
+    "pair_id": "PAIR_c0490d300b2eaf21",
+    "group_ids": "G172",
+    "scope_comparable": true,
+    "relation_tier": "user_classified_comparable",
+    "condition": "manual",
+    "building": "uNb9QFRL6hY",
+    "layer": "ordinary_manual",
+    "image_a": "uNb9QFRL6hY-12",
+    "image_b": "uNb9QFRL6hY-45",
+    "pool_a": "uNb9QFRL6hY-12__manual__15a1012a90",
+    "pool_b": "uNb9QFRL6hY-45__manual__5dc82190fe",
+    "version": "v21_history_reselected_fixed_candidates",
+    "source_pool_id": "uNb9QFRL6hY-45__manual__5dc82190fe",
+    "source_image": "uNb9QFRL6hY-45",
+    "target_pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+    "target_image": "uNb9QFRL6hY-12",
+    "domain": "new_timed_history",
+    "n": 5,
+    "policy": "outside_Q_outside_T_fast",
+    "member_workers": "W102|W123|W126|W133|W134",
+    "available_workers": 7,
+    "available_worker_ids": "W101|W102|W123|W126|W129|W133|W134",
+    "team_key": "uNb9QFRL6hY-12__manual__15a1012a90__9a29f874369c429e5ae7",
+    "history_Q_mean": 4.544248982359225,
+    "source_Q_mean": 75.71223002935751,
+    "source_roster_activity_seconds": 1194.492,
+    "B8L2": 92.27530406625972,
+    "D10": 93.39500881481,
+    "nodes": 4,
+    "fusion_turn_n": 4.0,
+    "fusion_short_turn_edges": 0.0,
+    "fusion_redundancy_n": 0.0,
+    "S_bottom_deg": 0.3912014357277442,
+    "dir": 1.5979242321937424,
+    "Hmean": 0.0206173552078141,
+    "Hcenter": 0.0131780881007156,
+    "omission": 0.0056282486875735,
+    "extension": 0.0452617603484221,
+    "ref_node_recall_5": 1.0,
+    "ref_node_recall_9": 1.0,
+    "ref_edge_recall_5": 1.0,
+    "ref_edge_recall_9": 1.0,
+    "iou_2d": 0.951313622131328,
+    "IoU3D100": 93.26217188267717,
+    "boundary_loss": 0.0047824551036077,
+    "direction_loss": 0.0956235032633787,
+    "height_loss": 0.0034427723079766,
+    "geometry_area_h2": 15.776495471464164,
+    "centroid_x_h": -1.98214767784148,
+    "centroid_z_h": 0.511629473607543,
+    "height_mean_h": 2.1202411811123345,
+    "pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+    "reference_id": "gt:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f.txt",
+    "reference_version": "gt_original",
+    "score_status": "complete_conditional",
+    "complete_evaluable": true,
+    "geometry_status": "ok",
+    "connection_available": true,
+    "recorded_time_eligible": true,
+    "recorded_time_total_seconds": 384.373,
+    "source_time_total_seconds": 384.373,
+    "source_time_known_n": 5,
+    "time_source_kinds": "user_processed_reported_not_raw_log_replayed",
+    "difficulty": "简单",
+    "downstream_acquisition": "missing_exact_team_evaluated",
+    "member_object_ids": "v2:new:104652|v2:new:104663|v2:new:104665|v2:new:104669|v2:new:104670",
+    "geometry_source": "stage05_selection_stop/endpoints/pools/uNb9QFRL6hY-12__manual__15a1012a90.jsonl.gz#uNb9QFRL6hY-12__manual__15a1012a90__9a29f874369c429e5ae7",
+    "target_activity_seconds": 384.373,
+    "observed_fusion_failure": false,
+    "measurement_unavailable": false,
+    "base_B8L2": 67.24344306565932,
+    "base_D10": 73.44101134166313,
+    "base_target_activity_seconds": 357.957,
+    "base_team_key": "uNb9QFRL6hY-12__manual__15a1012a90__3505e231633723bd86a0",
+    "base_complete_evaluable": true,
+    "base_nodes": 4,
+    "base_fusion_turn_n": 4.0,
+    "base_fusion_short_turn_edges": 0.0,
+    "base_fusion_redundancy_n": 0.0,
+    "base_S_bottom_deg": 0.6055697267657179,
+    "base_dir": 5.406882191717173,
+    "base_Hmean": 0.0272064529920653,
+    "base_Hcenter": 0.0060661466025594,
+    "base_omission": 0.0185454126023975,
+    "base_extension": 0.0879215606178422,
+    "base_ref_node_recall_5": 1.0,
+    "base_ref_node_recall_9": 1.0,
+    "base_ref_edge_recall_5": 1.0,
+    "base_ref_edge_recall_9": 1.0,
+    "base_iou_2d": 0.902137270668874,
+    "base_IoU3D100": 87.9762956413236,
+    "base_boundary_loss": 0.011459834186722,
+    "base_direction_loss": 0.6571060645970324,
+    "base_height_loss": 0.0017453187230496,
+    "base_geometry_area_h2": 16.227841606899986,
+    "base_centroid_x_h": -2.030231326492681,
+    "base_centroid_z_h": 0.5887533012762589,
+    "base_height_mean_h": 2.1063792897639626,
+    "policy_original": "outside_Q_outside_T_fast",
+    "delta_Q": 25.0318610006004,
+    "delta_D10": 19.953997473146885,
+    "absolute_delta_Q": 25.0318610006004,
+    "loss_over5": 0.0,
+    "gain_over5": 1.0,
+    "within2": 1.0,
+    "both_scored": 1.0,
+    "complete_rate": 1.0,
+    "Q_available_rate": 1.0,
+    "low_Q50": 0.0,
+    "low_Q80": 0.0,
+    "same_team": 0.0,
+    "log_activity_ratio": 0.0712005678403478,
+    "joint_save20_loss_atmost2": 0.0,
+    "source_plus_target_over_base_target": 4.410767215056557,
+    "delta_nodes": 0,
+    "delta_fusion_turn_n": 0.0,
+    "delta_fusion_short_turn_edges": 0.0,
+    "delta_fusion_redundancy_n": 0.0,
+    "delta_S_bottom_deg": -0.2143682910379736,
+    "delta_dir": -3.808957959523431,
+    "delta_Hmean": -0.0065890977842512,
+    "delta_Hcenter": 0.0071119414981562,
+    "delta_omission": -0.012917163914824,
+    "delta_extension": -0.0426598002694201,
+    "delta_ref_node_recall_5": 0.0,
+    "delta_ref_node_recall_9": 0.0,
+    "delta_ref_edge_recall_5": 0.0,
+    "delta_ref_edge_recall_9": 0.0,
+    "delta_iou_2d": 0.049176351462454,
+    "delta_IoU3D100": 5.285876241353563,
+    "delta_boundary_loss": -0.0066773790831143,
+    "delta_direction_loss": -0.5614825613336536,
+    "delta_height_loss": 0.001697453584927,
+    "delta_geometry_area_h2": -0.4513461354358217,
+    "delta_centroid_x_h": 0.048083648651201,
+    "delta_centroid_z_h": -0.0771238276687159,
+    "delta_height_mean_h": 0.0138618913483719,
+    "relation_oos_pending": false,
+    "exhibit_role": "large_quality_gain"
+  },
+  "target_meta": {
+    "pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+    "image": "uNb9QFRL6hY-12",
+    "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+    "condition": "manual",
+    "building": "uNb9QFRL6hY",
+    "room_id": "G172",
+    "scene": "unflagged",
+    "layer": "ordinary_manual",
+    "difficulty": "简单",
+    "difficulty_aligned": true,
+    "reference_id": "gt:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f.txt",
+    "reference_version": "gt_original",
+    "pool_n": 34,
+    "source_inventory_n": 35,
+    "source_time_known_n": 20,
+    "target_time_known_n": 0,
+    "old_member_n": 14,
+    "new_member_n": 20,
+    "data_release": "v2.1"
+  },
+  "reference": {
+    "target_id": "gt:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f.txt",
+    "reference_version": "gt_original",
+    "floor_xz_h": [
+      [
+        0.5499407310934633,
+        -1.0888820593000679
+      ],
+      [
+        0.5500210748721507,
+        1.9970516381756658
+      ],
+      [
+        -4.3670210368469355,
+        1.9973259107552097
+      ],
+      [
+        -4.367227540119015,
+        -1.0890935004428368
+      ]
+    ],
+    "points_1024x512": [
+      [
+        588.22,
+        131.78
+      ],
+      [
+        588.22,
+        367.91
+      ],
+      [
+        980.2,
+        172.53
+      ],
+      [
+        980.2,
+        329.3
+      ],
+      [
+        186.09,
+        217.22
+      ],
+      [
+        186.09,
+        289.46
+      ],
+      [
+        295.83,
+        214.73
+      ],
+      [
+        295.83,
+        291.63
+      ]
+    ],
+    "full_reference_available": true
+  },
+  "target_raw_records": [
+    {
+      "id": "v2:new:104651",
+      "object_id": "v2:new:104651",
+      "worker": "W101",
+      "worker_id": "W101",
+      "condition": "manual",
+      "points": [
+        [
+          175.1939594036052,
+          227.35328722333023
+        ],
+        [
+          175.1939594036052,
+          285.94462364398305
+        ],
+        [
+          292.1711215559584,
+          212.27177337667473
+        ],
+        [
+          292.1711215559584,
+          298.55799269629114
+        ],
+        [
+          585.1123883216435,
+          140.8339689267324
+        ],
+        [
+          585.1123883216435,
+          365.8647261000894
+        ],
+        [
+          983.4711984551647,
+          175.3530693166242
+        ],
+        [
+          983.4711984551647,
+          335.65532089552823
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 73.943,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 51.218154991414295,
+      "D10": 55.6889683161888
+    },
+    {
+      "id": "v2:new:104652",
+      "object_id": "v2:new:104652",
+      "worker": "W102",
+      "worker_id": "W102",
+      "condition": "manual",
+      "points": [
+        [
+          173.91597458259665,
+          223.87813608156247
+        ],
+        [
+          173.91597458259665,
+          288.09191403665847
+        ],
+        [
+          298.27565520275823,
+          216.42770614507683
+        ],
+        [
+          298.27565520275823,
+          291.15654630191665
+        ],
+        [
+          587.2210968632879,
+          138.36966912916918
+        ],
+        [
+          587.2210968632879,
+          369.5214085886723
+        ],
+        [
+          981.9711533626912,
+          175.1066146620342
+        ],
+        [
+          981.9711533626912,
+          325.2917776092375
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 73.476,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 86.79503175110736,
+      "D10": 87.51504637070583
+    },
+    {
+      "id": "v2:new:104663",
+      "object_id": "v2:new:104663",
+      "worker": "W123",
+      "worker_id": "W123",
+      "condition": "manual",
+      "points": [
+        [
+          80.34452569309202,
+          184.0189381432908
+        ],
+        [
+          80.34452569309202,
+          331.0289161684267
+        ],
+        [
+          182.4254028323553,
+          226.26516752580758
+        ],
+        [
+          182.4254028323553,
+          285.8268269484324
+        ],
+        [
+          297.84540289389116,
+          211.842903053152
+        ],
+        [
+          297.84540289389116,
+          297.67427768056024
+        ],
+        [
+          586.0028996379618,
+          134.9058681288977
+        ],
+        [
+          586.0028996379618,
+          370.46496443789977
+        ],
+        [
+          981.3749117092924,
+          177.6531823221511
+        ],
+        [
+          981.3749117092924,
+          326.7730654608789
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 82.724,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 51.23780046007113,
+      "D10": 55.841878444604646
+    },
+    {
+      "id": "v2:new:104665",
+      "object_id": "v2:new:104665",
+      "worker": "W126",
+      "worker_id": "W126",
+      "condition": "manual",
+      "points": [
+        [
+          588.3864290569082,
+          131.8517970620118
+        ],
+        [
+          588.3864290569082,
+          367.460488153258
+        ],
+        [
+          980.2449142546636,
+          172.89454240465756
+        ],
+        [
+          980.2449142546636,
+          329.66453383483304
+        ],
+        [
+          186.01514231828835,
+          217.12981356926193
+        ],
+        [
+          186.01514231828835,
+          289.38154479730883
+        ],
+        [
+          295.5565084864494,
+          214.40071243799335
+        ],
+        [
+          295.5565084864494,
+          291.3344564269333
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 94.68,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 99.12893241379795,
+      "D10": 99.13436801012384
+    },
+    {
+      "id": "v2:new:104669",
+      "object_id": "v2:new:104669",
+      "worker": "W133",
+      "worker_id": "W133",
+      "condition": "manual",
+      "points": [
+        [
+          180.24285563498313,
+          218.81609478307178
+        ],
+        [
+          180.24285563498313,
+          297.8270896567614
+        ],
+        [
+          290.4922200206312,
+          223.03927140097022
+        ],
+        [
+          290.4922200206312,
+          291.51212440797025
+        ],
+        [
+          588.3919724297996,
+          137.57249889607743
+        ],
+        [
+          588.3919724297996,
+          371.51786385355155
+        ],
+        [
+          975.0737150844948,
+          164.00429046442952
+        ],
+        [
+          975.0737150844948,
+          343.37110397772994
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 100.359,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 52.994708647385735,
+      "D10": 57.19016010512846
+    },
+    {
+      "id": "v2:new:104670",
+      "object_id": "v2:new:104670",
+      "worker": "W134",
+      "worker_id": "W134",
+      "condition": "manual",
+      "points": [
+        [
+          586.3243931935392,
+          132.19043342862702
+        ],
+        [
+          586.3243931935392,
+          368.5983030873355
+        ],
+        [
+          980.0035278513311,
+          169.9570533714825
+        ],
+        [
+          980.0035278513311,
+          329.8859798309701
+        ],
+        [
+          184.56652429430648,
+          222.17328722333022
+        ],
+        [
+          184.56652429430648,
+          283.321132691708
+        ],
+        [
+          295.6025541581625,
+          214.51367495309816
+        ],
+        [
+          295.6025541581625,
+          293.1619083608007
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 33.134,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 54.253041103928474,
+      "D10": 59.45252905831104
+    }
+  ],
+  "source_meta": {
+    "pool_id": "uNb9QFRL6hY-45__manual__5dc82190fe",
+    "image": "uNb9QFRL6hY-45",
+    "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+    "condition": "manual",
+    "building": "uNb9QFRL6hY",
+    "room_id": "G172",
+    "scene": "unflagged",
+    "layer": "ordinary_manual",
+    "difficulty": "简单",
+    "difficulty_aligned": true,
+    "reference_id": "gt:uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97:export_label/groudTruth.json",
+    "reference_version": "user_ceiling_adopted_20261028",
+    "pool_n": 35,
+    "source_inventory_n": 35,
+    "source_time_known_n": 30,
+    "target_time_known_n": 18,
+    "old_member_n": 23,
+    "new_member_n": 12,
+    "data_release": "v2.1"
+  },
+  "source_raw_records": [
+    {
+      "id": "v2:new:104949",
+      "object_id": "v2:new:104949",
+      "worker": "W101",
+      "worker_id": "W101",
+      "condition": "manual",
+      "points": [
+        [
+          171.07373650657905,
+          206.80755920035338
+        ],
+        [
+          171.07373650657905,
+          313.82024354385135
+        ],
+        [
+          363.0932324957202,
+          207.47814605315054
+        ],
+        [
+          363.0932324957202,
+          309.4404882954423
+        ],
+        [
+          671.6919947386374,
+          207.75966994348553
+        ],
+        [
+          671.6919947386374,
+          305.48567629347684
+        ],
+        [
+          834.238105561054,
+          197.53492855592185
+        ],
+        [
+          834.238105561054,
+          320.28056499731457
+        ],
+        [
+          902.8517571555421,
+          165.3030355975892
+        ],
+        [
+          902.8517571555421,
+          355.8800536877928
+        ],
+        [
+          927.2727940910158,
+          168.21200984830642
+        ],
+        [
+          927.2727940910158,
+          344.464
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 162.52,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 76.93554759378243,
+      "D10": 82.23754210346858
+    },
+    {
+      "id": "v2:new:104950",
+      "object_id": "v2:new:104950",
+      "worker": "W102",
+      "worker_id": "W102",
+      "condition": "manual",
+      "points": [
+        [
+          167.2526908960533,
+          197.73918965395134
+        ],
+        [
+          167.2526908960533,
+          319.60450201740764
+        ],
+        [
+          360.3018628517956,
+          202.32899992207265
+        ],
+        [
+          360.3018628517956,
+          316.69175126272887
+        ],
+        [
+          667.5771324197985,
+          206.38584985370753
+        ],
+        [
+          667.5771324197985,
+          305.2462628997048
+        ],
+        [
+          836.1218259309096,
+          202.23899278973647
+        ],
+        [
+          836.1218259309096,
+          321.9948984116509
+        ],
+        [
+          910.0778025608095,
+          163.09756039099474
+        ],
+        [
+          910.0778025608095,
+          345.70024702828675
+        ],
+        [
+          926.1554102980209,
+          169.61582922625934
+        ],
+        [
+          926.1554102980209,
+          342.7791274355423
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 115.194,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 57.9473632843855,
+      "D10": 63.63944245930982
+    },
+    {
+      "id": "v2:new:104953",
+      "object_id": "v2:new:104953",
+      "worker": "W123",
+      "worker_id": "W123",
+      "condition": "manual",
+      "points": [
+        [
+          162.60250657834348,
+          197.55318969944648
+        ],
+        [
+          162.60250657834348,
+          316.46519901197354
+        ],
+        [
+          366.28466137950016,
+          198.34687123964625
+        ],
+        [
+          366.28466137950016,
+          303.9285518471392
+        ],
+        [
+          670.6448375154463,
+          201.72080278374142
+        ],
+        [
+          670.6448375154463,
+          308.9649890519703
+        ],
+        [
+          841.2044079558345,
+          202.39654305731656
+        ],
+        [
+          841.2044079558345,
+          316.80813503671817
+        ],
+        [
+          913.1524312236841,
+          160.75657664292586
+        ],
+        [
+          913.1524312236841,
+          351.7692843088117
+        ],
+        [
+          933.120257985794,
+          158.92861907432842
+        ],
+        [
+          933.120257985794,
+          347.55112444858827
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 339.362,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 65.42122852922543,
+      "D10": 71.46887166410332
+    },
+    {
+      "id": "v2:new:104954",
+      "object_id": "v2:new:104954",
+      "worker": "W126",
+      "worker_id": "W126",
+      "condition": "manual",
+      "points": [
+        [
+          167.48226041964807,
+          198.79393758347854
+        ],
+        [
+          167.48226041964807,
+          316.0037626894093
+        ],
+        [
+          362.24665316986943,
+          202.04591093079458
+        ],
+        [
+          362.24665316986943,
+          309.59668681262315
+        ],
+        [
+          667.9377893416492,
+          205.45491870739502
+        ],
+        [
+          667.9377893416492,
+          309.53585510300644
+        ],
+        [
+          838.9302495557122,
+          197.5294325775673
+        ],
+        [
+          838.9302495557122,
+          315.84471463829186
+        ],
+        [
+          911.8347206113531,
+          161.36556927495675
+        ],
+        [
+          911.8347206113531,
+          352.45781636114526
+        ],
+        [
+          927.4348850433795,
+          168.38952156925683
+        ],
+        [
+          927.4348850433795,
+          344.3030421297832
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 211.367,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 94.98336600503096,
+      "D10": 96.32407174682011
+    },
+    {
+      "id": "v2:new:104958",
+      "object_id": "v2:new:104958",
+      "worker": "W133",
+      "worker_id": "W133",
+      "condition": "manual",
+      "points": [
+        [
+          166.56466566974126,
+          196.00746425108474
+        ],
+        [
+          166.56466566974126,
+          311.5951504509867
+        ],
+        [
+          360.17930331912584,
+          196.789721024526
+        ],
+        [
+          360.17930331912584,
+          306.451646032015
+        ],
+        [
+          668.0960332970426,
+          197.01959153213352
+        ],
+        [
+          668.0960332970426,
+          305.56389836842646
+        ],
+        [
+          838.5369662536584,
+          185.2075833287144
+        ],
+        [
+          838.5369662536584,
+          310.2145922055225
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 77.094,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 80.13679434310984,
+      "D10": 80.29211562460898
+    },
+    {
+      "id": "v2:new:104959",
+      "object_id": "v2:new:104959",
+      "worker": "W134",
+      "worker_id": "W134",
+      "condition": "manual",
+      "points": [
+        [
+          166.3196048505738,
+          202.22425631235453
+        ],
+        [
+          166.3196048505738,
+          312.59415636817477
+        ],
+        [
+          358.78493053567934,
+          206.5372872233302
+        ],
+        [
+          358.78493053567934,
+          316.69175126272887
+        ],
+        [
+          667.3773869851661,
+          204.30519654275363
+        ],
+        [
+          667.3773869851661,
+          309.9838817418015
+        ],
+        [
+          840.6548529682893,
+          199.6134404951913
+        ],
+        [
+          840.6548529682893,
+          313.60867325242145
+        ],
+        [
+          909.2617999173603,
+          161.38223185673942
+        ],
+        [
+          909.2617999173603,
+          352.91352814860073
+        ],
+        [
+          926.0015535721631,
+          169.37372149645515
+        ],
+        [
+          926.0015535721631,
+          340.1652062198706
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "ring_confirmed": false,
+      "order_status": "default_unreviewed",
+      "order_used": "frozen_evidence_declared_order_no_additional_sort",
+      "geometry_status": "surface_valid",
+      "origin": "new",
+      "source_time_seconds": 39.424,
+      "target_time_seconds": null,
+      "time_source_kind": "user_processed_reported_not_raw_log_replayed",
+      "quality_usable": true,
+      "B8L2": 80.0723979850358,
+      "D10": 83.0854247710588
+    }
+  ],
+  "endpoints": {
+    "uNb9QFRL6hY-12__manual__15a1012a90__9a29f874369c429e5ae7": {
+      "pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+      "image": "uNb9QFRL6hY-12",
+      "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "condition": "manual",
+      "building": "uNb9QFRL6hY",
+      "room_id": "G172",
+      "scene": "unflagged",
+      "layer": "ordinary_manual",
+      "difficulty": "简单",
+      "difficulty_aligned": true,
+      "reference_id": "gt:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f.txt",
+      "reference_version": "gt_original",
+      "pool_n": 34,
+      "source_inventory_n": 35,
+      "source_time_known_n": 5,
+      "target_time_known_n": 0,
+      "old_member_n": 14,
+      "new_member_n": 20,
+      "data_release": "v2.1",
+      "team_key": "uNb9QFRL6hY-12__manual__15a1012a90__9a29f874369c429e5ae7",
+      "member_workers": [
+        "W102",
+        "W123",
+        "W126",
+        "W133",
+        "W134"
+      ],
+      "member_object_ids": [
+        "v2:new:104652",
+        "v2:new:104663",
+        "v2:new:104665",
+        "v2:new:104669",
+        "v2:new:104670"
+      ],
+      "k": 5,
+      "new_n": 5,
+      "old_n": 0,
+      "source_time_total_seconds": 384.373,
+      "target_time_total_seconds": null,
+      "fusion_seconds": 0.005958580004516989,
+      "parity": 1,
+      "nodes": 4,
+      "below_four": false,
+      "half_vote_nodes": 0,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": true,
+      "complete_evaluable": true,
+      "location_unresolved": false,
+      "score_status": "complete_conditional",
+      "B8L2": 92.27530406625972,
+      "D10": 93.39500881481001,
+      "IoU3D100": 93.26217188267717,
+      "iou_2d": 0.951313622131328,
+      "S_bottom_deg": 0.39120143572774424,
+      "dir": 1.5979242321937424,
+      "Hmean": 0.02061735520781416,
+      "Hcenter": 0.013178088100715689,
+      "omission": 0.005628248687573507,
+      "extension": 0.04526176034842215,
+      "height_mean_ratio": 0.9793826447921858,
+      "score_seconds": 0.013025344000197947,
+      "geometry": {
+        "status": "geometry_review",
+        "reason": "source_order_and_identity_unconfirmed",
+        "points": [
+          [
+            182.4254028323553,
+            222.17328722333022
+          ],
+          [
+            182.4254028323553,
+            288.09191403665847
+          ],
+          [
+            295.6025541581625,
+            214.51367495309816
+          ],
+          [
+            295.6025541581625,
+            291.51212440797025
+          ],
+          [
+            587.2210968632879,
+            134.9058681288977
+          ],
+          [
+            587.2210968632879,
+            369.5214085886723
+          ],
+          [
+            980.2449142546636,
+            172.89454240465756
+          ],
+          [
+            980.2449142546636,
+            329.66453383483304
+          ]
+        ],
+        "footprint": [
+          [
+            -4.510386197911387,
+            2.186825963736141
+          ],
+          [
+            -4.383716200942854,
+            -1.0867093375749939
+          ],
+          [
+            0.5324309411930798,
+            -1.0704672408736478
+          ],
+          [
+            0.5463460043416288,
+            1.9858456244522849
+          ]
+        ],
+        "ring_confirmed": false,
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "order_status": "source_suggestion",
+        "geometry_status": "ok"
+      },
+      "reference_nodes": 4,
+      "minimum_support": 3,
+      "node_supports": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "identity_groups_n": 5,
+      "unselected_groups_n": 1,
+      "minority_observations_n": 1,
+      "selected_support_min": 1.0,
+      "ref_node_recall_5": 1.0,
+      "ref_edge_recall_5": 1.0,
+      "ref_matched_nodes_5": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_5": [
+        1,
+        3,
+        6,
+        11
+      ],
+      "ref_node_recall_9": 1.0,
+      "ref_edge_recall_9": 1.0,
+      "ref_matched_nodes_9": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_9": [
+        1,
+        3,
+        6,
+        11
+      ],
+      "endpoint_origin": "v21_reselection_engine_benchmark",
+      "source_time_known_sum_seconds": 384.373,
+      "source_parallel_active_seconds": 100.359,
+      "target_time_known_sum_seconds": 0,
+      "target_parallel_active_seconds": null,
+      "time_source_kinds": "user_processed_reported_not_raw_log_replayed",
+      "time_source_table": "research/workers/personnel_profiles_composition_20261020/source/tables/profiles/record_index.csv.gz",
+      "diag_status": "ok",
+      "diag_wall_coverage_03": 0.8604213285849608,
+      "diag_wall_coverage_05": 0.9966771771435392,
+      "diag_corner_recall_05": 0.75,
+      "geometry_area_h2": 15.776495471464164,
+      "centroid_x_h": -1.98214767784148,
+      "centroid_z_h": 0.511629473607543,
+      "bounds_min_x_h": -4.510386197911387,
+      "bounds_min_z_h": -1.0867093375749939,
+      "bounds_max_x_h": 0.5463460043416288,
+      "bounds_max_z_h": 2.186825963736141,
+      "height_mean_h": 2.1202411811123345,
+      "height_min_h": 2.0556004452219367,
+      "height_max_h": 2.1751756301033263,
+      "top_y_mean_px": 186.12184317749592,
+      "bottom_y_mean_px": 319.6974952170335,
+      "target_individual_B8L2_known_n": 5,
+      "target_individual_B8L2_mean": 68.88190287525813,
+      "target_individual_B8L2_min": 51.23780046007113,
+      "fusion_turn_n": 4,
+      "fusion_short_turn_edges": 0,
+      "fusion_redundancy_n": 0,
+      "underlying_data_version": "v2.1",
+      "repository_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+      "recorded_time_eligible": true,
+      "recorded_time_total_seconds": 384.373,
+      "record_time_by_kind_json": "{\"user_processed_reported_not_raw_log_replayed\":{\"known_n\":5,\"known_sum_seconds\":384.373,\"n\":5,\"total_seconds\":384.373}}",
+      "WQ": 86.57807897955223,
+      "floor_WQ_upper_bound": 86.836912560209,
+      "iou_3d_corner_mean": 0.9326217188267716,
+      "floor_WQ": 86.8369125602089,
+      "boundary_loss": 0.004782455103607763,
+      "direction_loss": 0.0956235032633787,
+      "global_height_loss": 0.0006641802121330962,
+      "local_height_loss": 0.0027785920958435907,
+      "height_loss": 0.003442772307976687,
+      "height_drop_WQ": 0.2588335806566704,
+      "height_drop_current": 0.2696308127099769,
+      "WQ_no_D": 94.39276048940557,
+      "WQ_no_B": 86.9380510009822,
+      "WQ_no_H": 86.8369125602089,
+      "iou2d100": 95.1313622131328,
+      "input_pool_sha256": "2b89865bbc8d05de004516675fc822b78cc9d0a49ca8186ddf172dbcbd6ed80d",
+      "downstream_acquisition": "missing_exact_team_evaluated",
+      "downstream_request_uses": "selection"
+    },
+    "uNb9QFRL6hY-12__manual__15a1012a90__3505e231633723bd86a0": {
+      "pool_id": "uNb9QFRL6hY-12__manual__15a1012a90",
+      "image": "uNb9QFRL6hY-12",
+      "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "condition": "manual",
+      "building": "uNb9QFRL6hY",
+      "room_id": "G172",
+      "scene": "unflagged",
+      "layer": "ordinary_manual",
+      "difficulty": "简单",
+      "difficulty_aligned": true,
+      "reference_id": "gt:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f.txt",
+      "reference_version": "gt_original",
+      "pool_n": 34,
+      "source_inventory_n": 35,
+      "source_time_known_n": 5,
+      "target_time_known_n": 0,
+      "old_member_n": 14,
+      "new_member_n": 20,
+      "data_release": "v2.1",
+      "team_key": "uNb9QFRL6hY-12__manual__15a1012a90__3505e231633723bd86a0",
+      "member_workers": [
+        "W101",
+        "W102",
+        "W123",
+        "W126",
+        "W134"
+      ],
+      "member_object_ids": [
+        "v2:new:104651",
+        "v2:new:104652",
+        "v2:new:104663",
+        "v2:new:104665",
+        "v2:new:104670"
+      ],
+      "k": 5,
+      "new_n": 5,
+      "old_n": 0,
+      "source_time_total_seconds": 357.957,
+      "target_time_total_seconds": null,
+      "fusion_seconds": 0.01294840400078101,
+      "parity": 1,
+      "nodes": 4,
+      "below_four": false,
+      "half_vote_nodes": 0,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": true,
+      "complete_evaluable": true,
+      "location_unresolved": false,
+      "score_status": "complete_conditional",
+      "B8L2": 67.24344306565932,
+      "D10": 73.44101134166313,
+      "IoU3D100": 87.9762956413236,
+      "iou_2d": 0.902137270668874,
+      "S_bottom_deg": 0.6055697267657179,
+      "dir": 5.406882191717173,
+      "Hmean": 0.027206452992065366,
+      "Hcenter": 0.006066146602559404,
+      "omission": 0.018545412602397542,
+      "extension": 0.08792156061784229,
+      "height_mean_ratio": 0.9727935470079346,
+      "score_seconds": 0.021154032001504675,
+      "geometry": {
+        "status": "geometry_review",
+        "reason": "source_order_and_identity_unconfirmed",
+        "points": [
+          [
+            182.4254028323553,
+            223.87813608156247
+          ],
+          [
+            182.4254028323553,
+            285.94462364398305
+          ],
+          [
+            295.6025541581625,
+            214.40071243799335
+          ],
+          [
+            295.6025541581625,
+            293.1619083608007
+          ],
+          [
+            586.3243931935392,
+            134.9058681288977
+          ],
+          [
+            586.3243931935392,
+            368.5983030873355
+          ],
+          [
+            981.3749117092924,
+            175.1066146620342
+          ],
+          [
+            981.3749117092924,
+            329.66453383483304
+          ]
+        ],
+        "footprint": [
+          [
+            -4.842047114842963,
+            2.347629201525038
+          ],
+          [
+            -4.182655615272414,
+            -1.036867056311583
+          ],
+          [
+            0.5326345554280123,
+            -1.0858188496015706
+          ],
+          [
+            0.5325639674365814,
+            1.9895859924126318
+          ]
+        ],
+        "ring_confirmed": false,
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "order_status": "source_suggestion",
+        "geometry_status": "ok"
+      },
+      "reference_nodes": 4,
+      "minimum_support": 3,
+      "node_supports": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "identity_groups_n": 5,
+      "unselected_groups_n": 1,
+      "minority_observations_n": 1,
+      "selected_support_min": 1.0,
+      "ref_node_recall_5": 1.0,
+      "ref_edge_recall_5": 1.0,
+      "ref_matched_nodes_5": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_5": [
+        1,
+        3,
+        6,
+        11
+      ],
+      "ref_node_recall_9": 1.0,
+      "ref_edge_recall_9": 1.0,
+      "ref_matched_nodes_9": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_9": [
+        1,
+        3,
+        6,
+        11
+      ],
+      "endpoint_origin": "v21_reselection_engine_benchmark",
+      "source_time_known_sum_seconds": 357.957,
+      "source_parallel_active_seconds": 94.68,
+      "target_time_known_sum_seconds": 0,
+      "target_parallel_active_seconds": null,
+      "time_source_kinds": "user_processed_reported_not_raw_log_replayed",
+      "time_source_table": "research/workers/personnel_profiles_composition_20261020/source/tables/profiles/record_index.csv.gz",
+      "diag_status": "ok",
+      "diag_wall_coverage_03": 0.6034163479816065,
+      "diag_wall_coverage_05": 0.6765427217059063,
+      "diag_corner_recall_05": 0.75,
+      "geometry_area_h2": 16.227841606899986,
+      "centroid_x_h": -2.030231326492681,
+      "centroid_z_h": 0.5887533012762589,
+      "bounds_min_x_h": -4.842047114842963,
+      "bounds_min_z_h": -1.0858188496015706,
+      "bounds_max_x_h": 0.5326345554280123,
+      "bounds_max_z_h": 2.347629201525038,
+      "height_mean_h": 2.1063792897639626,
+      "height_min_h": 2.0745609997334116,
+      "height_max_h": 2.1244654876528912,
+      "top_y_mean_px": 187.07283282762194,
+      "bottom_y_mean_px": 319.3423422317381,
+      "target_individual_B8L2_known_n": 5,
+      "target_individual_B8L2_mean": 68.52659214406384,
+      "target_individual_B8L2_min": 51.218154991414295,
+      "fusion_turn_n": 4,
+      "fusion_short_turn_edges": 0,
+      "fusion_redundancy_n": 0,
+      "underlying_data_version": "v2.1",
+      "repository_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+      "recorded_time_eligible": true,
+      "recorded_time_total_seconds": 357.957,
+      "record_time_by_kind_json": "{\"user_processed_reported_not_raw_log_replayed\":{\"known_n\":5,\"known_sum_seconds\":357.957,\"n\":5,\"total_seconds\":357.957}}",
+      "WQ": 56.217991702363356,
+      "floor_WQ_upper_bound": 56.27320602306022,
+      "iou_3d_corner_mean": 0.879762956413236,
+      "floor_WQ": 56.27320602306016,
+      "boundary_loss": 0.011459834186722069,
+      "direction_loss": 0.6571060645970324,
+      "global_height_loss": 0.0011565485693897852,
+      "local_height_loss": 0.0005887701536598879,
+      "height_loss": 0.0017453187230496731,
+      "height_drop_WQ": 0.05521432069680543,
+      "height_drop_current": 0.056494557577224214,
+      "WQ_no_D": 89.15167558298414,
+      "WQ_no_B": 56.58252396981989,
+      "WQ_no_H": 56.27320602306016,
+      "iou2d100": 90.2137270668874,
+      "input_pool_sha256": "2b89865bbc8d05de004516675fc822b78cc9d0a49ca8186ddf172dbcbd6ed80d",
+      "downstream_acquisition": "missing_exact_team_evaluated",
+      "downstream_request_uses": "selection"
+    }
+  },
+  "mechanism_limit": "Full geometry and raw annotations retained. No selected-node vote count is taken as a proof about unselected votes or connection causality; no dedicated trace was newly generated for these utility cases."
+}

@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "source_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "inputs": {
+    "POLICY_EVENT_RESULTS.csv.gz": {
+      "sha256": "a92f5ffbb321655fdbe1214e9f844e71007b54dc299dad9331c60436c21f865a",
+      "bytes": 27224980
+    },
+    "RELATION_FLAGS.csv": {
+      "sha256": "aaa01f7ffbdf1ccb6d594be25b713476dd9af1edf301eb3544b28e83a3adef50",
+      "bytes": 11920
+    },
+    "QT_N_SENSITIVITY.csv": {
+      "sha256": "77d245c1a3b120787cfe96ce5a371bdc7d064e109615d784091b1361eedc695a",
+      "bytes": 12221
+    }
+  },
+  "source_event_rows": 71608,
+  "filtered_policy_event_rows": 2912,
+  "paired_context_size_rows": 1456,
+  "reference_reproduction_cells": 42,
+  "max_reference_error": 1.4210854715202004e-14,
+  "assertions": [
+    "unique context-size-policy identities",
+    "constant exact candidate roster across size and policy",
+    "all candidate pools strictly larger than selected size",
+    "distinct selected members equal n and subset of exact candidates",
+    "direct adopted relations, no pending/conflict",
+    "Q-only join reproduces author's baseline score/time",
+    "historical Q mean constraint <=2 respected",
+    "42 original table cells reproduced to <1e-10",
+    "no missing Q filled as zero",
+    "complete size coverage"
+  ],
+  "bootstrap": {
+    "repetitions": 20000,
+    "seed": 20261030,
+    "unit": "building",
+    "kind": "empirical percentile sensitivity, not population-valid confidence guarantee"
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3"
+  },
+  "script_sha256": "8e7e71327f3b55a6464013c4449c8542276df2078bf15cd97d08d8fdfbbe92fc",
+  "new_fusion_endpoints": 0,
+  "policy_fitting_or_parameter_tuning": false
+}

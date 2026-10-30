@@ -1,6 +1,6 @@
 # HOHONET 研究资料总目录
 
-目录版本：research_catalog_20261028_v61_difficulty_definition_computable_difficulty_difficulty_comparison_wording_dependencies_external_review_scope_structure_sensitivity_accepted_v21_full_handoff_20261029_personnel_reselection_adopted__existing_population_evidence_complete；盘点日期：2026-10-29。
+目录版本：research_catalog_20261028_v61_difficulty_definition_computable_difficulty_difficulty_comparison_wording_dependencies_external_review_scope_structure_sensitivity_accepted_v21_full_handoff_20261029_personnel_reselection_adopted__existing_population_evidence_complete_doorway_first_review_20261031；盘点日期：2026-10-31。
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
 
@@ -10,11 +10,11 @@
 
 |主题|入口|资料数|说明|
 |---|---|---:|---|
-|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|95|原意、跨模块关系、进度、版本采用与交接。|
+|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|98|原意、跨模块关系、进度、版本采用与交接。|
 |数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|18|输入版本、人数门槛、GT/空间绑定和排除状态。|
 |质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|101|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
-|图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|36|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
-|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|112|多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。|
+|图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|37|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
+|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|113|多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。|
 |融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|35|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
 |同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|22|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
 |描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|28|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|

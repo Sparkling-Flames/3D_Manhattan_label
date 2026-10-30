@@ -1,5 +1,7 @@
 - **半队替换接续：** [逐图难度、幅度/升降/不可评诊断](../research/data/releases/v2.1/simulated_population_evidence/exchange/README.md)与[原答距离恢复](../research/workers/personnel_v21_reselection_20261029/raw_similarity/RAW_ANSWER_SIMILARITY_ZH.md)已提供；分类方法仍待Pro研究。
 
+- [v2.1五条下游补件与本地核查](../research/data/releases/v2.1/full_chain_downstream_20261030/README.md)：半队全部反例、同房、快慢难度、预测、Q/QT共同支持、停止与历史成本。
+
 
 - [v2.1混合人群讲解](thesis_main/研究讲解_v2.1_人群构成与共识_20261030.md)与[AC完整归档](../research/workers/personnel_ac_v21_20261030/README.md)：完整类别组合、整类/较大团队、八维结果及新研究页；[Word提纲仅改动方案](thesis_main/论文提纲改动方案_v2.1_20261030.md)。
 
@@ -381,4 +383,13 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 2026-10-24：[D10形成链与融合共同面板独立验收](../research/statistics/research_closeout_20261022/METHOD_SUPPLEMENT_ACCEPTANCE_20261024.md)已完成，含常数η²修复与真实重算边界；接入安排沿用主线研究台任务文档。
 
-- [门洞交界人工空间审核](../research/data/doorway_review_20261030/README.md)：20图708份，离线切分与四项分类，研究草稿，不采用新评分。
+- [门洞空间审核与v2.1曲线准备](../research/data/doorway_review_20261030/README.md)：保留用户裁决、几何与目标参考核查；仍需按已声明边界处理，不表示已完成新评分/曲线。
+- [门洞初审来源包与快照工作台](../research/difficulty/doorway_split_review_20261030/README.md)：归档20图708份原始初审记录和当时工作台；不替代后续审核及最终目标判定，原图不随仓库上传。
+
+- [v2.1论文证据、18模块完备性与目标人工确认](../research/data/releases/v2.1/paper_evidence_20261030/README.md)：英文主图/补图与源表索引；脚本 `tools/thesis_main/analysis/build_v21_paper_evidence_20261030.py`；不改分类、参考或正式难度。
+
+- 2026-10-30图片难度接续：[31池图片等级与受影响下游补算](../research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/README.md)，分类候选未定，原结果冻结保留。
+
+- v2.1收尾：[版本身份核查与四组人员证据](../research/data/releases/v2.1/closeout_20261030/README.md)，分类最终未定，门洞双版本待接入。
+
+- 2026-10-31 [候选标签完整联盟补齐](../research/data/releases/v2.1/closeout_20261030/alliance_completion_20261031/README.md)：原生端点、原/新共同支持与英文图；分类未定。

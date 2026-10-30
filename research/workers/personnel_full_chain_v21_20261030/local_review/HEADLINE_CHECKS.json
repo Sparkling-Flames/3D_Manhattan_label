@@ -1,0 +1,55 @@
+{
+  "source_identity": "pool snapshot and final main events byte-identical to local repository",
+  "half": {
+    "events": 197,
+    "scored_images": 83,
+    "GA": 3.5118687477230535,
+    "GS": 3.397134619746365,
+    "CB": 6.577500548285898
+  },
+  "same_room_10": {
+    "events": 268,
+    "six_endpoints_scored": 237,
+    "pairs": 19,
+    "distinct_target_blocks": 25
+  },
+  "same_room_14": {
+    "events": 10,
+    "six_endpoints_scored": 6,
+    "pairs": 2,
+    "distinct_target_blocks": 1
+  },
+  "same_room_mean": {
+    "pairs": 128,
+    "images": 65,
+    "buildings": 13,
+    "source_mae": 6.4635178280473,
+    "baseline_mae": 9.49648251935395,
+    "improved_images": 39,
+    "improved_buildings": 8
+  },
+  "speed_current": {
+    "turn_n": {
+      "pairs": 105,
+      "mean": 0.01979994313677778,
+      "positive": 55
+    },
+    "short_turn_edges": {
+      "pairs": 105,
+      "mean": 0.010263246371608128,
+      "positive": 59
+    },
+    "B8L2": {
+      "pairs": 105,
+      "mean": -0.16315424661148525,
+      "positive": 48
+    }
+  },
+  "cold_cost": {
+    "groups": 3,
+    "project_ratio_to_fixed7": 2.1152612347141972,
+    "all_groups_above_one": true,
+    "interpretation": "total project labor relative to fixed7; not historical acquisition cost divided by labor saved"
+  },
+  "common_support_input_identity": "all three inputs byte-identical to Pro delivery"
+}

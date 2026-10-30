@@ -1,0 +1,265 @@
+{
+  "frozen_repository_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "crosswalk_rows": 32,
+  "gap_rows": 14,
+  "local_source_paths_checked": 90,
+  "missing_source_paths": [],
+  "numerical_contracts": [
+    {
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "m": 7
+      },
+      "column": "events",
+      "actual": 197.0,
+      "expected": 197
+    },
+    {
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "m": 7
+      },
+      "column": "gap_A_positive_images",
+      "actual": 61.0,
+      "expected": 61
+    },
+    {
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "m": 7
+      },
+      "column": "gap_sym_nonpositive_images",
+      "actual": 21.0,
+      "expected": 21
+    },
+    {
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "m": 7
+      },
+      "column": "CB_mean",
+      "actual": 6.577500548285898,
+      "expected": 6.5775005483
+    },
+    {
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 20,
+        "m": 7
+      },
+      "column": "CB_mean",
+      "actual": 4.52496674010436,
+      "expected": 4.5249667401
+    },
+    {
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "column": "events",
+      "actual": 268.0,
+      "expected": 268
+    },
+    {
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "column": "valid_events",
+      "actual": 237.0,
+      "expected": 237
+    },
+    {
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "column": "building_equal_CB_mean",
+      "actual": 13.749295374628993,
+      "expected": 13.749295
+    },
+    {
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 14,
+        "m": 7
+      },
+      "column": "building_equal_GA_mean",
+      "actual": -2.240601870103712,
+      "expected": -2.240602
+    },
+    {
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 14,
+        "m": 7
+      },
+      "column": "legal_pairs",
+      "actual": 2.0,
+      "expected": 2
+    },
+    {
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "column": "legal_pairs",
+      "actual": 32.0,
+      "expected": 32
+    },
+    {
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "column": "executed_pairs",
+      "actual": 19.0,
+      "expected": 19
+    },
+    {
+      "source": "stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "method": "source_mean"
+      },
+      "column": "mae",
+      "actual": 6.4635178280473005,
+      "expected": 6.463518
+    },
+    {
+      "source": "stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "method": "external_image_mean"
+      },
+      "column": "mae",
+      "actual": 9.49648251935395,
+      "expected": 9.496483
+    },
+    {
+      "source": "stage02_same_room/prediction/PERSONAL_SIMILARITY_BY_SCOPE.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending"
+      },
+      "column": "symmetric_corr_surprise",
+      "actual": 0.0128777969969805,
+      "expected": 0.012878
+    },
+    {
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "public_external"
+      },
+      "column": "mae",
+      "actual": 13.385293501020373,
+      "expected": 13.385294
+    },
+    {
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "public_external"
+      },
+      "column": "unique_people",
+      "actual": 56.0,
+      "expected": 56
+    },
+    {
+      "source": "stage02_same_room/prediction/DECLARATION_VARIATION_SUMMARY.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending"
+      },
+      "column": "building_equal_worker_share",
+      "actual": 0.5264507232660148,
+      "expected": 0.5264506
+    },
+    {
+      "source": "stage02_same_room/prediction/DECLARATION_VARIATION_SUMMARY.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending"
+      },
+      "column": "building_equal_view_share",
+      "actual": 0.0826715663436293,
+      "expected": 0.0826716
+    },
+    {
+      "source": "stage02_same_room/prediction/DECLARATION_VARIATION_SUMMARY.csv",
+      "filters": {
+        "metric": "B8L2",
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending"
+      },
+      "column": "building_equal_interaction_share",
+      "actual": 0.3908777103903557,
+      "expected": 0.3908778
+    }
+  ],
+  "new_experiments": 0,
+  "source_path_contract": "交付根目录相对路径已逐项确认存在；冻结仓库路径保留原成果身份，不宣称本轮重新验证所有原端点。",
+  "classification_status": "工作分析对象；非用户最终选型",
+  "status": "CSV完整读回；源表及关键数值核对通过"
+}

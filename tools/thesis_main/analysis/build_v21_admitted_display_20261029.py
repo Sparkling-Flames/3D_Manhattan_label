@@ -29,6 +29,11 @@ def build():
                      & (selected.metric == 'Q_mean')].iloc[0]
     assert added.pools == 30 and added.images == 28
     result = {'contract': contract, 'checks': checks, 'rows': selected[columns].to_dict('records')}
+    updated = SOURCE / 'image_difficulty_20261030'
+    if (updated / 'INPUT_CHECKS.json').exists():
+        result['image_difficulty_update'] = json.loads((updated / 'INPUT_CHECKS.json').read_text(encoding='utf8'))
+        result['contract']['difficulty'] = 'one confirmed grade per image; target-specific references and scoring remain separate'
+        result['image_difficulty_curves'] = json.loads(pd.read_csv(updated / 'CURVES_BY_DIFFICULTY.csv').to_json(orient='records'))
     TARGET.write_text('window.V21_ADMITTED=' + json.dumps(result, ensure_ascii=False, allow_nan=False,
                       separators=(',', ':')) + ';\n', encoding='utf8')
     print('18 saved summary rows; original, added and combined remain separate')

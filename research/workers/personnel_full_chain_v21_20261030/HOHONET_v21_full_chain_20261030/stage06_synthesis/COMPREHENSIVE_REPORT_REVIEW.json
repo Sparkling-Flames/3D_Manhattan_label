@@ -1,0 +1,906 @@
+{
+  "reviewer": "independent speed_difficulty subagent",
+  "scope": "独立阅读综合报告/README/REPRODUCE并回连各模块已计算源表；不重新运行融合、预测或分析主程序。",
+  "frozen_repository_commit": "13a7861334749805a86dc19e9ea79fcaa71020c0",
+  "document_sha256": {
+    "REPORT_ZH.md": "18ffe68833fe9f23f8faf29914b6386fe053815ad472e0817dbc56e11310b9f6",
+    "README.md": "1432ab5c3ded731a59a149f98742a66565c976b769f5218f6ed26e331f4d22ed",
+    "REPRODUCE.md": "02bcf91c9d5ed115e7d79fbdf0ae95691b3f3ca65d2998302599beb448c4bfca"
+  },
+  "numeric_check_groups": 52,
+  "numeric_checks_all_passed": true,
+  "findings": [
+    {
+      "id": "R01",
+      "type": "条件分母表述",
+      "location": "REPORT_ZH.md 4.2；stage02同房报告对应条件率",
+      "finding": "source_trigger_2按|C−B|>2纳入正负响应，不能只写C−B>2",
+      "correction": "若源视角|C−B|>2，另一视角也满足|C−B|>2且同号，条件重复率71.45%；异号8.43%。",
+      "numeric_change_needed": false,
+      "status": "已通知统筹，待文案替换"
+    },
+    {
+      "id": "R02",
+      "type": "图片支持重叠说明",
+      "location": "REPORT_ZH.md 3.4",
+      "finding": "嵌套41图、非嵌套33图有8图交集，总66图；两层不能相加为74独立图。",
+      "correction": "非嵌套背景层33图（与前层重叠8图）。",
+      "numeric_change_needed": false,
+      "status": "已通知统筹，可加一句澄清"
+    }
+  ],
+  "scientific_conclusion": "未发现需改变数值、样本支持或主要结论的实质错误。发现1处条件触发文字需写绝对值，另1处图片重叠建议明确；数值与算法本身正确。",
+  "interpretation_checks": {
+    "classification_not_final": true,
+    "ABC_185_vs_BC_187_separate": true,
+    "old_team_current_label_identity_preserved": true,
+    "similarity_2600_people_pairs_57_vs_prediction_1793_answers_56_distinguished": true,
+    "variance_partition_not_prediction_or_class_explanation": true,
+    "Q_T_reselection_baseline_reason_preserved": true,
+    "time_and_Q_denominators_separate": true,
+    "D_vote_threshold_not_D_only_fusion": true,
+    "source_response_threshold_uses_absolute_value": true
+  },
+  "viewer_boundary": "已检查半队和同房绘图源码，ERP边为按保存环顺序的三维直边采样投影，非二维像素直线；可视化连线/闭合本身不证明成功融合，结论以原score_status、geometry.order_status和完整环诊断为准。未新增图像或几何计算。",
+  "stage03_mutated": false,
+  "checks": [
+    {
+      "check": "14/7正文均值、方向和83图",
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "m": 7
+      },
+      "observed": {
+        "events": 197.0,
+        "registered_images": 85.0,
+        "gap_A_valid_images": 83.0,
+        "gap_A_positive_images": 61.0,
+        "gap_sym_positive_images": 62.0,
+        "gap_sym_nonpositive_images": 21.0,
+        "CB_mean": 6.577500548285898,
+        "CB_positive_images": 76.0
+      },
+      "passed": true
+    },
+    {
+      "check": "20/7正文与共同支持",
+      "source": "stage01_half_team/MAIN_CHECKED_SUMMARY.csv",
+      "filters": {
+        "n": 20,
+        "m": 7
+      },
+      "observed": {
+        "events": 82.0,
+        "registered_images": 72.0,
+        "gap_A_valid_images": 70.0,
+        "gap_A_positive_images": 54.0,
+        "gap_sym_positive_images": 47.0,
+        "CB_mean": 4.52496674010436,
+        "CB_positive_images": 65.0
+      },
+      "passed": true
+    },
+    {
+      "check": "半队指标事件分母独立",
+      "source": "stage01_half_team/EVENTS_METRIC_SPECIFIC_SUPPORT.csv.gz",
+      "observed": {
+        "ABC": 185,
+        "BC": 187,
+        "labor": 95
+      },
+      "passed": true
+    },
+    {
+      "check": "全部反例重叠诊断",
+      "source": "stage01_half_team/ALL_36_EXCEPTION_NUMERIC_AND_MECHANISM_INDEX.csv",
+      "observed": {
+        "cases": 36,
+        "sym_nonpositive": 21,
+        "CB_positive": 17,
+        "majority_Q90": 14,
+        "GS_abs_le1": 8,
+        "C_between": 11,
+        "opposed_components": 11
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 B8L2__within",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__within"
+      },
+      "observed": {
+        "mean": 4.576711027181806
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 B8L2__cross_direct",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__cross_direct"
+      },
+      "observed": {
+        "mean": 8.08857977490486
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 B8L2__cross_symmetric",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__cross_symmetric"
+      },
+      "observed": {
+        "mean": 7.97384564692817
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 D10__delta_CB",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "D10__delta_CB"
+      },
+      "observed": {
+        "mean": 6.127291770410338
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 D10__gap_S",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "D10__gap_S"
+      },
+      "observed": {
+        "mean": 3.2325862757902994
+      },
+      "passed": true
+    },
+    {
+      "check": "半队多指标 record_time_CB_pct_source_matched",
+      "source": "stage01_half_team/ALL_METRICS_IMAGE_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "record_time_CB_pct_source_matched"
+      },
+      "observed": {
+        "mean": 5.977419832432813
+      },
+      "passed": true
+    },
+    {
+      "check": "半队建筑 B8L2__gap_A",
+      "source": "stage01_half_team/BUILDING_EQUAL_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__gap_A"
+      },
+      "observed": {
+        "mean": 2.578461875642582,
+        "positive_buildings": 18.0
+      },
+      "passed": true
+    },
+    {
+      "check": "半队建筑 B8L2__gap_S",
+      "source": "stage01_half_team/BUILDING_EQUAL_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__gap_S"
+      },
+      "observed": {
+        "mean": 2.727789220857366,
+        "positive_buildings": 18.0
+      },
+      "passed": true
+    },
+    {
+      "check": "半队建筑 B8L2__delta_CB",
+      "source": "stage01_half_team/BUILDING_EQUAL_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "metric": "B8L2__delta_CB"
+      },
+      "observed": {
+        "mean": 6.679320188076772,
+        "positive_buildings": 20.0
+      },
+      "passed": true
+    },
+    {
+      "check": "简单结构不变、Q多数升",
+      "source": "stage01_half_team/DIFFICULTY_METRIC_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "difficulty": "简单",
+        "metric": "fusion_turn_n__delta_CB"
+      },
+      "observed": {
+        "valid_images": 59.0,
+        "zero_images": 59.0
+      },
+      "passed": true
+    },
+    {
+      "check": "困难结构增多",
+      "source": "stage01_half_team/DIFFICULTY_METRIC_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "difficulty": "困难",
+        "metric": "fusion_turn_n__delta_CB"
+      },
+      "observed": {
+        "valid_images": 9.0,
+        "positive_images": 9.0,
+        "mean": 2.805555555555556
+      },
+      "passed": true
+    },
+    {
+      "check": "困难Q方向",
+      "source": "stage01_half_team/DIFFICULTY_METRIC_SUMMARY.csv",
+      "filters": {
+        "n": 14,
+        "difficulty": "困难",
+        "metric": "B8L2__delta_CB"
+      },
+      "observed": {
+        "positive_images": 7.0,
+        "mean": 17.732443881608702
+      },
+      "passed": true
+    },
+    {
+      "check": "嵌套背景共同图 gap_A",
+      "source": "stage01_half_team/MATCHED_BACKGROUND_CONTEXT_SUMMARY.csv",
+      "filters": {
+        "scope": "D14_subset_D20",
+        "metric": "gap_A"
+      },
+      "observed": {
+        "valid_images": 41.0,
+        "mean14": 3.859836796796004,
+        "mean20": 1.5430192773474367
+      },
+      "passed": true
+    },
+    {
+      "check": "嵌套背景共同图 gap_sym",
+      "source": "stage01_half_team/MATCHED_BACKGROUND_CONTEXT_SUMMARY.csv",
+      "filters": {
+        "scope": "D14_subset_D20",
+        "metric": "gap_sym"
+      },
+      "observed": {
+        "valid_images": 41.0,
+        "mean14": 3.884237843320717,
+        "mean20": 1.3620454860202205
+      },
+      "passed": true
+    },
+    {
+      "check": "嵌套背景共同图 CB",
+      "source": "stage01_half_team/MATCHED_BACKGROUND_CONTEXT_SUMMARY.csv",
+      "filters": {
+        "scope": "D14_subset_D20",
+        "metric": "CB"
+      },
+      "observed": {
+        "valid_images": 41.0,
+        "mean14": 7.441456988715648,
+        "mean20": 4.345780791340949
+      },
+      "passed": true
+    },
+    {
+      "check": "背景两层图片重叠",
+      "source": "stage01_half_team/MATCHED_BACKGROUND_CONTEXT_IMAGES.csv",
+      "observed": {
+        "nested": 41,
+        "nonnested": 33,
+        "overlap": 8,
+        "union": 66
+      },
+      "passed": true
+    },
+    {
+      "check": "同房主向 10/5",
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "observed": {
+        "events": 268.0,
+        "valid_events": 237.0,
+        "valid_pairs": 19.0,
+        "building_equal_GA_mean": 5.248292474786941,
+        "building_equal_GS_mean": 6.066600105955075,
+        "building_equal_CB_mean": 13.749295374628993
+      },
+      "passed": true
+    },
+    {
+      "check": "同房主向 12/6",
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 12,
+        "m": 6
+      },
+      "observed": {
+        "events": 86.0,
+        "valid_events": 67.0,
+        "valid_pairs": 7.0,
+        "building_equal_GA_mean": 4.582615745224256,
+        "building_equal_GS_mean": 4.993064589356722,
+        "building_equal_CB_mean": 12.83752768179643
+      },
+      "passed": true
+    },
+    {
+      "check": "同房主向 14/7",
+      "source": "stage02_same_room/abc/SUMMARY.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 14,
+        "m": 7
+      },
+      "observed": {
+        "events": 10.0,
+        "valid_events": 6.0,
+        "valid_pairs": 2.0,
+        "building_equal_GA_mean": -2.240601870103712,
+        "building_equal_GS_mean": 0.3334573567535543,
+        "building_equal_CB_mean": 11.364132697113464
+      },
+      "passed": true
+    },
+    {
+      "check": "同房双视角均正与均值多数",
+      "source": "stage02_same_room/abc/PAIR_VIEW_REPETITION.csv",
+      "filters": {
+        "final_method": "TARGET_DSTRUCT_K3",
+        "analysis_scope": "ordinary_comparable",
+        "condition": "manual",
+        "metric": "B8L2",
+        "level": "direction_nm",
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "observed": {
+        "GA_both_positive_pairs": 14.0,
+        "GS_both_positive_pairs": 13.0,
+        "CB_both_positive_pairs": 18.0,
+        "CB_opposite_pairs": 1.0,
+        "CB_pair_mean_positive": 19.0
+      },
+      "passed": true
+    },
+    {
+      "check": "同房容量 10/5",
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 10,
+        "m": 5
+      },
+      "observed": {
+        "legal_pairs": 32.0,
+        "executed_pairs": 19.0
+      },
+      "passed": true
+    },
+    {
+      "check": "同房容量 12/6",
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 12,
+        "m": 6
+      },
+      "observed": {
+        "legal_pairs": 9.0,
+        "executed_pairs": 7.0
+      },
+      "passed": true
+    },
+    {
+      "check": "同房容量 14/7",
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 14,
+        "m": 7
+      },
+      "observed": {
+        "legal_pairs": 2.0,
+        "executed_pairs": 2.0
+      },
+      "passed": true
+    },
+    {
+      "check": "同房容量 16/8",
+      "source": "stage02_same_room/abc/HALF_CAPACITY_SUMMARY.csv",
+      "filters": {
+        "method": "TARGET_DSTRUCT_K3",
+        "condition": "manual",
+        "ordinary_comparable": true,
+        "role_direction": "2→3",
+        "n": 16,
+        "m": 8
+      },
+      "observed": {
+        "legal_pairs": 0.0,
+        "executed_pairs": 0.0
+      },
+      "passed": true
+    },
+    {
+      "check": "同房14/7固定核心",
+      "source": "stage02_same_room/abc/MAIN_HALF_MEMBER_FREQUENCY.csv",
+      "observed": {
+        "workers": [
+          "W102",
+          "W109",
+          "W112",
+          "W115",
+          "W122",
+          "W126",
+          "W130"
+        ],
+        "uses": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "当前公共均值 source_mean",
+      "source": "stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "method": "source_mean"
+      },
+      "observed": {
+        "images": 65.0,
+        "buildings": 13.0,
+        "directions": 256.0,
+        "mae": 6.4635178280473005
+      },
+      "passed": true
+    },
+    {
+      "check": "当前公共均值 external_image_mean",
+      "source": "stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "method": "external_image_mean"
+      },
+      "observed": {
+        "images": 65.0,
+        "buildings": 13.0,
+        "directions": 256.0,
+        "mae": 9.49648251935395
+      },
+      "passed": true
+    },
+    {
+      "check": "个人相似与残差",
+      "source": "stage02_same_room/prediction/PERSONAL_SIMILARITY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2"
+      },
+      "observed": {
+        "pairs": 128.0,
+        "person_pairs": 2600.0,
+        "persons": 57.0,
+        "surprise_valid_person_pairs": 2599.0,
+        "symmetric_corr_Q": 0.4007623122861655,
+        "symmetric_corr_relative": 0.198644086130366,
+        "symmetric_corr_surprise": 0.0128777969969805,
+        "positive_rank_pairs": 105.0,
+        "persons_repeat_gt_half": 40.0
+      },
+      "passed": true
+    },
+    {
+      "check": "个人预测 public_external",
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "public_external"
+      },
+      "observed": {
+        "mae": 13.385293501020373,
+        "unique_target_answers": 1793.0,
+        "unique_people": 56.0,
+        "images": 65.0,
+        "buildings": 13.0
+      },
+      "passed": true
+    },
+    {
+      "check": "个人预测 public_source",
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "public_source"
+      },
+      "observed": {
+        "mae": 14.75532110047018,
+        "unique_target_answers": 1793.0,
+        "unique_people": 56.0,
+        "images": 65.0,
+        "buildings": 13.0
+      },
+      "passed": true
+    },
+    {
+      "check": "个人预测 external_abs",
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "external_abs"
+      },
+      "observed": {
+        "mae": 15.644759826677214,
+        "unique_target_answers": 1793.0,
+        "unique_people": 56.0,
+        "images": 65.0,
+        "buildings": 13.0
+      },
+      "passed": true
+    },
+    {
+      "check": "个人预测 own_source",
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "own_source"
+      },
+      "observed": {
+        "mae": 16.73461246325964,
+        "unique_target_answers": 1793.0,
+        "unique_people": 56.0,
+        "images": 65.0,
+        "buildings": 13.0
+      },
+      "passed": true
+    },
+    {
+      "check": "个人预测 public_external_halfown",
+      "source": "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2",
+        "budget": "single_direct",
+        "stage": "single",
+        "method": "public_external_halfown"
+      },
+      "observed": {
+        "mae": 14.193407702623627,
+        "unique_target_answers": 1793.0,
+        "unique_people": 56.0,
+        "images": 65.0,
+        "buildings": 13.0
+      },
+      "passed": true
+    },
+    {
+      "check": "人员视角平方和",
+      "source": "stage02_same_room/prediction/DECLARATION_VARIATION_SUMMARY.csv",
+      "filters": {
+        "scenario": "v21_all",
+        "scope": "ordinary_no_relation_oos_pending",
+        "metric": "B8L2"
+      },
+      "observed": {
+        "groups": 15.0,
+        "images": 40.0,
+        "buildings": 13.0,
+        "people": 52.0,
+        "matrix_cells": 685.0,
+        "building_equal_worker_share": 0.5264507232660148,
+        "building_equal_view_share": 0.0826715663436293,
+        "building_equal_interaction_share": 0.3908777103903557,
+        "building_equal_interaction_rms": 10.027617157191616
+      },
+      "passed": true
+    },
+    {
+      "check": "快慢桥接 v2原63对（冻结）",
+      "source": "stage03_speed_difficulty/PAPER_FIXED_PEOPLE_BRIDGE.csv",
+      "filters": {
+        "支持": "v2原63对（冻结）",
+        "指标": "turn_n"
+      },
+      "observed": {
+        "成员对": 63.0,
+        "人员": 35.0,
+        "困难−简单均差": 0.3353624140667621,
+        "正": 42.0
+      },
+      "passed": true
+    },
+    {
+      "check": "快慢桥接 当前Q/资格，固定原63对",
+      "source": "stage03_speed_difficulty/PAPER_FIXED_PEOPLE_BRIDGE.csv",
+      "filters": {
+        "支持": "当前Q/资格，固定原63对",
+        "指标": "turn_n"
+      },
+      "observed": {
+        "成员对": 63.0,
+        "人员": 35.0,
+        "困难−简单均差": 0.3353624140667621,
+        "正": 42.0
+      },
+      "passed": true
+    },
+    {
+      "check": "快慢桥接 当前TARGET K3全部105对",
+      "source": "stage03_speed_difficulty/PAPER_FIXED_PEOPLE_BRIDGE.csv",
+      "filters": {
+        "支持": "当前TARGET K3全部105对",
+        "指标": "turn_n"
+      },
+      "observed": {
+        "成员对": 105.0,
+        "人员": 35.0,
+        "困难−简单均差": 0.0197999431367777,
+        "正": 55.0
+      },
+      "passed": true
+    },
+    {
+      "check": "快慢桥接 当前TARGET K3与旧精确配对图片交集52对",
+      "source": "stage03_speed_difficulty/PAPER_FIXED_PEOPLE_BRIDGE.csv",
+      "filters": {
+        "支持": "当前TARGET K3与旧精确配对图片交集52对",
+        "指标": "turn_n"
+      },
+      "observed": {
+        "成员对": 52.0,
+        "人员": 35.0,
+        "困难−简单均差": 0.24851180086357,
+        "正": 37.0
+      },
+      "passed": true
+    },
+    {
+      "check": "Q/T选队 no_pending_direct_relations",
+      "source": "stage05_selection_stop/selection/MAIN_N5_HEADLINES.csv",
+      "filters": {
+        "version": "v21_history_reselected_fixed_candidates",
+        "domain": "new_timed_history",
+        "n": 5,
+        "policy": "outside_Q_outside_T_fast",
+        "relation_layer": "no_pending_direct_relations"
+      },
+      "observed": {
+        "events": 232.0,
+        "images": 57.0,
+        "buildings": 10.0,
+        "delta_Q": 0.1241336974001798,
+        "activity_ratio_geometric": 0.826679044555089,
+        "loss_over5": 0.0864814814814814
+      },
+      "passed": true
+    },
+    {
+      "check": "Q/T选队 original_scope_comparable_panel",
+      "source": "stage05_selection_stop/selection/MAIN_N5_HEADLINES.csv",
+      "filters": {
+        "version": "v21_history_reselected_fixed_candidates",
+        "domain": "new_timed_history",
+        "n": 5,
+        "policy": "outside_Q_outside_T_fast",
+        "relation_layer": "original_scope_comparable_panel"
+      },
+      "observed": {
+        "events": 240.0,
+        "images": 62.0,
+        "buildings": 11.0,
+        "delta_Q": 0.1123116949753221,
+        "activity_ratio_geometric": 0.8027344911067092,
+        "loss_over5": 0.0786195286195286
+      },
+      "passed": true
+    },
+    {
+      "check": "源历史停止 no_pending_direct_relations",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "no_pending_direct_relations",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_groups",
+        "policy": "source_within2_min3_geometry"
+      },
+      "observed": {
+        "groups": 5.0,
+        "images": 21.0,
+        "q_mean": 86.05425420205015
+      },
+      "passed": true
+    },
+    {
+      "check": "fixed7停止 no_pending_direct_relations",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "no_pending_direct_relations",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_groups",
+        "policy": "fixed_7_geometry"
+      },
+      "observed": {
+        "q_mean": 85.18930189486281
+      },
+      "passed": true
+    },
+    {
+      "check": "源规则合法劳动 no_pending_direct_relations",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "no_pending_direct_relations",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_new_complete_time",
+        "policy": "source_within2_min3_geometry"
+      },
+      "observed": {
+        "ratio_mean_activity_to_fixed7_geometry": 1.255631478374423
+      },
+      "passed": true
+    },
+    {
+      "check": "源历史停止 original_supported_groups",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "original_supported_groups",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_groups",
+        "policy": "source_within2_min3_geometry"
+      },
+      "observed": {
+        "groups": 6.0,
+        "images": 24.0,
+        "q_mean": 87.76350103719619
+      },
+      "passed": true
+    },
+    {
+      "check": "fixed7停止 original_supported_groups",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "original_supported_groups",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_groups",
+        "policy": "fixed_7_geometry"
+      },
+      "observed": {
+        "q_mean": 86.95800397245686
+      },
+      "passed": true
+    },
+    {
+      "check": "源规则合法劳动 original_supported_groups",
+      "source": "stage05_selection_stop/stopping/MAIN_RULE_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "original_supported_groups",
+        "history_budget": "maximum_history",
+        "panel": "whole_group",
+        "support": "all_attempts",
+        "time_support": "all_new_complete_time",
+        "policy": "source_within2_min3_geometry"
+      },
+      "observed": {
+        "ratio_mean_activity_to_fixed7_geometry": 1.2351307740747082
+      },
+      "passed": true
+    },
+    {
+      "check": "完整从零项目成本 no_pending_direct_relations",
+      "source": "stage05_selection_stop/stopping/MAIN_COLD_COST_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "no_pending_direct_relations"
+      },
+      "observed": {
+        "groups": 3.0,
+        "project_ratio_to_fixed7_geometry": 2.115261234714197,
+        "project_ratio_to_full_common_pool": 0.8705594623554518
+      },
+      "passed": true
+    },
+    {
+      "check": "完整从零项目成本 original_supported_groups",
+      "source": "stage05_selection_stop/stopping/MAIN_COLD_COST_HEADLINES.csv",
+      "filters": {
+        "relation_layer": "original_supported_groups"
+      },
+      "observed": {
+        "groups": 4.0,
+        "project_ratio_to_fixed7_geometry": 2.3948482831723887,
+        "project_ratio_to_full_common_pool": 0.8433693011785682
+      },
+      "passed": true
+    }
+  ],
+  "root_corrections_applied": [
+    "Conditional repetition uses absolute |C−B|>2, both directions; stage02 text corrected as well",
+    "Nested and nonnested matched background image strata overlap in 8 images; union 66"
+  ]
+}

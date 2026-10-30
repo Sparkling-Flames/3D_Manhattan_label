@@ -1,0 +1,212 @@
+diff --git a/RESEARCH_ANALYSIS_INDEX.md b/RESEARCH_ANALYSIS_INDEX.md
+index eb41f65..6eda1fd 100644
+--- a/RESEARCH_ANALYSIS_INDEX.md
++++ b/RESEARCH_ANALYSIS_INDEX.md
+@@ -1,5 +1,17 @@
+ # 研究分析交付入口
+ 
++## 2026-10-30：按v2完整链路实际补齐v2.1人员研究
++
++- [完整研究包与复现交接](research/workers/personnel_full_chain_v21_20261030/README.md)；[中文综合报告](research/workers/personnel_full_chain_v21_20261030/REPORT_ZH.md)。
++- [最新半队全部反例与局部机制](research/workers/personnel_full_chain_v21_20261030/stage01_half_team/README.md)：197事件，22张同起点非正/21张对称非正，联合36图，不套用旧focused-only名单。
++- [旧同房ABC实际效果、均值与个人预测](research/workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md)：固定原队与当前标签的条件子集、原/扩展直接关系、无待定主层和历史回放分开。
++- [同类近Q快慢×难度](research/workers/personnel_full_chain_v21_20261030/stage03_speed_difficulty/README.md)：原63对、当前105对、共同52对分别解释。
++- [Q/QT选队、停止人数与冷启动成本](research/workers/personnel_full_chain_v21_20261030/stage05_selection_stop/REPORT_ZH.md)：当前历史重选、质量坏尾、合法同源劳动和实际历史成本已重算。
++- [v2→v2.1全链路对照](research/workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)；[剩余缺口分类](research/workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)；[发布入口](research/data/releases/v2.1/full_chain_downstream_20261030/README.md)。
++
++TARGET K3/K2等为工作分析对象，用户尚未最终确定分类。新分类大池策略和新选队同房ABC没有自动追加，本轮不把旧实验改名；以下早期交付仍保持当时身份。
++
++
+ ## 2026-10-22：人员定稿、同房验收与统一接入
+ 
+ - [统一结论与证据边界](research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)
+diff --git a/research/catalog/INDEX.md b/research/catalog/INDEX.md
+index e0aa0a6..b39a036 100644
+--- a/research/catalog/INDEX.md
++++ b/research/catalog/INDEX.md
+@@ -1,5 +1,12 @@
+ # HOHONET 研究资料总目录
+ 
++## 2026-10-30 人员v2.1全链路接续：新增研究入口
++
++本轮新增[人员全链路研究包](../workers/personnel_full_chain_v21_20261030/README.md)和[发布说明](../data/releases/v2.1/full_chain_downstream_20261030/README.md)：最新14/7全部反例/机制、旧ABC双视角实际效果、同类近Q快慢×难度、同房均值/个人预测及多份历史、Q/QT选队—停止—历史成本已经实际补齐。原v2来源、团队、规则、当前参考及指标分母分别保留；最终人员分类尚未由用户确定。
++
++当前科学结论与验证范围见[综合报告](../workers/personnel_full_chain_v21_20261030/REPORT_ZH.md)；[全链路对照](../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)与[缺口分类](../workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)区别“本轮已完成”与“新设计/人工判断”。本条是文档目录补充，未擅自改变下方历史CATALOG版本、资料总数或宣称研究台浏览器验收。机器依赖已在[DEPENDENCIES.csv](../data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv)追加验收行；全量CATALOG机器目录重建保持独立更新身份。
++
++
+ 目录版本：research_catalog_20261028_v61_difficulty_definition_computable_difficulty_difficulty_comparison_wording_dependencies_external_review_scope_structure_sensitivity_accepted_v21_full_handoff_20261029_personnel_reselection_adopted__existing_population_evidence_complete；盘点日期：2026-10-29。
+ 
+ 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
+diff --git a/research/data/releases/v2.1/final_classification_downstream/README.md b/research/data/releases/v2.1/final_classification_downstream/README.md
+index a1295cb..a75b4c7 100644
+--- a/research/data/releases/v2.1/final_classification_downstream/README.md
++++ b/research/data/releases/v2.1/final_classification_downstream/README.md
+@@ -1,5 +1,16 @@
+ # v2.1 最终工作分类的同房、旧ABC与成员敏感性接续
+ 
++## 2026-10-30 最新下游实算接续与分类身份说明
++
++**本目录名称及历史“最终工作分类”表述不等于用户已经最终确定分类。** 本轮以已归档TARGET K3/K2为工作分析对象，OPPJOINT联合画像和RFUSE反向解释用途保留；新接续见[全链路研究包](../../../../workers/personnel_full_chain_v21_20261030/README.md)。
++
++- `TARGET_MAIN_EVENTS.csv.gz`的197条14/7事件已独立重聚合：83图共同可评，G_A正61图、非正22图；G_S正62图、非正21图。C−B方向、不可评/失败另计，联合反例36图。[完整反例与机制](../../../../workers/personnel_full_chain_v21_20261030/stage01_half_team/README.md)接入原图、完整原答、两队/三队融合、实际票账及20/7背景对照；半队局部支持与连接解释保留证据边界。
++- `OLD_ABC_APPLICABILITY.csv.gz`的8,904条TARGET K3适用记录已继续计算双视角实际效应，按原团队身份、方向、n/m、关系层及每指标共同有效支持报告，见[同房换人及用途](../../../../workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md)。该数字是旧D/X/Y/Z双视角事件数，每事件含两图×ABC，不是视角数、新设计、独立图片或独立房间数。主2→3的10/5有268事件、237条双视角共同Q、19图对/7楼；图对平均C−B为19/19正，但两视角各自都正为18/19，分别保留。
++- [同类近Q快慢×难度](../../../../workers/personnel_full_chain_v21_20261030/stage03_speed_difficulty/README.md)、同房均值/个人预测、多份历史，以及[选队停止和成本](../../../../workers/personnel_full_chain_v21_20261030/stage05_selection_stop/REPORT_ZH.md)已完成实际接续，不再以“画像存在”或“人数曲线存在”替代它们。
++
++本轮没有改变本目录冻结标签、原事件或正式规则，也没有以某一个分差最大决定最终分类。原同房构成重聚合、旧ABC适用性与本轮效应分析各自保留身份，不能互相改称新实验。总对照和未决问题见[全链路表](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)及[缺口表](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)。
++
++
+ 2026-10-29。承接[已完成的独立审查与第8节交接](../../../../workers/personnel_v21_reselection_20261029/independent_review/reaudit_20261029/README.md)，普通Manual使用TARGET_DSTRUCT K3作为主要工作分类、K2作为粗层；OPPJOINT用于联合画像、配比和质量/劳动解释，RAW3用于特征敏感性及八人替换补充，RFUSE保留融合响应的反向解释。本次没有重新拟合分类、选团队、评分或融合。
+ 
+ 本轮把三项下游真正接到现有数据上：同房原团队按最终标签重聚合、旧ABC逐条检查新标签适用性、主方向排除成员/块/背景/建筑后的敏感性。v2冻结实验及旧分类结果保留原身份。
+diff --git a/research/data/releases/v2.1/full_chain_downstream_20261030/README.md b/research/data/releases/v2.1/full_chain_downstream_20261030/README.md
+new file mode 100644
+index 0000000..4f942cf
+--- /dev/null
++++ b/research/data/releases/v2.1/full_chain_downstream_20261030/README.md
+@@ -0,0 +1,13 @@
++# v2.1完整人员研究链：下游补齐发布入口
++
++本发布连接[人员全链路研究包](../../../../workers/personnel_full_chain_v21_20261030/README.md)，来源冻结提交 `13a7861334749805a86dc19e9ea79fcaa71020c0`。与先前“只接入核心构成模块、尚未查到全部用途验收”的阶段相比，本轮已经实际完成：最新半队全部反例/机制、旧同房ABC当前标签合法子集实际效果、同类近楼外Q快慢×难度、同房均值/个人相似与预测、多份历史、Q/QT选队、停止人数和历史获取成本。
++
++结果和身份以[综合报告](../../../../workers/personnel_full_chain_v21_20261030/REPORT_ZH.md)、[逐项对照](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)及[缺口表](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)为准。证据不是仅有文件或适用数量：选队端点实际补算25,516个并精确复用310个，停止仅更新受影响的5,100旧前缀；其它原团队、原答或预测分支按各自回执说明重聚合与验证范围。
++
++**分类最终决定仍未作出。** TARGET K3/K2可作工作分析对象，OPPJOINT联合画像与RFUSE反向解释保留，不能由单项分差最大或本次资料完备性替用户决定最终分类。旧设计子集不改称新类别重新选队；新分类大池策略和新选队同房ABC没有自动执行。
++
++半队14/7当前共同可评83图中，G_A正61、G_S正62，全部反例和实际局部票账可追查。v2旧63快慢对42/63转折和44/63短边多数表达关系保留，同时当前105与共同52对显示人员/支持变化。选队原62图/11楼Q/T劳动比0.803，质量只31/62图提高且有坏尾；无待定主层57图/10楼另列。停止原6组/主5组及合法时间原4组/主3组不混用；从零取得源历史相对fixed7的项目成本比2.395/2.115仍未在原实际余下视角内回本。
++
++数据、参考、空间归属、排除、正式难度与冻结融合未改；v2旧结果原位保留。不同合法目标各自组队/评价，Manual/Semi、OOS、关系待定层与指标有效分母独立。
++
++文档补丁在完整交付的`repository_update/`，带原始字节SHA256 guard和冻结快照`git apply --check`回执。它尚未应用到用户Windows D盘或远端；研究文件须与新增workers入口一起导入，应用程序可据完整交付目录核验复制，不覆盖并行变化。
+diff --git a/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv b/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv
+index c6c2494..ed83883 100644
+--- a/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv
++++ b/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv
+@@ -37,3 +37,11 @@ final_half_exception_mechanisms,,False,reaggregation_and_trace_join_pending,comb
+ matched_speed_difficulty_v21,,False,equivalent_result_not_found,v2 same class near historical Q same source matched people,rebuild against current histories and labels; preserve old support comparison
+ same_room_prediction_uses_v21,,False,equivalent_acceptance_not_found,source-target mean personal residual and prediction baselines,reuse direct relations and current records; correlations are not prediction results
+ selection_stopping_cost_v21,,False,equivalent_result_not_found,Q/QT selection stopping and cold-start acquisition cost,replay frozen history panels and labor support before new designs
++final_half_exception_mechanisms_full_chain_20261030,research/workers/personnel_full_chain_v21_20261030/stage01_half_team/README.md,True,verified_v21_full_chain_20261030,Supersedes historical pending lookup: combined 197 14/7 events; 22 GA and 21 GS nonpositive; 36 union cases; actual trace joins,Use per-metric counts and local support; compare saved 20/7 XYZ/background; no final class adoption
++old_ABC_effects_full_chain_20261030,research/workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md,True,verified_v21_full_chain_20261030,Current-label conditional subset of old exact same-room teams; dual-view effects computed; not newly selected ABC,Read role/n/m/relation/scope-specific joint support; distinguish repeated original designs and paired views
++matched_speed_difficulty_full_chain_20261030,research/workers/personnel_full_chain_v21_20261030/stage03_speed_difficulty/README.md,True,verified_v21_full_chain_20261030,Supersedes historical equivalent-result-not-found: original 63 pairs; current TARGET105; exact shared52,Separate expression from correctness; preserve near-LOBO-Q and same-origin matching plus old/new support
++same_room_prediction_uses_full_chain_20261030,research/workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md,True,verified_v21_full_chain_20261030,Supersedes historical acceptance-not-found: fixed and expanded direct relations; mean/personal/residual prediction and multiple histories,Separate legacy all-relations from no-pending main layer; correlations and prediction errors are distinct
++selection_stopping_cost_full_chain_20261030,research/workers/personnel_full_chain_v21_20261030/stage05_selection_stop/REPORT_ZH.md,True,verified_v21_full_chain_20261030,Supersedes historical result-not-found: original policy candidates/rules; frozen selections and current-history reselections separate,Use current labor0.803 original or0.827 no-pending n5; retain quality-loss tail; stopping original6/4 and main5/3 groups
++full_chain_crosswalk_20261030,research/workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv,True,verified_v21_full_chain_20261030,v2 historical result to current v2.1 result with reasons and support,Do not treat conditional current result as final personnel-method selection
++full_chain_gap_register_20261030,research/workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv,True,verified_v21_full_chain_20261030,"Current verified gaps classified as completed analysis, future design, or human interpretation",Final class choice and any new selected same-room ABC remain separate decisions; no automatic full fusion rerun
++full_chain_reproduction_20261030,research/workers/personnel_full_chain_v21_20261030/README.md,True,verified_v21_full_chain_20261030,Frozen commit 13a7861334749805a86dc19e9ea79fcaa71020c0; exact member/endpoint identities and source snapshots,Review numerical checks and file readability; documentation application is hash guarded and separate from remote/browser acceptance
+diff --git a/research/data/releases/v2.1/personnel_reselection_dependencies/README.md b/research/data/releases/v2.1/personnel_reselection_dependencies/README.md
+index 8f6d740..2db0289 100644
+--- a/research/data/releases/v2.1/personnel_reselection_dependencies/README.md
++++ b/research/data/releases/v2.1/personnel_reselection_dependencies/README.md
+@@ -1,5 +1,26 @@
+ # v2.1 新人员分类：已存结果接续与依赖审查
+ 
++## 2026-10-30 全链路实际补齐：本轮验收接续
++
++本节为前次“按v2全链路复核”查缺后的实际执行结果。此前“未找到完整验收”保留当时检查身份；本轮已经定位、计算并验证相应下游，不再以这些历史待办推断当前缺失。统一入口为[人员全链路研究包](../../../../workers/personnel_full_chain_v21_20261030/README.md)与[v2.1下游发布说明](../full_chain_downstream_20261030/README.md)，以冻结提交 `13a7861334749805a86dc19e9ea79fcaa71020c0` 的原答、参考、资格、范围和楼外标签为准。
++
++**最终人员分类尚未由用户确定。** TARGET_DSTRUCT K3/K2是工作分析对象，OPPJOINT用于联合画像，RFUSE用于反向融合响应解释；下方旧“采用/最终”段落保留其历史来源，不作为本次最终选型决定。
++
++|此前待接续环节|本轮已计算、已验证结果|当前边界与入口|
++|---|---|---|
++|最新14/7全部反例与机制|197事件、83图共同可评；G_A正61/83、G_S正62/83。非正分别22和21图，质量方向/不可评另列，联合诊断36图；已接原答、几何、轨迹与局部票账，并连接20/7实际背景|[半队结果](../../../../workers/personnel_full_chain_v21_20261030/stage01_half_team/README.md)；不沿用旧focused-only 22张对称非正名单；半队人数不等于每个局部有半数票|
++|旧ABC在当前标签下的双视角实际效果|已从8,904个TARGET K3合法旧D/X/Y/Z双视角事件连接实际端点，每事件含两图×A/B/C，非视角数；按楼外角色、n/m、空间和指标支持计算效应|[同房完整接续](../../../../workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md)；固定旧团队的条件子集，不改称当前分类重新选队|
++|同类近Q快慢×难度|已按原规则保留旧63对、当前TARGET105对及精确共同52对；旧42/63转折、44/63短边多数规律保留，表达更多与质量更高分开|[快慢难度](../../../../workers/personnel_full_chain_v21_20261030/stage03_speed_difficulty/README.md)；同来源、楼外近Q、同具体成员与原/扩展支持均可查|
++|同房均值、个人相似与预测、多份历史|已重做原支持及扩展支持，比较源均值、楼外基线、个人同行差、扣除历史残差及预测增量；直接关系待定层独立列示|[预测与用途](../../../../workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md)；相关、预测误差和构成方差不互相替代|
++|Q/QT选队、停止与历史成本|实际完成25,826个所需精确端点（310复用、25,516补算）；停止原124,924前缀只更新受参考影响的5,100行|[选队停止报告](../../../../workers/personnel_full_chain_v21_20261030/stage05_selection_stop/REPORT_ZH.md)；原历史队固定评分与当前历史重选分别报告，未重跑全库256曲线|
++
++原设计层和无关系待定主层并列。原n5时间池62图/11楼Q/T相对Q为+0.112分、31/62图升质，劳动比0.803且11/11楼减少；无待定57图/10楼为+0.124分、29/57图升质、劳动比0.827，仍有超过5分的质量损失尾部。停止原6组/24图和主5组/21图分别16/24、13/21图提高Q；可计时原4组和主3组冷成本相对fixed7为2.395和2.115，实际剩余视角内均未回本。不可把旧0.787劳动比改贴当前重新选队。
++
++`DEPENDENCIES.csv`追加`*_full_chain_20261030`验收行，覆盖本节所列旧查缺状态；旧行保留前轮检查事实。最终对照见[v2→v2.1全链路表](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)，剩余问题按[缺口分类表](../../../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)解释。新分类大池策略、新选队同房ABC及最小跨楼历史采集属于需另立研究问题的新设计，本轮没有自动扩展。
++
++本次验证涵盖保存结果的重聚合、受影响端点计算、关键身份/数值回算及文件完整读取；不宣称已在用户Windows D盘应用、远端推送或完成研究台浏览器验收。下方原检查记录原样保留。
++
++
+ ## 2026-10-30 按v2全链路复核：修改（Modify）
+ 
+ 审查对象是“人员换人和AC材料接入后，v2.1是否已达到v2全链路完备程度”。结论：核心人群构成研究已经可以使用，但不能把配比、同房构成重聚合和AC归档完成等同于全部下游完成。基准为[v2全研究结论](../../../../statistics/research_closeout_20261022/CONCLUSIONS_ZH.md)第2节及[v2同房用途收尾](../../../../same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md)。本次检查报告、实际输出目录、依赖表和v2.1分析入口；未重新执行全量数值审计。下列“未找到”限定于本轮检查范围，不声称仓库历史绝无材料。
+diff --git a/research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md b/research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md
+index 346b471..e514e58 100644
+--- a/research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md
++++ b/research/same_room/same_room_acceptance_20261022/USES_CLOSEOUT.md
+@@ -1,5 +1,18 @@
+ # 同房研究用途收尾：平均质量、个人表现、选队与停止
+ 
++## 2026-10-30 v2.1用途重算接续
++
++本文下方v2结论保持冻结历史身份。对应v2.1的实际结果已接入[同房换人、均值与个人预测](../../workers/personnel_full_chain_v21_20261030/stage02_same_room/README.md)和[Q/QT选队、停止及历史成本](../../workers/personnel_full_chain_v21_20261030/stage05_selection_stop/REPORT_ZH.md)；完整前后比较见[对照表](../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)。
++
++1. 保留原直接关系和共同人员，不以同建筑或传递关系制造同房。原直接关系中4对带既有关系`oos_pending`，它不是当前图池已认定OOS；原123对/扩展132对的回放保留，主要用途另用无待定119/128对。当前无待定扩展65图/13楼的源均值MAE6.464，楼外图片均值9.496；原支持与当前扩展支持不混成一次版本收益。
++2. 个人绝对Q、相对同行表现、扣除楼外历史后的残差关系，以及个人预测对公共均值/稳定历史的增量已计算；多份现有同房历史按实际m与原组身份保留。相关系数、预测误差和构成解释比例分别解释。
++3. 旧ABC当前适用子集的双视角质量、结构、几何、劳动、状态已有实际端点结果。8,904是TARGET K3合法旧双视角D/X/Y/Z事件数，每事件包含两图×ABC，不是8,904个视角。主2→3的10/5在19图对/7楼中图对平均C−B均正，两视角各自都正为18/19；14/7仅2图对、10事件、6共同Q，目标Z固定同七人，现有容量已经全执行。它验证原固定团队的条件性效应，不代表按当前分类重新选队的同房ABC。
++4. n5当前Q/T原层62图/11楼平均ΔQ+0.112、31/62图提高、劳动比0.803且11/11楼减少；主无待定57图/10楼平均ΔQ+0.124、29/57图提高、劳动比0.827。实际损失超过5分的加权比例分别7.86%和8.65%，历史Q≤2分损失约束不是目标保质保证。
++5. 原停止6组/24图与主5组/21图分别16/24、13/21图Q改善，低尾略降。劳动只用原4组/14图及主3组/11图；已有源历史目标劳动比1.235/1.256，从零项目劳动相对fixed7比2.395/2.115，实际剩余视角内均未回本。源原答取得一次供所有顺序回放使用，未将成本乘256；参考人工成本未记录，不填0。
++
++最终分类尚未由用户确定。新分类约束选队、大池策略和新选队同房ABC维持不同问题/新设计身份。本次只补已有资料能回答的用途链，已保留旧源表及事件身份；下文旧0.787等数值只用于原v2条件。
++
++
+ 2026-10-22。基于已归档同房五包及[统一验收](SAME_ROOM_ACCEPTANCE.md)收束用途，采用真实v2及用户既有房间分类，不重新聚房。本次补核建筑方向和使用条件，不新增融合或模型实验。
+ 
+ **2026-10-23接续状态：** 本文的同房均值、个人相似、选队与停止结果已经收尾。后续[当前类别跨视角研究](../same_room_current_classes_v2_20261023/README.md)及[较大块严格ABC独立核验](../../statistics/same_room_rebuilt_audit_20261023/README.md)也已完成；原阶段“只有返回文字、等待最终交付”不再代表当前状态。各次实验保留自己的人员池、分母与核验范围，后续换类结果不覆盖本文均值/个人预测问题。
+diff --git a/research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md b/research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md
+index c24dde9..5afa03f 100644
+--- a/research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md
++++ b/research/statistics/research_closeout_20261022/CONCLUSIONS_ZH.md
+@@ -1,5 +1,19 @@
+ # 全研究结论主线：问题、证据、最初预期与新发现
+ 
++## 2026-10-30 接续：v2解释与用途链已按当前资料实际补齐
++
++[本轮中文综合报告](../../workers/personnel_full_chain_v21_20261030/REPORT_ZH.md)、[全链路对照](../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/V2_TO_V21_CROSSWALK.csv)和[发布入口](../../data/releases/v2.1/full_chain_downstream_20261030/README.md)接续此前查缺结论。**分类方法仍未由用户最终确定**；TARGET K3/K2为工作分析对象，OPPJOINT与RFUSE保留各自用途。历史段落中的“最终/采用”不代表本轮新增最终选型决定。
++
++- 最新半队仍有多数规律：14/7综合197事件中83图三队共同可评，同起点幅度正61/83、对称正62/83；全部22/21张对应非正图、质量方向反例及不可评联合36图已逐项接机制和20/7背景条件，不套用旧focused-only名单。详细局部票账说明半队人数只是达到门槛的容量，不保证每个结构获得7票。
++- 旧同房ABC不再停留在8,904条适用登记：已按真实原团队、楼外角色方向、n/m、房间/范围及双视角共同支持计算效应，结构、Q和劳动的重复程度分别报告；未新增房间事实或改称新分类选队实验。
++- 近楼外Q快慢×难度保留旧63对转折42正、短边44正的多数表达规律；当前TARGET105对、精确共同52对另列，表达更多不等于更正确。原/新增可评分支持和人员重匹配带来的变化分开。
++- 同房均值、个人绝对/相对/残差、个人预测及多份历史的用途链已恢复，直接关系待定部分独立列示。当前无待定扩展面板65图/13楼源均值预测B8L2 MAE6.464，楼外图片均值9.496；不能用个人相关或构成方差代替预测增量。
++- 当前Q/T选队在原62图/11楼劳动比0.803，11/11楼平均劳动减少，但Q只有31/62图提高，实际质量损失坏尾保留。主无待定57图/10楼对应劳动比0.827、29/57图Q提高。平均Q优势由负转正主要与当前历史重选改变Q-only基线有关，不是Q/T本身大幅升质。
++- 原停止完整6组/24图有16图Q提高；主无待定5组/21图有13图提高，P10略降。合法时间支持原4组/主3组的已有历史目标劳动比分别1.235/1.256；从零源历史项目成本比fixed7为2.395/2.115，原4/4及主3/3组实际余下视角内均未回本。这是本轮逐项重算结果，不直接复用v2数值声明。
++
++[剩余缺口](../../workers/personnel_full_chain_v21_20261030/stage06_synthesis/GAP_REGISTER.csv)明确区分已补齐、未来新设计和人工语义判断。无需因为分类名称变化全面重跑融合；新分类大池策略或新选队同房ABC仍需具体问题和容量依据。本补充未覆盖并行工作，不声称D盘已应用或浏览器验收通过。下方原研究阶段及数值身份保留。
++
++
+ **2026-10-30直接AC与完整类别组合已接入：** [13包归档及研究台](../../workers/personnel_ac_v21_20261030/README.md)保留全部原生端点、名单、几何与复现来源；TARGET20/7直接AC在78/85图提高Q，整目标类换入固定20人在155/185图提高；OPPJOINT20/10为42图提高、40图下降，正负变化均保留。完整类别组合实际合并原始标注再融合，与固定人数配比和严格ABC分开。最终标签同房、旧ABC适用性、成员敏感性、原答距离及半队诊断已串联至[新版独立讲解材料](../../../docs/thesis_main/研究讲解_v2.1_人群构成与共识_20261030.md)。v2冻结实验和旧讲解材料保留历史身份；原Word提纲不修改。
+ 
+ **最新分类采用与下游接续（2026-10-29）：** 根据已完成的独立审查及接续交接，普通Manual以TARGET_DSTRUCT K3为主工作分类、K2为粗层；OPPJOINT保留联合画像、配比与质量/劳动用途，RAW3补充八人替换与特征敏感性，RFUSE保留反向融合响应。14/7半队替换为主展示、20/7为较大背景对照。同房原团队重聚合、旧ABC适用性和成员敏感性已完成，见[接续结果与研究台接入说明](../../data/releases/v2.1/final_classification_downstream/README.md)。下方早期OPPJOINT及focused-only数值保留原设计身份，不替代最新综合事件。v2冻结对照、其它合法空间、全局CURRENT与浏览器验收边界不变。
+diff --git a/research/workers/personnel_full_chain_v21_20261030/README.md b/research/workers/personnel_full_chain_v21_20261030/README.md
+new file mode 100644
+index 0000000..17acce4
+--- /dev/null
++++ b/research/workers/personnel_full_chain_v21_20261030/README.md
+@@ -0,0 +1,33 @@
++# HOHONET v2.1人员全链路接续：研究交付与复现
++
++以冻结提交 `13a7861334749805a86dc19e9ea79fcaa71020c0` 为输入，接续v2完整解释/用途链。用户尚未最终确定人员分类；TARGET K3/K2为工作分析对象，OPPJOINT用于联合画像，RFUSE用于反向融合响应。正式数据、参考、目标归属、人员/标注排除、难度标签和融合规则未改变。
++
++## 入口
++
++- [中文综合报告](REPORT_ZH.md)及[HTML报告](REPORT_ZH.html)。
++- [完整交付原README](DELIVERY_README.md)：从交付根README保留导入，仓库此页只负责导航。
++- [v2→v2.1全链路对照](stage06_synthesis/V2_TO_V21_CROSSWALK.csv)与[剩余缺口](stage06_synthesis/GAP_REGISTER.csv)。
++- [v2.1发布说明](../../data/releases/v2.1/full_chain_downstream_20261030/README.md)。
++
++|阶段|已完成的实际研究|直接入口|
++|---|---|---|
++|输入与冻结核对|当前提交、原始依赖、输入池与135项冻结引擎代码一致性|`stage00_intake/`|
++|最新半队反例|197事件、最新21张对称非正，全部指标/状态联合36图；原答、端点、几何、票账、20/7背景|[阶段01](stage01_half_team/README.md)、[36图完整说明](stage01_half_team/ALL_36_CASES_ZH.md)|
++|同房换人、个人与预测|旧ABC适用子集实际双视角效果、原与扩展直接关系、个人均值/历史/残差和多份同房历史|[阶段02](stage02_same_room/README.md)|
++|同类近Q快慢×难度|原63对、当前105对及共同52对，表达/正确/劳动及成员建筑敏感性|[阶段03](stage03_speed_difficulty/README.md)|
++|选队、停止与成本|Q/QT两种身份、25,826精确团队、124,924旧前缀定向更新、已有/从零历史成本|[阶段05](stage05_selection_stop/REPORT_ZH.md)、[复现](stage05_selection_stop/README.md)|
++|综合与未决事项|支持范围、变化原因、采用说法及真正需要新设计/人工项|[全链路表](stage06_synthesis/V2_TO_V21_CROSSWALK.csv)|
++
++## 身份与分母
++
++v2冻结结果、旧团队固定重评、当前历史重选和新设计分别表达。普通Manual为主，Semi补充，OOS及其它合法空间单列。直接关系的旧`oos_pending`标志不自动改变当前图池资格；原设计完整层与无关系待定主层并列。缺Q不填0，原生失败、输出不可评和其它缺失分开；劳动只用合法同来源记录，不能作为并行等待时间。
++
++本轮完成已有资料可回答的下游：半队机制、旧同房ABC实际效应、近Q快慢×难度、预测用途、选队/停止/历史成本。没有自动新增人员、房间或重新跑256自然曲线。当前标签下的新选队同房ABC、类别约束大池策略和最低跨楼历史采集成本需另立具体问题，不因本目录建立就标为完成。
++
++## 导入与复现
++
++本入口依赖同目录的`stage*`、`scripts/`、`source/`、`REPORT_ZH.md/html`。仅应用文档patch不会生成这些研究数据。交付包`repository_update/apply_update.py --repo <仓库> --study <完整交付根> --apply`会先检查7个原文档SHA256、补丁可应用性和所有新目录目标冲突，再导入实际研究文件并更新文档；交付根README保存为`DELIVERY_README.md`。不复制`repository_update`本身，避免递归。
++
++各阶段README提供最小输入、代码、源表、精确事件和验证。应优先复用交付端点重聚合；完整源快照用于核查，不覆盖原仓库来源。若仓库目标文件已被并行线程更改，应用程序停止并列出冲突，保留其新版本，不自动强行覆盖。
++
++本研究在可访问的冻结仓库快照上完成。交付时尚未写入用户`D:\Work\HOHONET`、提交/推送远端或完成研究台浏览器验收；实际应用另以应用回执为准。

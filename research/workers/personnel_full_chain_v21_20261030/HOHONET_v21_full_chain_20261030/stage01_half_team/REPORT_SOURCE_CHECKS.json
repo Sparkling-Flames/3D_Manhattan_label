@@ -1,0 +1,81 @@
+{
+  "context_links": 100,
+  "nested_links": 56,
+  "context_image_rows": 840,
+  "common_direction_diagnostic_images": 2,
+  "case_reference_corner_event_rows": 454,
+  "metric_support": [
+    {
+      "n": 14,
+      "metric": "gap_A",
+      "registered_events": 197,
+      "valid_events": 185,
+      "valid_images": 83,
+      "valid_buildings": 21
+    },
+    {
+      "n": 14,
+      "metric": "gap_sym",
+      "registered_events": 197,
+      "valid_events": 185,
+      "valid_images": 83,
+      "valid_buildings": 21
+    },
+    {
+      "n": 14,
+      "metric": "CB",
+      "registered_events": 197,
+      "valid_events": 187,
+      "valid_images": 83,
+      "valid_buildings": 21
+    },
+    {
+      "n": 14,
+      "metric": "record_time_CB_pct_source_matched",
+      "registered_events": 197,
+      "valid_events": 95,
+      "valid_images": 55,
+      "valid_buildings": 19
+    },
+    {
+      "n": 20,
+      "metric": "gap_A",
+      "registered_events": 82,
+      "valid_events": 79,
+      "valid_images": 70,
+      "valid_buildings": 21
+    },
+    {
+      "n": 20,
+      "metric": "gap_sym",
+      "registered_events": 82,
+      "valid_events": 79,
+      "valid_images": 70,
+      "valid_buildings": 21
+    },
+    {
+      "n": 20,
+      "metric": "CB",
+      "registered_events": 82,
+      "valid_events": 79,
+      "valid_images": 70,
+      "valid_buildings": 21
+    },
+    {
+      "n": 20,
+      "metric": "record_time_CB_pct_source_matched",
+      "registered_events": 82,
+      "valid_events": 42,
+      "valid_images": 39,
+      "valid_buildings": 17
+    }
+  ],
+  "no_new_experimental_teams": true,
+  "report_source_tables": [
+    "MAIN_CHECKED_SUMMARY.csv",
+    "ALL_METRICS_IMAGE_SUMMARY.csv",
+    "KEY_METRIC_SUPPORT.csv",
+    "MATCHED_BACKGROUND_CONTEXT_SUMMARY.csv",
+    "ENDPOINT_STATUS_COUNTS.csv"
+  ]
+}

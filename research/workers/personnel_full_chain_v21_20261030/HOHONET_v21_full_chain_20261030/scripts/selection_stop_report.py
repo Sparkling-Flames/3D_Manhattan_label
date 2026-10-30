@@ -1,0 +1,294 @@
+"""Emit current, auditable selection/stopping closeout exhibits without fusion."""
+from pathlib import Path
+import json,gzip
+import pandas as pd
+import numpy as np
+from selection_stop_prepare import STUDY,OUT,SRC,save,native_pools,read
+from selection_stop_endpoints import iterjson
+
+V='v21_history_reselected_fixed_candidates'
+L='no_pending_direct_relations'
+OR='original_scope_comparable_panel'
+s=pd.read_csv(OUT/'selection/RELATION_LAYER_SUMMARY.csv')
+im=pd.read_csv(OUT/'selection/RELATION_LAYER_IMAGE_RESULTS.csv.gz')
+bm=pd.read_csv(OUT/'selection/RELATION_LAYER_BUILDING_RESULTS.csv')
+st=pd.read_csv(OUT/'stopping/RELATION_LAYER_STOPPING_SUMMARY.csv')
+co=pd.read_csv(OUT/'stopping/RELATION_LAYER_ACQUISITION_SUMMARY.csv')
+
+def get(layer,domain,policy,version=V,n=5):
+    z=s[(s.relation_layer==layer)&(s.version==version)&(s.domain==domain)&(s.n==n)&(s.policy==policy)]
+    assert len(z)==1
+    return z.iloc[0]
+def stop(layer,policy,time='all_groups',budget='maximum_history'):
+    z=st[(st.relation_layer==layer)&(st.panel=='whole_group')&(st.support=='all_attempts')&(st.time_support==time)&(st.history_budget==budget)&(st.policy==policy)]
+    assert len(z)==1
+    return z.iloc[0]
+def cost(layer):
+    z=co[(co.relation_layer==layer)&(co.panel=='whole_group')&(co.history_budget=='maximum_history')&(co.policy=='source_within2_min3_geometry')]
+    assert len(z)==1
+    return z.iloc[0]
+
+def directions():
+    rows=[]
+    for level,d in [('image',im),('building',bm)]:
+        for (layer,domain,policy),g in d[(d.version==V)&(d.n==5)].groupby(['relation_layer','domain','policy']):
+            for field in ['delta_Q','log_activity_ratio']:
+                x=g[field].dropna();rows.append(dict(relation_layer=layer,level=level,domain=domain,policy=policy,metric=field,positive=int((x>1e-8).sum()),negative=int((x< -1e-8).sum()),equal=int((x.abs()<=1e-8).sum()),valid=len(x)))
+    save('selection/MAIN_N5_DIRECTION_COUNTS.csv',pd.DataFrame(rows))
+
+def compact_exhibits():
+    # Every headline is a deterministic slice, never a new selected policy.
+    ss=s[(s.version==V)&(s.n==5)&s.domain.isin(['all','new_timed_history'])]
+    save('selection/MAIN_N5_HEADLINES.csv',ss)
+    save('selection/QT_N_SENSITIVITY.csv',s[(s.version==V)&(s.relation_layer==L)&(s.domain=='new_timed_history')&s.policy.isin(['outside_Q','outside_Q_outside_T_fast'])])
+    save('stopping/MAIN_RULE_HEADLINES.csv',st[(st.panel=='whole_group')&(st.support=='all_attempts')&(st.history_budget=='maximum_history')&st.policy.isin(['fixed_7_geometry','source_within2_min3_geometry','online_same_nodecount_3_geometry'])])
+    save('stopping/MAIN_COLD_COST_HEADLINES.csv',co[(co.panel=='whole_group')&(co.history_budget=='maximum_history')&(co.policy=='source_within2_min3_geometry')])
+    # Case selection is solely an explanatory index after the complete policy comparison.
+    d=pd.read_csv(OUT/'selection/ALL_MAIN_TIME_POLICY_CASES.csv')
+    f=pd.read_csv(OUT/'selection/RELATION_FLAGS.csv')
+    d=d.merge(f[['pair_id','relation_oos_pending']],on='pair_id',validate='many_to_one')
+    d=d[(d.version==V)&~d.relation_oos_pending]
+    chosen=pd.concat([d.nsmallest(2,'delta_Q'),d.nlargest(1,'delta_Q'),d[(d.team_key!=d.base_team_key)&d.delta_Q.abs().lt(0.01)].head(1)]).drop_duplicates('team_key')
+    chosen['exhibit_role']=['large_quality_loss_1','large_quality_loss_2','large_quality_gain','different_members_small_quality_change'][:len(chosen)]
+    fields=['exhibit_role','group_ids','source_image','target_image','source_pool_id','target_pool_id','member_workers','team_key','base_team_key','history_Q_mean','available_workers','B8L2','base_B8L2','delta_Q','absolute_delta_Q','D10','base_D10','target_activity_seconds','base_target_activity_seconds','fusion_turn_n','base_fusion_turn_n','fusion_short_turn_edges','base_fusion_short_turn_edges','S_bottom_deg','base_S_bottom_deg','Hmean','base_Hmean','boundary_loss','base_boundary_loss','direction_loss','base_direction_loss','height_loss','base_height_loss','score_status','geometry_source']
+    save('selection/REPRESENTATIVE_CASE_INDEX.csv',chosen[fields])
+    pools=native_pools();case_dir=OUT/'selection/cases';case_dir.mkdir(exist_ok=True)
+    for r in chosen.to_dict('records'):
+        pid=r['target_pool_id'];eps={z['team_key']:z for z in iterjson(OUT/'endpoints/pools'/f'{pid}.jsonl.gz') if z['team_key'] in [r['team_key'],r['base_team_key']]}
+        p=pools[pid];workers=set(w for z in eps.values() for w in z['member_workers']);source=pools[r['source_pool_id']]
+        obj=dict(identity='Illustrative cases after full frozen-policy analysis; not used for policy selection',row={k:(None if isinstance(v,float) and not np.isfinite(v) else v) for k,v in r.items()},target_meta=p['meta'],reference=p['reference'],target_raw_records=[z for z in p['records'] if z['worker_id'] in workers],source_meta=source['meta'],source_raw_records=[z for z in source['records'] if z['worker_id'] in workers],endpoints=eps,mechanism_limit='Full geometry and raw annotations retained. No selected-node vote count is taken as a proof about unselected votes or connection causality; no dedicated trace was newly generated for these utility cases.')
+        save(f'selection/cases/{r["exhibit_role"]}.json',obj)
+
+def write_report():
+    qt=get(L,'new_timed_history','outside_Q_outside_T_fast');qb=get(L,'new_timed_history','outside_Q');oqt=get(OR,'new_timed_history','outside_Q_outside_T_fast');oqb=get(OR,'new_timed_history','outside_Q')
+    selrows=[]
+    for layer,label in [(L,'无关系待定主层'),(OR,'原冻结设计层')]:
+        for dom,pol,title in [('all','outside_Q','楼外Q'),('all','source_Q','单源Q'),('all','random','随机三次'),('new_timed_history','outside_Q','楼外Q（同源时间池）'),('new_timed_history','outside_Q_outside_T_fast','楼外Q/T'),('new_timed_history','outside_Q_source_T_fast','楼外Q＋单源T')]:
+            z=get(layer,dom,pol)
+            selrows.append(f'|{label}|{title}|{int(z.events)}/{int(z.images)}/{int(z.buildings)}|{z.B8L2:.3f}|{z.D10:.3f}|{z.delta_Q:+.3f}|{z.B8L2_mean_target_p10:.3f}|'+(f'{z.activity_ratio_geometric:.3f}' if dom=='new_timed_history' else '另限合法时间支持')+'|')
+    stoprows=[]
+    for layer,label in [('no_pending_direct_relations','无关系待定'),('original_supported_groups','原冻结设计')]:
+        for pol,title in [('fixed_7_geometry','固定7＋几何补收'),('source_within2_min3_geometry','源曲线within2＋几何补收')]:
+            z=stop(layer,pol);t=stop(layer,pol,'all_new_complete_time')
+            stoprows.append(f'|{label}|{title}|{int(z.groups)}/{int(z.images)}|{z.q_mean:.3f}|{z.d10_mean:.3f}|{z.mean_k:.3f}|{z.q10:.3f}|{100*z.loss_gt5_to_full_rate_paired:.2f}%|{int(t.groups)}/{int(t.images)}：{t.ratio_mean_activity_to_fixed7_geometry:.3f}|')
+    ns=s[(s.version==V)&(s.relation_layer==L)&(s.domain=='new_timed_history')&(s.policy=='outside_Q_outside_T_fast')].sort_values('n')
+    nrows=['|'+str(int(z.n))+'|'+str(int(z.images))+'/'+str(int(z.buildings))+'|'+f'{z.delta_Q:+.3f}|{z.absolute_delta_Q:.3f}|{100*z.loss_over5:.2f}%|{z.activity_ratio_geometric:.3f}|{100*z.Q_available_rate:.2f}%'+'|' for z in ns.itertuples()]
+    report=f'''# v2.1 选队、停止人数与历史获取成本：实际接续报告
+
+**结论先行。** 在原来同房候选池、原楼外历史门槛和原算法下，楼外Q选队仍明显优于仅按某一同房源视角的本人Q选队。Q/T适合记录劳动与质量之间的有约束取舍：无关系待定主层的57图中29图升质、20图降质、8图相同，10楼中9楼劳动减少、1楼相同，劳动比0.827，但发生超过5分质量损失的加权比例仍为8.65%。已有同房源历史的停止规则能在21图中13图提高目标平均Q；它同时有低尾和成本代价，不能称为普遍省时。若从零取得全部源历史，3个无关系待定且劳动合法可比的组在实际剩余视角内均未相对固定7人回本。
+
+这里不决定最终人员分类。TARGET K3/K2、OPPJOINT与RFUSE的分类研究和用途判断由总报告另行讨论。本模块恢复的是v2已做的连续Q/QT选队与同房停止用途，不把旧V3进入策略或自然人数曲线替代这些问题，也不将旧的结构约束选队改名为当前分类选队。
+
+## 1. 数据、来源与本轮实际补算
+
+仓库冻结为 `13a7861334749805a86dc19e9ea79fcaa71020c0`。当前主目标池是 `source/research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json`，Git blob为 `fa42df06d5cf0990d5e3bbd99f68c9f517b349b9`；当前资格、原答Q与参考来自同版本 `quality_inventory.csv/json`。135项冻结融合依赖已由总流程逐字节核对，参见总目录 `stage00_intake/CURRENT_FULL_ENGINE_CLOSURE.json`。本模块没有修改参考、排除规则、难度标签、融合门槛或连接规则。
+
+已经检查原同房五包与2026-10-21精简归档。当前归档明确保留脚本和汇总、未保留原45,552团队库的全部请求与端点，并非把“文件存在”当作端点已验证。本轮从精确原面板、候选人员、算法及随机种子确定性重建原队，再用旧参考从当前保存几何重评分，200个原政策汇总条件（B8L2/D10合400个分数单元）的最大误差均小于3×10⁻¹⁴，证明原设计复现到数值精度。它是可核验的重建，不冒称找回丢失原件。
+
+|项目|实际数量与身份|
+|---|---|
+|选队原始/当前历史两条身份|71,608上下文事件行；400汇总条件，不是71,608张独立图|
+|选队原历史固定团队|24,190个精确团队|
+|当前历史、原候选池重选团队|24,214个；与原选队共同22,917个，新出现1,297个|
+|选队＋停止所需去重端点|25,826个，99个合法目标池|
+|本轮精确身份复用|310个当前端点|
+|本轮缺少精确团队实际计算|25,516个；全部保留完整几何、成员、状态与分数|
+|原停止前缀|124,924行；复用119,824行|
+|参考变动影响的停止前缀|4池、5,100行，使用343个精确团队完成评分更新|
+|新增自然随机顺序/全库曲线|0；未重跑256条自然曲线|
+
+来源及参数在 [FROZEN_DOWNSTREAM_DESIGN.json](FROZEN_DOWNSTREAM_DESIGN.json)；精确账目在 [FINAL_ENDPOINT_ACCOUNTING.json](endpoints/FINAL_ENDPOINT_ACCOUNTING.json)；复现数值在 [NUMERIC_RECONSTRUCTION_CHECKS.json](validation/NUMERIC_RECONSTRUCTION_CHECKS.json)。停止旧参考回算误差小于1.2×10⁻¹³，仅做旧参考评分，没有为验证新增融合。
+
+## 2. 什么被固定，什么随v2.1更新
+
+原历史面板含9,217份非OOS记录。按当前资格、参考和Q更新后，重新计算同图、同条件、同目标/参考的剔除本人同行差，再在目标建筑之外求个人历史。沿用至少8图、3楼的历史支持条件，共3,997个人员×留出楼×条件/来源/面板单元。Q与T支持标志均未改变，原候选无人因当前资格丢失；源时间语义与原答几何不变。楼外相对时间的变化仅为浮点舍入；楼外Q变化来自当前正式质量支持与分数更新。
+
+两个版本严格分开：`v2_fixed_selection_current_score`保留v2选中人员，只更新目标计分；`v21_history_reselected_fixed_candidates`在完全相同的原候选池用当前历史重新选队。两者都没有看目标Q来选人。楼外历史是当时全部可得的目标楼外资料，不是按采集日逐步到达的前瞻历史；因此这里验证“已有历史可用时”的回放用途。
+
+候选池保留直接同房源/目标的共同实际人员，不加传递同房关系。`all`可包含旧/新来源，适合质量比较；`new_timed_history`只保留具有合法同来源记录劳动及历史时间支持的候选。原算法研究n=3、4、5、6、7、9、13，须存在选择余地，候选数严格大于n；n=5是v2原用途主条件，未按本轮结果挑选。
+
+Q/T从楼外Q最高团队出发，贪心换入预计劳动更少的人，要求团队**历史相对Q均值**下降不超过2分。这不是“目标实际Q最多掉2分”的保证。单源Q策略按本人已完成源视角的Q排序；单源T策略使用本人源视角记录劳动。随机策略三次只在同一上下文内部求期望，不能视为三倍独立图片。
+
+## 3. 同房关系层与各指标分母
+
+原范围可比设计中的4个直接图对在既有关系表带`oos_pending`，其中3对属于pRb/G124，另1对为jtcx-22/23。该关系标志不是当前图池被正式认定OOS，也不修改现有合法原答或参考。为保留历史身份，同时给出两层：
+
+- **原冻结设计层**：完整保留原范围可比选队和停止支持，可与v2直接比较。
+- **无关系待定主层**：仅将关系无待定/无冲突的直接关系用于主要用途说法；待定部分另表补充，不删除旧结果。
+
+选队n5原层的质量池为242个源→目标上下文、64图、12楼；时间池240、62、11。无关系待定主层分别为234、59、11及232、57、10。上下文数不等于独立图数：同一目标在不同源视角或候选交集中可出现多次。
+
+先上下文/随机重复在目标图内平均，再图在建筑内平均，再建筑等权。Q和D10只在可评分端点统计；配对ΔQ须两端都可评分；缺失保留为空。质量低尾、几何完整和实际融合失败独立统计。时间使用合法同源记录活动秒数，既不是现实并行等待时间，也不是人工报酬。时间比为每个配对的对数比经上述层级平均后指数化。表中的P10为“各目标内上下文/路径P10再层级平均”，与全部事件直接混合的P10不同。
+
+## 4. 当前选队效果
+
+以下全部n=5，Q为B8L2；ΔQ是相同源/目标、候选、人数下相对楼外Q队的共同可评差。随机三次有三倍事件行，仍只有相同图片和建筑支持。
+
+|关系层|政策|事件/图/楼|B8L2|D10|配对ΔQ|目标P10均值|劳动比|
+|---|---|---:|---:|---:|---:|---:|---:|
+{chr(10).join(selrows)}
+
+可直接回连 [MAIN_N5_HEADLINES.csv](selection/MAIN_N5_HEADLINES.csv) 与 [MAIN_N5_DIRECTION_COUNTS.csv](selection/MAIN_N5_DIRECTION_COUNTS.csv)。当前主层楼外Q相对单源Q在43/59图、10/11楼更高；原层为47/64图、11/12楼。个人源视角的高Q不宜替代稳定楼外历史来做一般选队。随机与楼外Q的边际均值差不必精确等于配对Δ，因为随机有输出失败，其分母另存。
+
+### 4.1 Q/T减少记录劳动的规律与坏尾
+
+主层Q/T的平均ΔQ为+0.124，平均绝对ΔQ为1.679；29/57图升、20图降、8图相同，6/10楼升、3楼降、1楼相同。劳动比0.827，48/57图减少、1图增加、8图相同；9/10楼减少、1楼相同。平均提高不代表每张图改善，也不是单一大改善图代替多数：图方向与建筑方向完整保留。
+
+原层平均ΔQ+0.112、绝对Δ1.538（精确值以源表为准），31/62图升、23降、8同，7/11楼升、4降；劳动比0.803，53图减、1增、8同，11/11楼平均减少。原层31/62恰为一半，不写成“多数全部图片都提高Q”。
+
+主层实际Q下降超过5分的层级加权比例为8.65%；原层7.86%。在主层35.28%的加权事件中同时满足劳动至少少20%、目标Q损失不超过2分；原层41.17%。因此可采用“节省记录劳动的条件性用途”，不能采用“Q/T保质保证”。n5主Q/QT端点均完整可评，坏尾不是用失败Q=0制造。
+
+### 4.2 为什么新版Q/T相对Q的均值由负转正
+
+原层时间池的原v2楼外Q队为93.691115；固定这些人员按当前参考重评分为93.691195，几乎不变。用当前楼外Q重选后为93.362740。相应Q/T为：v2 93.470609、旧人员当前评分93.469330、当前重选93.475052。故Q/T相对Q从约−0.221变为+0.112，主要是当前历史重选改变了Q-only基线，不能叙述成Q/T本身大幅进步。当前重选的劳动比是0.803；0.787是旧团队身份的劳动比，不再作为新政策结论。
+
+全尺寸/上下文中，楼外Q团队原/新完全相同比例约70.93%（all），新来源/同源时间候选约78.45%。人员选择会受新增正式质量支持影响，尽管历史支持门槛与时间特征未变。
+
+### 4.3 人数及难度条件
+
+|n|图/楼（时间主层）|Q/T配对ΔQ|绝对ΔQ|>5分损失加权比例|劳动比|Q可评率|
+|---:|---:|---:|---:|---:|---:|---:|
+{chr(10).join(nrows)}
+
+这些已执行条件显示：省劳动的方向较稳定，但Q效应随规模与具体团队改变，不能把n5的小均值优势推广到所有人数。不同n存在容量缺失，不能将表中各行当成同一固定图集的自然人数趋势。每个n内比较保持相同候选、图与人数；完整逐图结果可进一步建立所需共同图集。
+
+现有正式难度下，主层时间池简单40图/7楼，Q/T Δ−0.037、劳动比0.817；中等9图/5楼，Δ−1.335、劳动比0.772；困难8图/4楼，Δ+1.985、劳动比0.866。这是原算法在当前面板的条件性描述；困难支持小，不把它解释成快者普遍在困难图更正确，也不取代另一模块的同类近Q快慢匹配。
+
+### 4.4 可直接追查的坏尾与几何
+
+[REPRESENTATIVE_CASE_INDEX.csv](selection/REPRESENTATIVE_CASE_INDEX.csv)及`selection/cases/`保存当前Q/T的两项大损失、一项大改善和不同成员但Q极小变化案例。每个案例包含完整两队端点、参考、两视角所涉成员原答及分项，不仅是一个总Q。
+
+- **G172，源uNb-40→目标uNb-01**：Q/T成员W108、W112、W132、W133、W134，目标Q53.939，对照82.888，Δ−28.949；记录劳动624.481秒对1086.440秒。
+- **G172，源uNb-40→目标uNb-43**：Q/T成员W108、W112、W115、W130、W134，Q70.421，对照99.190，Δ−28.769；劳动590.447秒对1012.354秒。
+
+- **同一G172，源uNb-45→目标uNb-12**：当前Q/T相对Q-only提高25.032分，但目标记录劳动384.373秒对357.957秒，增加约7.38%。该方向说明历史时间排序也不是单图时间保证。
+- **源S9-17→目标S9-10**：具体人员不同，Q仅变化约0.000005分，目标劳动200.698秒对206.733秒。它保留了不同成员可以产生极小质量差的条件。
+
+上述端点都有完整共识；前两例属于质量损失而非融合失败。历史Q均值约束不能控制具体图片上的结构/定位错误。案例分项可定位差异出现在边界、方向还是高度；本模块没有仅凭总分推断临界票或连接原因，也没有将被选节点票数当成全部票账。若要给这些政策坏尾定性到具体真实墙段，人工须同时看目标原图、参考、两队原答及几何；不影响已完成的数值比较。
+
+## 5. 停止规则：已有源历史能回答什么
+
+完整继承原同房共同人员面板与顺序。`source_within2_min3_geometry`先用**已经完整取得的源视角曲线**，找源平均曲线距其峰值不超过2分的最早k≥3；目标只按几何是否完整补收，不看目标Q。固定7对照同样允许几何补收。每组源数量保留m=1及所有m>N/2，主展示最大历史m=N−1。这里的m是源视角数，与换人实验的替换人数m不同。
+
+原完整组支持6组/24图/6楼，其中4组/14图具有同源完整劳动记录；去除关系待定G124后为5组/21图/5楼，时间主层3组/11图。原声明组共9个，其中3组全视角共同人员仅1、0、0，无法支持原k≥3规则；另14个覆盖子集保留独立身份，不能混称完整组。
+
+|关系层|政策|组/图|B8L2|D10|实际平均人数|目标P10均值|相对满共同池损失>5|合法时间组/图：劳动比|
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+{chr(10).join(stoprows)}
+
+源表：[MAIN_RULE_HEADLINES.csv](stopping/MAIN_RULE_HEADLINES.csv)。原6组的Q提升发生在16/24图、4/6楼；无待定主层为13/21图、3/5楼。平均Q与大损失比例改善，但全组P10略降，不能用均值掩盖低尾。Q和劳动的支持不同，表中时间比只来自对应合法3/4组，绝不将全部5/6组的Q均值与劳动均值写成同一全样本收益。
+
+在主层3个可计时组，源规则Q82.279对固定7的80.599，平均人数8.756，劳动比1.256。原4组对应85.787对84.399，劳动比1.235。后一比值是先求每目标平均劳动之比，再逐层平均；逐路径劳动比的层级均值则为1.270（主层1.297），两种统计量不能互换。
+
+### 5.1 更多已有同房历史的增量
+
+主层5组/21图中，单源、最少多数源、最大源历史的Q依次85.248、86.025、86.054，实际人数6.589、7.173、7.181；相对满共同池损失>5比例19.56%、16.01%、15.76%。多数源历史改善了这个固定面板中的源规则，最大历史相对最少多数源的增量很小。完整实际m表仍保存，未把所有m混成一个样本。
+
+不用源历史、只观察目标连续三次完整输出节点数相同的原在线规则，主层Q83.732、平均n5.848、P10 76.214、相对满共同池损失>5为22.90%，合法时间比0.886。它能较早停，但“点数稳定”不保证定位或质量充分。该规则未经本轮调参，作为已有机制的成本/质量对照保留。
+
+### 5.2 全部负例与条件
+
+主源规则相对fixed7的8张负例为VFua-01；e9-03、e9-26、e9-28；uNb-14、uNb-72；wc2-03、wc2-61。全24图清单在 [SOURCE_VS_FIXED7_IMAGE_EFFECTS.csv](stopping/SOURCE_VS_FIXED7_IMAGE_EFFECTS.csv)，去除G124后仍是这些8张负例。最明显为wc2-03：平均Q−4.487、平均人数−3.109；e9-03为−1.142，uNb-14为−1.431。S9三图平均Q均提高约2.76—3.77，但平均多收约7.14—8.59人：此处升质伴随更大劳动，而非省人。
+
+源曲线决定的是转移人数建议；不同目标视角的实际优劣不能由源Q曲线保证。当前参考改动只影响4池的5,100条旧前缀，完整组原源规则平均Q相对v2变化约−0.000045，原fixed7约−0.000121；所选人数与损失率未变。该近似不变是本轮逐团队重评分后得到，不是直接照抄v2。
+
+## 6. 历史获取成本：已有历史与从零获得必须分开
+
+若源视角历史已经存在，只计算目标新增记录劳动，原4组主源规则相对fixed7为1.235；它本身也不是普遍省时。若从零建立完整源曲线，必须计入每个源视角共同人员全部作答一次。已有256顺序重放共享这批原答，不将历史成本乘256。参考构建、评审与评分的人工作业没有记录，保持“未计入”，不假定为0。
+
+|关系层|合法完整组/楼|从零项目劳动／全视角fixed7|从零项目劳动／满共同池|实际剩余视角内相对fixed7回本|
+|---|---:|---:|---:|---:|
+|无关系待定主层|3/3|2.115|0.871|0/3|
+|原冻结设计层|4/4|2.395|0.843|0/4|
+|关系待定G124补充|1/1|3.234|0.762|0/1|
+
+主层3组各自相对fixed7比为S9/G046 3.708、VFua/G057 1.159、e9/G090 1.479；G124为3.234。相对“所有视角收齐满共同池”可以少劳动，但相对“所有视角fixed7”增加劳动。基线不同回答不同问题，不能因与满池比小于1就写成已回本。
+
+这里的冷成本来源是原实验实际存在的完整源视角资料。结果与v2成本数值相同，是因为可计时组的原答、人数、停止选择和计时记录未改变，已逐项独立重算。质量参考变化不能凭空改变这些记录劳动。
+
+Q/QT选队还依赖跨楼历史。原完整历史面板足够做“已存历史”的效果检验；它没有定义从零如何只收最少8图/3楼、怎样为候选匹配相同历史预算或怎样摊销跨房间服务成本，因此本模块不报告一个虚构的最小跨楼历史回本点。单源策略的`source_roster_activity_seconds`保留每次源候选名单的真实记录成本；该源可被多个目标复用，不能把每个源→目标事件的源成本直接相加当总项目。比如原n5时间面板源名单劳动均值3844.126秒；把一个源名单完整新收、只服务一个目标的诊断比值可在逐事件字段核对，但它不等于全部历史成本或全项目回本。若未来要选“从零最划算的历史采集方案”，需要先定义真实采集计划与复用范围，是新的成本设计，不是本轮已有数据尚未重算。
+
+## 7. 与v2衔接、采用说法及剩余边界
+
+|v2用途结论|v2.1结果|采用或修订|
+|---|---|---|
+|稳定楼外Q适合具体成员选择，单源Q较弱|原范围比较方向保留；无待定主层43/59图、10/11楼楼外Q更高|保留，注明固定候选/有历史条件|
+|Q/T节约劳动，伴随质量坏尾|原层时间比由旧队0.787变为当前重选0.803；主层0.827；超5分损失仍存在|保留劳动用途，修正新政策数值，不承诺保质|
+|源历史可指导目标停止人数|原/主层分别16/24、13/21图Q提高，低尾仍有代价|保留多数和条件规律，人数/劳动/质量分开|
+|从零建立同房历史未普遍回本|原4/4、主3/3组在实际余下视角内均未相对fixed7回本|本轮已实际复算，不继续借用旧值充当新证据|
+|原类别约束选队|本模块未将旧`half_Q_structure`改贴当前标签|最终分类未定；新类别选队属另一个问题|
+
+本轮没有必要为以上已完成用途结论新增同房ABC或全面重跑融合。当前结果支持把连续Q/T用于具体团队的劳动/质量取舍，并将类别用于解释群体标法与共识变化。新分类的大池选队若将来研究，须先明确它要比连续Q/T多回答什么；它不阻塞本模块结论。
+
+剩余项分清四类：①已有数据待整理：源表完整，本模块无阻塞汇总；②必须补算：本次识别的精确缺队/参考受影响前缀均已完成；③需新设计：最小跨楼历史采集及长期复用回本、最终分类约束的新选队比较；④需人工判断：极端政策坏尾对应真实墙段/空间语义，需看案例目标原图、参考和两队完整原答。未观测到的人工成本不填0，未获得的时间不并入劳动比。
+
+## 8. 交付与复现入口
+
+- 精确成员、源/目标、候选、版本、n：`design/SELECTION_DESIGN.csv.gz`与`CANDIDATE_HISTORY.csv.gz`。
+- 端点几何和身份：`endpoints/pools/*.jsonl.gz`，由`team_key`连接；可读分数索引`SCALARS.csv.gz`。
+- 逐事件、逐图、逐楼：`selection/POLICY_*`与`RELATION_LAYER_*`；每指标有效分母在`METRIC_SUPPORT.csv`。
+- 停止原身份与当前补丁：`inputs/.../replay_nodes.csv.gz`及`stopping/REPLAY_NODE_PATCHES.csv.gz`；规则、顺序、组和完整实际m结果均保存。
+- 源历史成本：`stopping/source_acquisition_project_cost.csv.gz`及逐组、逐预算汇总。
+- 案例：`selection/cases/*.json`包含原答、参考、两队完整输出；`REPRESENTATIVE_CASE_INDEX.csv`提供可读入口。
+- 程序：总目录`scripts/selection_stop_prepare.py`、`selection_stop_endpoints.py`、`selection_stop_analyze.py`、`selection_stop_validate.py`、`selection_stop_finalize.py`、`selection_stop_report.py`。
+- 全部文件读到结尾、gzip CRC、CSV/JSON内容解析记录：`FILE_READABILITY.csv`与`FILE_READABILITY_RECEIPT.json`。最终压缩包内部完整性由总交付再验证。
+
+本报告中的正文数字由上述已执行表格支撑，紧凑主表另存`MAIN_N5_HEADLINES.csv`、`MAIN_RULE_HEADLINES.csv`和`MAIN_COLD_COST_HEADLINES.csv`；原v2文件未覆盖，当前结果另目录保存。
+'''
+    # Insert the actual absolute effect rather than retaining a rounded draft.
+    report=report.replace('绝对Δ1.538（精确值以源表为准）',f'绝对Δ{oqt.absolute_delta_Q:.3f}')
+    (OUT/'REPORT_ZH.md').write_text(report,encoding='utf-8')
+    readme='''# v2.1选队、停止人数与历史取得成本
+
+本模块已完成实际重算。主入口：[中文报告](REPORT_ZH.md)。冻结仓库13a7861334749805a86dc19e9ea79fcaa71020c0；保留原v2面板、候选、顺序、规则和历史身份。
+
+## 阅读顺序
+
+1. `FROZEN_DOWNSTREAM_DESIGN.json`：参数、范围、历史信息可用性与成本合同。
+2. `selection/MAIN_N5_HEADLINES.csv`与`MAIN_N5_DIRECTION_COUNTS.csv`：当前选队均值、低尾、劳动与图/楼方向；原层及无待定主层分列。
+3. `stopping/MAIN_RULE_HEADLINES.csv`与`MAIN_COLD_COST_HEADLINES.csv`：已有历史停止及冷启动完整成本。
+4. `V2_TO_V21_CLOSEOUT.csv`：写作/总报告用的研究链对照。
+5. `validation/NUMERIC_RECONSTRUCTION_CHECKS.json`：原选队汇总和原停止前缀重建验证。
+6. `FILE_READABILITY.csv`：所有输入/结果完整读取清单。
+
+## 结果可追溯链
+
+选队：`design/SELECTION_DESIGN.csv.gz` → `team_key` → `endpoints/pools/<pool_id>.jsonl.gz` → `selection/POLICY_EVENT_RESULTS.csv.gz` → `POLICY_IMAGE_RESULTS`/`POLICY_BUILDING_RESULTS`/`POLICY_SUMMARY`。关联时保留version、domain、源/目标池与n；同队重复出现在源上下文中不当独立图证据。
+
+停止：保留`inputs/research/same_room/same_room_multiview_20261020/{REPLAY_GROUPS,REPLAY_ORDERS,REPLAY_POOLS,replay_nodes}`，仅将`stopping/REPLAY_NODE_PATCHES.csv.gz`按request_id覆盖B8L2、D10和参考元数据，然后执行冻结规则。k2原deferred不改写、不填Q=0。使用全体源历史时源Q可用，目标Q不进入停止选择。
+
+## 复现
+
+在解压后总目录运行（Python 3.12，numpy、pandas及冻结引擎原依赖）：
+
+```bash
+python scripts/selection_stop_prepare.py
+python scripts/selection_stop_endpoints.py plan
+python scripts/selection_stop_endpoints.py run --jobs 4
+python scripts/selection_stop_analyze.py all
+python scripts/selection_stop_validate.py
+python scripts/selection_stop_finalize.py
+python scripts/selection_stop_report.py
+python -c "import sys;sys.path.insert(0,'scripts');from selection_stop_finalize import accounting;accounting()"
+```
+
+已交付所有端点。复核汇总可直接从`selection_stop_analyze.py`开始，不必重跑融合。端点执行支持已完整完成池的恢复；旧缓存是可选加速来源，新复现无需取得已遗失的原团队库。prepare使用原历史与当前quality_inventory更新，不能把当前重新选择与旧人员固定评分混成一个版本。完整源输入位于总目录`source/`和本模块`inputs/`，各源blob清单保存在`CURRENT_SOURCE_BLOBS.json`、`ADDITIONAL_CURRENT_SOURCE_BLOBS.json`。
+
+`selection_stop_late_pools.py`只是本次并行进程分配辅助，非科学规则，无需用于正常复现。`RUN_RECEIPT.json`可能把辅助进程已完成池记作resumed；去重实际复用/新增以`FINAL_ENDPOINT_ACCOUNTING.json`为准。
+
+## 边界
+
+分类最终采用尚未由用户确定；本模块不作决定。劳动是合法来源的记录活动量。关系待定不是图池OOS，原设计保留，主要说法另用无待定层；不同层、Manual/Semi、范围不可比面板各分开。冷启动回本只指有完整合法记录的原同房源面板，不估计未记录的参考人工成本或未定义的最小跨楼历史采集方案。
+'''
+    (OUT/'README.md').write_text(readme,encoding='utf-8')
+    records=[
+      dict(question='Q/QT选队',v2='原n5新来源时间池：Q93.691115、QT93.470609、劳动比0.787316',v21='原层重选Q93.362740、QT93.475052、劳动比0.802734；无待定主层Q92.616774、QT92.740908、劳动比0.826679',reason='当前Q历史更新改变具体选队；当前参考单独影响很小；关系层另报',support='原62图11楼；主57图10楼',paper='有历史时Q/T在多数建筑减少记录劳动；平均质量近似持平但有超过5分的坏尾',source='selection/MAIN_N5_HEADLINES.csv;selection/MAIN_N5_DIRECTION_COUNTS.csv'),
+      dict(question='楼外Q与单源Q',v2='原n5 all楼外Q92.957617、单源Q89.279813',v21='原层93.050060 vs89.275422；主92.343484 vs88.085470',reason='当前质量历史重选，候选与算法保留',support='原64图12楼；主59图11楼，43/59图楼外Q更高',paper='单源个人高Q不足以替代稳定楼外个人质量历史',source='selection/MAIN_N5_HEADLINES.csv'),
+      dict(question='同房源历史停止',v2='原6组源within2 Q87.763546，fixed7 Q86.958125',v21='原6组87.763501 vs86.958004，16/24图提升；主5组86.054254 vs85.189302，13/21图提升',reason='仅4池参考变动、5100旧前缀重评分，规则与顺序不变',support='原6组24图；主5组21图',paper='已有源历史能条件性改善停止质量，P10及实际劳动须并列',source='stopping/MAIN_RULE_HEADLINES.csv;stopping/SOURCE_VS_FIXED7_IMAGE_EFFECTS.csv'),
+      dict(question='已有历史劳动',v2='4合法计时组，ratio_mean_activity/fixed7=1.235131',v21='原4组1.235131；主3组1.255631',reason='记录劳动与停止人数不变，已独立复算；主层移出关系待定G124',support='原4组14图；主3组11图',paper='源停止规则并非普遍省劳动，应将升质与增加劳动同时保留',source='stopping/MAIN_RULE_HEADLINES.csv'),
+      dict(question='从零获取源历史成本',v2='原4组项目劳动/fixed7=2.394848、4/4未在实际余下视角回本',v21='原4组2.394848、4/4未回本；主3组2.115261、3/3未回本',reason='实际全源原答、合法时长及停止选择不变，重新逐项目计算，非沿用旧声明',support='同上合法完整组，最大实际源预算',paper='取得完整同房历史的成本在本原面板内未相对fixed7摊平；相对收满池是另一基线',source='stopping/MAIN_COLD_COST_HEADLINES.csv'),
+      dict(question='从零跨楼Q/T历史最低成本',v2='未定义最小历史采样与长期复用计划',v21='保留现存楼外历史效果；未虚构最小采集或回本数值',reason='8图3楼支持门槛不是采集算法，已有记录不能自动识别最小成本',support='原9217条历史记录、3997历史单元；原候选固定',paper='需另定采集与摊销设计才能讨论最小冷启动成本，不阻塞已有历史用途结论',source='history/HISTORY_CONTRACT.json;REPORT_ZH.md#6-历史获取成本已有历史与从零获得必须分开')]
+    save('V2_TO_V21_CLOSEOUT.csv',pd.DataFrame(records))
+
+if __name__=='__main__':
+    directions();compact_exhibits();write_report();print('Current selection/stopping report, cases and compact exhibits saved',flush=True)

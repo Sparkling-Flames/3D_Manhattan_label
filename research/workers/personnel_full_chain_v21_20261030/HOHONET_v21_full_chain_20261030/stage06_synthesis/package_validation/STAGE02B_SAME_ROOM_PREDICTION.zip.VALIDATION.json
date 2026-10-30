@@ -1,0 +1,1186 @@
+{
+  "stage": "stage02_prediction",
+  "archive": "STAGE02B_SAME_ROOM_PREDICTION.zip",
+  "bytes": 104898259,
+  "sha256": "e6268470430a2d57ce2cbcea5a0dbd4a6b140d7a71377aeff6cde62cba569681",
+  "source_files": 144,
+  "archive_members": 145,
+  "full_read_and_crc_passed": true,
+  "nested_gzip_json_csv_images_validated": true,
+  "all_source_hashes_match": true,
+  "verification": [
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/EVENT_SOURCE_RECEIPT.json",
+      "bytes": 21708,
+      "sha256": "9ed8ad91b4d9761cd789f61a58eee33812c0c43ac33e9d5d88706e6deea95939",
+      "format": "json",
+      "top_items": 9
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/EVIDENCE_COMPLETION_CHECKS.json",
+      "bytes": 391,
+      "sha256": "2ab593a54649773686b681f56e2eb72e75614f0a72bc5ac71a2a164e6aed3216",
+      "format": "json",
+      "top_items": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/FINAL_FILE_MANIFEST.csv",
+      "bytes": 33240,
+      "sha256": "147dc7baad477f6e02fbf0715db8baafa4ab42c263c735290440fc57080fb6bc",
+      "format": "csv",
+      "rows": 185,
+      "columns": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/FINAL_VALIDATION.json",
+      "bytes": 2447,
+      "sha256": "d8d446b199ce779647349a284a347c201101144b3fdf051cf0f159c0ef5a0907",
+      "format": "json",
+      "top_items": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/GZIP_READABILITY_CHECK_INITIAL.json",
+      "bytes": 445,
+      "sha256": "99132e85b06268f3428ccf0d82ffc53948b02742a2a19d8530442ef649d269e1",
+      "format": "json",
+      "top_items": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/MINIMUM_REPRODUCTION_INPUTS.csv",
+      "bytes": 7384,
+      "sha256": "91b72bf1a3b0d2c84076f691a79b979321b8244bb2aad9d0be7bed7ee9b87b97",
+      "format": "csv",
+      "rows": 34,
+      "columns": 4
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/PACKAGED_INPUT_PORTABILITY_CHECK.json",
+      "bytes": 481,
+      "sha256": "50b2ecd6471b532ef4e27c647d3d63f18ba7c0fb4af96da3a3a18b85da2f28ec",
+      "format": "json",
+      "top_items": 6
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/README.md",
+      "bytes": 5179,
+      "sha256": "91de1c6298caa068e65dd729312a2d82d23b4ca9c478a28077928b7af5a2099a",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/REPORT_ZH.md",
+      "bytes": 25500,
+      "sha256": "9d96873ea38d112b4739c4d236c512c57260b622558847fbed94c64e95db2a99",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/TEMPORARY_CLEANUP_RECEIPT.json",
+      "bytes": 519,
+      "sha256": "17582e015a0e75b729c77dd4e1759891b9fa36743146860154576b4fa7ef50e3",
+      "format": "json",
+      "top_items": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc_finish_run.log",
+      "bytes": 509,
+      "sha256": "6c60faa799ebb580999689315313ee1271f1461ca85cb44f028ce7bf9c69d315",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/abc_run.log",
+      "bytes": 695556,
+      "sha256": "383a011deaa02b12d7b5667dcdc52e8f82a71d357796ebb2e202872c0d8f9fa4",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/capacity_run.log",
+      "bytes": 19,
+      "sha256": "040e4f3288d266e1550c9c6e3a280982e2abbffdc938a81b0502252089887b5f",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/endpoint_status_run.log",
+      "bytes": 127,
+      "sha256": "edc9e2c22b028c15c6f0c56b79c0784da84fd65b4dc70aa94472daee63023d1a",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/evidence_run.log",
+      "bytes": 366,
+      "sha256": "7c1b59ac93797f2ad5e38164e8e9d617148b28a35bd8ecbb27213a2f288f3a1b",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/final_validation_run.log",
+      "bytes": 12456,
+      "sha256": "5caf33b5616529f0fe53e36907232905f24e088abe29423824a81cbdf8082fa5",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/minimal_inputs/PRIMARY_POOL_INPUT_SNAPSHOT.json.gz",
+      "bytes": 2007182,
+      "sha256": "9941a141a78fbb0bef1c90e19af0271df82d6f99074e579be59933ace39ea583",
+      "gzip_crc_and_footer": "passed",
+      "format": "json",
+      "top_items": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/minimal_inputs/PRIMARY_POOL_SNAPSHOT_RECEIPT.json",
+      "bytes": 242,
+      "sha256": "a156760bc551c5ea3d8ef92459fa456baab4e3b30883a2a4d3f50f8c5483a94d",
+      "format": "json",
+      "top_items": 5
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/portability_run.log",
+      "bytes": 583,
+      "sha256": "711987c54642b65d748bcafd3e4ebd97c8d9d657a78c7f8c5c7ef75e035b7a85",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/CHECKS.json",
+      "bytes": 619,
+      "sha256": "89348b45316e1d658b929ce18f6a238fb49a27266df832bc013a17c288e6deb8",
+      "format": "json",
+      "top_items": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/COMPOSITION_AND_MEAN_GAP_SUMMARY.csv",
+      "bytes": 6309,
+      "sha256": "dddea69ed03d654c8fee3cbe9b3b79ec6d14282719068f29a2ff201e47c479dd",
+      "format": "csv",
+      "rows": 36,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/CURRENT_FORMAL_RECORDS.csv.gz",
+      "bytes": 1354057,
+      "sha256": "f335c3bbbd9b2b6379aa22ab7c6d3535f6a43ac6d24682643ae91a50d0aa01b6",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 8043,
+      "columns": 44
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DECLARATION_COMMON_MATRIX.csv.gz",
+      "bytes": 482057,
+      "sha256": "ba8253952e971794ee1b81ef156801f4360d1d2b56b1d23c69bafd27869b65cc",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 10816,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DECLARATION_VARIATION_PARTITION.csv",
+      "bytes": 88316,
+      "sha256": "ef1af6a04bb4cb1a4a4e1f24986c1ab272373af575ea1ce36dd0abbad5ef2106",
+      "format": "csv",
+      "rows": 236,
+      "columns": 25
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DECLARATION_VARIATION_SUMMARY.csv",
+      "bytes": 2991,
+      "sha256": "149357743c95cbcd411e1eb470f89bcd77bba7ed29537e49643c883a0944d2e5",
+      "format": "csv",
+      "rows": 18,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DECLARATION_VARIATION_SUPPORT.csv",
+      "bytes": 56609,
+      "sha256": "4a9fbb4bb0de3fd4785a95e343ae9c78548f23e61253ca37bb05e2c2bd03bbe5",
+      "format": "csv",
+      "rows": 278,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DIRECT_MEAN_IMAGE_ERRORS.csv",
+      "bytes": 255339,
+      "sha256": "b55341a5656f8066b18bc3f1fe2e061ab7befd671a26862ffb5699744e4b115f",
+      "format": "csv",
+      "rows": 792,
+      "columns": 15
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DIRECT_MEAN_SUMMARY.csv",
+      "bytes": 3806,
+      "sha256": "9ba83993c7512c35cec1cd5c10ba86b67d554785600bd65f3e33d92d6b9839b3",
+      "format": "csv",
+      "rows": 36,
+      "columns": 9
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv",
+      "bytes": 13125,
+      "sha256": "d65e6fbfe5a9824c5983229f5b350b859c993a08ba170e1ec51ef49fc30ddb49",
+      "format": "csv",
+      "rows": 108,
+      "columns": 11
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/HISTORY_DIRECT_EDGE_VALIDATION.csv",
+      "bytes": 101592,
+      "sha256": "d0a8594f7de1d43ab3e8f16d90e089874226c2731ef47a5420c95c565c094b60",
+      "format": "csv",
+      "rows": 264,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/HISTORY_PANEL_DIRECT_EDGE_VALIDATION.csv.gz",
+      "bytes": 2695498,
+      "sha256": "82cb22407068241602db42720df54f01140147536e49582a91033a8584546bee",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 289875,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/LOSSLESS_DESIGN_COMPRESSION.json",
+      "bytes": 1199,
+      "sha256": "3b0ccc30e95fc45d43cdd7eba5c771253c28ba29be075b9beeb5ac8807338b35",
+      "format": "json",
+      "top_items": 3
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/MATCHED_UNKNOWN_SUMMARY_BY_SCOPE.csv",
+      "bytes": 20626,
+      "sha256": "cefa95bcdc18877d33ff0af6b656a9ddaafba087bb134552fbcc02fc4293c045",
+      "format": "csv",
+      "rows": 108,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/MEAN_HISTORY_SUMMARY.csv",
+      "bytes": 75431,
+      "sha256": "5a18bf5252115c7b51e79b2ccdf6da555be5ddae3678c783119fbd27d1ca1632",
+      "format": "csv",
+      "rows": 432,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/MEAN_HISTORY_SUMMARY_BY_SCOPE.csv",
+      "bytes": 206628,
+      "sha256": "e0161a2dbc9cb0738a8450e609470e064375d4b8305b628fed578520c848de27",
+      "format": "csv",
+      "rows": 1296,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/PERSONAL_SIMILARITY_BY_SCOPE.csv",
+      "bytes": 3273,
+      "sha256": "ea68c078cfc1e8e0e9e9b77d6aa0a7b405943aa51f3255da262fb12a427dacd6",
+      "format": "csv",
+      "rows": 18,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/PERSONAL_SIMILARITY_SUMMARY.csv",
+      "bytes": 1138,
+      "sha256": "d3bb0eeaf54ea65c6097904e4439918d9efd6076abdddd831f05b7e4439cb467",
+      "format": "csv",
+      "rows": 6,
+      "columns": 16
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv",
+      "bytes": 69528,
+      "sha256": "0b1092b3074820c248d1304d8787022a2ab7ee8e891924e622f3c006642e8ca1",
+      "format": "csv",
+      "rows": 360,
+      "columns": 16
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/RELATION_PENDING_EDGES.csv",
+      "bytes": 24833,
+      "sha256": "982dfd91ca716dc62d4266335a6cb74381037b2aaa7d5447d64f2e3cbd98ff86",
+      "format": "csv",
+      "rows": 12,
+      "columns": 60
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/RELATION_SCOPE_CHECKS.json",
+      "bytes": 335,
+      "sha256": "730ec5d651f4d6ba63afc03a71c839c4eba6e8f14cf122e84fab2ef62ad8876c",
+      "format": "json",
+      "top_items": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/SECONDARY_SEMI_DOORWAY_SUPPORT.csv",
+      "bytes": 36674,
+      "sha256": "66b6d10fc46c04bd2d5f045c594ea3fe309488dea0edb710c3e84064526eead7",
+      "format": "csv",
+      "rows": 22,
+      "columns": 60
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/SUPPORT.csv",
+      "bytes": 174,
+      "sha256": "da3a011eb176768b429c85820761e7dffb95d4318148d726486d0c167f503aaf",
+      "format": "csv",
+      "rows": 3,
+      "columns": 6
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/SUPPORT_BY_SCOPE.csv",
+      "bytes": 537,
+      "sha256": "c3e9ad3e3537bbc9b057e6ee510d63eaa5b6d6ebf1c143f3dd4a2f6cdd428123",
+      "format": "csv",
+      "rows": 9,
+      "columns": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/V2_FORMAL_RECORDS.csv.gz",
+      "bytes": 1194137,
+      "sha256": "3a258b1c62fc3bd61636d3ea4c2b75632425ba24f55816cc4b2b3f4487bfbdce",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 7191,
+      "columns": 44
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/V2_V21_DIRECT_PAIR_SUPPORT_BRIDGE.csv",
+      "bytes": 78218,
+      "sha256": "d1b9ee47dab99a6307cf956a9cce3901611443efec7c2da85f9a19f2e2e9b9a6",
+      "format": "csv",
+      "rows": 378,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_MEAN_BUILDINGS.csv",
+      "bytes": 13573,
+      "sha256": "0d9aab18f3327e7353b801714098ea47e2e057abf78a522575fda03df14b26b5",
+      "format": "csv",
+      "rows": 168,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_MEAN_BUILDINGS_legacy_combined.csv",
+      "bytes": 17703,
+      "sha256": "d655532aad9d4b601983fa3f418c28b4f2041d8c46114a63d64be052480b9d1c",
+      "format": "csv",
+      "rows": 168,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_MEAN_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 19177,
+      "sha256": "08c24a1c9d838c3761dd983a7daf0d9650b40e347b9ef878b8bcd0e80387d794",
+      "format": "csv",
+      "rows": 156,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_MEAN_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 2535,
+      "sha256": "2e10b9106b8bf20ee504896bf29e1751a4d91b9b68a82b60c748741df85f3b63",
+      "format": "csv",
+      "rows": 24,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_MEAN_VALUES.csv.gz",
+      "bytes": 73747,
+      "sha256": "602f3e0114efc2d7b94489be0a3b880626bcb4eea7fecfca018ec40730b9af18",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 528,
+      "columns": 24
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_PAIRS.csv",
+      "bytes": 1739462,
+      "sha256": "9126b654c354e8674eda39e0809bed0423baa9cd1c4fb89964be0c2924980816",
+      "format": "csv",
+      "rows": 1222,
+      "columns": 59
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/DIRECT_PERSON_VALUES.csv.gz",
+      "bytes": 361670,
+      "sha256": "25f9e77305a7fadec87b1a75e1f907b097582dd79adad3c0afd86216d733bd05",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5452,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_DIRECTIONS_legacy_combined.csv.gz",
+      "bytes": 131792,
+      "sha256": "0f5bdf4f682f12813372a8ef401f5ed0c99b7c4a1bf1e37be5ab380ad089ad27",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2916,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_DIRECTIONS_ordinary_no_relation_oos_pending.csv.gz",
+      "bytes": 126017,
+      "sha256": "3989d0f00d485f9e000293399e416a81b60a77991c296b30befa7a0200d74430",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2820,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_DIRECTIONS_relation_oos_pending.csv.gz",
+      "bytes": 2345,
+      "sha256": "b610d1e5f21ab79f106d72178e88bfe955f7eb13ffb2f29adc53227ce52cc179",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 96,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_UNKNOWN_CONTROLS.csv.gz",
+      "bytes": 443870,
+      "sha256": "eb321c2f3c8759a86505361bd3b2b601df74bd11ab5b20b6d6016e393e27681b",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5615,
+      "columns": 28
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_UNKNOWN_DIRECTIONS.csv.gz",
+      "bytes": 131755,
+      "sha256": "135ca82428d146991c0087944321bc67ceae6e9c7479fd2106e984b44519cd41",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2916,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MATCHED_UNKNOWN_SUMMARY.csv",
+      "bytes": 2155,
+      "sha256": "2d6aeacc169bb505f0935e7c2b58228a051ecd5ce683498ed0a90a021490d47a",
+      "format": "csv",
+      "rows": 12,
+      "columns": 16
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MEAN_CALIBRATION_FOLDS.csv",
+      "bytes": 13411,
+      "sha256": "117754d0982f3d45d9596495f494e44a2271c7c6d7d58cbdc59b0751b51f0757",
+      "format": "csv",
+      "rows": 130,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MEAN_HISTORY_BUILDINGS.csv",
+      "bytes": 122098,
+      "sha256": "535dfef64a7077203c496dfec70db4012a5885e127810897de64873903e1529c",
+      "format": "csv",
+      "rows": 936,
+      "columns": 11
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MEAN_HISTORY_GROUPS.csv",
+      "bytes": 111078,
+      "sha256": "ca1324fe7bdc327accd552b9f47b283845828b3967950046f25dc97d7ef73b8a",
+      "format": "csv",
+      "rows": 936,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MEAN_HISTORY_TARGETS.csv.gz",
+      "bytes": 197241,
+      "sha256": "4de9d5d8a8dbe9b44d14f3bf193e567062690257c899b6cb1f5908324de43590",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5112,
+      "columns": 19
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/MEAN_HISTORY_VALUES.csv.gz",
+      "bytes": 1752973,
+      "sha256": "4c603e148283c933f7efc905b4f404f65d7a651b6d4440f29355abaa3dd43ec6",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 9854,
+      "columns": 45
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PAIR_REPETITION.csv",
+      "bytes": 20190,
+      "sha256": "3a56ce6b90f5fe94a18619bf6781ddcb04f0b14004375b129b88bd32698ffd89",
+      "format": "csv",
+      "rows": 264,
+      "columns": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_BUILDINGS.csv",
+      "bytes": 55678,
+      "sha256": "33e9fc8da92f164219607a0d8a5080cdeaaae2e15de4305185169ab23614e378",
+      "format": "csv",
+      "rows": 350,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_BUILDINGS_legacy_combined.csv",
+      "bytes": 61841,
+      "sha256": "951e8a89b47dcc79f6ba8a10400d1b7bc2e0bd6dd4dbb75703426961ded18fdb",
+      "format": "csv",
+      "rows": 350,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 59993,
+      "sha256": "9a67728333db2bda9acc7cd1c1ead3004b2a894813489077d9687edb2396b689",
+      "format": "csv",
+      "rows": 310,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 9063,
+      "sha256": "1803c7c8a73442d610e2702ea93e8822cab047aabd00c4d6aa70ccff0714b9ca",
+      "format": "csv",
+      "rows": 50,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_SUMMARY.csv",
+      "bytes": 6477,
+      "sha256": "503dacba24b9f91add515abd0a56f5c081472fd4c4d317d8088080f15ac8ebc4",
+      "format": "csv",
+      "rows": 40,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_TARGETS.csv.gz",
+      "bytes": 201697,
+      "sha256": "08e8b9e9fc429fe80861aeb52dbf05bc037843522fedde18d53b51d12c583ecc",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 4150,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_TARGET_WORKERS.csv.gz",
+      "bytes": 4742141,
+      "sha256": "18c92debff748cdfc18a8c89ca99cebcfa6d88cae0ff684ce564221a9a12249c",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 102500,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_PREDICTION_VALUES.csv.gz",
+      "bytes": 21817408,
+      "sha256": "f6cff662cd1414b4cb0c1bedb598bbb423b1bdfaf83ec3fb5d8e4b1705957ae8",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 301058,
+      "columns": 26
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_REPETITION_B8L2.csv",
+      "bytes": 1320,
+      "sha256": "23c7548e5c61bb23d39491668b8c4a8dc43873088f88410f538f802cf20b3725",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PERSON_REPETITION_D10.csv",
+      "bytes": 1338,
+      "sha256": "e1543e9b29c6866f96c68fae427e10fca5ef6350d9c3f8d0efa6fe71271cb7d5",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/PREDICTION_RELATION_SCOPE.csv.gz",
+      "bytes": 7357,
+      "sha256": "18575eb757d32a71a322243363c24ca6d11a1d49a00e3baf405c7ed5a967d958",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 830,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/RELATION_COVERAGE.csv",
+      "bytes": 196167,
+      "sha256": "dff7f3e6f20e701790122af9259a17e1db934bd0fa9a0afd6caa0d9b62f8b0eb",
+      "format": "csv",
+      "rows": 1554,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_all/prediction_design.csv.gz",
+      "bytes": 2270698,
+      "sha256": "4bcb0326a5889690a5e933c8cb0c522f39d61164a3fcfdeba1c127e0cc3c6868",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 150529,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_MEAN_BUILDINGS.csv",
+      "bytes": 11874,
+      "sha256": "32659046e506e1292db5b8725b3ae2844e97614c313dce68c9eea16480ff2a1d",
+      "format": "csv",
+      "rows": 144,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_MEAN_BUILDINGS_legacy_combined.csv",
+      "bytes": 16903,
+      "sha256": "33401edd700376d9e6bfaceb1def8ccfa3fd676e4ddcddbde743c7a52617bfd6",
+      "format": "csv",
+      "rows": 144,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_MEAN_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 17831,
+      "sha256": "9caa1cd5bd6fca5d840d580ba8a4481ff30af7e68b9d1e2e5aef6189aabb85bb",
+      "format": "csv",
+      "rows": 132,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_MEAN_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 2794,
+      "sha256": "8714cedfaab3d67ba8c86c6e50dbb9088745a5480c45410f79106d2d4dc16822",
+      "format": "csv",
+      "rows": 24,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_MEAN_VALUES.csv.gz",
+      "bytes": 69155,
+      "sha256": "425761fbdc56930628ef848ffa18b50d27cd2cc0690e278d917c187f99ef2306",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 492,
+      "columns": 24
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_PAIRS.csv",
+      "bytes": 1249177,
+      "sha256": "c8fdf674ad59c2db8bd9b10549af7c8343344f901000d58706b326a8830a7c20",
+      "format": "csv",
+      "rows": 830,
+      "columns": 59
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/DIRECT_PERSON_VALUES.csv.gz",
+      "bytes": 341951,
+      "sha256": "5b9934d07758e18ecbf5dc2ef437a60da7041fa6dceb37b4db9f6d71cffa0426",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5162,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_DIRECTIONS_legacy_combined.csv.gz",
+      "bytes": 119334,
+      "sha256": "fac9f6107c26224ff4fcd8c76d516339e1fad5b51d98a73f5c4d4875fc97b7d1",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2700,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_DIRECTIONS_ordinary_no_relation_oos_pending.csv.gz",
+      "bytes": 113845,
+      "sha256": "8720a8b4c2fb7d6091d95716b5c0f5a3cf8506785cb9f50f4a7361b1ccade6d0",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2604,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_DIRECTIONS_relation_oos_pending.csv.gz",
+      "bytes": 2289,
+      "sha256": "71a0a607981344620fdfa2517d43a60e73a05cb53fe73140d0078f8a1ccec54f",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 96,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_UNKNOWN_CONTROLS.csv.gz",
+      "bytes": 265923,
+      "sha256": "c41a604249f4c522c528f4ebfe8818f025d4bde9fea9db94105a41b8f21f1788",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 3371,
+      "columns": 28
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_UNKNOWN_DIRECTIONS.csv.gz",
+      "bytes": 119212,
+      "sha256": "d27d0dc817920b258b21b29e208c2163d5c50a9e96c80451c663e0ff7c90ad9f",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2700,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MATCHED_UNKNOWN_SUMMARY.csv",
+      "bytes": 2144,
+      "sha256": "ae7e76b1b107ec7639f98482fd443333257ddc522bc2f9068856f8dcdd6a0cd0",
+      "format": "csv",
+      "rows": 12,
+      "columns": 16
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MEAN_CALIBRATION_FOLDS.csv",
+      "bytes": 14722,
+      "sha256": "7572b280fd6a92e1d34b3a74c1e380d18bdcbde6d6c946fd6232d603b0fd304d",
+      "format": "csv",
+      "rows": 130,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MEAN_HISTORY_BUILDINGS.csv",
+      "bytes": 121620,
+      "sha256": "a5d97a2f47b0e40d288d14d3d50a632e92c5ebc57fb28e75f3047165750b7ca9",
+      "format": "csv",
+      "rows": 936,
+      "columns": 11
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MEAN_HISTORY_GROUPS.csv",
+      "bytes": 110607,
+      "sha256": "2f8dc15bc6d75ec6085a2acbfd1113cbfb08590f8b4674db376f0ef946f3bbb1",
+      "format": "csv",
+      "rows": 936,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MEAN_HISTORY_TARGETS.csv.gz",
+      "bytes": 197472,
+      "sha256": "44b963dbe790cf898b265a2029c91b269c3cf8ded96b1aca3e9b0684d2197619",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5112,
+      "columns": 19
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/MEAN_HISTORY_VALUES.csv.gz",
+      "bytes": 1754216,
+      "sha256": "7cf7dfaaf2a64abdcc528a22f729a1e1cea4df796ef541c2e7dd0cfe55e97c48",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 9854,
+      "columns": 45
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PAIR_REPETITION.csv",
+      "bytes": 18706,
+      "sha256": "5d493880296338861cc1193cfdc27b71c9dc2ecf7a451adab777fa64401efc94",
+      "format": "csv",
+      "rows": 246,
+      "columns": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_BUILDINGS.csv",
+      "bytes": 52492,
+      "sha256": "5ef165ab1b606c1f651565b699577d2f73be1c6f474078796454c0368180d76e",
+      "format": "csv",
+      "rows": 330,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_BUILDINGS_legacy_combined.csv",
+      "bytes": 61665,
+      "sha256": "9dff575765d410269e24790921dc23343cff760490d297ba2ccbdd3e67b0be61",
+      "format": "csv",
+      "rows": 330,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 59074,
+      "sha256": "bee7ac018ce60da489f767993a4721366c1db2fa096394d3eb74db5ffc0a944d",
+      "format": "csv",
+      "rows": 290,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 9558,
+      "sha256": "52c3ece674197c5ddc630e8562a3f553b17489da8068aa80d6efe25fbb9371f1",
+      "format": "csv",
+      "rows": 50,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_SUMMARY.csv",
+      "bytes": 6481,
+      "sha256": "3a2759075e6c6462492784e618b928a1f764080515cfcedf87e845c6c5dbfba1",
+      "format": "csv",
+      "rows": 40,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_TARGETS.csv.gz",
+      "bytes": 193462,
+      "sha256": "17ec64a75e76f571b5f51e150c970d23c2f363488fb31ba1156e6184d424c746",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 3970,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_TARGET_WORKERS.csv.gz",
+      "bytes": 4607768,
+      "sha256": "1bf5ecb9270ee0b96357c28128aea7a931f0eaba8c4bc16eb0d4c74b312dd6e3",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 99600,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_PREDICTION_VALUES.csv.gz",
+      "bytes": 21771581,
+      "sha256": "76334bfd200f6f39d482891d6e897fd5be6adaf8b06b40e488756dc9c8bd1d30",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 300478,
+      "columns": 26
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_REPETITION_B8L2.csv",
+      "bytes": 1321,
+      "sha256": "4bc7bc4ceb57e267bb8f3064b0f02a3a303c35f6effc8fa88e3658e0073cf973",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PERSON_REPETITION_D10.csv",
+      "bytes": 1335,
+      "sha256": "ac8dc6e4167167e18f94cdfd77dc48e8cb2f8faf3b36164b1a133726ccdd5680",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/PREDICTION_RELATION_SCOPE.csv.gz",
+      "bytes": 6875,
+      "sha256": "329095b5db0ba7bda8c9e7d92bab8a4b484e0fcb2785a053a4b2cecd92982869",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 794,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/RELATION_COVERAGE.csv",
+      "bytes": 196037,
+      "sha256": "6311542ee452556b408aae26dff909e01aa5b3d8cf194ca73a5e07527a0accb6",
+      "format": "csv",
+      "rows": 1554,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v21_on_v2_records/prediction_design.csv.gz",
+      "bytes": 2267227,
+      "sha256": "ca701a6e5e1e7599b8223f522e3516dd801d5dac0aa3895a0a2939267e6c09e0",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 150239,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_MEAN_BUILDINGS.csv",
+      "bytes": 11843,
+      "sha256": "f3d7a29b17e948cf646134e45b084d9c49a7f51435593af19f23f76c18834db7",
+      "format": "csv",
+      "rows": 144,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_MEAN_BUILDINGS_legacy_combined.csv",
+      "bytes": 15682,
+      "sha256": "c4374aae24eb80ec915384241c5bf5f01ba3620439693246c656599cf1b8a540",
+      "format": "csv",
+      "rows": 144,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_MEAN_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 16716,
+      "sha256": "180bb22f8b834fe4faba781beda209b844d095f685a75671f3619c6a146cde60",
+      "format": "csv",
+      "rows": 132,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_MEAN_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 2609,
+      "sha256": "889f208dc46c1cee8231b95fe0e8e56543d5851ed85d322fc49b874a32533391",
+      "format": "csv",
+      "rows": 24,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_MEAN_VALUES.csv.gz",
+      "bytes": 68851,
+      "sha256": "458cd3f16dbe534a0267631a88663de8d1e8fce9f70760a7caeabb9138d00e67",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 492,
+      "columns": 24
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_PAIRS.csv",
+      "bytes": 1248696,
+      "sha256": "5f64c8f24ff00ff8f1f819db6714dec17c19a2d9fd55cd08b4b2593bbf19c066",
+      "format": "csv",
+      "rows": 830,
+      "columns": 59
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/DIRECT_PERSON_VALUES.csv.gz",
+      "bytes": 342822,
+      "sha256": "2ef299081ed83d83cb997f5f680b83239a46ca9b6a9c3581fca79b8d254d036e",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5162,
+      "columns": 18
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_DIRECTIONS_legacy_combined.csv.gz",
+      "bytes": 119398,
+      "sha256": "a540483614dcb9226ff3f718e19b005c78e930c5c46a3582e7aedd93dd3a9cb6",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2700,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_DIRECTIONS_ordinary_no_relation_oos_pending.csv.gz",
+      "bytes": 113898,
+      "sha256": "b1398254a73a9d387131a30f9ded80307de945016cd0c96d12febb886724bc58",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2604,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_DIRECTIONS_relation_oos_pending.csv.gz",
+      "bytes": 2289,
+      "sha256": "71a0a607981344620fdfa2517d43a60e73a05cb53fe73140d0078f8a1ccec54f",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 96,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_UNKNOWN_CONTROLS.csv.gz",
+      "bytes": 265598,
+      "sha256": "bf228cbd08a6c9f8a8cac22eeecf2514e60933a8958cdfaa8c70c91fc5f4c13b",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 3371,
+      "columns": 28
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_UNKNOWN_DIRECTIONS.csv.gz",
+      "bytes": 119242,
+      "sha256": "990163bec05128d68f43b10abe75aa04fb0fd125f425cb88c1db4cba0ac8df06",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 2700,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MATCHED_UNKNOWN_SUMMARY.csv",
+      "bytes": 2136,
+      "sha256": "b3bff6538e4345d8f6dabb10aba36dc12eab6b156323e348e145468e23d88854",
+      "format": "csv",
+      "rows": 12,
+      "columns": 16
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MEAN_CALIBRATION_FOLDS.csv",
+      "bytes": 13683,
+      "sha256": "395d54fee8c44c73109c175d0c6227b9048ff366a52069561667f6d81e4a71af",
+      "format": "csv",
+      "rows": 130,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MEAN_HISTORY_BUILDINGS.csv",
+      "bytes": 121681,
+      "sha256": "ad1f0202155b074c02314bdc369b0a0736ace1f75f2ca41823f88303d0b054b1",
+      "format": "csv",
+      "rows": 936,
+      "columns": 11
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MEAN_HISTORY_GROUPS.csv",
+      "bytes": 110657,
+      "sha256": "967aad1f7d9a9c960642abd8ac8458ec8cf3d97440368e537c3747e8f1cd3260",
+      "format": "csv",
+      "rows": 936,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MEAN_HISTORY_TARGETS.csv.gz",
+      "bytes": 197118,
+      "sha256": "7a97acf6fd679635e16a14c2d82d45be972b6fc5ddf99d8b9568b67abd0f3ca3",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 5112,
+      "columns": 19
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/MEAN_HISTORY_VALUES.csv.gz",
+      "bytes": 1740754,
+      "sha256": "be21a04d26372b2af6c51cfbe1433d8624ebd83c8a24816d7ff3d7d9aab880ff",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 9854,
+      "columns": 45
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PAIR_REPETITION.csv",
+      "bytes": 18690,
+      "sha256": "2b5329859cc4cbe5b03d8830b406aed167da87376bd8e7c0c11158bb93c0dd7e",
+      "format": "csv",
+      "rows": 246,
+      "columns": 7
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_BUILDINGS.csv",
+      "bytes": 52476,
+      "sha256": "c511dbbfba21c911b4cff888fe407c5a3ca710ba7f796a24de25dbd761a6730b",
+      "format": "csv",
+      "rows": 330,
+      "columns": 12
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_BUILDINGS_legacy_combined.csv",
+      "bytes": 59036,
+      "sha256": "cce17961a14948d035c38025a7faeefb621baf17bb1a49ae84a50a97c3a45c2a",
+      "format": "csv",
+      "rows": 330,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_BUILDINGS_ordinary_no_relation_oos_pending.csv",
+      "bytes": 56778,
+      "sha256": "64d86a80a18030b820dc7ab0850e1bf0db5abb03afe31db0183e78201be8f35f",
+      "format": "csv",
+      "rows": 290,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_BUILDINGS_relation_oos_pending.csv",
+      "bytes": 9153,
+      "sha256": "d01135940f15fed4caf1fbd27367a1ca1c5e76a4d5393043db9a6251ed0d2275",
+      "format": "csv",
+      "rows": 50,
+      "columns": 13
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_SUMMARY.csv",
+      "bytes": 6465,
+      "sha256": "ae481edf134c1cfca8f152f373af4472b7ccff1439e3a6cf722f68be2b0de668",
+      "format": "csv",
+      "rows": 40,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_TARGETS.csv.gz",
+      "bytes": 193769,
+      "sha256": "550e523add77ab36561358a8ac55af17eb35c2081c714559b3a94e01674db524",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 3970,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_TARGET_WORKERS.csv.gz",
+      "bytes": 4607024,
+      "sha256": "2a0c1c869d5d5a95240323199803ef15e52c6ca792bfd551067184562a7fee04",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 99600,
+      "columns": 17
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_PREDICTION_VALUES.csv.gz",
+      "bytes": 21764673,
+      "sha256": "6c8522f4b62a1b70bac03f58ae3fa468aba899a941e6c37f6f02ebc21cfa575f",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 300478,
+      "columns": 26
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_REPETITION_B8L2.csv",
+      "bytes": 1321,
+      "sha256": "4bc7bc4ceb57e267bb8f3064b0f02a3a303c35f6effc8fa88e3658e0073cf973",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PERSON_REPETITION_D10.csv",
+      "bytes": 1335,
+      "sha256": "ac8dc6e4167167e18f94cdfd77dc48e8cb2f8faf3b36164b1a133726ccdd5680",
+      "format": "csv",
+      "rows": 57,
+      "columns": 2
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/PREDICTION_RELATION_SCOPE.csv.gz",
+      "bytes": 6875,
+      "sha256": "329095b5db0ba7bda8c9e7d92bab8a4b484e0fcb2785a053a4b2cecd92982869",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 794,
+      "columns": 8
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/RELATION_COVERAGE.csv",
+      "bytes": 196037,
+      "sha256": "6311542ee452556b408aae26dff909e01aa5b3d8cf194ca73a5e07527a0accb6",
+      "format": "csv",
+      "rows": 1554,
+      "columns": 10
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction/v2_frozen/prediction_design.csv.gz",
+      "bytes": 2267227,
+      "sha256": "ca701a6e5e1e7599b8223f522e3516dd801d5dac0aa3895a0a2939267e6c09e0",
+      "gzip_crc_and_footer": "passed",
+      "format": "csv",
+      "rows": 150239,
+      "columns": 14
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/prediction_run.log",
+      "bytes": 1192,
+      "sha256": "79a5d5ec120ba887d6505c46ca08f56ab8479053b6d6b34c42e55c9671101578",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/required_sources.json",
+      "bytes": 1873,
+      "sha256": "ea9373121b99a56c0b365f3e3ff074fcbdc7fc5a6f3e8de555739cce059fe75e",
+      "format": "json",
+      "top_items": 11
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/stage02_same_room/scope_run.log",
+      "bytes": 69,
+      "sha256": "a609a28aaede42a2736ad57bcc8b49de346af2ef448fa0cfd80718151be6569b",
+      "format": "utf8_text"
+    },
+    {
+      "member": "HOHONET_v21_full_chain_20261030/delivery_manifests/stage02_prediction_MANIFEST.csv",
+      "bytes": 20177,
+      "sha256": "7918d6dd007c5f8853205a8cb49aa2bfa6c6b3e3f92f2ed6a6219fbea0cffba5",
+      "format": "csv",
+      "rows": 144,
+      "columns": 3
+    }
+  ]
+}
