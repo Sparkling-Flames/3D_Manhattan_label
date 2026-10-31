@@ -10,12 +10,12 @@
 
 |主题|入口|资料数|说明|
 |---|---|---:|---|
-|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|98|原意、跨模块关系、进度、版本采用与交接。|
-|数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|18|输入版本、人数门槛、GT/空间绑定和排除状态。|
+|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|104|原意、跨模块关系、进度、版本采用与交接。|
+|数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|20|输入版本、人数门槛、GT/空间绑定和排除状态。|
 |质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|101|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
 |图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|37|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
 |人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|113|多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。|
-|融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|35|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
+|融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|36|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
 |同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|22|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
 |描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|28|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
 |文献与跨模块资料|[打开主题入口](../../docs/thesis_main/topics/literature/README.md)|4|文献阅读和跨模块共同基础；跨模块整包保持原结构并通过引用关联。|

@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-31T05:01:02+00:00",
+  "data_release": "v2.1",
+  "entry": "v21-results.html#current-research",
+  "classification_finalized": false,
+  "computation": "read existing result tables and receipts only; no scientific computation, fusion or selection",
+  "display_snapshot_utc": "2026-10-31T05:00:20+00:00",
+  "current_pointer": "v2",
+  "source_tables": {
+    "modules": {
+      "path": "research/data/releases/v2.1/research_readiness_20261031/MODULE_MATRIX.csv",
+      "rows": 21
+    },
+    "half": {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/HALF_SUMMARY.csv",
+      "rows": 4
+    },
+    "half_difficulty": {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/HALF_DIFFICULTY_COMPONENTS.csv",
+      "rows": 84
+    },
+    "same_room": {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/SAME_ROOM_HALF_SUMMARY.csv",
+      "rows": 9
+    },
+    "same_room_pairs": {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/SAME_ROOM_HALF_PAIRS.csv",
+      "rows": 64
+    },
+    "same_room_events": {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/SAME_ROOM_HALF_EVENTS.csv.gz",
+      "rows": 1621
+    },
+    "alliance": {
+      "path": "research/data/releases/v2.1/closeout_20261030/alliance_completion_20261031/FULL_VS_BEST_PURE_SUMMARY.csv",
+      "rows": 6
+    },
+    "alliance_resolution": {
+      "path": "research/data/releases/v2.1/closeout_20261030/alliance_completion_20261031/ALLIANCE_414_RESOLUTION.csv",
+      "rows": 414
+    },
+    "q_summary": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/SUMMARY.csv",
+      "rows": 96
+    },
+    "q_status": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/STATUS_SUMMARY.csv",
+      "rows": 10
+    },
+    "q_overlap": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/SELECTION_OVERLAP.csv",
+      "rows": 416
+    },
+    "q_design": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/DESIGN_LINKS.csv",
+      "rows": 1040
+    },
+    "q_events": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/OUTPUT_STATUS.csv",
+      "rows": 1040
+    },
+    "class_q": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/CLASS_AVERAGE_OVER_FOLDS.csv",
+      "rows": 3
+    },
+    "different_summary": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/DIFFERENT_SELECTION_SUMMARY.csv",
+      "rows": 4
+    },
+    "different_events": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/DIFFERENT_SELECTION_EVENTS.csv",
+      "rows": 76
+    },
+    "worker_wide": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/MANUAL_WORKER_DIFFICULTY_WIDE.csv",
+      "rows": 120
+    },
+    "worker_difficulty": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/WORKER_DIFFICULTY_CURRENT.csv",
+      "rows": 576
+    },
+    "worker_preferences": {
+      "path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/DIFFICULTY_PREFERENCES_CURRENT.csv",
+      "rows": 120
+    }
+  },
+  "document_review_receipt_present": true,
+  "checks": [
+    {
+      "command": "python -X utf8 -m pytest tests/test_v21_results_page_20261029.py tests/test_v21_release_scope_display_20261029.py tests/test_v21_reselection_workbench_20261029.py tests/test_v21_population_display_20261029.py -q",
+      "result": "9 passed"
+    },
+    {
+      "command": "node --test tests/v21-current.test.cjs tests/v21-results.test.cjs tests/v21_ac_workbench.test.cjs",
+      "result": "7 passed; DOM simulation, not browser execution"
+    },
+    {
+      "command": "node research/statistics/research_explorer_v1_r2_20261017/v21-version-switch.test.cjs",
+      "result": "passed; script and navigation mapping checks"
+    },
+    {
+      "command": "git -c core.whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof diff --check",
+      "result": "passed"
+    }
+  ],
+  "verified_display_cases": [
+    "current half 14/7: 147 registered events, 69 registered images, 67 common Q images; frozen 197/85/83 retained separately",
+    "same-room TARGET K3 10/5 C2->C3: 322 registered, 295 six-endpoint common Q, 19 image pairs; direction filter avoids mixing four other-direction events",
+    "403 executable changed alliances resolved; 11 below-three-person capacity records retained",
+    "Q-only primary comparison 14/7: 140 paired events, effect +0.0619; overlap 119/147; 20/7: 59 paired events, effect -0.1135; overlap 54/61",
+    "different-selection post-hoc subset and exact incoming members, missing Q not zero",
+    "ordinary Manual primary: 60 workers/6512 records; all-admitted: 60/6739; Semi separate 59/960 or 964",
+    "all current source paths and HTML control IDs exist; current snapshot matches source CSVs and RELEASE.json"
+  ],
+  "browser_acceptance": {
+    "status": "not_completed_windows_browser_policy_unsupported",
+    "requested_browser": "local Microsoft Edge",
+    "observations": [
+      "cua.getState: browser inventory contains only in-app browser and MCP Apps; no Edge browser",
+      "cua.getBrowser({id:\"edge\"}) returned Browser is not available: edge",
+      "Subsequent Firefox native attempt stopped by Computer Use because URL policy enforcement is not supported for the current Windows browser; no bypass attempted."
+    ],
+    "real_page_loaded": false,
+    "visual_review": false,
+    "csv_download_exercised": false,
+    "not_covered": [
+      "real file:// execution",
+      "layout and responsive appearance",
+      "current overview -> half -> Q-only -> different-selection -> worker difficulty -> return path",
+      "actual CSV downloads"
+    ],
+    "no_workaround_attempted": true
+  },
+  "coverage_limits": [
+    "21-module navigation links to existing scientific entries; this is not 21 newly unified interactive modules",
+    "same-room prediction, speed/difficulty, stopping/cost, detailed finite composition and other modules remain in existing source/topic interfaces",
+    "doorway corrected delivery is linked from the module table; existing specialized page is retained, not rebuilt as a unified interactive module",
+    "large-pool strategy and new same-room ABC are deferred; classification remains a working version"
+  ],
+  "index_sync_decision": "existing workbench entry retained; new JS/test/receipt are supporting files. Parent task owns docs, RELEASE and catalog synchronization.",
+  "temporary_artifacts": "no temporary screenshot or HTTP service created",
+  "git_commit_or_push": false,
+  "doorway_navigation_update": {
+    "status": "corrected_delivery_linked",
+    "entry": "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/computed_delta/index.html",
+    "snapshot_rebuilt": true,
+    "release_and_display_tests_passed": true,
+    "real_browser_checked": false
+  }
+}

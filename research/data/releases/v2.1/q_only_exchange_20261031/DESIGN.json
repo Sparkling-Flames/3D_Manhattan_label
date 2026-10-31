@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-31",
+  "classification_finalized": false,
+  "working_labels": "image_difficulty_20261030 TARGET_DSTRUCT_K3 LOBO C2->C3",
+  "main_policy": "Q_RAW",
+  "sensitivity_policy": "Q_PEER",
+  "q_definition": "raw B8L2; peer sensitivity subtracts image/target median; both target->image->building->worker equal means",
+  "support": "same legal Manual pool; TARGET-known; >=12 scored images and >=3 buildings outside target building",
+  "excluded": "D,X,Y for both policies; existing Z retained as frozen structural policy",
+  "tie_break": "worker_id ascending",
+  "selection_uses_target_Q": false,
+  "conditions": [
+    [
+      14,
+      7
+    ],
+    [
+      20,
+      7
+    ]
+  ],
+  "scoreable_filter_before_selection": false,
+  "q_matching": "descriptive capacity only; raw Q caliper 3, maximum disjoint matching",
+  "aggregation": "event replicate -> background -> block -> pool -> image; n separately",
+  "bootstrap": "2000 building cluster resamples; image-equal point estimate; seed 20261031",
+  "tails": "P10 of image-level paired-available quality; SD of image-level differences; not within-image random-team reliability",
+  "labor": "compare only full time-source-count vectors that match",
+  "unique_requests": 670,
+  "eligible_events": 208
+}

@@ -249,6 +249,8 @@
 
 ## 当前研究
 
+- [GT修订、不同空间与门洞问题集（2026-10-31）](../research/data/gt_revision_collection_20261031/README.md)：人工30图、41图43空间、顶面采用和门洞疑点的去重证据目录及人工复核条件。
+
 - [统一研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)：研究问题、变量、现状和当前安排。
 - [术语](thesis_main/CONTEXT.md)：统一概念和解释边界。
 - [研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：输入真源、预处理、人员与参考、补充证据及结果入口。
@@ -356,7 +358,8 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 2026-10-24：[D10形成链与融合共同面板独立验收](../research/statistics/research_closeout_20261022/METHOD_SUPPLEMENT_ACCEPTANCE_20261024.md)已完成，含常数η²修复与真实重算边界；接入安排沿用主线研究台任务文档。
 
-- [门洞空间审核与v2.1曲线准备](../research/data/doorway_review_20261030/README.md)：保留用户裁决、几何与目标参考核查；仍需按已声明边界处理，不表示已完成新评分/曲线。
+- [门洞空间审核与v2.1曲线准备](../research/data/doorway_review_20261030/README.md)：当前[584/439双版本曲线与比较](../research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md)已完成；累计145排除，14人池容量及资格敏感性单列。533结果与524名单原位归档，旧阶段数值不得当作当前结果。
+- [门洞v2.1人员池、参考与完整几何曲线归档](../research/fusion/doorway_population_v21_20261031/README.md)：584/553早期筛选快照，保留为历史分析，不替代当前584/439结果。
 - [门洞初审来源包与快照工作台](../research/difficulty/doorway_split_review_20261030/README.md)：归档20图708份原始初审记录和当时工作台；不替代后续审核及最终目标判定，原图不随仓库上传。
 
 - [v2.1论文证据、18模块完备性与目标人工确认](../research/data/releases/v2.1/paper_evidence_20261030/README.md)：英文主图/补图与源表索引；脚本 `tools/thesis_main/analysis/build_v21_paper_evidence_20261030.py`；不改分类、参考或正式难度。
@@ -366,3 +369,12 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - v2.1收尾：[版本身份核查与四组人员证据](../research/data/releases/v2.1/closeout_20261030/README.md)，分类最终未定，门洞双版本待接入。
 
 - 2026-10-31 [候选标签完整联盟补齐](../research/data/releases/v2.1/closeout_20261030/alliance_completion_20261031/README.md)：原生端点、原/新共同支持与英文图；分类未定。
+
+- [2026-10-31全链复现独立审查归档](../research/workers/full_chain_repro_review_20261031/INTAKE_ZH.md)：发布与路径衔接问题，修复提案未应用。
+
+- [2026-10-31全链隔离复现修复](../research/data/releases/v2.1/full_chain_downstream_20261030/repro_repair_20261031/README.md)：精确历史source适配器、发布去向与Q-only推进复核。
+
+- [2026-10-31 Q-only公平换人对照](../research/data/releases/v2.1/q_only_exchange_20261031/README.md)：固定208事件、624复用及46补算、质量/结构/劳动/失败与英文论文图；分类未定，大池及新同房ABC暂缓。
+
+- [DSTRUCT/Q及逐人难度后续诊断](../research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/README.md)：不同选员事件、参考匹配特征与60人分难度质量查询；只聚合现有结果。
+- [v2.1全研究完备性与当前研究台接入](../research/data/releases/v2.1/research_readiness_20261031/README.md)：21模块核查、当前标签支持与真实剩余事项；DSTRUCT正向/RFUSE反向职责已定、门洞当前成果已接入，研究台程序验收与浏览器验收分开。

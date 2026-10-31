@@ -1,0 +1,107 @@
+{
+  "archive_members": {
+    "01": 70,
+    "02": 259,
+    "04": 1121
+  },
+  "adjudication_parity": {
+    "base_members_match_local": true,
+    "protected_adjudications": 113,
+    "protected_scope_changes": 0,
+    "W019_W026_in_base": 0
+  },
+  "qualification": {
+    "base": 584,
+    "quality_eligible": 571,
+    "holds": 13,
+    "images": {
+      "7y3sRwLe3Va-06": 2,
+      "B6ByNegPMKs-42": 1,
+      "B6ByNegPMKs-43": 8,
+      "jh4fc5c5qoQ-14": 2
+    },
+    "reason_groups": {
+      "full_input_unavailable|input_geometry_unavailable": 3,
+      "legacy:same_target_quality_hold|legacy:same_target_unconfirmed|reference_binding_pending|space_binding_not_unique": 10
+    }
+  },
+  "identity": {
+    "orders": 4352,
+    "prefix_links": 426752,
+    "physical_endpoints": 259310,
+    "score_rows": 259917,
+    "added_records": 13,
+    "images_with_additions": 4,
+    "images_without_additions": 13,
+    "prefix_member_mismatches": 0
+  },
+  "score_formula": {
+    "rows": 207569,
+    "max_absolute_errors": {
+      "B8L2": 4.263256414560601e-14,
+      "D10": 5.684341886080802e-14
+    }
+  },
+  "exact_enumeration": {
+    "links": 4884,
+    "pool_k_groups": 278
+  },
+  "whole_compatibility_spread_k10": {
+    "sd": {
+      "mean": -5.885073880713545,
+      "positive": 3,
+      "negative": 12,
+      "same": 2
+    },
+    "p10": {
+      "mean": 6.1832803138820385,
+      "positive": 8,
+      "negative": 7,
+      "same": 2
+    }
+  },
+  "exclude_13_cache_coverage": {
+    "unique_teams_needed": 59051,
+    "physical_teams_missing": 36410,
+    "missing_target_scores_for_existing_geometry": 13643,
+    "prefix_attempts_by_family": {
+      "space1": 4608,
+      "whole_compatible": 14592,
+      "space2": 2048,
+      "overall_before": 30208,
+      "overall_after": 26624
+    },
+    "full_sensitivity_computed": false
+  },
+  "reference_floor_match": {
+    "side_references": 34,
+    "max_symmetric_difference": 3.736831272605019e-18,
+    "mismatches": []
+  },
+  "reference_source_checks": {
+    "references": 51,
+    "whole": 17,
+    "sides_from_original_source": 28,
+    "sides_from_user_adopted_plane": 6
+  },
+  "native_replay": {
+    "teams": 20,
+    "status_counts": {
+      "ok": 17,
+      "not_evaluable": 2,
+      "unavailable": 1
+    },
+    "reference_metric_comparisons": 13
+  },
+  "limits": [
+    "No full fusion rerun",
+    "No confidence interval resampling rerun",
+    "No independent physical closure semantic adoption",
+    "No package hash computation"
+  ],
+  "whole_reference_auto_scope": {
+    "both": 13,
+    "borderline": 3,
+    "space1": 1
+  }
+}

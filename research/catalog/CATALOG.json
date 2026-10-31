@@ -13131,8 +13131,8 @@
       "source_path": "research/data/doorway_review_20261030",
       "current_path": "research/data/doorway_review_20261030",
       "source": "v2.1库存与冻结原答；用户首审",
-      "adoption_status": "空间复核收尾：7y06显示对齐、7y18空间随确认边界更新，jtc12可标；待v2.1质量及曲线计算，自动归属需按最终空间刷新",
-      "verification_status": "保留20图/708份身份与审核记录、后续几何和目标复核；本轮为发布范围整理，未重跑科学分析",
+      "adoption_status": "当前584/439双版本曲线与比较已完成；145排除、439保留。533结果与524名单原位归档；14人池容量单列，7份空间归属为空不进入分空间池。",
+      "verification_status": "10项测试通过；83084个缺失团队原生补算，筛前584不变；k6/k10历史资格敏感性，14人池排除敏感性；PDF17页并渲染抽查。全人数排除历史资格未补算。",
       "availability": "仓库可读；原始全景图仅本机",
       "relationships": [
         "tools/thesis_main/analysis/build_doorway_review_20261030.py",
@@ -13159,7 +13159,51 @@
         "tests/test_doorway_geometry_review.py",
         "research/data/doorway_review_20261030/curve_preparation_v21/full_review_20261031/README.md",
         "tools/thesis_main/analysis/audit_all_doorway_geometry_20261031.py",
-        "tests/test_doorway_full_review.py"
+        "tests/test_doorway_full_review.py",
+        "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/README.md",
+        "tools/thesis_main/analysis/audit_doorway_delivery_20261031.py",
+        "tests/test_doorway_delivery_audit.py",
+        "tools/thesis_main/analysis/prepare_doorway_correction_20261031.py",
+        "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/RING_REVIEW.html",
+        "tools/thesis_main/analysis/inspect_doorway_scope_20261031.py",
+        "tools/thesis_main/analysis/prepare_doorway_delta_20261031.py",
+        "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/CORRECTION_HANDOFF.md",
+        "tools/thesis_main/analysis/run_doorway_delta_20261031.py",
+        "tools/thesis_main/analysis/report_doorway_delta_20261031.py",
+        "tools/thesis_main/analysis/check_doorway_exclude13_20261031.py",
+        "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/computed_delta/RESULTS_ZH.md",
+        "research/data/doorway_review_20261030/pro_delivery_independent_audit_20261031/V21_INTEGRATION_HANDOFF.md",
+        "research/data/doorway_review_20261030/scope_recheck_20261031/README.md",
+        "research/data/doorway_review_20261030/scope_recheck_20261031/index.html",
+        "research/data/doorway_review_20261030/scope_recheck_20261031/ADOPTED_USER_REVIEW.json",
+        "research/data/doorway_review_20261030/scope_recheck40_20261031/README.md",
+        "research/data/doorway_review_20261030/scope_recheck40_20261031/index.html",
+        "research/data/doorway_review_20261030/scope_recheck40_20261031/ADOPTION_CHECKS.json",
+        "research/data/doorway_review_20261030/scope_recheck40_20261031/EFFECTIVE_SCREENING_LEDGER.json",
+        "research/data/doorway_review_20261030/screen533_results_20261031/RESULTS_ZH.md",
+        "tools/thesis_main/analysis/recompute_doorway_screen533_20261031.py",
+        "tests/test_doorway_screen533.py",
+        "research/data/doorway_review_20261030/similarity_review_20261031/README.md",
+        "research/data/doorway_review_20261030/similarity_review_20261031/EFFECTIVE_SCREENING_LEDGER.json",
+        "tools/thesis_main/analysis/adopt_doorway_similar_exclusions_20261031.py",
+        "tests/test_doorway_similar_exclusions.py",
+        "tools/thesis_main/analysis/build_doorway_scope_recheck_20261031.py",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/README.md",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/index.html",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/EFFECTIVE_SCREENING_LEDGER.json",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/USER_REVIEW_RECEIVED.json",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/FINAL_SCREENING_LEDGER.json",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/ADOPTED_USER_REVIEW.json",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/PER_IMAGE_COUNTS.json",
+        "research/data/doorway_review_20261030/expanded_visual_review_20261031/PER_IMAGE_COUNTS.md",
+        "research/data/doorway_review_20261030/screen439_results_20261031/RELEASE.json",
+        "research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md",
+        "research/data/doorway_review_20261030/screen439_results_20261031/index.html",
+        "research/data/doorway_review_20261030/screen439_results_20261031/CHECKS.json",
+        "research/data/doorway_review_20261030/screen439_results_20261031/PER_IMAGE_K10_COMPARISON.csv",
+        "tools/thesis_main/analysis/adopt_doorway_expanded_review_20261031.py",
+        "tests/test_doorway_expanded_review.py",
+        "research/data/doorway_review_20261030/independent_doorway_analysis_20261030/ARCHIVE_STATUS.md"
       ]
     },
     {
@@ -13337,6 +13381,164 @@
       "relationships": [
         "与research/data/doorway_review_20261030的双边界分类工作台配套，任务与结论口径不同",
         "后续需按最终空间、参考绑定及保留/排除方案决定质量比较范围"
+      ]
+    },
+    {
+      "id": "MAT-full_chain_repro_review_20261031",
+      "title": "全链去重归档后的独立复现审查",
+      "theme": "coordination",
+      "type": "外部审查与未应用修复提案",
+      "date": "20261031",
+      "source_path": "research/workers/full_chain_repro_review_20261031/INTAKE_ZH.md",
+      "current_path": "research/workers/full_chain_repro_review_20261031/INTAKE_ZH.md",
+      "source": "用户提供ZIP",
+      "adoption_status": "归档并登记问题；提案未应用",
+      "verification_status": "全部ZIP成员读取；本机路径存在性检查；未运行提案或数值复算",
+      "availability": "本地归档",
+      "relationships": []
+    },
+    {
+      "id": "MAT-v21_repro_repair_20261031",
+      "title": "全链去重归档隔离复现修复与研究推进复核",
+      "theme": "coordination",
+      "type": "兼容入口、发布映射与隔离运行",
+      "date": "20261031",
+      "source_path": "research/data/releases/v2.1/full_chain_downstream_20261030/repro_repair_20261031/README.md",
+      "current_path": "research/data/releases/v2.1/full_chain_downstream_20261030/repro_repair_20261031/README.md",
+      "source": "固定HEAD加明确修复载荷；原清单历史版本校验",
+      "adoption_status": "修复已实施；分类未定；新科研实验未启动",
+      "verification_status": "176历史输入匹配、10适配器测试、7隔离任务及15表比较通过；最大数值差1.14e-13；未远端推送",
+      "availability": "本地；尚未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/stage_v21_full_chain_source.py",
+        "tests/test_v21_source_adapter.py"
+      ]
+    },
+    {
+      "id": "MAT-v21_q_only_exchange_20261031",
+      "title": "固定背景与替换规模的Q-only公平对照",
+      "theme": "coordination",
+      "type": "冻结政策、定向补算、独立检查与英文论文图",
+      "date": "20261031",
+      "source_path": "research/data/releases/v2.1/q_only_exchange_20261031/README.md",
+      "current_path": "research/data/releases/v2.1/q_only_exchange_20261031/README.md",
+      "source": "当前楼外工作标签、合法ABC事件与冻结原生引擎",
+      "adoption_status": "对照已完成；分类最终未定；大池与新同房ABC暂缓",
+      "verification_status": "208事件；624端点身份验证复用、46新融合；历史排除、选员、层级统计及旧ABC分数检查；图表目视检查",
+      "availability": "本地；未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/q_only_exchange_v21_20261031.py",
+        "tests/test_q_only_exchange_v21.py"
+      ]
+    },
+    {
+      "id": "MAT-v21_structure_q_diagnostic_20261031",
+      "title": "DSTRUCT/Q关联、不同选员结构几何及逐人难度画像核查",
+      "theme": "coordination",
+      "type": "保存结果的定向再聚合及解释边界",
+      "date": "20261031",
+      "source_path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/README.md",
+      "current_path": "research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/README.md",
+      "source": "楼外历史、原生端点标量、原答结构及既有人员难度表",
+      "adoption_status": "复核完成；分类仍为工作快照；未新增融合/策略",
+      "verification_status": "4项测试通过；178主目标难度单元及60人难度偏好复现；35个不同选员事件逐人连接",
+      "availability": "本地；未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/diagnose_v21_structure_q_20261031.py",
+        "tests/test_v21_structure_q_diagnostic.py"
+      ]
+    },
+    {
+      "id": "MAT-v2_v21_paper_evidence_comparison_20261031",
+      "title": "v2到v2.1论文证据对照与收尾影响",
+      "theme": "coordination",
+      "type": "版本证据对照与论文取材说明",
+      "date": "20261031",
+      "source_path": "research/data/releases/v2.1/paper_evidence_20261030/V2_TO_V21_PAPER_EVIDENCE_20261031.md",
+      "current_path": "research/data/releases/v2.1/paper_evidence_20261030/V2_TO_V21_PAPER_EVIDENCE_20261031.md",
+      "source": "v2冻结结果、v2.1共同支持源表及20261030至31补算报告",
+      "adoption_status": "论文取材对照；分类未定；门洞新双版本另线",
+      "verification_status": "定向读取源表及报告、路径检查；未重跑统计或融合",
+      "availability": "本地；未推送",
+      "relationships": [
+        "research/data/releases/v2.1/QUALITY_COMMON_SUPPORT_COMPARISON.csv",
+        "research/data/releases/v2.1/NATURAL_CONCLUSION_COMPARISON_INDEPENDENT_20261029.csv",
+        "research/data/releases/v2.1/research_readiness_20261031/README.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_research_readiness_20261031",
+      "title": "v2.1全研究完备性复核与研究台接入",
+      "theme": "coordination",
+      "type": "逐模块证据核查、当前口径修正与接入交接",
+      "date": "20261031",
+      "source_path": "research/data/releases/v2.1/research_readiness_20261031/README.md",
+      "current_path": "research/data/releases/v2.1/research_readiness_20261031/README.md",
+      "source": "v2研究链与v2.1当前源表、事件及既有复现回执",
+      "adoption_status": "DSTRUCT正向分类与RFUSE反向解释已采用；JOINT画像及进入顺序研究；门洞439版接入",
+      "verification_status": "21模块、38来源实际读取、45关键支持及标量核对；非全库融合重放",
+      "availability": "本地；未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_v21_research_readiness_20261031.py",
+        "research/statistics/research_explorer_v1_r2_20261017/V21_CURRENT_ACCEPTANCE_20261031.json"
+      ]
+    },
+    {
+      "id": "MAT-gt_revision_collection_20261031",
+      "title": "GT错误、可疑与空间范围规则问题证据集",
+      "theme": "data",
+      "type": "证据收藏与研究状态",
+      "date": "20261031",
+      "source_path": "research/data/gt_revision_collection_20261031",
+      "current_path": "research/data/gt_revision_collection_20261031",
+      "source": "保存人工GT30图、已确认41图43空间、两图删点修订、顶面30份及门洞20案例；全部指向既有证据",
+      "adoption_status": "最终问题汇报材料；125条记录、89张去重图；人工30图与顶面30图重合23图；不新增修订、重标或重算任务，不把全部案例认定为GT错误",
+      "verification_status": "来源/原图/原始点位路径、稳定ID及数量核对；30份顶面与v2.1发布参考逐坐标和版本一致；针对性测试通过；未做全量重新视觉裁决；小批视觉初筛保留2t7-07漏标与q9-34遮挡几何可疑两个典型，不宣称全量视觉核查；新增4张e9z及3张门洞视觉核查，e9z-09/16为隐藏结构主例、7y-10为新增漏角候选、jh4-14为可疑备选",
+      "availability": "离线HTML及JSON/Markdown；原图依赖仓库本机数据",
+      "relationships": [
+        "research/data/gt_revision_collection_20261031/index.html",
+        "research/data/gt_revision_collection_20261031/RESEARCH_STATUS.md",
+        "research/data/gt_revision_collection_20261031/HUMAN_REVIEW.md",
+        "tools/thesis_main/analysis/collect_gt_revision_cases_20261031.py",
+        "tests/test_gt_revision_collection_20261031.py",
+        "research/data/gt_revision_collection_20261031/REPORT_SUMMARY.md",
+        "research/data/gt_revision_collection_20261031/VISUAL_SHORTLIST.md"
+      ]
+    },
+    {
+      "id": "MAT-doorway_population_v21_20261031",
+      "title": "门洞v2.1人员池、参考、人数曲线与物理几何",
+      "theme": "fusion",
+      "type": "冻结的人数曲线与物理几何交付包",
+      "date": "20261031",
+      "source_path": "research/fusion/doorway_population_v21_20261031/README.md",
+      "current_path": "research/fusion/doorway_population_v21_20261031/README.md",
+      "source": "三份交付包清单，冻结源提交d4c73943ae58476880bf3ceb7b774e4ec59a95b5",
+      "adoption_status": "584/553早期筛选快照；保留作历史比较，不替代584/439当前版本",
+      "verification_status": "三包逐文件清单SHA与ZIP CRC通过；336处重叠文件字节一致；2,295份原始JSON已解包，原图HTML仅本机",
+      "availability": "仓库可读；含原始全景图的查看器仅本机",
+      "relationships": [
+        "research/data/doorway_review_20261030/README.md",
+        "research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md",
+        "research/fusion/doorway_population_v21_20261031/HOHONET_doorway_v21_20261031/stage05_results/RESULTS_REPORT_ZH.md",
+        "research/fusion/doorway_population_v21_20261031/HOHONET_doorway_v21_20261031/stage07_synthesis/DOORWAY_FINAL_REPORT_ZH.pdf"
+      ]
+    },
+    {
+      "id": "MAT-doorway_independent_analysis_20261030",
+      "title": "门洞范围与历史失败独立补充核验",
+      "theme": "data",
+      "type": "历史独立诊断归档",
+      "date": "20261030",
+      "source_path": "research/data/doorway_review_20261030/independent_doorway_analysis_20261030/README_ZH.md",
+      "current_path": "research/data/doorway_review_20261030/independent_doorway_analysis_20261030/README_ZH.md",
+      "source": "独立审查ZIP逐文件归档，冻结来源提交d4c73943ae58476880bf3ceb7b774e4ec59a95b5",
+      "adoption_status": "仅作范围敏感性及历史失败补充；不改GT、资格或融合结果",
+      "verification_status": "ZIP CRC通过，35项文件SHA与包内清单相符；原包复现代码与报告保留",
+      "availability": "仓库可读",
+      "relationships": [
+        "research/data/doorway_review_20261030/independent_doorway_analysis_20261030/ARCHIVE_STATUS.md",
+        "research/data/doorway_review_20261030/README.md"
       ]
     }
   ]

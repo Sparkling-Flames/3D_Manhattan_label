@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-31",
+  "tests_command": "python -X utf8 -m pytest tests/test_q_only_exchange_v21.py -q",
+  "tests_passed": 6,
+  "tests_seconds": 15.88,
+  "catalog_check": "716 materials, 11 algorithms, 22 result snapshots",
+  "visual_check": [
+    "figures/quality_policy_comparison.png",
+    "figures/paired_image_quality.png"
+  ],
+  "protocol_unchanged": true,
+  "manual_review_required": false,
+  "not_run": [
+    "full historical fusion replay",
+    "large-pool strategies",
+    "new same-room ABC",
+    "doorway sensitivity"
+  ],
+  "scope": "only frozen Q-only exchange policy comparison; classification remains provisional"
+}

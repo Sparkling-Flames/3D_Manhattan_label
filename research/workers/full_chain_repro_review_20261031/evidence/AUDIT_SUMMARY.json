@@ -1,0 +1,42 @@
+{
+  "verified_main": "d4c73943ae58476880bf3ceb7b774e4ec59a95b5",
+  "tree_truncated": false,
+  "full_chain_tree_blobs": 1192,
+  "original_manifest_members": 1406,
+  "original_members_at_original_path": 1147,
+  "original_members_missing_at_original_path": 259,
+  "missing_source_mirror": 176,
+  "excluded_original_pngs": 51,
+  "excluded_large_htmls": 3,
+  "missing_logs": 21,
+  "other_missing_files": [
+    "HOHONET_v21_full_chain_20261030/repository_update/base/research/data/releases/v2.1/final_classification_downstream/README.md",
+    "HOHONET_v21_full_chain_20261030/repository_update/base/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv",
+    "HOHONET_v21_full_chain_20261030/repository_update/base/research/data/releases/v2.1/personnel_reselection_dependencies/README.md",
+    "HOHONET_v21_full_chain_20261030/repository_update/overlay/research/data/releases/v2.1/final_classification_downstream/README.md",
+    "HOHONET_v21_full_chain_20261030/repository_update/overlay/research/data/releases/v2.1/full_chain_downstream_20261030/README.md",
+    "HOHONET_v21_full_chain_20261030/repository_update/overlay/research/data/releases/v2.1/personnel_reselection_dependencies/DEPENDENCIES.csv",
+    "HOHONET_v21_full_chain_20261030/repository_update/overlay/research/data/releases/v2.1/personnel_reselection_dependencies/README.md",
+    "HOHONET_v21_full_chain_20261030/requirements.txt"
+  ],
+  "actual_comparator_tests": [
+    {
+      "case": "floating_tolerance",
+      "correct_outcome": true,
+      "comparator_accepted": true
+    },
+    {
+      "case": "missing_mask_change",
+      "correct_outcome": true,
+      "comparator_accepted": false
+    },
+    {
+      "case": "material_numeric_change",
+      "correct_outcome": true,
+      "comparator_accepted": false
+    }
+  ],
+  "full_chain_numerical_rerun_performed": false,
+  "full_cold_start_performed": false,
+  "reason": "No complete local checkout; Shapely unavailable. Read-only remote tree review plus isolated adapter/unit verification only."
+}

@@ -24,6 +24,44 @@ def receipt(path):
     return json.loads(path.read_text(encoding='utf-8-sig')) if path.exists() else None
 
 
+def current_research():
+    """Read the current working evidence without relabeling frozen experiments."""
+    difficulty = 'admitted_space_extension/image_difficulty_20261030/'
+    q = 'q_only_exchange_20261031/'
+    diagnostic = q+'diagnostic_20261031/'
+    alliance = 'closeout_20261030/alliance_completion_20261031/'
+    sources = {
+        'modules': ('research_readiness_20261031/MODULE_MATRIX.csv', ['module','status','entry','evidence','boundary','verification']),
+        'half': (difficulty+'HALF_SUMMARY.csv', ['n','scope','events','registered_images','valid_images','gap_A','gap_sym','CB']),
+        'half_difficulty': (difficulty+'HALF_DIFFICULTY_COMPONENTS.csv', ['n','scope','difficulty','metric','images','mean']),
+        'same_room': (difficulty+'SAME_ROOM_HALF_SUMMARY.csv', ['method','n','m','direction','registered_pairs','valid_pairs','CB_mean']),
+        'same_room_pairs': (difficulty+'SAME_ROOM_HALF_PAIRS.csv', ['method_updated','n','m','pair_key','CB_a','CB_b']),
+        'same_room_events': (difficulty+'SAME_ROOM_HALF_EVENTS.csv.gz', ['method_updated','n','m','updated_direction','pair_key','GA_a','GS_a','CB_a','GA_b','GS_b','CB_b']),
+        'alliance': (alliance+'FULL_VS_BEST_PURE_SUMMARY.csv', ['version','scope','condition','images','mean_full_minus_best_pure']),
+        'alliance_resolution': (alliance+'ALLIANCE_414_RESOLUTION.csv', ['new_n_at_least3','resolved','action']),
+        'q_summary': (q+'SUMMARY.csv', ['n','m','comparator','metric','events','images','effect','ci_low','ci_high']),
+        'q_status': (q+'STATUS_SUMMARY.csv', ['n','policy','events','scored','connection_available']),
+        'q_overlap': (q+'SELECTION_OVERLAP.csv', ['n','policy','event_id','same_block','shared_incoming']),
+        'q_design': (q+'DESIGN_LINKS.csv', ['event_id','policy','n','m','D','incoming_members','team_key']),
+        'q_events': (q+'OUTPUT_STATUS.csv', ['event_id','policy','scored','complete','connection_available']),
+        'class_q': (diagnostic+'CLASS_AVERAGE_OVER_FOLDS.csv', ['class_id','raw_q','m_all_unmatched_ref_9','m_hard_turn_n']),
+        'different_summary': (diagnostic+'DIFFERENT_SELECTION_SUMMARY.csv', ['n','comparator','events','scored_events','B8L2_delta_image_mean']),
+        'different_events': (diagnostic+'DIFFERENT_SELECTION_EVENTS.csv', ['event_id','n','comparator','image','removed','added','class_composition_same','B8L2_delta','structure_scored','q_scored']),
+        'worker_wide': (diagnostic+'MANUAL_WORKER_DIFFICULTY_WIDE.csv', ['scope','worker_id','easy_Q_image_mean','medium_Q_image_mean','hard_Q_image_mean']),
+        'worker_difficulty': (diagnostic+'WORKER_DIFFICULTY_CURRENT.csv', ['scope','condition','worker_id','difficulty','records','images','Q_image_mean','relative_rank']),
+        'worker_preferences': (diagnostic+'DIFFICULTY_PREFERENCES_CURRENT.csv', ['scope','worker_id','supported','B8L2_candidate','B8L2_advantage'])}
+    data = {'sources': {}, 'classification_finalized': False}
+    for key, (name, required) in sources.items():
+        rows = table(OUT/name)
+        if not rows or (missing := set(required)-set(rows[0])):
+            raise ValueError(f'{name}: empty table or missing fields {sorted(missing) if rows else required}')
+        data[key] = [{field: row[field] for field in required} for row in rows] if key == 'same_room_events' else rows
+        data['sources'][key] = (OUT/name).relative_to(ROOT).as_posix()
+    data['difficulty_receipt'] = receipt(OUT/difficulty/'INPUT_CHECKS.json')
+    data['document_checks'] = receipt(OUT/'research_readiness_20261031/CHECKS.json')
+    return data
+
+
 def main():
     inventory=receipt(OUT/'quality_inventory.json');counts=receipt(OUT/'ORIGINAL_CHECKS.json')
     eligible=[r for r in inventory if r['quality_usable']]
@@ -70,7 +108,7 @@ def main():
     strict_rows=table(OUT/'current_exchange_results/confirm/combined/summary/METHOD_N_M_COMPARISON.csv')
     strict_comparison=[r for r in strict_rows if r['method']=='DSTRUCT_K3' and r['metric']=='B8L2']
     assert strict_comparison
-    data=dict(generated_utc=datetime.now(timezone.utc).isoformat(timespec='seconds'),release=receipt(OUT/'RELEASE.json'),current=receipt(OUT.parent/'CURRENT.json'),inventory=dict(records=len(inventory),quality=len(eligible),images=len({r['image_id'] for r in eligible})),
+    data=dict(generated_utc=datetime.now(timezone.utc).isoformat(timespec='seconds'),release=receipt(OUT/'RELEASE.json'),current=receipt(OUT.parent/'CURRENT.json'),current_research=current_research(),inventory=dict(records=len(inventory),quality=len(eligible),images=len({r['image_id'] for r in eligible})),
         natural_receipt=receipt(OUT/'natural_results/AGGREGATE_BANDS_CHECKS.json'),natural=curve,k2_receipt=receipt(OUT/'two_person_natural256/SUMMARY_CHECKS.json'),k2=k2points,
         k2_intervals=intervals,k2_interval_receipt=receipt(OUT/'two_person_natural256/K2_INTERVAL_CHECKS.json'),
         variance_receipt=receipt(OUT/'composition_variance/CHECKS.json'),variance=v,

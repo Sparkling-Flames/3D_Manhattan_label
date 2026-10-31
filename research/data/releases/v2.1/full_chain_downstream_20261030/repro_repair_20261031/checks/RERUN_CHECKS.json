@@ -1,0 +1,119 @@
+[
+  {
+    "task": "half",
+    "returncode": 0,
+    "tables": {
+      "stage01_half_team/MAIN_CHECKED_SUMMARY.csv": {
+        "rows": 2,
+        "columns": 24,
+        "max_absolute_error": 0.0
+      }
+    }
+  },
+  {
+    "task": "same_room_abc",
+    "returncode": 0,
+    "tables": {
+      "stage02_same_room/abc/SUMMARY.csv": {
+        "rows": 22260,
+        "columns": 93,
+        "max_absolute_error": 4.440892098500626e-16
+      }
+    }
+  },
+  {
+    "task": "same_room_prediction_scope",
+    "returncode": 0,
+    "tables": {
+      "stage02_same_room/prediction/DIRECT_MEAN_SUMMARY_BY_SCOPE.csv": {
+        "rows": 108,
+        "columns": 11,
+        "max_absolute_error": 0.0
+      },
+      "stage02_same_room/prediction/PERSON_PREDICTION_SUMMARY_BY_SCOPE.csv": {
+        "rows": 360,
+        "columns": 16,
+        "max_absolute_error": 0.0
+      }
+    }
+  },
+  {
+    "task": "speed_difficulty",
+    "returncode": 0,
+    "tables": {
+      "stage03_speed_difficulty/CURRENT_SAME_PEOPLE_SUMMARY.csv": {
+        "rows": 372,
+        "columns": 17,
+        "max_absolute_error": 0.0
+      },
+      "stage03_speed_difficulty/V21_FIXED_V2_SAME_PEOPLE_SUMMARY.csv": {
+        "rows": 124,
+        "columns": 17,
+        "max_absolute_error": 0.0
+      }
+    }
+  },
+  {
+    "task": "selection_stopping",
+    "returncode": 0,
+    "tables": {
+      "stage05_selection_stop/selection/POLICY_SUMMARY.csv": {
+        "rows": 400,
+        "columns": 151,
+        "max_absolute_error": 2.220446049250313e-16
+      },
+      "stage05_selection_stop/stopping/stopping_summary.csv": {
+        "rows": 456,
+        "columns": 43,
+        "max_absolute_error": 0.0
+      },
+      "stage05_selection_stop/stopping/source_acquisition_summary.csv": {
+        "rows": 54,
+        "columns": 19,
+        "max_absolute_error": 0.0
+      }
+    }
+  },
+  {
+    "task": "old_reference_scores",
+    "returncode": 0,
+    "tables": {
+      "stage05_selection_stop/validation/ORIGINAL_POLICY_REPRODUCTION.csv": {
+        "rows": 200,
+        "columns": 54,
+        "max_absolute_error": 1.4210854715202004e-14
+      },
+      "stage05_selection_stop/validation/STOPPING_OLD_SCORE_PARITY.csv.gz": {
+        "rows": 5100,
+        "columns": 8,
+        "max_absolute_error": 1.1368683772161605e-13
+      }
+    }
+  },
+  {
+    "task": "common_support",
+    "returncode": 0,
+    "tables": {
+      "COMMON_SUPPORT_SUMMARY.csv": {
+        "rows": 651,
+        "columns": 16,
+        "max_absolute_error": 0.0
+      },
+      "COMMON_CONTEXT_ROSTER.csv": {
+        "rows": 336,
+        "columns": 12,
+        "max_absolute_error": 0.0
+      },
+      "ADJACENT_SIZE_PAIRED_CHANGES.csv": {
+        "rows": 70,
+        "columns": 11,
+        "max_absolute_error": 0.0
+      },
+      "EXPLORATORY_N5_N13_ABSOLUTE_CONTRAST.csv": {
+        "rows": 4,
+        "columns": 15,
+        "max_absolute_error": 0.0
+      }
+    }
+  }
+]
