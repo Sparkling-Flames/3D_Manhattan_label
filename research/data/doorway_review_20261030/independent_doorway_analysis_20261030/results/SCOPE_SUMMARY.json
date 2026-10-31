@@ -1,0 +1,1707 @@
+{
+  "source_commit": "d4c73943ae58476880bf3ceb7b774e4ec59a95b5",
+  "inventory": 708,
+  "images": 20,
+  "unique_workers_inventory": 59,
+  "unique_workers_base": 57,
+  "base_records": 584,
+  "screened_records": 553,
+  "kept_human_or_visual_records": 113,
+  "base_exclusion_union": 124,
+  "exclusion_combinations": [
+    {
+      "reasons": [
+        "inherited_pool_exclusion"
+      ],
+      "n": 14
+    },
+    {
+      "reasons": [
+        "oos_separate"
+      ],
+      "n": 67
+    },
+    {
+      "reasons": [
+        "oos_separate",
+        "paired_geometry_unavailable"
+      ],
+      "n": 3
+    },
+    {
+      "reasons": [
+        "inherited_pool_exclusion",
+        "paired_geometry_unavailable"
+      ],
+      "n": 5
+    },
+    {
+      "reasons": [
+        "user_pending_image"
+      ],
+      "n": 35
+    }
+  ],
+  "tests": {
+    "geometry_examples": 10,
+    "simple_ring_examples": 2,
+    "classification_examples": 4,
+    "passed": true
+  },
+  "original_classification_parity": 708,
+  "old_automatic_fraction_max_abs_delta": 1.1102230246251565e-15,
+  "original_automatic_fraction_records": 586,
+  "paired_valid_records": 700,
+  "ready_to_score_count": 0,
+  "formally_adopted_targets": 0,
+  "base_changed_final_cut": 5,
+  "base_changed_final_polygon": 78,
+  "auto_base_final_cut_vs_polygon_disagreement": 75,
+  "variants": {
+    "prior_supplement": {
+      "scope_counts": {
+        "全部": 366,
+        "空间2": 71,
+        "都不符合（看不懂）": 31,
+        "未定": 33,
+        "空间1": 83
+      },
+      "nonempty_pools": 42,
+      "qualified_pools": 38,
+      "records_in_qualified_pools": 513,
+      "planned_prefixes256_k3_to_n": 111872,
+      "pool_table": [
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 26,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "全部",
+          "n": 13,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 11,
+          "planned_prefixes256_k3_to_n": 2816
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "空间1",
+          "n": 16,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 15,
+          "planned_prefixes256_k3_to_n": 3584
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "全部",
+          "n": 20,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 20,
+          "planned_prefixes256_k3_to_n": 4608
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "全部",
+          "n": 16,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 16,
+          "planned_prefixes256_k3_to_n": 3584
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间1",
+          "n": 8,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1536
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 22,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "全部",
+          "n": 13,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 3,
+          "automatic_n": 8,
+          "planned_prefixes256_k3_to_n": 2816
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间1",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间2",
+          "n": 9,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 1792
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 1,
+          "automatic_n": 7,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 1,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间2",
+          "n": 12,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 12,
+          "planned_prefixes256_k3_to_n": 2560
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 5,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "空间1",
+          "n": 18,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 1,
+          "automatic_n": 14,
+          "planned_prefixes256_k3_to_n": 4096
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "全部",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 0,
+          "automatic_n": 11,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间1",
+          "n": 7,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 5,
+          "planned_prefixes256_k3_to_n": 1280
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间2",
+          "n": 8,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1536
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "全部",
+          "n": 20,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 4608
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间2",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "全部",
+          "n": 24,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 23,
+          "planned_prefixes256_k3_to_n": 5632
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间2",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "全部",
+          "n": 22,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 5120
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "空间1",
+          "n": 1,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "空间2",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 5,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "全部",
+          "n": 23,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 21,
+          "planned_prefixes256_k3_to_n": 5376
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "空间1",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "uNb9QFRL6hY-21",
+          "target": "全部",
+          "n": 34,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 34,
+          "planned_prefixes256_k3_to_n": 8192
+        },
+        {
+          "image": "uNb9QFRL6hY-25",
+          "target": "全部",
+          "n": 33,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 31,
+          "planned_prefixes256_k3_to_n": 7936
+        },
+        {
+          "image": "uNb9QFRL6hY-47",
+          "target": "全部",
+          "n": 32,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 32,
+          "planned_prefixes256_k3_to_n": 7680
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "全部",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 12,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间2",
+          "n": 15,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 14,
+          "planned_prefixes256_k3_to_n": 3328
+        }
+      ],
+      "support_by_k": [
+        {
+          "k": 1,
+          "eligible_target_pools": 42,
+          "eligible_images": 17
+        },
+        {
+          "k": 2,
+          "eligible_target_pools": 41,
+          "eligible_images": 17
+        },
+        {
+          "k": 3,
+          "eligible_target_pools": 38,
+          "eligible_images": 17
+        },
+        {
+          "k": 4,
+          "eligible_target_pools": 34,
+          "eligible_images": 17
+        },
+        {
+          "k": 5,
+          "eligible_target_pools": 29,
+          "eligible_images": 17
+        },
+        {
+          "k": 6,
+          "eligible_target_pools": 27,
+          "eligible_images": 17
+        },
+        {
+          "k": 8,
+          "eligible_target_pools": 24,
+          "eligible_images": 17
+        },
+        {
+          "k": 10,
+          "eligible_target_pools": 21,
+          "eligible_images": 17
+        },
+        {
+          "k": 12,
+          "eligible_target_pools": 21,
+          "eligible_images": 17
+        },
+        {
+          "k": 16,
+          "eligible_target_pools": 15,
+          "eligible_images": 15
+        },
+        {
+          "k": 20,
+          "eligible_target_pools": 10,
+          "eligible_images": 10
+        },
+        {
+          "k": 24,
+          "eligible_target_pools": 6,
+          "eligible_images": 6
+        },
+        {
+          "k": 28,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 30,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 32,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 35,
+          "eligible_target_pools": 0,
+          "eligible_images": 0
+        }
+      ]
+    },
+    "final_cut_diagnostic": {
+      "scope_counts": {
+        "全部": 367,
+        "空间2": 70,
+        "都不符合（看不懂）": 31,
+        "未定": 34,
+        "空间1": 82
+      },
+      "nonempty_pools": 42,
+      "qualified_pools": 37,
+      "records_in_qualified_pools": 510,
+      "planned_prefixes256_k3_to_n": 111616,
+      "pool_table": [
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 26,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "全部",
+          "n": 13,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 11,
+          "planned_prefixes256_k3_to_n": 2816
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "空间1",
+          "n": 16,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 15,
+          "planned_prefixes256_k3_to_n": 3584
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "全部",
+          "n": 21,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 21,
+          "planned_prefixes256_k3_to_n": 4864
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "全部",
+          "n": 16,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 16,
+          "planned_prefixes256_k3_to_n": 3584
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间1",
+          "n": 8,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1536
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间2",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 22,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "全部",
+          "n": 13,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 3,
+          "automatic_n": 8,
+          "planned_prefixes256_k3_to_n": 2816
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间1",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间2",
+          "n": 9,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 1792
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 1,
+          "automatic_n": 7,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 1,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间2",
+          "n": 12,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 12,
+          "planned_prefixes256_k3_to_n": 2560
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 5,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "空间1",
+          "n": 18,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 1,
+          "automatic_n": 14,
+          "planned_prefixes256_k3_to_n": 4096
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "全部",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 0,
+          "automatic_n": 11,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间2",
+          "n": 8,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1536
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "全部",
+          "n": 20,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 4608
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间2",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "全部",
+          "n": 24,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 23,
+          "planned_prefixes256_k3_to_n": 5632
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间2",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "全部",
+          "n": 22,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 5120
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "空间1",
+          "n": 1,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "空间2",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 5,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "全部",
+          "n": 23,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 21,
+          "planned_prefixes256_k3_to_n": 5376
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "空间1",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "uNb9QFRL6hY-21",
+          "target": "全部",
+          "n": 34,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 34,
+          "planned_prefixes256_k3_to_n": 8192
+        },
+        {
+          "image": "uNb9QFRL6hY-25",
+          "target": "全部",
+          "n": 33,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 31,
+          "planned_prefixes256_k3_to_n": 7936
+        },
+        {
+          "image": "uNb9QFRL6hY-47",
+          "target": "全部",
+          "n": 32,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 32,
+          "planned_prefixes256_k3_to_n": 7680
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "全部",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 12,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间2",
+          "n": 15,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 14,
+          "planned_prefixes256_k3_to_n": 3328
+        }
+      ],
+      "support_by_k": [
+        {
+          "k": 1,
+          "eligible_target_pools": 42,
+          "eligible_images": 17
+        },
+        {
+          "k": 2,
+          "eligible_target_pools": 41,
+          "eligible_images": 17
+        },
+        {
+          "k": 3,
+          "eligible_target_pools": 37,
+          "eligible_images": 17
+        },
+        {
+          "k": 4,
+          "eligible_target_pools": 33,
+          "eligible_images": 17
+        },
+        {
+          "k": 5,
+          "eligible_target_pools": 30,
+          "eligible_images": 17
+        },
+        {
+          "k": 6,
+          "eligible_target_pools": 27,
+          "eligible_images": 17
+        },
+        {
+          "k": 8,
+          "eligible_target_pools": 24,
+          "eligible_images": 17
+        },
+        {
+          "k": 10,
+          "eligible_target_pools": 21,
+          "eligible_images": 17
+        },
+        {
+          "k": 12,
+          "eligible_target_pools": 21,
+          "eligible_images": 17
+        },
+        {
+          "k": 16,
+          "eligible_target_pools": 15,
+          "eligible_images": 15
+        },
+        {
+          "k": 20,
+          "eligible_target_pools": 10,
+          "eligible_images": 10
+        },
+        {
+          "k": 24,
+          "eligible_target_pools": 6,
+          "eligible_images": 6
+        },
+        {
+          "k": 28,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 30,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 32,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 35,
+          "eligible_target_pools": 0,
+          "eligible_images": 0
+        }
+      ]
+    },
+    "final_polygon_sensitivity": {
+      "scope_counts": {
+        "全部": 334,
+        "空间2": 43,
+        "未定": 107,
+        "都不符合（看不懂）": 31,
+        "空间1": 69
+      },
+      "nonempty_pools": 39,
+      "qualified_pools": 34,
+      "records_in_qualified_pools": 439,
+      "planned_prefixes256_k3_to_n": 94976,
+      "pool_table": [
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 26,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "2t7WUuJeko7-07",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "全部",
+          "n": 7,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 5,
+          "planned_prefixes256_k3_to_n": 1280
+        },
+        {
+          "image": "7y3sRwLe3Va-06",
+          "target": "空间1",
+          "n": 13,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 12,
+          "planned_prefixes256_k3_to_n": 2816
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "全部",
+          "n": 20,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 20,
+          "planned_prefixes256_k3_to_n": 4608
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 6,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "7y3sRwLe3Va-10",
+          "target": "空间2",
+          "n": 1,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "全部",
+          "n": 16,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 16,
+          "planned_prefixes256_k3_to_n": 3584
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间1",
+          "n": 6,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 1024
+        },
+        {
+          "image": "7y3sRwLe3Va-18",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "全部",
+          "n": 27,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 22,
+          "planned_prefixes256_k3_to_n": 6400
+        },
+        {
+          "image": "B6ByNegPMKs-42",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "全部",
+          "n": 9,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 3,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 1792
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间1",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "B6ByNegPMKs-43",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 1,
+          "automatic_n": 7,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 1,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "S9hNv5qa7GM-08",
+          "target": "空间2",
+          "n": 9,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 1792
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "全部",
+          "n": 11,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 5,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 2304
+        },
+        {
+          "image": "b8cTxDM8gDG-08",
+          "target": "空间1",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 3,
+          "agent_visual_n": 1,
+          "automatic_n": 13,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "全部",
+          "n": 17,
+          "qualified_n_ge_3": true,
+          "human_n": 6,
+          "agent_visual_n": 0,
+          "automatic_n": 11,
+          "planned_prefixes256_k3_to_n": 3840
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "jh4fc5c5qoQ-09",
+          "target": "空间2",
+          "n": 5,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 768
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "全部",
+          "n": 20,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 4608
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间1",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "jh4fc5c5qoQ-14",
+          "target": "空间2",
+          "n": 1,
+          "qualified_n_ge_3": false,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 0,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "全部",
+          "n": 10,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 2048
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 3,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "jtcxE69GiFV-12",
+          "target": "空间2",
+          "n": 1,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 1,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "全部",
+          "n": 22,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 2,
+          "automatic_n": 18,
+          "planned_prefixes256_k3_to_n": 5120
+        },
+        {
+          "image": "q9vSo1VnCiC-04",
+          "target": "空间2",
+          "n": 4,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 4,
+          "planned_prefixes256_k3_to_n": 512
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "全部",
+          "n": 23,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 21,
+          "planned_prefixes256_k3_to_n": 5376
+        },
+        {
+          "image": "q9vSo1VnCiC-13",
+          "target": "空间2",
+          "n": 2,
+          "qualified_n_ge_3": false,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 0
+        },
+        {
+          "image": "uNb9QFRL6hY-21",
+          "target": "全部",
+          "n": 32,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 32,
+          "planned_prefixes256_k3_to_n": 7680
+        },
+        {
+          "image": "uNb9QFRL6hY-25",
+          "target": "全部",
+          "n": 33,
+          "qualified_n_ge_3": true,
+          "human_n": 2,
+          "agent_visual_n": 0,
+          "automatic_n": 31,
+          "planned_prefixes256_k3_to_n": 7936
+        },
+        {
+          "image": "uNb9QFRL6hY-47",
+          "target": "全部",
+          "n": 32,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 0,
+          "automatic_n": 32,
+          "planned_prefixes256_k3_to_n": 7680
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "全部",
+          "n": 14,
+          "qualified_n_ge_3": true,
+          "human_n": 5,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 3072
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间1",
+          "n": 3,
+          "qualified_n_ge_3": true,
+          "human_n": 0,
+          "agent_visual_n": 1,
+          "automatic_n": 2,
+          "planned_prefixes256_k3_to_n": 256
+        },
+        {
+          "image": "uNb9QFRL6hY-83",
+          "target": "空间2",
+          "n": 10,
+          "qualified_n_ge_3": true,
+          "human_n": 1,
+          "agent_visual_n": 0,
+          "automatic_n": 9,
+          "planned_prefixes256_k3_to_n": 2048
+        }
+      ],
+      "support_by_k": [
+        {
+          "k": 1,
+          "eligible_target_pools": 39,
+          "eligible_images": 17
+        },
+        {
+          "k": 2,
+          "eligible_target_pools": 36,
+          "eligible_images": 17
+        },
+        {
+          "k": 3,
+          "eligible_target_pools": 34,
+          "eligible_images": 17
+        },
+        {
+          "k": 4,
+          "eligible_target_pools": 32,
+          "eligible_images": 17
+        },
+        {
+          "k": 5,
+          "eligible_target_pools": 25,
+          "eligible_images": 17
+        },
+        {
+          "k": 6,
+          "eligible_target_pools": 23,
+          "eligible_images": 17
+        },
+        {
+          "k": 8,
+          "eligible_target_pools": 20,
+          "eligible_images": 17
+        },
+        {
+          "k": 10,
+          "eligible_target_pools": 18,
+          "eligible_images": 16
+        },
+        {
+          "k": 12,
+          "eligible_target_pools": 15,
+          "eligible_images": 15
+        },
+        {
+          "k": 16,
+          "eligible_target_pools": 12,
+          "eligible_images": 12
+        },
+        {
+          "k": 20,
+          "eligible_target_pools": 9,
+          "eligible_images": 9
+        },
+        {
+          "k": 24,
+          "eligible_target_pools": 5,
+          "eligible_images": 5
+        },
+        {
+          "k": 28,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 30,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 32,
+          "eligible_target_pools": 3,
+          "eligible_images": 3
+        },
+        {
+          "k": 35,
+          "eligible_target_pools": 0,
+          "eligible_images": 0
+        }
+      ]
+    }
+  },
+  "source_scope": [
+    {
+      "source": "agent_visual_correct_automatic",
+      "n": 1,
+      "old": {
+        "全部": 1
+      },
+      "final_cut": {
+        "全部": 1
+      },
+      "final_polygon": {
+        "全部": 1
+      }
+    },
+    {
+      "source": "agent_visual_support_automatic",
+      "n": 25,
+      "old": {
+        "空间1": 11,
+        "空间2": 2,
+        "全部": 12
+      },
+      "final_cut": {
+        "空间1": 11,
+        "空间2": 2,
+        "全部": 12
+      },
+      "final_polygon": {
+        "空间1": 11,
+        "空间2": 2,
+        "全部": 12
+      }
+    },
+    {
+      "source": "agent_visual_unresolved",
+      "n": 9,
+      "old": {
+        "未定": 9
+      },
+      "final_cut": {
+        "未定": 9
+      },
+      "final_polygon": {
+        "未定": 9
+      }
+    },
+    {
+      "source": "automatic_current_cuts",
+      "n": 447,
+      "old": {
+        "全部": 316,
+        "空间2": 64,
+        "空间1": 67
+      },
+      "final_cut": {
+        "全部": 316,
+        "空间2": 62,
+        "空间1": 66,
+        "未定": 3
+      },
+      "final_polygon": {
+        "全部": 283,
+        "未定": 76,
+        "空间2": 36,
+        "空间1": 52
+      }
+    },
+    {
+      "source": "automatic_unresolved",
+      "n": 24,
+      "old": {
+        "未定": 24
+      },
+      "final_cut": {
+        "未定": 22,
+        "全部": 1,
+        "空间2": 1
+      },
+      "final_polygon": {
+        "未定": 22,
+        "全部": 1,
+        "空间1": 1
+      }
+    },
+    {
+      "source": "user_reaffirmed",
+      "n": 5,
+      "old": {
+        "全部": 3,
+        "都不符合（看不懂）": 2
+      },
+      "final_cut": {
+        "全部": 3,
+        "都不符合（看不懂）": 2
+      },
+      "final_polygon": {
+        "全部": 3,
+        "都不符合（看不懂）": 2
+      }
+    },
+    {
+      "source": "user_review",
+      "n": 73,
+      "old": {
+        "全部": 34,
+        "空间2": 5,
+        "都不符合（看不懂）": 29,
+        "空间1": 5
+      },
+      "final_cut": {
+        "全部": 34,
+        "空间2": 5,
+        "都不符合（看不懂）": 29,
+        "空间1": 5
+      },
+      "final_polygon": {
+        "全部": 34,
+        "空间2": 5,
+        "都不符合（看不懂）": 29,
+        "空间1": 5
+      }
+    }
+  ],
+  "warning": "All refreshed scopes are diagnostic only. Final cuts preserve the original half-plane rule; bounded-polygon intersection additionally tests shape/extent and is not a replacement scope rule. No fusion, scoring, formal target adoption, qualification change, or human/visual overwrite."
+}

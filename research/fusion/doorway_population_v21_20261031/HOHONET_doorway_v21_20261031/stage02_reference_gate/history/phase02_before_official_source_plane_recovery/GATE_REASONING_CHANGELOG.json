@@ -1,0 +1,12 @@
+{
+  "initial_check": "All 34 final side polygons contain at least one new floor vertex; no top points in final decisions.",
+  "additional_evidence": "Current reference catalogue carries explicit already adopted flat ceiling heights for q9-04, q9-13, uNb-47; receipt and implementation retrieved.",
+  "final_gate": {
+    "existing_full_targets": 17,
+    "unique_plane_restriction_targets": 6,
+    "floor_only_side_targets": 28
+  },
+  "why_revision_is_necessary": "A new vertex does not imply an unknown top if its containing horizontal plane is explicitly fixed. Old draft flags alone are not a substantive computability check.",
+  "unmodified": "original GT, final floors, reference axes, original annotations, source qualification, human and visual labels",
+  "remaining_boundary": "derived artificial stopping facets are target closures, not new physical-wall GT; original nonflat references not silently averaged"
+}

@@ -1,0 +1,37 @@
+{
+  "focal_intervals": [
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      7
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      10,
+      11
+    ]
+  ],
+  "no_fusion": true,
+  "no_new_sampling": true,
+  "unchanged_bootstrap": true,
+  "state_direction": "Positive native_below_four/no_connection/output_unscorable means more affected paths; negative means fewer.",
+  "quality_direction": "Q paired delta conditions on both endpoints scoreable; marginal conditional-mean delta is stored separately.",
+  "half_vote": "Uses native half_vote_nodes only where saved and finite. These are selected nodes exactly at the MV50 half threshold, not all candidate structures or a proof of mutually exclusive representations.",
+  "structural_inference": "Adding one member changes samples, local supports, locations and connections. Odd/even threshold change is descriptive; trace evidence is needed for a specific causal mechanism.",
+  "true_zero_Q": "No rounding-derived zero counts; retain underlying positive values.",
+  "final_score_export": "stage04_computation/ENDPOINT_TARGET_SCORES.csv.gz"
+}

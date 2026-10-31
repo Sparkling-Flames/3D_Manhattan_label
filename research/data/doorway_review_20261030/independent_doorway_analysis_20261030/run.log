@@ -1,0 +1,121 @@
+{
+  "source_commit": "d4c73943ae58476880bf3ceb7b774e4ec59a95b5",
+  "inventory": 708,
+  "images": 20,
+  "unique_workers_inventory": 59,
+  "unique_workers_base": 57,
+  "base_records": 584,
+  "screened_records": 553,
+  "kept_human_or_visual_records": 113,
+  "base_exclusion_union": 124,
+  "exclusion_combinations": [
+    {
+      "reasons": [
+        "inherited_pool_exclusion"
+      ],
+      "n": 14
+    },
+    {
+      "reasons": [
+        "oos_separate"
+      ],
+      "n": 67
+    },
+    {
+      "reasons": [
+        "oos_separate",
+        "paired_geometry_unavailable"
+      ],
+      "n": 3
+    },
+    {
+      "reasons": [
+        "inherited_pool_exclusion",
+        "paired_geometry_unavailable"
+      ],
+      "n": 5
+    },
+    {
+      "reasons": [
+        "user_pending_image"
+      ],
+      "n": 35
+    }
+  ],
+  "tests": {
+    "geometry_examples": 10,
+    "simple_ring_examples": 2,
+    "classification_examples": 4,
+    "passed": true
+  },
+  "original_classification_parity": 708,
+  "old_automatic_fraction_max_abs_delta": 1.1102230246251565e-15,
+  "original_automatic_fraction_records": 586,
+  "paired_valid_records": 700,
+  "ready_to_score_count": 0,
+  "formally_adopted_targets": 0,
+  "base_changed_final_cut": 5,
+  "base_changed_final_polygon": 78,
+  "auto_base_final_cut_vs_polygon_disagreement": 75,
+  "warning": "All refreshed scopes are diagnostic only. Final cuts preserve the original half-plane rule; bounded-polygon intersection additionally tests shape/extent and is not a replacement scope rule. No fusion, scoring, formal target adoption, qualification change, or human/visual overwrite."
+}
+{
+  "prior_supplement": {
+    "scope_counts": {
+      "全部": 366,
+      "空间2": 71,
+      "都不符合（看不懂）": 31,
+      "未定": 33,
+      "空间1": 83
+    },
+    "nonempty_pools": 42,
+    "qualified_pools": 38,
+    "records_in_qualified_pools": 513,
+    "planned_prefixes256_k3_to_n": 111872
+  },
+  "final_cut_diagnostic": {
+    "scope_counts": {
+      "全部": 367,
+      "空间2": 70,
+      "都不符合（看不懂）": 31,
+      "未定": 34,
+      "空间1": 82
+    },
+    "nonempty_pools": 42,
+    "qualified_pools": 37,
+    "records_in_qualified_pools": 510,
+    "planned_prefixes256_k3_to_n": 111616
+  },
+  "final_polygon_sensitivity": {
+    "scope_counts": {
+      "全部": 334,
+      "空间2": 43,
+      "未定": 107,
+      "都不符合（看不懂）": 31,
+      "空间1": 69
+    },
+    "nonempty_pools": 39,
+    "qualified_pools": 34,
+    "records_in_qualified_pools": 439,
+    "planned_prefixes256_k3_to_n": 94976
+  }
+}
+{
+  "identity": "Historical original-reference unsplit frozen v2 doorway pool; not new v2.1 per-space curves",
+  "case_image": "7y3sRwLe3Va-06",
+  "case_paths": 24,
+  "prefix_rows": 768,
+  "unique_case_teams": 733,
+  "full_pool_images": 17,
+  "full_pool_complete": 11,
+  "full_pool_incomplete": 6,
+  "full_pool_conditional_mean_q": 45.789167045717036,
+  "full_pool_q80_n": 1,
+  "full_pool_q90_n": 0,
+  "case_paths_ever_complete_k3_plus": 24,
+  "case_paths_ever_lost_completeness_k3_plus": 24,
+  "case_paths_ever_regained_completeness_k3_plus": 21,
+  "adjacent_lost_complete": 86,
+  "adjacent_gained_complete": 66,
+  "warning": "Path rows share workers and endpoints; they are not independent experiments. k=1 is raw-answer baseline, k=2 policy-deferred. Missing Q is not zero and conditional Q means have changing valid subsets."
+}

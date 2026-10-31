@@ -1,0 +1,59 @@
+{
+  "denominator": "Unique executed physical teams or target evaluations in this registered catalogue; not image-equal curve success rates.",
+  "physical_teams": 259310,
+  "target_evaluations": 259917,
+  "true_zero_B8L2_n": 0,
+  "true_zero_rows": [],
+  "minimum_finite_B8L2": {
+    "score_key": "B6ByNegPMKs-43__c6376336305f76d9ee25f284::全部",
+    "image": "B6ByNegPMKs-43",
+    "k": 1,
+    "target": "全部",
+    "B8L2": 0.0001763608731126,
+    "score_status": "complete",
+    "endpoint_file": "stage04_computation/endpoints/B6ByNegPMKs-43/part_00000.jsonl.gz"
+  },
+  "physical_target_status_conflicts": [],
+  "runtime_exceptions": {},
+  "partial_candidate_floor_evaluable_counts": [
+    {
+      "regime": "main_fusion_k_ge3",
+      "target": "全部",
+      "target_evaluations": 24050
+    },
+    {
+      "regime": "main_fusion_k_ge3",
+      "target": "空间1",
+      "target_evaluations": 172
+    },
+    {
+      "regime": "main_fusion_k_ge3",
+      "target": "空间2",
+      "target_evaluations": 502
+    }
+  ],
+  "nonconsensus_output_examples": {
+    "invalid_full_geometry": {
+      "score_key": "7y3sRwLe3Va-06__0e9f719e2c9424acb6a28540::空间1",
+      "k": 2,
+      "image": "7y3sRwLe3Va-06",
+      "target": "空间1",
+      "geometry_status": "unavailable",
+      "geometry_reason": "wrong_hemisphere",
+      "complete_floor_evaluable": "True",
+      "connection_available": "True",
+      "endpoint_file": "stage04_computation/endpoints/7y3sRwLe3Va-06/part_00001.jsonl.gz"
+    },
+    "invalid_floor": {
+      "score_key": "7y3sRwLe3Va-06__60dfacbe2d562cec8ff10443::全部",
+      "k": 10,
+      "image": "7y3sRwLe3Va-06",
+      "target": "全部",
+      "geometry_status": "unavailable",
+      "geometry_reason": "invalid_footprint",
+      "complete_floor_evaluable": "False",
+      "connection_available": "True",
+      "endpoint_file": "stage04_computation/endpoints/7y3sRwLe3Va-06/part_00025.jsonl.gz"
+    }
+  }
+}

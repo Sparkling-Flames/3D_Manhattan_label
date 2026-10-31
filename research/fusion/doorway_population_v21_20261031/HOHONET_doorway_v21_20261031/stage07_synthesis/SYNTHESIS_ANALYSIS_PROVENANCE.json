@@ -1,0 +1,63 @@
+{
+  "primary_all17_preserved": true,
+  "no_person_or_reference_changes": true,
+  "no_new_fusion": true,
+  "sensitivity_timing": "post hoc diagnostic prompted by an identified scope-routing limitation",
+  "selection_uses_quality": false,
+  "criterion": "Apply the already-frozen area-routing rule to the adopted WHOLE GT; retain the 13 whose output is both.",
+  "retained_images": [
+    "2t7WUuJeko7-07",
+    "7y3sRwLe3Va-10",
+    "7y3sRwLe3Va-18",
+    "B6ByNegPMKs-42",
+    "B6ByNegPMKs-43",
+    "S9hNv5qa7GM-08",
+    "jh4fc5c5qoQ-09",
+    "jh4fc5c5qoQ-14",
+    "q9vSo1VnCiC-04",
+    "uNb9QFRL6hY-21",
+    "uNb9QFRL6hY-25",
+    "uNb9QFRL6hY-47",
+    "uNb9QFRL6hY-83"
+  ],
+  "excluded_from_sensitivity_only": [
+    {
+      "image": "7y3sRwLe3Va-06",
+      "automatic_class_if_whole_GT_were_an_answer": "borderline"
+    },
+    {
+      "image": "b8cTxDM8gDG-08",
+      "automatic_class_if_whole_GT_were_an_answer": "space1"
+    },
+    {
+      "image": "jtcxE69GiFV-12",
+      "automatic_class_if_whole_GT_were_an_answer": "borderline"
+    },
+    {
+      "image": "q9vSo1VnCiC-13",
+      "automatic_class_if_whole_GT_were_an_answer": "borderline"
+    }
+  ],
+  "interpretation": "A robustness panel, not corrected membership or an independent experiment. All17 remains primary. Both-score path differences and marginal tail/SD contrasts remain distinct.",
+  "paired_sources": [
+    "stage05_results/PAIRED_IMAGE_K_RESULTS.csv.gz",
+    "stage05_results/PAIRED_NUMBERS_IMAGE_INTERVALS.csv.gz"
+  ],
+  "tail_source": "stage05_results/POOL_K_METRICS.csv.gz",
+  "source_hashes": {
+    "stage06_cases/WHOLE_GT_FINAL_HALFPLANE_CLASSIFICATION_BLIND.csv": "7d9a729b9ae1387bff7422e59fb07290cd519dfc537883bb4e51c88a6cb60d23",
+    "stage05_results/PAIRED_IMAGE_K_RESULTS.csv.gz": "1ae0d419219e6012b03c61d4bd7298fa4b9d0588e67aa6bc8f33dc5ab5d97f57",
+    "stage05_results/PAIRED_NUMBERS_IMAGE_INTERVALS.csv.gz": "598a629b8e05ed65b1201d8df9b96b73a681fe74e23ff2172369537207f8d96a",
+    "stage05_results/POOL_K_METRICS.csv.gz": "67603cd60563792329b977399c98479336a82f0b03cf26173e34f1db0563e23d"
+  },
+  "written_csv": [
+    "ALL17_COMMON_K10_PAIRED_RESULTS.csv",
+    "LOW_TAIL_AND_SPREAD_IMAGE_RESULTS.csv",
+    "LOW_TAIL_AND_SPREAD_SUMMARY.csv",
+    "QUALITY_BLIND_NUMBER_IMAGE_RESULTS.csv",
+    "QUALITY_BLIND_NUMBER_SUMMARY.csv",
+    "QUALITY_BLIND_PAIRED_IMAGE_RESULTS.csv",
+    "QUALITY_BLIND_PAIRED_SUMMARY.csv",
+    "QUALITY_BLIND_SENSITIVITY_IMAGE_SET.csv"
+  ]
+}

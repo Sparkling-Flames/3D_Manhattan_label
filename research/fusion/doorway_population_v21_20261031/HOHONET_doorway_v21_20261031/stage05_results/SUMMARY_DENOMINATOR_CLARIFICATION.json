@@ -1,0 +1,10 @@
+{
+  "input": "already saved per-image/path-pair descriptive statistics",
+  "no_fusion": true,
+  "no_new_bootstrap": true,
+  "arm_conditional_mean_delta_image_equal": "to arm finite-image mean minus from arm finite-image mean; arm support can differ, counts explicit",
+  "common_image_marginal_mean_delta_image_equal": "mean of per-image conditional-mean differences, requiring both image means finite",
+  "mean_delta_image_equal": "mean of within-image same-path deltas, requiring both path endpoints finite",
+  "same_path_pairing": "image, base_replicate, k; intervals use the same base_replicate at both k",
+  "note": "The original marginal_mean_delta_image_equal field is retained as an alias for the common-image marginal difference."
+}

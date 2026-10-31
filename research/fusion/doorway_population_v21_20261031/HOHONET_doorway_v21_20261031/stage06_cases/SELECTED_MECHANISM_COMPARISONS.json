@@ -1,0 +1,154 @@
+[
+  {
+    "case_id": "unb83_decline",
+    "image": "uNb9QFRL6hY-83",
+    "label": "同一整体参考下，全部兼容池反而降质",
+    "interpretation": "整池n35→17同时改变人数和范围构成；主反例保留。根据来源点对映射识别局部门槛跨越及原答表达，不能只按总Q解释。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "uNb9QFRL6hY-83__0d8bd704dc6c1d27c930adb5",
+      "target": "全部",
+      "event_id": "uNb9QFRL6hY-83__manual__overall_after_screen::full",
+      "pool_id": "uNb9QFRL6hY-83__manual__overall_after_screen"
+    },
+    "B": {
+      "physical_team_key": "uNb9QFRL6hY-83__db7e3e4ad5f65bf45094c3fe",
+      "target": "全部",
+      "event_id": "uNb9QFRL6hY-83__manual__whole_compatible::full",
+      "pool_id": "uNb9QFRL6hY-83__manual__whole_compatible"
+    }
+  },
+  {
+    "case_id": "unb83_sensitivity",
+    "image": "uNb9QFRL6hY-83",
+    "label": "预定视觉分歧敏感性仍保留下降",
+    "interpretation": "仅对预先登记的视觉分歧做敏感性，n31→13；没有据目标Q重新筛人。与主反例共同解释。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "uNb9QFRL6hY-83__6162d4fc0349747a6d950005",
+      "target": "全部",
+      "event_id": "uNb9QFRL6hY-83__manual__overall_after_screen__exclude_visual_disagreement::full",
+      "pool_id": "uNb9QFRL6hY-83__manual__overall_after_screen__exclude_visual_disagreement"
+    },
+    "B": {
+      "physical_team_key": "uNb9QFRL6hY-83__4f1880800628e55832514283",
+      "target": "全部",
+      "event_id": "uNb9QFRL6hY-83__manual__whole_compatible__exclude_visual_disagreement::full",
+      "pool_id": "uNb9QFRL6hY-83__manual__whole_compatible__exclude_visual_disagreement"
+    }
+  },
+  {
+    "case_id": "b643_invalid",
+    "image": "B6ByNegPMKs-43",
+    "label": "所有原答可评，融合却自交；预定敏感性恢复",
+    "interpretation": "13份原答均可评；原融合5点来源环具有支持但底面自交。预定敏感性去掉W124，门槛7→6使两组6票角点进入。不是缺Q=0，也不是没有连接。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "B6ByNegPMKs-43__9e60011917096ea74712ef59",
+      "target": "全部",
+      "event_id": "B6ByNegPMKs-43__manual__whole_compatible::full",
+      "pool_id": "B6ByNegPMKs-43__manual__whole_compatible"
+    },
+    "B": {
+      "physical_team_key": "B6ByNegPMKs-43__276517ee0b707b6dcf2a5be1",
+      "target": "全部",
+      "event_id": "B6ByNegPMKs-43__manual__whole_compatible__exclude_visual_disagreement::full",
+      "pool_id": "B6ByNegPMKs-43__manual__whole_compatible__exclude_visual_disagreement"
+    }
+  },
+  {
+    "case_id": "7y06_failure",
+    "image": "7y3sRwLe3Va-06",
+    "label": "大混合池仅3节点，全部兼容池形成5节点",
+    "interpretation": "n32→13，局部支持分布与阈值同时变化；不完整三角候选IoU仅诊断，不进入完整底面曲线或作为闭环展示。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "7y3sRwLe3Va-06__774d9fe9c631054f6e917b87",
+      "target": "全部",
+      "event_id": "7y3sRwLe3Va-06__manual__overall_after_screen::full",
+      "pool_id": "7y3sRwLe3Va-06__manual__overall_after_screen"
+    },
+    "B": {
+      "physical_team_key": "7y3sRwLe3Va-06__ea1f55d9f2186023f89c2f0b",
+      "target": "全部",
+      "event_id": "7y3sRwLe3Va-06__manual__whole_compatible::full",
+      "pool_id": "7y3sRwLe3Va-06__manual__whole_compatible"
+    }
+  },
+  {
+    "case_id": "s9_failure",
+    "image": "S9hNv5qa7GM-08",
+    "label": "混合池未成形，全部兼容池形成完整输出",
+    "interpretation": "n34→14并非固定n效应；解释原混合池关键组16/34与15/34未过MV50，兼容池12/14过票及实际来源环。两侧单独仍可能有足够节点而无完整来源环。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "S9hNv5qa7GM-08__6864ea357b4d6a1d17fc5fe3",
+      "target": "全部",
+      "event_id": "S9hNv5qa7GM-08__manual__overall_after_screen::full",
+      "pool_id": "S9hNv5qa7GM-08__manual__overall_after_screen"
+    },
+    "B": {
+      "physical_team_key": "S9hNv5qa7GM-08__1d35c48e21bff7db419a12b0",
+      "target": "全部",
+      "event_id": "S9hNv5qa7GM-08__manual__whole_compatible::full",
+      "pool_id": "S9hNv5qa7GM-08__manual__whole_compatible"
+    }
+  },
+  {
+    "case_id": "b642_restore",
+    "image": "B6ByNegPMKs-42",
+    "label": "人工筛除后恢复完整共识",
+    "interpretation": "筛除W118/W121；n35→33。原13+13两个位置组在删除后重新形成24票同源组，不能仅归因为门槛18→17。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "B6ByNegPMKs-42__8232c0bc477811c5ac00a6f5",
+      "target": "全部",
+      "event_id": "B6ByNegPMKs-42__manual__overall_before_screen::full",
+      "pool_id": "B6ByNegPMKs-42__manual__overall_before_screen"
+    },
+    "B": {
+      "physical_team_key": "B6ByNegPMKs-42__1a8bf1909741d4ced3e605d5",
+      "target": "全部",
+      "event_id": "B6ByNegPMKs-42__manual__overall_after_screen::full",
+      "pool_id": "B6ByNegPMKs-42__manual__overall_after_screen"
+    }
+  },
+  {
+    "case_id": "jtc_legal",
+    "image": "jtcxE69GiFV-12",
+    "label": "合法只标空间1与全部目标分别评价",
+    "interpretation": "不同目标与不同人数，不把跨目标Q差当升降质。空间1是用户明确认可的合法选择；原答和共同局部角点及停止边可直接查看。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "jtcxE69GiFV-12__429ba713f5deedaf0e45bb0b",
+      "target": "空间1",
+      "event_id": "jtcxE69GiFV-12__manual__space1::full",
+      "pool_id": "jtcxE69GiFV-12__manual__space1"
+    },
+    "B": {
+      "physical_team_key": "jtcxE69GiFV-12__4af933d00f9e6e118ca92977",
+      "target": "全部",
+      "event_id": "jtcxE69GiFV-12__manual__whole_compatible::full",
+      "pool_id": "jtcxE69GiFV-12__manual__whole_compatible"
+    }
+  },
+  {
+    "case_id": "2t7_small",
+    "image": "2t7WUuJeko7-07",
+    "label": "筛除后变化很小，仍须保留GT漏角疑点",
+    "interpretation": "n35→34，选中四组及完整来源环相同，主要是估计位置小幅变化；Q变化−0.0274。没有证据说明筛除解决了GT漏门框角点。",
+    "selection_reason": "涵盖降质、失败、恢复、目标合法差异、小变化及预定敏感性；所有17图整池仍完整保留",
+    "A": {
+      "physical_team_key": "2t7WUuJeko7-07__447be479176b2477d43c715b",
+      "target": "全部",
+      "event_id": "2t7WUuJeko7-07__manual__overall_before_screen::full",
+      "pool_id": "2t7WUuJeko7-07__manual__overall_before_screen"
+    },
+    "B": {
+      "physical_team_key": "2t7WUuJeko7-07__a01dd8fd7255e5d6c8934617",
+      "target": "全部",
+      "event_id": "2t7WUuJeko7-07__manual__overall_after_screen::full",
+      "pool_id": "2t7WUuJeko7-07__manual__overall_after_screen"
+    }
+  }
+]

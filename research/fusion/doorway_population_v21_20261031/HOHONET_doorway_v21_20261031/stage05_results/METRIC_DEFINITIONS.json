@@ -1,0 +1,27 @@
+{
+  "primary_floor_metrics": [
+    "IoU2D100_complete",
+    "S_bottom_deg_complete",
+    "dir_complete",
+    "omission_complete",
+    "extension_complete"
+  ],
+  "complete_floor_gate": "complete_floor_evaluable; original k1 uses valid raw floor",
+  "complete_geometry_metrics": [
+    "S_bottom_deg_complete",
+    "dir_complete",
+    "omission_complete",
+    "extension_complete",
+    "fusion_turn_n_complete",
+    "fusion_short_turn_edges_complete",
+    "fusion_redundancy_n_complete",
+    "floor_area_h2_complete",
+    "centroid_x_h_complete",
+    "centroid_z_h_complete",
+    "height_mean_h_complete"
+  ],
+  "raw_diagnostic": "Unsuffixed floor/shape metrics retain native partial-candidate values, including below_four; never interpret these as a complete consensus.",
+  "fusion_success": "Complete-output and actual-consensus-failure rates describe k>=2 fusion attempts; main curves start at k3. k1 is an original-answer Q baseline, not a fusion attempt. Native k1 complete_evaluable and legacy review flags remain in source columns.",
+  "direction": "dir is the residual to the output's own best orthogonal axes, not angular rotation relative to the reference.",
+  "quality": "B8L2/D10/IoU3D100 require the independently accepted complete reference; missing Q is never zero."
+}

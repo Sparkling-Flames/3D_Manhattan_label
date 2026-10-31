@@ -1,0 +1,97 @@
+{
+  "inventory_records": 708,
+  "inventory_images": 20,
+  "inventory_workers": 59,
+  "base_records": 584,
+  "screened_records": 553,
+  "screen_removed_records": 31,
+  "base_images": 17,
+  "base_buildings": 9,
+  "base_workers": 57,
+  "conditions": {
+    "manual": 708
+  },
+  "final_base_scope_counts": {
+    "全部": 367,
+    "空间2": 70,
+    "都不符合（看不懂）": 31,
+    "未定": 34,
+    "空间1": 82
+  },
+  "final_screened_scope_counts": {
+    "全部": 367,
+    "空间2": 70,
+    "未定": 34,
+    "空间1": 82
+  },
+  "source_counts": {
+    "user_review": 73,
+    "automatic_recomputed_final_halfplanes_20261031": 471,
+    "agent_visual_support_automatic": 25,
+    "agent_visual_unresolved": 9,
+    "user_reaffirmed": 5,
+    "agent_visual_correct_automatic": 1
+  },
+  "excluded_reason_combinations": [
+    {
+      "reasons": [
+        "inherited_pool_exclusion"
+      ],
+      "n": 14
+    },
+    {
+      "reasons": [
+        "oos_separate"
+      ],
+      "n": 67
+    },
+    {
+      "reasons": [
+        "oos_separate",
+        "paired_geometry_unavailable"
+      ],
+      "n": 3
+    },
+    {
+      "reasons": [
+        "inherited_pool_exclusion",
+        "paired_geometry_unavailable"
+      ],
+      "n": 5
+    },
+    {
+      "reasons": [
+        "user_pending_image"
+      ],
+      "n": 35
+    }
+  ],
+  "original_classification_reproduction_n": 708,
+  "independent_halfplane_max_abs_delta": 3.3306690738754696e-16,
+  "stored_auto_fraction_recomputed_n": 586,
+  "stored_auto_fraction_max_abs_delta": 1.1102230246251565e-15,
+  "protected_base_n": 113,
+  "protected_changes_n": 0,
+  "changed_auto_scope_base_n": 5,
+  "bounded_polygon_sensitivity_disagreement_base_n": 75,
+  "inherited_quality_true_base_n": 571,
+  "inherited_quality_hold_base_n": 13,
+  "base_paired_coordinates_present_n": 584,
+  "base_raw_geometry_caution_n": 2,
+  "retained_no_scope_n": 34,
+  "sensitivity_disagreement_n": 9,
+  "target_pool_count_including_empty": 51,
+  "nonempty_target_pools": 42,
+  "target_pools_n_ge3": 37,
+  "target_pool_members": 519,
+  "records_in_target_pools_n_ge3": 510,
+  "planned_prefix_rows_256_k3plus": 111616,
+  "every_target_pool_before_after_identical": true,
+  "warnings": [
+    "Scope assignment is independent of Q; finite-polygon results are sensitivity only.",
+    "Present paired coordinates do not by themselves establish complete-target reference correctness or quality evaluability.",
+    "The 31 rejected answers are selected review findings, not a random sample estimate of error prevalence.",
+    "584 and 553 count annotation identities, not unique people; same workers annotate multiple images.",
+    "Three inherited full-input holds have paired points in this archive; ten inherited target/reference holds remain explicitly recorded."
+  ]
+}
