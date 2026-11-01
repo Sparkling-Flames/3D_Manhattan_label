@@ -33,6 +33,7 @@ def current_research():
     sources = {
         'modules': ('research_readiness_20261031/MODULE_MATRIX.csv', ['module','status','entry','evidence','boundary','verification']),
         'half': (difficulty+'HALF_SUMMARY.csv', ['n','scope','events','registered_images','valid_images','gap_A','gap_sym','CB']),
+        'half_exceptions': ('half_team_current_exceptions_20261031/CASE_INDEX.csv', ['image','events','scored_events','gap_A','gap_sym','CB','flags','numeric_evidence','trace_evidence']),
         'half_difficulty': (difficulty+'HALF_DIFFICULTY_COMPONENTS.csv', ['n','scope','difficulty','metric','images','mean']),
         'same_room': (difficulty+'SAME_ROOM_HALF_SUMMARY.csv', ['method','n','m','direction','registered_pairs','valid_pairs','CB_mean']),
         'same_room_pairs': (difficulty+'SAME_ROOM_HALF_PAIRS.csv', ['method_updated','n','m','pair_key','CB_a','CB_b']),

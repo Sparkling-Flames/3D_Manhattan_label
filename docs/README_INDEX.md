@@ -1,3 +1,7 @@
+- **同房原始问题（2026-11-01）：** [平均质量、时间与个人表现的结论及证据索引](thesis_main/同房研究_原始问题结论与证据索引_20261101.md)；先讲相似现象，再讲配比和换人，时间覆盖与图对反例单列。
+
+- **当前半队反例（147合法事件）：** [30图63事件的几何、票数与连接解释及离线研究台](../research/data/releases/v2.1/half_team_current_exceptions_20261031/README.md)。旧36图保留历史范围。
+
 - **半队替换接续：** [逐图难度、幅度/升降/不可评诊断](../research/data/releases/v2.1/simulated_population_evidence/exchange/README.md)与[原答距离恢复](../research/workers/personnel_v21_reselection_20261029/raw_similarity/RAW_ANSWER_SIMILARITY_ZH.md)已提供；分类方法仍待Pro研究。
 
 - [v2.1五条下游补件与本地核查](../research/data/releases/v2.1/full_chain_downstream_20261030/README.md)：半队全部反例、同房、快慢难度、预测、Q/QT共同支持、停止与历史成本。
@@ -358,7 +362,7 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 2026-10-24：[D10形成链与融合共同面板独立验收](../research/statistics/research_closeout_20261022/METHOD_SUPPLEMENT_ACCEPTANCE_20261024.md)已完成，含常数η²修复与真实重算边界；接入安排沿用主线研究台任务文档。
 
-- [门洞空间审核与v2.1曲线准备](../research/data/doorway_review_20261030/README.md)：当前[584/439双版本曲线与比较](../research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md)已完成；累计145排除，14人池容量及资格敏感性单列。533结果与524名单原位归档，旧阶段数值不得当作当前结果。
+- [门洞空间审核与v2.1曲线准备](../research/data/doorway_review_20261030/README.md)：当前[584/439双版本曲线与比较](../research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md)已完成；累计145排除，14人池容量及资格敏感性单列。533结果与524名单原位归档，旧阶段数值不得当作当前结果。 综合人数曲线已延伸至34人，每个k保持两版同图比较并显示支持数，14人后标示变化面板。
 - [门洞v2.1人员池、参考与完整几何曲线归档](../research/fusion/doorway_population_v21_20261031/README.md)：584/553早期筛选快照，保留为历史分析，不替代当前584/439结果。
 - [门洞初审来源包与快照工作台](../research/difficulty/doorway_split_review_20261030/README.md)：归档20图708份原始初审记录和当时工作台；不替代后续审核及最终目标判定，原图不随仓库上传。
 
@@ -378,3 +382,5 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 
 - [DSTRUCT/Q及逐人难度后续诊断](../research/data/releases/v2.1/q_only_exchange_20261031/diagnostic_20261031/README.md)：不同选员事件、参考匹配特征与60人分难度质量查询；只聚合现有结果。
 - [v2.1全研究完备性与当前研究台接入](../research/data/releases/v2.1/research_readiness_20261031/README.md)：21模块核查、当前标签支持与真实剩余事项；DSTRUCT正向/RFUSE反向职责已定、门洞当前成果已接入，研究台程序验收与浏览器验收分开。
+
+- [2026-11-01 v2.1逐图人数响应独立审查](../research/workers/image_response_v21_20261101/README.md)：206图平台、171图后段升降/低尾/波动及门洞584/439；逐路径复算与几何案例通过，交接当前v2.1接入，原始参考与分类不变。

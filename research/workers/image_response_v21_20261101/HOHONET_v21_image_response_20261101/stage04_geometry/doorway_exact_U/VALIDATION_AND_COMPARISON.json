@@ -1,0 +1,25 @@
+{
+  "expected_all_pool_k_cells": 1314,
+  "actual_pool_k_cells": 1314,
+  "metric_rows": 6570,
+  "denominator_identity_all_pass": true,
+  "zero_pairs_missing_mean_all_pass": true,
+  "analytic_repeated_state_example_mean": 0.6666666666666666,
+  "expanded_real_check": {
+    "pool_id": "2t7WUuJeko7-07__manual__space2",
+    "k": 3,
+    "valid_paths": 256,
+    "path_pairs": 32640,
+    "brute_force_mean": 0.14502088584960024,
+    "multiplicity_U": 0.1450208858496002,
+    "absolute_difference": 2.7755575615628914e-17
+  },
+  "valid_full_pool_one_state_metric_rows": 290,
+  "valid_full_one_state_U_zero": true,
+  "gzip_read_to_eof": 141,
+  "bad_gzip": [],
+  "comparison_count_note": "sum of distinct state-pair evaluations within each pool/k; cross-pool repeats may recur, not globally unique geometry pairs",
+  "validation_did_not_change_fusion_or_Q": true,
+  "validation_expanded_repeated_pair_evaluations": 32640,
+  "adopted_result": "exact path-frequency U; original two matchings retained solely as approximation sensitivity"
+}

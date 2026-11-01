@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOHONET v2.1 逐图人数响应：复现入口与依赖</title>
+<style>
+body{font-family:system-ui,"Noto Sans SC","Microsoft YaHei",sans-serif;max-width:1160px;margin:36px auto;padding:0 24px;color:#203747;line-height:1.8}h1{font-size:30px;line-height:1.35}h2{font-size:23px;margin-top:36px;border-bottom:2px solid #d7e4eb;padding-bottom:7px}h3{font-size:18px}p,li{font-size:15px}table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px}th,td{border:1px solid #d5e0e7;padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{background:#eaf2f7}tr:nth-child(even){background:#f8fafc}code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;overflow-wrap:anywhere}pre{background:#f0f4f7;padding:16px;border-left:4px solid #357b9e;overflow:auto;font-size:13px;line-height:1.6;white-space:pre-wrap}.lead{background:#eaf3f8;padding:19px;border-radius:7px}.note{color:#536b7b;font-size:13px}a{color:#17688e}.nowrap{white-space:nowrap}@media print{body{max-width:none;margin:0;font-size:10pt}h2{break-after:avoid}pre,tr{break-inside:avoid}}
+</style></head>
+<body>
+<h1>HOHONET v2.1 逐图人数响应与稳定性<br>复现入口、依赖和新增计算账本</h1>
+<p class="note">研究目录：<code>HOHONET_v21_image_response_20261101</code><br>冻结仓库：<code>Sparkling-Flames/3D_Manhattan_label</code><br>固定提交：<code>e1873bfadc1d0e61499809c91fba9dc39c717f83</code></p>
+<div class="lead"><strong>本交付可以从已保存的精确团队端点重新完成本轮下游统计、门洞几何距离、分层和敏感性分析，并重画图表。</strong>不需要重新生成自然进入顺序或重新融合研究团队。交付保留必要原答、参考、路径、成员和案例证据；并未收集全库所有原始全景、所有团队的完整融合工程状态或全部历史大包。以下将这两个复现范围分别列明。</div>
+
+<h2>1．解压方式与文件范围</h2>
+<p>所有本轮 ZIP 都含相同的顶层目录 <code>HOHONET_v21_image_response_20261101/</code>。请把它们<strong>解压到同一个上级目录</strong>，由文件夹自然合并。不要再人为套一层 <code>reproduction_inputs/</code>，也不要把输入包解压进已有的研究根目录而重复嵌套同名目录。可以在新的复现文件夹下操作，保留原仓库和本轮已交付结果。</p>
+<table><thead><tr><th>文件</th><th>实际用途</th><th>是否为本轮下游重算必需</th></tr></thead><tbody>
+<tr><td><code>02_Results_Report_and_Figures.zip</code></td><td>完整核心结果、分层表、报告、图表和绘图数据。</td><td>直接阅读或从现有结果重画时需要；从输入重新分析时可由脚本生成结果。</td></tr>
+<tr><td><code>03_Path_Events_Part01.zip</code><br><code>03_Path_Events_Part02.zip</code><br><code>03_Path_Events_Part03.zip</code><br><code>03_Path_Events_Part04.zip</code></td><td>337 个逐池质量／结构／状态变化事件表，共 5,092,048 行；包含 252 个普通及辅助域登记池、85 个门洞池。空表仍保留身份。</td><td>直接查询已交付逐路径事件需要；从输入重算时会重新输出。</td></tr>
+<tr><td><code>04_Reproduction_Inputs_Part01.zip</code><br><code>04_Reproduction_Inputs_Part02.zip</code><br><code>04_Reproduction_Inputs_Part03.zip</code></td><td>690 个必要输入文件：422 个端点投影表、几何目录、k=2 独立覆盖、冻结快照、参考、现行成员池及路径、既有几何 U 与 MC 区间等。</td><td>从冻结端点完整重做统计时需要全部三包。</td></tr>
+<tr><td><code>05_Cases_and_Evidence.zip</code></td><td>三个普通 Manual 和两个门洞案例；完整相关原答、参考、原图、端点、票账、诊断轨迹及冻结回放代码。</td><td>核心数值重算不依赖案例包；阅读案例与完整报告重建需要，报告嵌入其中的 e9z 配图。</td></tr>
+<tr><td><code>06_Code_and_Reproduction.zip</code></td><td>全部 <code>scripts/</code>、本说明、依赖与新增计算账本、<code>requirements.txt</code>、静态字体和授权文件；另含与 04 字节完全相同的三个投影版 <code>POOL_INDEX.csv</code>。</td><td>执行复现命令需要。</td></tr>
+<tr><td><code>07_Geometry_Pair_Events.zip</code></td><td>门洞已保存路径的一步／两步几何变化、对实际满员距离及旧匹配近似的逐事件数据。</td><td>直接读取完整几何事件需要；从 04 输入重算时由脚本生成。</td></tr>
+</tbody></table>
+<p><strong>03 的四包、04 的三包都是能单独打开的普通 ZIP，不是多卷压缩文件。</strong>无需拼接字节；分别解压即可。各个分包内文件互不重复。输入包与代码包共享的三个小索引是相同字节，任一解压顺序均应保持同一内容。</p>
+<p>输入包已逐文件核验：690 文件、651 个 gzip 完整读到 EOF，670 个 CSV 共 3,421,185 数据行；855 条索引／直接依赖关系全部存在。上述行数包含标量表与几何扩展表的复用身份，<strong>不是独立研究团队或独立图片数</strong>。表投影保留本轮所用数值、状态、精确成员与参考身份，删去冗余别名及来源历史列；其 SHA256 与上游未投影 SHA256 的映射见 <code>INPUT_PROJECTION_MANIFEST.csv</code>。完整分包验证见 <code>stage09_delivery/REPRODUCTION_INPUT_PACKAGE_VALIDATION.json</code> 与对应 manifest。</p>
+
+<h2>2．运行环境</h2>
+<p>实际计算环境为 Python 3.12.14。根目录 <code>requirements.txt</code> 固定本轮实际使用的版本：NumPy 2.3.5、pandas 2.2.3、SciPy 1.17.0、Matplotlib 3.10.8、Shapely 2.1.2、Pillow 12.3.0、ReportLab 4.4.9、fonttools 4.61.1、PyMuPDF 1.26.6、pypdf 6.10.0，以及保留诊断代码依赖树使用的 scikit-learn 1.8.0。Shapely 的实际 GEOS 为 3.13.1。<code>vendor/</code> 二进制不随包分发，安装所列版本即可。</p>
+<p>以下命令均在解压后的研究根目录运行。可使用已有 Python 3.12 环境，或先创建独立环境。Linux/macOS 的激活命令是 <code>source .venv/bin/activate</code>；Windows PowerShell 使用 <code>.venv\Scripts\Activate.ps1</code>。</p>
+<pre>python -m venv .venv
+# 按当前系统激活 .venv 后执行：
+python -m pip install -r requirements.txt</pre>
+<p>静态图采用随 Matplotlib 可用的 DejaVu Sans。中文报告使用代码包 <code>assets/NotoSansSC-Regular.ttf</code> 等静态字体和随附授权文件。统计与图表不需要联网，不访问原 Windows 工作目录，也不依赖资料下载工具的登录状态。</p>
+
+<h2>3．最小入口：从既有核心结果重画图表</h2>
+<p>解压 <strong>02 结果包和 06 代码包</strong>后，执行下面一条命令即可。代码包附的投影版 Manual 索引提供冻结难度、容量和域身份。此入口不读全量端点、不生成新团队、不重做融合或质量评分。</p>
+<pre>python scripts/make_figures.py</pre>
+<p>输出在 <code>stage08_figures/</code>：英文标题、坐标与图例的 PNG/PDF/SVG、绘图数据、普通 206 图与门洞 17 图的逐图图册及可检索 HTML。该脚本没有额外的命令行开关，会按冻结范围生成完整图表和图册。</p>
+<p>若要重建中文综合报告和逐图可读索引，再解压 <strong>05 案例包</strong>，然后运行：</p>
+<pre>python scripts/build_report.py</pre>
+<p>输出在 <code>stage09_report/</code>。报告引用保存的统计结果与案例图；只有重画需求时，无需再次执行下节统计链。</p>
+
+<h2>4．完整下游入口：从冻结端点重做本轮统计</h2>
+<p>建议把 <strong>全部 04 输入包与 06 代码包</strong>解压到一个新的复现目录，按以下顺序执行。这样不会把原结果的完成标记误当作本次已重算证据，也不用删除历史结果。所有脚本自动以自身所在目录的上一级作为研究根；命令中的相对路径均相对于该根目录。</p>
+<h3>4.1 逐池统计、路径变化和全尾起点</h3>
+<pre>python scripts/analyze_response_parallel.py --root . --input-index stage02_normalized/manual/POOL_INDEX.csv --output stage03_response/manual --workers 4
+python scripts/analyze_response_parallel.py --root . --input-index stage02_normalized/doorway/POOL_INDEX.csv --output stage03_response/doorway --workers 4
+python scripts/summarize_response.py --mode manual --root .
+python scripts/summarize_response.py --mode doorway --root .
+python scripts/analyze_response_diagnostics.py
+python scripts/analyze_continuous_structure.py
+python scripts/p10_definition_sensitivity.py
+python scripts/stage_response.py
+python scripts/finite_tail_sensitivity.py</pre>
+<p>并行只改变池的调度，不改变估计或随机种子。内存较少时把 <code>--workers 4</code> 改为 <code>--workers 1</code>。不要让串行与并行程序同时写同一输出目录。单池完成标记核对输入 SHA256、统计规则和核心代码；投影表与原未投影表的文件哈希不同是已登记的数据投影，不是数据丢失。重新从投影输入计算后的新完成标记会记录其实际哈希。</p>
+<p><code>manual</code> 输入索引共 252 池，普通主目标 206、额外合法 Manual 目标 30、实际可用 Semi 14、OOS 2，输出按域分开。主结论从普通 206 图提取，不把这些域合成同一个分母。门洞 85 池分为筛前、筛后、空间1、空间2、全部兼容池；13 个零容量池保留。主融合分析从 k≥3 开始，k=1 原答和 k=2 补充单列。</p>
+<h3>4.2 几何、质量分项和汇总</h3>
+<pre>python scripts/analyze_cached_geometry.py
+python scripts/doorway_geometry_response.py
+python scripts/doorway_exact_geometry_U.py --workers 4
+python scripts/validate_doorway_U.py
+python scripts/analyze_response_components.py --workers 2
+python scripts/integrate_results.py
+python scripts/make_figures.py</pre>
+<p>普通 Manual 几何直接复用已冻结的 256 路径 U 统计，分别连接 177 个既有池和 29 个新／变化池。门洞几何程序从 17 个保存端点几何目录计算已有团队的距离。<code>doorway_geometry_response.py</code> 同时保留两个匹配近似、每条路径的一步／两步变化和到实际满员距离；<strong>正式同人数几何多样性采用随后完整计算的 <code>doorway_exact_U</code></strong>。旧匹配只作近似精度诊断，不能替代最终 U。上述程序均不调用融合引擎。</p>
+<p>完整 U 对每个池、每个人数下全部有效的已保存路径索引对求平均。相同状态以出现次数加权，不能把重复团队去重后等权；无效几何按自己的分母记录，缺值不作零。<code>analyze_response_components.py</code> 回连冻结质量损失块和几何描述，不更改采用的 Q。计算的是均值、P10、SD、路径变化、状态、尾段包络及敏感性，<strong>不重新构造人员分类、难度或参考</strong>。</p>
+<p>完整 U 已保存全部 <strong>1,314 个池×人数格、6,570 个指标统计</strong>、几何状态出现次数及有效路径／配对分母。运算内部使用的全部距离矩阵没有重复持久化；17 个几何 catalog、精确路径关联和计算脚本足以重新计算这些距离。这与 07 包逐路径的一步／两步和到满员的几何事件不同。交付保留全部必要新增结果，<strong>不声称另外提供 28,061,738 次运算逐对展开的数据库</strong>。</p>
+<p>若同时解压了 05 案例包，可再运行 <code>python scripts/build_report.py</code> 生成综合报告。无需为报告重新执行案例诊断回放。</p>
+<h3>4.3 完整性验证与小样本检查</h3>
+<pre>python scripts/verify_response_checkpoints.py --mode manual
+python scripts/verify_response_checkpoints.py --mode doorway</pre>
+<p>这两个验证入口应在本次重算完成后使用，会完整读取逐池 gzip 并检查行数和当前输入／代码哈希。直接对原始交付结果与投影输入一起运行，可能看到原始未投影输入的哈希差异；应先查投影映射，不把此差异误报为数值失真。不要使用 <code>--invalidate-bad</code> 修改已交付证据，除非明确是在自己的重算目录进行修复。</p>
+<p>投影输入已对两个完整池做实际数值回算检查：<code>2t7WUuJeko7-02__manual__80761d0f32</code> 的 210 个数值列及 <code>B6ByNegPMKs-43__manual__overall_after_screen</code> 的 212 个数值列，最大差均为 0。回执为 <code>stage09_delivery/MINIMUM_INPUT_REPRO_CHECK.json</code>。690 文件和 855 依赖的检查是完整覆盖；该两池回算是投影数值验证，不冒称在另一全新环境中已把全部下游重新运行一次。</p>
+
+<h2>5．脚本参数和规则位置</h2>
+<table><thead><tr><th>脚本</th><th>实际支持的参数</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>analyze_response.py</code></td><td><code>--root</code>、可重复的 <code>--input-index</code>、<code>--output</code>、<code>--domains</code>（逗号分隔）、可重复的 <code>--pool-id</code>、<code>--limit</code>、<code>--no-path-events</code>、<code>--no-resume</code>、可重复的 <code>--bands</code></td><td>串行与定向检查入口。按单池筛选时使用独立输出目录，避免把全量汇总替换成一个池。</td></tr>
+<tr><td><code>analyze_response_parallel.py</code></td><td><code>--root</code>、<code>--input-index</code>、<code>--output</code>、<code>--workers</code></td><td>每次一个输入索引，完整保存路径事件，可续算。</td></tr>
+<tr><td><code>summarize_response.py</code></td><td><code>--mode manual|doorway</code>、<code>--root</code></td><td>固定容量面板、图等权／楼等权及方向分解。</td></tr>
+<tr><td><code>doorway_exact_geometry_U.py</code></td><td><code>--workers</code>、可重复的 <code>--pool-id</code>、<code>--max-k</code>、<code>--force</code></td><td>定向参数仅供明确范围的诊断；正式交付使用全部池、全部实际 k≥3。</td></tr>
+<tr><td><code>analyze_response_components.py</code></td><td><code>--workers</code></td><td>普通主目标 206 池与门洞扩展 85 池；当前公式源码另存并固定哈希。</td></tr>
+<tr><td><code>verify_response_checkpoints.py</code></td><td><code>--mode manual|doorway</code>、<code>--invalidate-bad</code></td><td>默认只验证并保存回执；后一个开关会失效化出错完成标记。</td></tr>
+<tr><td>本说明其余统计、汇总、绘图、报告脚本</td><td>无命令行参数，按上述命令直接运行。</td><td>不要把一个未实现的 <code>--help</code> 当成安全探测：这些脚本会直接执行主函数。</td></tr>
+</tbody></table>
+<p>主分析容差及支持门槛保存在 <code>scripts/analyze_response.py::CONFIG</code> 和结果方法文件中：均值／P10 的全剩余区间范围≤2 分、SD 范围≤1 分、完整可评率范围≤5 个百分点；每个候选起点后至少观察 <code>max(5, ceil(0.15N))</code> 名新增人员，各 k 至少 64 个有效保存路径，N&lt;8 不强行给起点。敏感性网格同时保存。普通几何“后续低分歧起点”采用后续 U 水平始终≤阈值，是另一种定义，不能与 Q 的小变化起点混称同一个平台。</p>
+<p>主路径 P10 为线性分位，另交付 inverse-CDF 敏感性；既有精确有限组合口径保留 inverse CDF。线性 P10 的旧 bootstrap 区间没有套用到 inverse CDF。既有 2000 次整路径 bootstrap 只刻画 256 路径估计精度，团队成员造成的实际波动和图片／建筑差异分别报告。</p>
+
+<h2>6．复用与真实新增计算</h2>
+<p>逐项机器可读账本为 <a href="NEW_COMPUTATIONS_LEDGER.csv">NEW_COMPUTATIONS_LEDGER.csv</a>，输入逐文件固定登记为 <a href="DEPENDENCIES_PINNED.csv">DEPENDENCIES_PINNED.csv</a>。</p>
+<table><thead><tr><th>环节</th><th>本轮真实执行</th><th>没有被计作新增研究对象的内容</th></tr></thead><tbody>
+<tr><td>路径与端点</td><td>复用普通主池每池 256 个完整随机排列前缀和门洞现行 584/439 保存路径；核成员、参考、状态并整理投影。</td><td>新增自然进入路径 0，新增科学团队 0，正式参考与采用 Q 没有改写。</td></tr>
+<tr><td>逐图响应</td><td>逐 k 分布与状态、相邻／固定区间路径变化、全尾包络和小变化起点、暂稳后跳变、固定图片面板、分层、MC 边界和分位敏感性。</td><td>路径重复出现按频次保留，不当成独立图片。</td></tr>
+<tr><td>普通几何</td><td>重新解释和汇总 206 图已有 U 曲线，并计算当前规则下起点。</td><td>普通全库几何两两距离没有重算。</td></tr>
+<tr><td>门洞几何</td><td>已保存团队的一步／两步距离、到实际满员距离；另统一对 85 池、1,314 个池×人数格完成精确路径 U，输出 6,570 个指标格。</td><td>28,061,738 是各池、各 k 内不同状态对运算量的和，<strong>跨池可能重复</strong>；不是全球唯一团队数，更不是新增融合数。验证另完整展开 32,640 个重复索引对。</td></tr>
+<tr><td>质量分项</td><td>291 池按冻结公式恢复／复核损失块，1,834,456 条 k≥3 路径行公式核验，最大 B8 残差 8.53×10<sup>−14</sup>。</td><td>损失块不是可相加的 Q 分值贡献；保存的 B8L2、D10、IoU3D100 未覆盖。</td></tr>
+<tr><td>机制</td><td>4 个不同的<strong>既有团队</strong>补充完整诊断轨迹；e9z 已有三个端点另外核算三个几何对及对应角点。</td><td>诊断回放不等于新增人数试验。全部已接受回放与原端点几何／状态／可用指标一致。</td></tr>
+</tbody></table>
+<h3>4 个既有团队的诊断回放</h3>
+<table><thead><tr><th>图片及人数</th><th>精确来源键</th><th>执行与证据</th></tr></thead><tbody>
+<tr><td>uNb9QFRL6hY-47，k=31</td><td><code>uNb9QFRL6hY-47__2ab96427eb197cf31b84fa80</code></td><td>新诊断回放 1 次，全部 parity 通过。</td></tr>
+<tr><td>jh4fc5c5qoQ-09，k=23</td><td><code>screen439_results_20261031\native\jh4fc5c5qoQ-09.jsonl:1602</code></td><td>新诊断回放 1 次，全部 parity 通过。</td></tr>
+<tr><td>jh4fc5c5qoQ-09，k=24</td><td><code>screen439_results_20261031\native\jh4fc5c5qoQ-09.jsonl:1544</code></td><td>新诊断回放 1 次，全部 parity 通过。</td></tr>
+<tr><td>VFuaQ6m2Qom-04，k=35</td><td><code>VFuaQ6m2Qom-04__manual__fbe40a551f__399994847ae4b038c746</code></td><td>同一旧团队调用融合 2 次：第一次回放后适配器读取缺少列而未接受；第二次改读原已保存标量完成 47 项 parity。未改输入、规则或端点。两次日志均保留。</td></tr>
+</tbody></table>
+<p>因此是<strong>4 个不同旧团队、5 次实际诊断融合调用</strong>，其中 1 次在接受前的适配器阶段失败；不是 5 个新增团队。uNb47 的 k=32 使用原完整轨迹，未再次融合。门洞回执为 <code>stage04_doorway_cases/DIAGNOSTIC_REPLAY_LEDGER.csv</code>；VFua 两次过程见 <code>stage05_cases/manual/VFuaQ6m2Qom-04/FULL35_DIAGNOSTIC_EXECUTION_LOG.json</code>，47 项一致性表为 <code>FULL35_DIAGNOSTIC_PARITY.csv</code>。</p>
+
+<h2>7．哪些代码仍依赖原大包或上游源目录</h2>
+<p>本轮下游命令已由投影输入覆盖。下面是<strong>重新从更上游恢复归一化文件或重建案例素材</strong>时才需要的来源；不属于运行第 3、4 节的额外前置要求。源路径以固定提交中的 manifest 为准，不能凭可疑同名文件或修改时间替换版本。</p>
+<table><thead><tr><th>可选上游操作</th><th>精确来源与包名</th><th>现有代码／边界</th></tr></thead><tbody>
+<tr><td>重建普通路径归一化</td><td><code>research/data/releases/v2.1/natural_analysis_restored/inputs/</code>、<code>natural_inputs/</code>、<code>admitted_space_extension/natural_inputs/</code>；冻结难度与结构条件源表。逐文件名、Git blob SHA 与字节数在 <code>stage00_manual_sources/DOWNLOAD_PLAN.json</code>。</td><td><code>normalize_manual.py</code> 仍从这些原表读取。本交付已有所需归一化投影，不要求再下载这些原始表。</td></tr>
+<tr><td>重建 k=2 覆盖</td><td><code>research/data/releases/v2.1/two_person_natural256/PAIRED_PATH_RESULTS.csv.gz</code>、<code>PATH_LINKS.csv.gz</code> 和相应原表。</td><td><code>complete_manual_supplements.py</code> 的上游输入；04 已含当前普通 206 图的独立覆盖表。</td></tr>
+<tr><td>重建门洞标量／几何扩展</td><td><code>research/data/doorway_review_20261030/screen439_results_20261031/PAIRED_PATH_VALUES.csv.gz</code>、<code>DOORWAY_04_PHYSICAL_GEOMETRY.zip</code>，以及 <code>stage00_doorway_sources/ACTUAL_NATIVE30_DOWNLOAD_PLAN.json</code> 中 30 个实际 native JSONL 源；单人追加目标分数见原归一化脚本的显式源路径。</td><td><code>normalize_doorway.py</code>、<code>enrich_doorway.py</code> 的上游恢复路径。旧 Pro 最终分项须用包内 <code>stage04_computation/ENDPOINT_TARGET_SCORES.csv.gz</code>，不能用恢复参考前 shard 分数。04 已含当前标量、扩展、17 个几何目录。</td></tr>
+<tr><td>重新抽取门洞原图和旧轨迹</td><td><code>DOORWAY_02_RESULTS_CURVES_CASES.zip</code> 内 <code>stage06_cases/DOORWAY_ANSWERS_AND_CONSENSUS.html</code> 与 <code>stage06_cases/mechanism_traces/</code>；物理端点另在 <code>DOORWAY_04_PHYSICAL_GEOMETRY.zip</code>。</td><td><code>prepare_doorway_cases.py</code> 直接读取 <code>source/cache/</code> 下这两个 ZIP。05 已提供两例所需抽取结果，阅读或复核现成案例不需原大包。</td></tr>
+<tr><td>追查旧 256 路径的其它完整轨迹</td><td><code>HOHONET_20261026_DATA_S1_07.zip</code>、<code>HOHONET_20261026_DATA_S1_08.zip</code>、<code>HOHONET_20261026_DATA_S2_02.zip</code>、<code>HOHONET_20261026_DATA_S2_03.zip</code>、<code>HOHONET_20261026_DATA_S2_04.zip</code>、<code>HOHONET_20261026_DATA_S2_05.zip</code>、<code>HOHONET_20261026_DATA_S2_06.zip</code>。</td><td>当前门洞指向这些 7 包的具体 member 路径见 <code>stage00_doorway_sources/CURRENT_DOORWAY_FULL_STATE_FILES.csv</code>。登记有 pointer 不等于本轮已取得全部文件；已探测的一个展开远端路径为 404，应按登记包定位。无需为本轮下游补齐它们。</td></tr>
+<tr><td>从头重建普通案例素材</td><td><code>stage00_manual_sources/VFUA_CASE_DOWNLOAD_PLAN.json</code>、<code>PA4_SELECTED_CACHE_DOWNLOAD_PLAN.json</code>、<code>E9Z_SELECTED_CACHE_DOWNLOAD_PLAN.json</code> 的逐文件路径；pa4、e9z 的精确端点来自 <code>research/data/releases/v2.1/new_space_natural256/&lt;pool&gt;/part_*.jsonl.gz</code>。</td><td><code>build_manual_cases.py</code> 仍使用标准源目录和选择表读取。05 已含完整相关原答、参考、三例精确端点与可读图；不能把重建脚本的外部依赖漏写成所有原库自包含。</td></tr>
+<tr><td>再次执行已保存案例诊断</td><td>05 内 <code>stage04_doorway_cases/replay_engine/</code>、准备好的 case inputs 和参考；固定测量引擎路径为 <code>research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip</code> 及 <code>working_models.py</code>。</td><td><code>replay_doorway_cases.py</code>、<code>replay_manual_full35.py</code> 为诊断专用，不在统计流水线。其准备脚本依赖上面原包；<code>fetch_doorway_replay_dependencies.py</code> 是可选的固定提交取码工具。现成轨迹已验证，无须为了画图或重算 Q 分布再次回放。</td></tr>
+</tbody></table>
+<p>旧 2026-10-26 DATA 归档的原始登记提交为 <code>b9bcec809fbaec8ab055931a1abb7baa5db44dac</code>；本轮通过固定 v2.1 提交 <code>e1873bf…</code> 的来源清单和精确成员映射复用其冻结几何。保留这个历史身份，不把旧归档冒称新 v2.1 团队。完整源登记入口为 <code>research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/LOCAL_SOURCE_FILES.csv</code> 与 <code>SOURCE_ARCHIVE_RECEIPT.json</code>。</p>
+
+<h2>8．复现时保留的统计含义</h2>
+<ul>
+<li>主普通 Manual 是 206 图，每池 256 条路径；路径次数不是独立图片数，重复团队保留抽样频次。</li>
+<li>门洞使用现行 584／439；分空间及未定归属独立，553 等历史版本不参与当前结果。</li>
+<li>质量均值、低尾、团队波动、几何和状态分别使用自己的有效分母。缺 Q、完整输出不足、参考不可用、零容量和真实零分不能互相替代。</li>
+<li>k、N、k/N 保留；实际满员只有一队，团队间波动归零是有限人员池结果，不能据此证明正确或意见一致。</li>
+<li>主起点检查整个后续区间与剩余观察长度，暂时平缓后再跳变不会被忽略；它是回顾性描述，不是在线停止规则。</li>
+<li>所有人数比较使用明确固定图片面板；高人数少了哪些图片由容量表给出。简单／中等／困难继续采用人工冻结等级，几何条件并列解释。</li>
+</ul>
+<p class="note">本说明与账本只描述已执行工作和真实接口，未新增自然路径、科学团队、正式评分、空间规则或分类决策。最后的包 SHA256、CRC、内部 gzip EOF 与逐文件清单以 <code>stage09_delivery/</code> 的最终交付验证为准。</p>
+</body></html>

@@ -1,0 +1,65 @@
+{
+  "ordinary_images": 206,
+  "old_geometry_pools": 177,
+  "new_geometry_pools": 29,
+  "source_curve_rows": 32560,
+  "new_fusion": 0,
+  "new_geometry_distances": 0,
+  "new_analysis": true,
+  "rules": {
+    "V_floor": {
+      "units": "1 - floor IoU",
+      "primary": 0.1,
+      "grid": [
+        0.05,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "range_tolerance": 0.05
+    },
+    "V_centroid_h": {
+      "units": "camera height",
+      "primary": 0.05,
+      "grid": [
+        0.025,
+        0.05,
+        0.1
+      ],
+      "range_tolerance": 0.025
+    },
+    "V_height_h": {
+      "units": "camera height",
+      "primary": 0.05,
+      "grid": [
+        0.025,
+        0.05,
+        0.1
+      ],
+      "range_tolerance": 0.025
+    },
+    "V_turn5": {
+      "units": "absolute turn count difference",
+      "primary": 0.5,
+      "grid": [
+        0.25,
+        0.5,
+        1.0
+      ],
+      "range_tolerance": 0.25
+    },
+    "V_nodes": {
+      "units": "absolute node count difference",
+      "primary": 0.5,
+      "grid": [
+        0.25,
+        0.5,
+        1.0
+      ],
+      "range_tolerance": 0.25
+    }
+  },
+  "definition": "conditional pairwise U statistic over distinct sampled path indices; repeated exact teams retain frequency",
+  "onset": "all future dispersion values <= tolerance with >=max(5,ceil(.15N)) additional people observed; minimum valid paths 64/256",
+  "warning": "low dispersion or zero at full pool is not correctness, semantic agreement, or an online stopping rule"
+}

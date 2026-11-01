@@ -1,0 +1,283 @@
+{
+  "status": "passed_current_10_packages_pending_06",
+  "scope": "02, four 03 parts, three 04 parts, 05 and 07. 01 excluded; 06 not yet available.",
+  "packages": [
+    {
+      "package": "02_Results_Report_and_Figures.zip",
+      "archive_bytes": 204052108,
+      "zip_file_members": 4689,
+      "manifest_members": 4689,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "03_Path_Events_Part01.zip",
+      "archive_bytes": 261548335,
+      "zip_file_members": 75,
+      "manifest_members": 75,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "03_Path_Events_Part02.zip",
+      "archive_bytes": 261633900,
+      "zip_file_members": 74,
+      "manifest_members": 74,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "03_Path_Events_Part03.zip",
+      "archive_bytes": 259370589,
+      "zip_file_members": 91,
+      "manifest_members": 91,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "03_Path_Events_Part04.zip",
+      "archive_bytes": 139571017,
+      "zip_file_members": 97,
+      "manifest_members": 97,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "archive_bytes": 260000564,
+      "zip_file_members": 455,
+      "manifest_members": 455,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "04_Reproduction_Inputs_Part02.zip",
+      "archive_bytes": 261458268,
+      "zip_file_members": 190,
+      "manifest_members": 190,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "04_Reproduction_Inputs_Part03.zip",
+      "archive_bytes": 66755901,
+      "zip_file_members": 45,
+      "manifest_members": 45,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "05_Cases_and_Evidence.zip",
+      "archive_bytes": 78291343,
+      "zip_file_members": 441,
+      "manifest_members": 441,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    },
+    {
+      "package": "07_Geometry_Pair_Events.zip",
+      "archive_bytes": 95315990,
+      "zip_file_members": 68,
+      "manifest_members": 68,
+      "missing_members": [],
+      "unmanifested_members": [],
+      "duplicate_members_within_zip": [],
+      "size_mismatches": [],
+      "metadata_and_manifest_match": true
+    }
+  ],
+  "package_count": 10,
+  "archive_file_members": 6225,
+  "distinct_extraction_paths": 6225,
+  "duplicate_paths_across_packages": 0,
+  "identical_duplicate_paths": 0,
+  "different_content_overwrites": [],
+  "results02_vs_inputs04_common_paths": 0,
+  "unsafe_paths": [],
+  "symlink_entries": [],
+  "case_or_unicode_path_collisions": [],
+  "file_directory_conflicts": [],
+  "case_package_scripts_checked": 13,
+  "case_package_scripts_equal_current": true,
+  "README_documents_checked": 12,
+  "README_reference_count": 138,
+  "README_resolution_counts": {
+    "resolved_generic_case_filename_or_directory": 32,
+    "resolved_current_packages": 93,
+    "historical_source_reference_not_claimed_in_current_case_zip": 6,
+    "resolved_source_path_suffix_in_current_packages": 3,
+    "source_pointer_inventory_not_in_current_archives": 1,
+    "pending_06_present_in_workspace": 3
+  },
+  "current_broken_dependencies": [],
+  "pending_06_references": [
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage07_summary/p10_definition_sensitivity/README_ZH.md",
+      "package": "02_Results_Report_and_Figures.zip",
+      "reference": "scripts/p10_definition_sensitivity.py",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "pending_06_present_in_workspace",
+      "resolved_or_workspace_paths": "scripts/p10_definition_sensitivity.py",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "- 复现：`python scripts/p10_definition_sensitivity.py`。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage09_delivery/CASE_PACKAGE_README_ZH.md",
+      "package": "05_Cases_and_Evidence.zip",
+      "reference": "stage09_delivery/CASE_PACKAGE_MANIFEST.csv",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "pending_06_present_in_workspace",
+      "resolved_or_workspace_paths": "stage09_delivery/CASE_PACKAGE_MANIFEST.csv",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "本包 SHA256、ZIP CRC、内层 gzip 完整 EOF/CRC、内层 ZIP CRC 与表格可读性记录位于统一交付清单 `stage09_delivery/CASE_PACKAGE_MANIFEST.csv` 和 `CASE_PACKAGE_VALIDATION.json`。这两份外部文件给出封装后的实际成员与哈希，不将临时渲染页、缩略图、Python 字节码缓存纳入交付。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage09_delivery/CASE_PACKAGE_README_ZH.md",
+      "package": "05_Cases_and_Evidence.zip",
+      "reference": "CASE_PACKAGE_VALIDATION.json",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "pending_06_present_in_workspace",
+      "resolved_or_workspace_paths": "stage09_delivery/CASE_PACKAGE_VALIDATION.json",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "本包 SHA256、ZIP CRC、内层 gzip 完整 EOF/CRC、内层 ZIP CRC 与表格可读性记录位于统一交付清单 `stage09_delivery/CASE_PACKAGE_MANIFEST.csv` 和 `CASE_PACKAGE_VALIDATION.json`。这两份外部文件给出封装后的实际成员与哈希，不将临时渲染页、缩略图、Python 字节码缓存纳入交付。"
+    }
+  ],
+  "historical_external_source_references": [
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "NATURAL_CURVES.csv",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "source/repo/research/data/doorway_review_20261030/screen439_results_20261031/NATURAL_CURVES.csv",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "2. `stage02_normalized/doorway/`：纯标量标准化。每个非空池每个 k 均验证为 256 行，逐行成员等于保存的完整排列经过当前池过滤后的前缀。源均值、SD、P10、成功率、有效数与 adopted `NATURAL_CURVES.csv` 全部 4,365 行逐项一致，最大浮点差 4.7e-13。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "PAIRED_PATH_VALUES.csv.gz",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "source/repo/research/data/doorway_review_20261030/screen439_results_20261031/PAIRED_PATH_VALUES.csv.gz",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "- `B8L2`、`D10`、`IoU3D100` 始终以当前 `PAIRED_PATH_VALUES.csv.gz` 为正式数值，回连只做一致性验证，未覆盖这些 Q。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "DOORWAY_04_PHYSICAL_GEOMETRY.zip",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "source/cache/DOORWAY_04_PHYSICAL_GEOMETRY.zip",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "- Pro 分项从 `DOORWAY_04_PHYSICAL_GEOMETRY.zip` 中 `stage04_computation/ENDPOINT_TARGET_SCORES.csv.gz` 取最终恢复参考的结果，键为 physical_team_key + target。不能使用原 shard 中尚未恢复上下点对的旧 target_scores。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "stage04_computation/ENDPOINT_TARGET_SCORES.csv.gz",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "",
+      "matches": 0,
+      "listed_match_limit": 8,
+      "context": "- Pro 分项从 `DOORWAY_04_PHYSICAL_GEOMETRY.zip` 中 `stage04_computation/ENDPOINT_TARGET_SCORES.csv.gz` 取最终恢复参考的结果，键为 physical_team_key + target。不能使用原 shard 中尚未恢复上下点对的旧 target_scores。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "DOORWAY_02_RESULTS_CURVES_CASES.zip/stage06_cases/DOORWAY_ANSWERS_AND_CONSENSUS.html",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "",
+      "matches": 0,
+      "listed_match_limit": 8,
+      "context": "- 17 张原始全景已嵌入 `DOORWAY_02_RESULTS_CURVES_CASES.zip/stage06_cases/DOORWAY_ANSWERS_AND_CONSENSUS.html`。本轮只抽取所需两图并重新绘制当前端点，不使用旧 553 版池结论。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "stage06_cases/mechanism_traces/",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "historical_source_reference_not_claimed_in_current_case_zip",
+      "resolved_or_workspace_paths": "",
+      "matches": 0,
+      "listed_match_limit": 8,
+      "context": "- 该 ZIP 的 `stage06_cases/mechanism_traces/` 保存 78 个既有完整轨迹。另有当前使用的 460 个团队的 full_state_pointer，可从 `CURRENT_DOORWAY_FULL_STATE_CANDIDATES.csv` 回到 7 个已登记 DATA 包。已展开的 GitHub 首个具体 full_state 路径返回 404，不能把 pointer 存在当作已本地取得。"
+    },
+    {
+      "document": "HOHONET_v21_image_response_20261101/stage00_doorway_sources/DOWNSTREAM_HANDOFF_ZH.md",
+      "package": "04_Reproduction_Inputs_Part01.zip",
+      "reference": "CURRENT_DOORWAY_FULL_STATE_CANDIDATES.csv",
+      "reference_kind": "backtick_reference",
+      "resolution_status": "source_pointer_inventory_not_in_current_archives",
+      "resolved_or_workspace_paths": "stage00_doorway_sources/CURRENT_DOORWAY_FULL_STATE_CANDIDATES.csv",
+      "matches": 1,
+      "listed_match_limit": 8,
+      "context": "- 该 ZIP 的 `stage06_cases/mechanism_traces/` 保存 78 个既有完整轨迹。另有当前使用的 460 个团队的 full_state_pointer，可从 `CURRENT_DOORWAY_FULL_STATE_CANDIDATES.csv` 回到 7 个已登记 DATA 包。已展开的 GitHub 首个具体 full_state 路径返回 404，不能把 pointer 存在当作已本地取得。"
+    }
+  ],
+  "manifest_hashes_used": [
+    {
+      "path": "stage09_delivery/RESULTS_PACKAGE_MANIFEST.csv",
+      "sha256": "b6db2127426251b9c680da410721994ea24513ecc7779cd10b5c2479ec789774"
+    },
+    {
+      "path": "stage09_delivery/PATH_EVENT_PACKAGE_MANIFEST.csv",
+      "sha256": "480900ecc1250b5de6d83eec3e09d63a6967a2494c26aa2d934ac70ccfbf6e3a"
+    },
+    {
+      "path": "stage09_delivery/REPRODUCTION_INPUT_PACKAGE_MANIFEST.csv",
+      "sha256": "d818bffa4d972a9e81c12e7f1aba9951c070fc9a335525c792d826af6efa3fd4"
+    },
+    {
+      "path": "stage09_delivery/CASE_PACKAGE_MANIFEST.csv",
+      "sha256": "0a150319284f199309ab283867aabcdce056ec038e587729054521e211600503"
+    },
+    {
+      "path": "stage09_delivery/GEOMETRY_EVENT_PACKAGE_MANIFEST.csv",
+      "sha256": "fc123aab98d7b7bb6f0b90c0ad5281fac80fd68f39dced52e0f6ba49f7dc05ec"
+    }
+  ],
+  "README_reference_table": "stage09_delivery/CROSS_PACKAGE_README_REFERENCES.csv",
+  "script_hash_table": "stage09_delivery/CASE_SCRIPT_CURRENT_HASH_CHECK.csv",
+  "verification_method": "ZIP central-directory names/sizes/modes cross-checked against fully validated manifests. Existing member hashes compared across packages; only Markdown and 05 source scripts were read from ZIP. No inner gzip was reprocessed.",
+  "archive_payloads_modified": false,
+  "existing_case_sources_modified": false,
+  "inner_gzip_revalidated": false,
+  "note": "No current cross-package duplicate member exists; extraction order is therefore immaterial for these ten packages. 06 must still be compared once produced."
+}

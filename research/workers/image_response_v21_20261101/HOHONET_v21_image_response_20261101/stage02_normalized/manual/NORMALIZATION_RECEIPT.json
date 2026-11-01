@@ -1,0 +1,46 @@
+{
+  "commit": "e1873bfadc1d0e61499809c91fba9dc39c717f83",
+  "input_files": 269,
+  "normalized_pools": 252,
+  "domains": [
+    {
+      "domain": "oos_manual_independent",
+      "pools": 1,
+      "images": 1,
+      "rows": 840
+    },
+    {
+      "domain": "oos_semi_independent",
+      "pools": 1,
+      "images": 1,
+      "rows": 1080
+    },
+    {
+      "domain": "ordinary_manual_extra_target",
+      "pools": 30,
+      "images": 28,
+      "rows": 58112
+    },
+    {
+      "domain": "ordinary_manual_main",
+      "pools": 206,
+      "images": 206,
+      "rows": 1667072
+    },
+    {
+      "domain": "ordinary_semi_secondary",
+      "pools": 14,
+      "images": 13,
+      "rows": 22116
+    }
+  ],
+  "redirected_historical_doorway_pools": 17,
+  "unmaterialized_snapshot_pools": 25,
+  "no_fusion": true,
+  "no_rescore": true,
+  "duplicates_retain_path_weight": true,
+  "identity_checks": "exact counts, frozen object-worker relation when snapshot available, historical W019/W026 absence, nested prefixes, unique full team",
+  "k2": "original deferred values; actual archived k2 handled by separate overlay",
+  "source_files_untouched": true,
+  "scope": "all_downloaded_inputs"
+}

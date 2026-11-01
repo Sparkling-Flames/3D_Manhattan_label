@@ -10,6 +10,14 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
+          "text": "同房原始问题：平均质量、时间、个人表现及反例缺口",
+          "path": "docs/thesis_main/同房研究_原始问题结论与证据索引_20261101.md"
+        },
+        {
+          "text": "当前147合法半队事件：30图63事件反例、几何、票账与连接；只补六支原团队轨迹",
+          "path": "research/data/releases/v2.1/half_team_current_exceptions_20261031/README.md"
+        },
+        {
           "text": "v2.1收尾：版本身份、四组人员证据与门洞双版本",
           "path": "research/data/releases/v2.1/closeout_20261030/README.md"
         },
@@ -13197,6 +13205,9 @@
         "research/data/doorway_review_20261030/expanded_visual_review_20261031/PER_IMAGE_COUNTS.json",
         "research/data/doorway_review_20261030/expanded_visual_review_20261031/PER_IMAGE_COUNTS.md",
         "research/data/doorway_review_20261030/screen439_results_20261031/RELEASE.json",
+        "research/data/doorway_review_20261030/screen439_results_20261031/AGGREGATE_FULL_RANGE.png",
+        "research/data/doorway_review_20261030/screen439_results_20261031/AGGREGATE_FULL_RANGE.pdf",
+        "research/data/doorway_review_20261030/screen439_results_20261031/AGGREGATE_COMMON_SUPPORT.csv",
         "research/data/doorway_review_20261030/screen439_results_20261031/RESULTS_ZH.md",
         "research/data/doorway_review_20261030/screen439_results_20261031/index.html",
         "research/data/doorway_review_20261030/screen439_results_20261031/CHECKS.json",
@@ -13539,6 +13550,25 @@
       "relationships": [
         "research/data/doorway_review_20261030/independent_doorway_analysis_20261030/ARCHIVE_STATUS.md",
         "research/data/doorway_review_20261030/README.md"
+      ]
+    },
+    {
+      "id": "MAT-image_response_v21_20261101",
+      "title": "v2.1逐图人数响应、平台与稳定性独立审查",
+      "theme": "workers",
+      "type": "逐路径统计、几何机制与当前研究接入",
+      "date": "20261101",
+      "source_path": "research/workers/image_response_v21_20261101/HOHONET_v21_image_response_20261101",
+      "current_path": "research/workers/image_response_v21_20261101/README.md",
+      "source": "Pro逐图人数响应11包；冻结e1873bfadc1d0e61499809c91fba9dc39c717f83；当前256自然路径和门洞584/439",
+      "adoption_status": "主要结论通过独立复算，可接v2.1；多数规律与逐图例外并列，不改参考、资格或人员类别",
+      "verification_status": "2121700前缀、8591人数单元、5092048变化事件关联、13608起点条件、12200尾段区间；门洞1860477对底面距离及5案例独立核查；4项测试通过；非原生融合全链重跑；11个ZIP共6438成员逐字节匹配6383唯一文件，无缺项/差异；本机排除图像与重复代码快照",
+      "availability": "远端归档研究数据、报告、图表和复现脚本；高清全景、自包含原图查看器、重复的replay_engine快照与旧绝对路径脚本保留本机。解压原件仍在仓库路径，索引指向本入口。",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_image_response_20261101.py",
+        "tests/test_image_response_audit_20261101.py",
+        "research/workers/image_response_v21_20261101/INTEGRATION_HANDOFF_ZH.md",
+        "research/workers/image_response_v21_20261101/audit_geometry/README.md"
       ]
     }
   ]

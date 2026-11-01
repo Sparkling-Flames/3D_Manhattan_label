@@ -1,0 +1,28 @@
+{
+  "feature": "conditional_short_span=ref_short_min_horizontal_deg.fillna(0)",
+  "source": "frozen v2.1 computable geometry; angular degrees, not a binary category",
+  "has_short": "ref_short_edges>0; used separately as a binary structural condition",
+  "continuous_association": "Spearman correlation only among has_short=1, fixed capacity panels; leave-one-building ranges are sensitivity, not confidence intervals",
+  "no_difficulty_relabeling": true,
+  "corrected_initial_categorical_display_rows": [
+    {
+      "table": "FIXED_PANEL_CURVES.csv.gz",
+      "prior_sha256": "0e8abada74fd677f7f0e6fdcdc17588dbeeaea9c4d55272c4e3067391e439681",
+      "removed_rows": 70884,
+      "retained_rows": 32256
+    },
+    {
+      "table": "FIXED_PANEL_CHANGE_SUMMARY.csv.gz",
+      "prior_sha256": "92f9f73d1212551f76bcb061b5aa1580943c00734cfb13bcc50f0100c36bb59d",
+      "removed_rows": 35952,
+      "retained_rows": 15960
+    },
+    {
+      "table": "ONSET_STRATA.csv",
+      "prior_sha256": "4400e4082641000d712004cf7b9713ada70164670a90ec0337a3ce026c6a8f4a",
+      "removed_rows": 564,
+      "retained_rows": 240
+    }
+  ],
+  "new_fusion": false
+}

@@ -1,0 +1,20 @@
+{
+  "formula": "B8L2=100/(1+hypot(F,D8)+Hg+Hl)",
+  "F": "1/IoU2D-1+S_bottom_deg^2/32",
+  "D8": "1.5*dir_deg^2/(dir_deg^2+64)",
+  "Hg": "(Hmean/0.8)^2",
+  "Hl": "(Hcenter/0.25)^2",
+  "D10_direction": "1.5*dir_deg^2/(dir_deg^2+100)",
+  "units": "dimensionless losses, lower is better; block changes are not additive Q points",
+  "aggregation": "retain path frequencies; mean of Q not Q of mean blocks",
+  "formula_source": "stage00_manual_sources/repo/research/workers/personnel_population_curves_v2_20261023/sampling_extension_20261026/engine26/derive_frozen_blocks.py",
+  "formula_source_sha256": "150b581ce9960dc0228fde32b0b3d14237a39a084a2254bb74748134dfa796e9",
+  "pooled_max_B8_formula_residual": 8.526512829121202e-14,
+  "formula_checked_path_rows": 1834456,
+  "source_pools": 291,
+  "quality_component_gate": "complete_evaluable=1 and finite retained B8L2",
+  "geometry_gate": "doorway geometry_eligible; ordinary complete_evaluable",
+  "empty_pools": 13,
+  "new_fusion": false,
+  "new_quality_scores": false
+}

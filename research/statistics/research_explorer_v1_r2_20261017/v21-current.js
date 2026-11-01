@@ -24,6 +24,9 @@
   options('currentHalfMetric',data.half_difficulty.map(r=>r.metric),'B8L2_CB');
   function half(){const n=$('currentHalfN').value,scope=$('currentHalfScope').value;table('currentHalfSummary',[['events','登记事件'],['registered_images','登记图'],['valid_images','共同Q图'],['buildings','建筑'],['gap_A','同起点额外幅度'],['gap_sym','对称额外幅度'],['CB','C−B'],['CB_valid_images','C−B有效图'],['positive_A','同起点正向图'],['positive_sym','对称正向图']],data.half.filter(r=>r.n===n&&r.scope===scope));table('currentHalfDifficulty',[['difficulty','难度'],['images','有效图'],['mean','图等权均值'],['positive','正值图'],['negative','负值图']],data.half_difficulty.filter(r=>r.n===n&&r.scope===scope&&r.metric===$('currentHalfMetric').value));$('currentHalfRatio').textContent=`${n} 人换 7 人，替换 ${fmt(700/Number(n))}%；${labelScope(scope)}。`;}
   ['currentHalfN','currentHalfScope','currentHalfMetric'].forEach(id=>$(id).addEventListener('change',half));half();sources('currentHalfSources',['half','half_difficulty']);
+  options('currentExceptionImage',data.half_exceptions.map(r=>r.image));
+  function exception(){const r=data.half_exceptions.find(r=>r.image===$('currentExceptionImage').value);table('currentExceptionSummary',[['flags','诊断类型'],['events','当前合法事件'],['scored_events','三队共同Q事件'],['gap_A','GA'],['gap_sym','GS'],['CB','C−B']],[r]);$('currentExceptionNotes').textContent=r.numeric_evidence;$('currentExceptionTrace').textContent=r.trace_evidence;const host=$('currentExceptionLink');host.replaceChildren();const a=link('research/data/releases/v2.1/half_team_current_exceptions_20261031/viewer.html','查看该图全部合法事件、原答、融合、候选票数与连接');a.href+='?image='+encodeURIComponent(r.image);host.append(a);}
+  $('currentExceptionImage').addEventListener('change',exception);exception();sources('currentExceptionSources',['half_exceptions']);
 
   options('currentRoomMethod',data.same_room.map(r=>r.method),'TARGET_DSTRUCT_K3');
   options('currentRoomN',data.same_room.map(r=>r.n),'10');

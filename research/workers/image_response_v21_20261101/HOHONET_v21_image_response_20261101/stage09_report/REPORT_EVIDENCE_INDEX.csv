@@ -1,0 +1,14 @@
+id,result_file,selection
+R1,stage03_response/manual/PLATEAU_SENSITIVITY.csv.gz,"domain=ordinary_manual_main, primary_rule=True；逐图起点、无结论原因与实际满员值"
+R2,stage07_summary/manual/DIAGNOSTIC_FACTS.json；MC_ONSET_BRACKETS.csv,容差、支持门槛、整路径同时带、暂时平段与后段跃变
+R3,stage07_summary/manual/FIXED_PANEL_CHANGE_SUMMARY.csv.gz；ONSET_STRATA.csv,固定图片面板、难度/结构分层、正负方向、楼等权
+R4,stage04_geometry/ordinary_cached/GEOMETRY_U_CURVES.csv.gz；GEOMETRY_LOW_DISPERSION_SENSITIVITY.csv.gz,206图几何U、低分歧阈值与支持分母
+R5,stage07_summary/finite_tail/LEAVE_ONE_OUT_PATH_VS_EXACT.csv.gz,N−1全覆盖时的有限精确对照；不同P10定义单列
+R6,stage00_doorway_sources/CURRENT439_POOL_CAPACITY.csv；stage02_normalized/doorway/POOL_INDEX.csv,439采用链、当前逐图真实人员池、目标与参考
+R7,stage07_summary/doorway/RESULT_FACTS.json；SCREENING_FIXED_PANEL_IMAGE_CONTRASTS.csv.gz,同17图筛查比较、各容量面板与逐图方向
+R8,stage04_geometry/doorway_exact_U/GEOMETRY_U_CURVES.csv.gz；SCREENING_FIXED_PANEL_COMPARISON.csv,门洞完整路径配对几何、重复状态权重及分母
+R9,stage04_components/COMPONENTS_BY_K.csv.gz；NATIVE_STATUS_BY_K.csv.gz；METHOD.json,冻结公式、分项、结构与细分失败状态
+R10,stage05_cases/manual/CASE_INDEX.csv；各案例README_ZH.md与VIEWER.html,VFua、pa4、e9z的原图、完整原答、精确端点、票账与验收
+R11,stage04_doorway_cases/DOORWAY_LATE_CASES_ZH.md；DIAGNOSTIC_REPLAY_LEDGER.csv,uNb47、jh09的精确有限比较与完整候选/连接轨迹
+R12,stage07_summary/response_stages/IMAGE_STAGE_RESPONSES.csv.gz,167/171阶段强度结果；逐加人绝对变化定义与每步有效分母
+R13,stage07_summary/p10_definition_sensitivity/FACTS.json,线性P10与逆CDF的全206图判定和共同171图方向敏感性

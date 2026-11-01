@@ -2,7 +2,32 @@ import json
 from pathlib import Path
 import pandas as pd
 import pytest
+from tools.thesis_main.analysis.report_doorway_screen439_20261031 import aggregate_common_images
 from tools.thesis_main.analysis.recompute_doorway_screen533_20261031 import BASE, AUDIT, OUT, changed_pools, team_key
+
+
+def test_aggregate_common_support_excludes_missing_without_zero_fill():
+    rows=[]
+    for image,before,after in [('a',[10,30],[50,float('nan')]),('b',[90,90],[float('nan'),float('nan')]),('c',[99,99],None)]:
+        for family,values in [('overall_before',before),('overall_after',after)]:
+            if values is None:continue
+            rows.extend(dict(image=image,k=3,family=family,B8L2=v,complete_evaluable=pd.notna(v)) for v in values)
+    r=aggregate_common_images(pd.DataFrame(rows)).iloc[0]
+    assert r.capacity_images==2 and r.quality_images==1
+    assert r.before_q==20 and r.after_q==50
+    assert r.before_complete==1 and r.after_complete==.25
+    assert r.before_valid_paths==2 and r.after_valid_paths==1
+
+
+def test_aggregate_full_range_has_actual_common_support():
+    table=pd.read_csv(BASE/'screen439_results_20261031/AGGREGATE_COMMON_SUPPORT.csv')
+    assert table.k.tolist()==list(range(3,35))
+    assert table.loc[table.k<=14,'capacity_images'].eq(17).all()
+    assert table.loc[table.k==15,'capacity_images'].item()==16
+    assert table.loc[table.k==34,'capacity_images'].item()==3
+    assert (table.quality_images<=table.capacity_images).all()
+    assert (table.before_attempts==256*table.capacity_images).all()
+    assert (table.after_attempts==256*table.capacity_images).all()
 
 
 def test_new_screen_is_membership_only_and_before_is_frozen():

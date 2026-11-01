@@ -1,0 +1,643 @@
+{
+  "source_commit": "e1873bfadc1d0e61499809c91fba9dc39c717f83",
+  "source_archive": "source/cache/DOORWAY_04_PHYSICAL_GEOMETRY.zip",
+  "current_scalar_version": "screen439_final_20261031",
+  "pools": 85,
+  "path_rows": 372480,
+  "geometry_teams": 240279,
+  "geometry_states": 240359,
+  "geometry_source_keys": 240453,
+  "quality_maximum_absolute_difference": {
+    "B8L2": 1.4210854715202004e-14,
+    "D10": 1.4210854715202004e-14,
+    "IoU3D100": 1.4210854715202004e-14
+  },
+  "preserved_descriptor_reconstruction_max_abs_diff": {
+    "turns": 0.0,
+    "short_turn_edges": 0.0,
+    "redundant_turns": 0.0,
+    "floor_area_h2": 0.0,
+    "centroid_x_h": 0.0,
+    "centroid_z_h": 0.0,
+    "height_mean_h": 8.881784197001252e-16
+  },
+  "duplicate_geometry_comparisons": 348,
+  "new_fusion_runs": 0,
+  "new_quality_measurement_runs": 0,
+  "new_computations": "geometry descriptors on cached outputs; algebraic frozen Q loss blocks only",
+  "geometry_denominator": "valid polygon and complete_floor_evaluable, independent of target Q",
+  "readability": [
+    {
+      "path": "stage02_normalized/doorway_enriched/2t7WUuJeko7-07__manual__overall_after_screen.csv.gz",
+      "bytes": 2529896,
+      "uncompressed_bytes": 15453667,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/2t7WUuJeko7-07__manual__overall_before_screen.csv.gz",
+      "bytes": 3116202,
+      "uncompressed_bytes": 19131056,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/2t7WUuJeko7-07__manual__space1.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/2t7WUuJeko7-07__manual__space2.csv.gz",
+      "bytes": 88129,
+      "uncompressed_bytes": 1790583,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/2t7WUuJeko7-07__manual__whole_compatible.csv.gz",
+      "bytes": 1942383,
+      "uncompressed_bytes": 11399392,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-06__manual__overall_after_screen.csv.gz",
+      "bytes": 1959302,
+      "uncompressed_bytes": 10944314,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-06__manual__overall_before_screen.csv.gz",
+      "bytes": 2365002,
+      "uncompressed_bytes": 17067975,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-06__manual__space1.csv.gz",
+      "bytes": 937142,
+      "uncompressed_bytes": 5714071,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-06__manual__space2.csv.gz",
+      "bytes": 4630,
+      "uncompressed_bytes": 417359,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-06__manual__whole_compatible.csv.gz",
+      "bytes": 567432,
+      "uncompressed_bytes": 4061962,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-10__manual__overall_after_screen.csv.gz",
+      "bytes": 2328062,
+      "uncompressed_bytes": 12830615,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-10__manual__overall_before_screen.csv.gz",
+      "bytes": 3192354,
+      "uncompressed_bytes": 18650299,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-10__manual__space1.csv.gz",
+      "bytes": 303564,
+      "uncompressed_bytes": 2792076,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-10__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-10__manual__whole_compatible.csv.gz",
+      "bytes": 1795778,
+      "uncompressed_bytes": 9585203,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-18__manual__overall_after_screen.csv.gz",
+      "bytes": 2704475,
+      "uncompressed_bytes": 15327492,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-18__manual__overall_before_screen.csv.gz",
+      "bytes": 3038718,
+      "uncompressed_bytes": 19124643,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-18__manual__space1.csv.gz",
+      "bytes": 610018,
+      "uncompressed_bytes": 4166775,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-18__manual__space2.csv.gz",
+      "bytes": 100829,
+      "uncompressed_bytes": 1825396,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/7y3sRwLe3Va-18__manual__whole_compatible.csv.gz",
+      "bytes": 1257904,
+      "uncompressed_bytes": 7488986,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-42__manual__overall_after_screen.csv.gz",
+      "bytes": 2124128,
+      "uncompressed_bytes": 12778427,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-42__manual__overall_before_screen.csv.gz",
+      "bytes": 2526727,
+      "uncompressed_bytes": 18006141,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-42__manual__space1.csv.gz",
+      "bytes": 168013,
+      "uncompressed_bytes": 2185784,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-42__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-42__manual__whole_compatible.csv.gz",
+      "bytes": 1880793,
+      "uncompressed_bytes": 9989202,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-43__manual__overall_after_screen.csv.gz",
+      "bytes": 961385,
+      "uncompressed_bytes": 6454055,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-43__manual__overall_before_screen.csv.gz",
+      "bytes": 2376117,
+      "uncompressed_bytes": 17608002,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-43__manual__space1.csv.gz",
+      "bytes": 64234,
+      "uncompressed_bytes": 1588074,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-43__manual__space2.csv.gz",
+      "bytes": 11456,
+      "uncompressed_bytes": 907361,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/B6ByNegPMKs-43__manual__whole_compatible.csv.gz",
+      "bytes": 556983,
+      "uncompressed_bytes": 3750687,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/S9hNv5qa7GM-08__manual__overall_after_screen.csv.gz",
+      "bytes": 1973385,
+      "uncompressed_bytes": 11767183,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/S9hNv5qa7GM-08__manual__overall_before_screen.csv.gz",
+      "bytes": 2479613,
+      "uncompressed_bytes": 17870143,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/S9hNv5qa7GM-08__manual__space1.csv.gz",
+      "bytes": 23093,
+      "uncompressed_bytes": 1148969,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/S9hNv5qa7GM-08__manual__space2.csv.gz",
+      "bytes": 524103,
+      "uncompressed_bytes": 4601367,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/S9hNv5qa7GM-08__manual__whole_compatible.csv.gz",
+      "bytes": 788146,
+      "uncompressed_bytes": 4788506,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/b8cTxDM8gDG-08__manual__overall_after_screen.csv.gz",
+      "bytes": 1135374,
+      "uncompressed_bytes": 8515997,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/b8cTxDM8gDG-08__manual__overall_before_screen.csv.gz",
+      "bytes": 2003608,
+      "uncompressed_bytes": 17034504,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/b8cTxDM8gDG-08__manual__space1.csv.gz",
+      "bytes": 456278,
+      "uncompressed_bytes": 3993483,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/b8cTxDM8gDG-08__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/b8cTxDM8gDG-08__manual__whole_compatible.csv.gz",
+      "bytes": 637489,
+      "uncompressed_bytes": 4221845,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/2t7WUuJeko7-07.csv.gz",
+      "bytes": 4388933,
+      "uncompressed_bytes": 25956484,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/7y3sRwLe3Va-06.csv.gz",
+      "bytes": 3667203,
+      "uncompressed_bytes": 19857887,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/7y3sRwLe3Va-10.csv.gz",
+      "bytes": 4172891,
+      "uncompressed_bytes": 23130310,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/7y3sRwLe3Va-18.csv.gz",
+      "bytes": 4526324,
+      "uncompressed_bytes": 25201142,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/B6ByNegPMKs-42.csv.gz",
+      "bytes": 4150668,
+      "uncompressed_bytes": 23877226,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/B6ByNegPMKs-43.csv.gz",
+      "bytes": 2737066,
+      "uncompressed_bytes": 14964871,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/S9hNv5qa7GM-08.csv.gz",
+      "bytes": 3537394,
+      "uncompressed_bytes": 20366234,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/b8cTxDM8gDG-08.csv.gz",
+      "bytes": 2638790,
+      "uncompressed_bytes": 15957751,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/jh4fc5c5qoQ-09.csv.gz",
+      "bytes": 3813820,
+      "uncompressed_bytes": 21309529,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/jh4fc5c5qoQ-14.csv.gz",
+      "bytes": 3949396,
+      "uncompressed_bytes": 20215670,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/jtcxE69GiFV-12.csv.gz",
+      "bytes": 4929505,
+      "uncompressed_bytes": 28029656,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/q9vSo1VnCiC-04.csv.gz",
+      "bytes": 3681582,
+      "uncompressed_bytes": 19697806,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/q9vSo1VnCiC-13.csv.gz",
+      "bytes": 5008193,
+      "uncompressed_bytes": 27472353,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/uNb9QFRL6hY-21.csv.gz",
+      "bytes": 2543393,
+      "uncompressed_bytes": 13269025,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/uNb9QFRL6hY-25.csv.gz",
+      "bytes": 3888009,
+      "uncompressed_bytes": 20414303,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/uNb9QFRL6hY-47.csv.gz",
+      "bytes": 2787972,
+      "uncompressed_bytes": 13938054,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/geometry/uNb9QFRL6hY-83.csv.gz",
+      "bytes": 4630350,
+      "uncompressed_bytes": 25326038,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-09__manual__overall_after_screen.csv.gz",
+      "bytes": 2124243,
+      "uncompressed_bytes": 12096926,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-09__manual__overall_before_screen.csv.gz",
+      "bytes": 2586578,
+      "uncompressed_bytes": 18097544,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-09__manual__space1.csv.gz",
+      "bytes": 270939,
+      "uncompressed_bytes": 2701726,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-09__manual__space2.csv.gz",
+      "bytes": 21806,
+      "uncompressed_bytes": 1149491,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-09__manual__whole_compatible.csv.gz",
+      "bytes": 1024648,
+      "uncompressed_bytes": 6285224,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-14__manual__overall_after_screen.csv.gz",
+      "bytes": 1664404,
+      "uncompressed_bytes": 8864727,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-14__manual__overall_before_screen.csv.gz",
+      "bytes": 3167508,
+      "uncompressed_bytes": 18858471,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-14__manual__space1.csv.gz",
+      "bytes": 39041,
+      "uncompressed_bytes": 1400955,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-14__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jh4fc5c5qoQ-14__manual__whole_compatible.csv.gz",
+      "bytes": 1243496,
+      "uncompressed_bytes": 7296184,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jtcxE69GiFV-12__manual__overall_after_screen.csv.gz",
+      "bytes": 3234202,
+      "uncompressed_bytes": 18630824,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jtcxE69GiFV-12__manual__overall_before_screen.csv.gz",
+      "bytes": 3302195,
+      "uncompressed_bytes": 19450802,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jtcxE69GiFV-12__manual__space1.csv.gz",
+      "bytes": 118726,
+      "uncompressed_bytes": 1889676,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jtcxE69GiFV-12__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/jtcxE69GiFV-12__manual__whole_compatible.csv.gz",
+      "bytes": 2837583,
+      "uncompressed_bytes": 16125101,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-04__manual__overall_after_screen.csv.gz",
+      "bytes": 1756939,
+      "uncompressed_bytes": 9354199,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-04__manual__overall_before_screen.csv.gz",
+      "bytes": 2897855,
+      "uncompressed_bytes": 17616166,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-04__manual__space1.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-04__manual__space2.csv.gz",
+      "bytes": 117945,
+      "uncompressed_bytes": 1787467,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-04__manual__whole_compatible.csv.gz",
+      "bytes": 1227723,
+      "uncompressed_bytes": 7232635,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-13__manual__overall_after_screen.csv.gz",
+      "bytes": 2810698,
+      "uncompressed_bytes": 15212040,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-13__manual__overall_before_screen.csv.gz",
+      "bytes": 3175617,
+      "uncompressed_bytes": 17884702,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-13__manual__space1.csv.gz",
+      "bytes": 4352,
+      "uncompressed_bytes": 395087,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-13__manual__space2.csv.gz",
+      "bytes": 4284,
+      "uncompressed_bytes": 393295,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/q9vSo1VnCiC-13__manual__whole_compatible.csv.gz",
+      "bytes": 2595871,
+      "uncompressed_bytes": 14058002,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-21__manual__overall_after_screen.csv.gz",
+      "bytes": 3301930,
+      "uncompressed_bytes": 18884967,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-21__manual__overall_before_screen.csv.gz",
+      "bytes": 3302255,
+      "uncompressed_bytes": 18911079,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-21__manual__space1.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-21__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-21__manual__whole_compatible.csv.gz",
+      "bytes": 3302149,
+      "uncompressed_bytes": 18876263,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-25__manual__overall_after_screen.csv.gz",
+      "bytes": 3229632,
+      "uncompressed_bytes": 19105495,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-25__manual__overall_before_screen.csv.gz",
+      "bytes": 3230099,
+      "uncompressed_bytes": 19131607,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-25__manual__space1.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-25__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-25__manual__whole_compatible.csv.gz",
+      "bytes": 3129058,
+      "uncompressed_bytes": 18443603,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-47__manual__overall_after_screen.csv.gz",
+      "bytes": 3086804,
+      "uncompressed_bytes": 17291818,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-47__manual__overall_before_screen.csv.gz",
+      "bytes": 3087059,
+      "uncompressed_bytes": 17316394,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-47__manual__space1.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-47__manual__space2.csv.gz",
+      "bytes": 383,
+      "uncompressed_bytes": 701,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-47__manual__whole_compatible.csv.gz",
+      "bytes": 3087487,
+      "uncompressed_bytes": 17283626,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-83__manual__overall_after_screen.csv.gz",
+      "bytes": 2433971,
+      "uncompressed_bytes": 13949320,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-83__manual__overall_before_screen.csv.gz",
+      "bytes": 3103443,
+      "uncompressed_bytes": 19040589,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-83__manual__space1.csv.gz",
+      "bytes": 39829,
+      "uncompressed_bytes": 1407938,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-83__manual__space2.csv.gz",
+      "bytes": 946018,
+      "uncompressed_bytes": 6107818,
+      "full_gzip_read": "passed"
+    },
+    {
+      "path": "stage02_normalized/doorway_enriched/uNb9QFRL6hY-83__manual__whole_compatible.csv.gz",
+      "bytes": 823975,
+      "uncompressed_bytes": 5257344,
+      "full_gzip_read": "passed"
+    }
+  ]
+}

@@ -11,6 +11,20 @@ function load(){const elements={},document={getElementById:id=>elements[id]??=(n
 const text=el=>el.textContent+el.children.map(text).join(' ');
 const rows=el=>el.children[0].children[1].children;
 
+test('current half exceptions retain 30 images and link exact current cases',()=>{
+ const {elements:e,change,data}=load();assert.equal(data.half_exceptions.length,30);
+ change('currentExceptionImage','7y3sRwLe3Va-26');
+ assert.match(text(e.currentExceptionSummary),/对称幅度未超同类/);
+ assert.match(e.currentExceptionNotes.textContent,/C仍比B升质/);
+ assert.match(e.currentExceptionLink.children[0].href,/viewer\.html\?image=7y3sRwLe3Va-26$/);
+ change('currentExceptionImage','VFuaQ6m2Qom-04');
+ assert.match(text(e.currentExceptionSummary),/无三队共同Q/);
+ assert.match(text(e.currentExceptionSummary),/缺失／不可估/);
+ assert.match(e.currentExceptionTrace.textContent,/no_connection/);
+ change('currentHalfN','20');
+ assert.equal(e.currentExceptionImage.value,'VFuaQ6m2Qom-04');
+});
+
 test('current half support and frozen support remain distinct; same-room is six-endpoint support',()=>{
  const {elements:e,change}=load();assert.equal(e.currentModuleRows.children.length,21);
  assert.equal(rows(e.currentHalfSummary)[0].children[0].textContent,'147');assert.equal(rows(e.currentHalfSummary)[0].children[2].textContent,'67');
@@ -43,7 +57,7 @@ test('current UI has all controls and local sources; display never fetches resea
  const {elements:e}=load(),html=fs.readFileSync(path.join(page,'v21-results.html'),'utf8');
  for(const id of Object.keys(e))assert.ok(html.includes('id="'+id+'"'),id);
  const collect=el=>[el,...el.children.flatMap(collect)];
- for(const el of Object.values(e).flatMap(collect).filter(x=>x.tag==='a'&&x.href&&!x.href.startsWith('#')))assert.ok(fs.existsSync(path.resolve(page,el.href)),el.href);
+ for(const el of Object.values(e).flatMap(collect).filter(x=>x.tag==='a'&&x.href&&!x.href.startsWith('#')))assert.ok(fs.existsSync(path.resolve(page,el.href.split(/[?#]/)[0])),el.href);
  assert.doesNotMatch(fs.readFileSync(path.join(page,'v21-current.js'),'utf8'),/\bfetch\s*\(/);
  assert.match(html,/最终分类仍待确定|最终分类尚未定案/);
 });

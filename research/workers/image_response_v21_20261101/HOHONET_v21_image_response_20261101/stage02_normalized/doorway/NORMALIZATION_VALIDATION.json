@@ -1,0 +1,1603 @@
+{
+  "source_commit": "e1873bfadc1d0e61499809c91fba9dc39c717f83",
+  "rows": 372480,
+  "pools": 85,
+  "nonempty_pools": 72,
+  "no_capacity_pools": 13,
+  "physical_source_keys": 240453,
+  "exact_member_teams": 240279,
+  "all_prefix_members_verified": true,
+  "all_nonempty_pool_k_have_256_rows": true,
+  "all_source_images_members_k_verified_for_pro_index": true,
+  "all_workers_available_and_no_W019_W026": true,
+  "all_51_final_references_quality_available": true,
+  "source_files": {
+    "path_values": {
+      "path": "source/repo/research/data/doorway_review_20261030/screen439_results_20261031/PAIRED_PATH_VALUES.csv.gz",
+      "size": 16197885,
+      "sha256": "cb07dc90eb4e262345082482a1b4d34151e1f974d4cccf5480bf46dfcdd14aef"
+    },
+    "orders": {
+      "path": "source/repo/research/data/doorway_review_20261030/screen439_results_20261031/BASE_256_ORDERS.csv.gz",
+      "size": 371709,
+      "sha256": "b3650c2ca9bfd6e83d10081c1e592ac466309dfd5f3e2b593e407f34f67ab8e7"
+    },
+    "pools": {
+      "path": "source/repo/research/data/doorway_review_20261030/screen439_results_20261031/POOLS.json",
+      "size": 116099,
+      "sha256": "6f1bd863016589310b72efd80154fb470c98bdd2fba77356fade194c2d23fa95"
+    },
+    "records": {
+      "path": "source/repo/research/fusion/doorway_population_v21_20261031/HOHONET_doorway_v21_20261031/stage04_computation/design/FROZEN_RECORDS.json.gz",
+      "size": 128580,
+      "sha256": "bc7835025311218940996e4e483eab3a2a67d76c3737a072fa255e4051386bb9"
+    },
+    "references": {
+      "path": "source/repo/research/fusion/doorway_population_v21_20261031/HOHONET_doorway_v21_20261031/stage04_computation/recovered_reference_scores/FINAL_REFERENCES.json",
+      "size": 169797,
+      "sha256": "61c18f39f5b0298a517ce5703623e338f53bb762e306d585834a46092ce26f71"
+    },
+    "endpoint_index": {
+      "path": "source/repo/research/fusion/doorway_population_v21_20261031/HOHONET_doorway_v21_20261031/stage04_computation/PHYSICAL_ENDPOINT_INDEX.csv.gz",
+      "size": 9221943,
+      "sha256": "e0160d4010ea50d8698cad446355bd2d663dfae4d91675620d00455cca840aec"
+    }
+  },
+  "pool_checks": [
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__space1",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__space2",
+      "N": 4,
+      "rows": 1024,
+      "expected_rows": 1024,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 15,
+      "finite_B8L2": 806,
+      "source_complete_evaluable": 806,
+      "geometry_not_joined_rows": 1024,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__whole_compatible",
+      "N": 23,
+      "rows": 5888,
+      "expected_rows": 5888,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 4931,
+      "finite_B8L2": 4970,
+      "source_complete_evaluable": 4970,
+      "geometry_not_joined_rows": 5888,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-06__manual__space1",
+      "N": 12,
+      "rows": 3072,
+      "expected_rows": 3072,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1531,
+      "finite_B8L2": 2839,
+      "source_complete_evaluable": 2839,
+      "geometry_not_joined_rows": 3072,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-06__manual__space2",
+      "N": 1,
+      "rows": 256,
+      "expected_rows": 256,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1,
+      "finite_B8L2": 256,
+      "source_complete_evaluable": 256,
+      "geometry_not_joined_rows": 256,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-06__manual__whole_compatible",
+      "N": 9,
+      "rows": 2304,
+      "expected_rows": 2304,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 473,
+      "finite_B8L2": 1840,
+      "source_complete_evaluable": 1840,
+      "geometry_not_joined_rows": 2304,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-10__manual__space1",
+      "N": 6,
+      "rows": 1536,
+      "expected_rows": 1536,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 63,
+      "finite_B8L2": 1303,
+      "source_complete_evaluable": 1303,
+      "geometry_not_joined_rows": 1536,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-10__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-10__manual__whole_compatible",
+      "N": 19,
+      "rows": 4864,
+      "expected_rows": 4864,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 3776,
+      "finite_B8L2": 4847,
+      "source_complete_evaluable": 4847,
+      "geometry_not_joined_rows": 4864,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-18__manual__space1",
+      "N": 9,
+      "rows": 2304,
+      "expected_rows": 2304,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 471,
+      "finite_B8L2": 2038,
+      "source_complete_evaluable": 2038,
+      "geometry_not_joined_rows": 2304,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-18__manual__space2",
+      "N": 4,
+      "rows": 1024,
+      "expected_rows": 1024,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 15,
+      "finite_B8L2": 901,
+      "source_complete_evaluable": 901,
+      "geometry_not_joined_rows": 1024,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-18__manual__whole_compatible",
+      "N": 15,
+      "rows": 3840,
+      "expected_rows": 3840,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 2583,
+      "finite_B8L2": 3744,
+      "source_complete_evaluable": 3744,
+      "geometry_not_joined_rows": 3840,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-42__manual__space1",
+      "N": 5,
+      "rows": 1280,
+      "expected_rows": 1280,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 31,
+      "finite_B8L2": 857,
+      "source_complete_evaluable": 857,
+      "geometry_not_joined_rows": 1280,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-42__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "B6ByNegPMKs-42__manual__whole_compatible",
+      "N": 20,
+      "rows": 5120,
+      "expected_rows": 5120,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 4097,
+      "finite_B8L2": 4988,
+      "source_complete_evaluable": 4988,
+      "geometry_not_joined_rows": 5120,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual__space1",
+      "N": 4,
+      "rows": 1024,
+      "expected_rows": 1024,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 15,
+      "finite_B8L2": 418,
+      "source_complete_evaluable": 418,
+      "geometry_not_joined_rows": 1024,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual__space2",
+      "N": 2,
+      "rows": 512,
+      "expected_rows": 512,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 3,
+      "finite_B8L2": 512,
+      "source_complete_evaluable": 512,
+      "geometry_not_joined_rows": 512,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual__whole_compatible",
+      "N": 8,
+      "rows": 2048,
+      "expected_rows": 2048,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 249,
+      "finite_B8L2": 1929,
+      "source_complete_evaluable": 1929,
+      "geometry_not_joined_rows": 2048,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-08__manual__space1",
+      "N": 3,
+      "rows": 768,
+      "expected_rows": 768,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7,
+      "finite_B8L2": 256,
+      "source_complete_evaluable": 256,
+      "geometry_not_joined_rows": 768,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-08__manual__space2",
+      "N": 11,
+      "rows": 2816,
+      "expected_rows": 2816,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1133,
+      "finite_B8L2": 1105,
+      "source_complete_evaluable": 1105,
+      "geometry_not_joined_rows": 2816,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-08__manual__whole_compatible",
+      "N": 10,
+      "rows": 2560,
+      "expected_rows": 2560,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 797,
+      "finite_B8L2": 2507,
+      "source_complete_evaluable": 2507,
+      "geometry_not_joined_rows": 2560,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-08__manual__space1",
+      "N": 10,
+      "rows": 2560,
+      "expected_rows": 2560,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 783,
+      "finite_B8L2": 1132,
+      "source_complete_evaluable": 1132,
+      "geometry_not_joined_rows": 2560,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-08__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-08__manual__whole_compatible",
+      "N": 9,
+      "rows": 2304,
+      "expected_rows": 2304,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 475,
+      "finite_B8L2": 2085,
+      "source_complete_evaluable": 2085,
+      "geometry_not_joined_rows": 2304,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-09__manual__space1",
+      "N": 6,
+      "rows": 1536,
+      "expected_rows": 1536,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 63,
+      "finite_B8L2": 1055,
+      "source_complete_evaluable": 1055,
+      "geometry_not_joined_rows": 1536,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-09__manual__space2",
+      "N": 3,
+      "rows": 768,
+      "expected_rows": 768,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7,
+      "finite_B8L2": 256,
+      "source_complete_evaluable": 256,
+      "geometry_not_joined_rows": 768,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-09__manual__whole_compatible",
+      "N": 13,
+      "rows": 3328,
+      "expected_rows": 3328,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1902,
+      "finite_B8L2": 3074,
+      "source_complete_evaluable": 3074,
+      "geometry_not_joined_rows": 3328,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-14__manual__space1",
+      "N": 3,
+      "rows": 768,
+      "expected_rows": 768,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7,
+      "finite_B8L2": 768,
+      "source_complete_evaluable": 768,
+      "geometry_not_joined_rows": 768,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-14__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-14__manual__whole_compatible",
+      "N": 15,
+      "rows": 3840,
+      "expected_rows": 3840,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 2574,
+      "finite_B8L2": 3736,
+      "source_complete_evaluable": 3736,
+      "geometry_not_joined_rows": 3840,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jtcxE69GiFV-12__manual__space1",
+      "N": 4,
+      "rows": 1024,
+      "expected_rows": 1024,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 15,
+      "finite_B8L2": 1024,
+      "source_complete_evaluable": 1024,
+      "geometry_not_joined_rows": 1024,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jtcxE69GiFV-12__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "jtcxE69GiFV-12__manual__whole_compatible",
+      "N": 30,
+      "rows": 7680,
+      "expected_rows": 7680,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6838,
+      "finite_B8L2": 7503,
+      "source_complete_evaluable": 7503,
+      "geometry_not_joined_rows": 7680,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-04__manual__space1",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-04__manual__space2",
+      "N": 4,
+      "rows": 1024,
+      "expected_rows": 1024,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 15,
+      "finite_B8L2": 1024,
+      "source_complete_evaluable": 1024,
+      "geometry_not_joined_rows": 1024,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-04__manual__whole_compatible",
+      "N": 15,
+      "rows": 3840,
+      "expected_rows": 3840,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 2568,
+      "finite_B8L2": 3671,
+      "source_complete_evaluable": 3671,
+      "geometry_not_joined_rows": 3840,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-13__manual__space1",
+      "N": 1,
+      "rows": 256,
+      "expected_rows": 256,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1,
+      "finite_B8L2": 256,
+      "source_complete_evaluable": 256,
+      "geometry_not_joined_rows": 256,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-13__manual__space2",
+      "N": 1,
+      "rows": 256,
+      "expected_rows": 256,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1,
+      "finite_B8L2": 256,
+      "source_complete_evaluable": 256,
+      "geometry_not_joined_rows": 256,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-13__manual__whole_compatible",
+      "N": 27,
+      "rows": 6912,
+      "expected_rows": 6912,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6022,
+      "finite_B8L2": 6687,
+      "source_complete_evaluable": 6687,
+      "geometry_not_joined_rows": 6912,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-21__manual__space1",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-21__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-21__manual__whole_compatible",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7899,
+      "finite_B8L2": 8555,
+      "source_complete_evaluable": 8555,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-25__manual__space1",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-25__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-25__manual__whole_compatible",
+      "N": 33,
+      "rows": 8448,
+      "expected_rows": 8448,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7615,
+      "finite_B8L2": 7945,
+      "source_complete_evaluable": 7945,
+      "geometry_not_joined_rows": 8448,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-47__manual__space1",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-47__manual__space2",
+      "N": 0,
+      "rows": 0,
+      "expected_rows": 0,
+      "all_k_256": null,
+      "exact_saved_permutation_prefix": null,
+      "full_pool_unique_teams": 0,
+      "distinct_physical_endpoints": 0,
+      "finite_B8L2": 0,
+      "source_complete_evaluable": 0,
+      "geometry_not_joined_rows": 0,
+      "strata": {}
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-47__manual__whole_compatible",
+      "N": 32,
+      "rows": 8192,
+      "expected_rows": 8192,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7357,
+      "finite_B8L2": 8096,
+      "source_complete_evaluable": 8096,
+      "geometry_not_joined_rows": 8192,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-83__manual__space1",
+      "N": 3,
+      "rows": 768,
+      "expected_rows": 768,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7,
+      "finite_B8L2": 768,
+      "source_complete_evaluable": 768,
+      "geometry_not_joined_rows": 768,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-83__manual__space2",
+      "N": 13,
+      "rows": 3328,
+      "expected_rows": 3328,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1885,
+      "finite_B8L2": 2744,
+      "source_complete_evaluable": 2744,
+      "geometry_not_joined_rows": 3328,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-83__manual__whole_compatible",
+      "N": 11,
+      "rows": 2816,
+      "expected_rows": 2816,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 1160,
+      "finite_B8L2": 2549,
+      "source_complete_evaluable": 2549,
+      "geometry_not_joined_rows": 2816,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8142,
+      "finite_B8L2": 8012,
+      "source_complete_evaluable": 8012,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual__overall_after_screen",
+      "N": 30,
+      "rows": 7680,
+      "expected_rows": 7680,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6809,
+      "finite_B8L2": 6488,
+      "source_complete_evaluable": 6488,
+      "geometry_not_joined_rows": 7680,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-06__manual__overall_before_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7913,
+      "finite_B8L2": 4006,
+      "source_complete_evaluable": 3991,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-06__manual__overall_after_screen",
+      "N": 22,
+      "rows": 5632,
+      "expected_rows": 5632,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 4666,
+      "finite_B8L2": 4960,
+      "source_complete_evaluable": 4960,
+      "geometry_not_joined_rows": 5632,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-10__manual__overall_before_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7882,
+      "finite_B8L2": 8298,
+      "source_complete_evaluable": 8298,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-10__manual__overall_after_screen",
+      "N": 25,
+      "rows": 6400,
+      "expected_rows": 6400,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 5462,
+      "finite_B8L2": 6185,
+      "source_complete_evaluable": 6185,
+      "geometry_not_joined_rows": 6400,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-18__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8156,
+      "finite_B8L2": 7798,
+      "source_complete_evaluable": 7798,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "7y3sRwLe3Va-18__manual__overall_after_screen",
+      "N": 29,
+      "rows": 7424,
+      "expected_rows": 7424,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6564,
+      "finite_B8L2": 6853,
+      "source_complete_evaluable": 6853,
+      "geometry_not_joined_rows": 7424,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-42__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8169,
+      "finite_B8L2": 4759,
+      "source_complete_evaluable": 4753,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-42__manual__overall_after_screen",
+      "N": 25,
+      "rows": 6400,
+      "expected_rows": 6400,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 5472,
+      "finite_B8L2": 6039,
+      "source_complete_evaluable": 6039,
+      "geometry_not_joined_rows": 6400,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8152,
+      "finite_B8L2": 4542,
+      "source_complete_evaluable": 4542,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual__overall_after_screen",
+      "N": 14,
+      "rows": 3584,
+      "expected_rows": 3584,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 2254,
+      "finite_B8L2": 2642,
+      "source_complete_evaluable": 2642,
+      "geometry_not_joined_rows": 3584,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-08__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8159,
+      "finite_B8L2": 4555,
+      "source_complete_evaluable": 4555,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "S9hNv5qa7GM-08__manual__overall_after_screen",
+      "N": 24,
+      "rows": 6144,
+      "expected_rows": 6144,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 5204,
+      "finite_B8L2": 4511,
+      "source_complete_evaluable": 4511,
+      "geometry_not_joined_rows": 6144,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-08__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8151,
+      "finite_B8L2": 3188,
+      "source_complete_evaluable": 3188,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "b8cTxDM8gDG-08__manual__overall_after_screen",
+      "N": 19,
+      "rows": 4864,
+      "expected_rows": 4864,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 3823,
+      "finite_B8L2": 2683,
+      "source_complete_evaluable": 2683,
+      "geometry_not_joined_rows": 4864,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-09__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8155,
+      "finite_B8L2": 5105,
+      "source_complete_evaluable": 5105,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-09__manual__overall_after_screen",
+      "N": 24,
+      "rows": 6144,
+      "expected_rows": 6144,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 5217,
+      "finite_B8L2": 5236,
+      "source_complete_evaluable": 5236,
+      "geometry_not_joined_rows": 6144,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-14__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8150,
+      "finite_B8L2": 8092,
+      "source_complete_evaluable": 8092,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jh4fc5c5qoQ-14__manual__overall_after_screen",
+      "N": 18,
+      "rows": 4608,
+      "expected_rows": 4608,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 3515,
+      "finite_B8L2": 4392,
+      "source_complete_evaluable": 4392,
+      "geometry_not_joined_rows": 4608,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jtcxE69GiFV-12__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8151,
+      "finite_B8L2": 8728,
+      "source_complete_evaluable": 8728,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "jtcxE69GiFV-12__manual__overall_after_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7888,
+      "finite_B8L2": 8506,
+      "source_complete_evaluable": 8506,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-04__manual__overall_before_screen",
+      "N": 33,
+      "rows": 8448,
+      "expected_rows": 8448,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7633,
+      "finite_B8L2": 7549,
+      "source_complete_evaluable": 7549,
+      "geometry_not_joined_rows": 8448,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-04__manual__overall_after_screen",
+      "N": 19,
+      "rows": 4864,
+      "expected_rows": 4864,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 3802,
+      "finite_B8L2": 4600,
+      "source_complete_evaluable": 4600,
+      "geometry_not_joined_rows": 4864,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-13__manual__overall_before_screen",
+      "N": 33,
+      "rows": 8448,
+      "expected_rows": 8448,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7627,
+      "finite_B8L2": 8102,
+      "source_complete_evaluable": 8102,
+      "geometry_not_joined_rows": 8448,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "q9vSo1VnCiC-13__manual__overall_after_screen",
+      "N": 29,
+      "rows": 7424,
+      "expected_rows": 7424,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6563,
+      "finite_B8L2": 7242,
+      "source_complete_evaluable": 7242,
+      "geometry_not_joined_rows": 7424,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-21__manual__overall_before_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7899,
+      "finite_B8L2": 8555,
+      "source_complete_evaluable": 8555,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-21__manual__overall_after_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7899,
+      "finite_B8L2": 8555,
+      "source_complete_evaluable": 8555,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-25__manual__overall_before_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7888,
+      "finite_B8L2": 8181,
+      "source_complete_evaluable": 8181,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-25__manual__overall_after_screen",
+      "N": 34,
+      "rows": 8704,
+      "expected_rows": 8704,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7888,
+      "finite_B8L2": 8181,
+      "source_complete_evaluable": 8181,
+      "geometry_not_joined_rows": 8704,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-47__manual__overall_before_screen",
+      "N": 32,
+      "rows": 8192,
+      "expected_rows": 8192,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7357,
+      "finite_B8L2": 8096,
+      "source_complete_evaluable": 8096,
+      "geometry_not_joined_rows": 8192,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-47__manual__overall_after_screen",
+      "N": 32,
+      "rows": 8192,
+      "expected_rows": 8192,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 7357,
+      "finite_B8L2": 8096,
+      "source_complete_evaluable": 8096,
+      "geometry_not_joined_rows": 8192,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-83__manual__overall_before_screen",
+      "N": 35,
+      "rows": 8960,
+      "expected_rows": 8960,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 8148,
+      "finite_B8L2": 7598,
+      "source_complete_evaluable": 7598,
+      "geometry_not_joined_rows": 8960,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-83__manual__overall_after_screen",
+      "N": 27,
+      "rows": 6912,
+      "expected_rows": 6912,
+      "all_k_256": true,
+      "exact_saved_permutation_prefix": true,
+      "full_pool_unique_teams": 1,
+      "distinct_physical_endpoints": 6019,
+      "finite_B8L2": 6053,
+      "source_complete_evaluable": 6053,
+      "geometry_not_joined_rows": 6912,
+      "strata": {
+        "extension_stage2_104": 104,
+        "extension_stage1_104": 104,
+        "balanced_new24": 24,
+        "old24": 24
+      }
+    }
+  ],
+  "complete_output_definition": "source complete_evaluable: complete AND score-evaluable; False needs geometry join",
+  "singletons": "raw original answers, not multi-person fusion",
+  "n2_policy": "heterogeneous historical scoring convention, supplementary only",
+  "new_fusion_runs": 0,
+  "new_quality_runs": 0
+}

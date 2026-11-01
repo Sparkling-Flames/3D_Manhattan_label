@@ -1,0 +1,11 @@
+{
+  "complete_four_stage_images": 171,
+  "dominant_stage_counts": {
+    "3-6": 167,
+    "6-10": 3,
+    "20-30": 1
+  },
+  "definition": "stage score is mean of per-step conditional absolute within-path Q changes; equal weight to additions, not to stage length; fixed stages 3-6,6-10,10-20,20-30 on N>=30 images",
+  "Q_unavailable": "separate output-state changes; no zero substitution",
+  "new_fusion": 0
+}
