@@ -9,6 +9,50 @@ BASE=Path(__file__).resolve().parents[3]/'research/data/doorway_review_20261030'
 OUT=BASE/'screen439_results_20261031'
 
 
+def aggregate_common_images(paths):
+    """Equal image weights; both arms use identical capacity and quality panels."""
+    arms=['overall_before','overall_after']
+    selected=paths[paths.family.isin(arms)&(paths.k>=3)]
+    stats=selected.groupby(['k','image','family']).agg(q=('B8L2','mean'),valid=('B8L2','count'),attempts=('B8L2','size'),complete=('complete_evaluable','mean')).reset_index()
+    rows=[]
+    for k,g in stats.groupby('k'):
+        a=g[g.family==arms[0]].set_index('image');b=g[g.family==arms[1]].set_index('image')
+        common=a.index.intersection(b.index)
+        if not len(common):continue
+        a,b=a.loc[common],b.loc[common]
+        quality=common[a.q.notna()&b.q.notna()]
+        row=dict(k=int(k),capacity_images=len(common),quality_images=len(quality),capacity_image_ids='|'.join(common),quality_image_ids='|'.join(quality))
+        for label,frame in [('before',a),('after',b)]:
+            row.update({f'{label}_q':frame.loc[quality,'q'].mean(),f'{label}_complete':frame.complete.mean(),f'{label}_valid_paths':int(frame.loc[quality,'valid'].sum()),f'{label}_attempts':int(frame.attempts.sum()),f'{label}_quality_attempts':int(frame.loc[quality,'attempts'].sum())})
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def full_range_figures(paths):
+    import matplotlib.pyplot as plt
+    table=aggregate_common_images(paths)
+    table.to_csv(OUT/'AGGREGATE_COMMON_SUPPORT.csv',index=False)
+    fig,axes=plt.subplots(2,2,figsize=(14,9),sharex=True)
+    for label,color,title in [('before','#777777','筛前584'),('after','#0079b8','筛后439')]:
+        for ax,column,scale in [(axes[0,0],'q',1),(axes[0,1],'complete',100),(axes[1,1],'valid_paths',1)]:
+            ax.plot(table.k,table[f'{label}_{column}']*scale,color=color,linestyle='--',marker='.',label=title)
+            early=table[table.k<=14]
+            ax.plot(early.k,early[f'{label}_{column}']*scale,color=color,marker='.')
+    axes[1,0].step(table.k,table.capacity_images,where='mid',label='两版均有足够人数',color='#333333')
+    axes[1,0].plot(table.k,table.quality_images,'o',markersize=3,label='两版均有可评分输出',color='#d88720')
+    for ax,title,ylabel in zip(axes.flat,['人数—质量：同图等权','人数—完整共识形成率','每个人数的图片支持','质量均值使用的可评分路径数'],['条件质量 B8L2','完整共识可评率 (%)','图片数','有效路径数']):
+        ax.set(title=title,ylabel=ylabel,xlabel='团队人数',xticks=[3,6,10,14,18,22,26,30,34])
+        ax.axvline(14,color='#999',linestyle=':',lw=1);ax.grid(alpha=.2);ax.legend(fontsize=9)
+        ax.axvspan(14,table.k.max(),color='#999',alpha=.04)
+    axes[0,0].set_ylim(0,100);axes[0,1].set_ylim(0,102);axes[1,0].set_ylim(0,18)
+    fig.suptitle('门洞综合双版本：每个人数使用同一批图片，图片等权',fontsize=16)
+    fig.text(.5,.015,'实线：3—14人容量支持固定17图；虚线：15人起图片集合变化。质量仅汇总两版均可评分的图片；缺失不补零。',ha='center',fontsize=11)
+    fig.tight_layout(rect=(0,.045,1,.96))
+    for ext in ['png','pdf']:fig.savefig(OUT/f'AGGREGATE_FULL_RANGE.{ext}',dpi=160)
+    plt.close(fig)
+    return table
+
+
 def main():
     paths=pd.read_csv(OUT/'PAIRED_PATH_VALUES.csv.gz')
     h=json.loads((OUT/'HEADLINES.json').read_text(encoding='utf8'))['screening_k10']
@@ -76,8 +120,19 @@ def main():
         ax.set(xlabel='团队人数',ylabel=label,xticks=range(3,15));ax.grid(alpha=.2)
     fig.suptitle('筛后439 − 筛前584：17图共同人数范围；阴影为建筑重抽样95%逐点区间')
     fig.tight_layout();fig.savefig(OUT/'COMPARISON_OVERVIEW.png',dpi=160);plt.close(fig)
+    support=full_range_figures(paths)
+    note='\n## 全人数综合曲线（2026-11-01更新）\n\n[综合人数—质量及形成率](AGGREGATE_FULL_RANGE.png) · [综合图PDF](AGGREGATE_FULL_RANGE.pdf) · [逐人数支持与均值表](AGGREGATE_COMMON_SUPPORT.csv)\n\n综合主图画至两版共同有容量的最大人数34，而非截在14人。每个k先选两版都能组成k人队的同一批图片，形成率保留全部尝试。质量进一步使用两版均至少有一个可评分输出的同一批图片，各图内部仍分别条件于该臂成功路径，再对图片等权；它不是双端路径配对差。可评分图片数与路径数随图一起显示，不把缺失质量补零。\n\n14人以后以虚线标示图片集合变化，高人数均值不可解释为固定17图的人数效应。35人时筛后没有支持，不画筛前单臂冒充双版本比较；逐图筛前曲线仍保留35人端点。原3—14人固定容量面板的配对差图保留为补充。\n\n| 人数 | 共同容量图片数 | 共同可评分图片数 |\n|---:|---:|---:|\n'
+    for r in support.itertuples():note+=f'| {r.k} | {r.capacity_images} | {r.quality_images} |\n'
+    with (OUT/'RESULTS_ZH.md').open('a',encoding='utf8') as f:f.write(note)
     p=OUT/'index.html';html=p.read_text(encoding='utf8')
-    html=html.replace('<h2>', '<p>当前唯一双版本为584/439。B6ByNegPMKs-43筛后仅14人，超过容量不画；近满员组合减少，不能据此声称一致性提升。</p><img src="COMPARISON_OVERVIEW.png" alt="双版本配对变化及建筑重抽样区间"><h2>',1)
+    # Replace the overview block while preserving every original per-image chart.
+    import re
+    start=html.index('<h2>2t7WUuJeko7-07')
+    head=html[:start]
+    head=re.sub(r'<p>当前唯一双版本.*', '',head,flags=re.S)
+    head=head.split('<!-- aggregate-overview -->')[0]
+    block='<!-- aggregate-overview --><h2>综合人数—质量曲线：完整人数范围</h2><p>每个人数使用两版共同支持的同一批图片，图片等权。14人后虚线表示图片集合变化；质量无输出不补零，支持图片数和有效路径数见下排。35人无筛后支持，综合比较止于34人。</p><p><a href="AGGREGATE_FULL_RANGE.pdf">下载综合图PDF</a> · <a href="AGGREGATE_COMMON_SUPPORT.csv">逐人数支持与均值表</a></p><img src="AGGREGATE_FULL_RANGE.png" alt="全人数双版本质量形成率及支持"><details><summary>补充：固定17图容量面板，3—14人的配对差与区间</summary><img src="COMPARISON_OVERVIEW.png" alt="固定容量面板配对差"></details>'
+    html=head+block+html[start:]
     p.write_text(html,encoding='utf8')
 
 

@@ -1,0 +1,46 @@
+{
+  "analysis_id": "HOHONET_v21_image_response_20261101",
+  "source_commit": "e1873bfadc1d0e61499809c91fba9dc39c717f83",
+  "main_min_k": 3,
+  "tail_rule": "range of every observed integer k from start through actual N",
+  "minimum_followup": "max(5,ceil(0.15*N)) additional workers",
+  "near_exhaustion_fraction": 0.8,
+  "small_pool_max_N": 7,
+  "quality_tolerances": [
+    1.0,
+    2.0,
+    3.0,
+    5.0
+  ],
+  "sd_tolerances": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "rate_tolerances": [
+    0.02,
+    0.05,
+    0.1
+  ],
+  "minimum_valid_paths": [
+    32,
+    64,
+    128
+  ],
+  "primary_mean_tolerance": 2.0,
+  "primary_p10_tolerance": 2.0,
+  "primary_sd_tolerance": 1.0,
+  "primary_rate_tolerance": 0.05,
+  "primary_minimum_valid_paths": 64,
+  "local_flat_additional_workers": 3,
+  "path_jump_quality_cutoffs": [
+    2.0,
+    5.0,
+    10.0
+  ],
+  "main_SD_ddof": 1,
+  "P10": "linear empirical quantile of finite outputs, retaining path frequency",
+  "precision": "reuse matching 256-path simultaneous Q mean/P10 bands; conservative range bounds",
+  "onset_is_retrospective_not_online_stop": true,
+  "no_composite_stability_score": true
+}
