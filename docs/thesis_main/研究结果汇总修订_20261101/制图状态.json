@@ -1,0 +1,103 @@
+{
+  "sources": {
+    "补图_七人替换": [
+      "research/data/releases/v2.1/half_team_current_exceptions_20261031/CURRENT_147_EVENTS.csv.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/case_inputs/jtcxE69GiFV-22__manual__70a3575644.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/jtcxE69GiFV-22__manual__70a3575644__1eeaa8dc06311be3870b.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/jtcxE69GiFV-22__manual__70a3575644__8f4a43e97d9443708de4.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/jtcxE69GiFV-22__manual__70a3575644__26984c19ecb68aa775b5.json.gz"
+    ],
+    "补图_配比内团队分布": [
+      "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/composition/primary/by_method/TARGET_DSTRUCT_K3/TEAM_CLASS_VECTORS.csv.gz",
+      "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/composition/primary/by_method/TARGET_DSTRUCT_K3/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "research/workers/personnel_v21_reselection_20261029/additional_delivery/packages/03B_core/composition/primary_panel_inputs/ENDPOINT_SCALARS.csv.gz"
+    ],
+    "补图_共识响应同图案例": [
+      "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/composition/primary/by_method/RFUSE_GEOM_K2/TEAM_CLASS_VECTORS.csv.gz",
+      "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/composition/primary/by_method/RFUSE_GEOM_K2/CONFIGURATION_DISTRIBUTIONS.csv.gz",
+      "research/workers/personnel_v21_reselection_20261029/additional_delivery/packages/03B_core/composition/primary_panel_inputs/ENDPOINT_SCALARS.csv.gz"
+    ],
+    "补图_OOS真实案例": [
+      "research/statistics/research_explorer_v1_r2_20261017/oos-review-data.js"
+    ],
+    "重制_整类混合组合": [
+      "research/workers/personnel_ac_v21_20261030/stage06_cases/alliance_pa4_06/figures/SEVEN_ALLIANCE_ENDPOINTS.csv"
+    ],
+    "补图_七人替换_结构恢复": [
+      "research/data/releases/v2.1/half_team_current_exceptions_20261031/CURRENT_147_EVENTS.csv.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/case_inputs/S9hNv5qa7GM-12__manual__eec3a285d1.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/S9hNv5qa7GM-12__manual__eec3a285d1__6a8dde31b41d5c617b21.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/S9hNv5qa7GM-12__manual__eec3a285d1__0b9bfb2cdb384c80d62d.json.gz",
+      "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage01_half_team/trace_endpoints/S9hNv5qa7GM-12__manual__eec3a285d1__399813a16a0042383ae8.json.gz"
+    ]
+  },
+  "checks": {
+    "abc_event": "9db6b851281fe7094650a2cc",
+    "abc_Q": [
+      97.50404186695434,
+      89.06863052475568,
+      98.5962802379521
+    ],
+    "TARGET_DSTRUCT_K3": {
+      "teams": 924,
+      "missing_Q": 0,
+      "means": {
+        "C1:3|C2:12|C3:5": 63.545287717684054,
+        "C1:3|C2:13|C3:4": 56.95967522525224,
+        "C1:3|C2:14|C3:3": 55.15102523341069
+      }
+    },
+    "RFUSE_GEOM_K2": {
+      "teams": 924,
+      "missing_Q": 0,
+      "means": {
+        "C1:17|C2:3": 59.93293685133982,
+        "C1:18|C2:2": 56.15776019034207
+      }
+    },
+    "positive_abc_event": "c9bb25b937718b58f2189977",
+    "positive_abc_Q": [
+      61.59705139397775,
+      74.5722891185424,
+      93.35645584684282
+    ]
+  },
+  "sets": {
+    "D": [
+      "W100",
+      "W106",
+      "W119",
+      "W125",
+      "W127",
+      "W128",
+      "W131"
+    ],
+    "X": [
+      "W114",
+      "W116",
+      "W120",
+      "W123",
+      "W124",
+      "W129",
+      "W134"
+    ],
+    "Y": [
+      "W006",
+      "W008",
+      "W104",
+      "W110",
+      "W118",
+      "W121",
+      "W132"
+    ],
+    "Z": [
+      "W102",
+      "W109",
+      "W112",
+      "W115",
+      "W122",
+      "W126",
+      "W130"
+    ]
+  }
+}
