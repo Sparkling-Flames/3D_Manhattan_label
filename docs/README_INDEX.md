@@ -1,3 +1,9 @@
+- **v2.1当前统一口径与正式接入：** [全研究采用表](../research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md)、[AC/Q-only第二次验收](../research/fusion/manual_order_acceptance_20261104/README.md)。
+
+- **人工融合顺序与全链影响（20261104）：** [全链报告与交付](../research/fusion/manual_order_impact_20261104/README.md)、[独立辅助研究台](../research/statistics/research_explorer_v1_r2_20261017/v21-manual-order.html)。固定坐标56/57可评；原自动保留，坐标候选单列；预处理、9模块实际下游和逐条结论已核查。
+
+- **人工连接交付与x坐标核查（2026-11-04）：** [五包接收、上下点共享x及F2/F9来源追溯](../research/fusion/manual_order_delivery_review_20261104/README.md)。
+
 - **连接问题核查（2026-11-04）：** [当前引用、已有顺序与结论影响](../research/fusion/missing_ring_review_20261104/CURRENT_REAUDIT.md)；旧全量人工队列撤回，57个定向几何组单列，不覆盖自动结果。
 
 - **两刊论文提纲（2026-11-02）：** [选题、研究覆盖与证据索引](thesis_main/论文选题与研究覆盖_TOMM_IJHCS_20261102.md)、[TOMM中英双语提纲](thesis_main/论文提纲_TOMM_中英双语_20261102.md)、[IJHCS中英双语提纲](thesis_main/论文提纲_IJHCS_中英双语_20261102.md)；同一研究的备选组织，每节含目标、内容和图表建议，不改历史Word或实验。

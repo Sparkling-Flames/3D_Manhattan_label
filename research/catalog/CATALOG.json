@@ -13605,7 +13605,7 @@
       "source_path": "research/fusion/missing_ring_review_20261104",
       "current_path": "research/fusion/missing_ring_review_20261104/README.md",
       "source": "本地保存端点、原生节点和冻结团队原答",
-      "adoption_status": "57组人工顺序已全部回收并验证绑定；辅助几何、评分及全链影响交由Pro接续，原自动结果保留",
+      "adoption_status": "57组顺序已回收、绑定并接入人工辅助版；56条件可评；完整AC登记机会边界见最新验收",
       "verification_status": "当前引用、顺序绑定和事件影响见FINAL_AUDIT_CHECKS.json及CURRENT_REAUDIT.md；浏览器验收未完成",
       "availability": "本地离线工作台；含完整原答和本地原图链接",
       "relationships": [
@@ -13616,6 +13616,73 @@
         "research/fusion/missing_ring_review_20261104/user_order_return/README.md",
         "research/fusion/missing_ring_review_20261104/user_order_return/PRO_PROMPT_ZH.md",
         "tests/test_missing_ring_review_20261104.py"
+      ]
+    },
+    {
+      "id": "MAT-manual_order_delivery_review_20261104",
+      "title": "五批人工连接交付及shared-x本地独立核查",
+      "theme": "fusion",
+      "type": "接收审查与预处理复算",
+      "date": "20261104",
+      "source_path": "research/fusion/manual_order_delivery_review_20261104",
+      "current_path": "research/fusion/manual_order_delivery_review_20261104/README.md",
+      "source": "Downloads五批ZIP、当前显式v2.1输入与本地几何评分代码",
+      "adoption_status": "01—05及07批已正式接入；原自动、固定坐标人工辅助、坐标候选分别采用",
+      "verification_status": "10597对象预处理、436节点中心、57组几何及候选完整评分实算；10项pytest实际通过；未全链独立复现",
+      "availability": "本地审查目录",
+      "relationships": [
+        "tools/thesis_main/analysis/review_manual_order_delivery_20261104.py",
+        "research/fusion/manual_order_delivery_review_20261104/V21_IMPACT_REVIEW.md",
+        "research/fusion/manual_order_delivery_review_20261104/LOCAL_DOWNSTREAM_REAGGREGATION.csv",
+        "research/fusion/manual_order_delivery_review_20261104/INTEGRATION_REPORT.md"
+      ]
+    },
+    {
+      "id": "MAT-manual_order_impact_20261104",
+      "title": "人工连接辅助结果与全链传播",
+      "theme": "fusion",
+      "type": "数据、验收及当前采用索引",
+      "date": "20261104",
+      "source_path": "research/fusion/manual_order_impact_20261104/README.md",
+      "current_path": "research/fusion/manual_order_impact_20261104/README.md",
+      "source": "Pro第01—05及07批；本地正式接入",
+      "adoption_status": "定向辅助与原自动分别保留；Q-only208事件机会完整，AC完整登记公平性未建立",
+      "verification_status": "作者验收与本地检查分列于INTEGRATION_REPORT.md；未重跑全链融合",
+      "availability": "本地正式路径",
+      "relationships": [
+        "research/fusion/manual_order_delivery_review_20261104/INTEGRATION_REPORT.md"
+      ]
+    },
+    {
+      "id": "MAT-manual_order_acceptance_20261104",
+      "title": "人工连接第二次验收、完整分母与公平性边界",
+      "theme": "fusion",
+      "type": "数据、验收及当前采用索引",
+      "date": "20261104",
+      "source_path": "research/fusion/manual_order_acceptance_20261104/README.md",
+      "current_path": "research/fusion/manual_order_acceptance_20261104/README.md",
+      "source": "Pro第01—05及07批；本地正式接入",
+      "adoption_status": "定向辅助与原自动分别保留；Q-only208事件机会完整，AC完整登记公平性未建立",
+      "verification_status": "作者验收与本地检查分列于INTEGRATION_REPORT.md；未重跑全链融合",
+      "availability": "本地正式路径",
+      "relationships": [
+        "research/fusion/manual_order_delivery_review_20261104/INTEGRATION_REPORT.md"
+      ]
+    },
+    {
+      "id": "MAT-v21_current_research_basis_20261104",
+      "title": "v2.1全研究当前采用口径",
+      "theme": "coordination",
+      "type": "数据、验收及当前采用索引",
+      "date": "20261104",
+      "source_path": "research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md",
+      "current_path": "research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md",
+      "source": "Pro第01—05及07批；本地正式接入",
+      "adoption_status": "定向辅助与原自动分别保留；Q-only208事件机会完整，AC完整登记公平性未建立",
+      "verification_status": "作者验收与本地检查分列于INTEGRATION_REPORT.md；未重跑全链融合",
+      "availability": "本地正式路径",
+      "relationships": [
+        "research/fusion/manual_order_delivery_review_20261104/INTEGRATION_REPORT.md"
       ]
     }
   ]

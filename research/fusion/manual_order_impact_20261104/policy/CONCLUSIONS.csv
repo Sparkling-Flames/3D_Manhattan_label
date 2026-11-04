@@ -1,0 +1,10 @@
+topic,status,automatic,assisted,source,explanation
+旧structure_dominant_first/new16/image_equal/后段Q差,幅度变化,-0.7220116160008899,-0.7242887752372323,LATE_GLOBAL_COMPARISON.csv,仍为负；保留原固定k、路径簇与图片/建筑权重，原共同已评分端点不变
+旧structure_dominant_first/new16/building_equal/后段Q差,幅度变化,-1.0319938179370172,-1.0401265294953832,LATE_GLOBAL_COMPARISON.csv,仍为负；保留原固定k、路径簇与图片/建筑权重，原共同已评分端点不变
+旧structure_dominant_first/pooled32/image_equal/后段Q差,幅度变化,-0.776978968814762,-0.7782196589124806,LATE_GLOBAL_COMPARISON.csv,仍为负；保留原固定k、路径簇与图片/建筑权重，原共同已评分端点不变
+旧structure_dominant_first/pooled32/building_equal/后段Q差,幅度变化,-1.0780616379419488,-1.0824926740052292,LATE_GLOBAL_COMPARISON.csv,仍为负；保留原固定k、路径簇与图片/建筑权重，原共同已评分端点不变
+旧策略方向与区间判定,保持,0,0,NUMERIC_CHANGES.csv,352个既有后段摘要组无点估计符号变化，也无路径/建筑区间相对0的关系变化
+旧策略可评路径支持,条件变化,x8F5 n=28端点无Q,同一端点Q=30.829880,AFFECTED_PREFIX_ASSISTED.csv,新增现有路径端点支持，不是从0提升；总图片支持仍150/153
+早段、全员、old16及次要cohort,保持,0,0,CHECKS.json,仅new16一条路径命中；pooled32继承该引用，added_reference32、次要old8、早段与全员零命中
+当前DSTRUCT策略,尚不能判断,历史V3_BEHAVIOR角色,历史V3_BEHAVIOR角色,CHECKS.json,structure_dominant_first是旧角色策略；不能用该命名代替当前DSTRUCT策略实验
+包含人工辅助的总劳动效率,尚不能判断,原标注劳动不变,人工排序成本缺失,CHECKS.json,原记录劳动保持；未知人工介入时间不能按0计入效率

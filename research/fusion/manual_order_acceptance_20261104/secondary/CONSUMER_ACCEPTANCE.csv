@@ -1,0 +1,25 @@
+﻿module,consumer,actual_scope,acceptance,evidence
+same_room,当前事件、分项、图对、劳动、几何,1621 方法行；54 命中行 / 23 物理事件,独立重派生通过,SAME_ROOM_RECOMPUTED_METRIC_SUMMARIES.csv.gz; SAME_ROOM_SEPARATE_SUPPORTS.csv
+same_room,旧注册事件与配置→图对,2646 受影响标签层事件；31 直接事件；8198 配置 / 744 配对分层,旧来源和未命中行相符；全部配置→图对重新核对,CHECKS.csv; ../manual_order_impact_20261104/same_room/frozen_registered/native_results
+same_room,旧注册成员、历史 Q、原生几何,保持冻结选择域；前批已完成实际消费者，未新增选择,消费者文件存在；本轮未重新选择成员或历史 Q 域,../manual_order_impact_20261104/same_room/frozen_registered/native_member_sensitivity; native_history_q; native_geometry_summary
+composition,有限面板、配置分布、配置方差与原完整宏统计,2 面板 / 45 原团队；11 固定标签；2 新可评端点,从固定标签和成员全集重派生所有受影响分项，并独立重算全部宏统计,COMPOSITION_NEW_CONFIGURATIONS.csv; COMPOSITION_K3_MACRO_ACCEPTANCE.csv; CHECKS.csv
+alliances,纯类/联盟每类分项与池内最佳纯类,3160 行、12 命中物理团队 / 19 引用,从 GitHub 原表独立对比并重建全部池内排名和图等权摘要,ALLIANCE_SUPPORT_DECOMPOSITION.csv; ALLIANCE_NEW_SUPPORT_AND_RANK_CHANGES.csv
+alliances,414 行联盟落实表,403 可执行 / 11 容量记录,每一落实团队键、分数与 updated 且无未知背景的实际行一致,CHECKS.csv
+policy,POLICY_IMAGE_K.csv.gz,唯一 N35/k28 的 new16 旧角色策略前缀,原 152 未命中池逐格保持；命中池完整替换并重算 k/phase 均值,POLICY_IMAGE_K.csv.gz
+policy,POLICY_IMAGE_PHASE.csv,唯一 N35/k28 的 new16 旧角色策略前缀,原 152 未命中池逐格保持；命中池完整替换并重算 k/phase 均值,POLICY_IMAGE_PHASE.csv
+policy,FIXED_SUPPORT.csv.gz,唯一 N35/k28 的 new16 旧角色策略前缀,原 152 未命中池逐格保持；命中池完整替换并重算 k/phase 均值,FIXED_SUPPORT.csv.gz
+policy,POLICY_PRECISION_SUMMARY,new16 与 pooled32 的既有 late_20_to_Nminus1 摘要,全 352 组点值、保存路径抽样和建筑区间独立复核；其余摘要保持,POLICY_RECOMPUTED_LATE_SUMMARY.csv; POLICY_DIRECTION_AND_INTERVAL_ACCEPTANCE.csv
+natural,stage03/POOL_K_STATISTICS.csv.gz,仅两个其它目标池,原其它池逐格保持；实际新池行完整接入,research/fusion/manual_order_impact_20261104/natural/stage03_response/manual/POOL_K_STATISTICS.csv.gz
+natural,stage03/STATUS_BY_K.csv.gz,仅两个其它目标池,原其它池逐格保持；实际新池行完整接入,research/fusion/manual_order_impact_20261104/natural/stage03_response/manual/STATUS_BY_K.csv.gz
+natural,stage03/PATH_CHANGE_SUMMARY.csv.gz,仅两个其它目标池,原其它池逐格保持；实际新池行完整接入,research/fusion/manual_order_impact_20261104/natural/stage03_response/manual/PATH_CHANGE_SUMMARY.csv.gz
+natural,stage03/TAIL_ENVELOPES.csv.gz,仅两个其它目标池,原其它池逐格保持；实际新池行完整接入,research/fusion/manual_order_impact_20261104/natural/stage03_response/manual/TAIL_ENVELOPES.csv.gz
+natural,stage03/PLATEAU_SENSITIVITY.csv.gz,仅两个其它目标池,原其它池逐格保持；实际新池行完整接入,research/fusion/manual_order_impact_20261104/natural/stage03_response/manual/PLATEAU_SENSITIVITY.csv.gz
+natural,stage03/TRANSIENT_FLAT_THEN_CHANGE.csv.gz,两个其它目标池原/新贡献均为空,完整非目标表保持；不创造置信带或短暂平台案例,TRANSIENT_FLAT_THEN_CHANGE.csv.gz
+natural,stage03/REUSED_BAND_ESTIMATE_CHECKS.csv.gz,两个其它目标池原/新贡献均为空,完整非目标表保持；不创造置信带或短暂平台案例,REUSED_BAND_ESTIMATE_CHECKS.csv.gz
+natural,stage03/FIXED_WINDOW_DOMAIN_SUMMARY 与主平台表,原域与窗口声明保持,从完整路径变化行和平台网格独立重建，正式门槛未放宽,NATURAL_RECOMPUTED_FIXED_WINDOW_SUMMARY.csv; CHECKS.csv
+natural,stage07/FIXED_PANEL_CURVES.csv.gz,原固定面板成员/难度；仅其它目标域变化,原其它域保持；全部真实变化的值与池→图→楼权重重新计算,FIXED_PANEL_CURVES.csv.gz
+natural,stage07/PER_IMAGE_MARGINAL_CHANGES.csv.gz,原固定面板成员/难度；仅其它目标域变化,原其它域保持；全部真实变化的值与池→图→楼权重重新计算,PER_IMAGE_MARGINAL_CHANGES.csv.gz
+natural,stage07/FIXED_PANEL_CHANGE_SUMMARY.csv.gz,原固定面板成员/难度；仅其它目标域变化,原其它域保持；全部真实变化的值与池→图→楼权重重新计算,FIXED_PANEL_CHANGE_SUMMARY.csv.gz
+natural,main-only 几何、结构分项、P10/finite-tail、连续结构与诊断,两个被处理池均为 ordinary_manual_extra_target,未命中原 ordinary_manual_main 域；不重新运行,research/fusion/manual_order_impact_20261104/natural/DOWNSTREAM_CONSUMERS.csv
+coordinate_candidate,主端点、AC、联盟及单列候选摘要,1 候选 / 52 引用；主分支 56/57,候选四个 x 标量编辑精确；未混入主评分或主下游,CANDIDATE_ISOLATION.json; CHECKS.csv
+composition_format_repair,后续读取辅助标量成员列表的消费者,2 文件 / 8 字符串单元格,原管道分隔合同已恢复；现有聚合器读取固定 TEAM_REQUESTS，数值不受影响,repairs/MEMBER_FIELD_FORMAT_REPAIR.json

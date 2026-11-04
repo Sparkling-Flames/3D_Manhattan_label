@@ -1,0 +1,13 @@
+--- a/tools/thesis_main/analysis/evaluate_manual_order_composition_20261104.py
++++ b/tools/thesis_main/analysis/evaluate_manual_order_composition_20261104.py
+@@ -102,6 +102,10 @@
+     revised = []
+     for row in old.to_dict('records'):
+         changed = merge_endpoint(row, auxiliary[row['team_key']]) if row['team_key'] in auxiliary else row.copy()
++        # Preserve the original scalar member-list encoding as well as membership.
++        # The generic endpoint JSON uses lists; this CSV contract uses pipes.
++        for field in ('member_workers', 'member_object_ids'):
++            changed[field] = row[field]
+         # Retain exactly the existing scalar schema; the original aggregator derives failure.
+         revised.append({column: changed.get(column) for column in old})
+     revised = pd.DataFrame(revised, columns=old.columns)

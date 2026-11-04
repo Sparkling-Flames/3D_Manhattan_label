@@ -1,0 +1,28 @@
+{
+  "verdict": "PASS",
+  "input_snapshot_files_matched": [
+    "TEAM_REQUESTS.csv",
+    "ENDPOINTS.jsonl.gz",
+    "PAIRED_EVENTS.csv",
+    "SUMMARY.csv",
+    "SELECTION_OVERLAP.csv",
+    "OUTPUT_STATUS.csv",
+    "DESIGN_LINKS.csv"
+  ],
+  "opportunity_rows_independently_matched": 1040,
+  "no_connection_links": 29,
+  "no_connection_unique_endpoints": 21,
+  "uncovered_required_order_links": 0,
+  "remaining_failure_links": 3,
+  "focused_20_7_event_arms_matched": 35,
+  "focused_remaining_failures": 0,
+  "decomposition_conditions_recalculated": 88,
+  "event_contribution_rows_verified": 5412,
+  "common_support_value_changes": 0,
+  "missing_old_Q_filled_with_zero": 0,
+  "largest_numeric_disagreement": 3.552713678800501e-15,
+  "independent_weight_method": "top-down exact Fraction mass allocation across image, pool, block, background, replicate; no import of production audit code",
+  "sign_and_support_interpretation": "Published decomposition is a change of the supported mean, not a score improvement from zero for missing original Q.",
+  "material_rerun_gap_found": false,
+  "scope": "Frozen 208-event design and its accepted exact-team manual-order scores only"
+}

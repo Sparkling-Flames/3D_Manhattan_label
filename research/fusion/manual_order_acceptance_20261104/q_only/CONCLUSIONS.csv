@@ -1,0 +1,10 @@
+﻿item,decision,action,evidence,detail
+固定设计内各政策人工处理机会,保持,完成验收，无遗漏需补算,OPPORTUNITY_COVERAGE_BY_ARM.csv;ALL_1040_POLICY_OPPORTUNITIES.csv.gz,29/29无连接引用、21/21端点覆盖；3条节点不足单列。
+原共同支持质量和分项,保持,保留原自动与辅助原共同支持,CHECKS.json;INDEPENDENT_SUMMARY.csv,全832比较各原可评数值保持，原缺失Q不按0。
+14/7 DSTRUCT相对Q-only的明确平均Q优势,保持,仍不能主张明确优势,INDEPENDENT_SUMMARY.csv,Q_RAW点估计翻负但95%区间跨0；Q_PEER仍为小正值且区间跨0。
+20/7扩展支持的Q-only比较,条件变化,明确固定支持及S9hNv5qa7GM-09依赖,SUPPORT_AND_WEIGHT_DECOMPOSITION.csv;IMAGE_INFLUENCE_DIAGNOSTIC.csv,完整61事件54图差-0.482499；新增一图含2事件，原59事件不变。
+20/7不同选员子集,幅度变化,报告7事件7图6楼，非两次独立政策重复,20_7_DIFFERENT_SELECTION_EVENTS.csv;INDEPENDENT_SUMMARY.csv,6→7事件，-1.998106→-7.437562；Q_RAW和Q_PEER选员相同。
+把20/7称为50%换人,需改写,20/7统一称35%换人,../inputs/q_only/DESIGN_LINKS.csv,"原设计m=7,n=20；14/7才是50%。"
+人工辅助整体成本优势,尚不能判断,仅保留原标注劳动，辅助劳动未知,CHECKS.json;../../manual_order_impact_20261104/endpoints/ENDPOINT_SCORES.csv,排序劳动未完整计时，不能由原答劳动推算。
+全部无环结果可修复,尚不能判断,不得外推,ALL_NO_CONNECTION_OPPORTUNITIES.csv;../inputs/q_only/TEAM_REQUESTS.csv,同等机会证明限定冻结208事件，57组为定向案例。
+新增排序/端点评分/团队,保持,本轮均为0，停止扩实验,ADDITIONAL_HUMAN_REVIEW_QUEUE.csv;CHECKS.json,没有发现需要补人工端点的真实缺口。

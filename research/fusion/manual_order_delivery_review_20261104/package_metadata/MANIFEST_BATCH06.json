@@ -1,0 +1,352 @@
+{
+  "batch": 6,
+  "version": {
+    "version": "v21_manual_order_acceptance_20261104_qonly_v1",
+    "parent_method_version": "v21_targeted_manual_order_assisted_20261104_v1",
+    "source_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "scope": "Q-only full frozen 208-event opportunity and numerical acceptance",
+    "policy_event_links": 1040,
+    "unique_team_requests": 670,
+    "covered_no_connection_links": 29,
+    "covered_no_connection_teams": 21,
+    "new_fusion_runs": 0,
+    "new_teams": 0,
+    "new_human_order_requests": 0,
+    "new_coordinate_edits": 0,
+    "original_missing_Q_kept_missing": true,
+    "scientific_values_changed_from_batch05": false,
+    "independent_peer_review": "source_version/audit/PEER_REVIEW_QONLY_CHECKS.json"
+  },
+  "files": [
+    {
+      "path": "README_BATCH06_ZH.md",
+      "bytes": 1927,
+      "sha256": "d2a082ec4cd62f53239626d031bcd298831fd6c9b2cd90fb261d923b19391531"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/DESIGN_LINKS.csv",
+      "bytes": 437420,
+      "sha256": "3f47aa8233ea8f8696a2aaf8a55373be6fc45fd7733d9e09190f1e10ec30a5dc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/ENDPOINTS.jsonl.gz",
+      "bytes": 467159,
+      "sha256": "865f07fa13baa67d8db310ce7c879129079bf8bad7d75e816027c636620d696b"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/OUTPUT_STATUS.csv",
+      "bytes": 107491,
+      "sha256": "566d04b0c74773d698e78b186e6c5f0fce9a0f8755741a506e922cbc837e50db"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/PAIRED_EVENTS.csv",
+      "bytes": 489581,
+      "sha256": "c628cc671743ef0f957d2edfcdc2bf9b7763daee5b7ba7af37bf94ce1d16a6a4"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/SELECTION_OVERLAP.csv",
+      "bytes": 43989,
+      "sha256": "de1250b0b285a61f8599a329cf9fccc0ddd986a02f9926643ae0a9e7b3e94597"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/SUMMARY.csv",
+      "bytes": 15993,
+      "sha256": "8a71248df02193fba513e3656323de36d706764997b2658d29898e5f91ce4740"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/inputs/q_only/TEAM_REQUESTS.csv",
+      "bytes": 206381,
+      "sha256": "bbd1689ca94db269b8267e2dec310f9cfe75e9e37666ffdc5b90c2923b8b9afc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/20_7_DIFFERENT_SELECTION_ALL_FIVE_ARMS.csv",
+      "bytes": 11933,
+      "sha256": "62a9287c54288227eec6acc7984b496b6ded9d78870c4a30915502270a7945c0"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/20_7_DIFFERENT_SELECTION_EVENTS.csv",
+      "bytes": 13924,
+      "sha256": "f21ceb8cac7bf15ef7f8d544f364f4e1aaf03347f33b2f2eb0587a01fc35d38e"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/ADDITIONAL_HUMAN_REVIEW_QUEUE.csv",
+      "bytes": 66,
+      "sha256": "4684f1f713e899594ff3821322e7ad15011dbb150a1560201efaaa4000b76d49"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/ALL_1040_POLICY_OPPORTUNITIES.csv.gz",
+      "bytes": 37532,
+      "sha256": "9c4311871543a50099a8b48a07b390ec07fb78fa5f0ddc35989ebaf57241b715"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/ALL_DIFFERENT_SELECTION_EVENTS.csv",
+      "bytes": 66244,
+      "sha256": "a6feedf88104b2c0e5614b360a525936ec23975942c796fc6c1fba8054420067"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/ALL_NO_CONNECTION_OPPORTUNITIES.csv",
+      "bytes": 9642,
+      "sha256": "ab7b4bd4235d984a2e0b5f0cd4c028ce26631704883eee9e466de535c0c87bdc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/CHECKS.json",
+      "bytes": 33726,
+      "sha256": "39d75971adaae6bfade70e48700081927e5e83f021cc7798b04ef36bfd10c3d3"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/CONCLUSIONS.csv",
+      "bytes": 1794,
+      "sha256": "5e3ef935a4c7aac9bca09a49a8be47f4d6d3f2fbac6bdda4f6684292ad2f6c97"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/EVENT_WEIGHT_CONTRIBUTIONS.csv.gz",
+      "bytes": 208274,
+      "sha256": "8179961dab30903e1f15a510daabda910199fba6cadaaa732f6956c182df8395"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/IMAGE_INFLUENCE_DIAGNOSTIC.csv",
+      "bytes": 17151,
+      "sha256": "37240d6f2cd822841b72aa167c01838bc1b10f8e49f7713856fa74e45551df33"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/INDEPENDENT_IMAGE_EFFECTS.csv.gz",
+      "bytes": 376940,
+      "sha256": "dc5af0262e50c27091105f271b6dfa5ac6dd7f025179350d4ade954a8ae0bdfd"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/INDEPENDENT_SUMMARY.csv",
+      "bytes": 74774,
+      "sha256": "abb73cddbbe4a3ab45126ea1c2825267171d23fd934480e8c04a922caafca5c0"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/INPUT_MANIFEST.csv",
+      "bytes": 2036,
+      "sha256": "d3640dd20f4f8bbc18d5ad882be7b75fc228a667bdd59442bd4a286d2c3e1725"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/NEWLY_PAIRED_Q_EVENTS.csv",
+      "bytes": 16511,
+      "sha256": "c8e752aca6a4c68410741ae15f550f05b8bf22ee957e7e8cff7edca8f14cfb25"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/OPPORTUNITY_COVERAGE_BY_ARM.csv",
+      "bytes": 519,
+      "sha256": "af0f97e58fc98ce9c6a34022c0c1f8a696af545b8c64ac50ca642076d019aadc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/README.md",
+      "bytes": 1442,
+      "sha256": "b0df1ed0d2c9bff207e89d18baa12b48ba96cf4779bfe363a6767bd3f890509e"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/REMAINING_NON_ORDER_FAILURES.csv",
+      "bytes": 1093,
+      "sha256": "d5eb730fc7cd2214a8320de7b3fca11f1c7ff7a0cb7a459d0cff6124e318d140"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/REPORT_ZH.md",
+      "bytes": 11393,
+      "sha256": "0f33fcf0f7c2b9b3719bea5f21c697386994d8f7645dd098a4148b5b2b9808ef"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/SUPPORT_AND_WEIGHT_DECOMPOSITION.csv",
+      "bytes": 20749,
+      "sha256": "158f20d68ea95f70f06f85593a729d8dc71a93542d9e1f755eaa26fa7304d83c"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/q_only/VERSION.json",
+      "bytes": 701,
+      "sha256": "ade826ac5fc365991bbb926095664825ce96d83779f0a581ab05b28b5031b2b3"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/PEER_REVIEW_QONLY_ZH.md",
+      "bytes": 5510,
+      "sha256": "b9a69e641ed70aa0eb300157cfbf0e6f9389fb186c3169887464cfababbd46cf"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/REPORT_ZH.md",
+      "bytes": 8749,
+      "sha256": "f27987c68ebfba7278bcb9ded2ea91a4ee0f64c211f767ed8e7ec366433bb54f"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/20_7_DIFFERENT_SELECTION_ALL_FIVE_ARMS.csv",
+      "bytes": 26728,
+      "sha256": "0359a6e6abd4450265c3d96b65778be9bf7f222d217a10f68676e927826221ad"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/20_7_DIFFERENT_SELECTION_IDENTITIES.csv",
+      "bytes": 1220,
+      "sha256": "705d39513839fadb0def11dd976626b54c15d593aa68a27b0c9f4ddcb2dd0db2"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/FROZEN_POLICY_EVENT_INVENTORY.csv.gz",
+      "bytes": 70602,
+      "sha256": "82b8bf74de9cd1e646269fe99b39f3f9f209a9cbc41c0058b12faff8ce1d0fcb"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/INSUFFICIENT_NODES_3_POLICY_EVENTS.csv",
+      "bytes": 2606,
+      "sha256": "afbba5bce0aab8a13b5f62c0fc11b09a18138099e5b4214e4cc2dd5a3db112d4"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/ORIGINAL_POLICY_FAILURE_REQUIREMENTS.csv",
+      "bytes": 24183,
+      "sha256": "1de723f7961ea5494cc1c407017480f4e8196dcd36e159de272cb50f4f2f3afd"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/ORIGINAL_POLICY_SCOPE_AND_ORDER_COVERAGE.csv",
+      "bytes": 526,
+      "sha256": "393ba11df125a7f343f0b7eb76ee73c3da14e7ec85255ef1864969445a34a8ae"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/PEER_RECALCULATED_Q_DECOMPOSITION.csv",
+      "bytes": 2045,
+      "sha256": "164f6f0cc4ebc4dc076b10c8053a9378b7edb51d3adfca524d2c53e38665d254"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/PEER_REVIEW_QONLY_CHECKS.json",
+      "bytes": 1171,
+      "sha256": "cbbdb943412510202698088b93b81b9e25d46806f93388e62d49249cc77ec78f"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/REQUIRED_CONNECTION_ENDPOINTS_21.csv",
+      "bytes": 16118,
+      "sha256": "291e299221b084b8f8e3e27c2786ed47c827a520a079c048cdc52f90b8af74ee"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/SELECTION_IDENTITY_RECALCULATION.csv",
+      "bytes": 30129,
+      "sha256": "059eeb1d07bc933463c59ce6c1a478096f44a0ab6c7d4a713912c187768eb709"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/SOURCE_AND_DESIGN_CHECKS.json",
+      "bytes": 1439,
+      "sha256": "be8eca91c498f18258614e0250755aa39e30438961e298d67f3f7aeeb87acc68"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit/SOURCE_VERSION_MANIFEST.csv",
+      "bytes": 9456,
+      "sha256": "f9a89be6ac0ca9e20a5878ab0d31de78b59acf98cd62fe1c284bf57f339a3b9a"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/audit_version_and_design.py",
+      "bytes": 13339,
+      "sha256": "c797cb465665e31d5b4d7ee89216029273cbd5c98497036589ddb97f1cacf069"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/current/PRO_PROMPT_ZH.md",
+      "bytes": 7710,
+      "sha256": "98257f43a85a3bdafc187afa01e794627943484e214df5ab1f5994ac0fb224c4"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/current/QONLY_DESIGN.json",
+      "bytes": 1294,
+      "sha256": "9716e049302ba8d2717e1c3022a93efc192eec07b849ba399a80eb984e3b3c8a"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/current/QONLY_README.md",
+      "bytes": 8979,
+      "sha256": "fae81df03f39222bff362adeb5d134afc623595880c8777ffdf66c386b63a7c8"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/main_branch.json",
+      "bytes": 4791,
+      "sha256": "1edad438660d7eb3665ca503490ce6473b4b7d288b613e6a9bcefef356ea89b3"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/peer_review_qonly_acceptance.py",
+      "bytes": 12353,
+      "sha256": "9955999666668cdca8e982e49f6fb85a53aa5d7690294634539c99c0ce83ac7f"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/qonly_directory.json",
+      "bytes": 36573,
+      "sha256": "c386d8931ef2372ba0fab1c1f4d5880c320180b63fa782ec24e8dd298c691364"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/repository_metadata.json",
+      "bytes": 1131,
+      "sha256": "c4077d603119b6a8849ce2645df9ee2a7399ef4ae9ce2564acc73cbb9abea298"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/return_directory.json",
+      "bytes": 11668,
+      "sha256": "2247acc4847f67e79b684f9dd21af8e9cb7c6d5046e970c0a9e55eca26100d34"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/DESIGN.json",
+      "bytes": 1294,
+      "sha256": "9716e049302ba8d2717e1c3022a93efc192eec07b849ba399a80eb984e3b3c8a"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/DESIGN_LINKS.csv",
+      "bytes": 437420,
+      "sha256": "3f47aa8233ea8f8696a2aaf8a55373be6fc45fd7733d9e09190f1e10ec30a5dc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/ENDPOINTS.jsonl.gz",
+      "bytes": 467159,
+      "sha256": "865f07fa13baa67d8db310ce7c879129079bf8bad7d75e816027c636620d696b"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/OUTPUT_STATUS.csv",
+      "bytes": 107491,
+      "sha256": "566d04b0c74773d698e78b186e6c5f0fce9a0f8755741a506e922cbc837e50db"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/PAIRED_EVENTS.csv",
+      "bytes": 489581,
+      "sha256": "c628cc671743ef0f957d2edfcdc2bf9b7763daee5b7ba7af37bf94ce1d16a6a4"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/README.md",
+      "bytes": 8979,
+      "sha256": "fae81df03f39222bff362adeb5d134afc623595880c8777ffdf66c386b63a7c8"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/SELECTION_OVERLAP.csv",
+      "bytes": 43989,
+      "sha256": "de1250b0b285a61f8599a329cf9fccc0ddd986a02f9926643ae0a9e7b3e94597"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/SUMMARY.csv",
+      "bytes": 15993,
+      "sha256": "8a71248df02193fba513e3656323de36d706764997b2658d29898e5f91ce4740"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/data/releases/v2.1/q_only_exchange_20261031/TEAM_REQUESTS.csv",
+      "bytes": 206381,
+      "sha256": "bbd1689ca94db269b8267e2dec310f9cfe75e9e37666ffdc5b90c2923b8b9afc"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/fusion/missing_ring_review_20261104/user_order_return/IMPACT_BY_MODULE.csv",
+      "bytes": 351,
+      "sha256": "7d875635419f2d368cbca13edda9f3ca1d0e5250271a85c6f4ddffe530231f6c"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/fusion/missing_ring_review_20261104/user_order_return/IMPORT_RECEIPT.json",
+      "bytes": 383,
+      "sha256": "5e0e041a79cd01b8b3c3c025aacd6f97631799908ca1ef513655d27d682fda4c"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/fusion/missing_ring_review_20261104/user_order_return/PRO_PROMPT_ZH.md",
+      "bytes": 7710,
+      "sha256": "98257f43a85a3bdafc187afa01e794627943484e214df5ab1f5994ac0fb224c4"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/research/fusion/missing_ring_review_20261104/user_order_return/README.md",
+      "bytes": 2467,
+      "sha256": "dc5826741ef4355de1608a51b476a1d7b5f405e37df0124f510d7e6502769640"
+    },
+    {
+      "path": "research/fusion/manual_order_acceptance_20261104/source_version/source/tools/thesis_main/analysis/q_only_exchange_v21_20261031.py",
+      "bytes": 21038,
+      "sha256": "c4224bfbd174bccda096505b41660aa85bef8ffd33740b3e85d11a96da1a0999"
+    },
+    {
+      "path": "tools/thesis_main/analysis/audit_manual_order_qonly_fairness_20261104.py",
+      "bytes": 28028,
+      "sha256": "a94c0107720cce69f6582be60a85d47d40756277b1dfcee0197cdc980590bd8d"
+    }
+  ]
+}

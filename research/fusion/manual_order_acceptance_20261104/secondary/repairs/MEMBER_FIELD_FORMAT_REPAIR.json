@@ -1,0 +1,47 @@
+{
+  "repair": "composition_member_field_serialization_only",
+  "source_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "edited_cells": 8,
+  "csv_files": 2,
+  "writer_files": 1,
+  "member_content_and_order_unchanged": true,
+  "all_scientific_and_other_nonmember_CSV_cells_exact_text_unchanged": true,
+  "existing_member_consumer": "aggregate_frozen_panels.py reads TEAM_REQUESTS.csv.gz, not endpoint scalar member strings",
+  "new_teams": 0,
+  "new_fusions": 0,
+  "new_scores": 0,
+  "classification_selection_runs": 0,
+  "scientific_aggregation_runs": 0,
+  "immutable_prior_ZIPs_modified": false,
+  "files": [
+    {
+      "path": "research/fusion/manual_order_impact_20261104/composition/affected_inputs/assisted_original_support_ENDPOINT_SCALARS.csv.gz",
+      "before_sha256": "fb260da30f6cfd0a6d3230a0c1745ff0524f13d8da7e06c4892219c7b8ef0ddc",
+      "after_sha256": "b5a894fb1657af4886379dfbf9a7f5f258c96ca5471b26d864671a6f9a448193",
+      "rows": 45,
+      "columns": 124,
+      "field_order_unchanged": true,
+      "row_identity_and_order_unchanged": true,
+      "all_nonmember_cells_exact_text_unchanged": true,
+      "exact_pre_acceptance_copy": "research/fusion/manual_order_acceptance_20261104/secondary/repairs/pre_acceptance/assisted_original_support_ENDPOINT_SCALARS.csv.gz"
+    },
+    {
+      "path": "research/fusion/manual_order_impact_20261104/composition/affected_inputs/assisted_expanded_ENDPOINT_SCALARS.csv.gz",
+      "before_sha256": "0b10fcec5220581b79920c759ea628c15a3c3e085649534fe67de1f7fd327162",
+      "after_sha256": "afa25facc15f50523c98b1a10a611f9dc4db04f7dc345782b42eae1ad5d717ab",
+      "rows": 45,
+      "columns": 124,
+      "field_order_unchanged": true,
+      "row_identity_and_order_unchanged": true,
+      "all_nonmember_cells_exact_text_unchanged": true,
+      "exact_pre_acceptance_copy": "research/fusion/manual_order_acceptance_20261104/secondary/repairs/pre_acceptance/assisted_expanded_ENDPOINT_SCALARS.csv.gz"
+    },
+    {
+      "path": "tools/thesis_main/analysis/evaluate_manual_order_composition_20261104.py",
+      "before_sha256": "f7bfb8e7fd4206814dd3d845fc3c58c6779f6009d8ec9bc0b0a37f751cdaa435",
+      "after_sha256": "420af5b0bb2ffdf086f153cb5d9564024f9a86ae83a7436580dd9299114162cb",
+      "changed_behavior": "Keep member_workers and member_object_ids in the exact original scalar encoding",
+      "exact_pre_acceptance_copy": "research/fusion/manual_order_acceptance_20261104/secondary/repairs/pre_acceptance/evaluate_manual_order_composition_20261104.py"
+    }
+  ]
+}

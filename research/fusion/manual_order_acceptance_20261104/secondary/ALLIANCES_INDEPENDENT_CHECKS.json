@@ -1,0 +1,230 @@
+[
+  {
+    "module": "alliances",
+    "check": "all_3160_identities_labels_members_labor",
+    "passed": true,
+    "rows": 3160,
+    "columns": 11,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.275957614183426e-12
+  },
+  {
+    "module": "alliances",
+    "check": "all_unhit_rows_unchanged",
+    "passed": true,
+    "rows": 3141,
+    "columns": 23,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.275957614183426e-12
+  },
+  {
+    "module": "alliances",
+    "check": "all_original_scorable_rows_unchanged",
+    "passed": true,
+    "rows": 2932,
+    "columns": 23,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.275957614183426e-12
+  },
+  {
+    "module": "alliances",
+    "check": "19_references_12_teams_17_new_Q",
+    "passed": true,
+    "references": 19,
+    "teams": 12,
+    "new_Q": 17
+  },
+  {
+    "module": "alliances",
+    "check": "all_intervened_old_Q_missing",
+    "passed": true
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/B8L2",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/D10",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/IoU3D100",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/fusion_turn_n",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/fusion_short_turn_edges",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/boundary_loss",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/direction_loss",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/height_loss",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/omission",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "correct_endpoint_component/extension",
+    "passed": true,
+    "rows": 19,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "automatic/all_pool_rankings",
+    "passed": true,
+    "rows": 462,
+    "columns": 10,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 2.842170943040401e-14
+  },
+  {
+    "module": "alliances",
+    "check": "automatic/image_equal_summary",
+    "passed": true,
+    "rows": 6,
+    "columns": 6,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15
+  },
+  {
+    "module": "alliances",
+    "check": "automatic/all_class_metric_consumers",
+    "passed": true,
+    "rows": 504,
+    "columns": 4,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 4.547473508864641e-13
+  },
+  {
+    "module": "alliances",
+    "check": "manual_assisted/all_pool_rankings",
+    "passed": true,
+    "rows": 464,
+    "columns": 10,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "alliances",
+    "check": "manual_assisted/image_equal_summary",
+    "passed": true,
+    "rows": 6,
+    "columns": 6,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "alliances",
+    "check": "manual_assisted/all_class_metric_consumers",
+    "passed": true,
+    "rows": 504,
+    "columns": 4,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "alliances",
+    "check": "new_pool_and_ranking_changes_are_other_targets",
+    "passed": true,
+    "new_label_snapshot_pool_rows": 2,
+    "changed_best_pure_on_original_pools": 1,
+    "lost_pools": 0
+  },
+  {
+    "module": "alliances",
+    "check": "primary_target_comparison_preserved",
+    "passed": true,
+    "rows": 4,
+    "columns": 6,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15
+  },
+  {
+    "module": "alliances",
+    "check": "414_resolution_current_scores",
+    "passed": true,
+    "rows": 414,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "alliances",
+    "check": "414_resolution_identity_and_capacity",
+    "passed": true,
+    "resolved_rows": 414,
+    "executable": 403,
+    "capacity_only": 11
+  }
+]

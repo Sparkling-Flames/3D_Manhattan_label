@@ -1,0 +1,130 @@
+{
+  "source_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "audit_only": true,
+  "team_hash_contract_selfcheck_passed": 57,
+  "returned_unique_team_keys": 57,
+  "full_stopping_rows": 124924,
+  "non_k2_stopping_rows": 113288,
+  "full_stopping_unique_team_sets": 60129,
+  "full_stopping_pools": 43,
+  "full_stopping_groups": 20,
+  "source_patch_rows": 5100,
+  "full_stop_exact_hash_intersection": 0,
+  "full_stop_direct_tuple_intersection": 0,
+  "shared_pool_ids_with_57": 6,
+  "source_reference_condition": "zero team-set intersection before reference filtering; no old/current-reference false match",
+  "direct_tables": {
+    "same_room_Q_QT_selected_outcomes": {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/selection/POLICY_EVENT_RESULTS.csv.gz",
+      "rows": 71608,
+      "unique_endpoint_keys": 25487,
+      "columns": [
+        "team_key",
+        "base_team_key"
+      ],
+      "matched_references": 0
+    },
+    "historical_stop_reference_patch_endpoints": {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/endpoints/STOPPING_SCALARS.csv.gz",
+      "rows": 1534,
+      "unique_endpoint_keys": 1534,
+      "columns": [
+        "team_key"
+      ],
+      "matched_references": 0
+    },
+    "same_room_finite_panel_team_links": {
+      "path": "research/data/releases/v2.1/same_room_current_extended_design/PANEL_TEAM_LINKS.csv.gz",
+      "rows": 92342,
+      "unique_endpoint_keys": 182555,
+      "columns": [
+        "team_key_a",
+        "team_key_b"
+      ],
+      "matched_references": 0
+    }
+  },
+  "original_response_features_changed": false,
+  "half_same_room_AC_summaries_consumed_by_prediction_or_selection_history": false,
+  "no_new_prediction_fit": true,
+  "no_new_selection": true,
+  "no_stopping_replay": true,
+  "no_statistics_rerun": true,
+  "files": [
+    {
+      "path": "research/data/releases/v2.1/full_chain_downstream_20261030/README.md",
+      "bytes": 16641,
+      "sha256": "dbab4d9f103054f7dc709f202ea2cc00fb0ba14a53f176876af7fcb17e1595bf"
+    },
+    {
+      "path": "research/data/releases/v2.1/same_room_current_extended_design/PANEL_TEAM_LINKS.csv.gz",
+      "bytes": 2600303,
+      "sha256": "484093d5894c218579e3358dc2c4180d947434ebf6ac5153cbd4e0aeb09dc7cb"
+    },
+    {
+      "path": "research/fusion/manual_order_impact_20261104/endpoints/ENDPOINT_SCORES.csv",
+      "bytes": 136555,
+      "sha256": "821d268d342096fc802139f00c22d7c2c4c3ec1c10ce5e553727ab68c52579eb"
+    },
+    {
+      "path": "research/same_room/same_room_profile_return_review_20261021/pro/room_similarity/code/common.py",
+      "bytes": 4006,
+      "sha256": "37dee0f23a6d754ca86c8dd11a65653d6900ad76b4c3a1166b9bc663987c56a3"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/scripts/same_room_prediction.py",
+      "bytes": 18032,
+      "sha256": "ed6f283649c3b6686c3307e762027db0f61360b3e60fbce1fce7bd0fd0007791"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/scripts/selection_stop_analyze.py",
+      "bytes": 12855,
+      "sha256": "01e28937bfc65be4d72f0cb6c1d7553312a71222ec18b9f3d733ba2f0a7aafa5"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/scripts/selection_stop_finalize.py",
+      "bytes": 8443,
+      "sha256": "ea7b63431165507afeb35ecfae4d1c6b38e65ced6dad5be98cfaa27c4e899a24"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/scripts/selection_stop_prepare.py",
+      "bytes": 15012,
+      "sha256": "bc4a6bd5d483afb23f1cbdae9aedff7bb0f8ff88425b3320dc0b8ca0248fa903"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/scripts/selection_stop_report.py",
+      "bytes": 34158,
+      "sha256": "374f923858119e2997ae8b777063e2181129c1a7b1757eb4393a261abb0366a2"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/design/STOPPING_CONTRACT.json",
+      "bytes": 566,
+      "sha256": "05b074a723b419ad40fad6efd4f16285c411782ffb6d4d6db43e2e213aee8e3f"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/endpoints/STOPPING_SCALARS.csv.gz",
+      "bytes": 335947,
+      "sha256": "7b15fb8d96483ac92811ad6d007304f954e4e2908b6ddce8da0efc121cdf4d20"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/inputs/research/same_room/same_room_multiview_20261020/replay_nodes.csv.gz",
+      "bytes": 34093795,
+      "sha256": "da04e2d07180a2ace65ed3d0b3d11789591f6b2f6fc75478f1403326b3f80a2c"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/inputs/research/same_room/same_room_profile_return_review_20261021/pro/prior_integration/rebuild_stopping.py",
+      "bytes": 26215,
+      "sha256": "2f426d860026c8ca74c672c4b66764c890b65dfbdd668b15211df274a0ae5342"
+    },
+    {
+      "path": "research/workers/personnel_full_chain_v21_20261030/HOHONET_v21_full_chain_20261030/stage05_selection_stop/selection/POLICY_EVENT_RESULTS.csv.gz",
+      "bytes": 27224980,
+      "sha256": "a92f5ffbb321655fdbe1214e9f844e71007b54dc299dad9331c60436c21f865a"
+    },
+    {
+      "path": "tools/thesis_main/analysis/audit_manual_order_prediction_stop_20261104.py",
+      "bytes": 18560,
+      "sha256": "db75d875bc878f76f0dd2430ea4da13e620b52e9e42d68226c4acfee9be48dfe"
+    }
+  ]
+}

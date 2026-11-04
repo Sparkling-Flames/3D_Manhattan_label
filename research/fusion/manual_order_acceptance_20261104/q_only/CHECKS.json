@@ -1,0 +1,1057 @@
+{
+  "schema": "v21_qonly_opportunity_acceptance_20261104_v1",
+  "source_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "method": "independent_from_raw_frozen_endpoints_no_fusion_replay",
+  "checks": [
+    {
+      "check": "frozen_design",
+      "passed": true,
+      "policy_links": 1040,
+      "events": 208,
+      "unique_teams": 670
+    },
+    {
+      "check": "five_arms_every_event",
+      "passed": true
+    },
+    {
+      "check": "registered_conditions",
+      "passed": true
+    },
+    {
+      "check": "request_and_endpoint_identity",
+      "passed": true
+    },
+    {
+      "check": "returned_orders_57",
+      "passed": true
+    },
+    {
+      "check": "original_requests_members_and_reference",
+      "passed": true,
+      "mismatches": []
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__2030c0aaa5d197477778/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__2030c0aaa5d197477778/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__2030c0aaa5d197477778/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__2030c0aaa5d197477778/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__2030c0aaa5d197477778",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__21ab33180afc4c04793b/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__21ab33180afc4c04793b/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__21ab33180afc4c04793b/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__21ab33180afc4c04793b/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__21ab33180afc4c04793b",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__31e9130dff49417aec0f/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__31e9130dff49417aec0f/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__31e9130dff49417aec0f/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__31e9130dff49417aec0f/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/S9hNv5qa7GM-04__manual__c93fe8a825__31e9130dff49417aec0f",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__9283112e148116e73693/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__9283112e148116e73693/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__9283112e148116e73693/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__9283112e148116e73693/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/S9hNv5qa7GM-09__manual__v21_254__9283112e148116e73693",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__427c12f9a8f600c32cb5/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__427c12f9a8f600c32cb5/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__427c12f9a8f600c32cb5/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__427c12f9a8f600c32cb5/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__427c12f9a8f600c32cb5",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-01__manual__5b146df96f__0dda0c2ffe5958b32ad7/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-01__manual__5b146df96f__0dda0c2ffe5958b32ad7/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-01__manual__5b146df96f__0dda0c2ffe5958b32ad7/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-01__manual__5b146df96f__0dda0c2ffe5958b32ad7/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-01__manual__5b146df96f__0dda0c2ffe5958b32ad7",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__72a74d87d3192885d800/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__72a74d87d3192885d800/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__72a74d87d3192885d800/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__72a74d87d3192885d800/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/S9hNv5qa7GM-09__manual__v21_254__72a74d87d3192885d800",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/pa4otMbVnkk-14__manual__1ee397d26d__0375170b3963130a9153/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/pa4otMbVnkk-14__manual__1ee397d26d__0375170b3963130a9153/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/pa4otMbVnkk-14__manual__1ee397d26d__0375170b3963130a9153/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/pa4otMbVnkk-14__manual__1ee397d26d__0375170b3963130a9153/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/pa4otMbVnkk-14__manual__1ee397d26d__0375170b3963130a9153",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__e4bbee20c491f5736d11/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__e4bbee20c491f5736d11/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__e4bbee20c491f5736d11/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__e4bbee20c491f5736d11/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__e4bbee20c491f5736d11",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/zsNo4HB9uLZ-16__manual__7e980a16d1__1cd130c9f58388320bb8/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/zsNo4HB9uLZ-16__manual__7e980a16d1__1cd130c9f58388320bb8/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/zsNo4HB9uLZ-16__manual__7e980a16d1__1cd130c9f58388320bb8/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/zsNo4HB9uLZ-16__manual__7e980a16d1__1cd130c9f58388320bb8/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/zsNo4HB9uLZ-16__manual__7e980a16d1__1cd130c9f58388320bb8",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__15e71acd7fa4d34e232d/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__15e71acd7fa4d34e232d/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__15e71acd7fa4d34e232d/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__15e71acd7fa4d34e232d/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__15e71acd7fa4d34e232d",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__58975a1206038c6906e1/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__58975a1206038c6906e1/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__58975a1206038c6906e1/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__58975a1206038c6906e1/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__58975a1206038c6906e1",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/x8F5xyUWy9e-08__manual__0b13997fd3__3b791130cf895ef627c7/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/x8F5xyUWy9e-08__manual__0b13997fd3__3b791130cf895ef627c7/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/x8F5xyUWy9e-08__manual__0b13997fd3__3b791130cf895ef627c7/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/x8F5xyUWy9e-08__manual__0b13997fd3__3b791130cf895ef627c7/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/x8F5xyUWy9e-08__manual__0b13997fd3__3b791130cf895ef627c7",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__ae2ff7c3f83cd75d7b48/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__ae2ff7c3f83cd75d7b48/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__ae2ff7c3f83cd75d7b48/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-04__manual__c93fe8a825__ae2ff7c3f83cd75d7b48/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/S9hNv5qa7GM-04__manual__c93fe8a825__ae2ff7c3f83cd75d7b48",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__26be86a3726bc03cef4a/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__26be86a3726bc03cef4a/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__26be86a3726bc03cef4a/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__26be86a3726bc03cef4a/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__26be86a3726bc03cef4a",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__3f184d8dfe6bd234e96c/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__3f184d8dfe6bd234e96c/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__3f184d8dfe6bd234e96c/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__3f184d8dfe6bd234e96c/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__3f184d8dfe6bd234e96c",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__86449d8778313d431edb/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__86449d8778313d431edb/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__86449d8778313d431edb/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__86449d8778313d431edb/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__86449d8778313d431edb",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__4f6164f9ca2f0929fae5/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__4f6164f9ca2f0929fae5/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__4f6164f9ca2f0929fae5/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/S9hNv5qa7GM-09__manual__v21_254__4f6164f9ca2f0929fae5/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/S9hNv5qa7GM-09__manual__v21_254__4f6164f9ca2f0929fae5",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__dbb311b023d24c3fa3ce/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__dbb311b023d24c3fa3ce/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__dbb311b023d24c3fa3ce/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__dbb311b023d24c3fa3ce/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/X7HyMhZNoso-07__manual__dd2275185f__dbb311b023d24c3fa3ce",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__b0fa70612585a6130421/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__b0fa70612585a6130421/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__b0fa70612585a6130421/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/VFuaQ6m2Qom-04__manual__fbe40a551f__b0fa70612585a6130421/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/VFuaQ6m2Qom-04__manual__fbe40a551f__b0fa70612585a6130421",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__f50f3eca88d2ab225c82/pool_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__f50f3eca88d2ab225c82/reference_id",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__f50f3eca88d2ab225c82/reference_version",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_identity/X7HyMhZNoso-07__manual__dd2275185f__f50f3eca88d2ab225c82/nodes",
+      "passed": true
+    },
+    {
+      "check": "exact_manual_members/X7HyMhZNoso-07__manual__dd2275185f__f50f3eca88d2ab225c82",
+      "passed": true
+    },
+    {
+      "check": "all_no_connection_opportunities_covered",
+      "passed": true,
+      "arm_event_links": 29,
+      "unique_teams": 21,
+      "events": 14,
+      "images": 8
+    },
+    {
+      "check": "no_unnecessary_treatment",
+      "passed": true
+    },
+    {
+      "check": "remaining_failures_are_below_four",
+      "passed": true,
+      "remaining_links": 3
+    },
+    {
+      "check": "policy_comparison_complete",
+      "passed": true
+    },
+    {
+      "check": "status_identity/automatic/115",
+      "passed": true
+    },
+    {
+      "check": "status_values/automatic/116",
+      "passed": true
+    },
+    {
+      "check": "status_identity/automatic/117",
+      "passed": true
+    },
+    {
+      "check": "status_values/automatic/118",
+      "passed": true
+    },
+    {
+      "check": "status_identity/assisted_expanded/119",
+      "passed": true
+    },
+    {
+      "check": "status_values/assisted_expanded/120",
+      "passed": true
+    },
+    {
+      "check": "raw_original_pairs/keys",
+      "passed": true,
+      "rows": 832
+    },
+    {
+      "check": "raw_original_pairs",
+      "passed": true,
+      "numeric_cells": 27687,
+      "missing_mismatches": 0,
+      "max_abs_difference": 4.547473508864641e-13
+    },
+    {
+      "check": "previous_automatic_pairs/keys",
+      "passed": true,
+      "rows": 832
+    },
+    {
+      "check": "previous_automatic_pairs",
+      "passed": true,
+      "numeric_cells": 27687,
+      "missing_mismatches": 0,
+      "max_abs_difference": 4.547473508864641e-13
+    },
+    {
+      "check": "previous_assisted_pairs/keys",
+      "passed": true,
+      "rows": 832
+    },
+    {
+      "check": "previous_assisted_pairs",
+      "passed": true,
+      "numeric_cells": 28974,
+      "missing_mismatches": 0,
+      "max_abs_difference": 4.547473508864641e-13
+    },
+    {
+      "check": "all_original_support_unchanged/keys",
+      "passed": true,
+      "rows": 832
+    },
+    {
+      "check": "all_original_support_unchanged",
+      "passed": true,
+      "numeric_cells": 27687,
+      "missing_mismatches": 0,
+      "max_abs_difference": 0.0
+    },
+    {
+      "check": "labor_unchanged/keys",
+      "passed": true,
+      "rows": 832
+    },
+    {
+      "check": "labor_unchanged",
+      "passed": true,
+      "numeric_cells": 1572,
+      "missing_mismatches": 0,
+      "max_abs_difference": 0.0
+    },
+    {
+      "check": "selection_frozen/keys",
+      "passed": true,
+      "rows": 416
+    },
+    {
+      "check": "selection_frozen",
+      "passed": true,
+      "numeric_cells": 1248,
+      "missing_mismatches": 0,
+      "max_abs_difference": 0.0
+    },
+    {
+      "check": "20_7_different_selection_complete",
+      "passed": true
+    },
+    {
+      "check": "20_7_Q_RAW_Q_PEER_same_teams",
+      "passed": true
+    },
+    {
+      "check": "all_summary_and_cluster_intervals/keys",
+      "passed": true,
+      "rows": 380
+    },
+    {
+      "check": "all_summary_and_cluster_intervals",
+      "passed": true,
+      "numeric_cells": 4560,
+      "missing_mismatches": 0,
+      "max_abs_difference": 4.547473508864641e-13
+    },
+    {
+      "check": "original_published_summary/keys",
+      "passed": true,
+      "rows": 96
+    },
+    {
+      "check": "original_published_summary",
+      "passed": true,
+      "numeric_cells": 1152,
+      "missing_mismatches": 0,
+      "max_abs_difference": 4.547473508864641e-13
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/B8L2",
+      "passed": true,
+      "max_identity_error": 2.7755575615628914e-17
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/D10",
+      "passed": true,
+      "max_identity_error": 2.7755575615628914e-17
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/IoU3D100",
+      "passed": true,
+      "max_identity_error": 3.469446951953614e-18
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/boundary_loss",
+      "passed": true,
+      "max_identity_error": 5.421010862427522e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/direction_loss",
+      "passed": true,
+      "max_identity_error": 3.0357660829594124e-18
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/height_loss",
+      "passed": true,
+      "max_identity_error": 1.6940658945086007e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/omission",
+      "passed": true,
+      "max_identity_error": 1.0842021724855044e-19
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/extension",
+      "passed": true,
+      "max_identity_error": 1.0842021724855044e-19
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_PEER/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 8.673617379884035e-19
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/B8L2",
+      "passed": true,
+      "max_identity_error": 2.7755575615628914e-17
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/D10",
+      "passed": true,
+      "max_identity_error": 3.469446951953614e-17
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/IoU3D100",
+      "passed": true,
+      "max_identity_error": 6.938893903907228e-18
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 1.734723475976807e-18
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/boundary_loss",
+      "passed": true,
+      "max_identity_error": 5.421010862427522e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/direction_loss",
+      "passed": true,
+      "max_identity_error": 8.673617379884035e-19
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/height_loss",
+      "passed": true,
+      "max_identity_error": 1.3552527156068805e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/omission",
+      "passed": true,
+      "max_identity_error": 4.0657581468206416e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/extension",
+      "passed": true,
+      "max_identity_error": 5.421010862427522e-20
+    },
+    {
+      "check": "weighted_decomposition/all_registered/14/Q_RAW/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/B8L2",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/D10",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/IoU3D100",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/boundary_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/direction_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/height_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/omission",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/extension",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_PEER/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/B8L2",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/D10",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/IoU3D100",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/boundary_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/direction_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/height_loss",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/omission",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/extension",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/all_registered/20/Q_RAW/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/B8L2",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/D10",
+      "passed": true,
+      "max_identity_error": 1.1102230246251565e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/IoU3D100",
+      "passed": true,
+      "max_identity_error": 2.7755575615628914e-17
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/boundary_loss",
+      "passed": true,
+      "max_identity_error": 2.168404344971009e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/direction_loss",
+      "passed": true,
+      "max_identity_error": 5.204170427930421e-18
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/height_loss",
+      "passed": true,
+      "max_identity_error": 4.0657581468206416e-20
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/omission",
+      "passed": true,
+      "max_identity_error": 4.336808689942018e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/extension",
+      "passed": true,
+      "max_identity_error": 8.673617379884035e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_PEER/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 3.469446951953614e-18
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/B8L2",
+      "passed": true,
+      "max_identity_error": 1.6653345369377348e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/D10",
+      "passed": true,
+      "max_identity_error": 5.551115123125783e-17
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/IoU3D100",
+      "passed": true,
+      "max_identity_error": 5.551115123125783e-17
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/boundary_loss",
+      "passed": true,
+      "max_identity_error": 4.336808689942018e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/direction_loss",
+      "passed": true,
+      "max_identity_error": 2.168404344971009e-18
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/height_loss",
+      "passed": true,
+      "max_identity_error": 6.776263578034403e-20
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/omission",
+      "passed": true,
+      "max_identity_error": 2.168404344971009e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/extension",
+      "passed": true,
+      "max_identity_error": 4.336808689942018e-19
+    },
+    {
+      "check": "weighted_decomposition/different_selection/14/Q_RAW/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 0.0
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/B8L2",
+      "passed": true,
+      "max_identity_error": 8.881784197001252e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/D10",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/IoU3D100",
+      "passed": true,
+      "max_identity_error": 8.881784197001252e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/boundary_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/direction_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/height_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/omission",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/extension",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_PEER/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/B8L2",
+      "passed": true,
+      "max_identity_error": 8.881784197001252e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/D10",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/IoU3D100",
+      "passed": true,
+      "max_identity_error": 8.881784197001252e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/fusion_turn_n",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/fusion_short_turn_edges",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/boundary_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/direction_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/height_loss",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/omission",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/extension",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    },
+    {
+      "check": "weighted_decomposition/different_selection/20/Q_RAW/ref_node_recall_5",
+      "passed": true,
+      "max_identity_error": 2.220446049250313e-16
+    }
+  ],
+  "checks_passed": 227,
+  "checks_failed": 0,
+  "design_events": 208,
+  "unique_requested_teams": 670,
+  "policy_event_links": 1040,
+  "no_connection_links": 29,
+  "unique_no_connection_teams": 21,
+  "manual_covered_links": 29,
+  "newly_scored_links": 29,
+  "remaining_non_order_failure_links": 3,
+  "additional_manual_order_required": 0,
+  "additional_endpoint_scoring_required": 0,
+  "limitation": "Complete opportunity coverage within the frozen 208-event design only; no global repair-rate or randomized human-treatment inference."
+}

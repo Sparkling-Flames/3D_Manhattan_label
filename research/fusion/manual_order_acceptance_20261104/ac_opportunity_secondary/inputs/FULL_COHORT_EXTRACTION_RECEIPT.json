@@ -1,0 +1,22 @@
+[
+  {
+    "source": "research/fusion/manual_order_acceptance_20261104/ac/source_cache/POOL_CONDITION_EFFECTS.csv.gz",
+    "source_sha256": "9658eaef7ed433c19db0aaa001ecabe6c21e0f00eb781cd24f0344ab39e9f7bb",
+    "source_rows": 68858,
+    "extraction": "research/fusion/manual_order_acceptance_20261104/ac_opportunity_secondary/inputs/METHOD_N28_M7_ALL_REGISTERED_DIRECTION_ROWS.csv.gz",
+    "sha256": "293a9feda75752519d5fdaac1a3c67a3dbb40126dfbaf2dd95de81bb89dc5885",
+    "rows": 235,
+    "predicate": "analysis_view=A_fixed_n; scope=primary; condition=manual; n=28; m=7; method in OPPSTRUCT_K3,TARGET_DSTRUCT_K2,V21_DSTRUCT_RAW3_K3",
+    "frozen_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468"
+  },
+  {
+    "source": "research/fusion/manual_order_acceptance_20261104/ac/source_cache/DESIGN_LINKS.csv.gz",
+    "source_sha256": "48127e034187aa1086762b595e86f2be47fc6c6a105d41f459cd1bb721fbc77f",
+    "source_rows": 550794,
+    "extraction": "research/fusion/manual_order_acceptance_20261104/ac_opportunity_secondary/inputs/METHOD_N28_M7_NEUTRAL_A_DESIGN_LINKS.csv.gz",
+    "sha256": "bc1ce5609405daab128b5402f48135bd56c9e2ceaf233b3a3ff89167c7238619",
+    "rows": 1859,
+    "predicate": "design_family=A_equal_AC; background_profile missing or neutral_members_0; n28/m7; same three methods",
+    "frozen_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468"
+  }
+]

@@ -1,0 +1,123 @@
+[
+  {
+    "module": "coordinate_candidate",
+    "check": "main_fixed_coordinate_result_not_promoted",
+    "passed": true,
+    "main_endpoints": 57,
+    "main_scored": 56
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "unchanged_source_members_reference_order",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "all_node_identities_and_supports_preserved",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "exactly_four_requested_x_edits",
+    "passed": true,
+    "changed_scalars": 4
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "independent_planar_crossing_and_kernel_check",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "F2_F9_remain_two_distinct_floor_nodes",
+    "passed": true,
+    "floor_separation_h": 0.00679559346927045
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_scores_remain_separately_labeled",
+    "passed": true,
+    "rows": 2,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "conditional_candidate_is_not_a_global_coordinate_rule",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "52_actual_references_two_modules",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "main_AC_A_candidate_not_adopted",
+    "passed": true,
+    "references": 42
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "main_AC_C_candidate_not_adopted",
+    "passed": true,
+    "references": 8
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "main_AC_references_covered",
+    "passed": true,
+    "actual_references": 50
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "main_alliance_candidate_not_adopted",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_alliance_Q_and_selection_unchanged/FULL_VS_BEST_PURE.csv",
+    "passed": true,
+    "rows": 464,
+    "columns": 9,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_adds_two_snapshot_class_support_counts",
+    "passed": true
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_alliance_Q_and_selection_unchanged/FULL_VS_BEST_PURE_SUMMARY.csv",
+    "passed": true,
+    "rows": 6,
+    "columns": 6,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_C1_class_mean_and_support/fixed_coordinates",
+    "passed": true,
+    "rows": 2,
+    "columns": 4,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "coordinate_candidate",
+    "check": "candidate_C1_class_mean_and_support/coordinate_candidate_not_adopted",
+    "passed": true,
+    "rows": 2,
+    "columns": 4,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  }
+]

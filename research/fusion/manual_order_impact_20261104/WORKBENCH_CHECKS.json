@@ -1,0 +1,54 @@
+{
+  "browser": "156.0.8078.4",
+  "engine": "Chromium headless shell",
+  "url_scheme": "file",
+  "network_requests_required": false,
+  "checks": [
+    {
+      "check": "offline_initial_load",
+      "passed": true,
+      "endpoints": 57,
+      "images": 22
+    },
+    {
+      "check": "all_saved_endpoints_and_original_images",
+      "passed": true,
+      "assisted": 57,
+      "automatic": 57,
+      "images_loaded": 22
+    },
+    {
+      "check": "all_image_module_status_and_empty_filters",
+      "passed": true,
+      "image_filters": 22,
+      "module_filters": 9
+    },
+    {
+      "check": "coordinate_candidate_isolation_and_source_reference_overlays",
+      "passed": true,
+      "candidate_B8L2": 39.61561918763198,
+      "fixed_coordinate_B8L2": null
+    },
+    {
+      "check": "CSV_download_preserves_null_and_main_candidate_separation",
+      "passed": true,
+      "rows": 57,
+      "main_scored": 56
+    },
+    {
+      "check": "conclusion_filters_and_responsive_layout",
+      "passed": true,
+      "conclusions": 43,
+      "desktop_width": 1440,
+      "mobile_width": 390,
+      "horizontal_document_overflow": false
+    }
+  ],
+  "javascript_errors": [],
+  "failed_asset_requests": [],
+  "cancelled_requests_during_rapid_filter_changes": [],
+  "all_22_images_fully_decoded": true,
+  "data_sha256": "20434a744d5f9964319384434fa77fd39691de6df995952f3d020a894b4fa5a5",
+  "passed": true,
+  "scope": "new manual-order page; existing entry banners checked separately; not a whole historical workbench replay"
+}

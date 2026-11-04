@@ -1,0 +1,221 @@
+[
+  {
+    "module": "policy",
+    "check": "all_unhit_prefix_fields",
+    "passed": true,
+    "rows": 5599,
+    "columns": 162,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 4.547473508864641e-13
+  },
+  {
+    "module": "policy",
+    "check": "old_scored_prefix_values",
+    "passed": true,
+    "rows": 4773,
+    "columns": 162,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 4.547473508864641e-13
+  },
+  {
+    "module": "policy",
+    "check": "fixed_prefix_members_order_reference_and_labor",
+    "passed": true,
+    "rows": 5600,
+    "columns": 25,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 4.547473508864641e-13
+  },
+  {
+    "module": "policy",
+    "check": "one_existing_legacy_prefix_only",
+    "passed": true,
+    "affected_prefixes": 1
+  },
+  {
+    "module": "policy",
+    "check": "old_Q_missing_not_zero_and_labor_unmodified",
+    "passed": true
+  },
+  {
+    "module": "policy",
+    "check": "automatic/all_affected_pool_k_metrics",
+    "passed": true,
+    "rows": 420,
+    "columns": 27,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 2.4868995751603507e-14
+  },
+  {
+    "module": "policy",
+    "check": "automatic/all_fixed_k_phase_means",
+    "passed": true,
+    "rows": 1152,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "policy",
+    "check": "automatic/fixed_support_to_phase_consumers",
+    "passed": true,
+    "rows": 1152,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "policy",
+    "check": "manual_assisted/all_affected_pool_k_metrics",
+    "passed": true,
+    "rows": 420,
+    "columns": 27,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 2.4868995751603507e-14
+  },
+  {
+    "module": "policy",
+    "check": "manual_assisted/all_fixed_k_phase_means",
+    "passed": true,
+    "rows": 1152,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "policy",
+    "check": "manual_assisted/fixed_support_to_phase_consumers",
+    "passed": true,
+    "rows": 1152,
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0,
+    "absolute_tolerance": 1e-08
+  },
+  {
+    "module": "policy",
+    "check": "adopted_k_support_and_path_design_preserved",
+    "passed": true,
+    "rows": 1152,
+    "columns": 5,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "policy",
+    "check": "all_unhit_pool_consumers/POLICY_IMAGE_K.csv.gz",
+    "passed": true,
+    "rows": 60984,
+    "columns": 38,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 4.235164736271502e-22
+  },
+  {
+    "module": "policy",
+    "check": "affected_pool_replacement/POLICY_IMAGE_K.csv.gz",
+    "passed": true,
+    "rows": 420,
+    "columns": 38,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 3.552713678800501e-15
+  },
+  {
+    "module": "policy",
+    "check": "all_unhit_pool_consumers/POLICY_IMAGE_PHASE.csv",
+    "passed": true,
+    "rows": 7296,
+    "columns": 31,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 3.552713678800501e-15
+  },
+  {
+    "module": "policy",
+    "check": "affected_pool_replacement/POLICY_IMAGE_PHASE.csv",
+    "passed": true,
+    "rows": 48,
+    "columns": 31,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15
+  },
+  {
+    "module": "policy",
+    "check": "all_unhit_pool_consumers/FIXED_SUPPORT.csv.gz",
+    "passed": true,
+    "rows": 175104,
+    "columns": 9,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 3.552713678800501e-15
+  },
+  {
+    "module": "policy",
+    "check": "affected_pool_replacement/FIXED_SUPPORT.csv.gz",
+    "passed": true,
+    "rows": 1152,
+    "columns": 9,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 7.105427357601002e-15
+  },
+  {
+    "module": "policy",
+    "check": "all_unhit_precision_summary_rows",
+    "passed": true,
+    "rows": 8036,
+    "columns": 15,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 3.552713678800501e-15
+  },
+  {
+    "module": "policy",
+    "check": "all_affected_precision_summary_rows",
+    "passed": true,
+    "rows": 352,
+    "columns": 15,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 0.0
+  },
+  {
+    "module": "policy",
+    "check": "frozen_late_baseline",
+    "passed": true,
+    "rows": 352,
+    "columns": 15,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 8.881784197001252e-16
+  },
+  {
+    "module": "policy",
+    "check": "original_primary_cohort_preserved",
+    "passed": true
+  },
+  {
+    "module": "policy",
+    "check": "all_late_estimates_and_cached_path_building_intervals",
+    "passed": true,
+    "rows": 704,
+    "columns": 15,
+    "failed_fields": "",
+    "missing_disagreements": 0,
+    "maximum_absolute_error": 2.220446049250313e-16
+  },
+  {
+    "module": "policy",
+    "check": "all_352_point_and_interval_directions_preserved",
+    "passed": true,
+    "summary_groups": 352,
+    "changed_point_estimates": 104
+  }
+]

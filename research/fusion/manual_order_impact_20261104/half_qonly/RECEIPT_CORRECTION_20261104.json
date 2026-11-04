@@ -1,0 +1,64 @@
+{
+  "correction_scope": "two receipt event-count fields and their generation logic only",
+  "previous_values": {
+    "affected_frozen_half_events": 0,
+    "affected_current_half_events": 0
+  },
+  "corrected_values": {
+    "affected_frozen_half_events": 13,
+    "affected_current_half_events": 13
+  },
+  "cause": "pandas DataFrame.isin(dict) interprets dictionary keys as column labels; team identity key set is required",
+  "original_checks_sha256": "aee83613b38cfc06056c38de8142186d2a20317b473a8ab7c678b9f53d93c82c",
+  "corrected_checks_sha256": "a1ba8afdf62c1a859a78c634dc2a7991f09dd0e736704709d895f3c7ba8740c6",
+  "verified_affected_event_ids": [
+    "93e0c29b8e0fe2584b0eb1b2",
+    "8b15dc24d4ef131d688ea793",
+    "da14493dc79156b8b4b8d13e",
+    "956032e0c634d26742ba879d",
+    "39e890309e25ecaf273b6412",
+    "42edeb593085912e675a9361",
+    "0f168d05dd6a0ba41a9c1346",
+    "303a9ebe1c680309fcb8e7bb",
+    "a4f3f5db352ef9b899bc0860",
+    "78e59a8279efd95d1ddfbddc",
+    "7c216787f0079fdc10fcee6f",
+    "154d5aebcb8aaffc968f1e09",
+    "8e5bd4565d8bc469b8301fce"
+  ],
+  "affected_by_n": {
+    "14": 10,
+    "20": 3
+  },
+  "affected_endpoint_references": 16,
+  "science_csv_files_unchanged": 25,
+  "science_csv_sha256_before_and_after": {
+    "AUXILIARY_LEGACY_REFERENCE_DIAGNOSTICS.csv": "97d3165eba892e0d89563ed78e2490158b5cba7245d9dfc3483db3cea8546110",
+    "CONCLUSIONS.csv": "bb2dd88343c0fd3ea0d5d564c11b1fdcaabdce2af81351390ace2220e5515c0f",
+    "COUNTEREXAMPLE_EVENT_EXPLANATIONS.csv": "98c64872476d65886a97a49659b93f5ae9940edde9361704e0fd80b0fbda9d3f",
+    "COUNTEREXAMPLE_TRANSITIONS.csv": "5da49a56233d065c99fa665d6177a3a8790a359ec550be905996864d9a7ee38b",
+    "HALF_ASSISTED_EVENTS.csv.gz": "206f3cd7b8e033a292d970b281366c7ed83152af9aa54109aac06d4363e28df2",
+    "HALF_AUTOMATIC_EVENTS.csv.gz": "c453970b6718e68893187f183ec6940782b2541b10a7441aab9cd32629ec2929",
+    "HALF_BUILDINGS.csv": "d21a6038382487fa75d356ef2f6907dc6a5172363c49c7070841d0ec90c3552b",
+    "HALF_DIFFICULTY.csv": "22a5b28ccaf1cbb6e1d89b2ccd36ccec3b635214e91cc9f3b7b029c4a6d79fe9",
+    "HALF_IMAGES.csv.gz": "f7c81725b7c47dc9b5c9b40f7459da8745c51bc8225214cbbc6607d3962d902f",
+    "HALF_MATCHED_BACKGROUND_LINKS.csv.gz": "a9234acc0bef215c6f26b45565f3d148cd1f4cfdbdba4321b19e7c9d7ae3f563",
+    "HALF_MATCHED_BACKGROUND_SUMMARY.csv": "d0f5ba3fdf4a6323b995c2ff2991dbf1dd5755749cf678257eac5ea89b9c8397",
+    "HALF_SUMMARY.csv": "d8fa6d8ba4e99e5163984fac7ad8801f5355646fbacd2a6541fb7e399c9af503",
+    "HALF_SUPPORT.csv": "85b28ee0483e638e0436c50dd65266b0f5bb1c016e0b21c30ab18a9480e8cffb",
+    "QONLY_ASSISTED_EXPANDED_PAIRED_EVENTS.csv.gz": "96829bb98814d097932be30589eb55c81e5ef53a6204f6f25943845a9f97a071",
+    "QONLY_ASSISTED_ORIGINAL_SUPPORT_PAIRED_EVENTS.csv.gz": "4b263ca54b1c6d375bddf29b4ec3a294810c6911f279f48776bc0c2373479a67",
+    "QONLY_AUTOMATIC_PAIRED_EVENTS.csv.gz": "bf6cfb36831b6a3b925be1ac1269102b02ffa9b3fb644190a173d71001350f34",
+    "QONLY_DIFFERENT_SELECTION_EVENTS.csv.gz": "9e4a7027bae65991e3649e57f24e572f70b371b0cd0879661c11e3cc21138dbe",
+    "QONLY_DIFFERENT_SELECTION_SUMMARY.csv": "2c7360561190ec483d37936bd1194e526c457856c9c80a63e0fc049780efca22",
+    "QONLY_IMAGE_EFFECTS.csv.gz": "19755460ebc4c7a8fd4b55e1b3a41433f72d02937539686a31c040c089aa7c83",
+    "QONLY_OUTPUT_STATUS.csv": "55d098a3de8058b89d311ad4c8610265216d47e101acf37ceef6699169cd22b2",
+    "QONLY_STATUS_SUMMARY.csv": "9c311f8a9736015c01b38f938b0cf9ac107fd4d315227684ae0cf4d753b12640",
+    "QONLY_SUMMARY.csv": "abb73cddbbe4a3ab45126ea1c2825267171d23fd934480e8c04a922caafca5c0",
+    "QONLY_SUPPORT.csv": "7e66bf277166b804770081d778536f5538e00f07fa3150065bb2c28cb7e0151b",
+    "QUALITY_CONDITIONED_ANNOTATION_LABOR.csv": "0516bd740223ae2e27e3a32f616ab8be33ee58b87355c55598046be759c6df67",
+    "UNCHANGED_AUTOMATIC_LEGACY_REFERENCE_DIAGNOSTICS.csv": "9eb26469b132d62d4ffab380463e2f9476ffce668d5a0d65c0107d5bdf272fcd"
+  },
+  "scientific_statistics_rerun": false,
+  "already_delivered_batch02_modified": false
+}

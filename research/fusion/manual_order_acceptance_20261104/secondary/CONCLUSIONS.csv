@@ -1,0 +1,14 @@
+﻿module,item,judgment,finding,evidence
+same_room,当前 K3 10/5 C2→C3,幅度变化,六端 Q 共同支持 295→318/322；GA、GS、CB 方向保持；19 对 CB 均值仍全正。无需新选队。,SAME_ROOM_Q6_SUPPORT.csv; SAME_ROOM_RECOMPUTED_METRIC_SUMMARIES.csv.gz
+same_room,几何、劳动与质量分母,条件变化,几何六比较支持 240→240；原劳动六端 226→226，Q×劳动 201→222。人工排序时间未知。,SAME_ROOM_SEPARATE_SUPPORTS.csv
+composition,有限配比与成员波动,幅度变化,两个其它目标面板的既有团队/参考/固定标签与主目标分开；K3 配比间宏占比 32.439565%→32.534050%，原共同支持不变。,COMPOSITION_K3_MACRO_ACCEPTANCE.csv
+composition,新增单队配比的成员稳定性,尚不能判断,rPc6-06 的 C1:2|C2:2|C3:0 与 uNb9-88 的 C1:0|C2:3|C3:0 均仅一可评队；SD/IQR/范围保持缺失。,COMPOSITION_NEW_CONFIGURATIONS.csv
+alliances,主目标纯类与联盟,保持,主目标 205 图的 full−best-pure、类别选择和图片方向计数均不变；不能与其它目标混合。,ALLIANCE_RECOMPUTED_SUMMARIES.csv
+alliances,其它目标纯类与联盟,条件变化,updated 均值 −0.077642→+0.049069；frozen +1.200119→−0.548008。新增池与同池候选集合扩展分别列示，原团队 Q 未改变。,ALLIANCE_SUPPORT_DECOMPOSITION.csv; ALLIANCE_NEW_SUPPORT_AND_RANK_CHANGES.csv
+policy,旧策略单一前缀与实际消费者,幅度变化,唯一 x8-08、N35/k28、new16 的历史 V3_BEHAVIOR structure_dominant_first 前缀已接续；352 组点估计/区间相对 0 判定均保持。,POLICY_DIRECTION_AND_INTERVAL_ACCEPTANCE.csv
+policy,当前 DSTRUCT 策略与更大策略实验,保持,旧角色策略不等同当前 DSTRUCT；未增加政策、团队或 replacement 规模，未命中条件不重跑。,CHECKS.csv
+natural,人数两其它目标小池,幅度变化,两队分别复用 8/25 条原路径；Q 均值和尾部分位数按路径频数更新，主目标消费者逐格不变。,NATURAL_FROZEN_PATH_SUPPORT.csv; NATURAL_RECOMPUTED_PATH_STATISTICS.csv
+natural,正式平台人数/停止人数,尚不能判断,N=5/7 未满足原后续观察门槛；正式 onset_k 仍缺失。两个 ungated 诊断格不等同正式平台前移。,CHECKS.csv; ../../manual_order_impact_20261104/natural/AGGREGATE_NUMERIC_CHANGES.csv.gz
+coordinate_candidate,F2/F9 候选,保持,仅保留该四人团队的独立坐标候选；主分支仍 invalid_floor。候选消除严格自交，但相机不在可见核，未据此开展坐标规则实验。,CANDIDATE_ISOLATION.json; CANDIDATE_EXACT_COORDINATE_EDITS.csv
+coordinate_candidate,F2/F9 候选的联盟条件摘要,条件变化,候选未采用；单列分支 full-vs-best 的 Q、最佳纯类及比较支持保持，pa4 可评纯类数各加1；C1 类图均 Q 的 frozen/updated 支持分别150→151、166→167，均值相应变化，不能声称整个联盟模块仅计数改变。,CANDIDATE_ALLIANCE_SUPPORT_COUNTS.csv; CANDIDATE_C1_CLASS_METRIC_ACCEPTANCE.csv
+composition_format_repair,有限配比标量成员字段合同,需改写,已修正两份辅助标量表共8格的列表字符串格式，并修正写入脚本；实际成员、顺序和所有其它CSV单元文本保持，原统计无需重跑。,repairs/MEMBER_FIELD_FORMAT_REPAIR.json; repairs/MEMBER_FIELD_CELL_CHANGES.csv; repairs/OVERLAY_FILES.csv
