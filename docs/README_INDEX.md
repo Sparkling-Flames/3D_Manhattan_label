@@ -1,3 +1,9 @@
+- **当前类别解释（第08—10批）：** [原答、Q/T与团队结果](../research/workers/current_class_interpretation_20261104/REPORT_ZH.md)；[本地接收与审阅范围](../research/workers/current_class_interpretation_20261104/LOCAL_READING_NOTE.md)。
+
+- **混合构成与C1/C3半队替换（第11—12批）：** [整合报告](../research/workers/mixture_patterns_and_c13_half_20261104/REPORT_ZH.md)、[论文引用入口](thesis_main/MIXTURE_PATTERNS_C13_HALF_20261104.md)。
+
+- **当前DSTRUCT直接AC（第13—15批）：** [六方向、机制与收尾报告](../research/workers/current_dstruct_ac_final_20261104/REPORT_ZH.md)、[论文引用入口](thesis_main/CURRENT_DSTRUCT_DIRECT_AC_20261104.md)。
+
 - **v2.1当前统一口径与正式接入：** [全研究采用表](../research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md)、[AC/Q-only第二次验收](../research/fusion/manual_order_acceptance_20261104/README.md)。
 
 - **人工融合顺序与全链影响（20261104）：** [全链报告与交付](../research/fusion/manual_order_impact_20261104/README.md)、[独立辅助研究台](../research/statistics/research_explorer_v1_r2_20261017/v21-manual-order.html)。固定坐标56/57可评；原自动保留，坐标候选单列；预处理、9模块实际下游和逐条结论已核查。
@@ -396,3 +402,8 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - [2026-11-01 v2.1逐图人数响应独立审查](../research/workers/image_response_v21_20261101/README.md)：206图平台、171图后段升降/低尾/波动及门洞584/439；逐路径复算与几何案例通过，交接当前v2.1接入，原始参考与分类不变。
 
 - [研究结果汇总名称与图例修订（2026-11-01）](thesis_main/研究结果汇总修订_20261101/README.md)：来源索引、数据表与复核记录；正式Word和高清图件仅本地保存。
+
+
+## 2026-11-05：第11—15批人员证据接入
+
+[分类原答、匹配替换、直接换类、混合配比与进入过程](../research/workers/current_dstruct_ac_final_20261104/LOCAL_INTEGRATION_ZH.md)。保留当前标签、自动/辅助、原目标/其它合法空间及各实验分母；升质、降质、劳动增加、格内波动与过程回落并列。旧结果保留各自身份，新增包不改写历史分类或实验。

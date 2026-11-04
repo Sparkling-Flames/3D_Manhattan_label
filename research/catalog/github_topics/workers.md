@@ -8,6 +8,7 @@ Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评
 
 ## 当前依据
 
+- **2026-11-05新增交付：** [第08—10批当前类别原答、Q/T与团队结果](../../workers/current_class_interpretation_20261104/REPORT_ZH.md)；[第11—12批混合构成与C1/C3半队替换](../../workers/mixture_patterns_and_c13_half_20261104/REPORT_ZH.md)；[第13—15批DSTRUCT直接AC六方向与机制](../../workers/current_dstruct_ac_final_20261104/REPORT_ZH.md)。版本、分母和采用边界详见各自方法页及[接续说明](../../workers/current_dstruct_ac_final_20261104/LOCAL_INTEGRATION_ZH.md)。
 - [人员四轴更新](../../workers/worker_four_axis_update_20261015/README.md)
 - [类别块替换独立复核与额外背景重放](../../workers/personnel_composition_followup_20261019/README.md)：451对照、1353队；属于局部支持，未冻结正式人员类别。
 - [Pro人员组合研究原包](../../workers/personnel_composition_study_20261019/README_ZH.md)：保留原研究报告、方法、候选、反例和案例复现。

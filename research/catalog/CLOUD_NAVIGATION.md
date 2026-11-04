@@ -36,6 +36,12 @@ GitHub页面用于查看源码，不直接执行HTML。在线站与本机预览�
 - [文献与跨模块资料](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/catalog/github_topics/literature.md)
 - [历史归档与未分类快照](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/catalog/github_topics/archive.md)
 
+### 人员研究新增交付（2026-11-05）
+
+- [第08—10批：当前类别原答、Q/T与团队结果](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/workers/current_class_interpretation_20261104/REPORT_ZH.md)
+- [第11—12批：混合构成、进入过程与C1/C3半队替换](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/workers/mixture_patterns_and_c13_half_20261104/REPORT_ZH.md)
+- [第13—15批：DSTRUCT直接AC六方向与机制](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/workers/current_dstruct_ac_final_20261104/REPORT_ZH.md)
+
 ## 质量线当前交接与必要数据
 
 - [质量结构续研交接](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/quality/quality_structure_handoff_20261016/README.md)
