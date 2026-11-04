@@ -1,0 +1,642 @@
+{
+  "source_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "affected_endpoints": 2,
+  "affected_panels": [
+    "rPc6DW4iMge-06__manual__other_space_10__finite_v21__n4",
+    "uNb9QFRL6hY-88__manual__other_space_22__finite_v21__n3"
+  ],
+  "affected_panel_teams": 45,
+  "original_panels": 67,
+  "original_images": 28,
+  "original_buildings": 9,
+  "frozen_methods": [
+    "RFUSE_GEOMQ_K2",
+    "RFUSE_GEOMQ_K3",
+    "RFUSE_GEOM_K2",
+    "RFUSE_GEOM_K3",
+    "TARGET_DSTRUCT_K2",
+    "TARGET_DSTRUCT_K3",
+    "TARGET_DSTRUCT_K4",
+    "TARGET_RFUSE_GEOMQ_K2",
+    "TARGET_RFUSE_GEOMQ_K3",
+    "TARGET_RFUSE_GEOM_K2",
+    "TARGET_RFUSE_GEOM_K3"
+  ],
+  "original_team_links": 8935,
+  "no_new_teams": true,
+  "no_classification_reselection": true,
+  "original_common_metric_support_preserved": true,
+  "label_support_preserved": true,
+  "original_annotation_time_preserved": true,
+  "human_sorting_time": null,
+  "missing_Q_imputed": false,
+  "original_files_overwritten": false,
+  "original_fuse_calls": 0,
+  "new_scoring_calls": 0,
+  "weighting": "panel -> target pool -> image -> building; ratio formed after variance macro average",
+  "checks": [
+    {
+      "check": "endpoint_identity_and_original_common_support",
+      "affected_endpoints": 2,
+      "retained_panel_teams": 45,
+      "unchanged_teams": 43,
+      "time_columns": 11,
+      "fixed_metrics": 41,
+      "passed": true
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/affected_original_configurations",
+      "rows": 10,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/affected_original_distributions",
+      "rows": 462,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 3.637978807091713e-12
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K2/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/affected_original_configurations",
+      "rows": 24,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/affected_original_distributions",
+      "rows": 1100,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 1.4551915228366852e-11
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOMQ_K3/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/affected_original_configurations",
+      "rows": 6,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/affected_original_distributions",
+      "rows": 282,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 1.4551915228366852e-11
+    },
+    {
+      "check": "RFUSE_GEOM_K2/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K2/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/affected_original_configurations",
+      "rows": 16,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/affected_original_distributions",
+      "rows": 744,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 1.4551915228366852e-11
+    },
+    {
+      "check": "RFUSE_GEOM_K3/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "RFUSE_GEOM_K3/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/affected_original_configurations",
+      "rows": 14,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/affected_original_distributions",
+      "rows": 646,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 2.9103830456733704e-11
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K2/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/affected_original_configurations",
+      "rows": 22,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/affected_original_distributions",
+      "rows": 1006,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 3.637978807091713e-12
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K3/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/affected_original_configurations",
+      "rows": 22,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/affected_original_distributions",
+      "rows": 1006,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 3.637978807091713e-12
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_DSTRUCT_K4/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/affected_original_configurations",
+      "rows": 10,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/affected_original_distributions",
+      "rows": 462,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 2.9103830456733704e-11
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K2/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/affected_original_configurations",
+      "rows": 20,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/affected_original_distributions",
+      "rows": 920,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 2.9103830456733704e-11
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOMQ_K3/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/affected_original_configurations",
+      "rows": 6,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/affected_original_distributions",
+      "rows": 282,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 1.4551915228366852e-11
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K2/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/affected_original_variance",
+      "rows": 188,
+      "numeric_columns": 12,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/affected_original_configurations",
+      "rows": 14,
+      "numeric_columns": 11,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/affected_original_distributions",
+      "rows": 650,
+      "numeric_columns": 17,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/original_macro",
+      "rows": 1450,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 3.637978807091713e-12
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/automatic/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/assisted_original_support/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/assisted_expanded/label_coverage",
+      "rows": 2,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/original_metric_support_macro_invariance",
+      "rows": 1300,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    },
+    {
+      "check": "TARGET_RFUSE_GEOM_K3/annotation_labour_macro_invariance",
+      "rows": 100,
+      "numeric_columns": 10,
+      "maximum_absolute_error": 0.0
+    }
+  ]
+}

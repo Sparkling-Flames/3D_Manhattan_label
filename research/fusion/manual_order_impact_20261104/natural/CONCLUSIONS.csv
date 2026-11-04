@@ -1,0 +1,26 @@
+topic,status,automatic,assisted,source,explanation
+rPc6DW4iMge-06/k4/B8L2均值,幅度变化,73.46762296387007,72.55603809878963,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/B8L2线性P10,幅度变化,53.60151770142383,44.85798625419864,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/B8L2样本标准差,幅度变化,14.01313251745737,14.699283649773934,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/D10均值,幅度变化,77.36238323462716,76.40855974671246,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/D10线性P10,幅度变化,58.34448767383036,47.56931481780659,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/D10样本标准差,幅度变化,13.37624536807358,14.19945059877783,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/IoU3D100均值,幅度变化,87.96692986181797,87.44583037377794,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/IoU3D100线性P10,幅度变化,80.064680409038,72.27362341027396,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+rPc6DW4iMge-06/k4/IoU3D100样本标准差,幅度变化,6.313060950549505,6.859685860821701,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/B8L2均值,幅度变化,45.42085616415305,44.47835835633869,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/B8L2线性P10,幅度变化,30.940434626661176,32.41670706377345,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/B8L2样本标准差,幅度变化,11.38824285776434,11.19005207727311,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/D10均值,幅度变化,48.031063002816666,46.92304490002309,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/D10线性P10,幅度变化,31.61285019397017,33.192708026629326,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/D10样本标准差,幅度变化,13.296139323346097,13.070719294423512,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/IoU3D100均值,幅度变化,68.20401619670298,67.56518156753769,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/IoU3D100线性P10,保持,58.43236384251268,58.43236384251268,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+uNb9QFRL6hY-88/k3/IoU3D100样本标准差,幅度变化,11.452940756784404,11.049696105232195,AFFECTED_K_COMPARISON.csv,原可评团队质量未变；新增无Q端点改变可评分母，重复路径频数继续保留
+自然主目标结论,保持,0,0,DOWNSTREAM_CONSUMERS.csv,2队仅属于ordinary_manual_extra_target；原ordinary_manual_main消费者无真实命中
+新增可评支持,条件变化,34/35与9/10独立团队；248/256与231/256路径行,35/35与10/10独立团队；256/256与256/256路径行,AFFECTED_K_COMPARISON.csv,33条路径行只对应2个物理团队，不能当作33份独立证据
+人数平台及最优停止人数,尚不能判断,N=7与N=5,N=7与N=5,stage03_response/manual/PRIMARY_ONSET_DOMAIN_SUMMARY.csv,"沿用N<8仅描述和后续至少max(5,ceil(.15N))人数要求，不补造平台"
+原共同可评支持,保持,0,0,ORIGINAL_SCORED_SUPPORT_CHECKS.csv,原质量与几何指标逐行差为0，新增支持均值变化不解释为旧团队改善或恶化
+原始劳动与k1/k2策略边界,保持,原有记录,原有记录,CHECKS.json,既有标注劳动、raw k1、k2补充或暂缓规则不变；人工排序耗时未知
+后段跳变与主起点摘要,保持,0,0,CHECKS.json,两池N小于8，既有>=10后段跳变零命中；原primary onset和onset strata数值复现保持
+不加后续观察门槛的小范围诊断,条件变化,uNb complete/quality availability 起点4,同两项诊断起点3,AGGREGATE_NUMERIC_CHANGES.csv.gz,这是first_small_range_without_followup_gate；正式onset仍缺失，不得宣称人数平台提前
