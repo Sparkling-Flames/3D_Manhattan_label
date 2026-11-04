@@ -1,0 +1,93 @@
+{
+  "status": "PASS_WITH_EXPLICIT_OPPORTUNITY_LIMIT",
+  "frozen_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "condition": {
+    "method": "V21_DSTRUCT_RAW3_K3",
+    "scope": "other_admitted",
+    "condition": "manual",
+    "layer": "ordinary_manual",
+    "n": 4,
+    "m": 4,
+    "D_n": 0,
+    "source_role_rank": 1,
+    "target_role_rank": 2
+  },
+  "original_evaluable_events": 7,
+  "expanded_evaluable_events": 13,
+  "registered_events": 16,
+  "original_effect": 15.212662467897108,
+  "expanded_effect": -13.675954796250297,
+  "aggregation": "two pools/images/buildings equally weighted; events equal within each pool",
+  "missing_score_variables": [
+    {
+      "variable": "q0",
+      "event_id": "a63415f78c6f8edd39b5ac22",
+      "C_team_key": "rPc6DW4iMge-22__manual__other_space_11__7264832710c1375c6311",
+      "image": "rPc6DW4iMge-22",
+      "fixed_A_Q": 47.89869612957539,
+      "current_C_Q": null,
+      "current_state": "no_connection",
+      "nodes": 11
+    },
+    {
+      "variable": "q1",
+      "event_id": "554c5483aab8ad2fdb45b595",
+      "C_team_key": "wc2JMjhGNzB-26__manual__other_space_25__f75d0212c66c3f1117cf",
+      "image": "wc2JMjhGNzB-26",
+      "fixed_A_Q": 67.38109521839438,
+      "current_C_Q": null,
+      "current_state": "no_connection",
+      "nodes": 8
+    },
+    {
+      "variable": "q2",
+      "event_id": "dfd1596297c00f22af034a1d",
+      "C_team_key": "wc2JMjhGNzB-26__manual__other_space_25__0ea94e0e255592c4cb9c",
+      "image": "wc2JMjhGNzB-26",
+      "fixed_A_Q": 67.38109521839438,
+      "current_C_Q": null,
+      "current_state": "no_connection",
+      "nodes": 8
+    }
+  ],
+  "legal_Q_range": [
+    0,
+    100
+  ],
+  "range_source": "research/quality/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py",
+  "range_source_git_blob": "fb9c5788f4e2ab5035343a45426ca966eb6bc4ac",
+  "range_proof": "checked() requires I in [0,1] and nonnegative losses. score=100*I/(I+pooled+I*(g+l)); pooled,g,l are nonnegative; I=0 returns 0. Hence 0<=Q<=100 for an available score.",
+  "scenario_count": 27,
+  "support_subsets": 8,
+  "full16_boundary_combinations": 8,
+  "scenario_extremum_proof": "Each fixed evaluability subset has a mean affine in its available unknown C scores with positive weights; its extrema lie at the 0/100 vertices. The 3^3 enumeration covers all eight evaluability subsets and all their vertices.",
+  "all_subsets_effect_lower": -20.722480103341915,
+  "all_subsets_effect_upper": -1.9724801033419137,
+  "complete16_effect_lower": -20.722480103341915,
+  "complete16_effect_upper": -1.9724801033419137,
+  "complete16_formula": "(-331.559681653471 + q0 + q1 + q2) / 16",
+  "unavailable_old_Q_imputed": false,
+  "available_score_rows_changed": false,
+  "hypothetical_0_and_100_are_observations": false,
+  "blank_q_semantics": "endpoint remains unevaluable and is omitted from this metric-specific support",
+  "negative_direction_survives_all_legal_completions": true,
+  "does_not_establish": [
+    "actual scores of the three missing C endpoints",
+    "an exact complete16 mean",
+    "equal human-treatment opportunity",
+    "validity of an arbitrary new order",
+    "repairability outside this fixed condition"
+  ],
+  "reusability": {
+    "confirmed57_matches": 0,
+    "legacy33_matches": 0,
+    "distinct_residual_geometries": 3
+  },
+  "existing_order_missed_propagation_found": false,
+  "complete_opportunity_coverage": false,
+  "human_judgment_required_for_this_direction_verdict": false,
+  "new_orders_generated": 0,
+  "new_fusions": 0,
+  "new_endpoint_scores": 0,
+  "additional_global_opportunity_audit": "Separately owned by the AC acceptance producer; this receipt covers only this exact RAW3 condition"
+}

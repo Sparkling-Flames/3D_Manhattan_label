@@ -1,0 +1,68 @@
+{
+  "analysis_version": "v21_targeted_manual_order_assisted_20261104_v1",
+  "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+  "new_fusions": 0,
+  "new_endpoint_scores": 0,
+  "new_class_fits": 0,
+  "reference_changes": 0,
+  "original_files_modified": false,
+  "missing_Q_imputed": false,
+  "affected_events": 339,
+  "affected_pools": 9,
+  "affected_endpoint_identities": 11,
+  "saved_endpoint_identities": 248,
+  "automatic_valid_Q_events": 0,
+  "assisted_valid_Q_events": 257,
+  "main_aggregation": {
+    "affected_pool_condition_rows": 92,
+    "affected_condition_groups": 76,
+    "changed_condition_metric_rows": 4656,
+    "original_pool_rows": 68858,
+    "scope": "only changed condition groups reaggregated; untouched published rows remain authoritative"
+  },
+  "physical_pair_support": [
+    {
+      "scope": "all",
+      "affected_method_events": 339,
+      "affected_physical_pairs": 245,
+      "affected_pools": 9,
+      "affected_images": 9,
+      "automatic_Q_method_events": 0,
+      "assisted_Q_method_events": 257,
+      "automatic_Q_physical_pairs": 0,
+      "assisted_Q_physical_pairs": 193,
+      "automatic_floor_metric_events": 0,
+      "assisted_floor_metric_events": 260
+    },
+    {
+      "scope": "other_admitted",
+      "affected_method_events": 136,
+      "affected_physical_pairs": 91,
+      "affected_pools": 4,
+      "affected_images": 4,
+      "automatic_Q_method_events": 0,
+      "assisted_Q_method_events": 120,
+      "automatic_Q_physical_pairs": 0,
+      "assisted_Q_physical_pairs": 80,
+      "automatic_floor_metric_events": 0,
+      "assisted_floor_metric_events": 120
+    },
+    {
+      "scope": "primary",
+      "affected_method_events": 203,
+      "affected_physical_pairs": 154,
+      "affected_pools": 5,
+      "affected_images": 5,
+      "automatic_Q_method_events": 0,
+      "assisted_Q_method_events": 137,
+      "automatic_Q_physical_pairs": 0,
+      "assisted_Q_physical_pairs": 113,
+      "automatic_floor_metric_events": 0,
+      "assisted_floor_metric_events": 140
+    }
+  ],
+  "affected_complete_conditional_endpoints": 10,
+  "affected_invalid_floor_endpoints": 1,
+  "fixed_metadata_fields_verified": 89,
+  "common_Q_values_changed": 0
+}

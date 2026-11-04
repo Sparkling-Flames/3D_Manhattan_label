@@ -1,0 +1,312 @@
+[
+  {
+    "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "source": "research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/COMPLETE_COALITIONS.csv.gz",
+    "url": "https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/ac395e703d1fef573d1ef3e105df0286d62a0468/research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/COMPLETE_COALITIONS.csv.gz",
+    "source_sha256": "57df0b8a65bd395ec13882aa03b562d703f5377e45c533ec3f636fdfb12db82d",
+    "source_bytes": 16226906,
+    "source_rows": 83326,
+    "selected_conditions": 11,
+    "selection_keys": [
+      "scope",
+      "condition",
+      "layer",
+      "method",
+      "role_direction",
+      "number_condition",
+      "unknown_background_included"
+    ],
+    "selection_conditions": [
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "OPPSTRUCT_K3",
+        "role_direction": "role1+role2 -> role1+role3",
+        "number_condition": "fewer_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "OPPSTRUCT_K3",
+        "role_direction": "role1+role3 -> role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "OPPSTRUCT_K3",
+        "role_direction": "role1+role3 -> role2+role3",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "role1+role2+role3 -> role1+role3",
+        "number_condition": "fewer_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "role1 -> role1+role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "role1 -> role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "role1+role2 -> role1+role3",
+        "number_condition": "fewer_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "role1 -> role1+role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "role1 -> role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "role1 -> role2+role3",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      },
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "role1+role3 -> role2",
+        "number_condition": "more_people",
+        "unknown_background_included": false
+      }
+    ],
+    "subset": "research/fusion/manual_order_acceptance_20261104/ac/inputs/opportunity/COMPLETE_COALITIONS.csv.gz",
+    "subset_rows": 101,
+    "subset_pools": 15,
+    "subset_sha256": "55eafe51fe39350e9777cc639df7cb3fd36a95b82213100b63e6eae937ff3f7b",
+    "selection_includes_nonfinite_Q_rows": true
+  },
+  {
+    "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "source": "research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/FIXED_BLOCK_BACKGROUND_STEPS.csv.gz",
+    "url": "https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/ac395e703d1fef573d1ef3e105df0286d62a0468/research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/FIXED_BLOCK_BACKGROUND_STEPS.csv.gz",
+    "source_sha256": "01882657b93b2dadbba66d719b5446d82e32b06d6faddb9e7bcdee6a61f9986b",
+    "source_bytes": 57877685,
+    "source_rows": 130601,
+    "selected_conditions": 4,
+    "selection_keys": [
+      "scope",
+      "condition",
+      "layer",
+      "method",
+      "role_direction",
+      "n_from",
+      "n_to",
+      "m_from",
+      "m_to"
+    ],
+    "selection_conditions": [
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K2",
+        "role_direction": "1->2",
+        "n_from": 20.0,
+        "n_to": 28.0,
+        "m_from": 5.0,
+        "m_to": 5.0
+      },
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->3",
+        "n_from": 20.0,
+        "n_to": 28.0,
+        "m_from": 5.0,
+        "m_to": 5.0
+      },
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_from": 20.0,
+        "n_to": 28.0,
+        "m_from": 5.0,
+        "m_to": 5.0
+      },
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "OPPSTRUCT_K3",
+        "role_direction": "2->3",
+        "n_from": 20.0,
+        "n_to": 28.0,
+        "m_from": 7.0,
+        "m_to": 7.0
+      }
+    ],
+    "subset": "research/fusion/manual_order_acceptance_20261104/ac/inputs/opportunity/FIXED_BLOCK_BACKGROUND_STEPS.csv.gz",
+    "subset_rows": 301,
+    "subset_pools": 36,
+    "subset_sha256": "73a86b9c52c12e657e693aa1073d03ae9bb45bca6912a570d4c31594db7b3a90",
+    "selection_includes_nonfinite_Q_rows": true
+  },
+  {
+    "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "source": "research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/SAMPLING_BATCHES.csv.gz",
+    "url": "https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/ac395e703d1fef573d1ef3e105df0286d62a0468/research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/SAMPLING_BATCHES.csv.gz",
+    "source_sha256": "099b3196516b2c442970c506a0ee8c2a5045cf2bbe3e18c65a67e1fd18ecac32",
+    "source_bytes": 13326619,
+    "source_rows": 22616,
+    "selected_conditions": 2,
+    "selection_keys": [
+      "scope",
+      "condition",
+      "layer",
+      "method",
+      "role_direction",
+      "n",
+      "m"
+    ],
+    "selection_conditions": [
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "role_direction": "2->3",
+        "n": 28.0,
+        "m": 7.0
+      },
+      {
+        "scope": "primary",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "1->2",
+        "n": 8.0,
+        "m": 8.0
+      }
+    ],
+    "subset": "research/fusion/manual_order_acceptance_20261104/ac/inputs/opportunity/SAMPLING_BATCHES.csv.gz",
+    "subset_rows": 91,
+    "subset_pools": 87,
+    "subset_sha256": "6512c8d1ac7457846d62f6d51783a93b138e2297827bd3ddf2f676b118f6ee1b",
+    "selection_includes_nonfinite_Q_rows": true
+  },
+  {
+    "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "source": "research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/MEMBER_PANELS.csv.gz",
+    "url": "https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/ac395e703d1fef573d1ef3e105df0286d62a0468/research/workers/personnel_ac_v21_20261030/stage05_sensitivity/results_v1/MEMBER_PANELS.csv.gz",
+    "source_sha256": "85c406287719b869df8999b3104017d7cd1842823c01d39cdd0d33e15cd2aa2d",
+    "source_bytes": 34141149,
+    "source_rows": 28751,
+    "selected_conditions": 1,
+    "selection_keys": [
+      "scope",
+      "condition",
+      "layer",
+      "method",
+      "panel_kind",
+      "role_direction",
+      "n",
+      "m"
+    ],
+    "selection_conditions": [
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "V21_DSTRUCT_RAW3_K3",
+        "panel_kind": "class_count_preserving_members_D_not_fixed",
+        "role_direction": "1->2",
+        "n": 4.0,
+        "m": 4.0
+      }
+    ],
+    "subset": "research/fusion/manual_order_acceptance_20261104/ac/inputs/opportunity/MEMBER_PANELS.csv.gz",
+    "subset_rows": 2,
+    "subset_pools": 2,
+    "subset_sha256": "f8913414ebce551ae3d434e76d5326a3f151a904a1e6937587f5eb2424cc69dc",
+    "selection_includes_nonfinite_Q_rows": true
+  },
+  {
+    "source_repository_commit": "ac395e703d1fef573d1ef3e105df0286d62a0468",
+    "source": "research/workers/personnel_ac_v21_20261030/stage05_sensitivity/exact_outside_background_v1/EXACT_NEUTRAL_OUTSIDE_BACKGROUND_PAIRS.csv.gz",
+    "url": "https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/ac395e703d1fef573d1ef3e105df0286d62a0468/research/workers/personnel_ac_v21_20261030/stage05_sensitivity/exact_outside_background_v1/EXACT_NEUTRAL_OUTSIDE_BACKGROUND_PAIRS.csv.gz",
+    "source_sha256": "bec464cb1b3faf17018bb1e72493cdc6eb4c60a17f45c174803cb744a8535a9a",
+    "source_bytes": 3478534,
+    "source_rows": 6364,
+    "selected_conditions": 1,
+    "selection_keys": [
+      "scope",
+      "condition",
+      "layer",
+      "method",
+      "role_direction",
+      "n",
+      "m",
+      "background_change_type"
+    ],
+    "selection_conditions": [
+      {
+        "scope": "other_admitted",
+        "condition": "manual",
+        "layer": "ordinary_manual",
+        "method": "TARGET_DSTRUCT_K3",
+        "role_direction": "2->3",
+        "n": 4.0,
+        "m": 2.0,
+        "background_change_type": "background_class_counts_and_members_changed"
+      }
+    ],
+    "subset": "research/fusion/manual_order_acceptance_20261104/ac/inputs/opportunity/EXACT_NEUTRAL_OUTSIDE_BACKGROUND_PAIRS.csv.gz",
+    "subset_rows": 9,
+    "subset_pools": 2,
+    "subset_sha256": "6b8ce6e9786da71454edfcc9cf8ae1836e00c330fa78449a4fa4118b6dbe1e4f",
+    "selection_includes_nonfinite_Q_rows": true
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "analysis_version": "v21_targeted_manual_order_assisted_20261104_v1",
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_teams": 0,
+  "new_classifications": 0,
+  "missing_Q_imputed": false,
+  "frozen_role_labels_changed": false,
+  "original_files_modified": false,
+  "raw": [
+    {
+      "table": "MEMBER_PANELS",
+      "regenerated_raw_rows": 919,
+      "changed_raw_rows": 20,
+      "regenerated_pool_rows": 842,
+      "changed_pool_rows": 19
+    },
+    {
+      "table": "BACKGROUND_CHANGES",
+      "regenerated_raw_rows": 2364,
+      "changed_raw_rows": 6,
+      "regenerated_pool_rows": 354,
+      "changed_pool_rows": 3
+    },
+    {
+      "table": "FIXED_BLOCK_BACKGROUND_STEPS",
+      "regenerated_raw_rows": 4361,
+      "changed_raw_rows": 110,
+      "regenerated_pool_rows": 637,
+      "changed_pool_rows": 16
+    },
+    {
+      "table": "FIXED_A_REPLACEMENT_STEPS",
+      "regenerated_raw_rows": 603,
+      "changed_raw_rows": 14,
+      "regenerated_pool_rows": 131,
+      "changed_pool_rows": 4
+    },
+    {
+      "table": "UNEQUAL_DECOMPOSITION",
+      "regenerated_raw_rows": 2172,
+      "changed_raw_rows": 168,
+      "regenerated_pool_rows": 239,
+      "changed_pool_rows": 29
+    },
+    {
+      "table": "COMPLETE_COALITIONS",
+      "regenerated_raw_rows": 1424,
+      "changed_raw_rows": 87,
+      "regenerated_pool_rows": 1424,
+      "changed_pool_rows": 87
+    },
+    {
+      "table": "SAMPLING_BATCHES",
+      "regenerated_raw_rows": 681,
+      "changed_raw_rows": 14,
+      "regenerated_pool_rows": 681,
+      "changed_pool_rows": 12
+    }
+  ],
+  "outside": {
+    "changed_raw_pairs": 6,
+    "changed_summary_rows": 96
+  },
+  "summary": {
+    "changed_tables": [
+      "MEMBER_PANELS",
+      "BACKGROUND_CHANGES",
+      "FIXED_BLOCK_BACKGROUND_STEPS",
+      "FIXED_A_REPLACEMENT_STEPS",
+      "UNEQUAL_DECOMPOSITION",
+      "COMPLETE_COALITIONS",
+      "SAMPLING_BATCHES"
+    ],
+    "changed_summary_rows": 4596
+  },
+  "advanced": {
+    "MEMBER_PANELS": {
+      "selected_source_rows": 438,
+      "outputs": [
+        {
+          "file": "MEMBER_VARIABILITY_VALID_GE2_SUMMARY.csv.gz",
+          "changed_rows": 977
+        }
+      ]
+    },
+    "UNEQUAL_DECOMPOSITION": {
+      "selected_source_rows": 18302,
+      "outputs": [
+        {
+          "file": "COMMON_VALID_THREE_LEG_IMAGE_SUMMARY.csv.gz",
+          "changed_rows": 454
+        },
+        {
+          "file": "COMMON_VALID_DECOMPOSITION_SIZE_COVERAGE.csv.gz",
+          "changed_rows": 370
+        }
+      ]
+    }
+  }
+}

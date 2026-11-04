@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "checks": 3,
+  "numeric_cells": 1336,
+  "mismatches": 0,
+  "original_5767_checks_rerun": false,
+  "new_scores": 0,
+  "coverage": [
+    "all numeric fields in 42 affected strict-bridge summary rows, both versions",
+    "global physical-pair and unique-team state counts and target-pool counts from fresh frozen source minus old local plus assisted local"
+  ],
+  "excluded_fresh_rederivation": "Global state-cell building counts retain prior frozen set-membership witnesses in states/BUILDING_SUPPORT_AMBIGUITIES.json; no full-domain event reread claimed.",
+  "sources": [
+    "research/fusion/manual_order_acceptance_20261104/ac/source_cache/GLOBAL_DEDUPLICATED_PHYSICAL_PAIR_OUTPUT_STATES.csv",
+    "research/fusion/manual_order_acceptance_20261104/ac/source_cache/STRICT_ABC_AND_DIRECT_AC_SAME_CONDITION_REFERENCE.csv.gz",
+    "research/fusion/manual_order_acceptance_20261104/ac/source_cache/UNIQUE_REQUESTED_TEAM_OUTPUT_STATE_COUNTS.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/GLOBAL_DEDUPLICATED_PHYSICAL_PAIR_OUTPUT_STATES.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/UNIQUE_REQUESTED_TEAM_OUTPUT_STATE_COUNTS.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/assisted/GLOBAL_DEDUPLICATED_PHYSICAL_PAIR_OUTPUT_STATES.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/assisted/UNIQUE_REQUESTED_TEAM_OUTPUT_STATE_COUNTS.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/automatic/GLOBAL_DEDUPLICATED_PHYSICAL_PAIR_OUTPUT_STATES.csv",
+    "research/fusion/manual_order_impact_20261104/ac/states/automatic/UNIQUE_REQUESTED_TEAM_OUTPUT_STATE_COUNTS.csv",
+    "research/fusion/manual_order_impact_20261104/ac/strict_bridge/STRICT_ABC_AND_DIRECT_AC_SAME_CONDITION_REFERENCE.csv.gz",
+    "research/fusion/manual_order_impact_20261104/ac/strict_bridge/STRICT_BRIDGE_SUMMARY_CHANGES.csv.gz"
+  ]
+}

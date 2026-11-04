@@ -1,0 +1,32 @@
+{
+  "selection": "Root requested whole smaller-class departure: TARGET/RAW3 3->2; JOINT3 3->1 and 3->2; all existing JOINT4 4->*; primary Manual/all outside D/neutral0. Every metric and missing outcome row retained.",
+  "join_key": [
+    "scope",
+    "condition",
+    "layer",
+    "method",
+    "role_direction",
+    "background_profile",
+    "parent_background_stratum",
+    "metric"
+  ],
+  "equal_anchor_m": "small_class_n = n_small - D_n; equal anchor n = n_small",
+  "source_sha256": "b2c5ac46cf1eaf216fd2db2e898f6d407d1dd52f40c0e3a22daddddd8fe3e6f4",
+  "files": [
+    {
+      "file": "COMMON_VALID_DECOMPOSITION_SIZE_COVERAGE.csv.gz",
+      "rows": 1456,
+      "columns": 52,
+      "full_gzip_eof": true,
+      "sha256": "bab79f49d137756e8d8f1843a7af3e5f37ee83cb9824108b6d920caa325ffe5d"
+    },
+    {
+      "file": "REQUESTED_ALL_OUTSIDE_D_DIRECTIONS_WITH_SIZES.csv.gz",
+      "rows": 26,
+      "columns": 93,
+      "full_gzip_eof": true,
+      "sha256": "b8a6f28e53b44741fd50a76ac054be2879cfdae585152ef7147f6a1730e43d68"
+    }
+  ],
+  "new_teams": 0
+}

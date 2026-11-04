@@ -1,0 +1,31 @@
+{
+  "safe_to_exclude": [
+    "Q_TRACE_RUN.log",
+    "source_cache/DESIGN_LINKS.csv.gz",
+    "source_cache/EXTRA_SOURCE_MANIFEST.json",
+    "source_cache/POOL_CONDITION_EFFECTS.csv.gz",
+    "source_cache/opportunity_full_downloads/COMPLETE_COALITIONS.csv.gz",
+    "source_cache/opportunity_full_downloads/EXACT_NEUTRAL_OUTSIDE_BACKGROUND_PAIRS.csv.gz",
+    "source_cache/opportunity_full_downloads/FIXED_BLOCK_BACKGROUND_STEPS.csv.gz",
+    "source_cache/opportunity_full_downloads/MEMBER_PANELS.csv.gz",
+    "source_cache/opportunity_full_downloads/SAMPLING_BATCHES.csv.gz",
+    "source_cache/opportunity_shards/B6ByNegPMKs-47__manual__9eae4a3584.csv.gz",
+    "source_cache/opportunity_shards/S9hNv5qa7GM-04__manual__c93fe8a825.csv.gz",
+    "source_cache/opportunity_shards/S9hNv5qa7GM-09__manual__v21_254.csv.gz",
+    "source_cache/opportunity_shards/UwV83HsGsw3-09__manual__1a2b0afff3.csv.gz",
+    "source_cache/opportunity_shards/UwV83HsGsw3-10__manual__other_space_1.csv.gz",
+    "source_cache/opportunity_shards/VFuaQ6m2Qom-04__manual__fbe40a551f.csv.gz",
+    "source_cache/opportunity_shards/e9zR4mvMWw7-09__manual__other_space_3.csv.gz",
+    "source_cache/opportunity_shards/e9zR4mvMWw7-15__manual__64c3e640b7.csv.gz",
+    "source_cache/opportunity_shards/rPc6DW4iMge-05__manual__other_space_9.csv.gz",
+    "source_cache/opportunity_shards/uNb9QFRL6hY-18__manual__other_space_12.csv.gz",
+    "source_cache/opportunity_shards/uNb9QFRL6hY-41__manual__other_space_14.csv.gz",
+    "source_cache/opportunity_shards/uNb9QFRL6hY-59__manual__other_space_16.csv.gz",
+    "source_cache/opportunity_shards/uNb9QFRL6hY-88__manual__other_space_29.csv.gz",
+    "source_cache/opportunity_shards/uNb9QFRL6hY-88__manual__other_space_30.csv.gz",
+    "source_cache/opportunity_shards/wc2JMjhGNzB-53__manual__c22e59afe7.csv.gz"
+  ],
+  "reason": "The exact frozen affected-condition pool subset and affected-pool registered link subset are bundled in inputs/. Script prefers these subsets. Full original SHA256 and immutable GitHub URL remain in source manifests.",
+  "requires_previous_batches": "01 through 05; this supplemental script reads their unchanged output paths.",
+  "opportunity_cache_reason": "Default opportunity_audit.py reads bundled exact condition and event-status subsets. Full immutable URLs/SHA256 and selection definitions are preserved in OPPORTUNITY_INPUT_MANIFEST.json and OPPORTUNITY_EVENT_SOURCE_MANIFEST.json / OPPORTUNITY_EVENT_EXTRACTION.json. --prepare-inputs refreshes those subsets if desired."
+}

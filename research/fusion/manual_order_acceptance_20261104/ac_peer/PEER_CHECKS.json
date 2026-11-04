@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "other_OPPSTRUCT_external_building_flip",
+      "passed": true
+    },
+    {
+      "check": "other_TARGETK3_zeroD_building_flip",
+      "passed": true
+    },
+    {
+      "check": "unaffected_pure_pool_source_git_blob",
+      "passed": true,
+      "sha": "b112d1ea392067a6ff4fff5db6133de79391bab6"
+    },
+    {
+      "check": "pure_alias_full_registration",
+      "passed": true,
+      "registered_events": 16
+    },
+    {
+      "check": "pure_alias_membership_A_equal_AC",
+      "passed": true,
+      "selected_events": 16
+    },
+    {
+      "check": "pure_alias_membership_B_equal_whole_class",
+      "passed": true,
+      "selected_events": 16
+    },
+    {
+      "check": "pure_alias_member_panel_full_ids",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_support_automatic",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_building_image_weights_automatic",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_automatic/A_fixed_n_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_automatic/whole_equal_fixed_n_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_automatic/whole_equal_fixed_n_all_m_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_automatic/MEMBER_PANELS_mean",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_automatic/funnel_1/3->2/3",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_support_assisted",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_building_image_weights_assisted",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_assisted/A_fixed_n_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_assisted/whole_equal_fixed_n_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_assisted/whole_equal_fixed_n_all_m_pure_class",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_assisted/MEMBER_PANELS_mean",
+      "passed": true
+    },
+    {
+      "check": "pure_alias_exact_weights_assisted/funnel_1/3->2/3",
+      "passed": true
+    },
+    {
+      "check": "funnel_named_ALL_complete_cohort_automatic",
+      "passed": true
+    },
+    {
+      "check": "funnel_named_ALL_complete_cohort_assisted",
+      "passed": true
+    },
+    {
+      "check": "funnel_new_pool_six_pairs_one_node_failure",
+      "passed": true
+    },
+    {
+      "check": "funnel_new_pool_block_weighted_value",
+      "passed": true,
+      "reconstructed_new_pool_mean": 63.33284256883268
+    },
+    {
+      "check": "complete_reversal_catalogue",
+      "passed": true,
+      "rows": 1867
+    },
+    {
+      "check": "all_unit_support_contributions",
+      "passed": true,
+      "reversals": 1867,
+      "rows": 29559,
+      "maximum_error": 7.105427357601002e-15
+    },
+    {
+      "check": "Q_reversals_from_complete_lower_level_support",
+      "passed": true,
+      "estimands": 60,
+      "source_units": 1030
+    },
+    {
+      "check": "Q_event_trace_identity_and_missing_scores",
+      "passed": true,
+      "traced_event_references": 377,
+      "unique_events": 153,
+      "changed_analysis_rows": 209,
+      "full_source_metric_events": 14665
+    },
+    {
+      "check": "new_event_overlap_labels_are_not_independent_trial_counts",
+      "passed": true,
+      "evidence_rows": 60,
+      "overlap_sets": 30,
+      "interpretation": "These are overlapping new-event sets. Exact full-cohort aliases are separately proven in RAW3 and funnel tables."
+    }
+  ],
+  "new_teams": 0,
+  "new_fusions": 0,
+  "new_endpoint_scores": 0,
+  "scope": "Independent source, identity, aggregation, support, and alias review; no AC production files changed"
+}

@@ -1,0 +1,23 @@
+{
+  "source": "research/fusion/manual_order_acceptance_20261104/ac/Q_RESIDUAL_ENDPOINTS_OWN.csv.gz",
+  "source_sha256": "e26669e03c2037e36551a438f036828edf09f5214cdc4dcb3feeb3f99a879f72",
+  "source_rows": 350,
+  "filter": "opponent_in_confirmed57 and not failed_endpoint_in_confirmed57 and score_status=no_connection and selected_nodes>=4",
+  "all_direct_opponent_teams": 8,
+  "all_direct_opponent_references": 37,
+  "already_reviewed": [
+    "wc2JMjhGNzB-26__manual__other_space_25__0ea94e0e255592c4cb9c",
+    "wc2JMjhGNzB-26__manual__other_space_25__f75d0212c66c3f1117cf"
+  ],
+  "new_teams": 6,
+  "new_references": 15,
+  "selected_reference_snapshot_sha256": "d20a6f7aa46f56c9371ee023812e2d6e327a342c24c33e49ff3c349bc370f1ea",
+  "affected_event_source": {
+    "path": "research/fusion/manual_order_acceptance_20261104/ac/ALL_AFFECTED_RESIDUAL_EVENT_STATES.csv.gz",
+    "sha256": "b8444b5013f79f348dec7e2c5f3e1934d3d2d37f2853771a1ebff788ef7f76b5",
+    "rows": 82,
+    "selected_rows": 7,
+    "snapshot_file": "inputs/SIX_AFFECTED_EVENT_STATE_INPUT.csv.gz",
+    "snapshot_sha256": "832a0ac1a74b1b74eb2aee7bfb4657bbcb12bb8d4758c115051ef96011c1e52c"
+  }
+}
