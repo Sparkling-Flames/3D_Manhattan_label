@@ -1,0 +1,97 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>现有混合人群规律分析</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">混合人群研究台</a><a href="README.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>现有混合人群规律分析</h1>
+<p>主入口：<a href="REPORT_ZH.html">REPORT_ZH.md</a>。逐条数值及精确筛选条件：<a href="KEY_FINDINGS.csv">KEY_FINDINGS.csv</a>。</p>
+<p>本目录接续 v2.1 的当前 DSTRUCT K3、RFUSE K2、JOINT K3/K4，研究既有完整联盟、固定人数配比、同配比成员及固定替换块背景。只重聚合保存结果；未新增团队、拟合、融合或评分。新增 C1↔C3 半队严格 ABC 和前缀收敛在本批其它模块中单列。</p>
+<h2>科研图</h2>
+<table>
+<thead>
+<tr>
+<th>图</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="FIG01_COALITION_BASELINES_AND_STRUCTURE.png">FIG01</a></td>
+<td>同一混合终点的不同基线；官方难度×参考结构</td>
+</tr>
+<tr>
+<td><a href="FIG02_FIXED_N_COMPOSITION_AND_MONOTONICITY.png">FIG02</a></td>
+<td>固定 n 的配比方向；至少三层完整配置链的单调性</td>
+</tr>
+<tr>
+<td><a href="FIG03_BACKGROUND_SIGNED_AND_ABSOLUTE.png">FIG03</a></td>
+<td>固定换人块、嵌套背景增加的有符号效应和绝对幅度</td>
+</tr>
+<tr>
+<td><a href="FIG04_GEOMETRY_ILLUSTRATIONS.png">FIG04</a></td>
+<td>三张事后机制例的当前参考、完整纯类及混合几何，图内同尺度</td>
+</tr>
+</tbody></table>
+<p>四图均有同名 SVG。研究台可直接使用 <a href="GEOMETRY_ILLUSTRATIONS.json">GEOMETRY_ILLUSTRATIONS.json</a>，其中含 3 个参考与 6 个既有几何端点。</p>
+<h2>数据入口</h2>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>逐条或逐图表</th>
+<th>汇总与支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前 DSTRUCT 联盟</td>
+<td><code>DSTRUCT_CURRENT_ALLIANCE_ENDPOINTS.csv.gz</code>、<code>DSTRUCT_ALLIANCE_IMAGE_CONTRASTS.csv.gz</code></td>
+<td><code>DSTRUCT_ALLIANCE_STRATA.csv</code>、<code>DSTRUCT_ALLIANCE_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>难度、用途、结构</td>
+<td><code>POOL_SCENE_DIFFICULTY_INDEX.csv</code></td>
+<td><code>DSTRUCT_DIFFICULTY_STRUCTURE_CROSS.csv</code>、<code>DSTRUCT_DIFFICULTY_STRUCTURE_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>两类混合与两支纯类</td>
+<td><code>DSTRUCT_MIXTURE_VS_BOTH_PURE_IMAGE_EFFECTS.csv</code></td>
+<td><code>DSTRUCT_MIXTURE_VS_BOTH_PURE_STRATA.csv</code></td>
+</tr>
+<tr>
+<td>固定 n 配比</td>
+<td><code>FIXED_N_ADJACENT_CONFIGURATION_PAIRS.csv.gz</code>、<code>FIXED_N_FOCUSED_IMAGE_EFFECTS.csv.gz</code></td>
+<td><code>FIXED_N_FOCUSED_STRATA.csv</code>、完整的 <code>FIXED_N_CONFIGURATION_STEP_STRATA.csv</code></td>
+</tr>
+<tr>
+<td>主分析的配比链</td>
+<td><code>FIXED_N_THREE_OR_MORE_LEVEL_CHAINS.csv.gz</code>、<code>FIXED_N_THREE_OR_MORE_LEVEL_CHAINS_BY_IMAGE.csv</code></td>
+<td><code>FIXED_N_THREE_OR_MORE_LEVEL_CHAIN_STRATA.csv</code></td>
+</tr>
+<tr>
+<td>同配比成员</td>
+<td><code>SAME_CONFIGURATION_MEMBER_DISTRIBUTIONS.csv.gz</code>、<code>MEMBER_SPREAD_BY_IMAGE.csv</code></td>
+<td><code>MEMBER_SPREAD_STRATA.csv</code></td>
+</tr>
+<tr>
+<td>相同完整队伍上的 Q/T</td>
+<td><code>Q_T_IDENTICAL_COMPLETE_CONFIGURATION_PAIRS.csv.gz</code>、<code>Q_T_IDENTICAL_COMPLETE_IMAGE_EFFECTS.csv</code></td>
+<td><code>Q_T_IDENTICAL_COMPLETE_STRATA.csv</code>、<code>Q_T_IDENTICAL_COMPLETE_QUADRANTS.csv</code></td>
+</tr>
+<tr>
+<td>RFUSE/JOINT 联盟</td>
+<td><code>RFUSE_JOINT_CLASS_ADDITION_PAIRS.csv.gz</code>、<code>RFUSE_JOINT_CLASS_ADDITION_IMAGE_EFFECTS.csv.gz</code></td>
+<td><code>RFUSE_JOINT_CLASS_ADDITION_STRATA.csv</code>、<code>RFUSE_JOINT_CLASS_ADDITION_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>固定换人块及背景</td>
+<td><code>FIXED_BLOCK_BACKGROUND_EXISTING_ROWS.csv.gz</code>、<code>FIXED_BLOCK_BACKGROUND_IMAGE_EFFECTS.csv.gz</code></td>
+<td><code>FIXED_BLOCK_BACKGROUND_STRATA.csv</code>、<code>FIXED_BLOCK_BACKGROUND_COMMON_Q_SUPPORT.csv.gz</code></td>
+</tr>
+</tbody></table>
+<p><code>FIXED_N_MONOTONICITY_*</code> 是保留全部二层及以上链、在图内按链等权的辅助表。论文主结论使用名称含 <code>THREE_OR_MORE_LEVEL</code> 的完整三层及以上链表，按链→面板→图等权，避免两点连线自动算成多层单调证据。</p>
+<p><code>Q_T_EXCLUDED_UNEQUAL_TEAM_SUPPORT.csv</code> 保留 14 条不同 Q/T 团队分母的排除记录；它们来自一张 n=25 图片的 1 支缺少合法时间支持的队伍，不影响报告的 n12/n20 主条件。所有无 Q 端点和失败支持均保持缺失身份，没有以 0 计改善。</p>
+<h2>复现</h2>
+<p>在仓库根目录依次运行：</p>
+<pre><code class="language-bash">python research/workers/mixture_patterns_and_c13_half_20261104/mixtures/analyze_mixtures.py
+python research/workers/mixture_patterns_and_c13_half_20261104/mixtures/deepen_mixtures.py
+python research/workers/mixture_patterns_and_c13_half_20261104/mixtures/export_geometry_examples.py
+python research/workers/mixture_patterns_and_c13_half_20261104/mixtures/render_mixture_figures.py
+python research/workers/mixture_patterns_and_c13_half_20261104/mixtures/finalize_mixtures.py
+</code></pre>
+<p>依赖为项目现有 Python、NumPy、pandas、Matplotlib、Pillow。绘图支持 <code>--font</code> 或 <code>HOHONET_CJK_FONT</code>，并自动查找常见 Windows、Linux、macOS 中文字体。首次复现运行完整分析；<code>--reuse-pairs</code> 仅供已经保留本轮相邻配置原始结果的相同输入重汇总使用。</p>
+<p>原始资料路径、SHA-256 和固定提交 URL 在 <a href="FINAL_SOURCE_MANIFEST.csv">FINAL_SOURCE_MANIFEST.csv</a>。三份本地辅助输入与固定 Git 源逐字节、逐表相同的证明由父目录 <code>audit/ASSISTED_SOURCE_LOGICAL_COMPARISON.json</code> 给出。压缩文件、PNG/SVG、引用和数值检查见 <a href="FINAL_VERIFICATION.json">FINAL_VERIFICATION.json</a>，本目录文件清单见 <a href="DELIVERY_MANIFEST.csv">DELIVERY_MANIFEST.csv</a>。</p>
+</main></body></html>

@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "scope": "new mixture/curve/C13 deliverables and their current-entry references",
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "headline_aggregates": [
+    {
+      "from": "C1",
+      "to": "C1|C3",
+      "mean_Q": 13.714111156335456,
+      "images": 166,
+      "positive": 146,
+      "negative": 20
+    },
+    {
+      "from": "C2",
+      "to": "C2|C3",
+      "mean_Q": 2.768147913523097,
+      "images": 204,
+      "positive": 166,
+      "negative": 38
+    },
+    {
+      "from": "C1|C2",
+      "to": "C1|C2|C3",
+      "mean_Q": 3.5006186507114068,
+      "images": 199,
+      "positive": 165,
+      "negative": 34
+    },
+    {
+      "from": "C3",
+      "to": "C1|C3",
+      "mean_Q": -2.7205109667505822,
+      "images": 184,
+      "positive": 60,
+      "negative": 123
+    },
+    {
+      "from": "C3",
+      "to": "C2|C3",
+      "mean_Q": -4.749110961658468,
+      "images": 184,
+      "positive": 45,
+      "negative": 139
+    }
+  ],
+  "checks": {
+    "alliance_C1__C1|C3": {
+      "pass": true,
+      "detail": null
+    },
+    "alliance_C2__C2|C3": {
+      "pass": true,
+      "detail": null
+    },
+    "alliance_C1|C2__C1|C2|C3": {
+      "pass": true,
+      "detail": null
+    },
+    "alliance_C3__C1|C3": {
+      "pass": true,
+      "detail": null
+    },
+    "alliance_C3__C2|C3": {
+      "pass": true,
+      "detail": null
+    },
+    "named_mixture_image_average": {
+      "pass": true,
+      "detail": {
+        "images": 190,
+        "mean": 1.7804076521371048
+      }
+    },
+    "C13_GS_C1_to_C3": {
+      "pass": true,
+      "detail": {
+        "mean": 3.2693497772532356,
+        "images": 36
+      }
+    },
+    "C13_GS_C3_to_C1": {
+      "pass": true,
+      "detail": {
+        "mean": 3.954804599393444,
+        "images": 36
+      }
+    },
+    "C13_C3_minus_C1_mean_Q": {
+      "pass": true,
+      "detail": {
+        "mean": 7.864551319837481,
+        "images": 36
+      }
+    },
+    "C13_GS_identity": {
+      "pass": true,
+      "detail": null
+    },
+    "C13_unique_canonical_requests": {
+      "pass": true,
+      "detail": null
+    },
+    "saved_files_decode_and_syntax": {
+      "pass": true,
+      "detail": {
+        "counts": {
+          "python": 26,
+          "png": 10,
+          "svg": 10,
+          "gzip": 107,
+          "json": 35
+        },
+        "errors": []
+      }
+    },
+    "local_report_and_workbench_links": {
+      "pass": true,
+      "detail": {
+        "checked": 394,
+        "missing": []
+      }
+    },
+    "workbench_controls": {
+      "pass": true,
+      "detail": {
+        "offline_javascript_execution": "pass",
+        "rendered_default_tables": 5,
+        "checked_control_conditions": 153,
+        "actual_browser_rendered": false,
+        "scope": "DOM control simulation and data population, separate from PNG visual inspection"
+      }
+    },
+    "ten_scientific_figures_present": {
+      "pass": true,
+      "detail": {
+        "PNG": 10,
+        "visually_reviewed": 10
+      }
+    }
+  },
+  "failed_checks": [],
+  "scientific_subreviews": [
+    "mixtures/FINAL_VERIFICATION.json",
+    "curves/FINAL_NUMERICAL_VERIFICATION.json",
+    "c13_half/audit/FINAL_VALIDATION.json"
+  ],
+  "native_input_and_formula_checks": "See C13 final validation; existing endpoint parity performed before new run.",
+  "actual_browser_rendered": false
+}

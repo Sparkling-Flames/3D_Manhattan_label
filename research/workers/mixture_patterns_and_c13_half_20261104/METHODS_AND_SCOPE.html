@@ -1,0 +1,71 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>方法、范围与解释层次</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="workbench/index.html">混合人群研究台</a><a href="METHODS_AND_SCOPE.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>方法、范围与解释层次</h1>
+<h2>1. 四种问题各自的单位</h2>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>实际比较</th>
+<th>能支持的解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完整联盟</td>
+<td>同图某一类的全体人员与两类/三类人员的合并队</td>
+<td>实际组合后的变化；人数随可用容量改变</td>
+</tr>
+<tr>
+<td>固定人数配比</td>
+<td>同图、同人数、同候选池和固定背景中的配置均值</td>
+<td>构成比例变化的联系；不是每一步都对应同一具体人的成对替换</td>
+</tr>
+<tr>
+<td>同配比成员</td>
+<td>同图同配置中的多个不同成员集合</td>
+<td>类内异质性与具体成员造成的波动</td>
+</tr>
+<tr>
+<td>固定替换块背景</td>
+<td>换入/换出块保持，改变共同背景</td>
+<td>背景改变有符号收益、变化幅度或输出状态</td>
+</tr>
+<tr>
+<td>既有进入序列</td>
+<td>同图随机路径按早期类别构成分组</td>
+<td>早期构成与接近参考的速度；同一最终全员集合的终点不因进入顺序而改变</td>
+</tr>
+<tr>
+<td>严格 ABC</td>
+<td>A=D∪X、B=D∪Y、C=D∪Z</td>
+<td>同类换人幅度与跨类换人幅度的直接对照</td>
+</tr>
+</tbody></table>
+<p>主分析为普通 Manual 主目标。房间用途由已登记 <code>IMAGE_TYPE_INDEX.csv</code> 提供；<code>scene=clear</code> 等几何状态不当作房间用途。官方难度、边界自遮挡、短转折条件均使用研究已有标签。难度与结构条件可以重合，交叉表用于检查覆盖；观察到条件差异不自动构成独立因果识别。</p>
+<h2>2. 当前类别与建类信息</h2>
+<p>DSTRUCT K3 按楼外训练得到的结构表达类别解释；RFUSE GEOM K2 按几何融合响应解释；OPPJOINT K3/K4 是直接使用历史 Q/T 的联合画像。每张图使用排除该建筑的标签，<code>ALL</code> 名单不用于替代楼外标签。C 编号在各自方法内解释，不把不同方法的 C3 当作同一组人。</p>
+<p>历史 V3、RAW3 或旧 TARGET 结果保留真实方法和标签身份。旧 TARGET 与当前 DSTRUCT 的标签差异不能靠更名消除。既有 14/7 的 DSTRUCT C2→C3 与本轮 C1↔C3 的小团队条件分别报告，不能由效应大小排序类别距离。</p>
+<h2>3. 质量、结构和状态</h2>
+<p>沿用正式融合、B8L2（Q）、D10 与原质量分项。转折、短转折边、冗余节点、位置/尺度与参考遗漏用于解释几何变化。不同指标仅使用其真实有效支持；分项的支持不冒充三端完整 Q 支持。</p>
+<p>原自动结果始终保留。批准人工排序的辅助版是固定节点和坐标的连接辅助，改变连接方式和部分可评支持，不是改善前无 Q 端点的“零分”。F2/F9 坐标候选不进入本专题的主统计。</p>
+<h2>4. 图片与建筑计权</h2>
+<p>同图的团队、事件或路径先在约定的固定条件内汇总，再按图片等权；建筑等权作为另一个明确估计量单列。重复队伍或路径不是新的图片。分层表提供均值、中位数、正负方向、图数和楼数；适用时提供建筑聚类重抽样区间与逐楼剔除。少数反向图片说明规律的条件边界，不自动推翻多数图片上方向一致的结果。</p>
+<p>完整联盟使用每个比较各自的共同 Q 支持，并单列新增/丢失可评支持。固定人数主要解释采用相邻两配置全部登记队伍均可评的支持，另保留可用 Q 均值版本。对于三类七种联盟的共同支持，使用单独表格，避免拿不同分母的均值拼出虚假的排序。</p>
+<h2>5. “更快”分为四件事</h2>
+<ol>
+<li>同一人数下 Q 更高、低尾更好或可评率更高。</li>
+<li>更少人数首次达到 Q≥80 或 Q≥90。</li>
+<li>从指定人数 n 到观察窗终点 20 人，每个前缀均达标；它允许更早首次越线后曾跌落、后来再次恢复。</li>
+<li>在合法同源记录劳动预算下达到目标的概率更高。</li>
+</ol>
+<p>主要自然路径比较在 N≥20 的池内，前 6 人是否包含指定类别，两组各至少 16 条既有路径；6–20 人窗口固定，不随每个 n 更换图片队列。8 条路径、前 10 人等条件作为已列出的敏感性，不替代主口径。首次达标人数在已达标路径上计算，必须与未达标概率一起读。持续到 20 人不等于证明未来所有人数都持续达标。Q≥80、Q≥90 是本批并列描述阈值，不是官方验收标准或经验证的现场停止规则。主过程首次/曾达到从 n=6 的观察窗起算，不评价 n=1…5 的先前越线；K4 小池从已执行的 n=3 起算。</p>
+<p>记录劳动是已有人员劳动时间的累加，不是墙钟等待时间，也不包含未知的人工排序劳动。new 与 v1 的记录语义分别保留；跨来源混合总秒数不能直接解释为同源节时收益。先达标、同人数更好、少劳动和最终质量更高不互相替代。</p>
+<h2>6. 新增 C1↔C3 的 50% 严格 ABC</h2>
+<p>要求 D、X、Y、Z 两两不交，|D|=|X|=|Y|=|Z|=m，n=2m；X/Y 同属来源类，Z 属目标类。全部人员来自当前正式池，候选名单、参考、坐标及记录劳动不改变。</p>
+<ul>
+<li>容量最大的 n=8、m=4：C1→C3 有 24 图/10 楼，反向 4 图/3 楼，两方向没有共同图片，分别回答各自容量范围的问题。</li>
+<li>同图双向 n=6、m=3：36 图/10 楼，P/Q 为两支互斥 C1 块，R/S 为两支互斥 C3 块，四端点共享同一 D。以同一四端点构造两个方向的严格 ABC，单列四端共同支持。</li>
+<li>预先固定种子 <code>20261104013</code>、选样规则与重复数。n=8 每图方向 16 个块配置×2 个背景；n=6 每图 8 个四块配置×2 个背景×每方向 2 个目标块。</li>
+<li>总计 3,200 个事件、4,992 个唯一请求团队、48 张不同图片。未根据 Q、可连接状态或结果大小追加抽样。</li>
+</ul>
+<p>令 W=|Q_B−Q_A|，GA=|Q_C−Q_A|−W，GS=(|Q_C−Q_A|+|Q_C−Q_B|)/2−W。GA/GS 的正值表示跨类变化幅度更大；C−A、C−B 才表示实际质量升降。GS 不是收益分数。Q、几何和同源劳动分别使用必要端点的共同支持。</p>
+<p>计算复用正式 native engine。运行前使用既有简单、中等、困难成功端点和一个无连接端点核对分数、分项、状态及参考，以确认当前运行依赖未改变正式结果。该验证端点不进入 3,200 个研究事件。</p>
+</main></body></html>

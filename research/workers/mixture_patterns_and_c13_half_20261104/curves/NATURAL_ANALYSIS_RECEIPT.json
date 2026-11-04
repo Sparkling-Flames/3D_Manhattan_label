@@ -1,0 +1,39 @@
+{
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "pools": 206,
+  "images": 206,
+  "paths_per_pool": 256,
+  "primary_scope": "primary ordinary Manual",
+  "pool_n_ge20": 195,
+  "methods": {
+    "TARGET_DSTRUCT_K3": "C3",
+    "RFUSE_GEOM_K2": "C2",
+    "OPPJOINT_K3": "C3",
+    "OPPJOINT_K4": "C4"
+  },
+  "pooled256_strata": [
+    "new104A",
+    "new104B",
+    "new_space256",
+    "old24",
+    "prior_new24"
+  ],
+  "excluded_strata": [
+    "prior_focus48"
+  ],
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_teams": 0,
+  "time_source_homogeneous_pool_required": true,
+  "thresholds": [
+    80,
+    90
+  ],
+  "thresholds_are_descriptive": true,
+  "classification": "current held-out-building labels; presence in first6/first10; group fixed throughout curve",
+  "missingQ": "never converted to Q=0; unavailable prefix cannot certify achievement",
+  "support_rule": "same-image both landmark arms have >=16 registered known-label paths; >=8 sensitivity",
+  "bootstrap_unit": "building,2000 resamples, seed20261104",
+  "new_priority_policy_claim": false,
+  "elapsed_seconds": 225.2
+}

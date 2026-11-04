@@ -1,0 +1,352 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DSTRUCT K3：C1↔C3 严格 50% 替换补充结果</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">混合人群研究台</a><a href="REPORT_ZH.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>DSTRUCT K3：C1↔C3 严格 50% 替换补充结果</h1>
+<h2>核心结论</h2>
+<p><strong>缺失的 C1↔C3 严格 50% 替换已实际补齐。</strong> 当前人员容量支持 8 人换 4 人：C1→C3 覆盖全部 24 张可行图，C3→C1 覆盖全部 4 张可行图。两方向在 8/4 下没有共同图片，因此另补了 36 图、10 楼的 6 人换 3 人双向共同背景对照。总计 <strong>3,200 个登记 ABC 事件、4,992 个精确团队端点</strong>；4,898 个有正式 Q，94 个真实无连接状态完整保留。</p>
+<p>结果显示一个明确且有支持范围的规律：<strong>在本轮可行图上，将半数 C1 替换为 C3，通常提高融合质量，且跨类变化通常超过同类换人。</strong> 8/4 前向质量位移平均 +10.165 分、中位 +6.419 分，22/24 图为正；6/3 共同支持上 C3 背景团队比 C1 背景团队平均高 +7.865 分，32/36 图为正。建筑等权后分别为 +6.474、+6.146，方向保持；去掉任一建筑后方向也保持。这些结果既不由少数反例推翻，也不把 C3 改名为普适“高质量类”。</p>
+<p>8/4 反向的 GS 为 −0.346，主要来自一张图的 C3 类内成员波动很大；同一方向四张图的质量位移全部为负，表明 C1 换入使 Q 降低。<strong>GS 是否为正、Q 是升是降、同类成员是否稳定，是三个不同问题。</strong> 在同图、同 D、同四端点的 6/3 对照中，两方向 GS 分别为 +3.269、+3.955，跨类额外变化的结论得到补充支持。</p>
+<p>本补充测的是固定人数下的替换端点。它本身不检验按人数增长的趋近 GT 曲线，也不证明更短的实际标注时间；这些结论需要接回原有共识曲线研究。来源：<a href="analysis/SUMMARY.csv">主统计</a>、<a href="analysis/IMAGE_METRICS.csv.gz">逐图结果</a>、<a href="analysis/SUPPORT.csv">支持登记</a>、<a href="endpoints/RUN_RECEIPT.json">端点运行回执</a>。</p>
+<h2>1. 为什么采用 8/4，并另补共同 6/3</h2>
+<p>本轮使用固定提交 <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code> 的正式 v2.1 融合输入和当前 DSTRUCT K3 楼外标签。先对 206 个普通 Manual 主目标池逐一核验了当前 RAW 与正式池的实际人员集合、对象 ID、参考版本、预处理后坐标、上下点共享 x、已有劳动时间数值及来源。没有重新整理原始坐标，没有把 F2/F9 坐标候选推广到本轮，也没有重分类型。</p>
+<p>严格 ABC 需要 A=D∪X、B=D∪Y、C=D∪Z，D/X/Y/Z 两两不交，X、Y 同为源类，Z 为目标类，|X|=|Y|=|Z|=m，且 n=2m。由此需要源类至少 2m 人、目标类至少 m 人、总池至少 4m 人。</p>
+<table>
+<thead>
+<tr>
+<th>当前正式容量</th>
+<th>C1→C3</th>
+<th>C3→C1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>m≥5 的严格 50% 替换</td>
+<td>0 图</td>
+<td>0 图</td>
+</tr>
+<tr>
+<td>8/4</td>
+<td>24 图、10 楼</td>
+<td>4 图、3 楼</td>
+</tr>
+<tr>
+<td>8/4 两方向共同图</td>
+<td>0 图</td>
+<td>0 图</td>
+</tr>
+<tr>
+<td>6/3 四纯块共用 D 的共同图</td>
+<td>36 图、10 楼</td>
+<td>同一 36 图、10 楼</td>
+</tr>
+</tbody></table>
+<p>因此，不能在当前人员容量下伪造 14/7 的 C1↔C3，也不能只把一个 AC 差值取负号充当反向严格 ABC。新的 8/4 与旧 14/7 C2→C3 同时改变了类别对和 n/m，不能把数值差全部解释成“类别距离”。容量来源：<a href="design/POOL_CAPACITY.csv.gz">POOL_CAPACITY.csv.gz</a>、<a href="design/SOURCE_AUDIT.csv.gz">SOURCE_AUDIT.csv.gz</a>。</p>
+<p>设计在首次新融合之前冻结，种子为 <strong>20261104013</strong>：8/4 每图、每方向固定 16 套 XYZ，分别抽 2 个不同 D；6/3 每图固定 8 套两块 C1（P/Q）与两块 C3（R/S），各抽 2 个共同 D。每个共同 D 保存四端点 D+P、D+Q、D+R、D+S；每方向都使用两个目标块，各自有真实同类控制。共 576 个四端点束、2,304 个 6/3 ABC 事件。</p>
+<p>选择过程只使用类标签、人员 ID 与容量，不读 Q/T 或已有端点成败，也没有按显著性追加重复。D 从剩余可用人员中均匀抽取，允许背景含多类；各方向背景分布受真实容量限制。主 8/4 中，前向 502/768、反向 110/128 个 D 恰好由 4 个 C2 组成。完整 D/X/Y/Z 与精确团队键均可逐条追踪。<a href="design/DESIGN.json">设计</a>；<a href="design/EVENTS.csv.gz">事件</a>；<a href="design/REQUESTS.csv.gz">团队请求</a>；<a href="design/PAIRED_BUNDLES.csv.gz">共同四端点束</a>。</p>
+<p>融合沿用正式 MV50 阈值 <code>ceil(n/2)</code>，在本轮偶数人数下等于 4/3 票。因此，一整块 m 人共同支持的节点可以单独达到入选阈值。这是半数替换可能改变结构和连接状态的具体机制条件；本轮没有把它改成严格大于半数的投票规则。<a href="audit/FINAL_VALIDATION.json">节点阈值验收</a>。</p>
+<h2>2. 主结果、方向与支持</h2>
+<p>W=|QB−QA|；跨类变化=(|QC−QA|+|QC−QB|)/2；GA=|QC−QA|−W；GS=跨类变化−W。另报告带符号质量位移 QC−(QA+QB)/2，正值表示换入类质量较高。GS&gt;0 本身只表示跨类引起更大变化，不直接等于质量改善。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>方向</th>
+<th>支持</th>
+<th>W</th>
+<th>跨类变化</th>
+<th>GS</th>
+<th>GS区间</th>
+<th>质量位移</th>
+<th>质量位移区间</th>
+<th>质量位移为正图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8人换4人</td>
+<td>C1→C3</td>
+<td>24图/10楼</td>
+<td>+4.872</td>
+<td>+11.758</td>
+<td>+6.886</td>
+<td>[+1.224, +9.292]</td>
+<td>+10.165</td>
+<td>[+2.963, +13.127]</td>
+<td>22/24</td>
+</tr>
+<tr>
+<td>8人换4人</td>
+<td>C3→C1</td>
+<td>4图/3楼</td>
+<td>+6.322</td>
+<td>+5.976</td>
+<td>-0.346</td>
+<td>[-1.430, +1.263]</td>
+<td>-5.026</td>
+<td>[-10.703, -2.742]</td>
+<td>0/4</td>
+</tr>
+<tr>
+<td>6人换3人，共同四端点</td>
+<td>C1→C3</td>
+<td>36图/10楼</td>
+<td>+6.511</td>
+<td>+9.780</td>
+<td>+3.269</td>
+<td>[+1.210, +4.125]</td>
+<td>+7.865</td>
+<td>[+4.584, +9.197]</td>
+<td>32/36</td>
+</tr>
+<tr>
+<td>6人换3人，共同四端点</td>
+<td>C3→C1</td>
+<td>36图/10楼</td>
+<td>+5.825</td>
+<td>+9.780</td>
+<td>+3.955</td>
+<td>[+1.530, +4.913]</td>
+<td>-7.865</td>
+<td>[-9.197, -4.584]</td>
+<td>4/36</td>
+</tr>
+</tbody></table>
+<p>区间为 10,000 次按建筑整簇重采样的 95% 百分位区间；主均值先平均共同目标块，再平均 D、XYZ 块和图片。重复团队、重复背景没有被当作独立图样本。6/3 方向共用同一套建筑抽样，其带符号位移互为相反数是共同端点设计的代数关系，不是两次独立复现；W 和 GS 各自使用相应源类的同类控制。</p>
+<p>8/4 前向 768 个登记事件中 728 个三端同时有 Q，反向为 113/128；均保留全部 24/4 张图。6/3 的 576 个共同四端点束中，547 个四端都可评；每方向 1,094 个有效 ABC 事件覆盖全部 36 图。若仅要求各方向自己的三端可评，分别有 1,095、1,118 事件，GS 为 +3.292、+3.985，接近共同四端点的 +3.269、+3.955。没有用额外可评端点静默扩大某一方向的主分母。<a href="analysis/SUPPORT.csv">SUPPORT.csv</a>、<a href="analysis/PAIRED_FOUR_SUMMARY.csv">PAIRED_FOUR_SUMMARY.csv</a>。</p>
+<h2>3. 难度与场景中的规律</h2>
+<p>在两个设计中，C3 换入的平均质量优势均随当前官方难度上升而扩大。简单图也有正平均效应；困难图并非唯一贡献来源。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>难度</th>
+<th>支持</th>
+<th>GS</th>
+<th>质量位移</th>
+<th>质量位移为正图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8/4</td>
+<td>简单</td>
+<td>16图/9楼</td>
+<td>+2.658</td>
+<td>+5.299</td>
+<td>14/16</td>
+</tr>
+<tr>
+<td>8/4</td>
+<td>中等</td>
+<td>5图/3楼</td>
+<td>+10.031</td>
+<td>+14.588</td>
+<td>5/5</td>
+</tr>
+<tr>
+<td>8/4</td>
+<td>困难</td>
+<td>3图/3楼</td>
+<td>+24.198</td>
+<td>+28.740</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>6/3共同支持</td>
+<td>简单</td>
+<td>27图/8楼</td>
+<td>+1.363</td>
+<td>+5.089</td>
+<td>24/27</td>
+</tr>
+<tr>
+<td>6/3共同支持</td>
+<td>中等</td>
+<td>6图/4楼</td>
+<td>+4.424</td>
+<td>+12.670</td>
+<td>5/6</td>
+</tr>
+<tr>
+<td>6/3共同支持</td>
+<td>困难</td>
+<td>3图/2楼</td>
+<td>+18.117</td>
+<td>+23.234</td>
+<td>3/3</td>
+</tr>
+</tbody></table>
+<p>这是本轮可行图上的条件差异。困难层分别只有 3 图，6/3 的困难层来自 2 楼；不能把它写成已经识别了“难度对效应的因果作用”。两种人数规模出现相同的梯度，且简单层本身也支持正向规律，值得在现有研究中作为主要发现解释。<a href="analysis/SUMMARY.csv">难度分层</a>；<a href="analysis/IMAGE_SUPPORT.csv">逐图支持</a>。</p>
+<p>以 6/3 的共同四端点域比较房间用途，得到：</p>
+<table>
+<thead>
+<tr>
+<th>房间用途</th>
+<th>支持</th>
+<th>质量位移</th>
+<th>质量位移为正图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>卧室</td>
+<td>13图/6楼</td>
+<td>+4.087</td>
+<td>10/13</td>
+</tr>
+<tr>
+<td>卫浴</td>
+<td>4图/3楼</td>
+<td>+13.132</td>
+<td>4/4</td>
+</tr>
+<tr>
+<td>厨房与用餐</td>
+<td>2图/2楼</td>
+<td>+7.873</td>
+<td>2/2</td>
+</tr>
+<tr>
+<td>工作与学习</td>
+<td>4图/1楼</td>
+<td>+9.160</td>
+<td>4/4</td>
+</tr>
+<tr>
+<td>起居与休闲</td>
+<td>7图/1楼</td>
+<td>+12.153</td>
+<td>7/7</td>
+</tr>
+<tr>
+<td>通行与连接</td>
+<td>3图/3楼</td>
+<td>+8.283</td>
+<td>2/3</td>
+</tr>
+<tr>
+<td>未登记</td>
+<td>3图/2楼</td>
+<td>+5.051</td>
+<td>3/3</td>
+</tr>
+</tbody></table>
+<p>房间用途来自正式 <code>IMAGE_TYPE_INDEX.csv</code> 的 <code>room_type</code>，不是输入里的 <code>scene=clear/unflagged</code>。卧室的支持最广，平均 +4.087 分、10/13 图为正；卫浴平均 +13.132 分、4/4 图为正。起居与休闲的 7 图全部为正，但来自同一楼，应表述为该楼这一组场景的规律。通行与连接只有 3 图，均值受一张困难图影响较大，2/3 图为正。用途与几何难度并非独立抽样因素，不能仅凭这张表断定房间用途本身导致差异。<a href="analysis/SUMMARY.csv">分层表</a>；源表：<code>research/statistics/room_type_similarity_scoping_20261027/IMAGE_TYPE_INDEX.csv</code>。</p>
+<h2>4. 改善落在哪些质量分项</h2>
+<p>下表使用与主质量位移相同的对称基线：C−(A+B)/2。所有分项都限制在正式 Q 的同一共同支持上。</p>
+<table>
+<thead>
+<tr>
+<th>分项</th>
+<th>8/4 C1→C3</th>
+<th>6/3共同支持 C1→C3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>3D IoU×100（升高为好）</td>
+<td>+5.625</td>
+<td>+4.572</td>
+</tr>
+<tr>
+<td>2D IoU（升高为好）</td>
+<td>+0.045</td>
+<td>+0.037</td>
+</tr>
+<tr>
+<td>底边角位置误差°（降低为好）</td>
+<td>-0.547</td>
+<td>-0.466</td>
+</tr>
+<tr>
+<td>方向误差°（降低为好）</td>
+<td>-1.641</td>
+<td>-1.249</td>
+</tr>
+<tr>
+<td>Hmean（降低为好）</td>
+<td>-0.014</td>
+<td>-0.011</td>
+</tr>
+<tr>
+<td>Hcenter（降低为好）</td>
+<td>-0.003</td>
+<td>-0.004</td>
+</tr>
+<tr>
+<td>输出节点数</td>
+<td>+0.181</td>
+<td>+0.212</td>
+</tr>
+<tr>
+<td>参考节点几何召回率，9°</td>
+<td>+0.045</td>
+<td>+0.040</td>
+</tr>
+</tbody></table>
+<p>前向改善同时出现在平面重合、底边角位置、方向和高度误差；平均节点数只增加约 0.18/0.21 个。因而这组现象不宜概括成“C3 多加几个节点就得高分”：很多图片的节点数量不变，而位置和轮廓仍有改善。分项相互有关，以上是输出差异的定位，不是各机制的独立因果贡献分解。<a href="analysis/BALANCED_COMPONENT_SUMMARY.csv">分项汇总</a>；<a href="analysis/BALANCED_COMPONENT_IMAGE.csv">分项逐图</a>。</p>
+<h2>5. 反例究竟说明什么</h2>
+<p>8/4 C3→C1 的反向 GS 小幅为负，来源可以定位：</p>
+<table>
+<thead>
+<tr>
+<th>图片</th>
+<th>W：同类变化</th>
+<th>跨类变化</th>
+<th>GS</th>
+<th>质量位移</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B6ByNegPMKs-47</td>
+<td>11.485</td>
+<td>12.747</td>
+<td>+1.263</td>
+<td>−10.703</td>
+</tr>
+<tr>
+<td>jtcxE69GiFV-13</td>
+<td>10.469</td>
+<td>6.753</td>
+<td>−3.717</td>
+<td>−5.052</td>
+</tr>
+<tr>
+<td>jtcxE69GiFV-23</td>
+<td>0.785</td>
+<td>1.642</td>
+<td>+0.857</td>
+<td>−1.608</td>
+</tr>
+<tr>
+<td>uNb9QFRL6hY-82</td>
+<td>2.549</td>
+<td>2.761</td>
+<td>+0.212</td>
+<td>−2.742</td>
+</tr>
+</tbody></table>
+<p><code>jtcxE69GiFV-13</code> 的 C3 同类换人本来就引起很大变化，因此跨类变化没有超过同类基线；但换入 C1 后质量仍降低。不能把这个 GS 反例写成“C3 的质量优势反转”，也不能因前向更强就假设两个不同图片域的方向效应对称。<a href="analysis/IMAGE_METRICS.csv.gz">逐图结果</a>。</p>
+<p>8/4 前向只有 <code>uNb9QFRL6hY-65</code>（−4.964）和 <code>B6ByNegPMKs-11</code>（−2.518）两图质量位移为负。共同 6/3 有 4 个质量反例：<code>S9hNv5qa7GM-15</code>（−0.636）、<code>uNb9QFRL6hY-65</code>（−1.674）、<code>uNb9QFRL6hY-68</code>（−2.398）、<code>yqstnuAEVhm-27</code>（−2.507）。这些反例限定了“通常更好”的范围，未改变图均值、中位数及建筑敏感性中的主要方向。</p>
+<p>C3 的类内 W 在共同 6/3 下均值 5.825，C1 为 6.511，但 36 图中有 21 图的 C3 类内 W 更大。因此当前证据支持“这组 C3 背景组合的平均 Q 较高”，不支持“C3 在每张图上都更稳定”。类别比例之外，具体成员仍然重要。<a href="analysis/PAIRED_FOUR_IMAGE.csv">共同四端点逐图</a>、<a href="analysis/PAIRED_FOUR_SUMMARY.csv">共同四端点汇总</a>。</p>
+<p>另对固定 XYZ、只换两套共同 D 的结果进行了接续：在 6/3 四端共同支持上，质量位移随 D 变化的绝对差平均为 4.505 分。在两套 D 都可评的 266 块中，有 33 块质量位移翻号（直接按块计 12.4%，按图片等权汇总为 13.0%）。进一步限制 D 的类别计数向量完全相同，前向仍有 <strong>188 块、36 图</strong>；质量位移绝对差平均 <strong>4.248 分</strong>，其中 20 块翻号（直接按块计 10.6%，图片等权翻号率为 <strong>13.1%</strong>）。这表明背景中的具体成员会改变同一替换操作的效果，不能仅用比例解释全部波动。<a href="analysis/FIXED_BLOCK_BACKGROUND_CLASS_CONTROL_SUMMARY.csv">背景类别计数控制</a>、<a href="analysis/FIXED_BLOCK_BACKGROUND_CLASS_CONTROL.csv.gz">逐块明细</a>。</p>
+<h2>6. 连接、可评支持与可见核分开记录</h2>
+<p>4,992 个新端点中，94 个没有自动连接；全部原因为 <code>no_source_ring_covering_all_selected_nodes</code>。冻结节点坐标及票数仍保存在失败端点的自动状态中。它们没有被当作 Q=0，也没有被人工猜序。与旧 focused 30,166 个正式端点、另 163,859 条相关旧请求及 57 个已批准人工端点逐一求精确团队交集后，均为 0；因此本补充全部是同等自动处理，人工辅助身份没有命中，不混入主估计。<a href="audit/CACHE_AUDIT.json">缓存核查</a>、<a href="audit/ADDITIONAL_CACHE_REQUEST_AUDIT.json">补充请求核查</a>、<a href="analysis/FAILED_ENDPOINTS.csv.gz">失败端点</a>。</p>
+<p>在共同 6/3 中，1,152 个 C1 替换块背景团队有 32 个无 Q（2.778%），1,152 个 C3 背景团队有 1 个无 Q（0.087%）。这是连接/可评机会的区别；前述 +7.865 分质量优势来自共同可评支持，不含把失败记零的隐含奖励。<a href="analysis/PAIRED_ENDPOINT_SUPPORT_SUMMARY.csv">端点支持表</a>。</p>
+<p>独立几何验收显示：4,898 个正式可评几何全部共享上下 x、底面无自交、面积非零、相机位于多边形内部；337 个相机不在多边形可见核。<strong>这不是一个新增的正式无效判据：48 个冻结参考里有 7 个参考本身也不满足该核条件。</strong> 当前研究保留完整参考形状，不能用额外核规则剔除其困难局部，再把结果称为原任务。</p>
+<p>作为明确标注的附加诊断，若要求所比较端点都在可见核内，8/4 前向剩 668 事件、22 图，GS=+4.585、质量位移=+7.716；6/3 共同域剩 501 个四端点束、33 图，双向 GS=+1.798/+2.951，C3−C1 Q=+6.132，29/33 图为正。效应幅度缩小，主要方向保持；主结论继续使用原正式可评分母。<a href="audit/GEOMETRY_AUDIT.csv.gz">完整几何审计</a>、<a href="audit/REFERENCES_KERNEL.csv">参考核检查</a>、<a href="analysis/KERNEL_DIAGNOSTIC_SUMMARY.csv">额外核内敏感性</a>。</p>
+<h2>7. 时间与“更快达成共识”</h2>
+<p>本轮保留原始冻结记录的合法时间及来源。48 池共 1,642 条原答：旧 v1 的 684 条中 335 条有源时间；用户已处理记录 958 条均有源时间。4,992 个端点中 1,460 个队的源时间全知且正，400 个队同时满足全员同一时间来源。旧缺失没有被填零，也没有重新解释新用户处理时间为原日志重放时间。<a href="inputs/CURRENT_TIME_INDEX.csv.gz">时间输入</a>、<a href="endpoints/ENDPOINT_SCALARS.csv.gz">端点标量</a>。</p>
+<p>对三臂要求全部同源且各人记录全知：8/4 两方向均没有共同时间事件；6/3 前向仅 8 事件/1 图，反向仅 12 事件/3 图。共同四端点同时满足该条件的只有 4 个束。固定 D 下同源替换块的劳动差另存，不与混源全队总秒数混写。因此，本补充不能给出普遍节时结论；它已经给出清楚的质量与连接证据。固定 n 的替换效应也不能直接等同于进入顺序或共识曲线更早到达 GT。<a href="analysis/TIME_SUPPORT.csv">TIME_SUPPORT.csv</a>、<a href="analysis/TIME_SUMMARY.csv">TIME_SUMMARY.csv</a>。</p>
+<h2>8. 图、验证与复现</h2>
+<ul>
+<li><a href="figures/C13_STRICT_50PCT_GS.png">严格 50% GS 总览</a>：全部逐图点、建筑整簇区间与真实分母，保留反例。</li>
+<li><a href="figures/C13_CHANGE_VS_QUALITY.png">变化幅度与质量方向</a>：GS 与带符号质量位移分别展示。</li>
+<li><a href="figures/C13_TRACEABLE_ABC_CASES.png">可追溯的 ABC 完整底面</a>：强改善、质量反例、反向 GS 反例各一张。图内事件按接近图片平均效应选择，不挑该图最优事件；<a href="analysis/ILLUSTRATIVE_EVENT_TRACE.csv.gz">精确事件</a>、<a href="analysis/ILLUSTRATIVE_CASES.json.gz">全部几何和参考</a>可复查。</li>
+</ul>
+<p>正式 native 融合和评分代码未改。运行前以旧正式缓存中 3 个不同难度的成功端点及 1 个无连接端点做数值一致性检查，最大差 1.42×10⁻¹⁴；随后 4,992 个端点均实际计算并保存完整终态/失败状态。最终检查了节点票数阈值、成员对象 ID、参考、坐标、全部设计及源文件 hash、逐事件 W/GA/GS、逐图计权与 Q 公式。B8L2/D10 独立公式最大残差均为 2.84×10⁻¹⁴。<a href="audit/NATIVE_PARITY.json">native 一致性</a>、<a href="audit/FINAL_VALIDATION.json">最终验收</a>、<a href="audit/RUNTIME_VERSIONS.json">运行版本</a>、<a href="audit/ENGINE_IMPORT_RECEIPT.json">官方源依赖恢复回执</a>。</p>
+<p>在仓库根目录运行：</p>
+<pre><code class="language-bash">python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/run_native.py --jobs 4
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/analyze.py
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/validate_delivery.py
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/diagnostics.py
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/plots.py
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/case_panels.py
+python research/workers/mixture_patterns_and_c13_half_20261104/c13_half/code/write_report.py
+</code></pre>
+<p><code>run_native.py</code> 精确读取已冻结的请求，并按池断点恢复，已完成端点会复用。本地输出不可替代或覆盖旧自动/人工辅助实验。<code>design.py</code> 拒绝覆盖已冻结设计，避免看过结果后改抽样。全部输入、统计和审计均随本补充保存；底层融合依赖指向上述固定提交下的仓库文件。统计图同时提供 PNG、SVG 和 PDF。</p>
+<h2>可接入 v2.1 的结论条目</h2>
+<p>见 <a href="CONCLUSION_LEDGER.csv">CONCLUSION_LEDGER.csv</a>。本补充没有修改分类、Q/T 选队规则、进入策略、大池曲线或旧 14/7 实验；它增加的是 C1↔C3 当前可行的严格 50% 替换证据、共同支持解释和原结论适用条件。</p>
+</main></body></html>

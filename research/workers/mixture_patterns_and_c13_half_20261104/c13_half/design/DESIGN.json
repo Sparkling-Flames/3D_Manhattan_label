@@ -1,0 +1,81 @@
+{
+  "frozen_utc": "2026-11-04T10:06:49.889129+00:00",
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "method": "TARGET_DSTRUCT_K3",
+  "seed": 20261104013,
+  "source_files": {
+    "research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37",
+    "research/workers/current_class_interpretation_20261104/basis/WORKER_LABELS_ALL_LOBO.csv.gz": "c6e01f1dd5c9013b62d9661b7c3fdef4ba19ac543fd04d2bbbddf732d3fa7be1",
+    "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/RAW_TARGET_RESPONSE_RECORDS.csv.gz": "4731cdaa51e449af83c0bfe0b81f6d926a5eaf78ac2d4a647cf2ac8860443f52"
+  },
+  "main": {
+    "n": 8,
+    "m": 4,
+    "all_feasible_ordinary_manual_primary_pools": true,
+    "XYZ_blocks_per_pool_direction": 16,
+    "backgrounds_per_block": 2,
+    "sampling": "Uniform independent source 2m and target m draws; unordered X/Y deduplicated; D drawn uniformly without replacement from remaining workers; two distinct D per block"
+  },
+  "common": {
+    "n": 6,
+    "m": 3,
+    "common_domain": "C1>=6,C3>=6,N>=15",
+    "four_block_bundles_per_pool": 8,
+    "backgrounds_per_bundle": 2,
+    "ABC_per_background": 4,
+    "shared_endpoints_per_background": 4,
+    "sampling": "Two disjoint C1 blocks P/Q and two disjoint C3 blocks R/S; D uniform from remaining after all four blocks; two target choices per direction"
+  },
+  "selection_does_not_read": [
+    "Q",
+    "T",
+    "fusion status",
+    "geometry outcomes",
+    "manual-order status"
+  ],
+  "weighting": "Average target slot at shared D (6/3), then D within block, then blocks within image; image-equal main estimate; building-equal and building-cluster bootstrap sensitivity",
+  "main_method": "Unmodified automatic fusion and Q scoring; exact approved-manual identity hits reported separately only",
+  "support": "Missing Q stays missing; strict W/GA/GS use all three Q-valid endpoints; shared-direction paired6/3 comparison additionally requires all four endpoints",
+  "budget_pre_fusion": [
+    {
+      "study": "main_8_4",
+      "direction": "C1_to_C3",
+      "events": 768,
+      "pools": 24,
+      "buildings": 10
+    },
+    {
+      "study": "main_8_4",
+      "direction": "C3_to_C1",
+      "events": 128,
+      "pools": 4,
+      "buildings": 3
+    },
+    {
+      "study": "paired_6_3",
+      "direction": "C1_to_C3",
+      "events": 1152,
+      "pools": 36,
+      "buildings": 10
+    },
+    {
+      "study": "paired_6_3",
+      "direction": "C3_to_C1",
+      "events": 1152,
+      "pools": 36,
+      "buildings": 10
+    }
+  ],
+  "unique_requested_endpoints": 4992,
+  "selected_pools": 48,
+  "design_files": {
+    "design/EVENTS.csv.gz": "cdf61e66e58866d8da00649e138e2b62e853b347019c2697a5239e2c1484e2bd",
+    "design/PAIRED_BUNDLES.csv.gz": "79f0bc0d50fb433a44f57b9a4fe4c0bddbad88a893c988f4c8aa9c6bdf5dbf4e",
+    "design/POOL_CAPACITY.csv.gz": "07a33e41734063b41eae478095d4e9a85de6dc87c368406be1f5b17ea227017b",
+    "design/REQUESTS.csv.gz": "bbe8d0ba5be6f063532073dd4f49d5cc3ba23bfd5dda22c5de4be6d72888cd84",
+    "design/SOURCE_AUDIT.csv.gz": "f93fe89e7ab4367841fed2379f5962164393a890295103adcd2108b1750f69cf"
+  },
+  "no_outcome_adaptive_replication": true,
+  "classification_refit": false,
+  "coordinate_edits": false
+}

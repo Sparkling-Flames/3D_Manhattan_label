@@ -1,0 +1,87 @@
+{
+  "all_passed": true,
+  "reference_cache": "research/workers/personnel_v21_reselection_20261029/experiment/focused_endpoints/ENDPOINT_SCALARS.csv.gz",
+  "cache_sha256": "132e6ff0fadb2cb7ac0689c5cae79c2b86efd5b51b5a858de0dd467c2281f66c",
+  "cases": [
+    {
+      "team_key": "7y3sRwLe3Va-04__manual__d7b320ab08__0000a7d797d87c5aecc1",
+      "score_status": "complete_conditional",
+      "numeric_fields": 15,
+      "maximum_absolute_difference": 1.4210854715202004e-14,
+      "differences": {
+        "B8L2": 0.0,
+        "D10": 1.4210854715202004e-14,
+        "IoU3D100": 1.4210854715202004e-14,
+        "iou_2d": 1.1102230246251565e-16,
+        "S_bottom_deg": 0.0,
+        "dir": 1.1102230246251565e-16,
+        "Hmean": 2.1033522146218786e-16,
+        "Hcenter": 7.37257477290143e-17,
+        "omission": 9.71445146547012e-17,
+        "extension": 5.551115123125783e-17,
+        "nodes": 0.0,
+        "minimum_support": 0.0,
+        "boundary_loss": 0.0,
+        "direction_loss": 8.847089727481716e-17,
+        "height_loss": 9.042246118529107e-17
+      }
+    },
+    {
+      "team_key": "7y3sRwLe3Va-11__manual__feec3565b2__01b826e48aa2fc13f285",
+      "score_status": "complete_conditional",
+      "numeric_fields": 15,
+      "maximum_absolute_difference": 7.979727989493313e-17,
+      "differences": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0,
+        "iou_2d": 0.0,
+        "S_bottom_deg": 5.551115123125783e-17,
+        "dir": 0.0,
+        "Hmean": 7.979727989493313e-17,
+        "Hcenter": 2.862293735361732e-17,
+        "omission": 6.776263578034403e-21,
+        "extension": 2.7755575615628914e-17,
+        "nodes": 0.0,
+        "minimum_support": 0.0,
+        "boundary_loss": 4.2500725161431774e-17,
+        "direction_loss": 5.377642775528102e-17,
+        "height_loss": 1.973247953923618e-17
+      }
+    },
+    {
+      "team_key": "B6ByNegPMKs-47__manual__9eae4a3584__00da265e98a17b3de1dc",
+      "score_status": "complete_conditional",
+      "numeric_fields": 15,
+      "maximum_absolute_difference": 9.71445146547012e-17,
+      "differences": {
+        "B8L2": 0.0,
+        "D10": 0.0,
+        "IoU3D100": 0.0,
+        "iou_2d": 0.0,
+        "S_bottom_deg": 0.0,
+        "dir": 0.0,
+        "Hmean": 6.591949208711867e-17,
+        "Hcenter": 9.71445146547012e-17,
+        "omission": 2.7755575615628914e-17,
+        "extension": 1.3877787807814457e-17,
+        "nodes": 0.0,
+        "minimum_support": 0.0,
+        "boundary_loss": 0.0,
+        "direction_loss": 0.0,
+        "height_loss": 7.806255641895632e-17
+      }
+    },
+    {
+      "team_key": "B6ByNegPMKs-47__manual__9eae4a3584__3e0c561d8f525a74d55a",
+      "score_status": "no_connection",
+      "numeric_fields": 2,
+      "maximum_absolute_difference": 0.0,
+      "differences": {
+        "nodes": 0.0,
+        "minimum_support": 0.0
+      }
+    }
+  ],
+  "purpose": "Runtime parity on archived exact teams; validation-only endpoints, excluded from scientific design and estimates"
+}

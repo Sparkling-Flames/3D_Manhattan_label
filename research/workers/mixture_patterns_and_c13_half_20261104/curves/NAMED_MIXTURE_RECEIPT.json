@@ -1,0 +1,69 @@
+{
+  "contrasts": {
+    "TARGET_DSTRUCT_K3": [
+      [
+        "C1+C3",
+        "C1+C2"
+      ],
+      [
+        "C2+C3",
+        "C1+C2"
+      ],
+      [
+        "C1+C2+C3",
+        "C1+C2"
+      ]
+    ],
+    "RFUSE_GEOM_K2": [
+      [
+        "C1+C2",
+        "C1"
+      ],
+      [
+        "C1+C2",
+        "C2"
+      ]
+    ],
+    "OPPJOINT_K3": [
+      [
+        "C1+C3",
+        "C1+C2"
+      ],
+      [
+        "C2+C3",
+        "C1+C2"
+      ],
+      [
+        "C1+C2+C3",
+        "C1+C2"
+      ]
+    ],
+    "OPPJOINT_K4": [
+      [
+        "C1+C2+C4",
+        "C1+C2+C3"
+      ],
+      [
+        "C1+C4",
+        "C1+C2"
+      ],
+      [
+        "C1+C4",
+        "C1+C3"
+      ],
+      [
+        "C1+C2+C3+C4",
+        "C1+C2+C3"
+      ]
+    ]
+  },
+  "anchor": 6,
+  "window": "6 through20",
+  "descriptive_class_set_comparison": true,
+  "fixed_proportions": false,
+  "fixed_members": false,
+  "causal_priority_validation": false,
+  "all_registered_paths_preserved": true,
+  "min_arm_paths_primary": 16,
+  "min_arm_paths_sensitivity": 8
+}

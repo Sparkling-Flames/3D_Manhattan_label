@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "numeric_tolerance": 1e-09,
+  "source_inputs_hash_verified": 17,
+  "assisted_inputs_byte_and_table_equivalent_to_fixed_git": true,
+  "paired_Q_closure": true,
+  "background_four_endpoint_common_Q_closure": true,
+  "background_nested_D": true,
+  "original_all_classified_vs_best_pure_benchmark_reproduced": true,
+  "Q_T_same_team_support": true,
+  "no_missing_Q_imputed": true,
+  "new_fits": 0,
+  "new_teams": 0,
+  "new_fusion": 0,
+  "new_scores": 0,
+  "findings": 46,
+  "verified_local_links": 65,
+  "artifact_checks": [
+    {
+      "path": "DSTRUCT_ALLIANCE_IMAGE_CONTRASTS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "DSTRUCT_CURRENT_ALLIANCE_ENDPOINTS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIG01_COALITION_BASELINES_AND_STRUCTURE.png",
+      "check": "png_integrity_passed"
+    },
+    {
+      "path": "FIG01_COALITION_BASELINES_AND_STRUCTURE.svg",
+      "check": "svg_xml_passed"
+    },
+    {
+      "path": "FIG02_FIXED_N_COMPOSITION_AND_MONOTONICITY.png",
+      "check": "png_integrity_passed"
+    },
+    {
+      "path": "FIG02_FIXED_N_COMPOSITION_AND_MONOTONICITY.svg",
+      "check": "svg_xml_passed"
+    },
+    {
+      "path": "FIG03_BACKGROUND_SIGNED_AND_ABSOLUTE.png",
+      "check": "png_integrity_passed"
+    },
+    {
+      "path": "FIG03_BACKGROUND_SIGNED_AND_ABSOLUTE.svg",
+      "check": "svg_xml_passed"
+    },
+    {
+      "path": "FIG04_GEOMETRY_ILLUSTRATIONS.png",
+      "check": "png_integrity_passed"
+    },
+    {
+      "path": "FIG04_GEOMETRY_ILLUSTRATIONS.svg",
+      "check": "svg_xml_passed"
+    },
+    {
+      "path": "FIXED_BLOCK_BACKGROUND_COMMON_Q_SUPPORT.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_BLOCK_BACKGROUND_EXISTING_ROWS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_BLOCK_BACKGROUND_IMAGE_EFFECTS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_ADJACENT_CONFIGURATION_PAIRS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_FOCUSED_IMAGE_EFFECTS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_IMAGE_MEAN_STEPS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_MONOTONICITY_CHAINS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_PANEL_MEAN_STEPS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "FIXED_N_THREE_OR_MORE_LEVEL_CHAINS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "Q_T_IDENTICAL_COMPLETE_CONFIGURATION_PAIRS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "RFUSE_JOINT_CLASS_ADDITION_IMAGE_EFFECTS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "RFUSE_JOINT_CLASS_ADDITION_PAIRS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "SAME_CONFIGURATION_MEMBER_DISTRIBUTIONS.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "inputs/AC_ASSISTED_BACKGROUND_STEPS_AFFECTED.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "inputs/AC_ASSISTED_COMPLETE_COALITIONS_AFFECTED.csv.gz",
+      "check": "gzip_crc_passed"
+    },
+    {
+      "path": "inputs/DSTRUCT_ALLIANCE_RESULTS_ASSISTED.csv.gz",
+      "check": "gzip_crc_passed"
+    }
+  ],
+  "abandoned_partial_outputs_excluded": [
+    "FIXED_N_IMAGE_MEAN_STEPS.csv.gz.writing",
+    "RFUSE_JOINT_CLASS_ADDITION_STRATA.csv.writing"
+  ],
+  "visualization_review": "four PNG figures visually reviewed; complete geometry nodes retained"
+}

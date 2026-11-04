@@ -1,0 +1,24 @@
+﻿id,question,adoption,conclusion,scope,sources
+M01,C3加入较弱类别是否改善,保持并加强,C1→C1+C3 +13.714 Q（166图，146正）；C2→C2+C3 +2.768（204图，166正）。,普通Manual主目标；两端共同Q；完整联盟改变人数,mixtures/DSTRUCT_ALLIANCE_STRATA.csv
+M02,混合是否必然超过各组成纯类,条件明确,C3→C2+C3 −4.749 Q（184图，139负）；同一混合可以改善C2同时低于C3。,比较基线不能混淆,mixtures/DSTRUCT_ALLIANCE_STRATA.csv
+M03,困难与边界自遮挡是否放大差异,条件明确,边界自遮挡层C3→C2+C3 −18.467 Q，27/36图下降，转折/短段/遗漏同步改变。,15楼；难度与结构条件交叉，不声称独立因果,mixtures/DSTRUCT_Q_COMMON_COMPONENT_STRATA.csv;mixtures/DSTRUCT_DIFFICULTY_STRUCTURE_CROSS.csv
+M04,固定人数后是否仍有配比规律,新增可采用规律,C2少1/C3多1：n12 +1.969 Q（37图），n20 +1.192（35图）。,同图同候选池固定背景；相邻配置全部队伍均有Q,mixtures/FIXED_N_FOCUSED_STRATA.csv
+M05,配比曲线是否大多递增,新增可采用规律,至少三层完整Q配比链，n12平均83.3%、n20平均79.8%逐步不下降；保留局部非单调。,链→面板→图片等权，不将链数当独立图片,mixtures/FIXED_N_THREE_OR_MORE_LEVEL_CHAIN_STRATA.csv
+M06,构成规律与成员异质性是否矛盾,保持并加强,配比均值具有方向，同时同配比成员仍占主要波动；分类不能替代具体人。,完整有限面板；方差份额不是因果贡献率,mixtures/SAME_CONFIGURATION_MEMBER_DISTRIBUTIONS.csv.gz
+M07,背景是否吸收替换块影响,新增可采用规律,K4 m7 n20→28有符号阶差+0.014，绝对幅度−1.317，63/76图下降。,固定块、前后四端共同Q；真实JOINT K4身份,mixtures/REPORT_ZH.md
+M08,全部已分类队是否等同真正全员,需明确命名,含未知标签的真正全员与已分类联盟分别记录；最佳纯类是事后参照。,不能用事后最佳纯类声称已验证选队政策,mixtures/DSTRUCT_CLASSIFIED_VS_ACTUAL_ALL_MEMBERS.csv
+C01,具体混合能否更早接近参考,新增可采用规律,前6人C2+C3对C1+C2，完整6–20路径+1.780 Q，190图165正；困难层+2.696。,当前DSTRUCT楼外标签；每臂≥16路径；未固定比例和具体成员,curves/NAMED_MIXTURE_SUMMARY.csv;curves/NAMED_MIXTURE_DIFFICULTY_SUMMARY.csv
+C02,多数图片是否支持早期类别价值,保持并加强,DSTRUCT/RFUSE/JOINT K3/K4完整路径Q差+1.438/+1.202/+1.499/+1.498；楼等权均正。,194/185/193/193图，各22楼；同一数据的互补画像,curves/LANDMARK_ALL_SUMMARY.csv
+C03,先达标是否等于稳定共识,需改写,困难图早含C3，窗内曾Q≥80为50.06%对38.62%，20人当下达标仅26.75%对25.58%。,首次观察窗6–20；持续仅在窗口内；几何稳定需另一个指标,curves/REPORT_ZH.md;curves/LANDMARK_CURVE_DIFFICULTY_SUMMARY.csv
+C04,是否有合法记录劳动收益,条件明确,47图半数全员劳动预算内达Q80：DSTRUCT+4.71pp、K4+4.20pp；条件均值和中位分别报告。,new同源全池合法；非墙钟；首次劳动46图，两臂均能达到,curves/LANDMARK_RECORDED_LABOR_SUMMARY.csv
+C05,进入顺序是否提高同一全员终点,需改写,195池全员成员相同、Q跨路径完全相同；早期构成改善的是过程。,不能把全员Q接近度当成逐边几何稳定,curves/NATURAL_INPUT_VALIDATION.csv
+C06,K4小池实际消费者是否完成辅助接续,幅度变化，方向保持,两个精确端点已接入；高Q早期差+1.500→+1.534，快类−1.900→−1.926。,15有前缀池/14图/8楼；原1046可评端点数值不变,curves/K4_SMALL_POOL_ASSISTED_ENDPOINT_MATCHES.csv;curves/K4_MANUAL_ASSISTED_CONSUMER_CHANGES.csv
+C07,K4快类是否存在更好且更省的条件,条件明确,合法同源9图/5楼，快类优先+2.872 Q、−43.37秒；6图政策等价，收益来自另3图。,不能与全部14图Q−1.926混成同一支持,curves/K4_EARLY_CURVE_SUMMARY.csv
+A01,C1↔C3 50%严格ABC是否补齐,已完成新增计算,3200事件、4992唯一团队；4898有Q、94无连接；6/3共享36图，8/4各24/4图。,当前DSTRUCT K3；未重复使用人员凑10/5或14/7,c13_half/design/DESIGN.json;c13_half/endpoints/RUN_RECEIPT.json
+A02,同图双向跨类是否比同类变化更大,新增可采用规律,6/3四端共同支持，GS C1→C3 +3.269（32/36正），反向+3.955（24/36正）。,每方向1094共同Q事件；36图10楼；GS不是收益,c13_half/analysis/PAIRED_FOUR_SUMMARY.csv;c13_half/analysis/SUPPORT.csv
+A03,C1/C3半队替换实际质量方向,新增可采用规律,同图同背景C3团队比C1平均+7.865 Q，32/36图提高，建筑等权+6.146。,6/3四端共同支持；不能与14/7 C2→C3直接比较类别距离,c13_half/analysis/PAIRED_FOUR_SUMMARY.csv
+A04,8/4反向GS小支持是否推翻分类,条件明确,4图GS均值−0.346但3图正；4图换入C1后Q均降。负GS反映一图同类波动较大。,该方向4图3楼，与8/4正向无共同图片,c13_half/analysis/SUMMARY.csv;c13_half/REPORT_ZH.md
+A05,可见核诊断是否改变正式评分规则,保持正式口径，补敏感性,337可评端点核外且7个冻结参考也核外；额外核内6/3支持33图GS仍正，Q+6.132。,无自交、非零面积；未改坐标或将核外新判无效,c13_half/REPORT_ZH.md
+A06,连接机会与Q改善是否分开,新增可采用规律,6/3的1152 C1背景队32无连接，1152 C3背景队1无连接；失败保持无Q。,自动同等处理，不复用不匹配人工环序,c13_half/REPORT_ZH.md
+S01,是否重做分类或大规模Q/T策略,保持,当前类别、预处理、原个人Q/T与参考保持；新增团队仅完成指定C1↔C3缺口。,本轮结果支持解释与已有过程，不等同新的部署策略验证,METHODS_AND_SCOPE.md
+S02,能否宣称新策略普遍节约总劳动,尚不能由本轮独立判断,已有平均过程效率和小池条件收益可以采用；新的进入/停止策略需按独立应用条件验证。,当前无需因此扩大实验；几何稳定与墙钟时间没有被伪测,curves/REPORT_ZH.md

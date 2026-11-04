@@ -1,0 +1,12 @@
+﻿claim_id,status,conclusion,evidence,scope,source_files
+C13_50PCT_CAPACITY,条件变化,C1↔C3严格50%已补齐；当前最大双向可行方案8/4，m≥5无可行图,8/4前24图10楼、反4图3楼；6/3共同36图10楼,当前ordinary_manual主目标、当前LOBO,design/POOL_CAPACITY.csv.gz|design/DESIGN.json
+C13_CROSS_EXCESS,保持,共同6/3中跨类变化大于对应同类变化,GS C1→C3 +3.269；C3→C1 +3.955；图均值/建筑敏感性方向保持,547个四端点束，36图10楼,analysis/SUMMARY.csv|analysis/PAIRED_FOUR_SUMMARY.csv
+C13_QUALITY_DIRECTION,保持,C3换入在多数可行图提高融合Q；反向质量位移为负,8/4 +10.165、22/24图正；6/3 +7.865、32/36图正,当前n/m和支持域，不等于C3普遍高质量类型,analysis/SUMMARY.csv|analysis/IMAGE_METRICS.csv.gz
+C13_REVERSE_GS,条件变化,8/4反向GS约零且受一图大类内波动影响，不作双向对称性结论,GS −0.346；jtcx-13 W10.469、cross6.753；四图质量位移全负,8/4反向4图3楼，和前向零共同图,analysis/IMAGE_METRICS.csv.gz
+C13_DIFFICULTY,条件变化,C3换入优势在中难图更大，两种n/m均出现梯度,8/4质量位移简单5.299、中等14.588、困难28.740；6/3 5.089/12.670/23.234,困难各3图，非难度因果识别,analysis/SUMMARY.csv
+C13_SCENE,条件变化,卧室广支持正向；卫浴与起居组更大，但用途与难度/建筑仍关联,6/3卧室13图6楼 +4.087；卫浴4图3楼 +13.132；起居7图1楼 +12.153,房间用途来源IMAGE_TYPE_INDEX，不混用scene状态,analysis/SUMMARY.csv
+C13_STABILITY,需改写,较高平均Q不等于C3每图类内更稳定,C3 W均值5.825<C1 6.511，但21/36图C3 W更大,共享四端点共同域,analysis/PAIRED_FOUR_IMAGE.csv|analysis/PAIRED_FOUR_SUMMARY.csv
+C13_BACKGROUND_MEMBERS,保持,固定替换块下，更换具体背景成员仍改变效应，不能只解释比例,6/3两D质量位移绝对差均值4.505；同D类别计数向量的控制另附,有限两背景、固定块的描述性比较,analysis/FIXED_BLOCK_BACKGROUND_CLASS_CONTROL_SUMMARY.csv
+C13_CONNECTION_SUPPORT,条件变化,分别报告连接和共同支持Q，失败不计零,共有94无连接；共同6/3 C1背景团队32/1152无Q、C3为1/1152,同等自动处理，57人工精确命中0,analysis/PAIRED_ENDPOINT_SUPPORT_SUMMARY.csv|audit/CACHE_AUDIT.json
+C13_KERNEL_DIAGNOSTIC,幅度变化,额外核内约束缩小幅度，主要方向保持，不改官方评分门槛,8/4前向22图GS4.585/Q7.716；6/3共同33图GS1.798/2.951、Q6.132,7个冻结参考本身非相机星形，不能把核规则升格为资格,analysis/KERNEL_DIAGNOSTIC_SUMMARY.csv|audit/REFERENCES_KERNEL.csv
+C13_LABOR_SPEED,尚不能判断,本端点实验不能证明普遍省时或共识曲线更早到GT,8/4三臂全同源时间支持0；6/3共享四端点全同源仅4束,不把固定n替换效应当进入曲线速度,analysis/TIME_SUPPORT.csv|audit/ADDITIONAL_DIAGNOSTICS.json
