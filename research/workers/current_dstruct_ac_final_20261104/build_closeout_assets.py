@@ -1,0 +1,124 @@
+"""Write source catalog, claim ledger and batch navigation from frozen artifacts."""
+from pathlib import Path
+import csv
+import hashlib
+import json
+
+ROOT=Path(__file__).resolve().parent
+REPO=ROOT.parents[2]
+COMMIT='48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b'
+REPO_URL='https://github.com/Sparkling-Flames/3D_Manhattan_label'
+
+
+def rows(path):
+    with path.open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f))
+
+
+def write_csv(path, data, fields=None):
+    with path.open('w',encoding='utf-8-sig',newline='') as f:
+        w=csv.DictWriter(f,fieldnames=fields or list(data[0]));w.writeheader();w.writerows(data)
+
+
+def main():
+    claims=[
+      ('AC01','条件变化','旧TARGET必须逐成员按目标楼外标签复核','52,544事件→28,420当前合法物理对；34个LOBO人员行变类','存量团队条件分析，不称当前类重新均匀抽样','audit/README_ZH.md;registry/LEGACY_TARGET_EVENTS_AUDIT.csv.gz'),
+      ('AC02','保持','混合D与含未知D不自动排除','16,364合法混合D；152含未知D；允许计数重叠','专门纯背景设计仍须满足其自身约束','registry/LEGAL_CURRENT_AC_EVENTS.csv.gz;audit/OLD_SPECIFIC_DESIGN_REQUIREMENTS.csv'),
+      ('AC03','条件变化','旧事件转为合法新方向应保留映射','43个改向；7到C1→C2、36到C2→C3','旧event_id/来源方向/新方向同时保留并按物理对去重','registry/LEGACY_TARGET_EVENTS_AUDIT.csv.gz'),
+      ('AC04','条件变化','部分旧设计仅剩一般AC成立','5,062一般AC合法但无原特定设计仍成立','不冒称纯背景、目标富集等原设计','audit/LEGACY_REUSE_BY_ORIGINAL_DESIGN.csv.gz;analysis/CORE_LEGACY_DESIGN_LINK_SENSITIVITY.csv'),
+      ('AC05','保持','直接AC容量不同于严格ABC','Ns≥m、Nt≥m、N≥n+m并逐池核对','不要求两个同来源块；不强凑零容量预算','registry/CURRENT_AC_POOL_N_M_DIRECTION_CAPACITY.csv.gz'),
+      ('AC06','条件变化','核心预算真实缺口已补','22格7图4楼，704对1408队，684共同Q对','种子202611041301先冻结；20无连接保留','supplement/DESIGN.json;supplement/audit/FINAL_VALIDATION.json'),
+      ('AC07','保持','六方向完整报告而不重复验证','同一物理A/C反向ΔQ相反，绝对差相同','反向不增加独立图片或验证次数','analysis/SIX_DIRECTION_Q_BY_BUDGET.csv;audit/FORMAL_SUMMARY_INDEPENDENT_REVIEW.json'),
+      ('AC08','幅度变化','核心C2→C3平均升质方向保持','14/7 +6.190404，83图21楼；20/7 +4.484292，84图21楼','当前合法存量＋缺口、普通Manual原目标、自动共同Q','analysis/CORE_READABLE_RESULTS.csv'),
+      ('AC09','条件变化','C1→C2平均正向但图片异质','14/7 +2.776167；20/7 +2.033132；均44图13楼','并非每图升质，困难响应不单调','analysis/CORE_READABLE_RESULTS.csv;analysis/CONDITION_STRATIFIED_Q.csv'),
+      ('AC10','条件变化','C1→C3大块支持稀少，小块已有较广证据','14/7、20/7均7图5楼；6/3、8/4、10/5分别37/26/20图','不能把不同预算拼成受控替换比例曲线','analysis/SMALL_BUDGET_SIX_DIRECTION_RESULTS.csv;audit/KEY_BUDGET_CAPACITY_AND_REUSE.csv'),
+      ('AC11','保持','C2→C3简单图也多为正向','20/7简单57图：+3.932871，56正1负','不是仅由困难特殊图驱动','analysis/CONDITION_STRATIFIED_Q.csv'),
+      ('AC12','条件变化','困难与边界自遮挡放大C2→C3变化','20/7困难10图绝对变化16.075094；自遮挡12图15.290413','两分层重叠；困难3负图均在1分内；不推全部类对','analysis/CONDITION_STRATIFIED_Q.csv'),
+      ('AC13','条件变化','用途存在重复方向与少量反例','20/7 C23卧室22图、通行14图均正；特殊用途2图1楼不稳定','用途×难度小格展示实际支持，不强求规律','analysis/CONDITION_STRATIFIED_Q.csv'),
+      ('AC14','保持','高分集中限制变化幅度','20/7 C23双Q≥90：|ΔQ|2.064223；其它11.012029','分组图片重叠；有界量尺是部分解释','analysis/HIGH_SCORE_BAND_EFFECTS.csv'),
+      ('AC15','需改写','高分集中不能解释所有同类超过跨类','既有jtcxE69GiFV-13 ABC三端未达90，原图GS−3.7166','只引用原统计，代表事件不重新代替逐图GS','mechanisms/cases/APPENDIX_EXISTING_ABC.json.gz'),
+      ('AC16','需改写','节点数不变不等于几何不变','20/7 C23有1632/1829同节点对，其中127对|ΔQ|≥10','节点身份、位置、边界、方向、范围须分别检查','analysis/SAME_NODE_COUNT_SUPPORT.csv;mechanisms/cases/AC09.json.gz'),
+      ('AC17','保持','C2→C3多数图片多个几何分项改善','20/7：3D IoU +2.691478百分点；底边−0.252264°；方向−0.708326°','相同84图共同Q支持；各分项不是总Q的简单加数','analysis/COMPONENT_SUMMARIES.csv.gz'),
+      ('AC18','需改写','Q下降不代表所有几何都变差','20/7 C23七张负图的3D IoU均上升、方向误差均增大','非线性公式：六图方向贡献负，VFua图均方向误差增但方向项正','analysis/C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv'),
+      ('AC19','保持','精确评分算术分解解释分项作用','20/7 C23 +4.484=范围1.397+底边0.647+方向2.351+高度0.088','不是独立因果贡献，不是新物理团队实验','analysis/Q_FORMULA_ATTRIBUTION_SUMMARY.csv;analysis/Q_FORMULA_ATTRIBUTION_CHECKS.json'),
+      ('AC20','保持','实际票数跨固定门槛与较大变化相关','14/7跨票/未检测：23.663/3.716；20/7：24.815/3.059','事前248对样本；未稳定映射部分明确保留','mechanisms/MECHANISM_QUALITY_ASSOCIATIONS.csv;mechanisms/ANCHOR_MAPPING_COVERAGE.csv'),
+      ('AC21','需改写','跨票、增节点并不保证升质或大跳变','AC08 Q−9.678；AC12 Q−2.014','局部召回、方向与范围存在权衡','mechanisms/cases/AC08.json.gz;mechanisms/cases/AC12.json.gz'),
+      ('AC22','需改写','所有局部过票不保证现规则能连接','AC11完整来源环13→0，C无Q','无来源环不代表任意连接在几何上都不可能；未强接','mechanisms/cases/AC11.json.gz'),
+      ('AC23','条件变化','C2→C3有质量和记录劳动权衡','20/7全队同源共同Q/T：40图18楼，Q+4.405605，T+121.05048秒','劳动不等于完整流程成本；X/Z块口径另列','analysis/CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv'),
+      ('AC24','尚不能判断','两个大预算C1相关方向的劳动差异','14/7、20/7 C12/C13全队和块级合法同源Q/T均无支持','不拼异源记录，不填零','analysis/RECORDED_LABOR_SUPPORT.csv'),
+      ('AC25','幅度变化','批准人工接续扩展可评支持','32,086→32,127共同物理对；+41来自7个唯一端点','原共同分数变化0，11受影响正向条件无当前图均翻向','analysis/MANUAL_SUPPORT_CHANGED_CONDITIONS.csv;analysis/DATASET_CHECKS.json'),
+      ('AC26','保持','主核心预算结果不依赖人工支持扩展','14/7与20/7新增人工共同Q均0','自动主结果与辅助原共同支持一致','analysis/MANUAL_ORDER_SUPPORT_DECOMPOSITION.csv'),
+      ('AC27','尚不能判断','本轮固定n不能证明更快趋近GT','没有新进入曲线或收敛耗时实验','已有第11批曲线按其原支持引用，不能由本轮QT代替','REPORT_ZH.md;../mixture_patterns_and_c13_half_20261104/curves/REPORT_ZH.md'),
+      ('AC29','条件变化','同XZ、同D类别人数仍可能随具体D成员翻向','120个可比较D类向量子组中18严格翻向、9跨±1；7图4楼','只重聚合已有704缺口对；2/4/32背景次数分开，不新增配比实验','background/README_ZH.md;background/BACKGROUND_REVIEW.json'),
+      ('AC28','保持','AC、ABC、联盟各回答不同问题','换入方向、跨/同类变化幅度、直接组合结果分别解释','本轮未重算联盟、配比、人数曲线或ABC估计','REPORT_ZH.md'),
+    ]
+    data=[dict(claim_id=i,adoption_status=s,claim=c,evidence=e,interpretation_limit=l,source_paths=p)
+          for i,s,c,e,l,p in claims]
+    data.sort(key=lambda x:x['claim_id'])
+    write_csv(ROOT/'CONCLUSION_LEDGER.csv',data)
+    catalog={}
+    def add(path,sha='',blob='',version=COMMIT,role='',origin='',url=''):
+        key=(path,version)
+        q=catalog.setdefault(key,dict(path=path,version=version,sha256=sha,git_blob=blob,
+                                     role=role,origin_manifest=origin,url=url))
+        for k,v in [('sha256',sha),('git_blob',blob),('url',url)]:
+            if not q[k] and v:q[k]=v
+        if origin and origin not in q['origin_manifest'].split(';'):q['origin_manifest']+=';'+origin
+    for name in ['audit/AUDIT_INPUT_MANIFEST.csv','inputs/PINNED_CORE_INPUTS.csv','analysis/ANALYSIS_INPUT_MANIFEST.csv']:
+        for r in rows(ROOT/name):
+            path=r['path']
+            if 'current_dstruct_ac_final_20261104' in path:version='this_study_derived'
+            elif 'current_class_interpretation_20261104' in path or 'mixture_patterns_and_c13_half_20261104' in path:version='accepted_batches_08_12'
+            else:version=r.get('commit',COMMIT) or COMMIT
+            url=r.get('url','') or (f'{REPO_URL}/blob/{version}/{path}' if len(version)==40 else '')
+            add(path,r.get('sha256',''),r.get('git_blob',''),version,r.get('source_kind','registered_input'),name,url)
+    for r in rows(ROOT/'analysis/METRIC_EXTRACTION_RECEIPT.csv'):
+        add(r['path'],r['source_sha256'],r['git_blob_sha1'],r['commit'],'actually_read_legacy_metric_shard',
+            'analysis/METRIC_EXTRACTION_RECEIPT.csv',f"{REPO_URL}/blob/{r['commit']}/{r['path']}")
+    for r in rows(ROOT/'mechanisms/source/SAVED_LEGACY_ENDPOINT_ORIGINS.csv'):
+        add(r['source_path'],r['source_sha256'],r['source_git_blob'],r['source_commit'],'actually_read_legacy_endpoint_shard',
+            'mechanisms/source/SAVED_LEGACY_ENDPOINT_ORIGINS.csv',f"{REPO_URL}/blob/{r['source_commit']}/{r['source_path']}")
+    for p,role in [('inputs/CURRENT_RESEARCH_BASIS_GITHUB_MAIN.txt','pinned_main_basis_snapshot'),
+                   ('inputs/CURRENT_RESEARCH_BASIS_ACCEPTED_BATCH12.txt','accepted_batch12_basis_snapshot'),
+                   ('mechanisms/source/SELECTED_ORIGINAL_IMAGE_INDEX.csv','official_release_original_image_members'),
+                   ('supplement/inputs/SELECTED_POOLS.json.gz','frozen_effective_answers_and_references')]:
+        f=ROOT/p
+        add(str(f.relative_to(REPO)),hashlib.sha256(f.read_bytes()).hexdigest(),'',
+            'archived_input_snapshot',role,p)
+    for receipt in sorted((ROOT/'background').glob('*ORIGINAL_IMAGE_RECEIPT.json')):
+        r=json.loads(receipt.read_text(encoding='utf-8'))
+        original=ROOT/'background'/r['path']
+        add(str(original.relative_to(REPO)),r['sha256'],'','official_release_20261015',
+            'unchanged_background_case_original',str(receipt.relative_to(ROOT)),r['source_release_url'])
+    source_rows=sorted(catalog.values(),key=lambda x:(x['version'],x['path']))
+    write_csv(ROOT/'SOURCE_INDEX.csv',source_rows)
+    (ROOT/'delivery').mkdir(exist_ok=True)
+    (ROOT/'delivery/README.md').write_text('''# 第13–15批下载、安装与文件目录
+
+本轮是当前DSTRUCT直接AC最后一轮。三个ZIP均使用仓库相对路径，依次解压到 `D:/Work/HOHONET`；底座是main `48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b` 和已交付第08–12批。文件身份与采用优先关系见[版本说明](../VERSION_PRIORITY.html)。
+
+|批次|ZIP文件名|完整内容|
+|---|---|---|
+|13|HOHONET_v21_batch13_current_DSTRUCT_AC_audit_and_gap_20261104.zip|当前标签与旧事件/成员/设计审计、全逐图容量、复用与排除、冻结补充请求/有效原答/参考、全部1,408原生端点及失败状态|
+|14|HOHONET_v21_batch14_current_DSTRUCT_AC_statistics_20261104.zip|自动/辅助完整物理对底表、52,544旧TARGET指标提取、方法别名、逐图/分层/分项/状态/劳动、精确Q分解、统计代码与说明|
+|15|HOHONET_v21_batch15_current_DSTRUCT_AC_mechanisms_and_closeout_20261104.zip|完整中文报告与离线研究台、12个AC原图案例及既有ABC附录、508旧端点诊断、固定XZ背景分析、科学图、最终独立验收和8个项目入口更新|
+
+每包带 `delivery/BATCH_13_FILES.csv` 等相应文件清单，记录ZIP成员、字节数和SHA256。三个包的外部大小与SHA256见单独随包提供的 `HOHONET_v21_batches13_15_DOWNLOAD_INDEX.csv`。清单为校验提供身份，不依赖本次临时目录。
+
+解压全部三包后，打开：
+
+`research/workers/current_dstruct_ac_final_20261104/workbench/index.html`
+
+[中文报告](../REPORT_ZH.html)与[完整原图图册](../mechanisms/CURRENT_DSTRUCT_AC_ATLAS.html)可离线阅读。阅读不要求重新运行分析；[运行说明](../INSTALL_AND_RUN_ZH.html)明确区分重聚合、原生补充和既有端点诊断重放。
+
+## 大文件与可复现性
+
+CSV/JSON的大表保留gzip形式，不只交付均值。自动和辅助完整物理对各自保存；旧TARGET指标合并提取保留全部52,544行。按源池拆分的重复临时提取缓存、Python缓存和运行日志不再重复装包；恢复源分片的固定版本清单与代码均在包内。已提取合并数据足以正常重聚合，不需先下载整个历史指标库。
+
+[SOURCE_INDEX.csv](../SOURCE_INDEX.csv)汇总实际使用的固定main源文件、08–12批增量及本轮冻结快照。各模块还有逐端点、逐原图、逐池和逐指标分片清单。必要源代码仍来自已有仓库底座，不在ZIP里复制整个Git仓库。
+
+本轮新数据均位于专题目录；第15批列出的已有文件更新仅添加采用说明和入口，旧嵌入数据未改。可核对[项目入口变更清单](INTEGRATED_PROJECT_FILES.csv)与[最终验收](../DELIVERY_CHECKS.json)。
+''',encoding='utf-8')
+    print(json.dumps({'claims':len(data),'source_catalog_entries':len(source_rows)},ensure_ascii=False))
+
+
+if __name__=='__main__':main()

@@ -1,0 +1,175 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>当前 DSTRUCT 直接 AC：标签、团队身份与容量验收</title><style>*{box-sizing:border-box}body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#20333e;background:#f1f5f6}main{max-width:1200px;margin:24px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:36px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:42px;padding-bottom:9px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:26px}a{color:#0b7369;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:70px}th{background:#edf4f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:14px;margin-bottom:26px}.nav a{margin-right:22px}li{margin-bottom:4px}.equation{overflow:auto;text-align:center;margin:22px 0;padding:5px}.inline-equation{display:inline;vertical-align:middle}details{padding:12px 18px;border:1px solid #d7e1e6;margin:20px 0;background:#f8fbfb}summary{cursor:pointer;font-weight:600}@media(max-width:760px){main{padding:22px 17px;margin:0;border:0}h1{font-size:26px}h2{font-size:22px}}@media print{body{background:#fff}main{border:0;padding:0;max-width:none}.nav{display:none}h2{break-after:avoid}table{font-size:11px}img{max-height:90vh;object-fit:contain}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">直接 AC 研究台</a><a href="../REPORT_ZH.html">完整报告</a><a href="README_ZH.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>当前 DSTRUCT 直接 AC：标签、团队身份与容量验收</h1>
+<h2>核心结果</h2>
+<p><strong>旧 TARGET 库可以部分合法复用，不应整体改名，也不需要整体废弃。</strong> 本轮逐事件、逐人员块核对了 52,544 条 <code>TARGET_DSTRUCT_K3</code> 历史方法事件、65,058 条设计链接和 60,483 支相关物理团队。其中 28,420 个不同物理 A/C 对符合当前 DSTRUCT 的直接替换定义，涉及 45,162 支不同团队；原成员、目标、参考与团队键的身份检查全部通过。</p>
+<p>主目标的合法存量为 26,809 个物理对、205 张图、22 栋建筑；其它已准入目标单列 1,611 个物理对、19 个目标池、17 张图、6 栋建筑。两域共享图片，不能把图数相加作为总体图数。总体去重为 206 张图。<a href="REGISTRY_VALIDATION.json">验收记录</a>和<a href="../registry/LEGACY_TARGET_EVENTS_AUDIT.csv.gz">逐事件完整审计</a>保存精确分母。</p>
+<p><strong>这些是存量团队在当前标签下的条件分析。</strong> 即使某一历史事件现在仍合法，历史选块、整类抽样、背景配额和注册预算仍影响其出现机会。它不自动变成“按当前类别重新均匀抽样”的实验。</p>
+<h2>1. 版本和标签变化</h2>
+<p>正式来源为 main 提交 <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code>。当前标签取 <code>research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/LABELS_ALL_LOBO.csv.gz</code>；历史事件仍使用其原始注册身份及旧标签来源 <code>personnel_ac_v21_20261030/stage00_intake/FINAL_LABELS_FOR_AC_ALL_LOBO.csv.gz</code>。</p>
+<p>在同一 K3 方法的 <strong>1,426 个人员×折行</strong>中，34 行类别发生变化。这 34 行全部属于目标建筑留出的 LOBO 折；<code>ALL</code> 描述折变化 <strong>0 行</strong>，<code>known</code> 资格没有变化。每个目标图使用其建筑对应的留出折，不使用 <code>ALL</code> 标签。<a href="LABEL_CROSSWALK_ALL_LOBO.csv.gz">全部标签交叉表</a>、<a href="CHANGED_WORKER_FOLDS.csv">34 行变更清单</a>及<a href="AFFECTED_EVENT_MEMBERS.csv.gz">受影响事件成员</a>可逐成员追踪。</p>
+<p>历史容量池与第 08–12 批当前类别画像所覆盖的 274 个对应池，其人员集合、参考 ID 和参考版本均完全一致。本轮直接 AC 的正式容量域限于普通 Manual：206 个主目标池及 30 个其它已准入目标池；门洞、特殊范围和 Semi 未加入本轮研究。<a href="POOL_COMPATIBILITY_WITH_BATCH08_12.csv.gz">池身份核对</a>与<a href="AUDIT_INPUT_MANIFEST.csv">输入来源清单</a>记录了这一关系。</p>
+<h2>2. 什么是当前合法直接 AC</h2>
+<p>每个比较从实际团队重新检查：</p>
+<div class="equation"><img src="../math_assets/equation_80169186b8215080ec.svg" alt="A=D\cup X,\quad C=D\cup Z,\quad D=A\cap C,\quad X=A\setminus C,\quad Z=C\setminus A." style="width:534.67px;height:18.67px" class="block-equation"></div>
+
+
+<p>要求同图、同目标池、同参考和同评分条件，<code>|A|=|C|=n</code>、<code>|X|=|Z|=m&gt;0</code>，且 <code>D/X/Z</code> 两两互不重叠。<code>X</code>、<code>Z</code> 各自必须属于一个已知的当前 LOBO 类别，二者类别不同。团队成员必须仍在相应冻结候选池中，成员原答 ID、原生团队键和物理对身份也逐条匹配。</p>
+<p><strong>D 可以混类，也可以包含当前未知类别人员。</strong> 本轮保留了 16,364 个混类 D 的合法事件，以及 152 个 D 中含未知标签的合法事件；后者与前者可有交集。D 的具体人员、当前 C1/C2/C3/unknown 人数与名单均保存于逐事件表。<code>D=空</code> 的 2,390 个合法物理对单列，不把它们描述为存在共同背景的比较。</p>
+<h2>3. 旧事件保留、排除和映射</h2>
+<p>52,544 个旧事件中，15,473 个本来就不是等人数替换，例如整类数量变化、加入剩余成员或不同人数的联盟比较；这些保持历史身份，不进入本轮固定 n 直接 AC。其余 37,071 个等人数事件中，37,068 个在原标签下是纯跨类替换，另 3 个本来是混类别组合。前者有 8,648 个在当前标签下变成混合来源块、混合目标块或同一当前类别，因而不能继续作为当前纯跨类直接 AC。</p>
+<table>
+<thead>
+<tr>
+<th>合法存量的当前方向</th>
+<th align="right">主目标物理对</th>
+<th align="right">其它已准入目标物理对</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1→C2</td>
+<td align="right">8,750</td>
+<td align="right">560</td>
+</tr>
+<tr>
+<td>C1→C3</td>
+<td align="right">7,993</td>
+<td align="right">265</td>
+</tr>
+<tr>
+<td>C2→C3</td>
+<td align="right">10,066</td>
+<td align="right">786</td>
+</tr>
+</tbody></table>
+<p>这些方向沿用各历史事件登记的 A/C 方向。反向视图通过同一个物理对调 A/C 得到，支持数相同，有符号差值必然取反；这不是另一份独立抽样证据。</p>
+<p><strong>43 个仍合法但当前方向改变的旧事件得到保留。</strong> 其中原 C1→C3 的 7 个现在是 C1→C2，36 个现在是 C2→C3。原 <code>source_class/target_class/event_id</code> 不改写，当前映射写入独立 <code>current_*</code> 字段。没有把它们简单删除，也没有直接覆盖旧身份。</p>
+<p>完整核查分两层：通用当前 AC 合法性，以及旧特定设计的要求是否仍成立。例如旧“整类换入”可能不再覆盖当前整类；旧 <code>outside_swapped_classes</code> 的 D 可能进入当前被替换类别；旧中性配额或富集背景的类别计数也可能改变。这些情况下，<strong>通用直接 AC 仍可合法，但不能继续使用原特定设计名称作当前含义的断言</strong>。</p>
+<p>28,420 个合法事件中，23,358 个至少有一条旧特定设计链接仍满足相应当前成员条件，5,062 个只保留通用当前 AC 解释。后者没有从主通用 AC 清单剔除。旧中性配额的检查仅核对配额规则在当前标签下的类别计数，不声称恢复了当前分类下的随机抽样分布。继承严格 ABC 的共同背景不额外套用中性配额条件。</p>
+<p>逐条件来源和原因见：</p>
+<ul>
+<li><a href="LEGACY_REUSE_BY_ORIGINAL_CONDITION.csv.gz">原方向、n/m 与域的复用数量</a>；</li>
+<li><a href="LEGACY_REUSE_BY_ORIGINAL_DESIGN.csv.gz">原设计分层</a>；</li>
+<li><a href="LEGACY_REUSE_BY_CURRENT_CONDITION.csv.gz">映射后的当前条件</a>；</li>
+<li><a href="EXCLUSION_AND_RETENTION_REASONS.csv">排除与保留原因</a>；</li>
+<li><a href="../registry/LEGACY_TARGET_DESIGN_LINKS_AUDIT.csv.gz">逐设计链接及背景要求</a>和<a href="OLD_SPECIFIC_DESIGN_REQUIREMENTS.csv">要求汇总</a>。</li>
+</ul>
+<h2>4. AC 容量与需要补齐的范围</h2>
+<p>令候选池有 N 人，换出类和换入类分别有 <code>N_s</code>、<code>N_t</code> 人。允许一般混合背景时，直接 AC 的可行条件是：</p>
+<div class="equation"><img src="../math_assets/equation_a382cf0b263b8973c2.svg" alt="N_s\geq  m,\quad N_t\geq  m,\quad N\geq  n+m,\quad 1\leq  m\leq  n,\quad n\geq 3." style="width:468.00px;height:18.67px" class="block-equation"></div>
+
+
+<p>其中候选池至少容纳 <code>(n−m)+m+m=n+m</code> 个不同人员。50% 替换时 <code>n=2m</code>，因此总池要求是 <code>N≥3m</code>。这里没有严格 ABC 所需的第二块同类人员 Y，不能把其容量条件套在直接 AC 上。</p>
+<table>
+<thead>
+<tr>
+<th>主目标类别对，正反方向共享容量</th>
+<th align="right">14/7 可行图／旧合法覆盖图</th>
+<th align="right">20/7 可行图／旧合法覆盖图</th>
+<th>最大可行 50% 预算</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1↔C2</td>
+<td align="right">44／39</td>
+<td align="right">44／39</td>
+<td>20/10：1 图</td>
+</tr>
+<tr>
+<td>C1↔C3</td>
+<td align="right">7／4</td>
+<td align="right">7／4</td>
+<td>14/7：7 图；16/8 已无容量</td>
+</tr>
+<tr>
+<td>C2↔C3</td>
+<td align="right">84／81</td>
+<td align="right">84／81</td>
+<td>16/8：12 图；18/9 已无容量</td>
+</tr>
+</tbody></table>
+<p>缺口是相同的 7 张图、11 个池×类别对，在两个既有核心预算上共 22 个格。本轮只对这些未覆盖格补充直接 AC；没有为了补齐其它 n/m 网格扩大实验。<a href="../registry/CURRENT_AC_POOL_N_M_DIRECTION_CAPACITY.csv.gz">逐图完整六方向容量</a>包括已实际登记过的等 n/m 预算与预先列出的关键预算，保留不可行原因与零支持格；<a href="KEY_BUDGET_CAPACITY_AND_REUSE.csv">关键预算表</a>便于阅读。</p>
+<p>容量表中的 <code>possible_XZ_blocks</code> 与 <code>possible_D_per_XZ</code> 是有限候选池内的组合数量，不是已执行团队数，也不是独立统计样本数。反向容量行共享同一个物理支持集合。</p>
+<h2>5. 第 12 批严格 ABC 的直接腿复用</h2>
+<p>第 12 批已有 3,200 个当前 C1↔C3 严格 ABC 事件。A/C 和 B/C 都是合法的直接替换腿，本轮逐腿重新验证当前成员身份，得到 6,400 条来源别名，但去重后只有 <strong>4,096 个不同物理 A/C 对</strong>。这些腿保留 <code>source_event_id/source_leg/study/bundle_id/background_id</code>，仍属于原严格 ABC 设计所选的存量团队。</p>
+<p>这些腿与旧 TARGET 合法物理对没有重叠；两者共 32,516 个可复用物理对。统计时先按 <code>canonical_physical_pair_id</code> 去重，再选择方向。不得将 6,400 条腿别名、两次方向展示或多个设计链接作为独立观测反复计权。文件见<a href="../registry/BATCH12_C13_AC_BC_LEGS_AUDIT.csv.gz">批 12 腿审计</a>、<a href="../registry/REUSED_CURRENT_AC_REGISTRY.csv.gz">复用别名总表</a>和<a href="../registry/REUSED_CURRENT_AC_PHYSICAL_PAIRS.csv.gz">去重物理对总表</a>。</p>
+<h2>6. 补充设计的独立验收</h2>
+<p>补充随机种子在计算端点结果前固定为 <strong>202611041301</strong>。每个缺口格最多选择 16 个不同 X/Z 块组合；组合空间较小时全部枚举，再将 32 个物理对预算等分到已选 X/Z 块上，在剩余人员中抽取不同 D。D 允许混类；未按照 Q、劳动、GT 坐标、输出状态或预期方向选择人员。</p>
+<p>独立复现得到完全相同的 704 个物理对和 1,408 支团队。实际 22 格中：16 格为 16 个块×2 个 D；4 格为 8 个块×4 个 D；2 格为 1 个块×32 个 D。所有格的块权重相等，没有重复 X/Z 来伪装更多块。7 个选择池的完整内容与冻结来源相同，当前楼外标签、原答身份、参考、成员集合及不重叠条件均通过。</p>
+<p>加入补充登记后，14/7 和 20/7 在 C1↔C2、C1↔C3、C2↔C3 上分别覆盖全部 44、7、84 张可行图。<strong>这是注册覆盖完成；共同可评 Q 支持仍由实际端点状态决定。</strong> 本设计验收不打开端点评分结果，也不将失败端点填零。<a href="SUPPLEMENT_DESIGN_INDEPENDENT_REVIEW.json">独立验收</a>、<a href="SUPPLEMENT_INDEPENDENT_REPLAY_BY_CELL.csv">22 格逐格随机重建</a>、<a href="CORE_REGISTRATION_COVERAGE_AFTER_SUPPLEMENT.csv">补充后注册覆盖</a>可复核。</p>
+<h2>7. 运行与字段使用</h2>
+<p>在仓库根目录执行：</p>
+<pre><code class="language-bash">python research/workers/current_dstruct_ac_final_20261104/audit/build_event_registry.py
+python research/workers/current_dstruct_ac_final_20261104/audit/review_supplement_design.py
+python research/workers/current_dstruct_ac_final_20261104/audit/review_pair_dataset_and_means.py
+python research/workers/current_dstruct_ac_final_20261104/audit/review_score_formula_and_components.py
+python research/workers/current_dstruct_ac_final_20261104/audit/compare_formal_summary.py
+</code></pre>
+<p>运行依赖 Python、pandas 与 numpy；来源是同一固定 main 及已接入的第 08–12 批。第一条重做标签、登记和容量审计，不调用融合或评分；第二条只验证已冻结的补充设计，不覆盖其注册文件。后三条在主统计和补充端点表已存在时执行，分别核查底表与分层点估计、已有标量分项的评分公式与重复引用，以及最终六方向汇总。<code>supplement/design.py</code> 已设有冻结文件存在时禁止覆盖的保护。</p>
+<p>下游通常读取 <code>LEGAL_CURRENT_AC_EVENTS.csv.gz</code> 的 <code>current_source_class/current_target_class/current_n/current_m</code>，保留原 <code>event_id/A_team_key/C_team_key</code> 连接历史指标。<code>orientation_sign</code> 表示原 A/C 相对当前规范类别顺序的方向；<code>canonical_A_team_key/canonical_C_team_key</code> 用于不同来源的统一物理对去重。若按原背景方案分层，读取 <code>LEGAL_CURRENT_AC_DESIGN_LINKS.csv.gz</code>，但先在选定方案内去重事件，不能把一对多链接直接合并后平均。</p>
+<p>不能由“合法 AC”或“注册覆盖”直接推断可评分状态。以下为在设计冻结后追加的数值验收；图内、图间规律及几何解释由主统计和机制模块报告。</p>
+<h2>8. 独立数值和重复引用验收</h2>
+<p>在补充设计冻结后，本模块从原始标量源重新连接每支团队，而非导入主统计模块的建表函数。最终 35,524 条方法／腿别名对应 <strong>33,220 个不同物理对</strong>；43 个当前方向改变的旧事件完整进入当前正确方向，严格 ABC 的反向腿和同一端点的重复引用没有增加样本。</p>
+<p>直接按原始团队键取 Q，再按已批准的 57 组人工顺序的图、成员、条件和参考完整身份接入辅助版，得到与主底表一致的数值，最大浮点差为 <code>3.56e−15</code>。原自动共同可评为 <strong>32,086 对</strong>；已有人工辅助接入后为 <strong>32,127 对</strong>，新增 <strong>41 对</strong>。这是 7 个新增可评唯一端点通过重复消费者形成的共同支持扩展，不能写成 41 个新端点，也不能将旧无 Q 当作零分来计算改善。64 个合法物理对触及已批准端点，其中并非每对都获得双方可评。原共同支持上的 Q_A、Q_C 和差值逐值保持。<a href="PAIR_DATASET_INDEPENDENT_REVIEW.json">逐对数据独立验收</a></p>
+<p>评分口径另从存储分项独立重组。令 <code>I=iou_2d</code>、<code>S=S_bottom_deg</code>、<code>D=dir</code>，则：</p>
+<div class="equation"><img src="../math_assets/equation_944ff9874564e7e0e3.svg" alt="Q_s=\frac{100I}{I+\sqrt{(1-I+IS^2/32)^2+ \left(I\frac{1.5D^2}{D^2+s^2}\right)^2} +I[(H_{mean}/0.8)^2+(H_{center}/0.25)^2]}." style="width:482.67px;height:41.33px" class="block-equation"></div>
+
+
+<p><code>s=8</code> 对应 B8L2，<code>s=10</code> 对应 D10；<code>I=0</code> 时按既有定义取 0。这与“缺失 Q 填零”无关，前者是已有合法输出的评分定义，后者在本轮始终禁止。</p>
+<table>
+<thead>
+<tr>
+<th>独立评分核查范围</th>
+<th align="right">唯一端点</th>
+<th align="right">有 Q 且分项完整、可重组的端点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全部旧 TARGET 原始源，包括本轮未采用的历史设计</td>
+<td align="right">60,483</td>
+<td align="right">59,433</td>
+</tr>
+<tr>
+<td>当前全部物理对的自动端点</td>
+<td align="right">51,562</td>
+<td align="right">50,605</td>
+</tr>
+<tr>
+<td>当前全部物理对的既有人工辅助端点</td>
+<td align="right">51,562</td>
+<td align="right">50,612</td>
+</tr>
+<tr>
+<td>第 12 批原生端点源</td>
+<td align="right">4,992</td>
+<td align="right">4,898</td>
+</tr>
+<tr>
+<td>本轮容量补充原生端点源</td>
+<td align="right">1,408</td>
+<td align="right">1,388</td>
+</tr>
+<tr>
+<td>已批准人工顺序端点源</td>
+<td align="right">57</td>
+<td align="right">56</td>
+</tr>
+</tbody></table>
+<p>以上范围互有重叠，不相加。全部有 Q 端点均有重组所需的分项；B8L2 与 D10 最大重组残差均不超过 <code>5.69e−14</code>。26 个 Q／几何／阈值字段在旧完整源、当前自动和当前辅助三层中的重复团队引用一致，共 78 项检查，数值差最大为 0，缺失性冲突为 0。验收没有调用融合、修改源分数或增加人工连接。<a href="SCORE_AND_COMPONENT_INDEPENDENT_REVIEW.json">评分与分项验收</a>、<a href="INDEPENDENT_SCORE_FORMULA_SUMMARY.csv">来源汇总</a>、<a href="INDEPENDENT_SCORE_FORMULA_RESIDUALS.csv.gz">逐端点残差</a>、<a href="REPEATED_ENDPOINT_COMPONENT_CONSISTENCY.csv">重复分项一致性</a></p>
+<p>补充格的正式均值遵守冻结的两阶段规则：先在同一 X/Z 块内平均可用 D，再对 X/Z 块等权，最后汇总目标池、图片和建筑。缺失 Q 后，各块的有效 D 数可能不同，不能悄悄退回“剩余物理对一律等权”。历史存量维持条件分析的物理对等权。独立均值表分别列出图等权与建筑等权，原共同、人工辅助新增共同及扩展共同支持也分别保存：<a href="INDEPENDENT_IMAGE_BUILDING_Q_MEANS.csv">全部独立均值</a>、<a href="INDEPENDENT_CORE_Q_MEANS.csv">核心预算独立均值</a>。</p>
+<h2>9. 最终汇总与六方向验收</h2>
+<p>正式六方向表共有 4,200 行，其中有 Q 支持的规范正向条件为 1,586 行。本模块分别重建这些条件的图等权、建筑等权、有符号和绝对差值，以及正向、负向、变化不超过 1 分的图片数；与正式汇总在浮点精度内逐值一致，点估计最大误差为 <code>3.56e−15</code>。缺少共同 Q 的行保持空均值，未被填零。</p>
+<p>六方向的 2,100 组正反向条件逐项满足预期恒等式：有符号均值取反、区间上下界取反互换、改善和下降图片数互换，支持数与绝对差值保持。最终自动和辅助物理底表的 <code>current_source_class/current_target_class/current_direction</code> 均指向实际规范 A/C 方向，原登记方向保存在 <code>registered_current_*</code> 与别名表中，不再混用两种方向。</p>
+<p>本模块独立重算分层点估计，未重新模拟建筑簇 bootstrap；区间验收检查反向恒等式，以及完全相同的原共同支持在自动／辅助版本间复用同一重抽样结果后区间是否逐值保持。另有 514 个原共同和扩展共同的支持完全相同的条件，也通过点估计及区间恒等式检查。最终共 45 项比较通过，异常 0 项。具体通过状态和被验收统计源的 SHA-256 以<a href="FORMAL_SUMMARY_INDEPENDENT_REVIEW.json">最终正式汇总验收</a>为准；<a href="FORMAL_SUMMARY_INDEPENDENT_COMPARISON.csv">逐检查结果</a>和<a href="FORMAL_SUMMARY_INDEPENDENT_FAILURES.csv">异常清单</a>保留机器可读记录。</p>
+<h2>10. 工作台数据与 Windows 运行</h2>
+<p>工作台的 4,200 行汇总、12,484 行逐图结果和 3,292 行分层结果已逐单元核对冻结 CSV；HTML 中的缺失值保持为 JSON <code>null</code>。执行交付 HTML 的实际 JavaScript 后，全部 4,200 个方向／条件视图的图数、楼数、物理对数、均值与正负图片数一致。反向视图同时反号 ΔQ 并交换 Q(A)/Q(C)，平均绝对变化不变；真实 0 与缺失值分开显示，反向的缺失哨兵也没有被 JavaScript 一元负号变为 0。</p>
+<p>840 个分层视图使用与所选预算、域、来源及版本一致的数据；辅助原共同和新增共同口径下的分层显示被明确抑制，共检查 840 次，避免把完整共同支持的分层接到另一分母。全部数据只有 <code>manual</code> 一种条件，当前 UI 不会混入其它条件。以上是数据与实际 JavaScript 逻辑验收，不宣称浏览器视觉布局测试。<a href="WORKBENCH_DATA_REVIEW.json">工作台验收</a></p>
+<p>所有审计脚本从自身文件位置定位仓库根目录，<strong>不依赖临时工作目录、FILE_INDEX、下载助手或任何绝对本地路径</strong>。将交付内容按原相对目录合并到完整的 <code>D:/Work/HOHONET</code> 后，直接从仓库根目录运行即可。现有 main／第 08–12 批来源应已在原路径中；审计脚本不会代为联网获取缺失源文件。文本读写显式采用 UTF-8，Windows 也可使用下面的 UTF-8 模式命令：</p>
+<pre><code class="language-powershell">cd D:/Work/HOHONET
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/build_event_registry.py
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/review_supplement_design.py
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/review_pair_dataset_and_means.py
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/review_score_formula_and_components.py
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/compare_formal_summary.py
+python -X utf8 research/workers/current_dstruct_ac_final_20261104/audit/review_workbench_data.py
+</code></pre>
+<p>前五个脚本使用 Python、pandas 与 numpy。最后一个工作台逻辑验收还需 <code>node</code> 在 PATH 中，本次执行版本为 Node.js <code>v24.22.1</code>；对应 CommonJS 脚本随包保存在 <code>workbench_vm_review.cjs</code>，不受仓库 JavaScript 包类型设置影响。查看离线 HTML 本身不需要 Node。已算补充对上的背景变化分析见 <a href="../background/README_ZH.html">background/README_ZH.md</a>，不新增团队或融合运行。</p>
+</main></body></html>

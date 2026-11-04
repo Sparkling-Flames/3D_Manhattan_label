@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "source_hashes": {
+    "workbench/index.html": "285bd89d02e7d8c54fedf11b5eb92f0fb515afd016b15e90082311446e0831ab",
+    "build_workbench.py": "5f3db62fce4d3260d81dfed1b54f6cb3228cfdba99ddf3f752ff103d7dcacbfa",
+    "analysis/SIX_DIRECTION_Q_BY_BUDGET.csv": "aaa59f2cbf5cd3356d9a4c760052ddffae4484a6693fcb91c6bb36793e78ccd3",
+    "analysis/MAIN_IMAGE_EFFECTS.csv.gz": "65ab4f4d5da8d69365c503693bca96e82d3c03133450512802960ea40cf7bef7",
+    "analysis/CONDITION_STRATIFIED_Q.csv": "80a2382f726532e0a478f536d208a3ff8fdb6735e66e9da275fa98478be460e5"
+  },
+  "checks": [
+    {
+      "check": "payload_source_identity",
+      "table": "summary",
+      "rows": 4200,
+      "columns": 29,
+      "missing_cells_preserved_as_null": 13668,
+      "mismatches": 0
+    },
+    {
+      "check": "payload_source_identity",
+      "table": "images",
+      "rows": 12484,
+      "columns": 19,
+      "missing_cells_preserved_as_null": 0,
+      "mismatches": 0
+    },
+    {
+      "check": "payload_source_identity",
+      "table": "strata",
+      "rows": 3292,
+      "columns": 20,
+      "missing_cells_preserved_as_null": 0,
+      "mismatches": 0
+    },
+    {
+      "check": "UI_filter_key_unique",
+      "table": "summary",
+      "duplicates": 0
+    },
+    {
+      "check": "UI_filter_key_unique",
+      "table": "images",
+      "duplicates": 0
+    },
+    {
+      "check": "UI_filter_key_unique",
+      "table": "strata",
+      "duplicates": 0
+    }
+  ],
+  "summary_rows": 4200,
+  "image_rows": 12484,
+  "strata_rows": 3292,
+  "empty_common_support_summary_rows": 1028,
+  "numeric_image_missing_cells": 0,
+  "javascript_review": {
+    "status": "passed",
+    "review_mode": "delivered JavaScript in Node vm with a minimal DOM stub; no visual layout claim",
+    "checks": {
+      "image_views_checked": 4200,
+      "max_image_mean_rounding_residual": 7.105427357601002e-15,
+      "max_endpoint_difference_rounding_residual": 3.907985046680551e-14,
+      "missing_and_true_zero_rendering": "passed",
+      "stratum_views_checked": 840,
+      "incompatible_support_views_suppressed": 840,
+      "control_states_checked": 10,
+      "condition_singleton": "manual"
+    },
+    "failures": []
+  },
+  "failures": [],
+  "scope_note": "Data provenance, actual JS direction transforms, selector support guards and missing preservation were checked. This receipt does not claim browser visual-layout testing."
+}

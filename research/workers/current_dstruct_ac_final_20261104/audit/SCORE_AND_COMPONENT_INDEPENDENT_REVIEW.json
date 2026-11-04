@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "formula_sources": 6,
+  "source_formula_rows": [
+    {
+      "source": "legacy_all_unique_endpoints",
+      "unique_endpoints": 60483,
+      "Q_available": 59433,
+      "formula_verified_endpoints": 59433,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 5.684341886080802e-14,
+      "D10_max_abs_residual": 5.684341886080802e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    },
+    {
+      "source": "current_all_pairs_automatic",
+      "unique_endpoints": 51562,
+      "Q_available": 50605,
+      "formula_verified_endpoints": 50605,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 5.684341886080802e-14,
+      "D10_max_abs_residual": 5.684341886080802e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    },
+    {
+      "source": "current_all_pairs_assisted",
+      "unique_endpoints": 51562,
+      "Q_available": 50612,
+      "formula_verified_endpoints": 50612,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 5.684341886080802e-14,
+      "D10_max_abs_residual": 5.684341886080802e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    },
+    {
+      "source": "batch12_native_scalar_source",
+      "unique_endpoints": 4992,
+      "Q_available": 4898,
+      "formula_verified_endpoints": 4898,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 5.684341886080802e-14,
+      "D10_max_abs_residual": 5.684341886080802e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    },
+    {
+      "source": "gap_native_scalar_source",
+      "unique_endpoints": 1408,
+      "Q_available": 1388,
+      "formula_verified_endpoints": 1388,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 4.263256414560601e-14,
+      "D10_max_abs_residual": 4.263256414560601e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    },
+    {
+      "source": "approved_order_scalar_source",
+      "unique_endpoints": 57,
+      "Q_available": 56,
+      "formula_verified_endpoints": 56,
+      "Q_available_with_missing_formula_components": 0,
+      "B8L2_max_abs_residual": 2.1316282072803006e-14,
+      "D10_max_abs_residual": 1.4210854715202004e-14,
+      "B8L2_outside_0_100": 0,
+      "D10_outside_0_100": 0,
+      "Q_missing_D10_nonmissing": 0
+    }
+  ],
+  "repeated_metric_checks": 78,
+  "repeated_component_global_max_difference": 0.0,
+  "repeated_component_missingness_disagreements": 0,
+  "no_fusion_calls": true,
+  "no_score_source_overwrite": true,
+  "formula": "100I / [I + hypot(1-I+I*S_bottom^2/32, I*1.5*dir^2/(dir^2+s^2)) + I*((Hmean/0.8)^2+(Hcenter/0.25)^2)], s=8 for B8L2; s=10 for D10; I=0 maps to 0."
+}

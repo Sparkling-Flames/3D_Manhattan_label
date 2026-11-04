@@ -1,0 +1,298 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-11-04T13:17:23.936345+00:00",
+  "input_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "accepted_prior_batches": "08-12",
+  "new_delivery_batches": [
+    13,
+    14,
+    15
+  ],
+  "completed_scope": "current_DSTRUCT_K3_direct_AC_only",
+  "checks": [
+    {
+      "check": "receipt:audit/REGISTRY_VALIDATION.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:audit/SUPPLEMENT_DESIGN_INDEPENDENT_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:audit/PAIR_DATASET_INDEPENDENT_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:audit/SCORE_AND_COMPONENT_INDEPENDENT_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:audit/FORMAL_SUMMARY_INDEPENDENT_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:audit/WORKBENCH_DATA_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:supplement/audit/FINAL_VALIDATION.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/DATASET_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/STATISTICAL_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/Q_COMPONENT_INTERVAL_IDENTITY_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/Q_FORMULA_ATTRIBUTION_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/FINAL_OUTPUT_CONSISTENCY_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:analysis/DELIVERY_COMPLETION.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:mechanisms/MECHANISMS_FINAL_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:background/BACKGROUND_REVIEW.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "receipt:background/BACKGROUND_VISUALIZATION_CHECKS.json",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "independent_root_report_numeric_checks",
+      "status": "passed",
+      "details": {
+        "checks": 641
+      }
+    },
+    {
+      "check": "independent_report_review_bound_to_current_text",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "closing_latest_main_matches_frozen_source",
+      "status": "passed",
+      "details": {
+        "checked_at_utc": "2026-11-04T12:57:49.729063+00:00",
+        "head_sha": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+        "commit_time_utc": "2026-11-04T04:47:50Z",
+        "html_url": "https://github.com/Sparkling-Flames/3D_Manhattan_label/commit/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+        "pinned_source": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+        "matches_pinned": true
+      }
+    },
+    {
+      "check": "nine_core_inputs_match_frozen_source",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "final_main_statistics_identity",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "physical_counts",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "automatic_vs_assisted_support",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "frozen_supplement_execution",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "offline_equation_rendering",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "python_source_syntax",
+      "status": "passed",
+      "details": {
+        "files": 42
+      }
+    },
+    {
+      "check": "integrated_file_identity:research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/workers/personnel_ac_v21_20261030/README.md",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/workers/current_class_interpretation_20261104/README.md",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/workers/mixture_patterns_and_c13_half_20261104/README.md",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/statistics/research_explorer_v1_r2_20261017/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "single_new_banner:research/statistics/research_explorer_v1_r2_20261017/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "old_page_bytes_unchanged_after_removing_banner:research/statistics/research_explorer_v1_r2_20261017/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/workers/current_class_interpretation_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "single_new_banner:research/workers/current_class_interpretation_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "old_page_bytes_unchanged_after_removing_banner:research/workers/current_class_interpretation_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:research/workers/mixture_patterns_and_c13_half_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "single_new_banner:research/workers/mixture_patterns_and_c13_half_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "old_page_bytes_unchanged_after_removing_banner:research/workers/mixture_patterns_and_c13_half_20261104/workbench/index.html",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "integrated_file_identity:docs/thesis_main/CURRENT_DSTRUCT_DIRECT_AC_20261104.md",
+      "status": "passed",
+      "details": null
+    },
+    {
+      "check": "all_new_document_and_entry_local_references",
+      "status": "passed",
+      "details": {
+        "documents": 45,
+        "references": 547,
+        "distinct_targets": 520
+      }
+    }
+  ],
+  "failures": [],
+  "scientific_run_counts": {
+    "legacy_TARGET_events_audited": 52544,
+    "legal_legacy_pairs_reused": 28420,
+    "batch12_existing_direct_pairs_reused": 4096,
+    "new_AC_pairs": 704,
+    "new_native_teams": 1408,
+    "new_native_scored_teams": 1388,
+    "new_native_no_connection_teams": 20,
+    "new_AC_common_Q_pairs": 684,
+    "total_unique_physical_pairs": 33220,
+    "total_unique_teams": 51562,
+    "total_method_event_aliases": 35524,
+    "native_existing_diagnostic_replays_successful": 509,
+    "unique_delivered_existing_traces": 508,
+    "excluded_pilot_diagnostic_endpoints": 1,
+    "outcome_blind_mechanism_sample_pairs": 248,
+    "illustrative_AC_cases": 12,
+    "existing_ABC_appendices": 1,
+    "fixed_XZ_background_boards": 3,
+    "background_previously_computed_endpoints_displayed": 14,
+    "original_images_in_atlas": 12,
+    "additional_background_original_images": 3,
+    "new_manual_orders": 0
+  },
+  "unchanged_inputs": [
+    "current_LOBO_labels",
+    "effective_preprocessed_original_annotations",
+    "references",
+    "voting_and_fusion_rules",
+    "official_Q_D10_formula",
+    "old_automatic_endpoint_scores"
+  ],
+  "reused_only_experiments": [
+    "alliances",
+    "fixed_composition",
+    "team_size_or_entering_curves",
+    "strict_ABC",
+    "RFUSE",
+    "JOINT",
+    "Q_T_selection"
+  ],
+  "missingness": "Missing Q/T never imputed to zero; native status and original/new/expanded common support separate.",
+  "weighting": "Legacy distinct pairs within target/image; gap D within fixed XZ block then block then image; building cluster uncertainty.",
+  "UI_validation": "Node V8 and minimal DOM executed controls and source-data comparisons; no graphical-browser pixel claim.",
+  "root_visual_review": [
+    "F01 six directions",
+    "A01 conditional magnitude",
+    "A02 score tradeoffs",
+    "AC07 geometry",
+    "AC08 geometry",
+    "AC09 positioning",
+    "fixed_XZ_same_D_composition",
+    "fixed_XZ_output_states"
+  ],
+  "limitations": [
+    "Conditional analysis of legacy stock, not fresh uniform current-class population sampling.",
+    "Reverse directions share the same physical pairs.",
+    "C13 core-budget capacity is sparse; feasible smaller budgets retained.",
+    "Some directions have no same-source recorded-labor support.",
+    "Mechanism/background associations do not identify a universal selection policy or convergence speed."
+  ],
+  "delivery_state": "Repository-relative overlays prepared; no GitHub push and no access to user Windows D drive.",
+  "packaging_verification": "Each ZIP receives a member size/SHA256 manifest and CRC/readback check; outer ZIP receipts are written beside the packages."
+}

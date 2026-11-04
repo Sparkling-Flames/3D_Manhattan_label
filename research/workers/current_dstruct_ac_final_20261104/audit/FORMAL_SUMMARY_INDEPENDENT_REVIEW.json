@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "formal_summary_rows": 4200,
+  "nonempty_canonical_rows_compared": 1586,
+  "six_direction_pair_conditions": 2100,
+  "comparisons": 45,
+  "failures": 0,
+  "max_point_estimate_error": 3.552713678800501e-15,
+  "canonical_field_checks": [
+    {
+      "file": "PHYSICAL_PAIRS_AUTOMATIC.csv.gz",
+      "canonical_rows": 33220,
+      "current_fields_match_canonical_A_C": true,
+      "registered_orientation_retained": true
+    },
+    {
+      "file": "PHYSICAL_PAIRS_ASSISTED.csv.gz",
+      "canonical_rows": 33220,
+      "current_fields_match_canonical_A_C": true,
+      "registered_orientation_retained": true
+    }
+  ],
+  "original_common_confidence_interval_check": "passed",
+  "identical_original_expanded_support_conditions": 514,
+  "identical_original_expanded_interval_check": "passed",
+  "statistical_source_sha256": "aaa59f2cbf5cd3356d9a4c760052ddffae4484a6693fcb91c6bb36793e78ccd3",
+  "uncertainty_note": "Building-cluster bootstrap was not independently re-simulated; reversal identities and unchanged-support point/interval identities were checked. Independent point estimates were recomputed at the block, pool, image and building levels."
+}

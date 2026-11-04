@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第13–15批下载、安装与文件目录</title><style>*{box-sizing:border-box}body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#20333e;background:#f1f5f6}main{max-width:1200px;margin:24px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:36px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:42px;padding-bottom:9px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:26px}a{color:#0b7369;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:70px}th{background:#edf4f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:14px;margin-bottom:26px}.nav a{margin-right:22px}li{margin-bottom:4px}.equation{overflow:auto;text-align:center;margin:22px 0;padding:5px}.inline-equation{display:inline;vertical-align:middle}details{padding:12px 18px;border:1px solid #d7e1e6;margin:20px 0;background:#f8fbfb}summary{cursor:pointer;font-weight:600}@media(max-width:760px){main{padding:22px 17px;margin:0;border:0}h1{font-size:26px}h2{font-size:22px}}@media print{body{background:#fff}main{border:0;padding:0;max-width:none}.nav{display:none}h2{break-after:avoid}table{font-size:11px}img{max-height:90vh;object-fit:contain}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">直接 AC 研究台</a><a href="../REPORT_ZH.html">完整报告</a><a href="README.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>第13–15批下载、安装与文件目录</h1>
+<p>本轮是当前DSTRUCT直接AC最后一轮。三个ZIP均使用仓库相对路径，依次解压到 <code>D:/Work/HOHONET</code>；底座是main <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code> 和已交付第08–12批。文件身份与采用优先关系见<a href="../VERSION_PRIORITY.html">版本说明</a>。</p>
+<table>
+<thead>
+<tr>
+<th>批次</th>
+<th>ZIP文件名</th>
+<th>完整内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>13</td>
+<td>HOHONET_v21_batch13_current_DSTRUCT_AC_audit_and_gap_20261104.zip</td>
+<td>当前标签与旧事件/成员/设计审计、全逐图容量、复用与排除、冻结补充请求/有效原答/参考、全部1,408原生端点及失败状态</td>
+</tr>
+<tr>
+<td>14</td>
+<td>HOHONET_v21_batch14_current_DSTRUCT_AC_statistics_20261104.zip</td>
+<td>自动/辅助完整物理对底表、52,544旧TARGET指标提取、方法别名、逐图/分层/分项/状态/劳动、精确Q分解、统计代码与说明</td>
+</tr>
+<tr>
+<td>15</td>
+<td>HOHONET_v21_batch15_current_DSTRUCT_AC_mechanisms_and_closeout_20261104.zip</td>
+<td>完整中文报告与离线研究台、12个AC原图案例及既有ABC附录、508旧端点诊断、固定XZ背景分析、科学图、最终独立验收和8个项目入口更新</td>
+</tr>
+</tbody></table>
+<p>每包带 <code>delivery/BATCH_13_FILES.csv</code> 等相应文件清单，记录ZIP成员、字节数和SHA256。三个包的外部大小与SHA256见单独随包提供的 <code>HOHONET_v21_batches13_15_DOWNLOAD_INDEX.csv</code>。清单为校验提供身份，不依赖本次临时目录。</p>
+<p>解压全部三包后，打开：</p>
+<p><code>research/workers/current_dstruct_ac_final_20261104/workbench/index.html</code></p>
+<p><a href="../REPORT_ZH.html">中文报告</a>与<a href="../mechanisms/CURRENT_DSTRUCT_AC_ATLAS.html">完整原图图册</a>可离线阅读。阅读不要求重新运行分析；<a href="../INSTALL_AND_RUN_ZH.html">运行说明</a>明确区分重聚合、原生补充和既有端点诊断重放。</p>
+<h2>大文件与可复现性</h2>
+<p>CSV/JSON的大表保留gzip形式，不只交付均值。自动和辅助完整物理对各自保存；旧TARGET指标合并提取保留全部52,544行。按源池拆分的重复临时提取缓存、Python缓存和运行日志不再重复装包；恢复源分片的固定版本清单与代码均在包内。已提取合并数据足以正常重聚合，不需先下载整个历史指标库。</p>
+<p><a href="../SOURCE_INDEX.csv">SOURCE_INDEX.csv</a>汇总实际使用的固定main源文件、08–12批增量及本轮冻结快照。各模块还有逐端点、逐原图、逐池和逐指标分片清单。必要源代码仍来自已有仓库底座，不在ZIP里复制整个Git仓库。</p>
+<p>本轮新数据均位于专题目录；第15批列出的已有文件更新仅添加采用说明和入口，旧嵌入数据未改。可核对<a href="INTEGRATED_PROJECT_FILES.csv">项目入口变更清单</a>与<a href="../DELIVERY_CHECKS.json">最终验收</a>。</p>
+</main></body></html>

@@ -1,0 +1,62 @@
+{
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "checks": [
+    {
+      "path": "research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json",
+      "status": "matches",
+      "expected_sha256": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37",
+      "observed_sha256": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37"
+    },
+    {
+      "path": "research/data/releases/v2.1/admitted_space_extension/pools/INPUT_SNAPSHOT.json",
+      "status": "matches",
+      "expected_sha256": "f41f68d3d7ca8773d9d7b8fc47b6b829df1554559799ca5bc9b899cb309b23b6",
+      "observed_sha256": "f41f68d3d7ca8773d9d7b8fc47b6b829df1554559799ca5bc9b899cb309b23b6"
+    },
+    {
+      "path": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/LABELS_ALL_LOBO.csv.gz",
+      "status": "matches",
+      "expected_sha256": "3ba2291f1d07a03712435e516691db1365067ab9cfda2b5bb2820320d89818d4",
+      "observed_sha256": "3ba2291f1d07a03712435e516691db1365067ab9cfda2b5bb2820320d89818d4"
+    },
+    {
+      "path": "research/workers/personnel_ac_v21_20261030/stage00_intake/FINAL_LABELS_FOR_AC_ALL_LOBO.csv.gz",
+      "status": "matches",
+      "expected_sha256": "9dae84a66f221acd6990dd2818a0ecafa4b5c2fec5480cdb3ef1ab3864b0b714",
+      "observed_sha256": "9dae84a66f221acd6990dd2818a0ecafa4b5c2fec5480cdb3ef1ab3864b0b714"
+    },
+    {
+      "path": "research/workers/personnel_ac_v21_20261030/stage01_registered/AC_EVENTS.csv.gz",
+      "status": "matches",
+      "expected_sha256": "6005b93a6a7a7d950bd5dcf0cdf7866a82d4e02092480aa740c3e069d3e42f9d",
+      "observed_sha256": "6005b93a6a7a7d950bd5dcf0cdf7866a82d4e02092480aa740c3e069d3e42f9d"
+    },
+    {
+      "path": "research/workers/personnel_ac_v21_20261030/stage01_registered/TEAM_REQUESTS.csv.gz",
+      "status": "matches",
+      "expected_sha256": "c45aa60529e7cea7c4f4042b65deb518d9dbeaf827d4cab6d819f0a70a342080",
+      "observed_sha256": "c45aa60529e7cea7c4f4042b65deb518d9dbeaf827d4cab6d819f0a70a342080"
+    },
+    {
+      "path": "research/workers/personnel_ac_v21_20261030/stage01_registered/DESIGN_LINKS.csv.gz",
+      "status": "matches",
+      "expected_sha256": "48127e034187aa1086762b595e86f2be47fc6c6a105d41f459cd1bb721fbc77f",
+      "observed_sha256": "48127e034187aa1086762b595e86f2be47fc6c6a105d41f459cd1bb721fbc77f"
+    },
+    {
+      "path": "research/same_room/same_room_current_classes_v2_20261023/code/engine/new_team_engine.py",
+      "status": "matches",
+      "expected_sha256": "770cd316d5947fbf705ce657dc36b72e94dd344c5f1498a75d75b76afdf3a2fc",
+      "observed_sha256": "770cd316d5947fbf705ce657dc36b72e94dd344c5f1498a75d75b76afdf3a2fc"
+    },
+    {
+      "path": "research/workers/personnel_v21_reselection_20261029/experiment/benchmark_engine.py",
+      "status": "matches",
+      "expected_sha256": "36e1d83177709365622e0b31de51f3eae6abe391bad7a1b46d1c64ca5979d358",
+      "observed_sha256": "36e1d83177709365622e0b31de51f3eae6abe391bad7a1b46d1c64ca5979d358"
+    }
+  ],
+  "changed_sources": 0,
+  "missing_sources": 0,
+  "note": "No automatic replacement or reference/classification change. Use the input manifest to restore missing source files at the pinned commit."
+}
