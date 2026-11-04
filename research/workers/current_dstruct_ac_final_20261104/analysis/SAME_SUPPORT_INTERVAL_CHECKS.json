@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "point_estimates_changed": 0,
+  "tables": [
+    {
+      "table": "SIX_DIRECTION_Q_BY_BUDGET.csv",
+      "status": "already_verified_unchanged",
+      "sha256": "aaa59f2cbf5cd3356d9a4c760052ddffae4484a6693fcb91c6bb36793e78ccd3"
+    },
+    {
+      "table": "COMPONENT_SUMMARIES.csv.gz",
+      "reused_identical_image_value_intervals": 3038,
+      "intervals_with_previous_Monte_Carlo_only_differences": 1888,
+      "maximum_removed_interval_only_difference": 4.919931578976563,
+      "point_estimates_changed": 0
+    },
+    {
+      "table": "CONDITION_STRATIFIED_Q.csv",
+      "reused_identical_image_value_intervals": 1088,
+      "intervals_with_previous_Monte_Carlo_only_differences": 430,
+      "maximum_removed_interval_only_difference": 3.4603921320798676,
+      "point_estimates_changed": 0
+    },
+    {
+      "table": "RECORDED_LABOR_AND_JOINT_Q.csv",
+      "reused_identical_image_value_intervals": 96,
+      "intervals_with_previous_Monte_Carlo_only_differences": 72,
+      "maximum_removed_interval_only_difference": 23.874902083334234,
+      "point_estimates_changed": 0
+    },
+    {
+      "table": "GAP_WEIGHTING_SENSITIVITY.csv",
+      "reused_identical_image_value_intervals": 44,
+      "intervals_with_previous_Monte_Carlo_only_differences": 26,
+      "maximum_removed_interval_only_difference": 0.3290197188445605,
+      "point_estimates_changed": 0
+    },
+    {
+      "table": "COMPONENT_SUMMARIES.csv.gz",
+      "metric": "delta_B8L2",
+      "identity": "same Q as SIX_DIRECTION_Q_BY_BUDGET.csv",
+      "aligned_rows": 3172,
+      "intervals_corrected": 120,
+      "maximum_removed_interval_only_difference": 0.6904610974313385,
+      "point_estimates_changed": 0,
+      "per_image_support_and_value_check": "passed"
+    }
+  ]
+}

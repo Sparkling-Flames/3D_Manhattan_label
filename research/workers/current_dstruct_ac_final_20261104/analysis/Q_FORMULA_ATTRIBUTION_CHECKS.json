@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "scored_pair_versions": 64213,
+  "score_formula_max_absolute_residual": 5.684341886080802e-14,
+  "attribution_max_absolute_residual": 8.498757253505573e-14,
+  "feature_inputs": [
+    "iou_2d",
+    "S_bottom_deg",
+    "dir",
+    "Hmean",
+    "Hcenter"
+  ],
+  "interpretation": "algebraic finite-change decomposition, not causal, not structural mediation",
+  "unchanged_missing_Q_policy": true,
+  "physical_endpoint_scores_replaced": 0,
+  "new_physical_endpoints": 0,
+  "score_definition": "Q=100 I/[I+hypot(1-I+I*(S^2/32),I*(1.5 D^2/(D^2+64)))+I*((Hm/0.8)^2+(Hc/0.25)^2)]"
+}

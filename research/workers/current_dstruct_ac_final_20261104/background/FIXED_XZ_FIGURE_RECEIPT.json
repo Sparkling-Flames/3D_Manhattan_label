@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "event_ids": [
+    "ACG_c49c5c8dde3e059485cb0a82",
+    "ACG_f16945ce9cbf4d52b667f651"
+  ],
+  "block_id": "ACG_BLOCK_3f29e4cd489ab2fb5894",
+  "endpoint_bindings": [
+    {
+      "event_id": "ACG_c49c5c8dde3e059485cb0a82",
+      "arm": "A",
+      "team_key": "q9vSo1VnCiC-30__manual__4ca90db796__3510ad2c98d27e9cce39",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_c49c5c8dde3e059485cb0a82",
+      "arm": "C",
+      "team_key": "q9vSo1VnCiC-30__manual__4ca90db796__83b8e0369a43f5e79476",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_f16945ce9cbf4d52b667f651",
+      "arm": "A",
+      "team_key": "q9vSo1VnCiC-30__manual__4ca90db796__b3a92d208d448f28eabd",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_f16945ce9cbf4d52b667f651",
+      "arm": "C",
+      "team_key": "q9vSo1VnCiC-30__manual__4ca90db796__1877671999f2e3d240ef",
+      "member_reference_score_geometry_binding": "passed"
+    }
+  ],
+  "input_sources": [
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/ILLUSTRATIVE_FIXED_XZ_CASE.json",
+      "sha256": "ca83ff9e3e3dcbb6aa656b14457290f808244ce8a7ce04970b078ae3133799cc"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/BACKGROUND_EXPLANATORY_CASES.csv.gz",
+      "sha256": "e6e44b96ff61706b4d52160d730a6a2da8093894d4fa3d92068c3614a5c0a70e"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/inputs/SELECTED_POOLS.json.gz",
+      "sha256": "159a25f74e9dacccc1167ec9d52c9260b4e09438dec8567651b2839d15cffea6"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/endpoints/ENDPOINT_SCALARS.csv.gz",
+      "sha256": "4ab2986a081f88f12a592ca36d08aa1aed0b30cb8a403bd041b3d4e3d175e6d8"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/endpoints/ENDPOINT_GEOMETRY.csv.gz",
+      "sha256": "135e85ae9a66f563f0b759fe1e41d804f5c2acb1c1f01495d1f9be09ac297901"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/source/ORIGINAL_IMAGE_INDEX.csv",
+      "sha256": "d16c54ccc542837cab36cc3199ec09501d8e12892e71df2acb23a4cac43862b5"
+    }
+  ],
+  "original_sha256": "3b24020585ef3a707de353519a730bd066d00653dd5dccdbac8f123e630394fa",
+  "original_crc32": "3a53adfa",
+  "font_family": "Noto Sans CJK SC",
+  "figure": "FIXED_XZ_SAME_D_COMPOSITION.png",
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_team_selections": 0,
+  "frozen_analysis_or_mechanism_files_modified": false,
+  "visual_inspection": "PNG inspected: complete originals/overlays/BEV, readable labels and exact values; ASCII D labels, missing rings remain unconnected"
+}

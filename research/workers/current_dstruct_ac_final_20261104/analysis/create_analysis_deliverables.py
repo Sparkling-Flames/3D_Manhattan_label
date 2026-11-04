@@ -1,0 +1,257 @@
+"""Produce Chinese interpretation tables and documentation from frozen results."""
+from __future__ import annotations
+
+import json
+import platform
+import numpy as np
+import pandas as pd
+
+from ac_common import *
+from summarize_ac import cohorts
+
+
+def select(df, **where):
+    out = df
+    for key, value in where.items():
+        out = out.loc[out[key].eq(value)]
+    return out.copy()
+
+
+def markdown(df, columns, digits=3):
+    head = [label for _, label in columns]
+    lines = ["| " + " | ".join(head) + " |", "| " + " | ".join(["---"] * len(head)) + " |"]
+    for row in df.to_dict("records"):
+        vals = []
+        for name, _ in columns:
+            x = row.get(name)
+            if x is None or (not isinstance(x, str) and pd.isna(x)):
+                v = "—"
+            elif isinstance(x, (float, np.floating)):
+                v = f"{x:.{digits}f}"
+            else:
+                v = str(x)
+            vals.append(v.replace("|", "/").replace("_to_", "→"))
+        lines.append("| " + " | ".join(vals) + " |")
+    return "\n".join(lines)
+
+
+def main():
+    q = read_csv(HERE / "SIX_DIRECTION_Q_BY_BUDGET.csv")
+    core = select(q, analysis_cohort=COMBINED, version="automatic", scope="primary", support="original_common")
+    low = select(q, analysis_cohort=LEGACY, version="automatic", scope="primary", support="original_common")
+    low = low.loc[low.n.isin([6, 8, 10]) & low.n.eq(2 * low.m)].copy()
+    for table in [core, low]:
+        table["n_m"] = table.n.astype(str) + "/" + table.m.astype(str)
+        table["Q_CI95"] = table.apply(lambda r: f"[{r.cluster_bootstrap_low:.3f}, {r.cluster_bootstrap_high:.3f}]" if pd.notna(r.cluster_bootstrap_low) else "—", axis=1)
+        table["images_buildings"] = table.images.astype(int).astype(str) + "/" + table.buildings.astype(int).astype(str)
+        table["up_down_small"] = table.apply(lambda r: f"{int(r.up_gt_1p0_images)}/{int(r.down_lt_minus_1p0_images)}/{int(r.within_pm_1p0_images)}", axis=1)
+        table["strict_signs"] = table.apply(lambda r: f"{int(r.positive_images)}/{int(r.negative_images)}", axis=1)
+    csv(HERE / "SMALL_BUDGET_SIX_DIRECTION_RESULTS.csv", low)
+
+    labor = read_csv(HERE / "RECORDED_LABOR_AND_JOINT_Q.csv")
+    core_t = select(labor, analysis_cohort=COMBINED, version="automatic", scope="primary", Q_labor_support="same_pairs_Q_and_labor")
+    csv(HERE / "CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv", core_t)
+    pair = read_csv(HERE / "PHYSICAL_PAIRS_AUTOMATIC.csv.gz")
+    d = cohorts(pair)
+    exclusion = []
+    for key, g in d.groupby(["analysis_cohort", "scope", "condition", "n", "m", "class_pair"], dropna=False, sort=True):
+        meta = dict(zip(["analysis_cohort", "scope", "condition", "n", "m", "class_pair"], key))
+        for support, arms, flag in [("whole_team_single_source", ["A", "C"], "time_whole_single_source"),
+                                    ("replacement_blocks_single_source", ["X", "Z"], "time_blocks_single_source")]:
+            required = int(g.n.iloc[0] if arms[0] == "A" else g.m.iloc[0])
+            complete = g[arms[0] + "_known_positive_time_n"].eq(required) & g[arms[1] + "_known_positive_time_n"].eq(required)
+            eligible = truth(g[flag])
+            reason = np.select([eligible, ~complete], ["eligible_complete_positive_same_single_source", "incomplete_or_nonpositive_member_record"], default="complete_but_mixed_or_nonmatching_sources")
+            for why in sorted(set(reason)):
+                z = g.loc[reason == why]
+                exclusion.append(dict(meta, labor_support=support, reason=why, physical_pairs=len(z), images=z.image.nunique(), buildings=z.building.nunique()))
+    csv(HERE / "LABOR_EXCLUSION_REASONS.csv", pd.DataFrame(exclusion))
+
+    manual = read_csv(HERE / "MANUAL_ORDER_SUPPORT_DECOMPOSITION.csv")
+    manual = select(manual, analysis_cohort=LEGACY)
+    manual = manual.loc[manual.direction.isin(["C1_to_C2", "C1_to_C3", "C2_to_C3"])]
+    mk = ["scope", "n", "m", "class_pair", "direction"]
+    changed = None
+    for component, short in [("automatic_original_common", "original"), ("assisted_new_common", "new"), ("assisted_expanded_common", "expanded")]:
+        z = manual.loc[manual.support_component.eq(component)].set_index(mk)[["image_equal_mean", "images", "buildings", "physical_pairs", "wholly_new_images"]].add_prefix(short + "_")
+        changed = z if changed is None else changed.join(z)
+    changed = changed.loc[changed.new_physical_pairs.gt(0)].reset_index()
+    changed["mean_direction_flip"] = changed.original_image_equal_mean * changed.expanded_image_equal_mean < 0
+    csv(HERE / "MANUAL_SUPPORT_CHANGED_CONDITIONS.csv", changed)
+
+    im = read_csv(HERE / "COMPONENT_IMAGE_EFFECTS.csv.gz")
+    im = select(im, analysis_cohort=COMBINED, version="automatic", scope="primary", n=20, m=7, class_pair="C2_C3", support="original_common")
+    im["dQ"] = im.delta_B8L2
+    bad = im.loc[im.dQ.lt(0)].copy().sort_values("dQ")
+    att = read_csv(HERE / "Q_FORMULA_ATTRIBUTION_IMAGES.csv.gz")
+    att = select(att, analysis_cohort=COMBINED, version="automatic", scope="primary", n=20, m=7, class_pair="C2_C3")
+    terms = [c for c in att if c.startswith("Q_term_")]
+    bad = bad.merge(att[["image", "building"] + terms], on=["image", "building"], validate="one_to_one")
+    fields = ["image", "building", "official_difficulty", "room_type", "physical_pairs", "dQ", "delta_IoU3D100", "delta_iou_2d", "delta_S_bottom_deg", "delta_dir", "delta_Hmean", "delta_Hcenter", "delta_nodes"] + terms
+    csv(HERE / "C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv", bad[fields])
+
+    condition = read_csv(HERE / "CONDITION_STRATIFIED_Q.csv")
+    c23 = select(condition, analysis_cohort=COMBINED, version="automatic", scope="primary", n=20, m=7, direction="C2_to_C3")
+    difficulty = select(c23, stratum_type="official_difficulty")
+    difficulty["order"] = difficulty.stratum.map({"简单": 0, "中等": 1, "困难": 2})
+    difficulty = difficulty.sort_values("order")
+    structure = select(c23, stratum_type="structural_condition")
+    rooms = select(c23, stratum_type="room_type")
+    bands = read_csv(HERE / "HIGH_SCORE_BAND_EFFECTS.csv")
+    bands = select(bands, analysis_cohort=COMBINED, version="automatic", scope="primary", n=20, m=7, direction="C2_to_C3", stratum_type="symmetric_Q_band")
+    bands["order"] = bands.stratum.map({"M<60": 0, "60<=M<80": 1, "80<=M<90": 2, "M>=90": 3})
+    bands = bands.sort_values("order")
+    comp = read_csv(HERE / "COMPONENT_SUMMARIES.csv.gz")
+    comp = select(comp, analysis_cohort=COMBINED, version="automatic", scope="primary", n=20, m=7, direction="C2_to_C3", support="original_common")
+    chosen = ["delta_IoU3D100", "delta_iou_2d", "delta_S_bottom_deg", "delta_dir", "delta_Hmean", "delta_Hcenter", "delta_omission", "delta_extension", "delta_nodes", "delta_fusion_turn_n", "delta_fusion_short_turn_edges", "delta_ref_node_recall_9", "delta_ref_edge_recall_9", "delta_matched_ref_top_abs_deg", "delta_matched_ref_bottom_abs_deg", "delta_matched_ref_horizontal_abs_deg", "delta_matched_ref_pair_fraction"]
+    comp = comp.loc[comp.metric.isin(chosen)].copy()
+    names = {"IoU3D100": "3D IoU（百分点）", "iou_2d": "2D IoU（0–1）", "S_bottom_deg": "底边角误差（°）", "dir": "方向误差（°）", "Hmean": "全局高度偏差", "Hcenter": "局部高度偏差", "omission": "遗漏面积比例", "extension": "外扩面积比例", "nodes": "选中节点数", "fusion_turn_n": "有效转折数", "fusion_short_turn_edges": "短转折边数", "ref_node_recall_9": "参考节点召回（9°）", "ref_edge_recall_9": "参考边召回（9°）", "matched_ref_top_abs_deg": "匹配参考上边误差（°）", "matched_ref_bottom_abs_deg": "匹配参考下边误差（°）", "matched_ref_horizontal_abs_deg": "匹配参考水平误差（°）", "matched_ref_pair_fraction": "匹配参考角点比例"}
+    comp["metric_zh"] = comp.metric.map(lambda c: names.get(c.removeprefix("delta_"), c))
+    cfmt = [("n_m", "n/m"), ("direction", "方向"), ("images_buildings", "图/楼"), ("common_Q_physical_pairs", "共同Q物理对"), ("image_equal_mean", "平均ΔQ"), ("Q_CI95", "楼聚类95%区间"), ("abs_dQ_image_equal_mean", "平均绝对变化"), ("up_down_small", "升/降/小变（±1）")]
+    lowfmt = [("n_m", "n/m"), ("direction", "方向"), ("images_buildings", "图/楼"), ("image_equal_mean", "平均ΔQ"), ("abs_dQ_image_equal_mean", "平均绝对变化"), ("strict_signs", "严格正/负图数")]
+    tfmt = [("n", "n"), ("m", "m"), ("direction", "方向"), ("labor_support", "劳动口径"), ("eligible_physical_pairs", "Q/T共同对"), ("images", "图"), ("buildings", "楼"), ("image_equal_mean", "ΔT秒"), ("Q_image_equal_mean", "同支持ΔQ")]
+    tforward = core_t.loc[core_t.direction.isin(["C1_to_C2", "C1_to_C3", "C2_to_C3"])].copy()
+    tforward["labor_support"] = tforward.labor_support.map({"whole_team_single_source": "全队同源", "replacement_blocks_single_source": "替换块同源"})
+    report = f"""# 当前 DSTRUCT 直接 AC：数值、条件规律与支持说明
+
+## 1. 主要结论
+
+**在当前合法的存量团队及明确补齐的容量缺口中，C2→C3 有较稳定的平均升质方向；C1→C2 更依赖具体图片；C1→C3 在小预算存量上已有比大预算更广的图片支持。** 这些是保持同图、同参考、同 n/m、同 D 后的直接换块结果。反向结果完全相反；不把六个方向当六次独立验证，也不把不同比较池的结果拼成所有人的统一质量排名。
+
+20/7 C2→C3 在84图/21楼上的图均ΔQ为+4.484，77图严格为正、7图为负；按预先固定±1Q分为62图改善、3图下降、19图小变化。困难图绝对变化更大，但方向更不稳定。7张降Q图均同时提高3D IoU、增大方向误差；这种分项取舍解释了部分负例，不能只用面积或节点数评价融合变化。全队同源共同Q/T的40图中，平均记录劳动增加121.050秒，因此现有结果不支持“普遍更省劳动”或“普遍更快达成共识”。
+
+来源：[六方向全预算表](SIX_DIRECTION_Q_BY_BUDGET.csv)、[条件表](CONDITION_STRATIFIED_Q.csv)、[七张降Q图分项](C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv)、[劳动共同支持](CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv)。
+
+## 2. 数据身份、复用与计算口径
+
+输入main固定为 `48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b`；各输入路径、大小和SHA256见[输入清单](ANALYSIS_INPUT_MANIFEST.csv)。旧TARGET的52,544个方法事件先由独立登记审计按当前目标图对应LOBO标签检查。当前通用AC合法28,420个物理对，其中主目标26,809个、其它目标1,611个。43个事件改映射到另一合法方向，原始身份保留。23,358个仍满足其原特定设计合同，另外5,062个作为通用AC保留，不能继续声称满足旧纯类/配额合同。
+
+批12严格ABC的6,400个A/C、B/C方法腿仅对应4,096个物理对，在独立来源层复用；这不是重算严格ABC。仅14/7和20/7的容量缺口新增704个AC物理对、1,408支团队，预先固定种子202611041301，共7图/4楼。新端点1,388个有Q、20个无连接；全部为自然算法结果。本模块没有新排序、强制连接、坐标修正或重评分。总共35,524个方法别名对应33,220个物理对；自动共同Q32,086对，批准人工连接版本32,127对。
+
+旧存量的统计对象是**当前标签下合法存量团队的条件分析**，不是按当前类别重新均匀抽样。存量先物理对去重，再图内平均；补缺队列按预定设计先D背景平均、再X/Z块等权、再图片平均。多参考目标先在目标池内计算，随后图片等权；主目标与其它目标分开。主效应为图片等权平均，另报建筑等权均值，区间使用2,000次建筑聚类重采样，不把共享成员/图片的大量团队当独立样本。
+
+“支持较足”仅是≥10图且≥5楼的阅读标记；“稀少”表示低于此阈值，不是自动否定结果。Q缺失、几何无效、无连接分别保留。平均绝对变化是先对每个物理对取绝对值，再按同一层级平均；并非图均ΔQ再取绝对值。
+
+## 3. 六个方向：两个补齐容量后的核心预算
+
+以下为普通Manual原目标、自动版、原共同Q支持，旧存量与补缺图合并展示。反向为同一物理对的代数视图，支持和绝对变化完全相同；区间也直接反号交换端点。
+
+{markdown(core.sort_values(['n','direction']), cfmt)}
+
+14/7 C2→C3登记84图，其中1图没有双端Q，因此Q均值为83图；20/7为84图。C1↔C3的大预算只有7图/5楼，14/7的区间跨零，不能视作大范围稳定性已经建立。20/7 C1→C2的44图里严格正负为30/14，按±1则21/6/17，平均升质伴随明显图片差异。
+
+两个预算的图池、D分布与具体团队不完全相同，14/7与20/7的数值差不能直接称作“替换比例效应”。补缺范围每格仅32对；旧队列与新队列身份在底表分开。剩余物理对等权敏感性与冻结块等权主值的最大核心差约0.024Q，六个正向的符号不变，见[GAP_WEIGHTING_SENSITIVITY.csv](GAP_WEIGHTING_SENSITIVITY.csv)。
+
+## 4. 小预算不是空白：尤其C1↔C3
+
+以下全部来自旧事件在当前标签下仍合法的自动结果，没有为本节新增团队。C1→C3的6/3、8/4、10/5分别有37/17、26/10、20/7图/楼支持，图均分别+9.295、+15.417、+8.596Q；严格正图35/37、24/26、19/20。它们提供了当前C1↔C3直接换块的实质证据，不能只展示大预算7图后说C13没有支持。
+
+{markdown(low.sort_values(['n','direction']), lowfmt)}
+
+6/3 C2↔C3只有4图/4楼，需与其余条件区别；同一n/m的不同类对也并非总在同一图池和背景上。所有预算、方向和零共同Q条件完整保存在全预算表，不只保留正向或显著条件。
+
+## 5. 难度、结构和用途：规律在哪里成立
+
+20/7 C2→C3按当前官方难度分层如下。绝对变化随难度升高明显增大；有符号平均值并非简单单调，因为中等图的平均升质略低于简单图。困难图10张中7正3负，简单图57张中56正1负：**困难更容易发生较大变化，同时更可能出现方向分歧**。
+
+{markdown(difficulty, [('stratum','难度'),('physical_pairs','共同Q对'),('images','图'),('buildings','楼'),('image_equal_mean','平均ΔQ'),('mean_absolute_pair_effect_image_equal','平均绝对变化'),('positive_images','严格正'),('negative_images','严格负')])}
+
+边界自遮挡条件12图/8楼平均ΔQ+9.893、平均绝对变化15.290；无短转折且无边界遮挡的65图/19楼分别+3.639与4.000；仅短转折7图/6楼分别+3.064与5.416。难度和结构标签重叠，这些分层支持条件描述，不能把两者各自宣称为独立因果因素。
+
+C1→C2提供有意义的反例：20/7简单32图平均+0.613、中等6图+9.852、困难6图+1.790。困难中3正3负，所以“越难，换入较高编号类别越有利”不成立。中等条件的较大正均值应保留，但6图/4楼的范围也应同时写明。
+
+用途层中，20/7 C2→C3的卧室22图/13楼全部正向，图均+3.597；通行与连接14图/11楼全部正向，+7.515；卫浴16图/9楼为14正2负，+4.744；厨房与用餐6图/5楼为4正2负，+2.313。特殊用途只有2图/1楼、均值−0.158，不应由此否定总体，也不能把这一小格当稳定用途效应。用途×难度交叉表已输出，保留每格图楼支持，不强求全格都有结论。
+
+混合背景没有被剔除。20/7 C23在当前已知混合D的82图中均值+4.565，在纯C2背景66图中+4.826；两组图片和X/Z分布不同、且图片可重叠，因此此处只说明混合D上的现象确实存在，不把差值解释为受控背景效应。完整D成员与类别人数、未知标签保存在物理对表；固定X/Z比较D的可追溯局部证据见[机制图册](../mechanisms/CURRENT_DSTRUCT_AC_ATLAS.html)。
+
+## 6. 高分集中与同节点：能够解释什么
+
+采用端点对称水平M=(Q_A+Q_C)/2，避免只按A基线画图后把回归均值误当单向类别机制。20/7 C23的四个M层如下（同一图片可在不同层出现，不能把层内图数相加）。
+
+{markdown(bands,[('stratum','对称Q水平'),('physical_pairs','物理对'),('images','图'),('buildings','楼'),('image_equal_mean','平均绝对ΔQ')])}
+
+两端都≥90时，59图上平均绝对变化2.064Q；至少一端<90时，43图上11.012Q。固定同图、n/m、类对、至少5个非恒定物理对的84图内，M与绝对变化的Spearman相关62图为负、22图为正，均值−0.280。这是高端变化较小的描述证据。
+
+由于Q∈[0,100]，恒有 `|ΔQ| ≤ 2 min(M,100−M)`，接近100时本来就缺少变化空间；跨完整M区间也不是单调关系。因此高分集中可解释幅度受到限制，不能单独证明类别或投票机制，更不能决定严格ABC里“同类变化”与“跨类变化”的大小顺序。既有jtcxE69GiFV-13例的A/B/C为72.914/82.144/72.322，均非双端90分以上，仍出现既有严格ABC同类大于跨类现象，需结合具体结构和成员解释；该ABC统计只引用批12既有结果。
+
+20/7 C23的1,829个共同Q对中，1,632对选中节点数相同；图片等权同节点比例87.454%。同节点子集覆盖82图，图均ΔQ仍+3.026，平均绝对变化4.378，3D IoU+1.882个百分点，底边误差−0.156°、方向误差−0.317°。同节点A/C仍有平均BEV差异0.0303、角点对角距离0.741°。261个|ΔQ|>10的物理对中127个节点数不变；这是共享队对的描述计数，不是127次独立实验。**节点数不变并不表示角点定位、边界、方向、范围或对应不变。**
+
+来源：[高分层](HIGH_SCORE_BAND_EFFECTS.csv)、[同图关联](WITHIN_IMAGE_CEILING_ASSOCIATIONS.csv.gz)、[同节点分项](SAME_NODE_COUNT_COMPONENTS.csv.gz)。
+
+## 7. 几何分项及七张降Q图
+
+20/7 C2→C3、84图/21楼共同Q支持上的主要分项变化如下。节点数、转折数和短边数是表达差异，不能直接以“更多”当“更准确”；参考召回和误差帮助判断实际含义。
+
+{markdown(comp,[('metric_zh','分项'),('image_equal_mean','平均C−A'),('images','实际指标图数'),('positive_images','值增图数'),('negative_images','值减图数')],6)}
+
+新补队的参考匹配分项已直接使用冻结的既有测量函数从保存几何补齐，1,388个有Q的新端点全部有上/下/水平误差及匹配比例，684个新共同Q对双端齐全。参考匹配比例本身提升约0.030，因此上/下/水平误差并不保证是在同一批参考角点上比较。必须同时查看匹配比例与A/C直接几何距离，不能将不同匹配集合的均值误作逐角点同支撑改善。
+
+以下是20/7 C23全部七张图均降Q图片，未只挑最大的负例。四张处于±1Q的小变化范围，三张下降超过1Q；七张3D IoU都上升、方向误差都增加。
+
+{markdown(bad,[('image','图片'),('official_difficulty','难度'),('dQ','ΔQ'),('delta_IoU3D100','Δ3D IoU'),('delta_S_bottom_deg','Δ底边误差°'),('delta_dir','Δ方向误差°'),('delta_nodes','Δ节点数')])}
+
+为避免只凭总分猜机制，已对既有Q公式的五个输入作精确算术分解：对所有120种输入代入次序等权平均，五项严格相加回实际ΔQ。20/7 C23均值+4.484分，分为范围+1.397、底边+0.647、方向+2.351、全局高度+0.022、局部高度+0.066。七张负例的逐图分解也随表保留。中间混合输入仅为评分函数中的代数计算，**不是新的真实几何，也不是因果中介分析**。公式还原最大残差5.69×10⁻¹⁴，分解求和最大残差8.50×10⁻¹⁴。
+
+七图中六图的方向项平均贡献为负；VFuaQ6m2Qom-04是需要保留的例外：其平均方向误差增加0.941°，但逐对分解后方向项贡献+0.602Q，范围项−0.669、底边项−0.401，合计净−0.447Q。评分非线性、各物理对的输入位置和敏感度不同，**先逐对分解再平均**不等于将平均误差代入公式。由此不能把全部七图统一归因为方向损失，也不能把均值上某个分项改善直接认定为正向Q贡献。见[完整评分取舍图](figures/A02_QUALITY_COMPONENT_TRADEOFFS.png)。
+
+原图、D/X/Z人员块、完整标注、融合前后、局部节点及映射证据统一在[机制图册](../mechanisms/CURRENT_DSTRUCT_AC_ATLAS.html)；本模块逐图表提供数值追溯，案例不能替代全量条件汇总。
+
+## 8. 记录劳动：同源、同支持后才联合解释
+
+全队口径要求A和C全部成员有正值记录且共同使用一种来源；块级口径要求X和Z完整正值同源，利用完全相同D相消，即使D耗时不可得也可以识别ΔT_XZ。两者分别报告，均不把缺失时间当零，不称为完整workflow成本，也不包含此次人工连接的操作耗时。其它目标的记录是源标注劳动，不自动视为该目标标注耗时。
+
+{markdown(tforward.sort_values(['n','direction','labor_support']),tfmt)}
+
+C1↔C2、C1↔C3在这两个核心预算下没有满足上述同源规则的共同Q/T支持，原因包括成员记录不完整及混合/不匹配来源，见[劳动排除原因](LABOR_EXCLUSION_REASONS.csv)。不能从这里推断C1没有劳动，或把缺失值填零形成速度优势。
+
+20/7 C23全队共同支持561对/40图/18楼，ΔT+121.050秒、同支持ΔQ+4.406，几何平均整队T比1.029；其中13图Q升且T不升，25图Q升且T也升。块级共同支持723对/43图/18楼，ΔT+125.380秒、同支持ΔQ+4.757，块劳动比1.110。两套支持不同，不把两均值作简单差分。总体可说部分直接换入获得质量增益并伴随较多记录劳动，也存在升质未增劳动的图片；不能称为普遍更快趋近GT。
+
+## 9. 输出状态与批准人工连接
+
+20/7 C23的1,882个登记物理对中，1,829对双端Q；32对从缺Q到有Q，20对从有Q到缺Q，1对两端缺Q。其中无连接→有Q为13对，有Q→无连接18对；不足四节点→有Q19对。质量共同支持平均为正不意味着每个输出状态也改善。状态计数、涉及图片与图片等权转移率分别见[输出状态](OUTPUT_STATE_TRANSITIONS.csv)和[端点状态](UNIQUE_ENDPOINT_STATUS_BY_BUDGET.csv)。
+
+批准人工顺序仅命中当前合法旧事件64个，增加41个共同Q对（主目标22、其它目标19），分布7图/4楼；原共同Q上的每对分数变化均为0。11个受支持扩展影响的正向条件均没有图均符号翻转；例如主目标28/2 C13从原15图+1.485，经新增1图+64.923，扩展为16图+5.450。这个幅度改变来自新增支持，不能写成原来无Q端点获得64.923分“提升”。两个核心预算14/7、20/7自动与人工辅助结果完全相同。
+
+完整原共同/新增共同/扩展条件清单见[人工支持变化表](MANUAL_SUPPORT_CHANGED_CONDITIONS.csv)。此前其它范围的翻向结论不能直接移植到本轮当前标签合法存量。57组人工排序属于定向案例，本轮没有把它当所有失败可修复的依据，也没有扩大人工覆盖范围。
+
+全部固定n的A/C名义票数阈值相同。实际局部节点票数跨过阈值、分组对应改变及连接改变的区分须以原生轨迹为证；对应诊断及不看Q冻结样本结果见 `../mechanisms/`，不能仅由节点数量或Q跳变反推某一机制。
+
+## 10. 与已有研究的关系和可操作认识
+
+严格ABC回答跨类改变是否超过同类改变；直接AC回答这次换入后的有符号变化；联盟实验回答直接组合类别的结果。三者不互相替代。本轮只从批12保存的端点提取直接腿，未重算ABC估计量，未重开联盟、固定配比、人数曲线、RFUSE、JOINT或Q/T选队。
+
+可以据此形成三条当前研究认识。第一，在这些合法存量和明确缺口图上，C2换入C3时最一致的升质涉及方向、范围和边界，困难结构增加变化幅度，也增加取舍和负例。第二，C1→C2的变化更受图条件影响，不能用统一方向掩盖难度/用途内的分歧。第三，C1↔C3已有小预算较广图池的直接AC证据；容量较窄的大预算应作为条件分支，而不是否定全部C13研究。
+
+当前不能回答真实工作流的到达时间、人数递增的共识收敛速度、全库任意团队的预期收益、任意比例的因果效应，或所有无连接结果的可人工修复性。无需为这些未主张的结论新增大池实验。本轮的研究价值在于给出了可追溯的方向、幅度、支持和几何/劳动取舍，允许条件规律和少量反例同时存在。
+
+## 11. 完成与验收
+
+实际运行：225个冻结指标分片恢复/提取、52,544条旧TARGET指标保留、当前合法登记接续、64条批准辅助事件核验、批12直接腿去重、新补队保存几何的既有分项测量、合法劳动逐成员重建、图/楼统计、同支持Q/T、精确评分算术分解。所有旧Q、坐标、参考与排序保持其原版本身份。
+
+独立验收已逐端点回源，并对4,200行六方向表中的1,586个正向有Q条件独立重算，点估计最大误差3.56×10⁻¹⁵；2,100个正反条件的均值/计数/区间反号恒等式、原共同支持跨版本区间及514个同支持original/expanded条件区间全部通过。主表SHA256为 `{sha(HERE / 'SIX_DIRECTION_Q_BY_BUDGET.csv')}`。
+
+本模块验收文件包括 `DATASET_CHECKS.json`、`STATISTICAL_CHECKS.json`、`MAIN_SAME_SUPPORT_INTERVAL_CHECKS.json`、`SAME_SUPPORT_INTERVAL_CHECKS.json`、`FINAL_OUTPUT_CONSISTENCY_CHECKS.json`、`Q_FORMULA_ATTRIBUTION_CHECKS.json`；独立验收在 `../audit/`。执行说明、指标单位和可复现文件入口见[README](README.md)与[字段字典](METRIC_DICTIONARY_ZH.md)。
+"""
+    (HERE / "REPORT_ZH.md").write_text(report, encoding="utf-8")
+
+    findings = [
+        ("C23_20_7", "保持", "20/7 C2→C3在84图/21楼平均+4.484Q，77正7负；±1为62升3降19小变", "SIX_DIRECTION_Q_BY_BUDGET.csv", "COMBINED/automatic/primary/20/7/C2_to_C3/original_common"),
+        ("C13_low_budget", "支持补全", "C13的6/3、8/4、10/5分别37/26/20图，均值+9.295/+15.417/+8.596；不只大预算7图", "SMALL_BUDGET_SIX_DIRECTION_RESULTS.csv", "LEGACY/automatic/primary/original_common"),
+        ("difficulty", "条件变化", "C23困难图绝对变化大且方向更分散；C12不满足越难平均获益越大", "CONDITION_STRATIFIED_Q.csv", "COMBINED/automatic/primary/20/7"),
+        ("ceiling", "限定解释", "高端Q伴随较小幅度，受精确分数上界限制；不能解释所有ABC同类超过跨类次序", "HIGH_SCORE_BAND_EFFECTS.csv", "COMBINED/automatic/primary/20/7/C23"),
+        ("same_nodes", "保持", "同节点82图仍有Q、方向、范围和边界变化；节点数不能替代几何", "SAME_NODE_COUNT_COMPONENTS.csv.gz", "COMBINED/automatic/primary/20/7/C23/same_node_count"),
+        ("seven_drops", "条件变化", "七张C23降Q图全部3D IoU升且方向误差增，三张降幅超过1Q", "C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv", "COMBINED/automatic/primary/20/7/C23"),
+        ("labor", "需改写", "不能称普遍更快或更省劳动；全队同Q/T40图平均+121.050秒，且C1核心对缺合法同源支持", "CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv", "COMBINED/automatic/primary/20/7"),
+        ("manual_extension", "幅度变化", "原共同Q逐对不变；新增41对分布7图4楼，11正向条件无符号翻转，核心预算不受影响", "MANUAL_SUPPORT_CHANGED_CONDITIONS.csv", "LEGACY current-label conditional"),
+        ("convergence", "尚不能判断", "固定n/m直接AC不能回答真实共识随到达顺序或人数的收敛速度", "ANALYSIS_CONTRACT.json", "all"),
+    ]
+    csv(HERE / "KEY_FINDINGS.csv", pd.DataFrame(findings, columns=["finding_id", "assessment_zh", "finding_zh", "source", "condition_filter"]))
+    write_json(HERE / "INTERPRETATION_OUTPUT_CHECKS.json", dict(status="passed", low_budget_six_direction_rows=len(low),
+               core_labor_rows=len(core_t), seven_negative_Q_images=len(bad), all_seven_3D_IoU_up=bool(bad.delta_IoU3D100.gt(0).all()),
+               all_seven_direction_error_up=bool(bad.delta_dir.gt(0).all()), manual_support_changed_forward_conditions=len(changed),
+               changed_mean_signs=int(changed.mean_direction_flip.sum()), report_values_source="frozen tables, no new endpoint/selection/statistical fit"))
+    print("interpretation documents and traceable tables completed", flush=True)
+
+
+if __name__ == "__main__":
+    main()

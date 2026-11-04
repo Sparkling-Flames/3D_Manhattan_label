@@ -1,0 +1,10 @@
+finding_id,assessment_zh,finding_zh,source,condition_filter
+C23_20_7,保持,20/7 C2→C3在84图/21楼平均+4.484Q，77正7负；±1为62升3降19小变,SIX_DIRECTION_Q_BY_BUDGET.csv,COMBINED/automatic/primary/20/7/C2_to_C3/original_common
+C13_low_budget,支持补全,C13的6/3、8/4、10/5分别37/26/20图，均值+9.295/+15.417/+8.596；不只大预算7图,SMALL_BUDGET_SIX_DIRECTION_RESULTS.csv,LEGACY/automatic/primary/original_common
+difficulty,条件变化,C23困难图绝对变化大且方向更分散；C12不满足越难平均获益越大,CONDITION_STRATIFIED_Q.csv,COMBINED/automatic/primary/20/7
+ceiling,限定解释,高端Q伴随较小幅度，受精确分数上界限制；不能解释所有ABC同类超过跨类次序,HIGH_SCORE_BAND_EFFECTS.csv,COMBINED/automatic/primary/20/7/C23
+same_nodes,保持,同节点82图仍有Q、方向、范围和边界变化；节点数不能替代几何,SAME_NODE_COUNT_COMPONENTS.csv.gz,COMBINED/automatic/primary/20/7/C23/same_node_count
+seven_drops,条件变化,七张C23降Q图全部3D IoU升且方向误差增，三张降幅超过1Q,C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv,COMBINED/automatic/primary/20/7/C23
+labor,需改写,不能称普遍更快或更省劳动；全队同Q/T40图平均+121.050秒，且C1核心对缺合法同源支持,CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv,COMBINED/automatic/primary/20/7
+manual_extension,幅度变化,原共同Q逐对不变；新增41对分布7图4楼，11正向条件无符号翻转，核心预算不受影响,MANUAL_SUPPORT_CHANGED_CONDITIONS.csv,LEGACY current-label conditional
+convergence,尚不能判断,固定n/m直接AC不能回答真实共识随到达顺序或人数的收敛速度,ANALYSIS_CONTRACT.json,all

@@ -1,0 +1,30 @@
+{
+  "protocol_id": "current_dstruct_ac_native_mechanism_hash_sample_202611041302",
+  "seed_string": "202611041302",
+  "eligible_cohort": "legacy current-label legal cross-class equal-size direct AC; ordinary manual primary original-target pools; n=14,m=7 and n=20,m=7",
+  "strata": [
+    "n",
+    "m",
+    "pool_id",
+    "current_unordered_class_pair"
+  ],
+  "physical_pair_identity": "canonical unordered exact A/C teams bound to same pool/reference; keep all original event aliases",
+  "choice": "minimum hex SHA256 of UTF8(\"202611041302|\" + canonical_pair_id) within each stratum; tie canonical_pair_id ascending",
+  "outcomes_read_for_selection": false,
+  "failure_status_read_for_selection": false,
+  "reference_points_or_GT_read_for_selection": false,
+  "include_failed_outputs": true,
+  "new_physical_teams": 0,
+  "source_main": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "analysis": [
+    "Native minimum_support must equal ceil(n/2), same in A/C.",
+    "Stable anchored identity: exact same nonempty common-D observation key set (object_id,source_pair_index) in one native group of A and C.",
+    "Record threshold crossing only for stable anchors, plus counts and ambiguity for other overlaps and unanchored groups.",
+    "Common-D coassignment change uses all pairs of exactly shared original observations, not local feature names.",
+    "Connection correspondence compares selected-group order through stable anchored correspondence only when all selected nodes map bijectively; otherwise record unmappable/reconfigured.",
+    "Q jump >=5 and >=10 use absolute C-A only on original jointly scored support; no-Q transitions separately use all frozen selected pairs.",
+    "Aggregate within pool/image, keep n14/m7 and n20/m7 separate, report pooled image/building and co-occurrence counts without a causal claim.",
+    "No independence claim for team pairs sharing people/images; reverse views are algebraically coupled."
+  ],
+  "case_relation": "Post-outcome illustrated cases are separate from this outcome-blind diagnostic sample."
+}

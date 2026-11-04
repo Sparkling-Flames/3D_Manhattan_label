@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "source_cohort": "current_capacity_gap_supplement",
+  "version": "automatic",
+  "automatic_and_existing_assisted_identical": true,
+  "source_hashes": {
+    "analysis/PHYSICAL_PAIRS_AUTOMATIC.csv.gz": "7c8cf73d9748320c0396bf8ea3435aa5f5a43aa8f48de9d372087f6f658a0c5d",
+    "analysis/PHYSICAL_PAIRS_ASSISTED.csv.gz": "06e863cc85f42f032a048702c6e33d29633d370aed778422d4384132d1aacf44",
+    "supplement/EVENTS.csv.gz": "6ebd4fa99be289fbb33eb44ec7b3fb876aa8a0ad76911a708755c121464685c0",
+    "supplement/BLOCKS.csv.gz": "65b3d2dfe42f6df0d1ad852284f95cc96f0cc1496ad889d95cb8012999cff601"
+  },
+  "registered_pairs": 704,
+  "unique_teams": 1408,
+  "images": 7,
+  "buildings": 4,
+  "image_budget_direction_cells": 22,
+  "fixed_XZ_blocks": 290,
+  "common_Q_pairs": 684,
+  "backgrounds_per_block_counts": {
+    "2": 256,
+    "4": 32,
+    "32": 2
+  },
+  "eligible_variation_blocks": 276,
+  "insufficient_Q_variation_blocks": 14,
+  "strict_sign_crossing_blocks": 56,
+  "practical_sign_crossing_pm1_blocks": 24,
+  "strict_sign_crossing_images": 7,
+  "practical_sign_crossing_pm1_images": 5,
+  "score_state_change_blocks": 16,
+  "score_state_change_images": 3,
+  "same_D_class_vector_groups": 492,
+  "same_D_class_vector_eligible_groups": 120,
+  "same_D_class_vector_eligible_blocks": 108,
+  "same_D_class_vector_eligible_images": 7,
+  "same_D_class_vector_eligible_buildings": 4,
+  "same_D_class_vector_strict_crossing_groups": 18,
+  "same_D_class_vector_practical_crossing_groups": 9,
+  "same_D_class_vector_strict_crossing_images": 6,
+  "same_D_class_vector_practical_crossing_images": 4,
+  "same_D_class_vector_strict_crossing_blocks": 18,
+  "same_D_class_vector_practical_crossing_blocks": 9,
+  "max_background_dQ_range": 53.16280547155467,
+  "failures": [],
+  "interpretation": [
+    "All 704 teams comparisons were already registered and computed; no new team or fusion run.",
+    "Counts of 2, 4 and 32 backgrounds per XZ block remain separate. Range grows with opportunity to observe extremes.",
+    "Image summaries first average eligible XZ blocks within image; physical pairs and blocks are not independent images.",
+    "A block with fewer than two common-Q backgrounds has no evaluated range or sign-crossing claim.",
+    "Fixed D class-count subsets describe observed membership changes; no uniform population or causal background-ratio estimand is asserted.",
+    "Explanatory cases were selected after observing outcomes and do not determine team inclusion or primary means."
+  ]
+}

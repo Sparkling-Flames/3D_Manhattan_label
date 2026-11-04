@@ -1,0 +1,171 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>当前 DSTRUCT 直接 AC：分析模块</title><style>*{box-sizing:border-box}body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#20333e;background:#f1f5f6}main{max-width:1200px;margin:24px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:36px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:42px;padding-bottom:9px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:26px}a{color:#0b7369;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:70px}th{background:#edf4f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:14px;margin-bottom:26px}.nav a{margin-right:22px}li{margin-bottom:4px}.equation{overflow:auto;text-align:center;margin:22px 0;padding:5px}.inline-equation{display:inline;vertical-align:middle}details{padding:12px 18px;border:1px solid #d7e1e6;margin:20px 0;background:#f8fbfb}summary{cursor:pointer;font-weight:600}@media(max-width:760px){main{padding:22px 17px;margin:0;border:0}h1{font-size:26px}h2{font-size:22px}}@media print{body{background:#fff}main{border:0;padding:0;max-width:none}.nav{display:none}h2{break-after:avoid}table{font-size:11px}img{max-height:90vh;object-fit:contain}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">直接 AC 研究台</a><a href="../REPORT_ZH.html">完整报告</a><a href="README.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>当前 DSTRUCT 直接 AC：分析模块</h1>
+<p>本目录是本轮数值接续、质量分项、同源记录劳动、条件规律和不确定性分析的完整产物。首先读 <a href="REPORT_ZH.html">REPORT_ZH.md</a>；根目录报告负责与容量审计、原生机制轨迹、原图图册及整批交付衔接。</p>
+<h2>核心入口</h2>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文结果与条件解释</td>
+<td><code>REPORT_ZH.md</code>、<code>KEY_FINDINGS.csv</code></td>
+</tr>
+<tr>
+<td>六方向所有实际预算与支持</td>
+<td><code>SIX_DIRECTION_Q_BY_BUDGET.csv</code></td>
+</tr>
+<tr>
+<td>14/7、20/7及其它核心预算易读表</td>
+<td><code>CORE_READABLE_RESULTS.csv</code>、<code>CORE_SIX_DIRECTION_Q.csv</code></td>
+</tr>
+<tr>
+<td>存量6/3、8/4、10/5全部六方向</td>
+<td><code>SMALL_BUDGET_SIX_DIRECTION_RESULTS.csv</code></td>
+</tr>
+<tr>
+<td>自动与批准辅助版本的逐物理对完整数据</td>
+<td><code>PHYSICAL_PAIRS_AUTOMATIC.csv.gz</code>、<code>PHYSICAL_PAIRS_ASSISTED.csv.gz</code></td>
+</tr>
+<tr>
+<td>原事件身份、登记方向与去重映射</td>
+<td><code>PAIR_EVENT_ALIASES.csv.gz</code>、<code>REGISTERED_ORIENTATION_ENDPOINTS.csv.gz</code></td>
+</tr>
+<tr>
+<td>逐图Q及分项</td>
+<td><code>MAIN_IMAGE_EFFECTS.csv.gz</code>、<code>COMPONENT_IMAGE_EFFECTS.csv.gz</code></td>
+</tr>
+<tr>
+<td>分项汇总及实际指标分母</td>
+<td><code>COMPONENT_SUMMARIES.csv.gz</code>、<code>COMPONENT_NATIVE_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>难度、结构、用途、难度×用途、D和设计合同</td>
+<td><code>CONDITION_STRATIFIED_Q.csv</code>、<code>CONDITION_STRATIFIED_COMPONENTS.csv.gz</code>、<code>CONDITION_IMAGE_EFFECTS.csv.gz</code></td>
+</tr>
+<tr>
+<td>高分集中与同图关联</td>
+<td><code>HIGH_SCORE_BAND_EFFECTS.csv</code>、<code>WITHIN_IMAGE_CEILING_ASSOCIATIONS.csv.gz</code>、<code>WITHIN_IMAGE_CEILING_ASSOCIATION_SUMMARY.csv</code>、<code>IMAGE_SCORE_CONCENTRATION.csv.gz</code></td>
+</tr>
+<tr>
+<td>节点数不变时的独立几何变化</td>
+<td><code>SAME_NODE_COUNT_COMPONENTS.csv.gz</code>、<code>SAME_NODE_COUNT_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>同源劳动及严格同支持Q/T</td>
+<td><code>RECORDED_LABOR_AND_JOINT_Q.csv</code>、<code>RECORDED_LABOR_IMAGE_EFFECTS.csv.gz</code>、<code>RECORDED_LABOR_SUPPORT.csv</code>、<code>CORE_RECORDED_LABOR_SAME_Q_SUPPORT.csv</code></td>
+</tr>
+<tr>
+<td>记录劳动成员来源与排除理由</td>
+<td><code>CURRENT_RECORD_LABOR_INDEX.csv.gz</code>、<code>ENDPOINT_RECORDED_LABOR.csv.gz</code>、<code>LABOR_EXCLUSION_REASONS.csv</code></td>
+</tr>
+<tr>
+<td>原共同、新增共同、扩展支持</td>
+<td><code>MANUAL_ORDER_SUPPORT_DECOMPOSITION.csv</code>、<code>MANUAL_SUPPORT_CHANGED_CONDITIONS.csv</code></td>
+</tr>
+<tr>
+<td>输出状态</td>
+<td><code>OUTPUT_STATE_TRANSITIONS.csv</code>、<code>UNIQUE_ENDPOINT_STATUS_BY_BUDGET.csv</code></td>
+</tr>
+<tr>
+<td>特定原设计合同敏感性</td>
+<td><code>CORE_LEGACY_DESIGN_LINK_SENSITIVITY.csv</code></td>
+</tr>
+<tr>
+<td>补缺抽块层级及计权敏感性</td>
+<td><code>GAP_BLOCK_SUPPORT.csv.gz</code>、<code>GAP_WEIGHTING_SENSITIVITY.csv</code>、<code>GAP_WEIGHTING_IMAGE_EFFECTS.csv.gz</code></td>
+</tr>
+<tr>
+<td>Q固定公式精确分解</td>
+<td><code>Q_FORMULA_ATTRIBUTION_PAIRS.csv.gz</code>、<code>Q_FORMULA_ATTRIBUTION_IMAGES.csv.gz</code>、<code>Q_FORMULA_ATTRIBUTION_SUMMARY.csv</code></td>
+</tr>
+<tr>
+<td>全部七张20/7 C23图均降Q图</td>
+<td><code>C23_20_7_SEVEN_Q_DECLINE_IMAGES.csv</code></td>
+</tr>
+<tr>
+<td>静态科学图PNG及SVG</td>
+<td><code>figures/A01_CONDITIONAL_MAGNITUDE_AND_GEOMETRY.*</code>、<code>figures/A02_QUALITY_COMPONENT_TRADEOFFS.*</code></td>
+</tr>
+</tbody></table>
+<p><code>PHYSICAL_PAIRS_*</code>的一行是一对物理A/C，不是一次独立的人群实验。六方向汇总中反向是同一对的代数变换。<code>analysis_cohort</code>及<code>scope</code>必须保留筛选，不能把其它目标、批12腿、存量和补缺队列无差别拼接。字段及单位见 <a href="METRIC_DICTIONARY_ZH.html">METRIC_DICTIONARY_ZH.md</a>。</p>
+<h2>输入与版本</h2>
+<p>main固定提交为 <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code>。本目录不依赖任何scratch临时索引、当前工作路径或私人凭证。所有路径由脚本自身位置找到仓库根；将交付目录按原相对路径解压到完整仓库即可。Windows仓库可为 <code>D:/Work/HOHONET</code>，Linux亦可。</p>
+<p><code>ANALYSIS_INPUT_MANIFEST.csv</code>列出直接输入的仓库相对路径、字节数与SHA256，包含登记表、旧指标提取、人工接续、批12端点、逐成员时间/条件索引、新补队及冻结几何测量函数。各模块的源数据和原生运行环境另见根目录说明。</p>
+<p>旧TARGET原始指标为225个分片、52,544条方法事件。交付的<code>LEGACY_TARGET_METRICS_AUTOMATIC.csv.gz</code>是保留原列和原身份的完整TARGET提取，可以直接接续，不必重新获取约603MB原始混合方法分片。若需要回源，<code>METRIC_SOURCE_MANIFEST.json</code>固定每个分片的路径、Git提交及Git blob SHA1；运行提取脚本会验证，缺失时可从该提交的GitHub下载，绝不静默替换不匹配的现有文件。</p>
+<p><code>raw_target_metrics/</code>是逐分片提取缓存，与上述完整文件重复，可不放入精简下载包。下载包必须保留完整提取文件、清单、receipt和代码；不能只留下汇总表。</p>
+<h2>安装与运行</h2>
+<p>本轮使用Python 3.12、NumPy 2.3.5、pandas 2.2.3、SciPy 1.17.0、Shapely 2.2.0、Matplotlib 3.10.8。分析不调用fusion、不调整标签、不生成新人工顺序；新增团队的原生运行代码在<code>../supplement/</code>，容量/合法性脚本在<code>../audit/</code>。</p>
+<p>在仓库根运行：</p>
+<pre><code class="language-bash">python -m pip install -r research/workers/current_dstruct_ac_final_20261104/analysis/requirements-analysis.txt
+python research/workers/current_dstruct_ac_final_20261104/analysis/build_dataset.py
+python research/workers/current_dstruct_ac_final_20261104/analysis/summarize_ac.py
+python research/workers/current_dstruct_ac_final_20261104/analysis/explain_quality_formula.py
+python research/workers/current_dstruct_ac_final_20261104/analysis/create_analysis_deliverables.py
+python research/workers/current_dstruct_ac_final_20261104/analysis/plot_analysis.py --font /path/to/NotoSansCJKsc-Regular.otf
+</code></pre>
+<p>如系统已安装Noto Sans CJK SC、思源黑体、微软雅黑或SimHei，绘图可省略<code>--font</code>；也可设<code>HOHONET_CJK_FONT</code>为字体文件。只有作图需要字体，数值代码不依赖字体或图像生成服务。PNG是直接数值绘图，SVG保留文本便于编辑。</p>
+<p>如完整TARGET提取文件不存在，先运行：</p>
+<pre><code class="language-bash">python research/workers/current_dstruct_ac_final_20261104/analysis/extract_legacy_metrics.py --download-missing --workers 8
+</code></pre>
+<p>若原始225个分片已在仓库内，省略<code>--download-missing</code>即可；<code>METRIC_SOURCE_MANIFEST.json</code>随交付固定。其它源文件可按<code>ANALYSIS_INPUT_MANIFEST.csv</code>从固定Git提交恢复，其中本轮新<code>registry/</code>与<code>supplement/</code>由同批交付提供。运行<code>build_dataset.py --without-supplement</code>只用于复现存量和批12来源，会生成一个不同的、未补缺的数据集；最终交付主结果不使用此参数。</p>
+<p><code>finalize_analysis_outputs.py</code>是幂等收尾脚本：清除T-only行上不应联用的Q字段、保留补缺块权重、统一完全相同支持的区间。最终<code>summarize_ac.py</code>已内置这些规则；无需在正常全流程后再跑一次。重跑会原子写入本分析目录，输入文件保持冻结。</p>
+<h2>预先固定的分析规则</h2>
+<p><code>ANALYSIS_CONTRACT.json</code>记录口径。ΔQ是C−A；±1Q为小变化阈值，另附±0.5和±2。主结果在同图内汇总，再图片等权；建筑等权另列，区间按建筑聚类，不在队对层直接bootstrap。重采样2,000次，基础种子202611041302。补缺队列先D背景、再X/Z块、再图片；旧队列按物理对条件平均。反向均值/区间/正负数由同一正向估计精确变换。</p>
+<p>同支持的自动/辅助显示行共用同一组区间；分项<code>delta_B8L2</code>就是主Q，直接绑定同条件主表的区间。T-only汇总不附另一个事件子集上的Q平均；只有<code>same_pairs_Q_and_labor</code>可解释联合Q/T。missing Q和missing T始终为缺失，不填0。</p>
+<h2>验收文件</h2>
+<table>
+<thead>
+<tr>
+<th>验收范围</th>
+<th>receipt</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>225分片回源、TARGET行提取</td>
+<td><code>METRIC_EXTRACTION_CHECKS.json</code>、<code>METRIC_EXTRACTION_RECEIPT.csv</code></td>
+</tr>
+<tr>
+<td>标签登记与旧/辅助/批12/新增端点、劳动身份接续</td>
+<td><code>DATASET_CHECKS.json</code>、<code>ANALYSIS_INPUT_MANIFEST.csv</code></td>
+</tr>
+<tr>
+<td>图楼计权、反向恒等式、未填补缺失</td>
+<td><code>STATISTICAL_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>主表同支持区间及最终SHA</td>
+<td><code>MAIN_SAME_SUPPORT_INTERVAL_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>其它同值图集的相同区间</td>
+<td><code>SAME_SUPPORT_INTERVAL_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>主Q与分项Q区间相同</td>
+<td><code>Q_COMPONENT_INTERVAL_IDENTITY_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>主表不变及同支持Q/T清理</td>
+<td><code>FINAL_OUTPUT_CONSISTENCY_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>五输入Q公式及分解残差</td>
+<td><code>Q_FORMULA_ATTRIBUTION_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>中文报告辅助表、七图与人工支持变化</td>
+<td><code>INTERPRETATION_OUTPUT_CHECKS.json</code></td>
+</tr>
+<tr>
+<td>图文件及字体、视觉检查</td>
+<td><code>FIGURES_RECEIPT.json</code></td>
+</tr>
+<tr>
+<td>独立端点、公式、物理对计权及主统计复核</td>
+<td><code>../audit/INDEPENDENT_*</code></td>
+</tr>
+</tbody></table>
+<p>独立验收绑定最终<code>SIX_DIRECTION_Q_BY_BUDGET.csv</code>的SHA256：<code>aaa59f2cbf5cd3356d9a4c760052ddffae4484a6693fcb91c6bb36793e78ccd3</code>。全流程可重新复现数值；CSV格式化或版本变化可能改变字节哈希，届时须重新记录receipt，不应宣称沿用旧哈希。</p>
+</main></body></html>

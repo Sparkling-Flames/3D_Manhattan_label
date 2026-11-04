@@ -1,0 +1,61 @@
+{
+  "correction": "The first draft omitted indexed diagnostic rows because canonical_physical_pair_id was held in the Series index. No case choice changed; restore the 6 intended diagnostic roles and verify all 12 roles survive.",
+  "initial_six_cases": [
+    {
+      "case_id": "AC01",
+      "image": "e9zR4mvMWw7-26",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C1_C2",
+      "dQ": 3.353195289260995,
+      "selection_roles": "C1_C2_typical_positive"
+    },
+    {
+      "case_id": "AC02",
+      "image": "B6ByNegPMKs-11",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C1_C2",
+      "dQ": -2.632471292024846,
+      "selection_roles": "C1_C2_counterexample"
+    },
+    {
+      "case_id": "AC03",
+      "image": "uNb9QFRL6hY-04",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C1_C3",
+      "dQ": 2.37581467092636,
+      "selection_roles": "C1_C3_typical_positive"
+    },
+    {
+      "case_id": "AC04",
+      "image": "X7HyMhZNoso-13",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C1_C3",
+      "dQ": 0.0794439099052226,
+      "selection_roles": "C1_C3_nearzero_or_low_effect"
+    },
+    {
+      "case_id": "AC05",
+      "image": "uNb9QFRL6hY-29",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C2_C3",
+      "dQ": 3.108861045149453,
+      "selection_roles": "C2_C3_typical_positive"
+    },
+    {
+      "case_id": "AC06",
+      "image": "X7HyMhZNoso-13",
+      "n": 20,
+      "m": 7,
+      "class_pair": "C2_C3",
+      "dQ": 0.0071818270903065,
+      "selection_roles": "C2_C3_nearzero_or_low_effect"
+    }
+  ],
+  "initial_sha256": "0f14962e32fa26ebfb04fb52d61478cc2856404a2acce619a769f997e33388a7",
+  "made_before_case_trace_extraction": true
+}

@@ -1,0 +1,95 @@
+{
+  "frozen_utc": "2026-11-04T12:07:31.885539+00:00",
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "seed": 202611041301,
+  "source_files": {
+    "research/data/releases/v2.1/pools/INPUT_SNAPSHOT.json": "18e7a9159ea3f13ff7ca4d649d09de4be0a93075c325fcb8ba5f8ad41fa3aa37",
+    "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/LABELS_ALL_LOBO.csv.gz": "3ba2291f1d07a03712435e516691db1365067ab9cfda2b5bb2820320d89818d4",
+    "research/workers/current_dstruct_ac_final_20261104/audit/PRELIM_CORE_BUDGET_MISSING_POOLS.csv": "953cbe21481e6925e1b6173f0a4c020ef57e3b67b24a71585bab09debcf3cc12"
+  },
+  "reason": "Current-label legal historical generic-AC coverage absent in these 22 existing-core-budget cells; no outcome-driven inclusion",
+  "budgets": [
+    [
+      14,
+      7
+    ],
+    [
+      20,
+      7
+    ]
+  ],
+  "eligible_cells": 22,
+  "unique_pool_class_pairs": 11,
+  "images": 7,
+  "buildings": 4,
+  "selection": "At most 16 distinct uniform X/Z block pairs; all pairs when finite space <=16. Allocate a total target of 32 distinct backgrounds/physical pairs equally across selected blocks. D is uniform from all remaining people, with mixed classes allowed. Independently seeded by pool,pair,n,m.",
+  "no_selection_use_of": [
+    "Q",
+    "T",
+    "reference geometry",
+    "fusion state",
+    "expected direction"
+  ],
+  "method_events": 704,
+  "physical_pairs": 704,
+  "unique_requested_teams": 1408,
+  "counts": [
+    {
+      "pair": "C1_C2",
+      "n": 14,
+      "m": 7,
+      "events": 160,
+      "images": 5,
+      "buildings": 4
+    },
+    {
+      "pair": "C1_C2",
+      "n": 20,
+      "m": 7,
+      "events": 160,
+      "images": 5,
+      "buildings": 4
+    },
+    {
+      "pair": "C1_C3",
+      "n": 14,
+      "m": 7,
+      "events": 96,
+      "images": 3,
+      "buildings": 2
+    },
+    {
+      "pair": "C1_C3",
+      "n": 20,
+      "m": 7,
+      "events": 96,
+      "images": 3,
+      "buildings": 2
+    },
+    {
+      "pair": "C2_C3",
+      "n": 14,
+      "m": 7,
+      "events": 96,
+      "images": 3,
+      "buildings": 1
+    },
+    {
+      "pair": "C2_C3",
+      "n": 20,
+      "m": 7,
+      "events": 96,
+      "images": 3,
+      "buildings": 1
+    }
+  ],
+  "aggregation": "Backgrounds within X/Z block, blocks within image; paired-event mean is identical when D allocation is equal. Report supplemental images alone; any expanded-cohort analysis keeps legacy/current-gap sources explicit.",
+  "existing_endpoint_reuse": "Exact key and input/reference identity checked before new evaluation. No replacement of frozen requests after effects.",
+  "design_sha256": {
+    "BLOCKS.csv.gz": "65b3d2dfe42f6df0d1ad852284f95cc96f0cc1496ad889d95cb8012999cff601",
+    "EVENTS.csv.gz": "6ebd4fa99be289fbb33eb44ec7b3fb876aa8a0ad76911a708755c121464685c0",
+    "MISSING_CAPACITY_CELLS.csv": "ba03e91d754b5355ec1f18c3d2efdc3250e595565dfa918f484c7e2ec7cb8ddc",
+    "REQUESTS.csv.gz": "4d3a89382c3b167d5f6ee9bad3567031131659de95105594580563c677aa7853",
+    "SOURCE_AUDIT.csv": "2a4e726a1cf907656b20316db602b9c7596afbdd557b64be0e44bfeaff517d79"
+  }
+}

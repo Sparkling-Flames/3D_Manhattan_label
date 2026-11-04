@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "event_ids": [
+    "ACG_62799995a93d15315a52700f",
+    "ACG_12ee3f7179528ccbbf7d9539"
+  ],
+  "block_id": "ACG_BLOCK_ee94b668f26aeeb8580c",
+  "endpoint_bindings": [
+    {
+      "event_id": "ACG_62799995a93d15315a52700f",
+      "arm": "A",
+      "team_key": "e9zR4mvMWw7-15__manual__64c3e640b7__5f4c012d12ee0eb28cb9",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_62799995a93d15315a52700f",
+      "arm": "C",
+      "team_key": "e9zR4mvMWw7-15__manual__64c3e640b7__fe4b3f50013c67999ac5",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_12ee3f7179528ccbbf7d9539",
+      "arm": "A",
+      "team_key": "e9zR4mvMWw7-15__manual__64c3e640b7__be6c7cb8f9738d530d25",
+      "member_reference_score_geometry_binding": "passed"
+    },
+    {
+      "event_id": "ACG_12ee3f7179528ccbbf7d9539",
+      "arm": "C",
+      "team_key": "e9zR4mvMWw7-15__manual__64c3e640b7__9c09cdf02d7504bc3751",
+      "member_reference_score_geometry_binding": "passed"
+    }
+  ],
+  "input_sources": [
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/ILLUSTRATIVE_STABLE_FIXED_XZ_CASE.json",
+      "sha256": "f8bff930ee1e36616658eae8b11569771d1d16dc445b5da9b1a732bde5ce3c22"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/BACKGROUND_EXPLANATORY_CASES.csv.gz",
+      "sha256": "e6e44b96ff61706b4d52160d730a6a2da8093894d4fa3d92068c3614a5c0a70e"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/inputs/SELECTED_POOLS.json.gz",
+      "sha256": "159a25f74e9dacccc1167ec9d52c9260b4e09438dec8567651b2839d15cffea6"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/endpoints/ENDPOINT_SCALARS.csv.gz",
+      "sha256": "4ab2986a081f88f12a592ca36d08aa1aed0b30cb8a403bd041b3d4e3d175e6d8"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/supplement/endpoints/ENDPOINT_GEOMETRY.csv.gz",
+      "sha256": "135e85ae9a66f563f0b759fe1e41d804f5c2acb1c1f01495d1f9be09ac297901"
+    },
+    {
+      "path": "research/workers/current_dstruct_ac_final_20261104/background/source/e9zR4mvMWw7-15_ORIGINAL_IMAGE_INDEX.csv",
+      "sha256": "279b4d71f44da42d770b2959b0c86c84c0b1560f91bd0711aacf3b881d5b2378"
+    }
+  ],
+  "original_sha256": "e0cef070a05d89c4ac168634e873c9a459f12793ec0df37fedbaf8902874d81b",
+  "original_crc32": "c0e4af36",
+  "font_family": "Noto Sans CJK SC",
+  "figure": "FIXED_XZ_STABLE_BACKGROUND.png",
+  "new_fusions": 0,
+  "new_scores": 0,
+  "new_team_selections": 0,
+  "frozen_analysis_or_mechanism_files_modified": false,
+  "visual_inspection": "PNG inspected: complete originals/overlays/BEV, readable labels and exact values; ASCII D labels, missing rings remain unconnected"
+}
