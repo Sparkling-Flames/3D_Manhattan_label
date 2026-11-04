@@ -1,0 +1,14 @@
+﻿id,claim,judgement,adopted_interpretation,source_paths,exact_condition,source_commit,report
+C01,当前分类能解释不同标注行为,保持并补齐依据,用同图原答、完整原图、楼外 Q/T 和难度响应支持,basis/CLASS_ORIGINAL_TEAM_MATRIX.csv,manual primary current LOBO; metric-specific common support,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C02,DSTRUCT 主要区分结构保留,保持并扩充,困难局部结构差异清楚，同时联系位置、高度及 Q,dstruct/SAME_IMAGE_PAIR_SUMMARY.csv;dstruct/SAME_PERSON_DIFFICULTY_RESPONSE_SUMMARY.csv,TARGET_DSTRUCT_K3 C2 to C3; source/all_sources,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C03,三类必须对应低、中、高质量三级,需改写,C1/C2 Q 接近；联合画像也不是稳定的逐级质量阶梯,dstruct/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv;rfuse_joint/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv,all classes common within each method,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C04,RFUSE 只体现建类时的响应指标,需改写,已接回楼外原答和实际团队条件，形成完整解释链,rfuse_joint/SAME_IMAGE_PAIR_SUMMARY.csv;team_effects/DIRECT_AC_EXISTING_CONDITIONS.csv.gz,RFUSE_GEOM_K2; current matching LOBO,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C05,Q 接近但劳动不同可以成为类别价值,保持，已有数值,JOINT K4 C2/C1 在两种同源共同支持中均出现,rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv,OPPJOINT_K4 C1 to C2; separate new/v1; same records,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C06,较长劳动统一得到更高质量,条件变化,依据来源、具体类对和同记录 Q/T 报告,rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv,OPPJOINT_K4 C2 to C3; separate new/v1; same records,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C07,跨类替换平均产生更大 Q 变化,保持，附当前幅度,DSTRUCT 14/7 为 +3.441，50/69 图为正；幅度与方向分列,team_effects/STRICT_ABC_CURRENT_METRICS.csv,TARGET_DSTRUCT_K3 updated_labels_legal_subset auxiliary 14/7,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C08,ABC 是分类解释性的唯一标准,需改写,原答差异、几何响应、劳动、联盟和成员波动各有证据用途,team_effects/UNIFIED_EVIDENCE_MATRIX.csv,retain each design and actual supports,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C09,配比与成员均会改变混合结果,保持并补共同支持,相同 174 面板给出配比间/内方差；成员波动仍大,team_effects/COMMON_COMPLETE_PANEL_METRICS.csv;team_effects/MEMBER_VARIATION_DISTRIBUTIONS.csv,common 174 complete 924-team panels,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C10,困难图只是方差比例不变,需改写,同时报绝对方差，类别与成员两部分都明显扩大,team_effects/PRIMARY_COMPOSITION_ALL_METRICS.csv,TARGET_DSTRUCT_K3 current primary difficulty strata,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C11,更多人或全类混合统一改善结果,条件变化,纯类、联盟、固定块背景分别给出具体方向和支持,team_effects/TARGET_K3_FULL_VS_BEST_PURE.csv;team_effects/EXISTING_COALITIONS_MEMBERS_BACKGROUND_Q.csv.gz,actual n/m/direction/scope; signed background step,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C12,原有 Q/T 选队因本轮画像而必须重算,保持现有结果,本轮没有改变其必要输入，不扩充选队实验,../../data/releases/v2.1/CURRENT_RESEARCH_BASIS.md,classification/scoring/fusion inputs unchanged,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md
+C13,当前新分类能直接指导进入顺序、节约总劳动,尚不能判断,这是另一项应用主张；旧角色策略保留原身份，本轮不据画像替代策略结果,../../data/releases/v2.1/CURRENT_RESEARCH_BASIS.md,no new entry-order allocation effectiveness claim,48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b,REPORT_ZH.md

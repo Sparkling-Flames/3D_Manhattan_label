@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "frozen_source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "source_files_or_assets_unchanged": 108,
+  "current_documentation_updates": [
+    {
+      "path": "research/data/releases/v2.1/CURRENT_RESEARCH_BASIS.md",
+      "source_sha256": "ad53aa211cd234965b49bfa0fb21be8c9c541cd1fd9644cc54e53a1a4fd99a12",
+      "current_sha256": "d03e331c6a91334aaa8a42ab7ae786a162b731b90c6beca2859589546b09935f",
+      "change": "authorized current documentation/entry update"
+    },
+    {
+      "path": "research/data/releases/v2.1/README.md",
+      "source_sha256": "2ff5c65d4e3f13d0186c7a9adc0cd6f3dd8a7bb3100e2f939e4afe93e53190db",
+      "current_sha256": "cc7488704ffc876b1378bfdc3efd3642655bbc00b157919c13dc75fa084568ca",
+      "change": "authorized current documentation/entry update"
+    },
+    {
+      "path": "research/data/releases/v2.1/final_classification_downstream/README.md",
+      "source_sha256": "481b0aebe214f18bc928eb421b2df19a206370196dbc0b78bc577dcf2e60e917",
+      "current_sha256": "7ca3caccdd92129261d0a0bfffd8ed5c0e82eb88e771cd5dd46822481169714a",
+      "change": "authorized current documentation/entry update"
+    },
+    {
+      "path": "research/statistics/research_explorer_v1_r2_20261017/index.html",
+      "source_sha256": "b49f4a662d54844c231119b7de64587aae35d7aa236cf38e537be11192c4353f",
+      "current_sha256": "509d334e0203335cb65348a28b54b044d42287daaaea1baccee678b0f8da04ad",
+      "change": "authorized current documentation/entry update"
+    }
+  ],
+  "original_quality_component_joins": [
+    {
+      "scope": "primary",
+      "records": 7472,
+      "matched": 7472,
+      "max_abs_Q_difference": 3.552713678800501e-15
+    },
+    {
+      "scope": "other_admitted",
+      "records": 231,
+      "matched": 231,
+      "max_abs_Q_difference": 1.4210854715202004e-14
+    }
+  ],
+  "current_label_rows": 7130,
+  "unique_label_key": [
+    "method",
+    "heldout_building",
+    "worker_id"
+  ],
+  "unified_common_class_profile_rows": 10162,
+  "all_class_primary_Q_images": {
+    "TARGET_DSTRUCT_K3": 201,
+    "RFUSE_GEOM_K2": 192,
+    "OPPJOINT_K3": 194,
+    "OPPJOINT_K4": 164
+  },
+  "common_record_same_source_QT_conditions": 283,
+  "current_class_matrix_rows": 12,
+  "team_evidence_conditions": 2084,
+  "common_team_panels": 174,
+  "Q_team_links": 159655,
+  "maximum_variance_decomposition_residual": 8.999850251711905e-07,
+  "maximum_variance_decomposition_scaled_residual": 4.8977150528698884e-12,
+  "variance_check_note": "CSV uses 12 significant digits; relative tolerance applies across Q, geometry and seconds-squared units. Pre-serialization identity check remains in team_effects/CHECKS.json.",
+  "root_conclusion_rows": 13,
+  "local_reference_checks": 371,
+  "broken_references": [],
+  "python_syntax_files": 16,
+  "javascript_syntax_documents": [
+    "examples/index.html",
+    "workbench/index.html"
+  ],
+  "PNG_files_verified": 25,
+  "visual_review": "21 derived scientific/example PNGs reviewed, including four added JOINT K4 plates; original PNG identities separately verified",
+  "current_display": {
+    "methods": 4,
+    "images": 4,
+    "typical_slots": 92,
+    "feature_supplement_slots": 1,
+    "unique_original_answers": 39,
+    "JOINT_K4_added_slots": 28,
+    "JOINT_K4_plates": 4,
+    "JOINT_K4_independent_review": "examples/JOINT_K4_INDEPENDENT_REVIEW.json"
+  },
+  "browser_interaction_tested": false,
+  "browser_note": "No installed browser; checked local links, embedded-data construction, JavaScript syntax and static graphics.",
+  "independent_review": "Team analyst checked main/DSTRUCT support, versions and Q/T; example analyst checked case descriptions and scientific figures. Corrections were rounding, signed background-step wording, and complete class list in the hard example.",
+  "new_classification_fit": 0,
+  "new_scoring": 0,
+  "new_fusion": 0,
+  "new_teams": 0,
+  "source_receipts": [
+    "dstruct/VALIDATION.json",
+    "basis/LABEL_VERSION_CHECKS.json",
+    "basis/CLASS_MATRIX_CHECKS.json",
+    "rfuse_joint/VERIFICATION.json",
+    "team_effects/CHECKS.json",
+    "examples/DISPLAY_VALIDATION.json"
+  ]
+}

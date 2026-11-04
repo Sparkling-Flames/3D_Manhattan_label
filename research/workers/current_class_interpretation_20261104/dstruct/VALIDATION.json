@@ -1,0 +1,39 @@
+{
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "score_join_keys": [
+    "object_id",
+    "reference_id",
+    "reference_version"
+  ],
+  "quality_component_joins": [
+    {
+      "scope": "primary",
+      "records": 7472,
+      "matched": 7472,
+      "max_abs_Q_difference": 3.552713678800501e-15
+    },
+    {
+      "scope": "other_admitted",
+      "records": 231,
+      "matched": 231,
+      "max_abs_Q_difference": 1.4210854715202004e-14
+    }
+  ],
+  "ordinary_records": 7703,
+  "ordinary_manual_primary_records": 6512,
+  "ordinary_manual_other_records": 227,
+  "ordinary_semi_primary_records": 960,
+  "ordinary_semi_other_records": 4,
+  "worker_pool_unique": true,
+  "labels_target_building_excluded": true,
+  "manual_primary_K3_Q_common_images": 201,
+  "no_new_scoring": true,
+  "no_new_fusion": true,
+  "no_new_classification": true,
+  "missing_Q_is_missing": true,
+  "time_positive_same_origin_source": true,
+  "time_other_target": "recorded task time, not extra-space-specific time",
+  "within_class_distribution": "raw individual values included; summary quantiles average within-image class quantiles",
+  "excluded": "doorway/special-range and held reference statuses are not newly admitted; unknown class not zero",
+  "difficulty_response": "same building has both difficulty levels; image-equal means within level then building equal; observational, not same image becoming harder"
+}

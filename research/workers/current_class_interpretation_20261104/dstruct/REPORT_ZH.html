@@ -1,0 +1,265 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>当前 DSTRUCT：原答标法、质量、记录劳动与难度响应</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">当前类别研究台</a><a href="REPORT_ZH.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>当前 DSTRUCT：原答标法、质量、记录劳动与难度响应</h1>
+<h2>结论</h2>
+<p>当前 <code>TARGET_DSTRUCT_K3</code> 在楼外原答中有明确的解释作用。训练历史中结构保留较多的 C3，在困难图上保留更多转折和短墙段，边界位置误差更小，Q 也更高。C1 与 C2 的 Q 接近，不能把三类简单写成低、中、高质量三级。时间差明显小于质量差，较高质量没有普遍对应大幅增加的记录劳动。</p>
+<p>最直接的同图结果是：C3 相对 C2 在 205 张主目标 Manual 图片上的平均 Q 高 <strong>14.178 分</strong>，188 张为正、17 张为负；按建筑等权为 <strong>14.950 分</strong>。在完全相同的正时间原答中，new 来源的 202 张图，Q 高 <strong>15.262 分</strong>，几何平均时间比为 <strong>1.0663</strong>。这些是当前冻结类别对楼外表现的描述，不涉及新拟合、新选队或新评分。</p>
+<h2>1. 当前类别如何形成</h2>
+<p>使用 2026-10-30 难度接续后的 <code>TARGET_DSTRUCT_K3</code> 标签，K2 保留为粗分版本。不是历史 DSTRUCT、RAW3 或 V3 角色的更名。</p>
+<p>输入是普通 Manual 合法目标原答的四项结构特征：转折数、短墙段数、近共线点数、9° 球面底点匹配下的参考未匹配比例。形成全体结构域，以及困难图和困难减简单的结构响应域。原答先按同图、同参考、同条件取 peer 中位数残差，再按人员内目标、图片、建筑逐级等权汇总。Q 与 T 不直接进入这个分类；参考未匹配比例确实使用参考几何，因此它也不是完全不依赖参考的纯形状分类。</p>
+<p>各训练折采用相同的稳健缩放、域内 PCA、域间等权和 Ward 树。本文只读取既有标签。C1、C2、C3 按该折训练历史的困难转折中心、困难短边中心、总体转折中心排序，不按本次楼外 Q 排序。</p>
+<p><code>ALL</code> 描述名单为 C1 <strong>10 人</strong>、C2 <strong>37 人</strong>、C3 <strong>12 人</strong>，另有 3 人历史不足。真实原答分析用 <code>worker_id + heldout_building</code> 接目标楼外标签；不同折的具体成员可以变化。完整人员名单、每个折和每张图的容量见 <code>../basis/WORKER_ROSTER_ALL.csv</code>、<code>WORKER_LABELS_ALL_LOBO.csv.gz</code> 与 <code>CLASS_CAPACITY_PER_POOL.csv.gz</code>。</p>
+<h2>2. 同一批图片上，原答实际有什么差别</h2>
+<p>以下全部来自 <strong>201 张同时有三类人员的主目标 Manual 图片、22 栋建筑</strong>。先计算图内各类人员均值，再对图片等权。数值不受某一类恰好多标困难图的直接混杂。</p>
+<table>
+<thead>
+<tr>
+<th>原答指标</th>
+<th align="right">C1</th>
+<th align="right">C2</th>
+<th align="right">C3</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Q：B8L2，分</td>
+<td align="right">64.965</td>
+<td align="right">66.913</td>
+<td align="right">80.971</td>
+<td>当前正式质量</td>
+</tr>
+<tr>
+<td>转折数</td>
+<td align="right">4.742</td>
+<td align="right">4.794</td>
+<td align="right">5.253</td>
+<td>底面转角严格大于 5°</td>
+</tr>
+<tr>
+<td>短墙段数</td>
+<td align="right">0.206</td>
+<td align="right">0.246</td>
+<td align="right">0.503</td>
+<td>边长占周长小于 4%，两端转角至少 15°</td>
+</tr>
+<tr>
+<td>近共线点数</td>
+<td align="right">0.060</td>
+<td align="right">0.024</td>
+<td align="right">0.015</td>
+<td>转角不大于 5°；总体数量很低</td>
+</tr>
+<tr>
+<td>参考未匹配比例</td>
+<td align="right">10.07%</td>
+<td align="right">8.44%</td>
+<td align="right">2.86%</td>
+<td>9° 球面底点匹配诊断</td>
+</tr>
+<tr>
+<td>匹配上下边界绝对偏差，度</td>
+<td align="right">1.856</td>
+<td align="right">1.730</td>
+<td align="right">0.941</td>
+<td>匹配后上下边界绝对角差的平均</td>
+</tr>
+<tr>
+<td>底面 IoU</td>
+<td align="right">0.822</td>
+<td align="right">0.834</td>
+<td align="right">0.909</td>
+<td>正式 Q 原分项</td>
+</tr>
+<tr>
+<td>底边位置误差，度</td>
+<td align="right">2.177</td>
+<td align="right">1.964</td>
+<td align="right">1.006</td>
+<td><code>S_bottom_deg</code></td>
+</tr>
+<tr>
+<td>内在方向误差，度</td>
+<td align="right">5.597</td>
+<td align="right">5.363</td>
+<td align="right">3.026</td>
+<td><code>dir</code>，不应写成水平位置偏差</td>
+</tr>
+<tr>
+<td>全局高度相对误差</td>
+<td align="right">3.72%</td>
+<td align="right">3.32%</td>
+<td align="right">1.62%</td>
+<td><code>Hmean</code></td>
+</tr>
+<tr>
+<td>底面漏出参考面积比例</td>
+<td align="right">9.50%</td>
+<td align="right">8.67%</td>
+<td align="right">3.60%</td>
+<td><code>omission</code>，几何诊断</td>
+</tr>
+<tr>
+<td>底面超出参考面积比例</td>
+<td align="right">9.49%</td>
+<td align="right">9.23%</td>
+<td align="right">5.91%</td>
+<td><code>extension</code>，分母为原答面积</td>
+</tr>
+</tbody></table>
+<p>结构数量是类别含义的接续证据；楼外 Q、位置和高度表现则补充了类别的解释用途。C3 的优势同时出现在多个分项中，不能归结为只有节点数量不同。近共线点在三类中都很少，不宜把它夸大为当前人群最主要的差别。</p>
+<h3>类内分布保留</h3>
+<p>三类在每张图内都有人员差异。图内个人 Q 的 P25、中位数、P75 再按图等权，分别为：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th align="right">图内 P25 的图均值</th>
+<th align="right">图内中位数的图均值</th>
+<th align="right">图内 P75 的图均值</th>
+<th align="right">每图该类平均人数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td align="right">59.078</td>
+<td align="right">65.688</td>
+<td align="right">71.505</td>
+<td align="right">4.587</td>
+</tr>
+<tr>
+<td>C2</td>
+<td align="right">58.720</td>
+<td align="right">67.761</td>
+<td align="right">76.070</td>
+<td align="right">21.647</td>
+</tr>
+<tr>
+<td>C3</td>
+<td align="right">75.586</td>
+<td align="right">82.631</td>
+<td align="right">88.288</td>
+<td align="right">5.756</td>
+</tr>
+</tbody></table>
+<p>这些是同图内分布的汇总，不是把所有个人记录混在一起后取的总体分位数。逐对象数值与逐图完整分位数都随包提供。Q 的分布有重叠，类别描述的是行为倾向，不是每个人在每张图上必然满足的规则。</p>
+<h2>3. 困难图片放大了什么</h2>
+<p>下表为两类共同支持中的 C3 减 C2。每个难度层先在同一图片内比较两类；当前难度标签保持冻结。</p>
+<table>
+<thead>
+<tr>
+<th>难度</th>
+<th align="right">Q/结构支持图数</th>
+<th align="right">Q 差，分</th>
+<th align="right">转折数差</th>
+<th align="right">短墙段数差</th>
+<th align="right">边界绝对偏差差，度</th>
+<th align="right">时间支持图数</th>
+<th align="right">几何平均 T 比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单</td>
+<td align="right">130</td>
+<td align="right">+13.943</td>
+<td align="right">+0.058</td>
+<td align="right">+0.033</td>
+<td align="right">−0.811</td>
+<td align="right">130</td>
+<td align="right">1.027</td>
+</tr>
+<tr>
+<td>中等</td>
+<td align="right">38</td>
+<td align="right">+9.929</td>
+<td align="right">+0.360</td>
+<td align="right">+0.146</td>
+<td align="right">−0.647</td>
+<td align="right">37</td>
+<td align="right">1.084</td>
+</tr>
+<tr>
+<td>困难</td>
+<td align="right">37</td>
+<td align="right">+19.368</td>
+<td align="right">+2.149</td>
+<td align="right">+1.248</td>
+<td align="right">−0.907</td>
+<td align="right">37</td>
+<td align="right">1.103</td>
+</tr>
+</tbody></table>
+<p>简单图本来较少提供额外转折与短墙机会，因此总体转折均值只相差约半个不能概括困难图上的差别。困难图中 C3 平均多保留约 <strong>2.15 个转折、1.25 段短墙</strong>，这就是分类最直接的标注行为解释。</p>
+<p>进一步在同时有简单和困难图片的 <strong>15 栋建筑</strong>中，先计算各楼、各难度内的同图类差，再比较难度：困难相对简单的类差平均增加 <strong>2.237 个转折</strong>，15/15 栋同向；短墙段差增加 <strong>1.264</strong>，13 栋为正、1 栋为负、1 栋相等。Q 类差增加 <strong>4.905 分</strong>，11/15 栋为正。时间 log 比的增量仅 <strong>0.0171</strong>，8/15 栋为正。</p>
+<p>因此可以明确写“结构差异随困难条件扩大”。记录劳动的难度增量在建筑间更不一致，不需要把结构、Q、T 都写成同一条线性规律。同楼的两种难度仍来自不同图片，这不是同一张图被随机加难的因果实验。</p>
+<p>另以<strong>同一人员在同一楼内同时标过简单和困难图</strong>为单位作补充：先算每人的困难−简单响应，再在类内和建筑间汇总。C3 相对 C2 的困难响应，在 15 楼中额外增加 <strong>2.330 个转折</strong>（15/15 楼为正）、<strong>1.351 段短墙</strong>（13 正、1 负、1 相等）；参考面积遗漏响应降低 <strong>0.1174</strong>（15/15 楼同向）。Q 响应额外增加 <strong>5.235 分</strong>，9/15 楼为正。这一同人补充再次支持困难结构差异，同时说明 Q 的响应方向比结构更依赖具体楼。它保留同一人员，但各人具体作答图片集合仍可不同，因此与上面的严格同图类差分别报告。来源：<code>SAME_PERSON_DIFFICULTY_RESPONSE_SUMMARY.csv</code>。</p>
+<h2>4. 同源 Q/T：较高质量是否靠明显更久的劳动换来</h2>
+<p>时间只使用合法、正的 <code>source_active_time_seconds</code>。new 的用户处理后报告时间与 v1 的已审计继承时间分开。在两类都有正时间且 Q 可用的同一目标、同一来源内计算 Q 与 logT，保证下表每行的 Q/T 用的是同一批原答。</p>
+<table>
+<thead>
+<tr>
+<th>类差</th>
+<th>来源</th>
+<th align="right">共同图片</th>
+<th align="right">Q 差，分</th>
+<th align="right">几何平均 T 比</th>
+<th>当前可写的解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2 − C1</td>
+<td>new</td>
+<td align="right">185</td>
+<td align="right">+1.169</td>
+<td align="right">0.9371</td>
+<td>Q 图均值差较小，记录劳动约少 6.3%</td>
+</tr>
+<tr>
+<td>C3 − C2</td>
+<td>new</td>
+<td align="right">202</td>
+<td align="right">+15.262</td>
+<td align="right">1.0663</td>
+<td>Q 优势明显，记录劳动约多 6.6%</td>
+</tr>
+<tr>
+<td>C2 − C1</td>
+<td>v1</td>
+<td align="right">83</td>
+<td align="right">+4.260</td>
+<td align="right">0.8987</td>
+<td>Q 较高，记录劳动约少 10.1%</td>
+</tr>
+<tr>
+<td>C3 − C2</td>
+<td>v1</td>
+<td align="right">78</td>
+<td align="right">+8.563</td>
+<td align="right">1.0215</td>
+<td>Q 较高，记录劳动接近持平</td>
+</tr>
+</tbody></table>
+<p>来源：<code>../rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv</code>。v1 的 C3/C2 时间比按建筑等权为约 0.960，因此它更适合表述为接近持平，不宜把图等权的 +2.1% 写成稳定变慢。</p>
+<p>为了展示各类时间水平，new 来源三类共同支持的 <strong>184 张图</strong>上，三类的几何平均记录时间分别为 <strong>126.70、118.90、124.71 秒</strong>；算术平均分别为 <strong>164.16、165.49、187.02 秒</strong>。两种均值区别来自时长分布右偏，均随表保留。不能将几何平均时间解释成平均实际总劳动秒数。</p>
+<p>当前结果支持“结构保留、质量与劳动不是单一快慢排序”。这些描述尚不等于通过改变进入顺序就能节约多少劳动；后者仍应由相应的实际进入策略研究回答。</p>
+<h2>5. 人员容量与其他条件</h2>
+<p>206 个主目标 Manual 原答池中，C1/C2/C3 每图人数中位数为 <strong>4/22/6</strong>，至少有 7 人的池分别为 <strong>44/201/84</strong>。<code>ALL</code> 名单中的人数不能替代某张图真实可组队容量。当前严格换人事件有其实际可组成的方向与人数范围，必须与这些容量一起解释。</p>
+<p>作为粗分，当前 K2 的 C2−C1 在 205 图中 Q 差 <strong>+14.496 分</strong>，189 图为正，边界误差差 <strong>−0.822°</strong>；这是 K3 主差异的简化描述，不是一轮新选型。</p>
+<p>其他合法目标单列：K3 C3−C2 在 <strong>20 图、6 楼</strong>上 Q 差 <strong>+19.002 分</strong>，18 图为正，转折差 <strong>+1.942</strong>。这不合并进主目标均值；时间属于原标注任务记录，不能称为额外空间的独立劳动。</p>
+<p>Semi 使用 Manual 训练的类别做跨方式接续：主目标 C3−C2 在 <strong>30 图、12 楼</strong>上 Q 差 <strong>+7.042 分</strong>，25 图为正，转折差 <strong>+0.142</strong>。这是 Manual 类别迁移到 Semi 的观察，不能写成另一个独立训练的 Semi 分类。困难 Semi 支持很少，不据此比较完整难度曲线。</p>
+<h2>6. 与团队证据怎样连接</h2>
+<p>原答层面的结构保留、位置与 Q 差异，给现有 DSTRUCT 严格 ABC 提供了可观察的人员含义。14 人换 7 人的当前辅助结果中，对称跨类额外 Q 变化为 <strong>+3.441 分</strong>；固定人数配比面板中，类别配比对 Q、转折、短墙与记录劳动均有非零解释比例。具体值、共同支持及同配比成员波动见 <code>../team_effects/REPORT_ZH.md</code>，不把原答 Q 差直接等同于团队收益。</p>
+<h2>数据、统计及复现</h2>
+<ul>
+<li>冻结来源：GitHub <code>Sparkling-Flames/3D_Manhattan_label</code>，commit <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code>，2026-11-04。</li>
+<li>原答：<code>research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/RAW_TARGET_RESPONSE_RECORDS.csv.gz</code>。</li>
+<li>正式分项：主目标 <code>research/data/releases/v2.1/quality_records.csv</code>；其他合法目标 <code>.../image_difficulty_20261030/ANALYSIS_RECORDS.json</code>。</li>
+<li>三键 <code>object_id + reference_id + reference_version</code> 连接分项：主目标 7472/7472、其他目标 231/231 全部匹配，Q 最大绝对差低于 1.5×10⁻¹⁴。</li>
+<li>主表普通 Manual 主目标 6512 条、其他目标 227 条；普通 Semi 主目标 960 条、其他目标 4 条。未知类别保留在支持表，不按零处理。门洞和特殊范围不混入。</li>
+<li>一个人在一个池内无重复记录。每个指标采用自己的有限值支持；先图内同参考类均值，其他目标在图内等权，再图等权；同时输出建筑等权。</li>
+<li>复现：仓库根执行 <code>python research/workers/current_class_interpretation_20261104/dstruct/build_profiles.py</code>。Q/T 同记录脚本见 <code>../rfuse_joint/build_quality_time_pairs.py</code>。</li>
+<li><code>SAME_IMAGE_PAIR_SUMMARY.csv</code>：所有两类比较、难度层、来源层、正负方向数量。</li>
+<li><code>ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv</code>：全类共同图片上的水平与类内分布。</li>
+<li><code>SAME_BUILDING_DIFFICULTY_RESPONSE.csv.gz</code> / <code>DIFFICULTY_RESPONSE_SUMMARY.csv</code>：同楼难度响应。</li>
+<li><code>SAME_PERSON_SAME_BUILDING_DIFFICULTY.csv.gz</code> / <code>SAME_PERSON_DIFFICULTY_RESPONSE_SUMMARY.csv</code>：同一人员在同楼的难度响应；由 <code>build_person_difficulty_responses.py</code> 复现。</li>
+<li><code>HELDOUT_ORIGINAL_RECORDS.csv.gz</code>：逐对象、逐方法、逐楼外标签与原始数值。</li>
+</ul>
+<p>本文件描述的是既有冻结分类的补充统计。分类、质量函数、参考、难度标签、坐标、人工融合顺序、节点票数和团队均未因本轮描述而改变。</p>
+</main></body></html>

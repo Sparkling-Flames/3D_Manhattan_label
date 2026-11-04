@@ -1,0 +1,486 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOINT K4：同图完整原答补充</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">当前类别研究台</a><a href="JOINT_K4_SUPPLEMENT.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>JOINT K4：同图完整原答补充</h1>
+<p>更新日期：2026-11-04。方法：<code>OPPJOINT_K4</code>。数据冻结于提交 <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code>，与第 08 / 09 批解释层使用相同版本。</p>
+<p><strong>JOINT K4 的展示缺口已补齐：在原有 4 张图上加入四类的完整标注、对应个人 Q / D10、质量分项及记录劳动时间。</strong> 新增 28 个展示位，涉及 28 个原答对象、18 名工人；其中 23 个对象已在其他分类图板中出现，新增 5 个不同原答对象。整套图册共 39 个不同原答对象。本次沿用已有模型和结果，只扩充原答展示及其说明。</p>
+<p><strong>阅读入口：</strong> <a href="index.html#method=OPPJOINT_K4">直接打开 JOINT K4 离线图册</a>。下方四张静态板也可直接打开原始分辨率；对应的逐对象指标保留在每张板及数据表中。</p>
+<h2>1. 与原图册保持同图、同源</h2>
+<p>三张主图继续使用同一建筑的简单、中等、困难图，第四张保留为跨建筑附例。K4 不重新参与原有选图排名。四类在每张图上都有实际原答；C3 在这四个 <strong>new 同源图片组</strong>中都只有 W121 一人，因此展示其 1 / 1 个原答，其余类按原来的 8 个几何特征中位距离选取 2 人。</p>
+<table>
+<thead>
+<tr>
+<th>原图</th>
+<th>官方难度</th>
+<th align="right">同源有效人数</th>
+<th align="right">K4 C1</th>
+<th align="right">C2</th>
+<th align="right">C3</th>
+<th align="right">C4</th>
+<th align="right">实际展示人数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>jtcxE69GiFV-10</code></td>
+<td>简单</td>
+<td align="right">34</td>
+<td align="right">16</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">2 + 2 + 1 + 2 = 7</td>
+</tr>
+<tr>
+<td><code>jtcxE69GiFV-09</code></td>
+<td>中等</td>
+<td align="right">34</td>
+<td align="right">16</td>
+<td align="right">11</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">2 + 2 + 1 + 2 = 7</td>
+</tr>
+<tr>
+<td><code>jtcxE69GiFV-26</code></td>
+<td>困难</td>
+<td align="right">31</td>
+<td align="right">14</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">2 + 2 + 1 + 2 = 7</td>
+</tr>
+<tr>
+<td><code>yqstnuAEVhm-01</code></td>
+<td>中等</td>
+<td align="right">30</td>
+<td align="right">17</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">2 + 2 + 1 + 2 = 7</td>
+</tr>
+</tbody></table>
+<p>C3 的 1 人是这些图中当前同源原答的实际容量，不能解释成 K4 全部训练人员中只有 1 人。以 <code>jtcxE69GiFV</code> 留楼外折为例，该折当前标签表列入 C3 的人员为 W027、W036、W121；前两人为 v1 来源。这里保持各展示组的来源一致，直接披露本图可用人数。相同 W121 出现在四张图上是四个不同任务的真实原答，不能计为四名不同工人。</p>
+<p>选人特征仍为转折、短墙、近共线点、水平 / 顶边 / 底边偏差、面积比与高度的对数；Q、D10、时间及其排名没有参与本次图示选样。K4 的建类本身使用历史 Q / T，这与“图册选人不用 Q / T”是两个不同步骤。完整规则见 <a href="SELECTION_RULE.md">选样规则</a>，候选距离见 <a href="SELECTION_RANKS.csv">选样排名</a>。</p>
+<h2>2. 28 个展示原答的个人指标</h2>
+<p>以下 Q 为既有 B8L2，T 为 <code>source_active_time_seconds</code>，单位秒。Q / D10 保留 3 位小数，原始精度保存在 <a href="SELECTED_RECORDS.csv">SELECTED_RECORDS.csv</a>；该表还包括 IoU2D、底边位置误差、方向、高度、遗漏 / 外扩面积等分项与对象 ID。所有本页 T 均来自 <code>new | user_processed_reported_not_raw_log_replayed</code>，描述已接受的用户预处理时间记录，未在本次重放原始计时日志。</p>
+<h3>jtcxE69GiFV-10 · 简单主图</h3>
+<p><a href="figures/jtcxE69GiFV-10__JOINT_K4.png">打开完整 K4 对照板</a></p>
+<p><img src="figures/jtcxE69GiFV-10__JOINT_K4.png" alt="jtcxE69GiFV-10 的 JOINT K4 四类完整原答及个人指标"></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>工人</th>
+<th align="right">Q</th>
+<th align="right">D10</th>
+<th align="right">T（秒）</th>
+<th align="right">转折</th>
+<th align="right">短墙</th>
+<th align="right">近共线点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>W128</td>
+<td align="right">87.106</td>
+<td align="right">87.639</td>
+<td align="right">70.856</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>W134</td>
+<td align="right">86.283</td>
+<td align="right">88.300</td>
+<td align="right">37.918</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W124</td>
+<td align="right">98.954</td>
+<td align="right">98.965</td>
+<td align="right">78.964</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W120</td>
+<td align="right">98.420</td>
+<td align="right">98.427</td>
+<td align="right">94.598</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C3（本图 1 / 1）</td>
+<td>W121</td>
+<td align="right">91.284</td>
+<td align="right">91.872</td>
+<td align="right">263.866</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W122</td>
+<td align="right">99.457</td>
+<td align="right">99.471</td>
+<td align="right">111.260</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W126</td>
+<td align="right">99.637</td>
+<td align="right">99.639</td>
+<td align="right">59.402</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<h3>jtcxE69GiFV-09 · 中等主图</h3>
+<p><a href="figures/jtcxE69GiFV-09__JOINT_K4.png">打开完整 K4 对照板</a></p>
+<p><img src="figures/jtcxE69GiFV-09__JOINT_K4.png" alt="jtcxE69GiFV-09 的 JOINT K4 四类完整原答及个人指标"></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>工人</th>
+<th align="right">Q</th>
+<th align="right">D10</th>
+<th align="right">T（秒）</th>
+<th align="right">转折</th>
+<th align="right">短墙</th>
+<th align="right">近共线点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>W125</td>
+<td align="right">64.490</td>
+<td align="right">70.410</td>
+<td align="right">217.940</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>W134</td>
+<td align="right">92.731</td>
+<td align="right">92.745</td>
+<td align="right">72.594</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W127</td>
+<td align="right">92.101</td>
+<td align="right">92.178</td>
+<td align="right">291.202</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W110</td>
+<td align="right">83.408</td>
+<td align="right">86.854</td>
+<td align="right">500.864</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C3（本图 1 / 1）</td>
+<td>W121</td>
+<td align="right">59.535</td>
+<td align="right">62.964</td>
+<td align="right">427.824</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W126</td>
+<td align="right">63.202</td>
+<td align="right">69.177</td>
+<td align="right">97.332</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W112</td>
+<td align="right">88.980</td>
+<td align="right">90.663</td>
+<td align="right">378.920</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<h3>jtcxE69GiFV-26 · 困难主图</h3>
+<p><a href="figures/jtcxE69GiFV-26__JOINT_K4.png">打开完整 K4 对照板</a></p>
+<p><img src="figures/jtcxE69GiFV-26__JOINT_K4.png" alt="jtcxE69GiFV-26 的 JOINT K4 四类完整原答及个人指标"></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>工人</th>
+<th align="right">Q</th>
+<th align="right">D10</th>
+<th align="right">T（秒）</th>
+<th align="right">转折</th>
+<th align="right">短墙</th>
+<th align="right">近共线点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>W107</td>
+<td align="right">48.247</td>
+<td align="right">51.059</td>
+<td align="right">1146.891</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>W125</td>
+<td align="right">73.513</td>
+<td align="right">79.436</td>
+<td align="right">986.096</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W127</td>
+<td align="right">52.483</td>
+<td align="right">56.148</td>
+<td align="right">740.365</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W116</td>
+<td align="right">50.577</td>
+<td align="right">54.772</td>
+<td align="right">563.670</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C3（本图 1 / 1）</td>
+<td>W121</td>
+<td align="right">45.493</td>
+<td align="right">46.184</td>
+<td align="right">2894.746</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W112</td>
+<td align="right">61.802</td>
+<td align="right">68.134</td>
+<td align="right">3559.413</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W115</td>
+<td align="right">68.454</td>
+<td align="right">74.489</td>
+<td align="right">1018.229</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<h3>yqstnuAEVhm-01 · 跨建筑中等附图</h3>
+<p><a href="figures/yqstnuAEVhm-01__JOINT_K4.png">打开完整 K4 对照板</a></p>
+<p><img src="figures/yqstnuAEVhm-01__JOINT_K4.png" alt="yqstnuAEVhm-01 的 JOINT K4 四类完整原答及个人指标"></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>工人</th>
+<th align="right">Q</th>
+<th align="right">D10</th>
+<th align="right">T（秒）</th>
+<th align="right">转折</th>
+<th align="right">短墙</th>
+<th align="right">近共线点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>W108</td>
+<td align="right">70.894</td>
+<td align="right">77.081</td>
+<td align="right">100.105</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>W133</td>
+<td align="right">55.355</td>
+<td align="right">60.704</td>
+<td align="right">66.895</td>
+<td align="right">7</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W123</td>
+<td align="right">67.265</td>
+<td align="right">73.301</td>
+<td align="right">113.520</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>W116</td>
+<td align="right">47.773</td>
+<td align="right">51.307</td>
+<td align="right">44.335</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C3（本图 1 / 1）</td>
+<td>W121</td>
+<td align="right">46.064</td>
+<td align="right">49.209</td>
+<td align="right">285.970</td>
+<td align="right">7</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W130</td>
+<td align="right">97.747</td>
+<td align="right">98.078</td>
+<td align="right">118.097</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>W115</td>
+<td align="right">94.380</td>
+<td align="right">95.254</td>
+<td align="right">98.514</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<h2>3. 图示补充了哪些可观察解释</h2>
+<h3>3.1 简单图：同为四个转折，仍可看到不同的质量与劳动</h3>
+<p><code>jtcxE69GiFV-10</code> 的 7 个 K4 展示原答都是 4 个转折、0 段短墙，但 Q 从 86.283 到 99.637，T 从 37.918 秒到 263.866 秒。例如 C1 的 W134 为 Q 86.283 / T 37.918，C2 的 W124 为 Q 98.954 / T 78.964，C3 的 W121 为 Q 91.284 / T 263.866，C4 的 W126 为 Q 99.637 / T 59.402。完整边界和底面让读者看到位置与形状误差，个人时间让读者看到相同点数下的劳动差异。</p>
+<h3>3.2 困难图：结构表达、评分与劳动形成多种组合</h3>
+<p><code>jtcxE69GiFV-26</code> 的参考为 8 个转折、3 段短墙。C4 的 W112 与 W115 均保留 8 / 3，Q 为 61.802 / 68.454，T 为 3559.413 / 1018.229 秒；相同类别、相同结构计数仍有明显的个人劳动与位置差异。C2 的 W127 / W116 表达 5 / 6 个转折和 1 段短墙。C3 的 W121 表达 4 个转折、0 段短墙，Q 为 45.493，T 为 2894.746 秒。</p>
+<p>C1 中也存在不同组合：W107 有 9 个转折、1 段短墙，Q 为 48.247；W125 有 6 个转折、1 段短墙，Q 为 73.513。它们把“保留更多结构”“几何位置更准确”“投入更多记录时间”三个可观察维度具体展示出来。不能把原始转折数量直接换成 Q，也不应把一个类的所有工人描述为同一种作答。</p>
+<h3>3.3 跨建筑图：结构计数相同，位置精度仍能区分类内与类间原答</h3>
+<p>在 <code>yqstnuAEVhm-01</code> 上，C2 的 W123 / W116 和 C4 的 W130 / W115 都表达 8 个转折、2 段短墙。前两人的 Q 为 67.265 / 47.773，后两人为 97.747 / 94.380；对应匹配边界绝对偏差分别为 2.168° / 1.168° 与 0.140° / 0.196°。完整标注对照有助于看见结构计数之外的实际几何差异。这里仍使用该建筑自身的留楼外标签。</p>
+<p>这些是选定原答的具体事实。图册负责把标法画出来，下面的全量共同支持统计负责说明各类在研究范围内的平均 Q / T 关系。</p>
+<h2>4. 与既有 K4 Q / T 发现怎样对应</h2>
+<p>下表直接读取本轮前已经完成的 <a href="../rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv">同记录、同源共同支持汇总</a>，限定 <code>manual / primary / ALL difficulty / OPPJOINT_K4</code>。Q 差和时间比来自同一批具有合法正时间的原答，先同图比较，再按图片等权汇总。时间比为几何时间比；不是两个算术平均时间直接相除。它们没有因新增图板而重算。</p>
+<table>
+<thead>
+<tr>
+<th>类对（后一类减前一类）</th>
+<th>来源</th>
+<th align="right">图片 / 建筑</th>
+<th align="right">Q 差</th>
+<th align="right">时间比（后一类 / 前一类）</th>
+<th>采用的解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2 − C1</td>
+<td>new</td>
+<td align="right">162 / 17</td>
+<td align="right">−0.133</td>
+<td align="right">0.8847</td>
+<td>Q 图均值接近，记录劳动平均约少 11.5%</td>
+</tr>
+<tr>
+<td>C2 − C1</td>
+<td>v1</td>
+<td align="right">87 / 21</td>
+<td align="right">+0.678</td>
+<td align="right">0.8340</td>
+<td>Q 图均值接近，记录劳动平均约少 16.6%</td>
+</tr>
+<tr>
+<td>C3 − C2</td>
+<td>new</td>
+<td align="right">143 / 21</td>
+<td align="right">−4.171</td>
+<td align="right">2.9495</td>
+<td>较长记录劳动与较低平均 Q 同时出现</td>
+</tr>
+<tr>
+<td>C3 − C2</td>
+<td>v1</td>
+<td align="right">49 / 14</td>
+<td align="right">+9.097</td>
+<td align="right">3.6844</td>
+<td>较长记录劳动与较高平均 Q 同时出现</td>
+</tr>
+</tbody></table>
+<p>“均值接近”是这里的数值描述，不是统计等效性检验结论。四张 new 图中的几何典型原答也不是 162 图总体 Q / T 关系的重新抽样证明；具体图片或具体两人的快慢方向可以与总体平均不同。C3 的 new / v1 结果应分别按来源、实际成员和图片支持解释，不能把本图 W121 的表现推广到所有折或所有来源的 C3。</p>
+<p>这份补充使读者既能读到 K4 的质量—劳动关系，也能在同一张真实图上看到四类原答的结构和位置；已有总体结论及团队结果的数值和支持范围保持原值。</p>
+<h2>5. 标签、坐标、参考与时间接续</h2>
+<ul>
+<li><strong>楼外标签</strong>：每个对象按 <code>method=OPPJOINT_K4</code>、<code>heldout_building=building</code>、<code>worker_id</code> 绑定，且 <code>known=true</code>。没有用 <code>ALL</code> 名单代替当前图片的楼外标签，也没有重新拟合 K4。编号来自各折训练 Q 中心排序，并不是跨折固定的人员角色名称。</li>
+<li><strong>当前有效坐标</strong>：直接读取 v2.1 有效输入对象的 <code>points_1024x512</code>，上下点和保存顺序完整展示。28 个 K4 原答的 <code>preprocessing_status=ready</code>、几何状态为 <code>surface_valid</code>；其 <code>order_status=default_unreviewed</code> 保留原记录含义。本次没有重新排序原答，没有采用 F2 / F9 坐标候选，也没有把融合节点人工顺序回写到个人原答。</li>
+<li><strong>同参考评分绑定</strong>：Q、D10 与分项以 <code>object_id + reference_id + reference_version</code> 精确接续既有评分结果。独立核对的 28 / 28 条均匹配，Q / D10 浮点差异上界约为 <code>1.42e-14</code>。原图中的参考对应当前原答使用的同一参考和版本。</li>
+<li><strong>展示单位</strong>：Release PNG 为 2048 × 1024；研究坐标为 1024 × 512，展示等比例映射，不改研究点位。底面投影单位仍为相机到地板的高度。</li>
+<li><strong>劳动来源</strong>：本图组所有 T 都是同一 new 来源的合法正值。与 v1 的比较仅通过上节已分源的共同支持统计进行，不将两个来源直接拼成一个时间均值。</li>
+</ul>
+<h2>6. 可核查来源</h2>
+<ol>
+<li>Sparkling-Flames（2026）. <em>3D_Manhattan_label: v2.1 current effective annotation input</em>. GitHub 项目研究数据，固定提交 <code>48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b</code>。有效坐标：<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b/research/data/releases/v2.1/analysis_input/data.json.gz"><code>research/data/releases/v2.1/analysis_input/data.json.gz</code></a>；评分：<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b/research/data/releases/v2.1/quality_records.csv">quality_records.csv</a>；参考：<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b/research/data/releases/v2.1/reference_catalog.json">reference_catalog.json</a>。</li>
+<li>Sparkling-Flames（2026）. <em>Personnel v2.1 reselection: MAIN45 labels, ALL and LOBO</em>. GitHub 项目研究数据，同一固定提交。K4 原始标签：<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b/research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz"><code>research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz</code></a>。本补充直接读取已整理的 <a href="../basis/WORKER_LABELS_ALL_LOBO.csv.gz">当前五方法标签表</a>。</li>
+<li>Sparkling-Flames（2026）. <em>Image difficulty 20261030: raw target response records</em>. GitHub 项目研究数据，同一固定提交。原答结构、Q / T 来源字段与官方难度：<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b/research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/RAW_TARGET_RESPONSE_RECORDS.csv.gz"><code>RAW_TARGET_RESPONSE_RECORDS.csv.gz</code></a>。</li>
+<li>Sparkling-Flames（2026）. <em>quality-original-images-20261015</em>. GitHub Release 原图资产，<a href="https://github.com/Sparkling-Flames/3D_Manhattan_label/releases/tag/quality-original-images-20261015">Release 页面</a>。本次复用第 09 批同一批原图，来源明细见 <a href="ORIGINAL_IMAGE_RECEIPT.json">ORIGINAL_IMAGE_RECEIPT.json</a>。</li>
+<li>本项目本轮整理（2026）. <em>当前类别原答与团队效果解释：同记录同源 Q / T</em>. HOHONET v2.1 补充研究表。<a href="../rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv">Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv</a>、<a href="../rfuse_joint/REPORT_ZH.html">RFUSE / JOINT 报告</a>、<a href="../REPORT_ZH.html">总报告</a>。这是基于上述冻结数据的研究输出，不是新增外部文献。</li>
+</ol>
+</main></body></html>

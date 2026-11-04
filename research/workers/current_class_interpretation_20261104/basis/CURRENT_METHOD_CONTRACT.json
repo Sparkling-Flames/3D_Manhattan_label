@@ -1,0 +1,116 @@
+{
+  "frozen_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "methods": {
+    "TARGET_DSTRUCT_K2_K3": {
+      "role": "ordinary Manual forward classification; K2 coarse, K3 main",
+      "label_source": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/LABELS_ALL_LOBO.csv.gz",
+      "training": "ordinary Manual, primary and admitted other targets",
+      "heldout": "ALL descriptive plus 22 leave-one-building-out folds",
+      "direct_Q": false,
+      "direct_T": false,
+      "reference_informed": true,
+      "raw_structure": [
+        "turn_n",
+        "short_turn_edges",
+        "near_straight_nodes_5deg",
+        "unmatched_ref_9"
+      ],
+      "domains": [
+        "overall structure",
+        "hard structure and hard minus easy structure"
+      ],
+      "ordering": [
+        "m_hard_turn_n",
+        "m_hard_short_turn_edges",
+        "m_all_turn_n"
+      ],
+      "gates": "all>=12 images/3 buildings; easy>=5/2; hard>=4/2; complete required features",
+      "embedding": "robust median/(p85-p15), std then1 fallback, clip ±3, PCA <=2/domain, equal-domain RMS normalization; Ward one tree"
+    },
+    "RFUSE_GEOM_K2": {
+      "role": "reverse fusion-response explanation",
+      "label_source": "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/rfuse/RFUSE_LABELS_ALL_LOBO.csv.gz",
+      "training": "actual ordinary Manual natural teams, n10–24, legal targets, complete model outputs, at least four unique teams within pool×n",
+      "direct_Q": false,
+      "direct_T": false,
+      "indirect_quality_dependence": "shared training eligibility requires all geometry and quality outputs; Q coefficients are saved for description but do not enter GEOM embedding or alpha selection",
+      "geometry_outputs": [
+        "floor_turn5_n",
+        "floor_short_edge_03_n",
+        "floor_redundant5_n",
+        "bottom_y_mean_px",
+        "top_y_mean_px",
+        "log_floor_area",
+        "log_height_mean"
+      ],
+      "domains": [
+        "structure response",
+        "boundary/scale response"
+      ],
+      "strata": [
+        "all",
+        "hard",
+        "hard_minus_easy"
+      ],
+      "regression": "occurrence-weighted centered team composition shares and outputs within pool×n; buildings equal, images equal, available pool×n groups equal within image; ridge coefficients",
+      "alpha_grid": [
+        0.1,
+        1,
+        10
+      ],
+      "alpha_selection": "minimum inner-building normalized geometry response MSE, domain/stratum balanced; outer building excluded",
+      "ordering": [
+        "hard_floor_turn5_n",
+        "all_bottom_y_mean_px"
+      ],
+      "gates": "all>=8 images/3 buildings; easy>=5/2; hard>=3/2",
+      "embedding": "robust median/(p85-p15), clip ±3, PCA2/domain, equal-domain RMS normalization; Ward",
+      "semi_use": "cross-mode application of Manual response labels, not a separately trained Semi classifier",
+      "distinct_methods": "GEOMQ includes Q; TARGET_RFUSE changes target weighting; neither silently substitutes for RFUSE_GEOM_K2",
+      "team_sizes": [
+        10,
+        12,
+        14,
+        16,
+        20,
+        24
+      ]
+    },
+    "OPPJOINT_K3_K4": {
+      "role": "joint original-answer, quality/time and mixture profile",
+      "label_source": "research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+      "training": "ordinary Manual, legal primary and admitted other targets; not Manual+Semi joint training",
+      "direct_Q": true,
+      "direct_T": true,
+      "domains": [
+        "structure response to geometric opportunity",
+        "boundary/scale response to geometric opportunity",
+        "Q overall, weighted p20 and opportunity response",
+        "source-centered logT overall and opportunity response"
+      ],
+      "opportunity": [
+        "log1p(max(reference turns−4,0))",
+        "log1p(reference self-occlusion H)",
+        "log1p(reference short turns)"
+      ],
+      "ordering": [
+        "m_all_B8L2",
+        "m_challenge_turn_n",
+        "m_all_log_time"
+      ],
+      "gates": "all>=12 images/3 buildings; opportunity variance>1e-5, >=2 levels; positive time>=12 images/3 buildings and estimable response",
+      "embedding": "robust median/(p85-p15), clip ±3, PCA<=2/domain, equal-domain RMS normalization; Ward one tree",
+      "difficulty": "formal picture difficulty is not a JOINT clustering input; current label reuse verified numerically",
+      "warning": "C1...Ck are per-fold training Q-center ranks. ALL role names and K3/K4 splits are not fixed identities across folds"
+    }
+  },
+  "analysis": {
+    "ALL": "roster and training description only",
+    "LOBO": "join worker_id and target building to heldout_building",
+    "unit": "object then worker-target; class means within the same legal target; target differences equally within image; images equally within building; report both image- and building-equal summaries",
+    "time": "positive source_active_time_seconds only, comparisons stratified by origin/time_source; other-target time denotes original task record and is not space-specific labor",
+    "scope": "ordinary Manual primary main; other targets separate; Semi cross-mode separate; no doorway or special-range expansion",
+    "missing": "unscored or unknown-class results remain missing, never zero; metric-specific finite support",
+    "no_new_experiment": true
+  }
+}

@@ -1,0 +1,797 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>当前类别—原答—团队效果对照表</title><style>body{font:16px/1.85 system-ui,"Microsoft YaHei",sans-serif;margin:0;color:#1c3038;background:#f3f6f7}main{max-width:1150px;margin:25px auto 50px;background:#fff;border:1px solid #d9e3e8;border-radius:8px;padding:40px 48px}h1{font-size:32px;line-height:1.4}h2{font-size:25px;margin-top:45px;padding-bottom:10px;border-bottom:1px solid #d7e1e6}h3{font-size:19px;margin-top:28px}a{color:#116f63;text-underline-offset:3px}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:14px;margin:22px 0}th,td{border:1px solid #d9e1e6;padding:8px 11px;text-align:left;min-width:75px}th{background:#f0f5f4}td{vertical-align:top}code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}pre{background:#eef3f5;padding:16px;overflow:auto;font-size:14px}blockquote{margin:24px 0;padding:7px 22px;border-left:4px solid #247b6b;background:#f3f8f6}.nav{font-size:14px;color:#60727c;border-bottom:1px solid #dde6eb;padding-bottom:15px;margin-bottom:28px}.nav a{margin-right:24px}li{margin-bottom:5px}@media(max-width:760px){main{padding:24px 18px;margin:0;border:0}h1{font-size:26px}h2{font-size:23px}}</style></head><body><main><div class="nav"><a href="../workbench/index.html">当前类别研究台</a><a href="CLASS_ORIGINAL_TEAM_TABLES.md">Markdown 原文</a>HOHONET v2.1 · 2026-11-04</div><h1>当前类别—原答—团队效果对照表</h1>
+<h2>阅读规则</h2>
+<p>这份表把用户要求的分类依据、人员和容量、实际标法、Q/T、困难响应与团队效果接在一起。四个当前方法分别是DSTRUCT K3、RFUSE K2、OPPJOINT K3/K4；没有重选分类。完整机器表为<a href="CLASS_ORIGINAL_TEAM_MATRIX.csv">CLASS_ORIGINAL_TEAM_MATRIX.csv</a>，每个类别一行。</p>
+<p><strong>ALL名单仅作全数据描述；下列原答和容量使用目标建筑的LOBO标签。Q、转折、短墙、边界各指标使用其全类共同支持；new时间也要求全类共同支持，但具有独立分母。不能将本表不同支持的Q与T直接拼成效率对比，严格同一批原答的Q/T比较应查<a href="../rfuse_joint/Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv">共同记录Q/T表</a>。</strong></p>
+<p>原答短墙为底面周长占比&lt;4%、两端转角≥15°；转折&gt;5°；边界列为已采用质量分项<code>S_bottom_deg</code>。T为正记录劳动的几何均值，单位秒，限定new同一来源。每图容量取206个普通Manual主目标池，零表示该类在该图不存在。</p>
+<h2>方法层团队效果：只在这里解释一次</h2>
+<p>以下Q配比间份额基于共同的174个完整面板、32图、21楼；时间基于其中130个new同源完整面板、31图、21楼。它衡量整个分类方案把固定团队波动组织到配比之间的份额，<strong>不是某一类的贡献，也不是加入该类会提高多少Q</strong>。CSV按类重复这几个字段只是为关联方便。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>Q配比间份额%</th>
+<th>logT配比间份额%</th>
+<th>秒数配比间份额%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TARGET_DSTRUCT_K3</td>
+<td>15.063</td>
+<td>19.776</td>
+<td>18.659</td>
+</tr>
+<tr>
+<td>RFUSE_GEOM_K2</td>
+<td>7.482</td>
+<td>26.584</td>
+<td>22.573</td>
+</tr>
+<tr>
+<td>OPPJOINT_K3</td>
+<td>12.575</td>
+<td>32.490</td>
+<td>27.846</td>
+</tr>
+<tr>
+<td>OPPJOINT_K4</td>
+<td>14.395</td>
+<td>37.815</td>
+<td>43.625</td>
+</tr>
+</tbody></table>
+<p>来源：<a href="../team_effects/COMMON_COMPLETE_PANEL_METRICS.csv">COMMON_COMPLETE_PANEL_METRICS.csv</a>。同配比具体成员仍保留大量波动；K4更细分会影响份额，不能据此简单排名分类器。</p>
+<h2>TARGET_DSTRUCT_K3</h2>
+<p>分类依据：有效转折、短墙、近共线点、未匹配参考点；整体与困难响应两域；参考辅助。直接使用Q/T：否 / 否。RFUSE仍有质量可评性的间接训练支持条件；DSTRUCT具有参考匹配输入。</p>
+<table>
+<thead>
+<tr>
+<th>楼外类编号</th>
+<th>ALL描述人数</th>
+<th>每图容量中位(范围)</th>
+<th>Q共同图</th>
+<th>原答Q</th>
+<th>转折</th>
+<th>短墙</th>
+<th>边界误差°</th>
+<th>new几何T秒/独立支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>10</td>
+<td>4 (0–10)</td>
+<td>201</td>
+<td>64.965</td>
+<td>4.742</td>
+<td>0.206</td>
+<td>2.177</td>
+<td>126.70 / 184图</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>37</td>
+<td>22 (4–27)</td>
+<td>201</td>
+<td>66.913</td>
+<td>4.794</td>
+<td>0.246</td>
+<td>1.964</td>
+<td>118.90 / 184图</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>12</td>
+<td>6 (0–8)</td>
+<td>201</td>
+<td>80.971</td>
+<td>5.253</td>
+<td>0.503</td>
+<td>1.006</td>
+<td>124.71 / 184图</td>
+</tr>
+</tbody></table>
+<p>原答来源：<a href="../dstruct/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv">dstruct</a>；人员和容量见本目录对应CSV。</p>
+<h3>ALL描述性名单</h3>
+<ul>
+<li><p><strong>C1：困难结构较简化、近共线冗余偏多，10人。</strong> W001、W028、W030、W031、W032、W035、W037、W103、W105、W125。</p>
+</li>
+<li><p><strong>C2：常规结构表达，37人。</strong> W006、W008、W010、W011、W012、W013、W014、W018、W029、W033、W034、W036、W100、W101、W104、W106、W107、W108、W110、W111、W113、W114、W116、W117、W118、W119、W120、W121、W123、W124、W127、W128、W129、W131、W132、W133、W134。</p>
+</li>
+<li><p><strong>C3：局部转折与短墙表达较多，12人。</strong> W002、W015、W017、W021、W027、W102、W109、W112、W115、W122、W126、W130。</p>
+</li>
+</ul>
+<p>上述描述不随意移植到LOBO；OPPJOINT编号按每折训练Q中心排列，TARGET/RFUSE分别按困难原答转折/困难融合转折响应中心排列。</p>
+<h3>困难响应</h3>
+<p>这里先给同一人员、同一建筑内困难−简单的类均值；每个人两种难度都必须有合法记录，再等权到建筑。各类支持楼不同，所以类间差值另使用相邻类共同楼，不能直接相减本表单类均值。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>同人Q困难−简单</th>
+<th>Q楼</th>
+<th>同人转折困难−简单</th>
+<th>转折楼</th>
+<th>同人短墙困难−简单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>-25.923</td>
+<td>15</td>
+<td>1.433</td>
+<td>15</td>
+<td>0.337</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>-32.092</td>
+<td>15</td>
+<td>1.711</td>
+<td>15</td>
+<td>0.474</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>-26.857</td>
+<td>15</td>
+<td>4.041</td>
+<td>15</td>
+<td>1.825</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>B类</th>
+<th>A类</th>
+<th>B−A转折响应差</th>
+<th>共同楼</th>
+<th>转折正向楼</th>
+<th>B−A Q响应差</th>
+<th>Q共同楼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2</td>
+<td>C1</td>
+<td>0.278</td>
+<td>15.000</td>
+<td>9.000</td>
+<td>-6.169</td>
+<td>15.000</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>C2</td>
+<td>2.330</td>
+<td>15.000</td>
+<td>15.000</td>
+<td>5.235</td>
+<td>15.000</td>
+</tr>
+</tbody></table>
+<p>完整困难分层Q/转折/短墙均值与独立图数、同人楼数均已保留在总矩阵。</p>
+<h3>与这些类别有关的实际团队方向</h3>
+<table>
+<thead>
+<tr>
+<th>证据ID</th>
+<th>涉及类</th>
+<th>条件</th>
+<th>量</th>
+<th>值</th>
+<th>图</th>
+<th>正图</th>
+<th>负图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DSTRUCT_14_7_gap_sym</td>
+<td>C2 / C3</td>
+<td>strict ABC n14 m7 C2→C3</td>
+<td>gap_sym</td>
+<td>3.441</td>
+<td>69</td>
+<td>50.000</td>
+<td>19.000</td>
+</tr>
+<tr>
+<td>DSTRUCT_14_7_CB</td>
+<td>C2 / C3</td>
+<td>strict ABC n14 m7 C2→C3</td>
+<td>CB</td>
+<td>6.712</td>
+<td>69</td>
+<td>65.000</td>
+<td>4.000</td>
+</tr>
+<tr>
+<td>DSTRUCT_PURE_C1</td>
+<td>C1</td>
+<td>all available members of pure class; unequal class capacities</td>
+<td>mean_Q_not_contrast</td>
+<td>74.880</td>
+<td>166</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DSTRUCT_PURE_C2</td>
+<td>C2</td>
+<td>all available members of pure class; unequal class capacities</td>
+<td>mean_Q_not_contrast</td>
+<td>83.034</td>
+<td>205</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DSTRUCT_PURE_C3</td>
+<td>C3</td>
+<td>all available members of pure class; unequal class capacities</td>
+<td>mean_Q_not_contrast</td>
+<td>91.379</td>
+<td>184</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>逐条源路径、版本、过滤条件见<a href="CLASS_TEAM_DIRECTION_LINKS.csv">CLASS_TEAM_DIRECTION_LINKS.csv</a>。完整联盟的“more people”包含人数增加；纯类绝对Q使用不同图片和人数，只是该类可用全员的描述，不作组间因果差。严格ABC的gap说明额外变化幅度，CB/AC才另列方向。</p>
+<h2>RFUSE_GEOM_K2</h2>
+<p>分类依据：真实自然团队的结构、边界/尺度岭响应；总体/困难/困难−简单；GEOM无Q/T直接特征。直接使用Q/T：否 / 否。RFUSE仍有质量可评性的间接训练支持条件；DSTRUCT具有参考匹配输入。</p>
+<table>
+<thead>
+<tr>
+<th>楼外类编号</th>
+<th>ALL描述人数</th>
+<th>每图容量中位(范围)</th>
+<th>Q共同图</th>
+<th>原答Q</th>
+<th>转折</th>
+<th>短墙</th>
+<th>边界误差°</th>
+<th>new几何T秒/独立支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>55</td>
+<td>31 (6–34)</td>
+<td>192</td>
+<td>68.126</td>
+<td>4.808</td>
+<td>0.259</td>
+<td>1.882</td>
+<td>120.48 / 192图</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>4</td>
+<td>3 (0–6)</td>
+<td>192</td>
+<td>82.063</td>
+<td>5.365</td>
+<td>0.608</td>
+<td>0.818</td>
+<td>127.66 / 192图</td>
+</tr>
+</tbody></table>
+<p>原答来源：<a href="../rfuse_joint/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv">rfuse_joint</a>；人员和容量见本目录对应CSV。</p>
+<h3>ALL描述性名单</h3>
+<ul>
+<li><p><strong>C1：多数融合响应组，55人。</strong> W001、W002、W006、W008、W010、W011、W012、W013、W014、W015、W017、W018、W021、W027、W028、W029、W030、W031、W032、W033、W034、W035、W036、W037、W100、W101、W102、W103、W104、W105、W106、W107、W108、W110、W111、W113、W114、W115、W116、W117、W118、W119、W120、W121、W122、W123、W124、W125、W127、W128、W129、W131、W132、W133、W134。</p>
+</li>
+<li><p><strong>C2：困难转折融合响应较高，4人。</strong> W109、W112、W126、W130。</p>
+</li>
+</ul>
+<p>上述描述不随意移植到LOBO；OPPJOINT编号按每折训练Q中心排列，TARGET/RFUSE分别按困难原答转折/困难融合转折响应中心排列。</p>
+<h3>困难响应</h3>
+<p>这里先给同一人员、同一建筑内困难−简单的类均值；每个人两种难度都必须有合法记录，再等权到建筑。各类支持楼不同，所以类间差值另使用相邻类共同楼，不能直接相减本表单类均值。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>同人Q困难−简单</th>
+<th>Q楼</th>
+<th>同人转折困难−简单</th>
+<th>转折楼</th>
+<th>同人短墙困难−简单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>-31.020</td>
+<td>15</td>
+<td>1.884</td>
+<td>15</td>
+<td>0.561</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>-28.942</td>
+<td>14</td>
+<td>4.376</td>
+<td>14</td>
+<td>2.084</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>B类</th>
+<th>A类</th>
+<th>B−A转折响应差</th>
+<th>共同楼</th>
+<th>转折正向楼</th>
+<th>B−A Q响应差</th>
+<th>Q共同楼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2</td>
+<td>C1</td>
+<td>2.427</td>
+<td>14.000</td>
+<td>14.000</td>
+<td>2.400</td>
+<td>14.000</td>
+</tr>
+</tbody></table>
+<p>完整困难分层Q/转折/短墙均值与独立图数、同人楼数均已保留在总矩阵。</p>
+<h3>与这些类别有关的实际团队方向</h3>
+<table>
+<thead>
+<tr>
+<th>证据ID</th>
+<th>涉及类</th>
+<th>条件</th>
+<th>量</th>
+<th>值</th>
+<th>图</th>
+<th>正图</th>
+<th>负图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RFUSE_AC_20_4</td>
+<td>C1 / C2</td>
+<td>AC n20 m4 1-&gt;2</td>
+<td>Q_C_minus_A</td>
+<td>2.934</td>
+<td>82</td>
+<td>77.000</td>
+<td>5.000</td>
+</tr>
+<tr>
+<td>COALITION_1</td>
+<td>C1 / C2</td>
+<td>complete coalition role1 -&gt; role1+role2; more people</td>
+<td>Q_C_minus_A</td>
+<td>1.517</td>
+<td>191</td>
+<td>157.000</td>
+<td>34.000</td>
+</tr>
+</tbody></table>
+<p>逐条源路径、版本、过滤条件见<a href="CLASS_TEAM_DIRECTION_LINKS.csv">CLASS_TEAM_DIRECTION_LINKS.csv</a>。完整联盟的“more people”包含人数增加；纯类绝对Q使用不同图片和人数，只是该类可用全员的描述，不作组间因果差。严格ABC的gap说明额外变化幅度，CB/AC才另列方向。</p>
+<h2>OPPJOINT_K3</h2>
+<p>分类依据：结构机会响应、边界机会响应、Q总体/低尾/响应、同源logT总体/响应四域。直接使用Q/T：是 / 是。历史Q/T分离属于建类依据，表中楼外原答用于检验其实际表现。</p>
+<table>
+<thead>
+<tr>
+<th>楼外类编号</th>
+<th>ALL描述人数</th>
+<th>每图容量中位(范围)</th>
+<th>Q共同图</th>
+<th>原答Q</th>
+<th>转折</th>
+<th>短墙</th>
+<th>边界误差°</th>
+<th>new几何T秒/独立支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>19</td>
+<td>14 (0–29)</td>
+<td>194</td>
+<td>67.227</td>
+<td>4.746</td>
+<td>0.241</td>
+<td>1.959</td>
+<td>114.99 / 178图</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>29</td>
+<td>11 (0–28)</td>
+<td>194</td>
+<td>66.513</td>
+<td>4.742</td>
+<td>0.239</td>
+<td>2.048</td>
+<td>160.87 / 178图</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>8</td>
+<td>6 (0–9)</td>
+<td>194</td>
+<td>80.031</td>
+<td>5.177</td>
+<td>0.503</td>
+<td>1.079</td>
+<td>138.33 / 178图</td>
+</tr>
+</tbody></table>
+<p>原答来源：<a href="../rfuse_joint/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv">rfuse_joint</a>；人员和容量见本目录对应CSV。</p>
+<h3>ALL描述性名单</h3>
+<ul>
+<li><p><strong>C1：几何机会下较简化，19人。</strong> W008、W010、W015、W028、W029、W031、W035、W037、W106、W108、W110、W114、W116、W117、W118、W120、W123、W124、W127。</p>
+</li>
+<li><p><strong>C2：常规且含长记录劳动成员，29人。</strong> W001、W006、W011、W012、W013、W017、W021、W027、W030、W032、W033、W036、W100、W101、W103、W104、W105、W107、W111、W113、W119、W121、W125、W128、W129、W131、W132、W133、W134。</p>
+</li>
+<li><p><strong>C3：较高历史Q、更多局部细节，8人。</strong> W002、W102、W109、W112、W115、W122、W126、W130。</p>
+</li>
+</ul>
+<p>上述描述不随意移植到LOBO；OPPJOINT编号按每折训练Q中心排列，TARGET/RFUSE分别按困难原答转折/困难融合转折响应中心排列。</p>
+<h3>困难响应</h3>
+<p>这里先给同一人员、同一建筑内困难−简单的类均值；每个人两种难度都必须有合法记录，再等权到建筑。各类支持楼不同，所以类间差值另使用相邻类共同楼，不能直接相减本表单类均值。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>同人Q困难−简单</th>
+<th>Q楼</th>
+<th>同人转折困难−简单</th>
+<th>转折楼</th>
+<th>同人短墙困难−简单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>-31.351</td>
+<td>14</td>
+<td>1.866</td>
+<td>14</td>
+<td>0.590</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>-27.222</td>
+<td>15</td>
+<td>1.879</td>
+<td>15</td>
+<td>0.475</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>-30.524</td>
+<td>15</td>
+<td>3.831</td>
+<td>15</td>
+<td>1.742</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>B类</th>
+<th>A类</th>
+<th>B−A转折响应差</th>
+<th>共同楼</th>
+<th>转折正向楼</th>
+<th>B−A Q响应差</th>
+<th>Q共同楼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2</td>
+<td>C1</td>
+<td>0.169</td>
+<td>14.000</td>
+<td>8.000</td>
+<td>4.941</td>
+<td>14.000</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>C2</td>
+<td>1.952</td>
+<td>15.000</td>
+<td>15.000</td>
+<td>-3.303</td>
+<td>15.000</td>
+</tr>
+</tbody></table>
+<p>完整困难分层Q/转折/短墙均值与独立图数、同人楼数均已保留在总矩阵。</p>
+<h3>与这些类别有关的实际团队方向</h3>
+<table>
+<thead>
+<tr>
+<th>证据ID</th>
+<th>涉及类</th>
+<th>条件</th>
+<th>量</th>
+<th>值</th>
+<th>图</th>
+<th>正图</th>
+<th>负图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JOINT3_AC_20_10</td>
+<td>C1 / C2</td>
+<td>AC n20 m10 1-&gt;2</td>
+<td>Q_C_minus_A</td>
+<td>0.297</td>
+<td>82</td>
+<td>42.000</td>
+<td>40.000</td>
+</tr>
+<tr>
+<td>JOINT3_ABC_14_7_C2</td>
+<td>C1 / C2</td>
+<td>frozen strict ABC n14 m7 1/3-&gt;2/3</td>
+<td>gap_sym</td>
+<td>0.144</td>
+<td>44</td>
+<td>17.000</td>
+<td></td>
+</tr>
+<tr>
+<td>JOINT3_ABC_14_7_C3</td>
+<td>C1 / C3</td>
+<td>frozen strict ABC n14 m7 1/3-&gt;3/3</td>
+<td>gap_sym</td>
+<td>4.201</td>
+<td>42</td>
+<td>33.000</td>
+<td></td>
+</tr>
+<tr>
+<td>COALITION_2</td>
+<td>C1 / C2</td>
+<td>complete coalition role1 -&gt; role1+role2; more people</td>
+<td>Q_C_minus_A</td>
+<td>0.686</td>
+<td>176</td>
+<td>104.000</td>
+<td>72.000</td>
+</tr>
+<tr>
+<td>COALITION_3</td>
+<td>C1 / C3</td>
+<td>complete coalition role1 -&gt; role1+role3; more people</td>
+<td>Q_C_minus_A</td>
+<td>4.455</td>
+<td>177</td>
+<td>153.000</td>
+<td>24.000</td>
+</tr>
+<tr>
+<td>COALITION_4</td>
+<td>C2 / C3</td>
+<td>complete coalition role2 -&gt; role2+role3; more people</td>
+<td>Q_C_minus_A</td>
+<td>5.694</td>
+<td>146</td>
+<td>130.000</td>
+<td>16.000</td>
+</tr>
+</tbody></table>
+<p>逐条源路径、版本、过滤条件见<a href="CLASS_TEAM_DIRECTION_LINKS.csv">CLASS_TEAM_DIRECTION_LINKS.csv</a>。完整联盟的“more people”包含人数增加；纯类绝对Q使用不同图片和人数，只是该类可用全员的描述，不作组间因果差。严格ABC的gap说明额外变化幅度，CB/AC才另列方向。</p>
+<h2>OPPJOINT_K4</h2>
+<p>分类依据：结构机会响应、边界机会响应、Q总体/低尾/响应、同源logT总体/响应四域。直接使用Q/T：是 / 是。历史Q/T分离属于建类依据，表中楼外原答用于检验其实际表现。</p>
+<table>
+<thead>
+<tr>
+<th>楼外类编号</th>
+<th>ALL描述人数</th>
+<th>每图容量中位(范围)</th>
+<th>Q共同图</th>
+<th>原答Q</th>
+<th>转折</th>
+<th>短墙</th>
+<th>边界误差°</th>
+<th>new几何T秒/独立支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>26</td>
+<td>11 (0–19)</td>
+<td>164</td>
+<td>67.452</td>
+<td>4.698</td>
+<td>0.208</td>
+<td>1.951</td>
+<td>114.51 / 114图</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>19</td>
+<td>14 (0–29)</td>
+<td>164</td>
+<td>67.959</td>
+<td>4.672</td>
+<td>0.234</td>
+<td>1.925</td>
+<td>101.03 / 114图</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>3</td>
+<td>1 (0–23)</td>
+<td>164</td>
+<td>68.870</td>
+<td>4.777</td>
+<td>0.237</td>
+<td>1.844</td>
+<td>305.22 / 114图</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>8</td>
+<td>6 (0–8)</td>
+<td>164</td>
+<td>82.148</td>
+<td>5.153</td>
+<td>0.505</td>
+<td>0.921</td>
+<td>114.23 / 114图</td>
+</tr>
+</tbody></table>
+<p>原答来源：<a href="../rfuse_joint/ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv">rfuse_joint</a>；人员和容量见本目录对应CSV。</p>
+<h3>ALL描述性名单</h3>
+<ul>
+<li><p><strong>C1：常规、较短记录劳动，26人。</strong> W001、W006、W011、W012、W013、W017、W021、W030、W032、W033、W100、W101、W103、W104、W105、W107、W111、W113、W119、W125、W128、W129、W131、W132、W133、W134。</p>
+</li>
+<li><p><strong>C2：几何机会下较简化，19人。</strong> W008、W010、W015、W028、W029、W031、W035、W037、W106、W108、W110、W114、W116、W117、W118、W120、W123、W124、W127。</p>
+</li>
+<li><p><strong>C3：长记录劳动，3人。</strong> W027、W036、W121。</p>
+</li>
+<li><p><strong>C4：较高历史Q、更多局部细节，8人。</strong> W002、W102、W109、W112、W115、W122、W126、W130。</p>
+</li>
+</ul>
+<p>上述描述不随意移植到LOBO；OPPJOINT编号按每折训练Q中心排列，TARGET/RFUSE分别按困难原答转折/困难融合转折响应中心排列。</p>
+<h3>困难响应</h3>
+<p>这里先给同一人员、同一建筑内困难−简单的类均值；每个人两种难度都必须有合法记录，再等权到建筑。各类支持楼不同，所以类间差值另使用相邻类共同楼，不能直接相减本表单类均值。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>同人Q困难−简单</th>
+<th>Q楼</th>
+<th>同人转折困难−简单</th>
+<th>转折楼</th>
+<th>同人短墙困难−简单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>-32.418</td>
+<td>12</td>
+<td>1.787</td>
+<td>12</td>
+<td>0.507</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>-31.466</td>
+<td>15</td>
+<td>1.654</td>
+<td>15</td>
+<td>0.511</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>-26.134</td>
+<td>15</td>
+<td>1.809</td>
+<td>15</td>
+<td>0.452</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>-29.501</td>
+<td>15</td>
+<td>4.118</td>
+<td>15</td>
+<td>1.891</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>B类</th>
+<th>A类</th>
+<th>B−A转折响应差</th>
+<th>共同楼</th>
+<th>转折正向楼</th>
+<th>B−A Q响应差</th>
+<th>Q共同楼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C2</td>
+<td>C1</td>
+<td>-0.135</td>
+<td>12.000</td>
+<td>4.000</td>
+<td>-0.729</td>
+<td>12.000</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>C2</td>
+<td>0.155</td>
+<td>15.000</td>
+<td>8.000</td>
+<td>5.333</td>
+<td>15.000</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>C3</td>
+<td>2.309</td>
+<td>15.000</td>
+<td>15.000</td>
+<td>-3.367</td>
+<td>15.000</td>
+</tr>
+</tbody></table>
+<p>完整困难分层Q/转折/短墙均值与独立图数、同人楼数均已保留在总矩阵。</p>
+<h3>与这些类别有关的实际团队方向</h3>
+<table>
+<thead>
+<tr>
+<th>证据ID</th>
+<th>涉及类</th>
+<th>条件</th>
+<th>量</th>
+<th>值</th>
+<th>图</th>
+<th>正图</th>
+<th>负图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>COALITION_5</td>
+<td>C1 / C2</td>
+<td>complete coalition role1 -&gt; role1+role2; more people</td>
+<td>Q_C_minus_A</td>
+<td>1.836</td>
+<td>153</td>
+<td>101.000</td>
+<td>52.000</td>
+</tr>
+<tr>
+<td>COALITION_6</td>
+<td>C1 / C3</td>
+<td>complete coalition role1 -&gt; role1+role3; more people</td>
+<td>Q_C_minus_A</td>
+<td>0.938</td>
+<td>137</td>
+<td>72.000</td>
+<td>65.000</td>
+</tr>
+<tr>
+<td>COALITION_7</td>
+<td>C1 / C4</td>
+<td>complete coalition role1 -&gt; role1+role4; more people</td>
+<td>Q_C_minus_A</td>
+<td>4.759</td>
+<td>150</td>
+<td>125.000</td>
+<td>25.000</td>
+</tr>
+</tbody></table>
+<p>逐条源路径、版本、过滤条件见<a href="CLASS_TEAM_DIRECTION_LINKS.csv">CLASS_TEAM_DIRECTION_LINKS.csv</a>。完整联盟的“more people”包含人数增加；纯类绝对Q使用不同图片和人数，只是该类可用全员的描述，不作组间因果差。严格ABC的gap说明额外变化幅度，CB/AC才另列方向。</p>
+<h2>输入、版本与复现</h2>
+<p>原答、标签、团队三层各自保留实际支持与版本。没有把ALL成员当作每折永久人员，也没有把方法层方差解释为单类效果。方向性证据包括当前DSTRUCT辅助扩展合法子集、RFUSE/JOINT标签已验一致的冻结AC、JOINT冻结自动ABC与明确人数变化的完整联盟。完整方法关系与限制见<a href="README_ZH.html">合同</a>、<a href="../rfuse_joint/REPORT_ZH.html">原答报告</a>和<a href="../team_effects/REPORT_ZH.html">团队报告</a>。</p>
+<p>运行：</p>
+<pre><code class="language-bash">python research/workers/current_class_interpretation_20261104/basis/build_class_original_team_matrix.py
+</code></pre>
+<p>输入散列与依赖路径见<a href="CLASS_MATRIX_INPUT_MANIFEST.csv">CLASS_MATRIX_INPUT_MANIFEST.csv</a>。此脚本只接续已完成表格，新增原答评分、团队、融合、分类拟合均为0。</p>
+</main></body></html>

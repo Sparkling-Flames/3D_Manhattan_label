@@ -1,0 +1,274 @@
+{
+  "status": "passed",
+  "review_date": "2026-11-04",
+  "scope": "JOINT K4 original-answer display addition only; no new experiment, scoring, fusion or classifier fitting",
+  "source_commit": "48a2fc6aedd51cd701b1bce06c02bd3ef92ec75b",
+  "independent_selection": {
+    "rules": "Existing four images; same new time source; existing eight geometric median-distance features; at most two distinct workers per class; C3 singleton fully shown",
+    "records": 28,
+    "unique_workers": 18,
+    "matches_independent_pre_build_selection": true,
+    "capacity": {
+      "jtcxE69GiFV-10": {
+        "available_per_class": {
+          "C1": 16,
+          "C2": 10,
+          "C3": 1,
+          "C4": 7
+        },
+        "displayed_per_class": {
+          "C1": 2,
+          "C2": 2,
+          "C3": 1,
+          "C4": 2
+        }
+      },
+      "jtcxE69GiFV-09": {
+        "available_per_class": {
+          "C1": 16,
+          "C2": 11,
+          "C3": 1,
+          "C4": 6
+        },
+        "displayed_per_class": {
+          "C1": 2,
+          "C2": 2,
+          "C3": 1,
+          "C4": 2
+        }
+      },
+      "jtcxE69GiFV-26": {
+        "available_per_class": {
+          "C1": 14,
+          "C2": 10,
+          "C3": 1,
+          "C4": 6
+        },
+        "displayed_per_class": {
+          "C1": 2,
+          "C2": 2,
+          "C3": 1,
+          "C4": 2
+        }
+      },
+      "yqstnuAEVhm-01": {
+        "available_per_class": {
+          "C1": 17,
+          "C2": 6,
+          "C3": 1,
+          "C4": 6
+        },
+        "displayed_per_class": {
+          "C1": 2,
+          "C2": 2,
+          "C3": 1,
+          "C4": 2
+        }
+      }
+    }
+  },
+  "prior_atlas_preservation": {
+    "prior_slots": 65,
+    "prior_unique_annotations": 34,
+    "unchanged_existing_slot_fields_and_values": true,
+    "unchanged_existing_object_coordinates_order_and_metadata": true,
+    "unchanged_references": true,
+    "difference_count": 0,
+    "permitted_new_raw_record_field": "OPPJOINT_K4",
+    "current_slots": 93,
+    "current_unique_annotations": 39,
+    "new_unique_annotations": 5
+  },
+  "source_binding": {
+    "original_label_source": "research/workers/personnel_v21_reselection_20261029/classification/MAIN45_LABELS_ALL_LOBO.csv.gz",
+    "current_LOBO_label_matches": 28,
+    "ALL_labels_used": false,
+    "raw_record_reference_time_source_matches": 28,
+    "positive_same_source_times": 28,
+    "time_max_abs_error_seconds": 0,
+    "coordinate_max_abs_error_pixels": 0,
+    "quality_same_reference_version_matches": 28,
+    "quality_component_max_abs_errors": {
+      "B8L2": 1.4210854715202004e-14,
+      "D10": 1.4210854715202004e-14,
+      "iou_2d": 0.0,
+      "S_bottom_deg": 0.0,
+      "dir": 0.0,
+      "Hmean": 0.0,
+      "Hcenter": 0.0,
+      "IoU3D100": 0.0
+    },
+    "all_score_states_computed": true,
+    "source_order_preprocessing_status_preserved": true,
+    "statuses": {
+      "v2:new:102884": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102890": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102880": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102876": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102877": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102878": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102882": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102847": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102856": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102849": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102833": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102844": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102848": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:102835": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103121": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103135": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103137": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103128": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103129": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103124": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:103127": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106088": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106109": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106099": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106096": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106097": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106106": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      },
+      "v2:new:106095": {
+        "order_status": "default_unreviewed",
+        "preprocessing_status": "ready",
+        "geometry_status": "surface_valid"
+      }
+    }
+  },
+  "claims": {
+    "C3_singleton_is_current_image_new_source_capacity_not_global_class_size": true,
+    "C3_current_LOBO_members_jtcxE69GiFV": [
+      "W027",
+      "W036",
+      "W121"
+    ],
+    "C3_current_LOBO_members_yqstnuAEVhm": [
+      "W015",
+      "W027",
+      "W036",
+      "W121"
+    ],
+    "existing_Q_T_aggregate_support_and_values_unchanged": true,
+    "examples_do_not_reestimate_population_Q_T": true,
+    "existing_Q_T_aggregate_compared_to": "batch08 delivered ZIP: Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv byte-for-byte identical"
+  },
+  "mismatches": [],
+  "visual_review": {
+    "boards_reviewed": [
+      "figures/jtcxE69GiFV-26__JOINT_K4.png",
+      "figures/yqstnuAEVhm-01__JOINT_K4.png"
+    ],
+    "four_class_columns_visible": true,
+    "singleton_C3_full_answer_and_capacity_note_visible": true,
+    "individual_Q_time_geometry_and_reference_visible": true,
+    "no_observed_clipping_or_missing_class": true
+  }
+}

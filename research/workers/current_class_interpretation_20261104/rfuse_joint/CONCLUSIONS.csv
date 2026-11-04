@@ -1,0 +1,10 @@
+﻿topic,judgement,finding,source,condition
+当前分类职责与实际标签,保持,DSTRUCT正向、RFUSE反向、OPPJOINT联合画像；所有类别均复用冻结当前标签，未重新选型。,../basis/CURRENT_METHOD_CONTRACT.json,ALL描述与目标建筑LOBO实验标签分开
+RFUSE反向类别与原答特点的联系,保持,较高困难转折响应类在楼外原答中也表现为困难结构保留更多、遗漏较少、Q更高；原答证据补齐了训练响应的解释。,SAME_IMAGE_PAIR_SUMMARY.csv,普通Manual主目标；当前合法、可评原答支持；不把4名ALL成员视作所有楼外折永久名单
+RFUSE的质量与劳动画像,条件变化,同源new、同一批正时间原答中，192图Q差+14.106150、时间几何比1.059617；更高质量没有对应大幅更长记录劳动。,Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv,"method=RFUSE_GEOM_K2,manual,primary,new,ALL；v1无可用双类共同支持"
+JOINT是否是从低Q到高Q的固定等级,需改写,高训练Q类的楼外质量优势清楚，但低/中编号类Q重叠且方向依来源、建筑权重变化；四域联合分类不能简写为质量等级。,SAME_IMAGE_PAIR_SUMMARY.csv;ALL_CLASSES_COMMON_SUPPORT_PROFILE.csv,OPPJOINT原编号按每折训练Q中心升序；ALL角色并非永久楼外类型
+JOINT同等Q下时间差异,保持,K4 C2−C1：new162图Q−0.133061、T比0.884693；v1 87图Q+0.678103、T比0.833982，体现Q接近而记录劳动不同。,Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv,严格同源、同图、同一批时间合法原答；不是以混合Q支持匹配某一来源T
+长记录劳动是否统一换来更高Q,需改写,K4 C3−C2：new143图T比2.949455但Q−4.170892；v1 49图T比3.684379且Q+9.096673。应保留来源条件下不同质量回报。,Q_T_COMMON_RECORDS_PAIR_SUMMARY.csv,观察性类别比较，不把时间比解释为个人增加耗时的因果收益
+困难响应,条件变化,RFUSE同源new困难图转折差+2.746643、31/32图正，简单图仅+0.086136；相同人/相同楼的结构响应同向，Q响应差的建筑方向不齐。,SAME_IMAGE_PAIR_SUMMARY.csv;DIFFICULTY_RESPONSE_PAIR_SUMMARY.csv,区分困难图横截面对比与相同人跨难度响应，不把二者当同一个估计量
+Semi和其它目标,幅度变化,RFUSE Semi主目标Q差+3.161593，23图；其它目标Manual +10.319542，21图。支持和效应均独立列出。,SAME_IMAGE_PAIR_SUMMARY.csv,Semi是Manual标签的跨模式表现；其它目标精确接自身reference/version分项
+新一轮Q/T选队、进入策略或重评分,保持,本次缺口由原答画像、同图统计与来源解释补齐，未发现要求重跑这些实验的新输入。,CHECKS.json;../basis/LABEL_VERSION_CHECKS.json,若以后提出新的人员分配/进入顺序效益主张，再按该主张设计验证
