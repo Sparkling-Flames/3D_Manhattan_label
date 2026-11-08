@@ -2,7 +2,7 @@
 
 这是只包含已完成五案的独立交付。
 每案目录包含main.png、reverse.png、presentation.blend、full_model.blend、简短说明与渲染核验。共10张正式图、10个可编辑工程。
-OVERVIEW.png为五案主视图总览，REVERSE_OVERVIEW.png为反向总览。
+OVERVIEW.png为五案主视图总览，REVERSE_OVERVIEW.png为反向总览。OVERVIEW.png按用户要求仅保留本机；云端当前版本不提供该图，原MANIFEST/FILES记录的是完整本地包。
 
 code/包含仅这五案的可运行代码、10份最终几何快照及10份无几何的材质/世界/渲染模板。代码从快照重新创建全工程，不是从原照片重新推断模型；原始全景不属于运行依赖。模板不是额外场景模型。按code/README_中文.md运行。
 

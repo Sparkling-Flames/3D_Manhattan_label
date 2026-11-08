@@ -85,7 +85,7 @@
 
 ## 3. 几何响应矩阵及发现
 
-![固定尺度的控制响应](figures/control_responses.png)
+固定尺度控制响应图（PNG/PDF/SVG）按用户要求仅保留本机；本报告正文、数据和复现代码仍在仓库。
 
 [96条测量矩阵](CONTROL_RESPONSE_MATRIX.csv)、[方向/单调性汇总](CONTROL_RESPONSE_SUMMARY.csv)、[全部控制几何](CONTROL_GEOMETRIES.json.gz)。房间尺度为相机高归一后的1/2/4倍；横移和单墙位移按相机高的0/.05/.15/.30，刚体旋转按弧度，凹角去除按0/1⁄6/1⁄2/1的插值比例。三尺度共用同一形状，不是三批独立真实房间。
 
