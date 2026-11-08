@@ -10,7 +10,7 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
-          "text": "v2.1全研究：170项结果、作用与正文覆盖，附45配置及32历史条件",
+          "text": "v2.1全研究：175项结果、作用与正文覆盖，附45配置及32历史条件",
           "path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md"
         },
         {
@@ -800,6 +800,10 @@
       "description": "同房直接关系证据、共同人员、质量/融合曲线和迁移比较。",
       "page_path": "docs/thesis_main/topics/same_room/README.md",
       "current_basis": [
+        {
+          "text": "v2.1个体结构习惯：128图对、同源他人对照与169份局部实体接续",
+          "path": "research/data/releases/v2.1/same_room_structure_20261108/README.md"
+        },
         {
           "text": "独立复算：同房严格ABC、完整几何关联、敏感性、人数路径及原生端点抽查",
           "path": "research/statistics/same_room_rebuilt_audit_20261023"
@@ -13826,13 +13830,32 @@
       "source_path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md",
       "current_path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md",
       "source": "292份直接证据文件、计算脚本及当前11章LaTeX正文；历史支持和当前结果分开",
-      "adoption_status": "170项研究、验证、桥接及暂缓事项；附45配置、32历史条件，写作核对材料，不替代研究真源",
+      "adoption_status": "175项研究、验证、桥接及暂缓事项；附45配置、32历史条件，写作核对材料，不替代研究真源；新增L23–L27同房结构历史与v2.1实算",
       "verification_status": "源表/事件计数、正文快照定位、444个Markdown链接、HTML静态结构与筛选逻辑检查；未重跑全融合或检查PDF排版",
       "availability": "本地Markdown全表、离线HTML筛选表、JSON证据索引",
       "relationships": [
         "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/index.html",
         "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/核对数据与证据索引.json",
         "docs/thesis_main/论文提纲_LaTeX_20261028/main.tex"
+      ]
+    },
+    {
+      "id": "MAT-same_room_structure_v21_20261108",
+      "title": "v2.1同房个体结构重复、迁移与局部墙角接续",
+      "theme": "same_room",
+      "type": "实际补算 / 描述与固定迁移对照",
+      "date": "20261108",
+      "source_path": "research/data/releases/v2.1/same_room_structure_20261108/README.md",
+      "current_path": "research/data/releases/v2.1/same_room_structure_20261108/README.md",
+      "source": "当前6512份结构与正式参考、128个直接同房图对、旧局部对应人工状态",
+      "adoption_status": "可用于结构习惯解释；具体实体墙角仍限定G046/G057局部，不升级为全房身份核验",
+      "verification_status": "完整脚本执行；3项针对性测试；17930行预测的50组损失另行重聚合；参考与共同人员身份核对通过",
+      "availability": "本地报告、逐人/逐图对/逐目标/局部表及复现脚本",
+      "relationships": [
+        "research/data/releases/v2.1/same_room_structure_20261108/PLAN_AND_FIELDS.md",
+        "research/data/releases/v2.1/same_room_structure_20261108/VALIDATION.json",
+        "tools/thesis_main/analysis/same_room_structure_v21_20261108.py",
+        "tests/test_same_room_structure_v21_20261108.py"
       ]
     }
   ]

@@ -16,7 +16,7 @@
 |图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|37|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
 |人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|117|多套人员分类、连续画像与团队构成分别解释；固定分类研究同构成换人及跨构成变化，Manual/Semi效果分开。|
 |融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|41|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
-|同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|22|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
+|同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|23|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
 |描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|28|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
 |文献与跨模块资料|[打开主题入口](../../docs/thesis_main/topics/literature/README.md)|4|文献阅读和跨模块共同基础；跨模块整包保持原结构并通过引用关联。|
 |历史归档与未分类快照|[打开主题入口](../../docs/thesis_main/topics/archive/README.md)|257|保留原位且不属于当前主题入口的旧结果和历史快照；按原路径及日期回溯，不代表当前方法或待办。|
