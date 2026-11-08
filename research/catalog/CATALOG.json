@@ -10,6 +10,10 @@
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
         {
+          "text": "v2.1全研究：170项结果、作用与正文覆盖，附45配置及32历史条件",
+          "path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md"
+        },
+        {
           "text": "TOMM与IJHCS题目、完整双语提纲及当前研究覆盖",
           "path": "docs/thesis_main/论文选题与研究覆盖_TOMM_IJHCS_20261102.md"
         },
@@ -12322,6 +12326,31 @@
       ]
     },
     {
+      "id": "MAT-structural_support_comparison_20261108",
+      "title": "固定同队的结构支持保留与排除：代表选择、共识及区域表达",
+      "theme": "fusion",
+      "type": "支持统计、字段说明与写作核查",
+      "date": "20261108",
+      "source_path": "research/fusion/fusion_common_panel_20261024",
+      "current_path": "research/fusion/structural_support_comparison_20261108",
+      "source": "冻结v2原答与既有138队；重放当前对应、自动共识与medoid，不重新选队或比较参考Q",
+      "adoption_status": "待写作讨论：普通Manual 17/70队出现代表原答与逐结构支持选择差异，涉及12图；少数支持不等于错误",
+      "verification_status": "138队medoid身份一致、可比自动点坐标差为0；7项相关测试通过；统筹从逐节点表独立确认7/70、14/70及并集17/70",
+      "availability": "仓库路径可读",
+      "relationships": [
+        "research/fusion/structural_support_comparison_20261108/README.md",
+        "research/fusion/structural_support_comparison_20261108/FIELD_CONTRACT.md",
+        "research/fusion/structural_support_comparison_20261108/SUMMARY.json",
+        "tools/thesis_main/analysis/structural_support_comparison_20261108.py",
+        "tests/test_structural_support_comparison_20261108.py",
+        "docs/thesis_main/论文写作工作资料/共识支持统计与Manual动机_深入核查及前后对照_20261108.md",
+        "docs/thesis_main/论文写作工作资料/共识案例与正文改进待审_20261108/完整改进方案与前后对照.md",
+        "tools/thesis_main/analysis/build_consensus_case_proposal_20261108.py",
+        "docs/thesis_main/论文写作工作资料/顶面信息与基线比较_20261108/顶面信息核查与写作建议.md",
+        "tools/thesis_main/analysis/inspect_upper_observations_20261108.py"
+      ]
+    },
+    {
       "id": "MAT-fusion_common_panel_20261024",
       "title": "当前自动墙线、完整原答medoid与Lee的固定共同团队比较",
       "theme": "fusion",
@@ -12619,15 +12648,15 @@
     },
     {
       "id": "MAT-latex_outline_20261028",
-      "title": "英文 Elsevier 论文 LaTeX 章节骨架",
+      "title": "当前英文论文 LaTeX 正文",
       "theme": "coordination",
       "type": "论文提纲 / LaTeX 工程",
       "date": "20261028",
       "source_path": "docs/thesis_main/论文提纲_LaTeX_20261028/README.md",
-      "current_path": "docs/thesis_main/论文提纲_LaTeX_20261028/README.md",
+      "current_path": "docs/thesis_main/论文提纲_LaTeX_20261028/main.tex",
       "source": "沿用旧英文 elsarticle 模板，章节依当前提纲结构建立",
-      "adoption_status": "空白英文写作工程，正文由作者撰写",
-      "verification_status": "章节入口和文件结构已检查",
+      "adoption_status": "当前11章英文正文；20261108逐研究覆盖核对另列",
+      "verification_status": "本轮读取main.tex实际包含的11章；未重编译PDF",
       "availability": "本地 PDFLaTeX 工程",
       "relationships": [
         "docs/thesis_main/论文提纲_LaTeX_20261028/main.tex",
@@ -13750,6 +13779,60 @@
         "research/workers/current_dstruct_ac_final_20261104/LOCAL_INTEGRATION_ZH.md",
         "docs/thesis_main/CURRENT_DSTRUCT_DIRECT_AC_20261104.md",
         "research/workers/current_dstruct_ac_final_20261104/LOCAL_INTEGRATION_ZH.md"
+      ]
+    },
+    {
+      "id": "MAT-validation_followup_20261107",
+      "title": "整体质量调查、固定团队评分尺度敏感性与几何响应",
+      "theme": "quality",
+      "type": "研究报告、数据与离线调查",
+      "date": "20261107",
+      "source_path": "research/quality/validation_followup_20261107/README.md",
+      "current_path": "research/quality/validation_followup_20261107/README.md",
+      "source": "现有输出复用计算；30对Manual整体质量人评包",
+      "adoption_status": "补充验证；8人最终答卷主分析，1人单列及9人结果保留，缺陷与粗等级分别报告",
+      "verification_status": "60份原答Q/D10重算、IoU对照、最终等级与缺陷映射、11项相关测试",
+      "availability": "仓库工作区",
+      "relationships": [
+        "research/quality/validation_followup_20261107/human_review/README.md",
+        "research/quality/validation_followup_20261107/human_review/returned_20261107/README.md",
+        "research/quality/validation_followup_20261107/CHECKS.json",
+        "tools/thesis_main/analysis/build_independent_review_20261107.py",
+        "tools/thesis_main/analysis/quality_validation_followup_20261107.py"
+      ]
+    },
+    {
+      "id": "MAT-collinear_score_audit_20261107",
+      "title": "全部共线参考的当前采用核对与固定原答重评分",
+      "theme": "quality",
+      "type": "研究核查与评分数据",
+      "date": "20261107",
+      "source_path": "research/quality/collinear_score_audit_20261107/README.md",
+      "current_path": "research/quality/collinear_score_audit_20261107/README.md",
+      "source": "全部10个删点参考及主目标/其他合法目标池",
+      "adoption_status": "审计完成，正式评分未改",
+      "verification_status": "203份四阶段重评分；当前Q/D10存档误差0",
+      "availability": "仓库工作区",
+      "relationships": [
+        "tools/thesis_main/analysis/audit_collinear_scores_20261107.py"
+      ]
+    },
+    {
+      "id": "MAT-v21_full_manuscript_audit_20261108",
+      "title": "v2.1全研究结果、作用与当前正文覆盖表",
+      "theme": "coordination",
+      "type": "研究清单 / 正文证据核对",
+      "date": "20261108",
+      "source_path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md",
+      "current_path": "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/v2.1研究全量清单与正文覆盖表.md",
+      "source": "292份直接证据文件、计算脚本及当前11章LaTeX正文；历史支持和当前结果分开",
+      "adoption_status": "170项研究、验证、桥接及暂缓事项；附45配置、32历史条件，写作核对材料，不替代研究真源",
+      "verification_status": "源表/事件计数、正文快照定位、444个Markdown链接、HTML静态结构与筛选逻辑检查；未重跑全融合或检查PDF排版",
+      "availability": "本地Markdown全表、离线HTML筛选表、JSON证据索引",
+      "relationships": [
+        "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/index.html",
+        "docs/thesis_main/论文写作工作资料/v21全研究正文核对_20261108/核对数据与证据索引.json",
+        "docs/thesis_main/论文提纲_LaTeX_20261028/main.tex"
       ]
     }
   ]

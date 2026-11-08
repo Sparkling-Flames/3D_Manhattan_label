@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "blender": "5.2.3 LTS",
+  "cases": [
+    "01_doorway",
+    "02_oblique",
+    "03_sloped_ceiling",
+    "04_split_ceiling",
+    "05_split_floor"
+  ],
+  "python_dependencies": "standard library only",
+  "actual_release_directory_cli_smoke": {
+    "case": "01_doorway",
+    "variant": "presentation",
+    "command": "python code/run.py --blender <blender-executable> --case 01 --variant presentation --threads 2 --output <external-test-directory>",
+    "rebuilt_saved_reopened": true,
+    "native_shading_fingerprints_match": true
+  },
+  "additional_variant_smoke": "Both case 01 variants also rebuilt and verified from this release directory.",
+  "allowed_case_list_enforced": true,
+  "allowed_view_list_enforced": true,
+  "snapshot_scope": "Ten unchanged final snapshots and corresponding shading templates; historical round-trip and pixel checks retained for these five cases only."
+}

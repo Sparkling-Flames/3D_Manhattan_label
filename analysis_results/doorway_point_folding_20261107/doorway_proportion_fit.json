@@ -1,0 +1,210 @@
+{
+  "basis": "照片门洞竖棱＋公开相机平移；水平主轴与平顶假设；GT及深度预测不参加拟合",
+  "coordinate_units": "approximate meters from camera translation baseline, not surveyed dimensions",
+  "source_camera_positions": "https://raw.githubusercontent.com/peteanderson80/Matterport3DSimulator/master/connectivity/2t7WUuJeko7_connectivity.json",
+  "observations": [
+    {
+      "view": "07",
+      "id": "L1",
+      "u_px": 450
+    },
+    {
+      "view": "07",
+      "id": "L2",
+      "u_px": 534
+    },
+    {
+      "view": "07",
+      "id": "R2",
+      "u_px": 1496
+    },
+    {
+      "view": "07",
+      "id": "R1",
+      "u_px": 1590
+    },
+    {
+      "view": "15",
+      "id": "L1",
+      "u_px": 1285
+    },
+    {
+      "view": "15",
+      "id": "R1",
+      "u_px": 1397
+    },
+    {
+      "view": "06",
+      "id": "L2",
+      "u_px": 1681
+    },
+    {
+      "view": "06",
+      "id": "R2",
+      "u_px": 1516
+    }
+  ],
+  "top_candidates_px": {
+    "15": [
+      [
+        380,
+        266
+      ],
+      [
+        650,
+        267
+      ],
+      [
+        1397,
+        269
+      ],
+      [
+        1656,
+        266
+      ]
+    ],
+    "06": [
+      [
+        377,
+        269
+      ],
+      [
+        621,
+        264
+      ],
+      [
+        1403,
+        237
+      ],
+      [
+        1704,
+        239
+      ]
+    ]
+  },
+  "local_panorama_yaw_offsets_radians": {
+    "07": 0.0,
+    "15": 0.0,
+    "06": 1.5707963267948966
+  },
+  "door_fit_parameters_world": [
+    4.1999990014079716,
+    -2.90105752724079,
+    -1.5466395271097637,
+    0.7925749611556957,
+    0.10809230265025858
+  ],
+  "bearing_reprojection_residual_px": [
+    8.589476403313318,
+    7.105848034708668,
+    6.530021110460884,
+    7.295034358836134,
+    5.127485468832357,
+    -5.41197959108809,
+    2.4334203536031898,
+    -4.457650943397046
+  ],
+  "bearing_reprojection_rms_px": 6.139052248240906,
+  "bathroom_bounds_xy": [
+    -2.876126898706544,
+    0.4884663208214205,
+    -1.4998818781690089,
+    -0.05404615132512929
+  ],
+  "hall_bounds_xy": [
+    -0.4864884544511384,
+    0.9059623286950383,
+    0.05404615132512929,
+    3.217417327234208
+  ],
+  "estimated_ceiling_heights_m": {
+    "15": 3.422088513526579,
+    "06": 3.452383118718246
+  },
+  "common_height": 3.4372358161224126,
+  "door_half_width": 0.39628748057784785,
+  "door_depth": 0.10809230265025858,
+  "door_height": 2.058236757900337,
+  "camera": [
+    0.02780734879711019,
+    0.01607536280115815,
+    1.69018
+  ],
+  "all_cameras_local": {
+    "07": [
+      0.02780734879711019,
+      0.01607536280115815,
+      1.69018
+    ],
+    "06": [
+      0.290097393586895,
+      1.4665940398626334,
+      1.68717
+    ],
+    "15": [
+      -1.2047283309774002,
+      -0.8137479693502017,
+      1.71023
+    ]
+  },
+  "side_opening_y": [
+    0.11104052659648822,
+    1.1325327855890543
+  ],
+  "door_points_local": {
+    "L1": [
+      -0.39628748057784785,
+      -0.05404615132512929
+    ],
+    "L2": [
+      -0.39628748057784785,
+      0.05404615132512929
+    ],
+    "R2": [
+      0.39628748057784785,
+      0.05404615132512929
+    ],
+    "R1": [
+      0.39628748057784785,
+      -0.05404615132512929
+    ]
+  },
+  "depth_crosscheck": [
+    {
+      "id": "L1",
+      "fitted_horizontal_range_m": 0.42985282486676507,
+      "hohonet_median_near_horizon_m": 0.562,
+      "role": "prediction_crosscheck_not_fit_input"
+    },
+    {
+      "id": "L2",
+      "fitted_horizontal_range_m": 0.42579126938408085,
+      "hohonet_median_near_horizon_m": 0.506,
+      "role": "prediction_crosscheck_not_fit_input"
+    },
+    {
+      "id": "R2",
+      "fitted_horizontal_range_m": 0.370431354367151,
+      "hohonet_median_near_horizon_m": 0.491,
+      "role": "prediction_crosscheck_not_fit_input"
+    },
+    {
+      "id": "R1",
+      "fitted_horizontal_range_m": 0.37509283418976813,
+      "hohonet_median_near_horizon_m": 0.4975,
+      "role": "prediction_crosscheck_not_fit_input"
+    }
+  ],
+  "not_surveyed": [
+    "cabinet-hidden end wall",
+    "floor plane z=0 approximately",
+    "frame molding thickness",
+    "door-leaf angle"
+  ],
+  "checks": [
+    "synthetic metric recovery",
+    "positive scales",
+    "entry inside both envelopes",
+    "bearing residual under 15px"
+  ]
+}

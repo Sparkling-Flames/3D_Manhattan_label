@@ -1,0 +1,78 @@
+{
+  "source": "HoHoNet monocular prediction; NOT observed sensor depth",
+  "checkpoint": "ckpt\\mp3d_depth_HOHO_depth_dct_efficienthc_TransEn1_hardnet\\ep60.pth",
+  "cfg": "config/mp3d_depth/HOHO_depth_dct_efficienthc_TransEn1_hardnet.yaml",
+  "input_transform": "full RGB 2048x1024 to1024x512 area resize",
+  "depth_type": "radial Euclidean metres, raw float32; exclude nonpositive values",
+  "legacy_png_warning": "infer_depth.py directly casts prediction*1000 to uint16; negative predictions can wrap to near65.5m. Use raw float NPY.",
+  "images": [
+    {
+      "case": "x8F5xyUWy9e-09",
+      "rgb": "data\\mp3d_layout\\test\\img\\x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23.png",
+      "npy": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23.raw_pred_m.npy",
+      "shape": [
+        512,
+        1024
+      ],
+      "min_m": 0.7601239681243896,
+      "max_m": 4.608062744140625,
+      "nonpositive_pixels": 0,
+      "positive_p01_p50_p99_m": [
+        0.8562303030490875,
+        1.6132671236991882,
+        3.8027315759658813
+      ]
+    },
+    {
+      "case": "uNb9QFRL6hY-69",
+      "rgb": "data\\mp3d_layout\\test\\img\\uNb9QFRL6hY_ce88ee8b7ee84fca92c13ab16599d90e.png",
+      "npy": "uNb9QFRL6hY_ce88ee8b7ee84fca92c13ab16599d90e.raw_pred_m.npy",
+      "shape": [
+        512,
+        1024
+      ],
+      "min_m": 0.5834944248199463,
+      "max_m": 7.659834861755371,
+      "nonpositive_pixels": 0,
+      "positive_p01_p50_p99_m": [
+        0.6046574640274048,
+        1.8558127880096436,
+        4.457028102874758
+      ]
+    },
+    {
+      "case": "S9hNv5qa7GM-07",
+      "rgb": "data\\mp3d_layout\\valid\\img\\S9hNv5qa7GM_53d54b73e58940019b731673e65c1902.png",
+      "npy": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902.raw_pred_m.npy",
+      "shape": [
+        512,
+        1024
+      ],
+      "min_m": 0.3564643859863281,
+      "max_m": 8.739095687866211,
+      "nonpositive_pixels": 0,
+      "positive_p01_p50_p99_m": [
+        0.4401009321212769,
+        1.4428133964538574,
+        3.787270498275757
+      ]
+    },
+    {
+      "case": "q9vSo1VnCiC-09",
+      "rgb": "data\\mp3d_layout\\test\\img\\q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb.png",
+      "npy": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb.raw_pred_m.npy",
+      "shape": [
+        512,
+        1024
+      ],
+      "min_m": -10.610342025756836,
+      "max_m": 7.121665000915527,
+      "nonpositive_pixels": 830,
+      "positive_p01_p50_p99_m": [
+        1.0828225350379943,
+        2.1266976594924927,
+        5.504827556610107
+      ]
+    }
+  ]
+}

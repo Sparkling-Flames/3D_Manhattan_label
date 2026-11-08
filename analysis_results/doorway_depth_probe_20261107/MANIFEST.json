@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-07",
+  "role": "model_prediction_not_sensor_measurement",
+  "model": "HoHoNet HarDNet-68 MP3D depth ep60",
+  "config": "config/mp3d_depth/HOHO_depth_dct_efficienthc_TransEn1_hardnet.yaml",
+  "weights": "ckpt/mp3d_depth_HOHO_depth_dct_efficienthc_TransEn1_hardnet/ep60.pth",
+  "entry": "infer_depth.py",
+  "runtime": ".venv-paper-a-gpu; PyTorch 2.11.0+cu128; RTX 4060 Laptop GPU",
+  "override": {
+    "model.kwargs.backbone_config.kwargs.pretrained": false
+  },
+  "override_reason": "skip redundant ImageNet backbone initialization download; complete task weights loaded unchanged",
+  "input_resize": "2048x1024 RGB -> 1024x512, torch interpolate area; full equirectangular image",
+  "input_mask_or_crop": "none; original top/bottom blur retained",
+  "output": "official uint16 PNG = prediction*1000 cast to uint16; pred_m.npy is PNG/1000, not unquantized network output",
+  "coordinate_semantics": "radial Euclidean distance per spherical ray, following vis_depth.py; not perspective z-depth",
+  "known_limits": [
+    "model prediction may smooth thin door returns",
+    "furniture is measured/predicted visible surface, not hidden wall",
+    "blurred panorama poles are not visual evidence",
+    "depth should not be mistaken for layout-GT-derived depth"
+  ],
+  "checks": "3 output shapes, finite/positive, official script completed; source files unchanged",
+  "cases": [
+    {
+      "case": "07",
+      "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+      "source": "data\\mp3d_layout\\valid\\img\\2t7WUuJeko7_53937db036374126830e0f1203b04ead.png",
+      "depth_png": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_53937db036374126830e0f1203b04ead.depth.png",
+      "prediction_m_npy": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_53937db036374126830e0f1203b04ead.pred_m.npy",
+      "min_m": 0.20800000429153442,
+      "median_m": 1.4259999990463257,
+      "max_m": 5.617000102996826,
+      "all_positive_finite": true
+    },
+    {
+      "case": "06",
+      "image_id": "2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f",
+      "source": "data\\mp3d_layout\\valid\\img\\2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.png",
+      "depth_png": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.depth.png",
+      "prediction_m_npy": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.pred_m.npy",
+      "min_m": 0.5019999742507935,
+      "median_m": 1.430999994277954,
+      "max_m": 5.125,
+      "all_positive_finite": true
+    },
+    {
+      "case": "15",
+      "image_id": "2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc",
+      "source": "data\\mp3d_layout\\valid\\img\\2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc.png",
+      "depth_png": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc.depth.png",
+      "prediction_m_npy": "analysis_results\\doorway_depth_probe_20261107\\2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc.pred_m.npy",
+      "min_m": 0.5669999718666077,
+      "median_m": 1.3289999961853027,
+      "max_m": 3.3589999675750732,
+      "all_positive_finite": true
+    }
+  ]
+}

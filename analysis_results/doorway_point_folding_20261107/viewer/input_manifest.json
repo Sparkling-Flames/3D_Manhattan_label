@@ -1,0 +1,42 @@
+{
+  "schema_version": "panorama_studio_input_v1",
+  "selection": "候选点折叠，不是原答、GT或修订参考；两视角未配准。",
+  "cases": [
+    {
+      "image_id": "2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc",
+      "title": "15 · 浴室可见包络 · 候选点",
+      "category": "研究草稿：原始折叠与约束诊断分开；柜后端墙未确认",
+      "image": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\2t7WUuJeko7_b72b7b78675f429a9f382a44e551cffc.png",
+      "variants": [
+        {
+          "name": "粗选底点（含遮挡推断）",
+          "path": "D:\\Work\\HOHONET\\analysis_results\\doorway_point_folding_20261107\\15_rough_floor.json",
+          "role": "research_draft"
+        },
+        {
+          "name": "顶角约束的平顶候选（底点由假设推算）",
+          "path": "D:\\Work\\HOHONET\\analysis_results\\doorway_point_folding_20261107\\15_top_anchored.json",
+          "role": "research_draft"
+        }
+      ]
+    },
+    {
+      "image_id": "2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f",
+      "title": "06 · 走廊 · 候选点",
+      "category": "研究草稿：原始折叠与约束诊断分开；柜后端墙未确认",
+      "image": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.png",
+      "variants": [
+        {
+          "name": "粗选底点（含遮挡推断）",
+          "path": "D:\\Work\\HOHONET\\analysis_results\\doorway_point_folding_20261107\\06_rough_floor.json",
+          "role": "research_draft"
+        },
+        {
+          "name": "顶角约束的平顶候选（底点由假设推算）",
+          "path": "D:\\Work\\HOHONET\\analysis_results\\doorway_point_folding_20261107\\06_top_anchored.json",
+          "role": "research_draft"
+        }
+      ]
+    }
+  ]
+}
