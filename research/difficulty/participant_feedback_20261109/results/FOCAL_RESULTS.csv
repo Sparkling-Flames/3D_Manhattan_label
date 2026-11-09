@@ -1,0 +1,17 @@
+﻿condition,scene_route,factor,metric,comparison,units,buildings,selected_responses,not_selected_responses,mean_difference,median_difference,lower_95,upper_95,positive_units,negative_units,zero_units,interval_unit
+manual,ordinary,occlusion,omission,same_image_target,72,19,446,447,-0.0480925259427418,-0.0123195171128334,-0.0747139464172107,-0.0123682096831781,25,46,1,building_cluster_resample
+manual,ordinary,occlusion,simplified,same_image_target,72,19,446,447,-0.0375314743735796,0.0,-0.0640605847003873,-0.0099847984218837,3,12,57,building_cluster_resample
+manual,ordinary,occlusion,turn_deficit,same_image_target,72,19,446,447,-0.4312318580136562,0.0,-0.7446664082310677,-0.1761163661824133,4,16,52,building_cluster_resample
+manual,ordinary,seam,matched_boundary_abs_deg,same_image_target,31,11,80,358,-0.2661246880418638,0.0,-0.8271881965282682,0.1016148449661234,15,15,1,building_cluster_resample
+semi,ordinary,occlusion,omission,same_image_target,24,11,158,265,0.0071005031282951,0.0033334059202246,-0.0026865229042568,0.0188863740051032,15,9,0,building_cluster_resample
+semi,ordinary,occlusion,simplified,same_image_target,24,11,158,265,0.0104166666666666,0.0,0.0,0.04,1,0,23,building_cluster_resample
+semi,ordinary,occlusion,turn_deficit,same_image_target,24,11,158,265,0.0130208333333333,0.0,0.0,0.05,1,0,23,building_cluster_resample
+semi,ordinary,seam,matched_boundary_abs_deg,same_image_target,14,7,24,201,-0.0729673401735824,-0.0605319190587879,-0.7219359602589204,0.5547273996048079,7,7,0,building_cluster_resample
+manual,ordinary,occlusion,omission,same_person_same_building_image_centered,24,16,353,328,-0.0417693372016483,-0.0551124681114118,-0.0624119397219796,-0.0207952561526537,7,17,0,person_cluster_resample
+manual,ordinary,occlusion,simplified,same_person_same_building_image_centered,24,16,353,328,-0.0208477237026721,-0.0203098811988563,-0.0693394659258882,0.0278304165914973,10,14,0,person_cluster_resample
+manual,ordinary,occlusion,turn_deficit,same_person_same_building_image_centered,24,16,353,328,-0.2915753609293443,-0.3984081322978839,-0.4685447213863958,-0.1100684424387958,7,17,0,person_cluster_resample
+manual,ordinary,seam,matched_boundary_abs_deg,same_person_same_building_image_centered,21,9,74,182,-0.0662010727936242,-0.1684292102612969,-0.4816265040017937,0.373599137174685,7,14,0,person_cluster_resample
+semi,ordinary,occlusion,omission,same_person_same_building_image_centered,24,8,92,110,-0.0268850221786216,-0.0003160827660624,-0.0810582842233496,0.0075631040116821,11,13,0,person_cluster_resample
+semi,ordinary,occlusion,simplified,same_person_same_building_image_centered,24,8,92,110,-0.0052083333333333,0.0,-0.0494791666666666,0.0338541666666666,3,2,19,person_cluster_resample
+semi,ordinary,occlusion,turn_deficit,same_person_same_building_image_centered,24,8,92,110,-0.0286458333333333,0.0,-0.1197916666666666,0.0390625,3,2,19,person_cluster_resample
+semi,ordinary,seam,matched_boundary_abs_deg,same_person_same_building_image_centered,13,6,19,35,0.0578404586534064,-0.1777792978416525,-0.4656524464427074,0.6093035322852235,5,8,0,person_cluster_resample

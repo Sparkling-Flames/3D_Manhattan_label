@@ -1,0 +1,29 @@
+{
+  "population": "正式普通主目标且有difficulty回答和对应指标的记录；不因标注者确认后的点位修正排除",
+  "manual_records": 1016,
+  "semi_records": 456,
+  "metrics": [
+    "simplified",
+    "turn_deficit",
+    "matched_boundary_abs_deg",
+    "omission",
+    "B8L2"
+  ],
+  "missing_policy": "逐指标排除缺测，本次五指标均完整；不以0填缺失",
+  "factors": "多选因素，不是简单/中等/困难分层；trivial不作关联因素",
+  "direction": "选择该因素减未选择该因素",
+  "same_image": "同image_id/reference_id内两组均值差，图片等权；建筑聚类重抽",
+  "same_person": "先减image-target均值，同人同楼报告组差，楼内差平均到人，人员等权；人员重抽",
+  "bootstrap": {
+    "seed": 20261109,
+    "replicates": 4000,
+    "interval": "percentile 2.5/97.5"
+  },
+  "semi_matrix": "既有138份状态原值保留：20/1/32/85，不重新解释未知",
+  "sources": [
+    "IJHCS_Stage03_Final_Revision_20261109.zip::stage03/work_materials/participant_feedback/results/linkage_audit_deidentified.csv",
+    "research/data/releases/v2.1/quality_records.csv",
+    "research/data/releases/v2.1/admitted_space_extension/image_difficulty_20261030/classification/RAW_TARGET_RESPONSE_RECORDS.csv.gz"
+  ],
+  "preparation": "按object_id一对一连接正式质量和主目标结构表；参考ID和B8L2逐条吻合；ordinary剔除doorway/OOS/special_conditional_only/hold_reference_quality/hold_main_analysis/hold_all_analysis；既有1464条五指标逐条吻合，新增Manual/Semi各4条。来源ZIP保持原样。"
+}

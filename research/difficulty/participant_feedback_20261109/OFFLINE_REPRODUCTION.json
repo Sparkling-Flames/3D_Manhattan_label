@@ -1,0 +1,177 @@
+{
+  "all_checks_passed": true,
+  "focal_estimates_reproduced": 16,
+  "seed": 20261109,
+  "resamples": 4000,
+  "estimates": [
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "simplified",
+      "comparison": "same_image_target",
+      "units": 72,
+      "difference": -0.037531474373579635,
+      "lower_95": -0.06406058470038734,
+      "upper_95": -0.009984798421883778
+    },
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "simplified",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.020847723702672155,
+      "lower_95": -0.06933946592588826,
+      "upper_95": 0.027830416591497396
+    },
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "turn_deficit",
+      "comparison": "same_image_target",
+      "units": 72,
+      "difference": -0.43123185801365627,
+      "lower_95": -0.7446664082310677,
+      "upper_95": -0.17611636618241336
+    },
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "turn_deficit",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.2915753609293443,
+      "lower_95": -0.46854472138639586,
+      "upper_95": -0.1100684424387958
+    },
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "omission",
+      "comparison": "same_image_target",
+      "units": 72,
+      "difference": -0.04809252594274184,
+      "lower_95": -0.07471394641721077,
+      "upper_95": -0.012368209683178163
+    },
+    {
+      "condition": "manual",
+      "factor": "occlusion",
+      "outcome": "omission",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.04176933720164833,
+      "lower_95": -0.06241193972197961,
+      "upper_95": -0.020795256152653773
+    },
+    {
+      "condition": "manual",
+      "factor": "seam",
+      "outcome": "matched_boundary_abs_deg",
+      "comparison": "same_image_target",
+      "units": 31,
+      "difference": -0.2661246880418638,
+      "lower_95": -0.8271881965282682,
+      "upper_95": 0.10161484496612344
+    },
+    {
+      "condition": "manual",
+      "factor": "seam",
+      "outcome": "matched_boundary_abs_deg",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 21,
+      "difference": -0.06620107279362426,
+      "lower_95": -0.4816265040017937,
+      "upper_95": 0.37359913717468507
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "simplified",
+      "comparison": "same_image_target",
+      "units": 24,
+      "difference": 0.010416666666666666,
+      "lower_95": 0.0,
+      "upper_95": 0.04
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "simplified",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.005208333333333333,
+      "lower_95": -0.049479166666666664,
+      "upper_95": 0.033854166666666664
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "turn_deficit",
+      "comparison": "same_image_target",
+      "units": 24,
+      "difference": 0.013020833333333334,
+      "lower_95": 0.0,
+      "upper_95": 0.05
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "turn_deficit",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.028645833333333332,
+      "lower_95": -0.11979166666666667,
+      "upper_95": 0.0390625
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "omission",
+      "comparison": "same_image_target",
+      "units": 24,
+      "difference": 0.007100503128295153,
+      "lower_95": -0.00268652290425686,
+      "upper_95": 0.018886374005103266
+    },
+    {
+      "condition": "semi",
+      "factor": "occlusion",
+      "outcome": "omission",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 24,
+      "difference": -0.0268850221786216,
+      "lower_95": -0.0810582842233496,
+      "upper_95": 0.00756310401168218
+    },
+    {
+      "condition": "semi",
+      "factor": "seam",
+      "outcome": "matched_boundary_abs_deg",
+      "comparison": "same_image_target",
+      "units": 14,
+      "difference": -0.07296734017358245,
+      "lower_95": -0.7219359602589204,
+      "upper_95": 0.5547273996048079
+    },
+    {
+      "condition": "semi",
+      "factor": "seam",
+      "outcome": "matched_boundary_abs_deg",
+      "comparison": "same_person_same_building_image_centered",
+      "units": 13,
+      "difference": 0.05784045865340643,
+      "lower_95": -0.4656524464427074,
+      "upper_95": 0.6093035322852235
+    }
+  ],
+  "ordinary_semi_responses": 456,
+  "known_defect_subset": 138,
+  "states": {
+    "unknown_after_edit": 85,
+    "localized_duplicate_removed_exact": 32,
+    "known_defect_retained_unchanged": 20,
+    "known_duplicate_retained_after_other_edits": 1
+  },
+  "scope": "Minimal-field reproduction; does not recheck source geometry or acquisition."
+}
