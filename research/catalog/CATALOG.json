@@ -13861,6 +13861,22 @@
         "tools/thesis_main/analysis/same_room_structure_v21_20261108.py",
         "tests/test_same_room_structure_v21_20261108.py"
       ]
+    },
+    {
+      "id": "MAT-questionnaire_20261111",
+      "title": "重新收集的八人质量问卷",
+      "theme": "quality",
+      "type": "新问卷统计",
+      "date": "20261111",
+      "source_path": "research/quality/questionnaire_20261111/问卷收集.json",
+      "current_path": "research/quality/questionnaire_20261111/README.md",
+      "source": "作者清洗后重新收集，题目与左右标注不变",
+      "adoption_status": "替代旧八人问卷结果；论文尚待同步",
+      "verification_status": "覆盖与配对分母断言、原JSON独立方向计数、原题Q核对通过",
+      "availability": "本地报告、JSON、CSV、复算脚本",
+      "relationships": [
+        "tools/thesis_main/analysis/summarize_quality_collection_20261111.py"
+      ]
     }
   ]
 }
