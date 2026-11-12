@@ -33,7 +33,7 @@ m=f.add_axes([.50,.24,.49,.54]);m.set_xlim(0,5.3);m.set_ylim(0,3.25);m.axis("off
 f.text(.50,.96,"(b) Semi: reports and local outcomes",weight="bold",fontsize=9,va="top")
 f.text(.50,.86,"138 responses on six known-defect tasks",fontsize=7.5)
 states=["known_defect_retained_unchanged","known_duplicate_retained_after_other_edits","localized_duplicate_removed_exact","unknown_after_edit"]
-heads=["Unchanged\nRetained","Edited\nRetained","Edited\nRemoved*","Edited\nUnknown"]
+heads=["Unchanged\nRetained","Edited\nRetained","Edited\nRemoved*","Edited\nUnresolved"]
 fills=["#F7E8D6","#F7E8D6","#DEF0E9","#E9ECEF"]
 r=pd.read_csv(BASE/"inputs/figure_right_data.csv")
 for col,h in enumerate(heads):m.text(1.17+col*1.025+.49,3.02,h,ha="center",va="center",fontsize=7.2)
@@ -45,7 +45,7 @@ for key,label,n,y in [("specific_issue_reported","Specific issue\n(n = 89)",89,1
   x=1.17+j*1.025;m.add_patch(Rectangle((x,y),.98,.98,facecolor=fills[j],edgecolor="white"))
   m.text(x+.49,y+.61,str(count),ha="center",fontsize=14,weight="bold");m.text(x+.49,y+.24,f"{100*count/n:.1f}%",ha="center",fontsize=7.3)
 assert matrix==[[8,0,32,49],[12,1,0,36]]
-f.text(.50,.045,"* Exact removal of the inserted duplicate.\nUnknown: edited; issue-specific correction unverified.",fontsize=7.2,va="bottom")
+f.text(.50,.045,"* Exact removal of the inserted duplicate.\nUnresolved: target defect not cleanly resolved.",fontsize=7.2,va="bottom")
 for ext in ["png","pdf","svg"]:f.savefig(OUT/f"participant_feedback.{ext}",dpi=300,facecolor="white")
 plt.close(f)
 print(OUT)

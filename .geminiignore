@@ -1,0 +1,13 @@
+# 大目录：不参与 gemini 的文件搜索与读取
+# 这些目录加起来上百 GB，扫进来只会拖慢搜索、淹没结果。
+
+.venv/
+.venv-paper-a-gpu/
+ckpt/
+output/
+__pycache__/
+.git/
+
+# Python 缓存
+*.pyc
+*.pyo

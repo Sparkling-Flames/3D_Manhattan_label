@@ -6,12 +6,12 @@ Yet even when the target space is explicitly fixed, human annotators produce div
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/individual_fireplace_rev11.pdf}
-\caption{(a) Panorama 7y3sRwLe3Va-19. (b) A29 bridges the fireplace with four corners; (c) A59 traces its sides with eight. The full footprints share a scale, with the reference dashed. Supplement B7 provides the context model and three-dimensional views.}
+\includegraphics[width=\columnwidth]{figures/individual_fireplace.pdf}
+\caption{(a) Panorama 7y3sRwLe3Va-19 and (b) room context. (c) A29 bridges the fireplace with four corners; (d) A59 traces its sides with eight. The footprints share a scale, with the reference dashed; the lower row shows the room context and the three-dimensional layouts reconstructed from each annotation.}
 \label{fig:individual-fireplace}
 \end{figure}
 
-This study contributes two methods, a doorway-boundary scene definition, and empirical findings on individual expression, group size, composition and cross-view transfer:
+These differences require measurements that distinguish structural and geometric errors, and aggregation that aligns variable-length wall sequences while retaining upper--lower observations and individual support. This study contributes two methods, a doorway-boundary scene definition, and empirical findings on individual expression, group size, composition and cross-view transfer:
 
 \textbf{Geometric quality measurement.} We formulate a composite quality metric, $Q$, that jointly evaluates spatial extent, boundary placement, internal orthogonal regularity, and both global and local height accuracy. The metric detects balanced local height distortions while remaining invariant to redundant collinear vertices that leave wall geometry unchanged. Evaluations by eight annotators link geometric and structural measurements to reported defects, with overall grades providing a complementary assessment of $Q$.
 
@@ -23,5 +23,5 @@ This study contributes two methods, a doorway-boundary scene definition, and emp
 
 \textbf{Contextual effects of team composition.} We distinguish the magnitude of within-profile and cross-profile replacement from the direction of quality change. Cross-profile replacements generally produce larger changes, while specified C2-to-C3 exchanges usually improve Q. Team outcomes also depend on specific members and the retained background. Teams with identical profile ratios can yield markedly different layouts, mixing structural profiles can either recover missed features or dilute fine detail, and the same member-block exchange can reverse its quality impact depending on the remaining team members.
 
-Individual analyses connect these outcomes to structural habits that become most distinct at short and self-occluded walls, and show that editing an initialization does not ensure error correction. Cross-view comparisons identify recurring structural habits, transferable quality and short-detail histories, and changing local corner choices.
+Individual analyses connect these outcomes to structural habits that become most distinct at short and self-occluded walls, and show that editing an initialization does not ensure error correction. Cross-view comparisons identify recurring structural habits, transferable room-level quality baselines and personal short-detail histories, and changing local corner choices.
 
