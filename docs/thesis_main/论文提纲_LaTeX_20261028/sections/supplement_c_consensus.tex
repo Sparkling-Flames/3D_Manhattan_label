@@ -1,0 +1,103 @@
+% Include after sections/supplement_c_geometry in supplement_personnel.tex.
+\clearpage
+\subsection*{C16. Parameter, validation and implementation details}
+\label{sec:consensus-implementation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/geometry_consensus.pdf}
+\caption{From paired-corner observations to collective geometry and quality. Distinct-person support determines retained identities and median positions. Automatic or assisted ordering connects these nodes, and valid layouts are assessed against the matched target reference. The outputs retain structural support, formation status and geometric quality.}
+\label{fig:geometry-consensus}
+\end{figure}
+
+\paragraph{Quality-score development.}
+Parameter development used controlled geometry and development cases. Twenty-eight configurations compared direction scales of approximately 6.12, 8, 10 and 12 degrees, boundary denominators of 32, 48 and 64, and combination exponents of 1.25, 1.5, 2 and 3. The retained \(8^\circ\) scale responds to isolated direction deviations; L2 moderates their accumulation with footprint loss, and the boundary denominator of 32 retains sensitivity to omissions and localization errors. Development comparisons of global-height scales 1.0 and 0.8 and local-height settings near 0.25 informed the retained height scales. The formula was then fixed for validation and personnel analyses.
+
+\paragraph{Score-scale sensitivity.}
+The sensitivity analysis uses nine distinct parameter settings: the primary score and eight variants multiplying one scale by $0.75$ or $1.25$. The $1.25\times$ direction variant is the $10^\circ$ setting. Boundary variants scale $\sqrt{32}$, giving squared denominators of 18 and 50; global-height scales are 0.6 and 1.0, local-height scales 0.1875 and 0.3125, and direction scales $6^\circ$ and $10^\circ$.
+
+The 3--6-person comparison uses 206 images and the 20--30-person comparison uses 171. Each interval retains the same jointly scorable paths across settings within each image; P10 changes subtract endpoint quantiles. The 14-person A--B--C comparison uses 69 images in 20 buildings, includes fixed-node assisted ordering and retains the aggregation defined in C17. Every setting preserves early mean gains, late P10 gains, reduced late standard deviation and positive replacement excess (Table~\ref{tab:score-scale-sensitivity}). The existing parameter and result records accompany the manuscript in \path{supplement_sources/score_sensitivity/}.
+
+\input{supplement_sources/score_sensitivity/table}
+
+\paragraph{Eight-reviewer questionnaire protocol and defect relations.}
+Two Manual annotations were randomly selected from each of 30 panoramas across 17 buildings: nine easy, nine moderate and nine difficult ordinary panoramas plus three doorway panoramas. Eight annotators were randomly invited to take part in the questionnaire. They rated each annotation as good, medium or poor and selected visible defects, using only panorama overlays, shared-scale floor footprints and three-dimensional views in a fixed randomized arrangement. Grades were encoded as 2, 1 and 0, respectively, before averaging.
+
+Of 480 submitted grades, 478 were valid (67 good, 163 medium and 248 poor); two were unknown. The 238 complete reviewer--image pairs comprise 123 ties and 115 directional comparisons. Q agrees with 110 directions and opposes five; mean-height prism IoU agrees with 88 and opposes 27. Neither metric ties on these 115 directional pairs. Their correlations with mean grades across the 60 annotations are 0.946 and 0.738. Averaging the common reviewers within each image gives 21 non-tied comparisons, with agreement in 20 for Q and 16 for IoU. These grade-based comparisons complement the defect feedback.
+
+Defect-selection shares use valid answers for each annotation: unknown and blank answers are excluded, while ``none'' is a valid report of no visible defect. The 480 defect answers comprise 460 valid reports and 20 unknown reports, with no blank answers or combinations of ``none'' with a specific defect. Across the 60 annotations, missing-structure shares correlate with missing effective turns (\(\rho=0.544\)) and floor omission (\(\rho=0.240\)); explicit floor-omission shares correlate with omitted floor fraction (\(\rho=0.586\)). Extra-structure shares correlate with extra turns (\(\rho=0.415\)) and floor extension (\(\rho=0.157\)). Boundary-position shares correlate with \(S_b\) (\(\rho=0.395\)) and \(D_{\mathrm{dir}}\) (\(\rho=0.358\)). Wall-height shares correlate with \(H_m\) (\(\rho=0.090\)), \(H_c\) (\(\rho=0.612\)) and the combined height loss (\(\rho=0.609\)), distinguishing local height discrepancies from an overall height shift.
+
+Reviewers assigned the same grade in 1,369 of 1,666 valid within-annotation reviewer pairs (82.2\%). Resampling the 17 buildings 10,000 times, retaining all their images, paired annotations and the eight reviewers, gives percentile 95\% intervals of [0.870, 0.977] for Q's correlation and [0.496, 0.880] for prism IoU. Their correlation difference is 0.208, with interval [0.062, 0.440]. Omitting each reviewer in turn gives Q correlations of 0.900--0.960 and prism-IoU correlations of 0.695--0.760.
+
+The questionnaire responses, per-annotation geometric measurements and recomputation scripts are provided in \path{supplement_sources/questionnaire/}.
+
+\paragraph{Additional geometric review.}
+A separate geometric review examined 25 same-image pairs: 23 Manual and two Semi. Twenty pairs were selected for specified geometric conditions and score relationships; five mechanism examples were already familiar to the reviewer. Across all 25 pairs, ten received directional judgments, three were judged close, and 12 were difficult to compare or problematic on both sides. Among the 20 condition-selected pairs, six judgments were directional. Q with direction scales \(8^\circ\) and \(10^\circ\) agreed with all five directional Manual judgments, while prism IoU agreed with three. In the directional Semi pair, the reviewer preferred the lower-scoring response.
+
+\paragraph{Working skip penalty.}
+The matching uses a fixed penalty of \(g=7.5^\circ\) for each unmatched observation. Selected during development, this value balances positional variation among observations of the same turn against the separation of nearby distinct turns. Its effect operates through the cyclic partial matching defined in the main text.
+
+\paragraph{Candidate identity groups.}
+Pairwise cyclic alignment uses the average spherical distance of the upper
+and lower endpoints and a skip penalty of \(g=7.5^\circ\) for each unmatched
+observation. Complete-linkage agglomerative clustering encodes these
+alignments with dissimilarity zero on the diagonal, \(c(a,b)/180^\circ\) for
+observations selected as a pair in the corresponding worker-pair alignment,
+and 2 otherwise. The hierarchy is cut at 1. Each resulting candidate group
+therefore contains at most one observation per worker, with matching support
+for every pair of observations. Pairwise links through an intermediate
+observation alone are insufficient to join a group.
+
+\paragraph{Periodic positioning and ties.}
+The observed-pair anchor minimizes the sum of the larger upper- or
+lower-endpoint angular distances to the other group members. Anchor ties
+follow the fixed worker, response and pair-index order. With panorama
+width \(W=1024\), anchor coordinate \(x_0\), and wrapped offsets
+\(d_j=((x_j-x_0+W/2)\bmod W)-W/2\), a position is returned only if
+\(\max_j d_j-\min_j d_j<W/2\) and no \(|d_j|=W/2\). The boundary checks
+use a \(10^{-9}\)-pixel tolerance. A failed check leaves the position
+unresolved. Horizontal and vertical medians use the same group's
+observations with equal worker weights; their resulting coordinates may
+lie between original observations.
+
+\paragraph{Connection of retained corners.}
+
+Corner ordering enters at two distinct stages: individual annotation and collective connection. During Manual annotation, each participant places corner pairs and orders their own closed wall ring in the viewer to specify the sequence of adjacent walls. After pairwise matching and MV50 selection, the team's retained identities \(\mathcal V\) and their median coordinates are already determined, but individual members may have retained different subsets of wall turns.
+
+Automatic connection tests whether the team's submitted rings already specify a complete order over \(\mathcal V\). Let \(\rho_w|_{\mathcal V}\) be worker \(w\)'s cyclic order restricted to \(\mathcal V\). For \(|\mathcal V|\geq3\), \(\mathcal R(\mathcal V)\) contains those projected rings that cover every selected identity in \(\mathcal V\) exactly once, treating cyclic shifts and whole-ring reversal as equivalent; with fewer selected identities, the set is empty. When \(\mathcal R(\mathcal V)\) is nonempty, the automatic branch selects the most-supported projected source ring:
+\begin{equation}
+ \rho^*=\underset{\rho\in\mathcal R(\mathcal V)}{\arg\max}
+ \sum_{w\in S}\mathrm{1}\!\left[
+ \operatorname{canon}(\rho_w|_{\mathcal V})=\rho\right].
+ \label{eq:ring}
+\end{equation}
+When no single submitted ring covers all retained identities in \(\mathcal V\)---or when a reviewed connection order is specified---the retained corner identities still have defined geometric positions in the panorama, and their cyclic connection order is supplied by fixed-node assisted ordering. This step performs the same wall-sequence ordering operation used during Manual annotation, now applied to the team's fixed consensus nodes: it connects the retained identities in \(\mathcal V\) without adding or removing nodes, altering distinct-person support counts, or modifying median coordinates. Both automatic and assisted outputs then undergo identical 3D reconstruction and geometric validity checks, retaining explicit branch labels and failure states (fewer than three nodes, unresolved order, or self-intersecting footprint; Supplement C15).
+
+
+\paragraph{Source rings and output records.}
+Cyclic shifts and whole-ring reversal are canonicalized as equivalent.
+Ties between the most-supported covering source rings follow a fixed
+canonical order and are recorded. A direct adjacency occurs in an original
+source ring; a projected adjacency results from removing intervening
+unselected nodes. Records retain the supporting workers for both kinds of
+adjacency. Candidate rings, fixed-coordinate assisted orders and geometric
+validity states are stored separately.
+
+Each team record retains membership, original responses, pairwise matches,
+identity groups and source pairs, including identities below the MV50
+threshold. Checks recount distinct supporters, verify the at-least-half
+selection, recompute periodic and vertical medians, and verify selected-node
+coverage and ring support. Thus each retained corner can be traced to its
+source observations, supporter count, median position and place in the final ring.
+
+\paragraph{Floor-region comparison and local structure.}
+BEV voting partitions the team's overlapping floor polygons into regions and retains regions covered by at least half the people. Its output is a two-dimensional floor region. Paired-corner consensus retains the upper and lower coordinates of supported wall turns and connects them into a wall layout.
+
+Figure~\ref{fig:consensus-unb45} shows the full panorama and the corresponding floor outputs for a ten-person team. The same seven people mark E and F. Both the paired-corner layout and the BEV region retain the resulting local change in floor coverage; the paired-corner output also records the supporters and upper--lower positions of those turns.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/consensus_unb45.pdf}
+\caption{Local wall turns enter a collective layout through their supporters. In panorama uNb9QFRL6hY-45, E and F each receive support from the same seven of ten annotators. The paired-corner layout retains six turns, while BEV voting retains the corresponding floor-region change. The panorama and close view locate E and F; floor views share coordinates and scale, with the reference shown by dashed lines.}
+\label{fig:consensus-unb45}
+\end{figure}

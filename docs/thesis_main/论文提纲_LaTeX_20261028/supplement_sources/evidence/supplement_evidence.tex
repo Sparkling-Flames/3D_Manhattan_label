@@ -1,0 +1,131 @@
+\documentclass{article}
+\ifdefined\pdfminorversion\pdfminorversion=7\fi
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[paperwidth=595bp,paperheight=842bp,margin=0bp]{geometry}
+\usepackage{graphicx}
+\providecommand{\supplementsourceroot}{}
+\usepackage[absolute,overlay]{textpos}
+\textblockorigin{0bp}{0bp}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\newcommand{\evidencepage}[3]{%
+  \begin{textblock*}{525bp}(35bp,22bp)
+    {\fontsize{12}{14}\selectfont #1\par}
+  \end{textblock*}
+  \begin{textblock*}{525bp}(35bp,55bp)
+    \includegraphics{\supplementsourceroot #2}
+  \end{textblock*}
+  \begin{textblock*}{525bp}(35bp,670bp)
+    {\fontsize{8.5}{12.55}\selectfont\raggedright #3\par}
+  \end{textblock*}
+  \mbox{}\newpage
+}
+\IfFileExists{figures/semi_natural_e9z39.png}{%
+  \def\supplementfigureroot{figures/}%
+}{%
+  \def\supplementfigureroot{../../figures/}%
+}
+\newcommand{\fullfigurepage}[3]{%
+  \begin{textblock*}{525bp}(35bp,22bp)
+    {\fontsize{12}{14}\selectfont #1\par}
+  \end{textblock*}
+  \begin{textblock*}{525bp}(35bp,55bp)
+    \centering
+    \includegraphics[width=525bp,height=590bp,keepaspectratio]{\supplementfigureroot #2}\par
+    \vspace{15bp}
+    {\fontsize{8.5}{12.55}\selectfont\raggedright #3\par}
+  \end{textblock*}
+  \mbox{}\newpage
+}
+\begin{document}
+%% Uploaded source page 1
+\evidencepage{Supplement B1: detailed evidence panels}{panels/B01.pdf}{%
+Study design for independent panoramic layout annotations. Individual responses enter individual analysis and offline team recombination. Team branches vary group size, matched replacement, or composition; the resulting layouts and states enter quality assessment against the assigned target reference. The group-size branch uses 256 random permutations per eligible Manual pool; 3-, 6-, and 10-person teams are nested prefixes of an order. Historical records support profiles and decision replays; activity records supply recorded labor. Method validation and empirical research address the behavior of the methods and the effects of people and task conditions, respectively.}
+
+%% Uploaded source page 2
+\evidencepage{Supplement B2: detailed evidence panels}{panels/B02.pdf}{%
+Geometric quality and structural consensus calculations for independent panoramic layout annotations. (a) Five measurements yield scaled losses and Q; the direction residual uses the layout's own orthogonal axes. (b) Paired corners are matched, supported by distinct people, localized, and connected using source rings. Targeted assisted ordering retains selected nodes, votes, and coordinates; output states remain separate from Q.}
+
+%% Uploaded source page 3
+\evidencepage{Supplement B3: detailed evidence panels}{panels/B03.pdf}{%
+Geometric quality and corner-mean prism IoU under balanced ceiling-height changes in a square room. The archived control uses a 3 m reference height. The upper views show the reference and opposite shifts of 20\% at the same scale; gray dashes mark reference geometry. The lower panel includes all six amplitudes from 0 to 40\%. Mean height remains unchanged, while Q responds to local height errors. IoU is multiplied by 100.}
+
+%% Uploaded source page 4
+\evidencepage{Supplement B4: detailed evidence panels}{panels/B04.pdf}{%
+Quality measurements under collinear resampling of an unchanged tilted layout. The upper views show four and sixteen point pairs on the same geometric boundary; added pairs subdivide the high-side edge without introducing wall turns. The lower panel shows all four sampling configurations. Q remains 70.09, while corner-mean prism IoU changes because the arithmetic mean of sampled heights changes. Reference geometry is dashed; IoU is multiplied by 100.}
+
+%% Uploaded source page 5
+\evidencepage{Supplement B5: detailed evidence panels}{panels/B05.pdf}{%
+Geometric deviations of annotation R03274 from its reference in the panorama, BEV, and three-dimensional views of case J04. Blue solid lines show the submitted layout; gray dashed lines show the reference. The local enlargement and bird's-eye view (BEV) identify corresponding floor corners P and P' in the reference and annotation. The three-dimensional overlay preserves their common camera coordinate system, relative positions, and individual corner heights; pale reference surfaces provide spatial context. Panorama coordinates are in pixels.}
+
+%% Uploaded source page 6
+\evidencepage{Supplement B6: detailed evidence panels}{panels/B06.pdf}{%
+Correspondence, independent-person support, and short-wall retention in two ten-person teams annotating bathroom panorama jtc-13. Above: three complete original footprints from Team 1 illustrate absence, one matched turn, and both matched turns; the adjacent ledger includes all ten people. Filled circles and triangles identify support for the two matched identities, totaling 4 and 2 votes. Coordinates are normalized by camera height h. Below: the local photographs show the short-wall region and two groups of upper-corner observations from Team 2, with eight observations per group. With the same five-vote threshold, 4/2 support retains neither turn (four corners), whereas 8/8 retains both (six corners). Models share a viewing angle and scale; near walls are cut away for visibility, and gray dashed lines show the reference floor outline.}
+
+%% Uploaded source page 7
+\evidencepage{Supplement B7: detailed evidence panels}{panels/B07.pdf}{%
+Differences in fireplace representation between annotators A29 and A59 relative to the reference for panorama 7y3sRwLe3Va-19. The complete panorama and GT-based context scene appear at left; the two Manual annotations appear at right. A29 retains four corners, while A59 retains eight, including the fireplace projection represented in the GT. BEVs share camera-height-normalized coordinates and scale; three-dimensional panels share a camera and scale. GT wall boundaries follow the reference, while openings, furniture, materials, and display thickness are estimated for context. Original-answer models preserve their submitted corners and individual top heights, with near walls transparent and all wall segments retained. Different appearance treatments distinguish the context scene from the annotation comparisons; retaining more corners does not imply a higher overall Q.}
+
+%% Uploaded source page 8
+\evidencepage{Supplement B8: detailed evidence panels}{panels/B08.pdf}{%
+Retention and editing of a duplicated wall-corner pair in Semi annotation of panorama Z6MFQCViBuw-10. The overview locates the ceiling and floor crops taken directly from the original panorama. Orange points mark the extra pair in the shared initialization; blue points mark the other original corners. A3 submitted the initialization unchanged, whereas A2 removed the extra pair and retained all other coordinates. Pair counts refer to the complete annotations. Corresponding crops share the same pixel-coordinate limits. The two bars summarize unchanged submissions in the separate expert-confirmed and processing-marked error-opportunity sets of the initialization-error study.}
+
+%% Uploaded source page 9
+\evidencepage{Supplement B9: detailed evidence panels}{panels/B09.pdf}{%
+Quality, variability, pairwise floor-layout dissimilarity, and complete-and-evaluable rates across group sizes and difficulty levels on 171 panoramic images. Each image has at least 30 eligible annotators and contributes 256 random entry orders. Images contribute equally after within-image calculation. Q, P10, and standard deviation use scorable teams; P10 averages image-specific quantiles. Pairwise floor-layout dissimilarity is the mean pairwise 1 - IoU between team outputs. Panel (e) uses all 43,776 attempts at each size, including incomplete and unscorable outputs. Shading highlights the 3--6 and 20--30 intervals; every size from 3 to 30 is shown.}
+
+%% Uploaded source page 10
+\evidencepage{Supplement B10: detailed evidence panels}{panels/B10.pdf}{%
+Changes in image-mean quality from 20 to 30 annotators by difficulty on the same 171-image panel. Each point is one image; diamonds are difficulty-group means. The shaded band marks changes within \textpm{}2 Q points. Horizontal offsets separate points and have no numerical meaning. Each difference uses that image's scorable outputs at the two sizes, rather than requiring each path to be scorable at both.}
+
+%% Uploaded source page 11
+\evidencepage{Supplement B11: detailed evidence panels}{panels/B11.pdf}{%
+Individual responses show similar four-turn footprints on the easy panorama but retain five, six and eight turns on the difficult panorama. Rows share an image, reference and BEV scale; columns are C1 (more simplifying), C2 (typical expression) and C3 (more turn-retaining). Camera-height-normalized BEVs highlight short walls with dark segments. Geometric typicality determines the ranking within each held-out-building class; Q and time describe the selected examples. The difficult-scene C1 and C2 examples also appear in the main-text profile illustration. Here C3 is the first-ranked A40 (Q=61.8, T=3559 s); the main-text illustration uses second-ranked A43 (Q=68.5, T=1018 s), which retains the same eight turns and three short walls with less extreme recorded time. Each row contains different individuals.}
+
+%% Uploaded source page 12
+\evidencepage{Supplement B12: detailed evidence panels}{panels/B12.pdf}{%
+Team quality across profile compositions and member selections in two 12-person panels. Each team combines six retained members with six of twelve candidates. Adjacent positions differ by one C2/C3 seat in the composition counts; each point averages different teams, rather than a paired exchange of one person. Bars show the fifth to 95th percentiles across scorable teams, and bottom numbers give their counts. The easy and difficult examples were selected at the median interval width among eligible within-image composition sequences in each difficulty group. These fixed-background panels are instances of the 231-panel design and differ from variable-size whole-class combinations.}
+
+%% Uploaded source page 13
+\evidencepage{Supplement B13: detailed evidence panels}{panels/B13.pdf}{%
+Magnitude and direction of team-quality changes under within-profile and between-profile replacement of seven members in 14-person teams on 69 images. Each dot in the team diagram is one annotator. The lower panel summarizes 69 images: each dot is one image mean and each diamond is the mean across images. Positive values in the upper row indicate a larger absolute change across profiles; positive values in the lower row indicate higher quality for Team 3 than Team 2. The scores cover 146 of 147 archived comparisons, including fixed-coordinate assisted ordering.}
+
+%% Uploaded source page 14
+\evidencepage{Supplement B14: detailed evidence panels}{panels/B14.pdf}{%
+Mean consensus quality and within-image mixture effects for seven profile combinations on 154 common panoramic images from 22 buildings. (a) Image-equal mean Q for each combination. (b) Each dot is the paired Q difference between a mixture and one of its constituent pure groups on the same image; diamonds are the 154-image means. Both constituent comparisons use the same image support. Each selected profile contributes all available annotators on the image, so team size varies between combinations. C1, C2 and C3 denote more simplifying, typical-expression and more turn-retaining profiles.}
+
+%% Uploaded source page 15
+\evidencepage{Supplement B15: detailed evidence panels}{panels/B15.pdf}{%
+Localization changes under a seven-person replacement in a 20-person team for panorama 7y3sRwLe3Va-13. The teams retain the same 13 people. (a) Complete consensus footprints in camera-height-normalized coordinates; the triangle marks the camera and the dotted box locates the enlargement. All four identities retain 20 supporters with a ten-person threshold. Identities are matched across teams using retained observations and corner indices; their mapped ring order is unchanged. (b) Original lower-corner observations at corner 4; large black-edged markers show consensus locations and the plus marks the reference. (c) Enlarged far-end footprints. (d) Saved whole-layout measurements; height errors are dimensionless. The archived outputs use automatic source-order candidates. This diagnostic case illustrates localization at fixed selected structure; the Q difference includes changes across the complete layout.}
+
+%% Uploaded source page 16
+\evidencepage{Supplement B16: detailed evidence panels}{panels/B16.pdf}{%
+Quality changes under the same registered five-person replacement in ten-person teams across two views of the same room. Left: two real panoramas and the B/C consensus footprints for one archived event; the retained background D and exchanged blocks Y/Z are identical across views, but each person supplies a separate annotation for each panorama. Footprints use each view's camera coordinates normalized by camera height, not a shared spatial registration. Right: each point is a room-pair mean directional effect, aggregated over its registered member-block comparisons; 18 of 19 pairs improve at both views. The circle identifies the illustrated pair. The example was selected at the median mean effect among events improving in both views with verified cached endpoint geometries; its individual-event changes are distinct from the pair averages. Under the typical-expression to turn-retaining profile relationship, 318 of 322 registered events had all six endpoints scorable, including fixed-coordinate assisted ordering.}
+
+%% Uploaded source page 17
+\evidencepage{Supplement B17: detailed evidence panels}{panels/B17.pdf}{%
+Doorway capture position and target boundaries in two panoramic cases. Top: a photo-informed reconstruction and original panorama for 2t7-07, captured at the bathroom--hallway threshold. Bottom: panorama 7y3sRwLe3Va-18, with the reviewed doorway boundary positions for space 1 (cyan) and space 2 (orange). The space numbers identify targets within this image. The cutaway uses approximate dimensions; the marked lines locate the target boundaries on the original panorama.}
+
+%% Uploaded source page 18
+\evidencepage{Supplement B18: detailed evidence panels}{panels/B18.pdf}{%
+Conditional quality and complete-and-evaluable rates across team sizes for doorway annotations. (a--b) Screening comparison on the same 17 images at every size from three to fourteen; before and after use the same whole-space reference and the same underlying 256 base orders per image. Q is averaged over each version's evaluable outputs within each image, then across images; the rate uses all attempts. (c--d) Target-compatible pools for panorama 7y3sRwLe3Va-18, each evaluated against its assigned target reference: space 1 has nine eligible people, space 2 four, and the whole-space pool fifteen. Lines stop at the actual pool capacity; a missing Q remains missing. The space-specific pools differ in both members and references.}
+
+%% Uploaded source page 19
+\evidencepage{Supplement B19: detailed evidence panels}{panels/B19.pdf}{%
+Geometry outside the primary Manhattan, single-level task in four OOS panoramas and corresponding photo-informed cutaway models. (a) An oblique wall beside the doorway in x8-09. (b) Sloping ceiling surfaces above low side walls in S9-07. (c) A broad lowered ceiling adjoining the timber ceiling in q9-09. (d) Upper and lower steps connecting distinct floor levels in uNb-69. Each case pairs its original panorama with a reconstructed scene. Cutaways expose the spatial relationships, with approximate dimensions and simplified furnishings. These models explain the observed scene geometry; they are not scored annotations, revised references, or aggregation outputs.}
+
+\fullfigurepage{Supplement B20: retained natural initialization}{semi_natural_e9z39.png}{%
+Natural model initialization and unchanged Semi submissions for panorama e9zR4mvMWw7-39. Experts identified initialization errors before the experiment. (a) The initial upper--lower endpoints. (b) Three submitted responses retain all eight initial pairs unchanged. (c--e) Enlargements show the corresponding upper and lower endpoints in panorama pixel coordinates. The unchanged submissions retain the reviewed errors.}
+
+\fullfigurepage{Supplement B21: task reports and editing outcomes}{participant_feedback.pdf}{%
+Participant reports at submission accompany different geometric outcomes. (a) Occlusion reports and omitted-area or simplification differences in 1,016 Manual responses. The same-image contrasts use 72 images; the within-person contrasts use 24 people. Bars show 95\% cluster-resampling intervals. (b) Initialization reports and local outcomes for 138 retained ordinary Semi responses on six confirmed-defect tasks. Exact removals delete the inserted duplicate pair; unresolved marks edited responses that did not cleanly resolve the target defect. Supplement C11 gives the denominators, outcome definitions and resampling procedure.}
+
+\fullfigurepage{Supplement B22: spatially uninterpretable doorway submissions}{doorway_screening_examples.pdf}{%
+Submitted endpoints and connection order in two excluded doorway responses: (a) A30 in B6ByNegPMKs-43 and (b) A42 in b8cTxDM8gDG-08. Blue curves are projected connections and orange dots are endpoints. Dashed boxes locate the enlarged regions (c--d), showing crossing connections near the doorway and connections between near and distant boundary points. Both submissions were excluded in expert screening blinded to Q.}
+
+\fullfigurepage{Supplement B23: quality, labor and structural response}{continuous_profiles_integrated.pdf}{%
+Individual quality, recorded labor and structural response. Each dot is one person: (a--b) use 58 people and (c) uses 59. Relative Q is centered on the image--target peer median; relative log time measures recorded effort, and turn response compares difficult with easy images. Panel (c) shows mean within-image Q ranks, with higher ranks indicating better relative performance. The highlighted A2 contributed 43 non-difficult and fifteen difficult images. The main-text profile illustration retains panels (b--c) alongside the three structural-profile drawing examples.}
+\end{document}

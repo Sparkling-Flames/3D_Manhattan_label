@@ -1,0 +1,72 @@
+
+\subsection*{C20. Collection coverage and detailed study procedures}
+
+\paragraph{Collection and analysis coverage.}
+
+The primary personnel study uses 6,512 ordinary Manual responses from 60 people across 206 images in 22 buildings (130 easy, 39 moderate and 37 difficult images with 4,142, 1,231 and 1,139 responses, typically 31--35 responses per image). Table~\ref{tab:collection-coverage} places this set within the full collection. Offline teams recombine these independent human observations.
+
+
+
+\begin{table}[!ht]
+\centering\small
+\caption{Response and image coverage by analysis set.}
+\label{tab:collection-coverage}
+\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.13}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}
+\hline
+Analysis set & Responses & Images\\\hline
+All submissions & 10,439 & ---\\
+Primary-target quality & 8,154 & 225\\
+\quad Ordinary Manual subset & 6,512 & 206\\
+\quad Ordinary Semi subset & 960 & 37\\\hline
+Alternative targets & 231 & 28\\
+Doorway screening & 584 before; 439 after & 17\\
+OOS diagnostics & 1,222 & 28\\\hline
+\end{tabular*}
+\end{table}
+
+The table's ordinary-scene rows are subsets of the primary-target responses; the analysis sets overlap. Semi covers 59 people and 12 buildings. The alternative-target set comprises 31 pools. Initialization-error supports are specified with their results.
+
+
+
+\paragraph{Historical profile inputs.}
+
+\begin{table}[!ht]
+\centering\small
+\caption{Historical inputs and roles of annotator profiles.}
+\label{tab:annotator-profiles}
+\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.14}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}p{.38\linewidth}>{\raggedright\arraybackslash}p{.33\linewidth}@{}}
+\hline
+Profile & Inputs & Question\\\hline
+Structural expression & Turns, short edges, near-collinear points, reference matches & How do people draw?\\
+Consensus response & Structural, boundary and scale changes in team outputs & How do members affect aggregation?\\
+Joint profile & Structure, geometry, historical Q and time & How do expression, quality and labor relate?\\\hline
+\end{tabular}
+\end{table}
+
+Profiles use known people's histories outside the target building. Target-building exclusion precedes feature construction, eligibility checks, scaling, dimension reduction and clustering. The structural profiles C1--C3 use structural-expression features; the consensus-response profiles R1--R2 summarize regularized member effects on group geometry. The four joint profiles J1--J4 use 13 features describing structure, boundary response, historical Q and recorded time. Geometric opportunity refers to reference turns, short edges and self-occlusion. Structural and joint profiles use domain-balanced features and Ward clustering. Within each training fold, the J labels follow increasing class-centre Q residual, with structural response and time resolving ties. Supplement C6--C9 specifies all features, class cuts and fitting procedures.
+
+
+
+\paragraph{Feedback and cross-view procedures.}
+
+Submission-time feedback records participants' reports of scene conditions and, for Semi, problems in the initialized proposal. Linked ordinary primary-target records cover 1,016 Manual submissions from 118 images and 456 Semi submissions from 34 images, with 24 people in each condition. Same-image contrasts compare people within each image and target; complementary same-person contrasts center outcomes within images and aggregate within person and building. Intervals resample buildings or people, respectively. Semi outcomes compare the submitted geometry with the exact initialization to identify retained errors and confirmed local corrections.
+
+For cross-view structural repetition, we compare each annotator with themselves and with every other member of the same common-worker pool across directly related views. Simplification denotes fewer effective turns than the assigned reference. We report pair-equal comparisons and building-equal checks, including a subset whose two references both contain short edges. Local endpoint comparisons use established cross-view correspondences and one-to-one periodic azimuth matching at 3, 6 and 9 degrees. Structural prediction uses other directly related views, excludes the target view, and compares personal history with peers on the same source images. Errors are averaged over people within images, images within buildings, and then buildings.
+
+
+
+\paragraph{Selection and stopping rules.}
+
+Offline quality-and-time selection (Q/T) starts with the team ranked by building-external historical Q. It exchanges members for lower predicted labor while allowing at most a two-point decrease in mean historical relative Q. Each budget receives an independently selected team, which is then evaluated on its target image. The policy is compared with historical-Q selection and complements the structural-profile selection comparison (Supplement C2 and C8).
+
+Source-history stopping uses the mean Q curve from all other available views of the same room. Along each shared member order, it chooses the earliest $k\geq3$ within two points of that source curve's peak. Target-view additions then continue until complete geometry is available. Comparators use a fixed seven-person request with the same completion rule, or stable node counts across three complete outputs. The replay evaluates both use of existing history and total labor including its acquisition. T sums selected members' recorded annotation durations in person-seconds; matched comparisons require compatible, positive finite time records. Supplement C8--C9 specifies the policies and accounting, and the main Discussion reports their results.
+
+
+
+\paragraph{Outcome weighting and resampling.}
+
+Q, its within-image tenth percentile (P10) and between-team standard deviation describe scorable layouts. Complete-and-evaluable rates use all attempted teams. Paired size changes require both outputs scorable; $G_S$ requires all three team scores, and $Q_C-Q_B$ requires B and C. Incomplete, failed and unscorable outputs keep their recorded status. Automatic and fixed-coordinate assisted-order supports are identified in each comparison.
+
+Group-size and direct-replacement summaries generally weight images equally; selection results average contexts within images, images within buildings, and buildings equally. Group-size intervals use 2,000 bootstrap resamples of complete entry paths, preserving paired sizes and generation-batch sizes. These intervals describe Monte Carlo precision for the observed pools. Separate building resampling describes variation across the 22 sampled buildings while retaining the observed people. Supplement C17 gives the estimands, interpolation and resampling details. The resulting summaries distinguish variation across teams, computational precision and variation across buildings.

@@ -1,0 +1,15 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Staffing for quality, stability and structure}
+Our findings demonstrate that team size and member selection serve distinct operational goals in 3D layout annotation. Expanding a small team rapidly boosts average geometric quality, whereas adding annotators to an already moderate-sized team primarily improves lower-tail quality and narrows between-team variance. However, on visually complex or occluded scenes, aggregate group-size curves mask opposing structural shifts as contested wall turns cross or fall below the at-least-half support threshold. When target disagreement or omission of difficult structures persists, adding more annotators may offer limited benefit; expert assistance can help clarify the target or review the relevant structures.
+
+At the level of team composition, out-of-building profiles capture persistent individual habits, while the existing team context governs how new submissions reshape the consensus layout. Mixing simplifying and turn-retaining profiles can either supply missing wall turns or dilute support for fine architectural recesses below the retention threshold; even when the consensus corner count is unchanged, swapping members shifts boundary localization through the median coordinate estimator. Structural profiles describe individual tendencies, while incoming and retained observations jointly determine which turns are recovered or lost and how boundaries shift.
+
+\subsection{Using observations for annotation support and reference review}
+Pairing discrete corner-support records with multi-component geometric measurements ($Q$) provides an interpretable diagnostic framework for dataset curation and reference auditing. Support records trace exactly which annotators contributed to each wall turn and how tightly their clicked endpoints cluster, while the components of $Q$ separate floor-extent errors from boundary displacements, non-orthogonal walls, and local ceiling distortions. Consequently, whenever a visible wall turn receives strong multi-annotator support yet is absent from an existing benchmark reference, it surfaces immediately as an actionable candidate for expert reference revision.
+
+The cross-view and task-condition results guide annotation and reference review. Linking multiple viewpoints of the same room allows curation pipelines to cross-check contested corners and transfer individual structural histories, while doorway scenes benefit from explicitly specifying whether the target enclosure terminates at the doorframe or extends into the adjoining space. OOS diagnostics distinguish geometric requirements: oblique walls require relaxing the Manhattan direction assumption, sloped ceilings require varying upper heights, and split-level floors require representing more than one ground plane. Finally, because Semi submissions can retain known initialization errors even after editing, interactive annotation tools should highlight uncertain model boundaries, visualize multi-annotator support and coordinate spread, and link 2D panorama clicks directly to 3D wall previews.
+
+\input{sections/09_implications}
+

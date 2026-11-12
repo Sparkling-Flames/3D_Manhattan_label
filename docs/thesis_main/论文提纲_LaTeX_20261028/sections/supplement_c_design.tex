@@ -1,0 +1,75 @@
+\subsection*{C17. Recombination, target assignment and outcome estimands}
+
+\paragraph{Target-compatible pools.}
+Each response is assigned to its actual target before evaluation. Where available, manual target adjudication takes precedence. Automatic assignment considers distinguishing wall segments, turns and exclusive regions, then uses floor IoU and normalized boundary distance to resolve ties. Assignment uses the complete submitted geometry and excludes the resulting composite Q. A pool is defined by image, annotation condition and target/reference. References for admitted alternative spaces combine the adjudicated floor extent with the confirmed image height.
+
+\paragraph{Profile and member comparisons.}
+The main text introduces the structural-expression, consensus-response and joint profiles. Supplement C6 specifies the feature definitions and fitting procedure. The designs below distinguish fixed-size composition, whole-class combinations, replacement scale and retained backgrounds. The three-team design has equal-size, mutually disjoint replacement blocks and a common retained background. Direct replacement fixes the background, team size and replacement size. The bidirectional six-person comparison requires all four outputs scorable on the same images.
+
+\begin{table}[ht]
+\centering\small
+\caption{Controlled team comparisons by fixed conditions and varied factors.}
+\label{tab:comparison-designs}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.13}
+\begin{tabular}{@{}p{.20\textwidth}p{.35\textwidth}p{.40\textwidth}@{}}
+\hline
+Comparison & Held fixed & Varied factor / question\\\hline
+Matched replacement & Image, target, team size, retained members & Same- versus cross-profile blocks; magnitude and direction\\
+Direct replacement & Image, target, team size, retained members & One exchanged block; directional change\\
+Fixed-size composition & Image, target, background, candidate pool & Profile counts; members at identical counts\\
+Whole-class combination & Image, target, selected profile definitions & All members of each selected class; team size varies\\
+Replacement scale & Starting team and target & Number of replaced members\\
+Retained background & Image, target, exchanged blocks & Background members and their number\\
+Cross-view comparison & Physical-room relation and member blocks & Separate original annotations at each viewpoint\\\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Construction of the matched replacement events.}
+The 14-person, seven-person comparison uses 147 specified events on 69 images in 20 buildings. Replacement blocks were constructed within eligible image--target pools, with mutually disjoint seven-person blocks X and Y from C2, Z from C3, and a seven-person retained block D. Registration reused existing blocks after checking their current class eligibility and disjointness, and supplemented them with seeded member draws (base seed 2026102907). Backgrounds were drawn from the remaining people at feasible low, middle and high counts of the incoming class, or at one feasible stratum selected by a deterministic design key. The focused registration allowed two replacement blocks per design cell; the screening registration allowed one, with one background per selected stratum. Duplicate events were removed. This specified event set supplies the matched comparisons; 146 events have all three outputs scorable.
+
+\paragraph{Natural and prioritized entry orders.}
+The principal natural-order analysis contains 223 Manual pools, with 256 random entry orders per pool. Each retains its assigned target, reference and eligible annotators. The main fixed panel uses 171 ordinary images with at least 30 people. One person supplies an individual response, two-person aggregation is calculated separately, and natural group curves principally use \(k\geq3\). Fully enumerated finite team sets give exact marginal distributions; pathwise differences retain observations along the same order. Historical-priority comparisons use paired base orders, principally 32 pooled paths, with priorities based on historical Q, richer turning structure, shorter recorded time or the largest structural class.
+
+\paragraph{Natural-size estimands and uncertainty.}
+To make the natural-size estimands explicit, fix an image and target pool with \(N\) eligible people. For a uniformly random entry order \(\pi_r\), let \(S_{rk}=\{\pi_r(1),\ldots,\pi_r(k)\}\). For any particular \(k\)-person subset \(A\), \(\Pr(S_{rk}=A)=\binom Nk^{-1}\). Let \(M\) be the number of sampled orders, \(\mathcal J_k\) the indices with a scorable output at size \(k\), and \(q_{rk}\) their quality scores. Let \(e_{rk}=1\) when output \((r,k)\) is complete and evaluable, and zero otherwise. The conditional mean quality and complete-and-evaluable rate are
+\begin{equation}
+ \begin{aligned}
+ \widehat\mu_Q(k)&=\frac{1}{|\mathcal J_k|}\sum_{r\in\mathcal J_k}q_{rk},\\
+ \widehat p_{\mathrm{ce}}(k)&=\frac1M\sum_{r=1}^{M}e_{rk}.
+ \end{aligned}
+ \label{eq:natural-outcomes}
+\end{equation}
+Order indices retain duplicate-team occurrences. If \(\mathcal J_k\) is empty, mean quality is undefined. For two sizes, the paired pathwise change instead uses \(\mathcal J_{k,l}=\mathcal J_k\cap\mathcal J_l\):
+\begin{equation}
+ \widehat\Delta_{k,l}^{\mathrm{paired}}
+ =\frac{1}{|\mathcal J_{k,l}|}\sum_{r\in\mathcal J_{k,l}}
+ (q_{rl}-q_{rk}).
+ \label{eq:paired-size-change}
+\end{equation}
+It is undefined without jointly scorable paths and need not equal \(\widehat\mu_Q(l)-\widehat\mu_Q(k)\). These quantities are first calculated within each image's analysis pool; reported fixed-panel curves average the image-level statistics over the stated common image set.
+
+
+Monte Carlo precision was assessed by 2,000 bootstrap resamples of complete entry paths within each image pool, preserving the original generation-batch sizes. Each resample used the same path weights across group sizes. Q summaries retained their scorable denominators, whereas completion used all attempts. Image-specific P10 values were computed by linear interpolation before equal-weight averaging across images. Approximate 95\% percentile intervals describe path-sampling uncertainty conditional on the observed pools. Separate building-level bootstrap intervals resampled buildings while retaining the path point estimates, assessing variation across the 22 sampled buildings.
+
+\paragraph{Variance across compositions and member sets.}
+For panel \(p\), let \(\mathcal T_{pc}\) be the scorable teams with profile-count vector \(c\), \(n_{pc}=|\mathcal T_{pc}|\), and \(n_p=\sum_c n_{pc}\). Write \(\overline q_{pc}\) for the composition mean and \(\overline q_p\) for the mean over all scorable teams. The finite-population variances are
+\begin{equation}
+ \begin{aligned}
+ V_{p,\mathrm{within}}
+ &=\frac1{n_p}\sum_c\sum_{t\in\mathcal T_{pc}}
+ (q_t-\overline q_{pc})^2,\\
+ V_{p,\mathrm{between}}
+ &=\sum_c\frac{n_{pc}}{n_p}(\overline q_{pc}-\overline q_p)^2,\\
+ V_{p,\mathrm{total}}
+ &=V_{p,\mathrm{within}}+V_{p,\mathrm{between}}.
+ \end{aligned}
+ \label{eq:composition-variance}
+\end{equation}
+Compositions receive weights proportional to their scorable team counts. Variance components are then averaged over panels within target pool, pools within image, images within building, and buildings equally. With normalized panel weight \(a_p\), the between-composition share is the ratio of the aggregated variances:
+\begin{equation}
+ \eta_{\mathrm{between}}
+ =\frac{\sum_p a_pV_{p,\mathrm{between}}}
+ {\sum_p a_pV_{p,\mathrm{total}}}.
+ \label{eq:composition-share}
+\end{equation}
+Panels with no scorable teams have undefined variances. Zero-variance panels retain zero components, and a zero aggregate total leaves the share undefined. The reported share describes the scorable finite team sets under these weights.

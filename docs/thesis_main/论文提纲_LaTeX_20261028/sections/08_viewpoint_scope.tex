@@ -1,0 +1,68 @@
+\subsection{Cross-View Repetition, Transfer, and Task Conditions}
+\label{sec:viewpoint-scope}
+\subsubsection{Structural habits recur while local corner choices change}
+
+When annotators observe the same room from multiple camera viewpoints, their macro-level tendency to retain or simplify architectural structure persists, even as their micro-level decisions at individual corners shift with the camera angle. Across 128 directly paired viewpoints spanning 65 panoramas in 13 buildings, two annotations by the same person differed by an average of 0.671 effective turns, compared to 0.752 turns for pairs drawn from different annotators in the shared worker pool. This individual consistency is most pronounced when both viewpoints contain short reference edges: across 15 such view pairs in five buildings, same-person simplification agreement surpassed the different-person baseline by 13.38 percentage points (73.29\% versus 59.91\%; Table~\ref{tab:same-room-evidence}), yielding a 12.39-point advantage under equal building weighting that held across all five buildings.
+
+\begin{figure*}[tbp]
+\centering
+\includegraphics[width=150mm]{figures/same_room_structure.pdf}
+\caption{Two annotators repeat their broader structural habits across views while changing individual corner choices. (a--b) A40 and A41's complete layouts on VFuaQ6m2Qom-07 and -10, with the same narrow-wall endpoints enlarged. Counts are effective/reference turns; dashed lines mark reference azimuths. A40 marks both endpoints in both views. A41 marks neither in view 07 and both in view 10, while simplifying both layouts. (c) Same-person and different-person simplification agreement over fifteen view pairs in five buildings.}
+\label{fig:same-room-structure}
+\end{figure*}
+
+Same-room case comparisons illustrate how stable global habits coexist with view-dependent local choices. Across four viewpoints of the same room, annotator A40 consistently matched the full reference turn count, whereas annotator A41 simplified the room in every view; yet between views \texttt{VFuaQ6m2Qom-07} and \texttt{-10}, A41 switched from omitting both endpoints of a narrow wall segment to marking both (Figure~\ref{fig:same-room-structure}), and 7 of the 18 shared annotators changed whether they marked the door-side endpoint. Likewise, in a second room spanning three view pairs, 19 of 33, 12 of 30, and 14 of 30 annotators altered their local corner markings across viewpoints, showing how viewpoint-dependent corner choices coexist with recurring tendencies to retain or simplify room structure (Supplement C19).
+
+\subsubsection{Transfer depends on the outcome and the specified people}
+
+Cross-view transfer reflects this contrast between recurring structural expression and view-dependent positions: source-view histories improve short-detail and quality prediction, whereas directly transferring personal pixel offsets increases error. Across 1,793 target annotations (65 panoramas, 56 annotators, 13 buildings), incorporating an annotator's source-view history from the same room reduced short-edge count MAE by 10.4\% relative to source-view peer averages (from 0.526 to 0.472 edges; Table~\ref{tab:same-room-evidence}), an improvement that remained positive under equal building weighting after omitting any one building. Similarly, observing the source-view mean $Q$ lowered target-image mean $Q$ prediction error from 9.496 to 6.464 points and reduced individual $Q$ MAE from 15.645 to 13.385 points when combined with personal history. Conversely, directly transferring an annotator's personal floor-endpoint pixel offset across viewpoints degraded localization, raising MAE from 2.610 to 3.082 pixels, and appending coarse room-use labels to geometric features slightly increased $Q$ MAE from 5.158 to 5.379 points across 190 panoramas.
+
+\begin{table}[t]
+\centering\small
+\caption{Cross-view repetition and transfer. Short-edge-count MAE is in edges; all Q MAEs are in Q points. Short-edge and individual-Q prediction use 1,793 annotations in thirteen buildings; image-mean prediction uses 128 view pairs. The final row uses reference-derived geometry features. Other supports are shown by row. Protocols and results appear in Supplements C7 and C19.}
+\label{tab:same-room-evidence}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{.65\linewidth}r@{}}
+\toprule
+Comparison & Result\\
+\midrule
+Simplification agreement, same/different person (15 pairs, 5 buildings) & 73.29/59.91\%\\
+Short-edge-count MAE, personal history/peers & 0.472/0.526\\
+Image-mean Q MAE, source view/external baseline & 6.464/9.496\\
+Individual Q MAE, room + personal history/personal history & 13.385/15.645\\
+Replacement positive at both views (19 pairs, 7 buildings) & 18/19\\
+Composition correlation (127 pairs, 13 buildings) & $-$0.052\\
+Q MAE, geometry + room use/geometry (190 images, 21 buildings) & 5.379/5.158\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At the team level, targeted member replacements transfer robustly across viewpoints, whereas full composition patterns show little cross-view association. In 10-person matched A--B--C comparisons that held five background members fixed and reused each annotator's view-specific submission, replacing five C2 annotators with five C3 annotators increased mean $Q$ in both viewpoints across 18 of 19 room pairs (with 318 of 322 replacement events scorable across all six outputs; Supplement C14). In contrast, broad composition-level performance exhibited a pooled cross-view correlation of $-0.052$ across 127 view pairs, and raw individual $Q$ correlation across views ($0.401$) dropped to $0.013$ after controlling for peer averages and out-of-building personal history. Room-level quality baselines and individual structural histories carry useful information across views, and the specified C2-to-C3 replacements usually retain a positive direction. Full-composition quality shows little cross-view association.
+
+\subsubsection{Doorway targets change closure and group-size responses}
+\label{sec:doorway}
+
+We examine doorway-boundary viewpoints as a distinct annotation scene: the camera stands beneath the doorframe between adjoining spaces, exposing more than one plausible enclosure (Figure~\ref{fig:doorway-scene}). Choosing one room or the combined space changes where a layout closes, even when each answer traces a coherent boundary.
+\begin{figure*}[tbp]
+\centering
+\includegraphics[width=145mm]{figures/doorway_boundary_3d_trimmed.pdf}
+\caption{A camera at the doorway boundary. (a) The three-dimensional schematic marks the camera beneath the lintel; the adjoining rooms show why the doorway can define different target extents. (b) An actual doorway panorama illustrates the adjoining spaces visible from this position. The schematic explains the arrangement rather than reconstructing that particular panorama.}
+\label{fig:doorway-scene}
+\end{figure*}
+
+When domain experts screened doorway submissions while blinded to $Q$---filtering out degenerate or spatially uninterpretable polygons while retaining coherent enclosures (Supplements B17, B22)---the fixed 17-image panel narrowed from 584 to 439 eligible responses. Evaluated against a common whole-space reference at a team size of 10, screening raised conditional mean $Q$ by 1.581 points and lifted the complete-and-evaluable rate by 7.86 percentage points (Figure~\ref{fig:doorway-screening}a--b).
+
+\begin{figure*}[tbp]
+\centering
+\includegraphics[width=140mm]{figures/doorway_absolute_curves_trimmed.pdf}
+\caption{Doorway screening and target-specific trajectories answer separate questions. (a--b) Screening on the same seventeen images uses a common whole-space reference before and after, at sizes 3--14. (c--d) Assigned-target pools in 7y3sRwLe3Va-18 contain nine people for space 1, four for space 2 and fifteen for the whole space. These pools differ in members and references. Q uses scorable outputs; completion rates use all attempts.}
+\label{fig:doorway-screening}
+\end{figure*}
+
+In the screened doorway pools containing competing targets, conditional mean $Q$ rose from 38.111 at size 3 to 44.953 at size 6, but plateaued at 44.294 by size 14 (falling by 0.54 points across paths jointly scorable at sizes 6 and 14, with 7 panoramas improving and 10 declining), while completion dipped from 86.63\% to 80.79\% before rebounding to 92.72\%. Partitioning a doorway pool by the specific room enclosure each annotator targeted---such as panorama \texttt{7y3sRwLe3Va-18}, where 28 of 29 screened submissions cleanly separate into nine annotators tracing Space 1, four tracing Space 2, and fifteen tracing the combined space (Figure~\ref{fig:doorway-screening}c--d)---reveals distinct group-size trajectories for the intended enclosures, each evaluated with its corresponding members and reference.
+
+\FloatBarrier
+\subsubsection{OOS observations identify representation conditions}
+
+Finally, out-of-scope (OOS) scenes reveal where a single-level Manhattan layout cannot capture the observed architecture. Across 1,222 diagnostic submissions on 28 panoramas, floor structure and upper geometry present distinct representational demands: all 80 Manual submissions on three sloped-ceiling panoramas retained four floor corners, while the ceiling geometry requires height variation. A continuous turning glass boundary presents a different challenge: across five views of the same room, 61.8\% of two-response comparisons differed in corner count, averaged equally over images. Together, the panorama and reconstruction examples connect these patterns to oblique walls, sloping ceilings and changes in floor or ceiling level (Supplement B19).
+

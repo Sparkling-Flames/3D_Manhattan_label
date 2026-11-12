@@ -1,0 +1,54 @@
+\subsection{Group Size, Consensus Quality, and Between-Team Variation}
+\label{sec:group-size}
+\subsubsection{Early additions raise the mean; later additions improve the lower tail}
+
+Expanding an annotation team affects different parts of the quality distribution at different stages: initial additions drive rapid gains in average quality, whereas later additions primarily improve lower-tail quality and compress between-team variance (Figure~\ref{fig:group-size-171}). Across our fixed panel of 171 standard Manual panoramas---each with 30--35 eligible annotators and 256 Monte Carlo entry orders weighted equally across images---mean $Q$ jumps by 4.739 points as team size increases from three to six annotators (95\% path-bootstrap CI $[4.629, 4.851]$).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=115mm]{figures/group_size_171_trimmed.pdf}
+\caption{Group size affects mean Q, lower-tail Q, between-team variation and output completion differently. Curves use the same 171 images: 116 easy, 28 moderate and 27 difficult. Q summaries use scorable outputs; complete-and-evaluable rates use all 43,776 attempts per size. P10 is the image-specific 10th percentile, averaged over images. Shading marks 3--6 and 20--30 people. The at-least-half threshold admits exactly half of an even-sized team: the required support stays at two votes from three to four people, then rises to three at five people, contributing to odd--even alternation.}
+\label{fig:group-size-171}
+\end{figure*}
+
+In contrast, expanding teams from 20 to 30 annotators increases mean $Q$ by only 0.500 points, yet lifts the within-image 10th percentile (P10) by 2.848 points and cuts the within-image standard deviation by 2.031 points (Table~\ref{tab:group-size-intervals}). This late-stage stabilization is pervasive across scenes: between sizes 20 and 30, P10 improved on 166 of the 171 panoramas, between-team standard deviation declined on 168, and pairwise footprint variation fell on 170 (Supplement C5).
+
+\begin{table}[t]
+\centering\small
+\caption{Quality levels and late-stage uncertainty on the fixed 171-image panel. Changes and intervals are calculated before rounding.}
+\label{tab:group-size-milestones}
+\label{tab:group-size-intervals}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Annotators & Mean Q & P10 & \\
+\midrule
+3 & 77.9 & 64.9 & \\
+6 & 82.6 & 73.1 & \\
+10 & 84.3 & 76.9 & \\
+20 & 85.7 & 80.6 & \\
+30 & 86.2 & 83.5 & \\
+\midrule
+20--30 change & Estimate & Path interval & Building interval\\
+\midrule
+Mean Q & +0.500 & [0.439, 0.563] & [0.037, 1.042]\\
+P10 & +2.848 & [2.620, 3.136] & [1.942, 3.970]\\
+SD of Q & $-$2.031 & [$-$2.087, $-$1.962] & [$-$2.638, $-$1.503]\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{\columnwidth}{\footnotesize At 20 and 30 people, SD is 4.107 and 2.076; completion is 99.068\% and 99.488\% of 43,776 attempts per size. Approximate 95\% intervals: path resampling measures Monte Carlo precision conditional on the observed pools; building resampling retains path estimates and resamples the 22 buildings.}
+\end{table}
+
+Structural completion follows a distinct trajectory from geometric quality. Requiring at least four supported corner clusters and a valid closed wall ring (Supplement C15), the complete-and-evaluable rate initially dips by 1.857 percentage points from three to six annotators before recovering and rising by 0.420 percentage points between 20 and 30 annotators. As teams grow, additional votes can bring disputed turns into the layout or remove previously retained ones, so geometric quality and complete-output rates follow different trajectories.
+
+\subsubsection{Finite pools narrow variation while image-specific quality still changes}
+
+These late-stage distributional gains hold strictly even when restricting exclusively to the 43,212 entry paths (out of 43,776) that produce scorable outputs at both 20 and 30 annotators: mean $Q$ rises by 0.502 points, P10 climbs by 2.844 points, and within-image standard deviation drops by 2.005 points, matching the directions of the size-specific summaries. For the latter, Table~\ref{tab:group-size-intervals} reports the path- and building-resampling intervals.
+
+Because each pool contains 30--35 eligible annotators, teams of size 30 draw 85.7\%--100\% of the candidate pool, naturally increasing member overlap across sampled teams. The capacity-stratified results show how quality changes as these observed teams approach their full pools. Removing the 12 panoramas whose pool capacity is exactly 30 (where between-team variance mechanically reaches zero at size 30) still yields a P10 gain of 2.942 points across the remaining 159 panoramas, with positive P10 gains on 155 of them. Even within the 12 capacity-30 panoramas, moving from 20 to 30 annotators alters the consensus geometry itself, shifting mean $Q$ by $-0.911$ while lifting P10 by $+1.612$; likewise, on the 97 jointly scorable panoramas with 35-person pools, expanding from 30 to 35 annotators raises mean $Q$ by 0.281 and P10 by 2.736 (see Supplement C10 for full capacity-stratified curves).
+
+Beneath the modest late-stage average gain lies a sharp divergence on visually difficult scenes. Across the 27 difficult panoramas, mean $Q$ shifted by $-0.174$ points from 20 to 30 annotators---not because layouts had stabilized, but because 16 panoramas improved while 11 deteriorated, yielding a substantial mean absolute change of 4.772 $Q$ points (with only 7 of 27 panoramas shifting by 2 points or less). Correspondingly, retrospective 2-point stability appeared later on difficult scenes: among detected onsets, the medians were 9, 16, and 17 annotators for easy, moderate, and difficult panoramas, respectively (Supplement C19).
+
+These opposing trajectories stem directly from how discrete support and median localization interact as new members arrive. A wall turn supported by four annotators survives in an eight-person team under the at-least-half rule, but vanishes when a ninth annotator who bridged the turn raises the support threshold to five. At the same time, every added member triggers a full recomputation of pairwise correspondence, median corner coordinates, and polygon connection, shifting boundary positions and local heights even when the corner count remains constant. Late additions therefore improved lower-tail quality on most images while continuing to reshape the structure and localization of contested layouts.
+

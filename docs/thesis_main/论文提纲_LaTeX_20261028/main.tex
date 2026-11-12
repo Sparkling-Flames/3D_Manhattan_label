@@ -1,0 +1,112 @@
+% !TeX program = xelatex
+\ifdefined\pdfminorversion\pdfminorversion=7\fi
+\documentclass[final,5p,twocolumn]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,array}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{balance}
+\usepackage[table]{xcolor}
+\definecolor{paperBlue}{HTML}{0072B2}
+\definecolor{paperOrange}{HTML}{D55E00}
+\definecolor{earlyStageFill}{HTML}{F6E8D6}
+\definecolor{lateStageFill}{HTML}{E7EFF5}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\dbltopfraction}{0.85}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{7pt plus 2pt minus 2pt}
+\setlength{\intextsep}{7pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{0pt}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-2.2ex plus -0.5ex minus -0.2ex}{0.8ex plus 0.2ex}%
+  {\normalfont\large\bfseries\raggedright}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-1.6ex plus -0.4ex minus -0.2ex}{0.6ex plus 0.2ex}%
+  {\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-1.2ex plus -0.3ex minus -0.1ex}{0.4ex plus 0.1ex}%
+  {\normalfont\small\bfseries\raggedright}}
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{10pt plus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpsep}{10pt plus 2pt}
+\setlength{\@dblfpbot}{0pt plus 1fil}
+\makeatother
+
+\journal{International Journal of Human--Computer Studies}
+
+\begin{document}
+\raggedbottom
+\begin{frontmatter}
+\title{\bfseries Human Variation and Structural Consensus in Panoramic Room Layout Annotation: The Roles of Group Size and Composition}
+\author{}
+\begin{abstract}
+Reliable panoramic layout data require clear target spaces and accurate geometry. Within a specified target, annotators still differ in retained wall turns, spatial extent and boundary placement. We propose two methods for measuring and combining these expressions. Geometric quality measurement combines extent, boundary, direction, and global and local height discrepancies into Q. Paired-corner structural consensus combines distinct-person support and upper--lower observations into a connected layout. Controlled geometry establishes local-height sensitivity and invariance to collinear resampling; an eight-participant evaluation of 60 real annotations links geometric and structural measurements to visible defects and Q to overall grades ($\rho=0.946$). Shared-team comparisons trace observed structures and upper endpoints into consensus boundaries.
+
+We recombine 6,512 Manual annotations from 60 people across 206 panoramas in 22 buildings. On 171 fixed images with pools of 30--35 annotators, mean Q improves most from three to six people. Additions from twenty to thirty chiefly improve the lower tail and reduce between-team variation, while complete-output rates follow a different trajectory. Profile proportions and specific members jointly affect layouts: mixtures can recover or lose structure, and retained backgrounds can reverse a replacement's direction. Cross-view analyses show recurring structural habits alongside viewpoint-dependent corner choices. We define doorway-boundary viewpoints, where a camera beneath the doorframe exposes competing enclosures and closure choices. Initialization and representation conditions identify editing and task-design needs. Offline selection and stopping relate these findings to recorded labor and history-acquisition costs, informing annotation organization and reference review.
+\end{abstract}
+\begin{keyword}
+Panoramic room layout annotation \sep Human annotation variability \sep Structural consensus \sep Group size \sep Annotator composition \sep Human--computer interaction
+\end{keyword}
+\end{frontmatter}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\section{Research Approach and Study Design}
+\input{sections/04_methods}
+\input{sections/03_study_context_and_design}
+\section{Results}
+\label{sec:results}
+\input{sections/05_individual_expression}
+\input{sections/06_group_size}
+\input{sections/07_composition}
+\input{sections/08_viewpoint_scope}
+\input{sections/10_discussion}
+\input{sections/11_conclusion}
+
+\FloatBarrier
+\section*{Data and code availability}
+Supplementary files provide method source snapshots, controlled-geometry inputs, analysis tables, and anonymized questionnaire answers with display mapping. Scripts reproduce questionnaire summaries and saved-effect aggregates; the implementation guide specifies the full geometry and fusion pipeline's inputs and dependencies.
+
+\setlength{\bibsep}{2pt plus 1pt minus 1pt}
+\begin{thebibliography}{00}
+\bibitem{chang2017matterport3d} Chang, A. X., et al. (2017). Matterport3D: Learning from RGB-D data in indoor environments. Proceedings of the International Conference on 3D Vision.
+\bibitem{zou2021manhattan} Zou, C., Su, J.-W., Peng, C.-H., Colburn, A., Shan, Q., Wonka, P., Chu, H.-K., \& Hoiem, D. (2021). Manhattan Room Layout Reconstruction from a Single 360$^\circ$ Image: A Comparative Study of State-of-the-Art Methods. International Journal of Computer Vision, 129(5), 1410--1431. DOI: 10.1007/s11263-020-01426-8.
+\bibitem{c2ref06} Tsai, Y.-J., Jhang, J.-C., Zheng, J., Wang, W., Chen, A. Y. C., Sun, M., Kuo, C.-H., \& Yang, M.-H. (2024). No More Ambiguity in 360$^\circ$ Room Layout via Bi-Layout Estimation. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 28056--28065.
+\bibitem{pano2018} Yang, S.-T., Peng, C.-H., Wonka, P., \& Chu, H.-K. (2018). PanoAnnotator: A Semi-Automatic Tool for Indoor Panorama Layout Annotation. SIGGRAPH Asia 2018 Posters. DOI: 10.1145/3283289.3283304.
+\bibitem{lee2018} Lee, D. J.-L., Das Sarma, A., \& Parameswaran, A. (2018). Aggregating Crowdsourced Image Segmentations. HCOMP 2018 Works in Progress and Demonstration Papers, CEUR Workshop Proceedings, Vol. 2173.
+\bibitem{c2ref01} Zhang, Y., Song, S., Tan, P., \& Xiao, J. (2014). PanoContext: A Whole-room 3D Context Model for Panoramic Scene Understanding. In European Conference on Computer Vision (ECCV), 668--686. DOI: 10.1007/978-3-319-10599-4\_43.
+\bibitem{horizon2019} Sun, C., Hsiao, C.-W., Sun, M., \& Chen, H.-T. (2019). HorizonNet: Learning Room Layout With 1D Representation and Pano Stretch Data Augmentation. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 1047--1056.
+\bibitem{cruz2021zind} Cruz, S., Hutchcroft, W., Li, Y., Khosravan, N., Boyadzhiev, I., \& Kang, S. B. (2021). Zillow Indoor Dataset: Annotated Floor Plans With 360$^\circ$ Panoramas and 3D Room Layouts. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2133--2143. DOI: 10.1109/CVPR46437.2021.00217.
+\bibitem{dong2024panocontext} Dong, Y., Fang, C., Bo, L., Dong, Z., \& Tan, P. (2024). PanoContext-Former: Panoramic Total Scene Understanding with a Transformer. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 28087--28097. Supplementary Material, Section 1.
+\bibitem{kanayama2025tof360} Kanayama, H., Chamseddine, M., Guttikonda, S., Okumura, S., Yokota, S., Stricker, D., \& Rambach, J. (2025). ToF-360: A Panoramic Time-of-Flight RGB-D Dataset for Single Capture Indoor Semantic 3D Reconstruction. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, 4481--4490.
+\bibitem{horizoneval} Sun, C., Hsiao, C.-W., Sun, M., \& Chen, H.-T. HorizonNet general-layout evaluation (\texttt{eval\_general.py}). Software accompanying HorizonNet, CVPR 2019. \url{https://github.com/sunset1995/HorizonNet/blob/master/eval_general.py}. Accessed 10 November 2026.
+\bibitem{c2ref13} Dawid, A. P., \& Skene, A. M. (1979). Maximum Likelihood Estimation of Observer Error-Rates Using the EM Algorithm. Journal of the Royal Statistical Society: Series C (Applied Statistics), 28(1), 20--28. DOI: 10.2307/2346806.
+\bibitem{c2ref08} Welinder, P., Branson, S., Belongie, S. J., \& Perona, P. (2010). The Multidimensional Wisdom of Crowds. Advances in Neural Information Processing Systems, 23.
+\bibitem{c2ref09} Yan, Y., Rosales, R., Fung, G., Schmidt, M., Hermosillo, G., Bogoni, L., Moy, L., \& Dy, J. (2010). Modeling Annotator Expertise: Learning When Everybody Knows a Bit of Something. Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics (AISTATS), PMLR 9, 932--939.
+\bibitem{c2ref07} Kairam, S., \& Heer, J. (2016). Parting Crowds: Characterizing Divergent Interpretations in Crowdsourced Annotation Tasks. Proceedings of the ACM Conference on Computer-Supported Cooperative Work \& Social Computing (CSCW), 1635--1646. DOI: 10.1145/2818048.2820016.
+\bibitem{c2ref10} Pavlick, E., \& Kwiatkowski, T. (2019). Inherent Disagreements in Human Textual Inferences. Transactions of the Association for Computational Linguistics, 7, 677--694. DOI: 10.1162/tacl\_a\_00293.
+\bibitem{c2ref11} Dumitrache, A., Inel, O., Timmermans, B., Ortiz, C., Sips, R.-J., Aroyo, L., \& Welty, C. (2021). Empirical Methodology for Crowdsourcing Ground Truth. Semantic Web, 12(3), 403--421. DOI: 10.3233/SW-200415.
+\bibitem{c2ref19} Sheng, V. S., Provost, F. J., \& Ipeirotis, P. G. (2008). Get Another Label? Improving Data Quality and Data Mining Using Multiple, Noisy Labelers. Proceedings of the 14th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), 614--622. DOI: 10.1145/1401890.1401965.
+\bibitem{c2ref14} Warfield, S. K., Zou, K. H., \& Wells, W. M. (2004). Simultaneous Truth and Performance Level Estimation (STAPLE): An Algorithm for the Validation of Image Segmentation. IEEE Transactions on Medical Imaging, 23(7), 903--921. DOI: 10.1109/TMI.2004.828354.
+\bibitem{c2ref17} Braylan, A., Marabella, M., Alonso, O., \& Lease, M. (2023). A General Model for Aggregating Annotations Across Simple, Complex, and Multi-Object Annotation Tasks. Journal of Artificial Intelligence Research, 78, 901--973. DOI: 10.1613/jair.1.14388.
+\bibitem{c2ref21} Pradhan, V. K., Schaekermann, M., \& Lease, M. (2022). In Search of Ambiguity: A Three-Stage Workflow Design to Clarify Annotation Guidelines for Crowd Workers. Frontiers in Artificial Intelligence, 5, 828187. DOI: 10.3389/frai.2022.828187.
+\bibitem{c2ref12} Gurari, D., Sameki, M., \& Betke, M. (2016). Investigating the Influence of Data Familiarity to Improve the Design of a Crowdsourcing Image Annotation System. Proceedings of the AAAI Conference on Human Computation and Crowdsourcing (HCOMP), 4(1), 59--68. DOI: 10.1609/hcomp.v4i1.13294.
+\bibitem{c2ref23} Wang, H., Hutchcroft, W., Li, Y., Wan, Z., Boyadzhiev, I., Tian, Y., \& Kang, S. B. (2022). PSMNet: Position-Aware Stereo Merging Network for Room Layout Estimation. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 8616--8625.
+\bibitem{c2ref24} Solarte, B., Wu, C.-H., Liu, Y.-C., Tsai, Y.-H., \& Sun, M. (2022). 360-MLC: Multi-view Layout Consistency for Self-training and Hyper-parameter Tuning. Advances in Neural Information Processing Systems (NeurIPS), 35.
+\bibitem{c2ref25} Snow, R., O'Connor, B., Jurafsky, D., \& Ng, A. Y. (2008). Cheap and Fast---but Is It Good? Evaluating Non-Expert Annotations for Natural Language Tasks. Proceedings of the 2008 Conference on Empirical Methods in Natural Language Processing (EMNLP), 254--263. DOI: 10.3115/1613715.1613751.
+\bibitem{walter2022crowd} Walter, V., K\"olle, M., \& Collmar, D. (2022). Measuring the Wisdom of the Crowd: How Many is Enough? PFG -- Journal of Photogrammetry, Remote Sensing and Geoinformation Science, 90, 269--291. DOI: 10.1007/s41064-022-00202-2.
+\bibitem{hohonet2021} Sun, C., Sun, M., \& Chen, H.-T. (2021). HoHoNet: 360 Indoor Holistic Understanding With Latent Horizontal Features. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2573--2582.
+\bibitem{plank2022variation} Plank, B. (2022). The ``Problem'' of Human Label Variation: On Ground Truth in Data, Modeling and Evaluation. Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing, 10671--10682. DOI: 10.18653/v1/2022.emnlp-main.731.
+\bibitem{levy2021suggestions} Levy, A., Agrawal, M., Satyanarayan, A., \& Sontag, D. (2021). Assessing the Impact of Automated Suggestions on Decision Making: Domain Experts Mediate Model Errors but Take Less Initiative. Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems, 1--13. DOI: 10.1145/3411764.3445522.
+\end{thebibliography}
+\end{document}

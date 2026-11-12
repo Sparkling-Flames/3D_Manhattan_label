@@ -1,0 +1,68 @@
+\clearpage
+\subsection*{C15. Reconstruction, geometric states and branch criteria}
+
+\paragraph{From panorama endpoints to geometry.}
+The panorama has width $W$ and height $H_{\mathrm{img}}$, with pixel coordinates
+measured from the upper left. Each upper--lower pair first receives the
+midpoint of its shorter horizontal arc, denoted $u$; its original vertical
+coordinates $v_t$ and $v_b$ are retained. In radians, let
+$\theta=2\pi(u/W-1/2)$ and
+$\beta_j=\pi(v_j/H_{\mathrm{img}}-1/2)$ for $j\in\{t,b\}$.
+The camera is the origin, the vertical axis points upward, and camera height
+is the length unit. For $0<\beta_b<\pi/2$, the horizontal radius is
+$\rho=1/\tan\beta_b$. The floor point is
+$(\rho\sin\theta,-1,-\rho\cos\theta)$ and the corresponding upper point is
+$(\rho\sin\theta,-\rho\tan\beta_t,-\rho\cos\theta)$.
+Thus the corner's wall height is $h=1-\rho\tan\beta_t$.
+The stored endpoint representation uses $W=1024$ and $H_{\mathrm{img}}=512$.
+Measurements in metres, such as the depth example in the main paper, apply
+the stated camera-height multiplier to these normalized coordinates.
+
+\paragraph{Geometric validity and output states.}
+The scoring geometry is an implicitly closed paired wall ring. Checks require
+finite coordinates, equal upper and lower ring sizes, at least three pairs,
+vertical pairing, the common floor plane, strictly positive wall heights,
+and a simple nondegenerate footprint. Zero-length edges, self-intersections
+and unresolved numerical degeneracies retain their failure states.
+The spherical-boundary measurements additionally require defined finite
+projections and nondegenerate shorter arcs. A valid floor can therefore
+exist without a complete scorable wall layout. The scorer measures internal
+orthogonal regularity and local height variation on this geometry; it does
+not fit them away. Camera position and visibility-kernel diagnostics are
+recorded separately, as in C14.
+
+Scale-dependent numerical guards handle degenerate geometry and undefined projections; their implementation is specified in the accompanying source map.
+
+\begingroup\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}p{.14\linewidth}>{\raggedright\arraybackslash}p{.56\linewidth}@{}}
+\toprule
+Branch & Minimum nodes & Additional condition and output\\
+\midrule\endfirsthead
+\toprule Branch & Minimum nodes & Additional condition and output\\\midrule\endhead
+Geometric Q & 3 paired corners & Both assessed and reference layouts pass the geometric and metric-domain checks above. Valid zero floor overlap gives Q=0; unavailable geometry retains an unscorable status.\\[3pt]
+Automatic consensus order & 3 selected identities & A projected source ring covers all selected identities with defined positions. Its connected geometry then undergoes the Q checks; a candidate order alone does not establish scorability.\\[3pt]
+Fixed-coordinate assisted order & Same selected set & The supplied order preserves identities, support and coordinates. The resulting ring undergoes the same validity checks.\\[3pt]
+Natural-size complete-output rates & 4 selected identities & A valid footprint gives a complete floor; paired wall geometry with recorded status \texttt{ok} gives the complete-evaluable geometry flag. Q additionally requires successful metric calculation.\\[3pt]
+Source-history stopping & 4 nodes in a complete output & Starting at the requested prefix, add members until the recorded complete-geometry criterion is satisfied. Target Q does not choose the stopping point.\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+These minimums belong to their respective procedures. The general geometry
+and source-ring construction admit three nodes; the natural-size completion
+flags and stopping delivery rule impose four.
+
+\paragraph{Reference self-occlusion.}
+For a valid reference footprint containing the camera strictly inside,
+$H$ (\texttt{ref\_H}) counts floor vertices whose open sightline from the
+camera crosses the interior of a non-incident footprint edge before reaching
+the vertex. Tangential vertex contacts and collinear contacts are recorded
+separately from crossings. Invalid footprints or a camera outside the
+interior leave this feature unavailable. This is concealment by the room
+boundary in the floor model. The same count enters the opportunity features
+in C6 and the matched cross-view comparisons.
+
+The accompanying source map in
+\texttt{supplement\_sources/implementation\_reference/} identifies the
+reconstruction, validity, scoring, correspondence and visibility functions
+used to check these definitions.

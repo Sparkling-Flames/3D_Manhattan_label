@@ -1,0 +1,27 @@
+\section{Introduction}
+
+Training and evaluating indoor panorama interpretation systems requires reliable 3D room layout references. A layout reference defines both the spatial extent of a room and its precise boundary geometry. However, our audit of MatterportLayout references for Matterport3D panoramas \cite{chang2017matterport3d,zou2021manhattan} revealed ambiguities in how openings and hidden extensions are defined, alongside direct geometric errors within the target rooms---such as omitted fireplace projections, missed visible wall turns, and displaced boundaries. Establishing a trustworthy reference therefore requires explicit decisions about both which space to represent and how to trace its boundaries.
+
+Yet even when the target space is explicitly fixed, human annotators produce divergent layouts for the same panorama. One annotator bridges a fireplace with a single straight wall, while another traces its recessed sides (Figure~\ref{fig:individual-fireplace}); annotators also place shared corners and ceiling boundaries at different positions. Understanding how reliable references emerge from human input requires examining which structural choices and boundary positions diverge across annotators, under what visual conditions these divergences intensify, and how individual interpretations combine when aggregated into a collective layout.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/individual_fireplace_rev11.pdf}
+\caption{(a) Panorama 7y3sRwLe3Va-19. (b) A29 bridges the fireplace with four corners; (c) A59 traces its sides with eight. The full footprints share a scale, with the reference dashed. Supplement B7 provides the context model and three-dimensional views.}
+\label{fig:individual-fireplace}
+\end{figure}
+
+This study contributes two methods, a doorway-boundary scene definition, and empirical findings on individual expression, group size, composition and cross-view transfer:
+
+\textbf{Geometric quality measurement.} We formulate a composite quality metric, $Q$, that jointly evaluates spatial extent, boundary placement, internal orthogonal regularity, and both global and local height accuracy. The metric detects balanced local height distortions while remaining invariant to redundant collinear vertices that leave wall geometry unchanged. Evaluations by eight annotators link geometric and structural measurements to reported defects, with overall grades providing a complementary assessment of $Q$.
+
+\textbf{Structural consensus construction.} We develop a paired-corner consensus algorithm that aggregates upper--lower corner pairs across annotators who mark different numbers of wall turns. By coupling distinct-annotator support filtering with periodic angular localization and polygon reconstruction, our method preserves supported architectural turns and reconstructs their upper boundaries, extending floor-coverage voting to a complete paired-corner layout. Shared-team comparisons demonstrate how individual observations enter both its structure and geometry.
+
+\textbf{Doorway-boundary viewpoints.} We define the capture condition in which the camera stands beneath the doorframe between adjoining spaces. Choosing either room or their combined space changes the target enclosure and its closure. Our analyses distinguish screening spatially uninterpretable responses from comparing coherent, target-specific pools.
+
+\textbf{Distributional effects of group size.} We show that enlarging annotation teams affects different parts of the quality distribution at different rates: initial additions drive rapid gains in mean quality, whereas subsequent additions primarily compress between-team variance and elevate the lower tail. On visually ambiguous panoramas, aggregate trends mask opposing trajectories among distinct structural interpretations.
+
+\textbf{Contextual effects of team composition.} We distinguish the magnitude of within-profile and cross-profile replacement from the direction of quality change. Cross-profile replacements generally produce larger changes, while specified C2-to-C3 exchanges usually improve Q. Team outcomes also depend on specific members and the retained background. Teams with identical profile ratios can yield markedly different layouts, mixing structural profiles can either recover missed features or dilute fine detail, and the same member-block exchange can reverse its quality impact depending on the remaining team members.
+
+Individual analyses connect these outcomes to structural habits that become most distinct at short and self-occluded walls, and show that editing an initialization does not ensure error correction. Cross-view comparisons identify recurring structural habits, transferable quality and short-detail histories, and changing local corner choices.
+

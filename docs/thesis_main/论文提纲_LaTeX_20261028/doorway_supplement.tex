@@ -1,0 +1,26 @@
+\documentclass[10pt]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage{graphicx,pdfpages}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+\begin{document}
+\section*{Supplementary figures: doorway group-size curves}
+
+These figures accompany the doorway analysis in the main paper. The screening comparison uses 584 responses before and 439 after review. Both versions use the same whole-space reference and underlying base orders. At each team size, Q is calculated over the evaluable outputs in each version; complete-and-evaluable rates use all attempts. Missing Q is not assigned zero.
+
+\textbf{Figure S1: Full-range aggregate.} The following page shows the existing 3--34-person comparison. Both versions use the same supported images at each size; the number of images decreases after 14 people. The high-size segment therefore describes a changing image set.
+
+\textbf{Figure S2: Screening differences.} The next page shows screened minus unscreened marginal quality and complete-and-evaluable rates on the fixed 17 images from 3 to 14 people. The Q difference is a difference between marginal means, not the mean of paired-path differences.
+
+\textbf{Figures S3--S19: Individual panoramas.} The following 17 pages reproduce one recorded curve sheet per image, including non-evaluable and nonmonotonic cases. Each sheet identifies its image, eligible pools, output status, and actual capacities. Space-specific curves use their assigned target references; the before/after whole-space comparison uses the common whole-space reference. Curves stop when a pool lacks enough members.
+\clearpage
+\includepdf[pages=-,fitpaper=true,pagecommand={\thispagestyle{plain}}]{figures/doorway_full_range.pdf}
+\clearpage
+\renewcommand{\thefigure}{S2}
+\begin{figure}[p]\centering
+\includegraphics[width=\textwidth]{figures/doorway_screening_supp.pdf}
+\caption{Screened minus unscreened marginal outcomes on the fixed 17-image set, with Q calculated within each version's evaluable outputs and complete-and-evaluable rate over all attempts.}\end{figure}
+\clearpage
+\includepdf[pages=-,fitpaper=true,pagecommand={\thispagestyle{plain}}]{figures/doorway_individual_curves.pdf}
+\end{document}

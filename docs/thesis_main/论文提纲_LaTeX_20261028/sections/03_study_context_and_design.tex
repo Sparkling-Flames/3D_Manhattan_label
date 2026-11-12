@@ -1,0 +1,56 @@
+\subsection{Study design and controlled comparisons}
+\label{sec:study-design}
+
+\subsubsection{Annotation task, participants and references}
+To study how human annotators interpret and trace 3D indoor geometry, we asked participants to delineate the walls enclosing the space containing the camera. The primary task focuses on Manhattan-world enclosures characterized by vertical walls aligned along two orthogonal plan-view axes, a closed single-level footprint, and single floor and ceiling planes---a scope that naturally accommodates L-shaped rooms and shallow architectural recesses. Participants were instructed to mark all enclosing wall turns, ignore movable furniture and surface decorations, and close openings along identifiable structural divisions such as doorframes or paired wall ends.
+
+We recruited participants from university cohorts and Upwork, compensating them at an average rate of USD 0.50 per panorama. All participants consented to the recording of their annotation durations and the use of their submissions for research. Following instruction and practice, participants contributed annotations in two task modes. In the \textit{Manual} condition, annotators placed and ordered upper--lower corner pairs from scratch while inspecting and refining their resulting 3D room preview in real time. In the \textit{Semi} condition, annotators edited either natural model predictions from HoHoNet \cite{hohonet2021} or six controlled-defect initializations on separate panoramas (see Supplements B1, C12, and C20 for interface and collection protocols).
+
+Our primary analyses draw on 6,512 standard Manual submissions from 60 annotators across 206 panoramas in 22 buildings, complemented by 960 standard Semi submissions from 59 annotators across 37 panoramas in 12 buildings (with 57 of the 62 total annotators contributing to both conditions). Because each annotator completed each panorama independently, we can form multi-annotator teams offline by recombining independent submissions that share the exact same image, condition, and target reference.
+
+We based the target references on MatterportLayout annotations on Matterport3D panoramas \cite{chang2017matterport3d,zou2021manhattan}. Prior to the main study, three domain experts---with experience annotating 100 panoramas and detailed knowledge of Manhattan layout geometry---reviewed the references to formalize target-space rules, resolve visibility ambiguities, and correct geometric errors within the selected target rooms, as well as catalog the natural initialization errors in the Semi condition. Each analysis pool links a panorama and task condition to the corresponding reviewed target reference.
+
+We further stratified panoramas into easy, moderate, and difficult tiers by combining reference corner counts and geometric self-occlusion metrics with expert visual inspection; short wall segments and self-occluded corners define the primary structural challenges across these tiers. Doorway viewpoints and out-of-scope (OOS) scenes---such as rooms with oblique walls, sloped ceilings, or split floor levels---are analyzed in dedicated cohorts to isolate boundary-rule and representational effects (Supplements C15, C17, and C20). Before computing $Q$, experts also screened doorway submissions while blinded to $Q$ to filter out degenerate enclosures or insufficient corner pairs, allowing us to evaluate doorway performance both against a unified whole-space reference (on a fixed 17-image panel) and against space-specific references.
+
+Finally, to validate our geometric quality metric $Q$ against human perception, we randomly sampled two Manual annotations from each of 30 panoramas across 17 buildings (nine easy, nine moderate, nine difficult, and three doorway scenes). Eight annotators were randomly invited to evaluate these submissions. They independently graded each submission as good, medium, or poor and flagged specific visual defects using a randomized display of panorama overlays, shared-scale footprints, and 3D room views, yielding a direct empirical benchmark for our geometric components (Supplement C16).
+
+\subsubsection{Profiles and controlled team comparisons}
+To compare how annotators with different structural histories contribute to collective layouts, we construct each annotator's historical profile strictly from their submissions outside the target building. Grouping annotators by their out-of-building behavior enables controlled comparisons of within-profile swaps, cross-profile swaps, and profile mixtures. We define three complementary profile families (Supplements C6--C9): \textit{structural profiles} (C1--C3), which classify annotators into simplifying (C1), typical (C2), and turn-retaining (C3) tendencies based on corner counts, short edges, near-collinear vertices, and reference matches; \textit{consensus-response profiles} (R1--R2), which capture how an individual shifts group geometry; and \textit{joint profiles} (J1--J4), which integrate structural habits, geometric accuracy, historical $Q$, and task duration.
+
+For C1--C3, we summarize structural features over each person's eligible history, including overall patterns and responses to difficult images. Within each training fold, features are robustly scaled, reduced by PCA within domains, and balanced across domains before Ward clustering forms three groups. Groups are ordered by their difficult-image turn and short-edge counts, then overall turn count. The target building is excluded throughout this process, and its annotations inherit each person's history-based class. Effective turns exceed $5^\circ$; short edges span less than 4\% of the perimeter and have endpoint turns of at least $15^\circ$. Supplement C6 gives the full specifications and history requirements.
+
+For our group-size analyses (RQ2), we run Monte Carlo simulations using 256 uniformly random entry orders per eligible pool, where each order defines a nested sequence of teams of size $k \in \{3,\dots,30\}$ across a consistent set of 171 standard panoramas. Table~\ref{tab:principal-analysis-sets} summarizes our six principal experimental designs.
+
+\begin{table*}[t]
+\centering\small
+\caption{Principal comparisons. Each fixes the image and target except where viewpoint or target is the factor studied. Supports overlap. Full collection coverage and procedures appear in Supplement C20.}
+\label{tab:principal-analysis-sets}\label{tab:analysis-support}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.20\textwidth}>{\raggedright\arraybackslash}p{.29\textwidth}>{\raggedright\arraybackslash}p{.45\textwidth}@{}}
+\toprule
+Comparison & Support & Change and outcomes\\
+\midrule
+Group size & 171 images; 22 buildings; 256 orders per image & Add people within each pool; Q, lower tail, variation and completion\\
+Shared structure & 70 Manual teams; 24 images; 14 buildings & Compare floor coverage and paired-corner observations on the same submissions\\
+Matched replacement & 69 images; 20 buildings; 146 of 147 events scorable & Replace 7 of 14 members; compare within- and cross-profile changes and their direction\\
+Retained background & 276 comparable blocks; 7 images & Change retained members for the same exchange; direction of Q change\\
+Cross-view structure & 128 view pairs; 65 images; 13 buildings & Compare same- and different-person structure across room views\\
+Doorway screening & 17 images; 9 buildings; 584 responses before, 439 after & Screen responses against the same whole-space reference; Q and completion\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+To isolate the impact of team composition (RQ3), we use a matched replacement framework. A direct A--C replacement compares team $A=D\cup X$ against team $C=D\cup Z$, where $D$ is the fixed background of retained members and $X, Z$ are equal-sized, disjoint blocks of removed and added members, yielding a quality shift of $Q_C-Q_A$. To separate the effect of changing a profile from the baseline variance of swapping individuals, our matched A--B--C design introduces a control team $B=D\cup Y$, where $Y$ matches the size and profile of $X$, while $Z$ is drawn from a contrasting profile (with $X, Y, Z, D$ mutually disjoint). This structure quantifies both the excess magnitude of cross-profile replacement ($G_S$) and its directional effect ($\Delta_{CB}$):
+\begin{align}
+G_S&=\frac{|Q_C-Q_A|+|Q_C-Q_B|}{2}-|Q_B-Q_A|,\label{eq:symmetric-excess}\\
+\Delta_{CB}&=Q_C-Q_B.\label{eq:directional-change}
+\end{align}
+We aggregate replacement effects across all valid backgrounds and exchanged blocks within each image before averaging equally across images. In addition, we vary profile ratios within fixed-size teams and form whole-profile mixtures from all available members of the selected classes. We test context dependence by holding the exchanged blocks $(X,Z)$ fixed while varying the retained background $D$ (Supplement C17).
+
+\subsubsection{Outcomes, uncertainty and offline policies}
+We evaluate team performance across four primary dimensions: mean quality $Q$, lower-tail robustness (the within-image 10th percentile, P10), between-team dispersion (standard deviation across teams), and the complete-and-evaluable output rate across all attempted teams. Paired comparisons across team sizes or A--B--C replacements are evaluated on teams with valid scorable outputs, while unscorable or incomplete states are tracked explicitly in completion rates.
+
+To quantify uncertainty in our group-size curves, we weight images equally and compute 95\% confidence intervals via two complementary bootstrap schemes (2,000 resamples each): resampling complete entry trajectories within each pool to measure Monte Carlo precision, and resampling the 22 buildings to describe variation across buildings with the observed annotators retained (Supplements C6--C10, C17).
+
+Finally, we evaluate practical annotation policies by simulating offline member selection and adaptive stopping rules (Section~\ref{sec:labor-history}, Supplements C8--C9, C20), where total labor is measured as the sum of recorded individual annotation times. For member selection, our quality-and-time policy starts from the top historical-$Q$ team and swaps in faster annotators so long as the team's mean historical relative $Q$ remains within a 2-point tolerance. For adaptive stopping, our source-history rule halts recruitment at the earliest $k \geq 3$ whose expected quality (estimated from other views) comes within 2 $Q$ points of the curve peak, continuing only if needed to secure a complete polygon; we benchmark this against a fixed $k=7$ baseline and a stability rule that stops after three consecutive complete outputs with unchanged corner counts.
+

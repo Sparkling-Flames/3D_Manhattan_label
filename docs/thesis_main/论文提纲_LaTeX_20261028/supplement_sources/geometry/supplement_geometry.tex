@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[left=38.44bp,right=38.44bp,top=28bp,bottom=28bp]{geometry}
+\usepackage{graphicx,xcolor}
+\providecommand{\supplementsourceroot}{}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}
+\newcommand{\controlpage}[2]{%
+  \clearpage
+  \includegraphics[width=\linewidth]{\supplementsourceroot panels/C#1.pdf}\par
+  \vspace{3pt}
+  {\fontsize{9}{11}\selectfont\textbf{Figure S#1 (control C#1).} #2\par}
+  \vspace{5pt}
+  {\fontsize{7.5}{10}\selectfont\color[HTML]{56616B}%
+  Dots show all supplied configurations; lines connect observations.
+  Q and IoU are distinct indices.\par}
+}
+\begin{document}
+{\Large\bfseries Supplement A: Controlled geometric perturbations\par}
+
+Eight families, 66 archived configurations
+
+S1 / C1: Uniform ceiling-height changes\\
+S2 / C2: Balanced local height changes\\
+S3 / C3: Concentrated versus distributed height errors\\
+S4 / C4: Collinear resampling of unchanged geometry\\
+S5 / C5: Shear versus translation\\
+S6 / C6: Near-wall versus far-wall displacement\\
+S7 / C7: Omission of a narrow alcove\\
+S8 / C8: Non-orthogonal reference geometry
+
+The 66 configurations vary height, position, direction and local structure.
+Points show every configuration and lines connect observations. IoU is
+multiplied by 100; dimensions are specified in each panel.
+
+The prism comparison uses the arithmetic mean of corner heights. C2 also
+shows the analytic volume IoU of the solid with a planar tilted top, and C4
+shows the perimeter-weighted-height prism comparison. Added point pairs
+subdivide existing straight boundaries while preserving their wall turns.
+
+C8 uses a non-orthogonal reference to isolate the effect of Q's internal
+direction requirement alongside its reference-relative measurements.
+Together, the controls establish responses to specified geometric changes.
+
+\controlpage{1}{Uniform ceiling-height shifts.}
+\controlpage{2}{Opposite height shifts with unchanged mean.}
+\controlpage{3}{Equal vertex-mean height, different profiles.}
+\controlpage{4}{Identical geometry with different vertex counts.}
+\controlpage{5}{Equal overlap under shear and translation.}
+\controlpage{6}{Equal displacement of near and far walls.}
+\controlpage{7}{Omission of a narrow alcove.}
+\controlpage{8}{Non-orthogonal reference: scope diagnostic.}
+\end{document}

@@ -1,0 +1,371 @@
+% Insert before \end{document} in supplement_personnel.tex.
+% Uses only its existing longtable, booktabs and array packages.
+% MR source IDs resolve to the accompanying source_manifest.json and SOURCE_MAP.txt.
+\clearpage
+\subsection*{C6. Reproducible personnel-profile specifications}
+The specifications below define the implementations used for the reported
+structural-expression, consensus-response and joint-profile analyses
+[MR01--MR03]. For an observation in building
+$b$, labels are joined by person and \texttt{heldout\_building}$=b$.
+The \texttt{ALL} fit is descriptive only. Class numbers are assigned by the
+ordered training-fold class centres, not by matching a test fold to the
+\texttt{ALL} solution. Other replacement designs retain the labels specified
+for their own comparisons.
+
+Let $S$ denote four raw-response fields:
+\begin{sloppypar}
+\texttt{turn\_n}, \texttt{short\_turn\_edges},
+\texttt{near\_\allowbreak straight\_\allowbreak nodes\_\allowbreak 5deg},
+and \texttt{unmatched\_\allowbreak ref\_\allowbreak 9}.
+They count floor turns $>5^\circ$, edges shorter than 4\% of the perimeter
+with both endpoint turns at least $15^\circ$, turns $\leq5^\circ$, and the
+unmatched reference fraction after one-to-one spherical floor-point matching
+with a $9^\circ$ acceptance threshold, respectively.
+Let $B$ denote \texttt{matched\_\allowbreak top\_\allowbreak bias\_\allowbreak deg},
+\texttt{matched\_\allowbreak bottom\_\allowbreak bias\_\allowbreak deg}, \texttt{log\_area\_ratio}, and
+\texttt{log\_height}. The signed endpoint deviations use one-to-one periodic
+azimuth matching with a $9^\circ$ threshold; the remaining fields are log
+submitted/reference floor area and log reconstructed mean height under
+camera-height normalization. These are not all absolute-error measures.
+\end{sloppypar}
+
+Raw profile features are centred on the median for image, legal reference
+and condition. Log time additionally separates origin and time source and
+uses positive finite recorded durations only. Each metric is averaged over
+valid records within person--target, then equally over targets within image,
+images within person--building, and buildings within person. Missing
+outcomes are not zero-imputed [MR02].
+
+\begingroup\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{.19\linewidth}>{\raggedright\arraybackslash}p{.49\linewidth}>{\raggedright\arraybackslash}p{.23\linewidth}}
+\toprule
+Profile & Exact feature blocks & Eligibility and class order \\
+\midrule\endfirsthead
+\toprule Profile & Exact feature blocks & Eligibility and class order \\
+\midrule\endhead
+Target structural
+(\texttt{TARGET\_DSTRUCT})
+&
+12 features, two domains: overall means of $S$ (4); difficult means and
+difficult-minus-easy means of $S$ (8).
+One Ward tree has the defined $K=2,3,4$ cuts.
+&
+Overall $\geq12$ images/3 buildings; easy $\geq5$/2; difficult $\geq4$/2.
+Complete required features.
+Order by difficult turn count, difficult short-edge count, overall turn count.
+\\[3pt]
+Consensus response
+(\texttt{RFUSE\_GEOM})
+&
+21 regularized member-effect features: overall, difficult and
+difficult-minus-easy coefficients for
+\texttt{floor\_turn5\_n},
+\texttt{floor\_short\_edge\_03\_n},
+\texttt{floor\_redundant5\_n} (structure domain, 9);
+\texttt{bottom\_y\_mean\_px}, \texttt{top\_y\_mean\_px},
+\texttt{log\_floor\_area}, \texttt{log\_height\_mean}
+(boundary/scale domain, 12).
+The paper uses the defined $K=2$ cut.
+&
+Overall $\geq8$ images/3 buildings; easy $\geq5$/2; difficult $\geq3$/2.
+Order by difficult fused turn response, then overall bottom-coordinate response.
+Native fused-output short edges use the length threshold defined below,
+distinct from $S$.
+\\[3pt]
+Joint profile
+(\texttt{OPPJOINT})
+&
+13 features, four domains: opportunity slopes of $S$ (4), opportunity slopes
+of $B$ (4), overall mean/p20 and opportunity slope of peer-centred Q (3),
+overall mean and opportunity slope of peer-centred log time (2).
+The reported $K=3,4$ are existing cuts.
+&
+Overall $\geq12$ images/3 buildings; opportunity variance $>10^{-5}$ and
+at least two levels; positive-time support $\geq12$/3 with a defined time slope.
+Complete required features.
+Order by overall Q residual, challenge-turn residual, overall log-time residual.
+\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+For valid positive-area fused footprints, the short-edge count is the number
+of cyclic edges with Euclidean length strictly below 0.3 camera-height units.
+It applies neither a perimeter-normalized threshold nor an endpoint-turn
+threshold [MR12].
+
+For the joint profile, the opportunity inputs are
+$\log(1+\max(v-4,0))$, $\log(1+H)$ and $\log(1+s)$, where
+$v$, $H$ and $s$ are the archived \texttt{ref\_turn5}, \texttt{ref\_H} and
+\texttt{ref\_short\_edges} fields.
+Training unique image--reference targets receive equal
+target-within-image, image-within-building and building weights.
+Each axis is centred on its weighted median, divided by its weighted
+p85--p15 range (fallback: weighted standard deviation, then 1), clipped to
+$[-3,3]$, and the three axes are summed and divided by $\sqrt{3}$.
+A person's response slope is weighted covariance of the peer residual and
+opportunity divided by weighted opportunity variance. The Q p20 is a weighted
+empirical quantile of the same peer residuals, not a raw-Q P10 [MR02].
+
+For each eligible training-fold profile domain, columns are median-centred,
+scaled by p85--p15 (fallback: population standard deviation, then 1), and
+clipped to $[-3,3]$. Full-SVD PCA retains at most two axes per raw-response
+domain and two per consensus-response domain. Each domain is divided by
+the training root-mean-squared PC-vector length (floor $10^{-9}$) and by
+the square root of the number of domains. Ward linkage uses Euclidean
+distances and optimal leaf ordering. The target building is excluded before
+history, eligibility, scaling, PCA and clustering. Insufficient histories
+remain \texttt{unknown}; they are not assigned to the nearest class.
+
+\paragraph{Regularized consensus-response effects.}
+The \texttt{RFUSE\_GEOM} implementation uses ordinary Manual natural
+orders, sizes $k\in\{10,12,14,16,20,24\}$, and 24 natural orders per pool.
+Repeated deterministic team endpoints are collapsed with their path
+occurrence counts retained. A pool--size group requires at least four
+distinct eligible teams. The seven geometry outputs and the shared
+quality-output eligibility fields must be available; thus Q is not a
+GEOM clustering feature, but Q availability affects its training support.
+For team $t$ and person $w$, $X_{tw}=1/k_t$ for a member and zero otherwise.
+Within pool--size groups, both $X$ and the output matrix $Y$ are centred
+using path-occurrence weights. Each building has total weight one, with
+equal images within building and equal target--size groups within image;
+path occurrences determine weights within each group. The separate
+overall/easy/difficult fits are
+\[
+ \widehat{\mathbf B}
+ = (X^\mathsf{T}WX+\lambda I)^{-1}X^\mathsf{T}WY,\qquad
+ \lambda=\max\{ \alpha\,\mathrm{tr}(X^\mathsf{T}WX)/P,\;10^{-12}\},
+\]
+where $P$ is the number of membership columns.
+Nested leave-one-building-out selection considers
+$\alpha\in\{0.1,1,10\}$ using training-variance-normalized response MSE,
+balanced over validation buildings, outputs, strata and domains.
+The selection table chooses $\alpha=10$ for the descriptive fit
+and all 22 outer folds [MR03]. This is the dimensionless multiplier, not
+a fixed numerical penalty of 10. The target-equal
+\texttt{TARGET\_RFUSE} and Q-augmented \texttt{RFUSE\_GEOMQ} candidates are
+different models and are not substituted here.
+
+\subsection*{C7. Prediction models, preprocessing and test support}
+The following rows identify the exact implementations behind the reported
+comparisons. A shared label such as \emph{history} does not imply identical
+aggregation across these analyses [MR04--MR07].
+
+\begingroup\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{.19\linewidth}>{\raggedright\arraybackslash}p{.49\linewidth}>{\raggedright\arraybackslash}p{.23\linewidth}}
+\toprule
+Comparison & Features, estimator and preprocessing & Split, support and estimand \\
+\midrule\endfirsthead
+\toprule Comparison & Features, estimator and preprocessing & Split, support and estimand \\
+\midrule\endhead
+Difficulty versus computable geometry
+&
+Weighted linear ridge, penalty 1 on every coefficient except the intercept.
+Controls: training-level person and record-source indicators; medium/hard
+difficulty indicators. Added numeric features:
+\texttt{ref\_turn5}, \texttt{ref\_H}, \texttt{ref\_short\_edges},
+\texttt{ref\_min\_horizontal\_deg}, short-edge presence, and minimum
+short-edge span conditional on presence (zero for structural absence).
+Numeric weighted mean/SD scaling is training-only; no tuning.
+The binary simplification prediction is clipped linear regression,
+not logistic regression.
+&
+22 building-held-out folds; 6,512 records, 206 images, 60 people.
+Training images have equal total weight; test errors are averaged within
+image then building, with buildings equal.
+MSE for turn deficit and simplification; MAE for Q.
+Missing outcomes are excluded per outcome; nonfinite geometry is excluded.
+Unseen people have zero person indicators.
+\\[3pt]
+Same-room image-mean Q:
+9.496 to 6.464
+&
+Direct source-image mean Q substitutes for the target-image mean.
+The baseline is the mean of other-building image means.
+No fitted regression coefficient, scaling, imputation or hyperparameter.
+&
+128 directly adopted, non-pending pairs, both directions:
+256 predictions, 65 images, 13 buildings.
+Average absolute errors over source directions per target,
+then images within building and buildings equally.
+\\[3pt]
+Same-room individual Q:
+15.645 to 13.385
+&
+Baseline: the person's record-mean Q outside the target building.
+Let $\theta_w$ be the record-mean outside-building residual from
+leave-one-person-out task-peer Q.
+Prediction: source-image mean Q of other people plus $\theta_w$,
+clipped to $[0,100]$.
+This is \texttt{public\_external} with a single direct source,
+not the half-own-residual variant.
+&
+1,793 target answers, 65 images, 56 people, 13 buildings;
+5,198 source-specific prediction rows.
+Shared valid support across the saved predictors; missingness is not zero.
+Source-specific errors are averaged per target answer before
+image/building aggregation.
+\\[3pt]
+Same-room structure:
+short edges 0.526 to 0.472
+&
+For each target answer, average the person's feature over directly
+neighbouring source views on which that person answered.
+The comparator averages other people's features on the same source views.
+No fitted parameters. This averages source features before evaluating
+the target error, unlike the single-direct Q comparison.
+&
+Same 1,793/65/56/13 support, requiring outside-building personal history.
+The signed floor-offset comparison is in ERP pixels and uses spherical
+bottom-point matching; it is not the azimuth-paired degree feature in $B$.
+\\[3pt]
+Recorded purpose added to geometry:
+5.158 versus 5.379
+&
+Five numeric features: reference turn count, log(1+\texttt{ref\_H}),
+short-edge/turn fraction, log minimum horizontal span and log
+90th-percentile floor radius (last two floored at $10^{-5}$ before log).
+Difficulty is categorical; the augmented model adds purpose.
+Training-median imputation with missing indicators, standard scaling,
+one-hot categories with unseen levels ignored.
+Fixed candidate portfolio detailed below.
+&
+Outer LOBO on 206 ordinary images/22 buildings; reported repeated-purpose
+subset: 190 images/21 buildings.
+Inner building-grouped five-fold model selection.
+Q predictions clipped to $[0,100]$; reported MAE is image-equal.
+Geometry is reference-derived, not a no-reference RGB predictor.
+\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+The recorded-purpose portfolio contains linear ridge
+$\alpha\in\{0.1,1,10,100\}$, quadratic-numeric ridge
+$\alpha\in\{10,100\}$, and histogram gradient boosting
+(120 iterations, 7 leaf nodes, minimum 15 samples per leaf,
+learning rate 0.05, L2 penalty 10, seed 2026102703).
+Quadratic expansion follows imputation/scaling and has degree two with no
+bias column. The inner criterion is the mean of held-out-fold MAEs.
+Every preprocessing step is re-fitted inside each inner training fold.
+For Q, the geometry-only model selected quadratic ridge $\alpha=10$ in
+16 outer folds and boosting in 6; geometry plus purpose selected quadratic
+ridge $\alpha=10$ in 18, boosting in 3, and linear ridge $\alpha=1$ in 1.
+The archived 44-row model table identifies every fold [MR07].
+
+\subsection*{C8. Continuous Q and Q/T selection}
+The fixed candidate roster is shared by the policies and does not expand
+when the historical selection criteria change.
+All target-building records are excluded from historical estimates.
+For each person, $q_w$ is the record-mean Q residual relative to other people
+on the same image, condition, legal target and reference version.
+The cost $c_w$ is the exponential of the record-mean log-time residual,
+additionally separating origin and time source. Q and time histories
+each require at least eight images and three buildings.
+The main panel uses the compatible complete-time history subset, without
+mixing incompatible time sources [MR08].
+
+Q-only selects the $n$ largest $q_w$, breaking ties by person identifier.
+Q/T starts from that team and repeatedly chooses the best strictly
+cost-reducing one-person exchange subject to a fixed historical mean-Q
+floor of the initial team's mean minus 2 points. Feasible exchanges are
+ordered by total $c_w$, then descending mean $q_w$, then sorted person IDs;
+cost must decrease by more than $10^{-9}$. It stops when no such exchange
+exists. This is a deterministic local-search rule, not a globally optimal
+solution, and target Q does not select the team. Each
+$n\in\{3,4,5,6,7,9,13\}$ is optimized separately, with more than $n$
+eligible candidates; teams across sizes need not be nested.
+
+The primary common-support identity is
+(source--target pair, source pool, target pool, domain).
+Both policies must have been executed at every listed size, with exactly
+the same candidate roster throughout. Only ordinary Manual, comparable,
+directly adopted relations without pending or substantive scope conflicts
+are included. This yields 126 contexts, 46 target images and 9 buildings.
+Let $\mathcal A$ average contexts within target image, images within
+building, and buildings equally. The two primary estimands are
+\[
+ \mathcal A(Q_{\rm QT}-Q_{\rm Q}),\qquad
+ \exp\{\mathcal A[\log(T_{\rm QT}/T_{\rm Q})]\}.
+\]
+Thus the labor ratio is not a ratio of arithmetic mean labor.
+At $n=5$, these are $0.21836$ and $0.81343$, with empirical
+building-cluster percentile intervals $[-0.53836,0.86896]$ and
+$[0.76045,0.88192]$. The archive uses 20,000 building-bootstrap
+resamples, seed 20261030, synchronized across sizes [MR09].
+These quantify empirical cluster sensitivity, not a guarantee of
+population-sampling coverage.
+
+The $n=5$ versus $n=13$ comparison additionally requires both policies to
+be scoreable at every size: 124 contexts, the same 46 images and 9 buildings.
+Its labor-growth estimand is
+$\exp\{\mathcal A[\log(T_{13}/T_5)]\}$, separately for each policy
+(2.33142 and 2.17016). It compares independently selected teams,
+not the causal effect of adding eight people to a fixed team.
+Unscoreable Q is never replaced by zero.
+
+\subsection*{C9. Source-history stopping and acquisition cost}
+The reported 86.054 versus 85.189 Q comparison is the archived
+\texttt{maximum\_history}, \texttt{whole\_group},
+\texttt{all\_attempts}, non-pending-direct-relations panel.
+For a room group containing $v$ views, it uses the maximum available
+source-view history $m=v-1$, not one source view [MR10].
+For each shared member-order replay $r$, let
+\[
+ s_r(k)=\frac{1}{m}\sum_{h\in H} Q_{hr}(k),\qquad
+ M_r=\max_{j\geq3:\,s_r(j)\ {\rm finite}}s_r(j).
+\]
+\[
+ k_{\rm req,r}=
+ \min\{k\geq3:s_r(k)\ {\rm finite},\ s_r(k)\geq M_r-2\}.
+\]
+All source values at a prefix must be available; the implementation uses
+ordinary means, no interpolation, and a numerical comparison tolerance
+of $10^{-10}$. If no valid prefix exists, no choice is produced.
+The target then advances from $k_{\rm req,r}$ to its first complete
+geometric output: status \texttt{ok}, at least four nodes, and an available
+connection. A target with no subsequent complete output remains unavailable.
+Target reference Q is not used by this decision. The fixed-seven comparator
+requests $\min(7,K)$ and applies the same geometric top-up, where $K$ is
+the available common-worker pool size.
+The separate online rule triggers at $k\geq5$ when three consecutive
+complete outputs have equal node counts; otherwise it uses the full pool.
+Equal counts do not establish equal geometry.
+
+The quality panel contains five same-room groups, 21 images and five
+buildings (5,376 replay attempts). Outcomes are first summarized
+within each target view over its replay/history choices, then equally
+over target views within group, groups within building, and buildings.
+The compatible complete-time panel contains only three groups,
+11 images and three buildings. Let $L_{vr}(k)$ be the recorded member
+labor through prefix $k$, and $k_{7,vr}$ the fixed-seven-plus-geometry choice.
+For a source/target split $(H,T)$, the project acquisition ratio is
+\[
+ \rho_r=
+ \frac{\sum_{h\in H}L_{hr}(K)+
+       \sum_{t\in T}L_{tr}(k_{{\rm stop},tr})}
+      {\sum_{h\in H}L_{hr}(k_{7,hr})+
+       \sum_{t\in T}L_{tr}(k_{7,tr})}.
+\]
+The archive averages these ratios over replays, splits, groups and buildings,
+yielding 2.11526. This is an arithmetic mean of project ratios,
+not a ratio of the target-only mean labor values
+(1,660.3 versus 1,307.9 person-seconds), and not the geometric ratio in C8.
+Replays reuse collected annotations and are not charged as repeated
+real acquisitions. Unmeasured reference-production and assisted-connection
+costs are not imputed as zero; recorded person-time is not wall-clock delay.
+
+\paragraph{Source and implementation record.}
+The source author is Sparkling-Flames (2026), \emph{3D\_Manhattan\_label},
+a research software and output repository. All MR source IDs above resolve
+to the full file titles, paths, Git blob identifiers and fixed-commit URLs
+in the accompanying \texttt{source\_manifest.json} and
+\texttt{SOURCE\_MAP.txt}, at commit
+\texttt{a116cebbd03321f55c757130a4dd88b299539155}.
+MR01--MR03 identify the profile definitions, result bindings and
+underlying profile code; MR04--MR07 identify prediction scripts and matched
+output tables; MR08--MR10 identify selection/stopping implementations,
+common-support tables and cost summaries.
+The source map links each method specification to its implementation and
+reported output tables.
+

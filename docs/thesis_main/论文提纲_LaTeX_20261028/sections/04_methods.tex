@@ -1,0 +1,146 @@
+\label{sec:methods}
+
+Each human submission forms an ordered ring of upper--lower corner pairs, where the lower endpoint marks a floor-level wall junction and the upper endpoint sets the local wall height. To evaluate and combine these observations, we develop two complementary methods: a geometric quality metric, $Q$, that combines reference-based extent, boundary and height measurements with internal Manhattan regularity, and a paired-corner structural consensus algorithm that merges individual corner observations into supported wall turns, aggregated coordinates, and a closed 3D room layout.
+
+Small endpoint shifts in a panorama can produce substantial changes in the reconstructed walls (Figure~\ref{fig:observed-geometry}). We therefore evaluate the resulting geometry as well as the image observations, and retain local upper and lower positions when forming consensus.
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=82mm]{figures/observed_corner_geometry.pdf}
+\caption{Image observations and reconstructed geometry. A floor endpoint displacement from P to P' changes the footprint and the corresponding wall in three dimensions. The assessed layout is blue and the reference is dashed gray.}
+\label{fig:observed-geometry}
+\end{figure}
+
+\subsection{Geometric quality measurement}
+\label{sec:quality}
+
+A freehand layout can match the reference floor coverage while distorting the ceiling contour, or maintain crisp orthogonal walls while enclosing the wrong spatial extent. Our composite metric $Q$ captures these distinct failure modes through five geometric components (Figure~\ref{fig:quality-components}). During 3D reconstruction, each upper--lower corner pair is horizontally aligned to the midpoint of its shorter horizontal arc while retaining both vertical coordinates, thereby preserving the annotator's local height profile (Supplement B5).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=135mm]{figures/quality_components_trimmed.pdf}
+\caption{Five geometric components and their combination into Q. Panels (a--e) measure floor overlap, boundary placement, internal direction, mean height and local height; (f) combines their losses. Blue denotes the assessed layout and dashed gray the reference, except in (c), where it marks fitted internal axes. The height examples share a footprint.}
+\label{fig:quality-components}
+\end{figure*}
+
+\subsubsection{Geometry and score definition}
+
+Let $P$ and $R$ denote the assessed layout and its matched reference, reconstructed in camera-height units with the floor plane fixed at $y=-1$, and let $A_P, A_R$ be their 2D floor polygons. Spatial extent is measured via floor intersection-over-union, $I=|A_P\cap A_R|/|A_P\cup A_R|$. To measure local boundary displacement symmetrically, the boundary distance $S_b$ (in degrees) averages the nearest-neighbor angular distances from uniformly spaced samples along each spherical floor contour to the opposing continuous boundary.
+
+Internal orthogonal regularity is evaluated directly on $P$. Given floor edges of length $\ell_e$ and plan-view orientation $\alpha_e$, we fit the optimal orthogonal axis pair by minimizing the length-weighted angular residual:
+\begin{equation}
+ D_{\mathrm{dir}}(P)=\min_{0\leq\phi<90^\circ}
+ \sqrt{\frac{\sum_e\ell_e\operatorname{wrap}_{90^\circ}(\alpha_e-\phi)^2}{\sum_e\ell_e}},
+ \label{eq:direction}
+\end{equation}
+where $\operatorname{wrap}_{90^\circ}(\cdot)$ maps angular deviations into $[-45^\circ,45^\circ)$.
+
+Wall heights are interpolated linearly along each floor edge. Given cyclic corner heights $h_i$, the perimeter-weighted mean height is
+\begin{equation}
+ \mu_P=\frac{\sum_i\ell_i(h_i+h_{i+1})}{2\sum_i\ell_i}.
+ \label{eq:perimeter-height}
+\end{equation}
+Global height error is normalized by the reference height as $H_m=|\mu_P-\mu_R|/\mu_R$, while local height error $H_c$ computes the symmetric root-mean-square discrepancy between the mean-centered height profiles of $P$ and $R$, also normalized by $\mu_R$. Specifically, each uniformly spaced sample along one floor perimeter is compared against the nearest floor position on the other layout (taking the largest squared residual in the event of distance ties; Supplement C18 details the exact expressions using 2,048 boundary and 4,096 height samples per direction). Because the height measurements follow the perimeter and its interpolated height profile, subdividing an edge without changing that geometry leaves the measurements invariant.
+
+For any valid layout with positive floor overlap ($I>0$), the five geometric measurements map into four scaled losses that combine into the composite score $Q$:
+\begin{align}
+ F&=\left(\frac1I-1\right)+\frac{S_b^2}{32}, &
+ L_d&=1.5\frac{D_{\mathrm{dir}}^2}{D_{\mathrm{dir}}^2+8^2},\label{eq:floor-loss}\\
+ L_m&=\left(\frac{H_m}{0.8}\right)^2, &
+ L_c&=\left(\frac{H_c}{0.25}\right)^2.\label{eq:height-loss}
+\end{align}
+\begin{equation}
+ Q(P,R)=\frac{100}{1+\sqrt{F^2+L_d^2}+L_m+L_c}.\label{eq:quality}
+\end{equation}
+All scaling constants and the functional form were locked via controlled geometric perturbation tests prior to human validation and team analyses (Supplement C16). When floor overlap is the only discrepancy, $Q$ reduces directly to $100I$. A layout is scorable if it forms a simple, nondegenerate polygon with at least three corner pairs, positive wall heights, and valid boundary projections; valid polygons with zero reference overlap receive $Q=0$, while degenerate or incomplete geometries are recorded explicitly as unscorable (Supplement C15).
+
+\subsubsection{Geometric responses and human judgments}
+\label{sec:q-validation}
+\label{sec:human-validation}
+
+Analytical perturbation tests establish two properties of $Q$: sensitivity to local height distortion and invariance to collinear resampling of unchanged wall geometry (Figure~\ref{fig:height-control}; 66 configurations in Supplement A). First, introducing opposing local ceiling shifts preserves both the floor footprint and the mean wall height; consequently, prism IoU based on the arithmetic mean of corner heights remains fixed at $1.0$, whereas $Q$ decreases smoothly as the local height distortion grows. Second, subdividing the high edge of a tilted wall with redundant collinear corner pairs leaves the physical 3D walls unchanged, yet corner-mean prism IoU drops artificially from $100\%$ to $86.96\%$; in contrast, our perimeter-integrated formulation holds $Q$ constant at $70.09$.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=140mm]{figures/height_resampling_controls_trimmed.pdf}
+\caption{Q detects balanced local height distortion and preserves unchanged geometry under resampling. In the analytical 3 m reference room, (a) opposing height shifts preserve mean height and corner-mean prism IoU but reduce Q; (b) additional collinear pairs change corner-mean prism IoU while perimeter-based measurements and Q stay fixed.}
+\label{fig:height-control}
+\end{figure*}
+
+Eight annotators evaluated 60 real Manual annotations, yielding 460 valid defect reports and 478 overall grades. Defect reports associate visible annotation problems with the corresponding geometric and structural measurements (Table~\ref{tab:quality-feedback}); mean overall grades provide complementary evidence for Q.
+
+\begin{table}[t]
+\centering\small
+\caption{Spearman associations between human judgments and geometric and structural measurements across 60 Manual annotations from 30 panoramas. Defect shares are calculated from each annotation's valid reports; overall grades are averaged across available reviewers.}
+\label{tab:quality-feedback}
+\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.38\linewidth}>{\raggedright\arraybackslash}p{.43\linewidth}r@{}}
+\toprule
+Human judgment & Measurement & $\rho$\\
+\midrule
+Missing structure & Missing effective turns & 0.544\\
+Floor omission & Omitted floor fraction & 0.586\\
+Wall-height error & Local height $H_c$ & 0.612\\
+Boundary-position error & Boundary distance $S_b$ & 0.395\\
+\midrule
+Mean overall grade & Q & 0.946\\
+Mean overall grade & Mean-height prism IoU & 0.738\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Complementing the defect feedback, overall grades show closer agreement with $Q$ than with mean-height prism IoU. Across 238 complete reviewer--image pairs, 115 assigned different grades to the two annotations on the same panorama: $Q$ matched the grade-derived ordering in 110 of 115 cases ($95.7\%$), compared to 88 of 115 ($76.5\%$) for prism IoU. When averaging grades from the same valid reviewers for both annotations (yielding 21 non-tied panorama pairs), $Q$ agreed with the ordering of mean grades in 20 of 21 pairs versus 16 of 21 for prism IoU. Overall, $Q$ achieved a Spearman correlation of $\rho = 0.946$ (95\% building-bootstrap CI: $[0.870, 0.977]$) with mean human grades, outperforming prism IoU by $\Delta\rho = 0.208$ ($[0.062, 0.440]$), while reviewers assigned identical grades in $82.2\%$ of 1,666 valid within-annotation reviewer pairs (Supplement C16).
+
+The group-size trends and matched-replacement excess remain consistent across nine distinct parameter settings: the primary $Q$ and eight variants multiplying one scale parameter by $0.75$ or $1.25$. Every setting preserves early mean gains, later lower-tail gains and positive symmetric excess in the 14-person matched replacements. The $1.25\times$ direction variant sets the scale to $10^\circ$, giving $G_S=3.385$ compared with $3.441$ for the primary score across 69 images (Supplement C16).
+
+\subsection{Structural consensus from paired corner observations}
+\label{sec:consensus}
+
+Architectural features such as shallow recesses introduce wall turns that some annotators trace and others bridge over, creating structural disagreements that barely alter total floor area. Our structural consensus method aggregates layouts directly at the level of paired corners through four sequential stages: cyclic correspondence, distinct-person support filtering, coordinate aggregation, and polygon connection (Figure~\ref{fig:consensus-steps}).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=135mm]{figures/consensus_steps_rev11.pdf}
+\caption{Local observations form a collective layout in an illustrative six-person team. E receives three votes and is retained under the at-least-half rule; G receives two and is excluded. Supporters supply the upper and lower positions, which are connected in wall order to form the layout.}
+\label{fig:consensus-steps}
+\end{figure*}
+
+\subsubsection{Correspondence, support and position}
+
+Each observation $a_{wj}=(p^t_{wj},p^b_{wj})$ pairs annotator $w$'s top and bottom corner endpoints. We define the pairwise matching cost between two observations from different annotators as their mean spherical angular distance, $c(a,b)=[\theta(p_a^t,p_b^t)+\theta(p_a^b,p_b^b)]/2$. Using dynamic programming across cyclic starting points and both traversal directions, we identify corresponding corners between annotators $u$ and $v$ while preserving their cyclic order and allowing unmatched observations:
+\begin{equation}
+ \pi_{uv}^{*}=\underset{\pi\in\Pi_{uv}}{\arg\min}
+ \left[\sum_{(a,b)\in\pi}c(a,b)
+ +g\bigl(n_u^{\mathrm{skip}}+n_v^{\mathrm{skip}}\bigr)\right],
+ \label{eq:cyclic-match}
+\end{equation}
+where $\Pi_{uv}$ is the set of partial one-to-one cyclic matches, $n_w^{\mathrm{skip}}$ counts unmatched corners. We use a skip penalty of $g=7.5^\circ$ to accommodate positional variation at shared corners while separating observations of nearby wall turns. We then apply complete-linkage clustering over the pairwise matches to partition observations into disjoint corner clusters $G$, enforcing full pairwise support within each cluster and at most one corner per annotator.
+
+For a team $S$, let $s(G)$ denote the number of distinct annotators contributing to cluster $G$. Our at-least-half support rule (MV50) retains cluster $G$ whenever at least half of the team supports it:
+\begin{equation}
+ z(G)=\mathrm{1}[2s(G)\geq |S|],
+ \label{eq:mv50}
+\end{equation}
+Each retained corner's 3D position is estimated solely from its supporting annotators with equal weight: horizontal azimuths are unwrapped relative to an observed anchor pair and aggregated via the sample median, while the upper and lower vertical elevations are aggregated via separate medians (Supplements C16, C18). This decoupled median estimation seamlessly bridges the $360^\circ$ panorama seam while preserving the local wall height observed at each individual turn. Finally, the retained upper--lower pairs are connected in cyclic wall order to form a layout, followed by geometric validity checks (Supplements C15--C16).
+
+\subsubsection{Supported structures and upper boundaries}
+\label{sec:method-validation}
+
+To see how corner-level aggregation preserves structure, we compare our method against Bird's-Eye-View (BEV) region voting \cite{lee2018}, which partitions overlaid floor polygons into planar cells and retains regions covered by at least half the team. Across a benchmark panel of 138 teams from 48 pools (including 70 standard Manual teams across 24 panoramas in 14 buildings), BEV voting yields 138 valid 2D floor footprints, whereas paired-corner consensus in this comparison yields 131 valid footprints and 130 complete 3D layouts. Within the 70 Manual teams (67 complete evaluable layouts), our consensus algorithm retains 354 strictly majority-supported corner clusters and 28 half-supported clusters while filtering out 116 minority clusters, matching BEV voting on well-supported recesses such as panorama uNb9QFRL6hY-45 (where 7 of 10 annotators trace both recess turns; Supplement C16).
+
+Crucially, tracking discrete corner support explains how shifting team membership alters collective room structure. In bathroom panorama jtcxE69GiFV-13, two turns defining a recessed shower wall receive only four and two votes in Team 1, falling short of the five-vote threshold and collapsing the output into a simplified four-corner box. In Team 2, eight of ten members mark both turns, crossing the support threshold and recovering the complete six-corner recessed layout (Figure~\ref{fig:bathroom-turn-votes}).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=100mm]{figures/bathroom_turn_votes_rev11.pdf}
+\caption{Membership changes support for the same recess. In jtcxE69GiFV-13, Team 1 gives the two turns four and two votes; Team 2 gives each eight. Their layouts have four and six corners. (a) records support; (b--c) show the two layouts at a shared scale and view, using each layout's median upper height to display structure. Figure~\ref{fig:upper-boundary-evidence} traces the upper boundary; Supplement B6 gives the individual observations.}
+\label{fig:bathroom-turn-votes}
+\end{figure*}
+
+Moreover, whereas BEV voting operates solely on 2D floor projections, paired-corner consensus directly reconstructs 3D ceiling contours from the supporting upper endpoints. Tracing Team 2's eight supporting observations at the adjacent shower turns (Figure~\ref{fig:upper-boundary-evidence}) shows how the periodic horizontal and vertical medians localize the upper vertices at $(682.39,146.33)$ and $(691.87,158.32)$ on the $1024\times512$ panorama, carrying their separate upper coordinates into the local ceiling--wall boundary.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=135mm]{figures/upper_boundary_evidence.pdf}
+\caption{Observed upper endpoints form the consensus upper boundary in jtcxE69GiFV-13, Team 2. (a) Eight people supply an aligned corner pair at each turn. (b) Periodic horizontal and separate vertical medians give the upper positions. (c) Their connection in wall order forms the local ceiling--wall boundary. Coordinates refer to the $1024\times512$ panorama.}
+\label{fig:upper-boundary-evidence}
+\end{figure*}
