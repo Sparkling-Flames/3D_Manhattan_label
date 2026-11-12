@@ -1,0 +1,691 @@
+{
+  "scope": "Fig10 and Fig13 vector reflow only; no rescoring or data recalculation",
+  "vector_data_preserved": true,
+  "source_numbers_verified": {
+    "Fig10a": [
+      "3–6: +4.739",
+      "20–30: +0.500"
+    ],
+    "Fig10b": [
+      "20–30: +2.848"
+    ],
+    "Fig10c": [
+      "20–30: −2.031"
+    ],
+    "Fig10d": [
+      "3–6: −1.857 pp",
+      "20–30: +0.420 pp"
+    ],
+    "Fig13": [
+      "Before Q=77.41",
+      "After Q=92.58",
+      "ΔQ=+15.17",
+      "Δu=−0.423 px",
+      "Δv_upper=+0.021 px",
+      "Δv_lower=+0.821 px",
+      "floor_shift=0.17 h"
+    ]
+  },
+  "visual_review_resolved_findings": [
+    "Fig13a corner 4 initially overlapped the lower-left marker. Numbered circles now lie outside the data geometry and distinguish corner identities from x ticks.",
+    "All re-typeset x/y ticks now map from exact source grid paths. Maximum anchor discrepancy is below 0.000007 pt.",
+    "Fig13a and Fig13b now preserve x/z scale isotropically, to floating-point precision.",
+    "Fig13c/d delta annotations initially covered one retained-person point each. Their right anchor now lies at x=80 pt; final rendering and marker/text bounding boxes show no retained/removed/added point overlap.",
+    "Before/After labels in Fig13b lie below the corresponding floor lines; the reference label and shift value do not cover data."
+  ],
+  "assembly_requirement": "Preserve figure-level legends: All/Easy/Moderate/Difficult for Fig10; retained/removed/added and before/after/reference for Fig13.",
+  "final_visual_review": "Passed latest PDF renderings. No data/annotation obstruction remains in the examined panel files.",
+  "panels": [
+    {
+      "figure": 10,
+      "panel": "a",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig10/a.pdf",
+      "source_git_blob_sha1": "fed92fe7d569bef248cf5db4861bc5090f259cbd",
+      "output_sha256": "3e2da5841c4da488fd40dee3c3f5170183cfc8cce0db9bc9fe4b98785ab70e80",
+      "source_graphical_paths": 129,
+      "output_graphical_paths": 129,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 1640,
+      "max_affine_point_error_pt": 0.002238765938742761,
+      "x_scale": 0.5102040816326531,
+      "y_scale": 0.777076250607091,
+      "x_to_y_scale_ratio": 0.6565688775510203,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 2.8026347251852712e-06,
+      "max_y_tick_anchor_error_pt": 1.9290251600523334e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 3,
+          "expected_anchor_pt": 25.402475629534038,
+          "actual_anchor_pt": 25.402475357055664,
+          "absolute_error_pt": 2.724783740859493e-07
+        },
+        {
+          "axis": "x",
+          "value": 6,
+          "expected_anchor_pt": 35.90717876200773,
+          "actual_anchor_pt": 35.90717697143555,
+          "absolute_error_pt": 1.7905721847455425e-06
+        },
+        {
+          "axis": "x",
+          "value": 10,
+          "expected_anchor_pt": 49.9134547953703,
+          "actual_anchor_pt": 49.913455963134766,
+          "absolute_error_pt": 1.1677644664587206e-06
+        },
+        {
+          "axis": "x",
+          "value": 20,
+          "expected_anchor_pt": 84.92914098622848,
+          "actual_anchor_pt": 84.92913818359375,
+          "absolute_error_pt": 2.8026347251852712e-06
+        },
+        {
+          "axis": "x",
+          "value": 30,
+          "expected_anchor_pt": 119.94482328453842,
+          "actual_anchor_pt": 119.94482421875,
+          "absolute_error_pt": 9.342115845356602e-07
+        },
+        {
+          "axis": "y",
+          "value": 40,
+          "expected_anchor_pt": 85.80649454377125,
+          "actual_anchor_pt": 85.80649261474609,
+          "absolute_error_pt": 1.9290251600523334e-06
+        },
+        {
+          "axis": "y",
+          "value": 60,
+          "expected_anchor_pt": 59.23513718355392,
+          "actual_anchor_pt": 59.235138702392575,
+          "absolute_error_pt": 1.5188386583986357e-06
+        },
+        {
+          "axis": "y",
+          "value": 80,
+          "expected_anchor_pt": 32.66375610885139,
+          "actual_anchor_pt": 32.663754272460935,
+          "absolute_error_pt": 1.8363904530360742e-06
+        },
+        {
+          "axis": "y",
+          "value": 100,
+          "expected_anchor_pt": 6.0924106058766405,
+          "actual_anchor_pt": 6.092411804199219,
+          "absolute_error_pt": 1.1983225780554108e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "3\n6\n10\n20\n30\n40\n60\n80\n100\nAnnotators\nMean Q\n3–6: +4.739\n20–30: +0.500\n"
+    },
+    {
+      "figure": 10,
+      "panel": "b",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig10/b.pdf",
+      "source_git_blob_sha1": "fed92fe7d569bef248cf5db4861bc5090f259cbd",
+      "output_sha256": "2f3654c2720660727bb679250054c4088e50e2454ab82e99db6704912f368907",
+      "source_graphical_paths": 129,
+      "output_graphical_paths": 129,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 1640,
+      "max_affine_point_error_pt": 0.0024103885874640868,
+      "x_scale": 0.5101244078913122,
+      "y_scale": 0.777076250607091,
+      "x_to_y_scale_ratio": 0.6564663474051322,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 1.2170256411536684e-06,
+      "max_y_tick_anchor_error_pt": 1.9290251600523334e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 3,
+          "expected_anchor_pt": 25.39881131690096,
+          "actual_anchor_pt": 25.39881134033203,
+          "absolute_error_pt": 2.3431070417245792e-08
+        },
+        {
+          "axis": "x",
+          "value": 6,
+          "expected_anchor_pt": 35.90186624545345,
+          "actual_anchor_pt": 35.9018669128418,
+          "absolute_error_pt": 6.67388349029352e-07
+        },
+        {
+          "axis": "x",
+          "value": 10,
+          "expected_anchor_pt": 49.905955051284906,
+          "actual_anchor_pt": 49.90595626831055,
+          "absolute_error_pt": 1.2170256411536684e-06
+        },
+        {
+          "axis": "x",
+          "value": 20,
+          "expected_anchor_pt": 84.9161692819828,
+          "actual_anchor_pt": 84.91616821289062,
+          "absolute_error_pt": 1.0690921783407248e-06
+        },
+        {
+          "axis": "x",
+          "value": 30,
+          "expected_anchor_pt": 119.92638351268072,
+          "actual_anchor_pt": 119.92638397216797,
+          "absolute_error_pt": 4.594872535790273e-07
+        },
+        {
+          "axis": "y",
+          "value": 20,
+          "expected_anchor_pt": 85.80649454377125,
+          "actual_anchor_pt": 85.80649261474609,
+          "absolute_error_pt": 1.9290251600523334e-06
+        },
+        {
+          "axis": "y",
+          "value": 40,
+          "expected_anchor_pt": 65.8779794879189,
+          "actual_anchor_pt": 65.8779800415039,
+          "absolute_error_pt": 5.53584996509926e-07
+        },
+        {
+          "axis": "y",
+          "value": 60,
+          "expected_anchor_pt": 45.94944071758136,
+          "actual_anchor_pt": 45.94944076538086,
+          "absolute_error_pt": 4.7799495916933665e-08
+        },
+        {
+          "axis": "y",
+          "value": 80,
+          "expected_anchor_pt": 26.020925661729,
+          "actual_anchor_pt": 26.020924377441407,
+          "absolute_error_pt": 1.284287591829525e-06
+        },
+        {
+          "axis": "y",
+          "value": 100,
+          "expected_anchor_pt": 6.0924106058766405,
+          "actual_anchor_pt": 6.092411804199219,
+          "absolute_error_pt": 1.1983225780554108e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "3\n6\n10\n20\n30\n20\n40\n60\n80\n100\nAnnotators\nP10 of Q\n20–30: +2.848\n"
+    },
+    {
+      "figure": 10,
+      "panel": "c",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig10/c.pdf",
+      "source_git_blob_sha1": "fed92fe7d569bef248cf5db4861bc5090f259cbd",
+      "output_sha256": "aefb622f57d8d34b9a2892fa8c27c6084ddb1eb77319ce228c6e5ee62713bae5",
+      "source_graphical_paths": 129,
+      "output_graphical_paths": 129,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 1640,
+      "max_affine_point_error_pt": 0.0022299101659840714,
+      "x_scale": 0.5102040816326531,
+      "y_scale": 0.7770762506070907,
+      "x_to_y_scale_ratio": 0.6565688775510204,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 2.8026347251852712e-06,
+      "max_y_tick_anchor_error_pt": 4.284911042873318e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 3,
+          "expected_anchor_pt": 25.402475629534038,
+          "actual_anchor_pt": 25.402475357055664,
+          "absolute_error_pt": 2.724783740859493e-07
+        },
+        {
+          "axis": "x",
+          "value": 6,
+          "expected_anchor_pt": 35.90717876200773,
+          "actual_anchor_pt": 35.90717697143555,
+          "absolute_error_pt": 1.7905721847455425e-06
+        },
+        {
+          "axis": "x",
+          "value": 10,
+          "expected_anchor_pt": 49.9134547953703,
+          "actual_anchor_pt": 49.913455963134766,
+          "absolute_error_pt": 1.1677644664587206e-06
+        },
+        {
+          "axis": "x",
+          "value": 20,
+          "expected_anchor_pt": 84.92914098622848,
+          "actual_anchor_pt": 84.92913818359375,
+          "absolute_error_pt": 2.8026347251852712e-06
+        },
+        {
+          "axis": "x",
+          "value": 30,
+          "expected_anchor_pt": 119.94482328453842,
+          "actual_anchor_pt": 119.94482421875,
+          "absolute_error_pt": 9.342115845356602e-07
+        },
+        {
+          "axis": "y",
+          "value": 0,
+          "expected_anchor_pt": 85.80683413519913,
+          "actual_anchor_pt": 85.8068359375,
+          "absolute_error_pt": 1.8023008721002043e-06
+        },
+        {
+          "axis": "y",
+          "value": 4,
+          "expected_anchor_pt": 65.87831907934677,
+          "actual_anchor_pt": 65.87832336425781,
+          "absolute_error_pt": 4.284911042873318e-06
+        },
+        {
+          "axis": "y",
+          "value": 8,
+          "expected_anchor_pt": 45.94978030900923,
+          "actual_anchor_pt": 45.9497802734375,
+          "absolute_error_pt": 3.557173045010131e-08
+        },
+        {
+          "axis": "y",
+          "value": 12,
+          "expected_anchor_pt": 26.021265253156873,
+          "actual_anchor_pt": 26.021267700195313,
+          "absolute_error_pt": 2.4470384403230128e-06
+        },
+        {
+          "axis": "y",
+          "value": 16,
+          "expected_anchor_pt": 6.092738340061926,
+          "actual_anchor_pt": 6.092739868164062,
+          "absolute_error_pt": 1.5281021363833247e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "3\n6\n10\n20\n30\n0\n4\n8\n12\n16\nAnnotators\nSD of Q\n20–30: −2.031\n"
+    },
+    {
+      "figure": 10,
+      "panel": "d",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig10/d.pdf",
+      "source_git_blob_sha1": "fed92fe7d569bef248cf5db4861bc5090f259cbd",
+      "output_sha256": "8ea124b4be411c69c5faecb823414896687c4920fe9707262c199f77a757179d",
+      "source_graphical_paths": 129,
+      "output_graphical_paths": 129,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 1640,
+      "max_affine_point_error_pt": 0.002402165598467655,
+      "x_scale": 0.5101244078913122,
+      "y_scale": 0.7770762506070907,
+      "x_to_y_scale_ratio": 0.6564663474051324,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 1.2170256411536684e-06,
+      "max_y_tick_anchor_error_pt": 3.202937655544247e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 3,
+          "expected_anchor_pt": 25.39881131690096,
+          "actual_anchor_pt": 25.39881134033203,
+          "absolute_error_pt": 2.3431070417245792e-08
+        },
+        {
+          "axis": "x",
+          "value": 6,
+          "expected_anchor_pt": 35.90186624545345,
+          "actual_anchor_pt": 35.9018669128418,
+          "absolute_error_pt": 6.67388349029352e-07
+        },
+        {
+          "axis": "x",
+          "value": 10,
+          "expected_anchor_pt": 49.905955051284906,
+          "actual_anchor_pt": 49.90595626831055,
+          "absolute_error_pt": 1.2170256411536684e-06
+        },
+        {
+          "axis": "x",
+          "value": 20,
+          "expected_anchor_pt": 84.9161692819828,
+          "actual_anchor_pt": 84.91616821289062,
+          "absolute_error_pt": 1.0690921783407248e-06
+        },
+        {
+          "axis": "x",
+          "value": 30,
+          "expected_anchor_pt": 119.92638351268072,
+          "actual_anchor_pt": 119.92638397216797,
+          "absolute_error_pt": 4.594872535790273e-07
+        },
+        {
+          "axis": "y",
+          "value": 75,
+          "expected_anchor_pt": 85.80683413519913,
+          "actual_anchor_pt": 85.8068359375,
+          "absolute_error_pt": 1.8023008721002043e-06
+        },
+        {
+          "axis": "y",
+          "value": 80,
+          "expected_anchor_pt": 70.47719804820301,
+          "actual_anchor_pt": 70.47720031738281,
+          "absolute_error_pt": 2.269179802283361e-06
+        },
+        {
+          "axis": "y",
+          "value": 85,
+          "expected_anchor_pt": 55.1475619612069,
+          "actual_anchor_pt": 55.14756088256836,
+          "absolute_error_pt": 1.0786385402639098e-06
+        },
+        {
+          "axis": "y",
+          "value": 90,
+          "expected_anchor_pt": 39.81792587421078,
+          "actual_anchor_pt": 39.817929077148435,
+          "absolute_error_pt": 3.202937655544247e-06
+        },
+        {
+          "axis": "y",
+          "value": 95,
+          "expected_anchor_pt": 24.488301644457263,
+          "actual_anchor_pt": 24.488301086425782,
+          "absolute_error_pt": 5.58031480579757e-07
+        },
+        {
+          "axis": "y",
+          "value": 100,
+          "expected_anchor_pt": 9.158665557461148,
+          "actual_anchor_pt": 9.158665466308594,
+          "absolute_error_pt": 9.11525539493141e-08
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "3\n6\n10\n20\n30\n75\n80\n85\n90\n95\n100\nAnnotators\nComplete (%)\n3–6: −1.857 pp\n20–30: +0.420 pp\n"
+    },
+    {
+      "figure": 13,
+      "panel": "a",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig13/a.pdf",
+      "source_git_blob_sha1": "8cb5daddab538c29a74d9c59919ca50c17e78aa7",
+      "output_sha256": "a2332540c70992de28de0b04f7266537187db8d85858d3026d89837fd79a679c",
+      "source_graphical_paths": 160,
+      "output_graphical_paths": 164,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 4,
+      "compared_control_points": 2044,
+      "max_affine_point_error_pt": 0.002562559269677145,
+      "x_scale": 0.3408243689423794,
+      "y_scale": 0.34082436894237933,
+      "x_to_y_scale_ratio": 1.0000000000000002,
+      "preserves_geometry_aspect": true,
+      "max_x_tick_anchor_error_pt": 6.5014685333153466e-06,
+      "max_y_tick_anchor_error_pt": 1.7795690752109294e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": -6,
+          "missing": true
+        },
+        {
+          "axis": "x",
+          "value": -4,
+          "expected_anchor_pt": 66.36440311634627,
+          "actual_anchor_pt": 66.36440196051262,
+          "absolute_error_pt": 1.1558336439065897e-06
+        },
+        {
+          "axis": "x",
+          "value": -2,
+          "expected_anchor_pt": 107.7288977626744,
+          "actual_anchor_pt": 107.72890009894036,
+          "absolute_error_pt": 2.3362659504755356e-06
+        },
+        {
+          "axis": "x",
+          "value": 0,
+          "expected_anchor_pt": 149.0933872084354,
+          "actual_anchor_pt": 149.09338070696685,
+          "absolute_error_pt": 6.5014685333153466e-06
+        },
+        {
+          "axis": "x",
+          "value": 1,
+          "expected_anchor_pt": 169.77562673074874,
+          "actual_anchor_pt": 169.77563168352935,
+          "absolute_error_pt": 4.952780614075891e-06
+        },
+        {
+          "axis": "y",
+          "value": -0.5,
+          "expected_anchor_pt": 58.02497936414953,
+          "actual_anchor_pt": 58.02497863769531,
+          "absolute_error_pt": 7.264542176699251e-07
+        },
+        {
+          "axis": "y",
+          "value": 0,
+          "expected_anchor_pt": 47.68384920185856,
+          "actual_anchor_pt": 47.6838493347168,
+          "absolute_error_pt": 1.328582399651168e-07
+        },
+        {
+          "axis": "y",
+          "value": 0.5,
+          "expected_anchor_pt": 37.34272944070189,
+          "actual_anchor_pt": 37.34272766113281,
+          "absolute_error_pt": 1.7795690752109294e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "-6\n-4\n-2\n0\n1\n-0.5\n0.0\n0.5\nx/h\nz/h\n1\n2\n3\n4\nCamera\nBefore  Q = 77.41\nAfter  Q = 92.58\nΔQ = +15.17\n"
+    },
+    {
+      "figure": 13,
+      "panel": "b",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig13/b.pdf",
+      "source_git_blob_sha1": "8cb5daddab538c29a74d9c59919ca50c17e78aa7",
+      "output_sha256": "daccc32d9271aa19eb1614b4e3d0b52a1874a488542b8c558eed8bb167637fde",
+      "source_graphical_paths": 160,
+      "output_graphical_paths": 160,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 2044,
+      "max_affine_point_error_pt": 0.0003617904080260094,
+      "x_scale": 0.606060606060606,
+      "y_scale": 0.6060606060606063,
+      "x_to_y_scale_ratio": 0.9999999999999994,
+      "preserves_geometry_aspect": true,
+      "max_x_tick_anchor_error_pt": 2.7286481412147623e-06,
+      "max_y_tick_anchor_error_pt": 2.774325253085408e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": -5.8,
+          "expected_anchor_pt": 28.98995832963423,
+          "actual_anchor_pt": 28.98995733493939,
+          "absolute_error_pt": 9.94694840272814e-07
+        },
+        {
+          "axis": "x",
+          "value": -5.6,
+          "expected_anchor_pt": 53.94053141276041,
+          "actual_anchor_pt": 53.94053030246869,
+          "absolute_error_pt": 1.1102917198968498e-06
+        },
+        {
+          "axis": "x",
+          "value": -5.4,
+          "expected_anchor_pt": 78.89110218394886,
+          "actual_anchor_pt": 78.89109945530072,
+          "absolute_error_pt": 2.7286481412147623e-06
+        },
+        {
+          "axis": "y",
+          "value": -0.7,
+          "expected_anchor_pt": 80.44320401278412,
+          "actual_anchor_pt": 80.44320678710938,
+          "absolute_error_pt": 2.774325253085408e-06
+        },
+        {
+          "axis": "y",
+          "value": -0.5,
+          "expected_anchor_pt": 55.49262399384472,
+          "actual_anchor_pt": 55.49262237548828,
+          "absolute_error_pt": 1.6183564355287672e-06
+        },
+        {
+          "axis": "y",
+          "value": -0.3,
+          "expected_anchor_pt": 30.542053222656257,
+          "actual_anchor_pt": 30.54205322265625,
+          "absolute_error_pt": 7.105427357601002e-15
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "-5.8\n-5.6\n-5.4\n-0.7\n-0.5\n-0.3\nx/h\nz/h\nBefore\nAfter\nRef.\nShift 0.17 h\n"
+    },
+    {
+      "figure": 13,
+      "panel": "c",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig13/c.pdf",
+      "source_git_blob_sha1": "8cb5daddab538c29a74d9c59919ca50c17e78aa7",
+      "output_sha256": "63d7a1e4d76621b38bebacee6a14a3e0a230a695e6dc3fdd2439fda26dccbc96",
+      "source_graphical_paths": 160,
+      "output_graphical_paths": 160,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 2044,
+      "max_affine_point_error_pt": 0.002431701171471847,
+      "x_scale": 0.6063947078280043,
+      "y_scale": 0.6061093247588426,
+      "x_to_y_scale_ratio": 1.0004708442149033,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 2.9422386234045916e-06,
+      "max_y_tick_anchor_error_pt": 3.5816450179027015e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 266,
+          "expected_anchor_pt": 31.076018883348695,
+          "actual_anchor_pt": 31.076019577565603,
+          "absolute_error_pt": 6.942169079593441e-07
+        },
+        {
+          "axis": "x",
+          "value": 270,
+          "expected_anchor_pt": 54.6643529385164,
+          "actual_anchor_pt": 54.66435461479705,
+          "absolute_error_pt": 1.6762806467340852e-06
+        },
+        {
+          "axis": "x",
+          "value": 274,
+          "expected_anchor_pt": 78.25269624653303,
+          "actual_anchor_pt": 78.25269918877166,
+          "absolute_error_pt": 2.9422386234045916e-06
+        },
+        {
+          "axis": "y",
+          "value": 220,
+          "expected_anchor_pt": 10.695175023707547,
+          "actual_anchor_pt": 10.695175170898438,
+          "absolute_error_pt": 1.471908905870123e-07
+        },
+        {
+          "axis": "y",
+          "value": 225,
+          "expected_anchor_pt": 33.96471046864795,
+          "actual_anchor_pt": 33.96471405029297,
+          "absolute_error_pt": 3.5816450179027015e-06
+        },
+        {
+          "axis": "y",
+          "value": 230,
+          "expected_anchor_pt": 57.23424591358836,
+          "actual_anchor_pt": 57.23424530029297,
+          "absolute_error_pt": 6.132953913606798e-07
+        },
+        {
+          "axis": "y",
+          "value": 235,
+          "expected_anchor_pt": 80.5037906070231,
+          "actual_anchor_pt": 80.50379180908203,
+          "absolute_error_pt": 1.2020589252870195e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "266\n270\n274\n220\n225\n230\n235\nu (px)\nv (px; downward)\nΔu = −0.423 px\nΔv = +0.021 px\n"
+    },
+    {
+      "figure": 13,
+      "panel": "d",
+      "output": "/workspace/scratch/ff1b25156f22/outputs/figure_revision_20261113/figure_package/panels/fig13/d.pdf",
+      "source_git_blob_sha1": "8cb5daddab538c29a74d9c59919ca50c17e78aa7",
+      "output_sha256": "5f1d1c5ed16ff29797d9afc59820d9fb72b7fb49de6dc46461e0d2fcfb3ce6eb",
+      "source_graphical_paths": 160,
+      "output_graphical_paths": 160,
+      "all_original_path_structures_unchanged": true,
+      "added_annotation_paths": 0,
+      "compared_control_points": 2044,
+      "max_affine_point_error_pt": 0.0005467642388406689,
+      "x_scale": 0.6091290246024841,
+      "y_scale": 0.6061093247588426,
+      "x_to_y_scale_ratio": 1.004982104251313,
+      "preserves_geometry_aspect": null,
+      "max_x_tick_anchor_error_pt": 2.82035831844496e-06,
+      "max_y_tick_anchor_error_pt": 5.004490319038268e-06,
+      "tick_details": [
+        {
+          "axis": "x",
+          "value": 266,
+          "expected_anchor_pt": 31.107601055021224,
+          "actual_anchor_pt": 31.107601456227712,
+          "absolute_error_pt": 4.012064884761912e-07
+        },
+        {
+          "axis": "x",
+          "value": 270,
+          "expected_anchor_pt": 54.80228884394961,
+          "actual_anchor_pt": 54.80229025322478,
+          "absolute_error_pt": 1.4092751712269092e-06
+        },
+        {
+          "axis": "x",
+          "value": 274,
+          "expected_anchor_pt": 78.4969952220206,
+          "actual_anchor_pt": 78.49699240166228,
+          "absolute_error_pt": 2.82035831844496e-06
+        },
+        {
+          "axis": "y",
+          "value": 270,
+          "expected_anchor_pt": 11.388608631980382,
+          "actual_anchor_pt": 11.38861083984375,
+          "absolute_error_pt": 2.2078633676869686e-06
+        },
+        {
+          "axis": "y",
+          "value": 280,
+          "expected_anchor_pt": 41.24038073180957,
+          "actual_anchor_pt": 41.240379333496094,
+          "absolute_error_pt": 1.3983134792283636e-06
+        },
+        {
+          "axis": "y",
+          "value": 290,
+          "expected_anchor_pt": 71.09215283163876,
+          "actual_anchor_pt": 71.09214782714844,
+          "absolute_error_pt": 5.004490319038268e-06
+        }
+      ],
+      "image_objects": 0,
+      "output_text": "266\n270\n274\n270\n280\n290\nu (px)\nv (px; downward)\nΔu = −0.423 px\nΔv = +0.821 px\n"
+    }
+  ]
+}

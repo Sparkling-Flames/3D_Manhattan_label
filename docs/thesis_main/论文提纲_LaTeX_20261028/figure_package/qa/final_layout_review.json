@@ -1,0 +1,156 @@
+{
+  "review_scope": "Read-only independent inspection of regenerated previews dated 2026-11-13 03:12 local; all sixteen figures inspected through contact sheets, plus full-size figures 1, 7, 12, 16. No new aesthetic requirements or research suggestions.",
+  "result": "All sixteen figure structures and native caption positions pass. Fig1/3 old backdrop remnants resolved in source panels; Fig12 native-caption word-break fix handled by root before final recompilation.",
+  "figures": [
+    {
+      "figure": 1,
+      "visual_status": "pass; residual white backdrop removed and panel asset visually rechecked",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 2,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 3,
+      "visual_status": "pass; residual white backdrop removed and panel asset visually rechecked",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 4,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 5,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 6,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 7,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 8,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 9,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 10,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 11,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 12,
+      "visual_status": "pass with reported minor cleanup",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 13,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 14,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 15,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    },
+    {
+      "figure": 16,
+      "visual_status": "pass",
+      "caption_position": "below",
+      "text_outside_page": []
+    }
+  ],
+  "findings": [
+    {
+      "figure": 1,
+      "panel": "a",
+      "severity": "minor visible residual occlusion",
+      "finding": "Original title background remains as a white rectangular step on the upper edge of the panorama; text itself is removed.",
+      "source_path": "individual_fireplace.pdf",
+      "source_white_path_index": 26,
+      "source_rect": [
+        4.1345,
+        2.8379,
+        55.7321,
+        11.7578
+      ],
+      "recommended_action": "Delete this actual white title-background path, retaining the underlying photograph.",
+      "resolution": "Resolved in panel asset: actual white backdrop path deleted, image stream and other paths unchanged; new PNG inspected."
+    },
+    {
+      "figure": 3,
+      "panel": "a",
+      "severity": "minor visible residual occlusion",
+      "finding": "Original title background remains along the upper edge of the panorama.",
+      "source_path": "observed_corner_geometry.pdf",
+      "source_white_path_index": 16,
+      "source_rect": [
+        2.8748,
+        1.5234,
+        56.6893,
+        10.8264
+      ],
+      "recommended_action": "Delete this actual white title-background path, retaining the underlying photograph.",
+      "resolution": "Resolved in panel asset: actual white backdrop path deleted, image stream and other paths unchanged; new PNG inspected."
+    },
+    {
+      "figure": 12,
+      "panel": "main caption",
+      "severity": "minor typesetting defect",
+      "finding": "Final word members is split into member- and s. on an isolated final line.",
+      "recommended_action": "Keep members together in the native caption (e.g. \\mbox{members})."
+    }
+  ],
+  "specific_checks": {
+    "fig1_context_and_both_3d_models": "pass; all complete",
+    "fig1_common_bev_scale": "pass; distances between 0 and 2 ticks are 22.077 pt and 22.076 pt",
+    "fig7_three_columns": "pass; three aligned native subcaptions below corresponding artwork",
+    "fig7_equal_team_panel_sizes": "pass; both source canvases 122 x 135 pt, assembled at equal height",
+    "fig16_two_by_two": "pass; a/b row and c/d row; legends separate comparisons",
+    "fig10_one_row": "pass; four metrics in one row",
+    "fig13_one_row": "pass; full footprint, detail, upper observations, lower observations in one row",
+    "fig15_camera_label": "pass; label outside geometry with leader line; camera below lintel; neutral background",
+    "all_native_subtitles": "pass; (a)-(f) labels below image panels; no old title text visibly remains",
+    "scientific_content_visual_check": "No lost data curves, observations, complete layouts, or frame/camera geometry detected. Numerical revalidation of rebuilt figures 4/6 was not part of this layout review."
+  },
+  "followup_artifact_check": "qa/background_removal_checks.json confirms only fig01/a and fig03/a exports changed."
+}

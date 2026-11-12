@@ -4,12 +4,7 @@ Training and evaluating indoor panorama interpretation systems requires reliable
 
 Yet even when the target space is explicitly fixed, human annotators produce divergent layouts for the same panorama. One annotator bridges a fireplace with a single straight wall, while another traces its recessed sides (Figure~\ref{fig:individual-fireplace}); annotators also place shared corners and ceiling boundaries at different positions. Understanding how reliable references emerge from human input requires examining which structural choices and boundary positions diverge across annotators, under what visual conditions these divergences intensify, and how individual interpretations combine when aggregated into a collective layout.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/individual_fireplace.pdf}
-\caption{(a) Panorama 7y3sRwLe3Va-19 and (b) room context. (c) A29 bridges the fireplace with four corners; (d) A59 traces its sides with eight. The footprints share a scale, with the reference dashed; the lower row shows the room context and the three-dimensional layouts reconstructed from each annotation.}
-\label{fig:individual-fireplace}
-\end{figure}
+\input{figure_package/latex/fig01}
 
 These differences require measurements that distinguish structural and geometric errors, and aggregation that aligns variable-length wall sequences while retaining upper--lower observations and individual support. This study contributes two methods, a doorway-boundary scene definition, and empirical findings on individual expression, group size, composition and cross-view transfer:
 

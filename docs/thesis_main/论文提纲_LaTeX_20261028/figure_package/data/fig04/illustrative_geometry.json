@@ -1,0 +1,239 @@
+{
+  "type": "controlled illustrative geometry, not participant data",
+  "units": "metres",
+  "camera_height_m": 1.6,
+  "sample_counts": {
+    "boundary_per_direction": 2048,
+    "height_per_direction": 4096
+  },
+  "cases": [
+    {
+      "panel": "a",
+      "kind": "one_wall_inward",
+      "parameter_m": 0.4,
+      "reference": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      },
+      "assessed": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            1.6,
+            -2.0
+          ],
+          [
+            1.6,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      }
+    },
+    {
+      "panel": "b",
+      "kind": "one_wall_inward",
+      "parameter_m": 1.2,
+      "reference": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      },
+      "assessed": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            0.8,
+            -2.0
+          ],
+          [
+            0.8,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      }
+    },
+    {
+      "panel": "c",
+      "kind": "balanced_height_tilt",
+      "parameter_m": 0.3,
+      "reference": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      },
+      "assessed": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          2.7,
+          3.3,
+          3.3,
+          2.7
+        ]
+      }
+    },
+    {
+      "panel": "d",
+      "kind": "balanced_height_tilt",
+      "parameter_m": 1.2,
+      "reference": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ]
+      },
+      "assessed": {
+        "floor_xz_m": [
+          [
+            -2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            -2.0
+          ],
+          [
+            2.0,
+            2.0
+          ],
+          [
+            -2.0,
+            2.0
+          ]
+        ],
+        "wall_heights_m": [
+          1.8,
+          4.2,
+          4.2,
+          1.8
+        ]
+      }
+    }
+  ]
+}

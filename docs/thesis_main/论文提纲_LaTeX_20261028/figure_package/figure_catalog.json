@@ -1,0 +1,181 @@
+[
+  {
+    "number": 1,
+    "source_asset": "figures/individual_fireplace.pdf",
+    "labels": [
+      "fig:individual-fireplace"
+    ],
+    "caption": "(a) Panorama 7y3sRwLe3Va-19 and (b) room context. (c) A29 bridges the fireplace with four corners; (d) A59 traces its sides with eight. The footprints share a scale, with the reference dashed; the lower row shows the room context and the three-dimensional layouts reconstructed from each annotation.",
+    "width": "86mm",
+    "columns": 1,
+    "latex": "latex/fig01.tex"
+  },
+  {
+    "number": 2,
+    "source_asset": "figures/study_design.pdf",
+    "labels": [
+      "fig:study-design"
+    ],
+    "caption": "Overview of the study. Independent Manual and Semi submissions provide spatial observations; geometric quality measurement and structural consensus support controlled comparisons of individuals, group size, team composition and cross-view patterns.",
+    "width": "145mm",
+    "columns": 2,
+    "latex": "latex/fig02.tex"
+  },
+  {
+    "number": 3,
+    "source_asset": "figures/observed_corner_geometry.pdf",
+    "labels": [
+      "fig:observed-geometry"
+    ],
+    "caption": "Image observations and reconstructed geometry. A floor endpoint displacement from P to P' changes the footprint and the corresponding wall in three dimensions. The assessed layout is blue and the reference is dashed gray.",
+    "width": "82mm",
+    "columns": 1,
+    "latex": "latex/fig03.tex"
+  },
+  {
+    "number": 4,
+    "source_asset": "figures/quality_components_trimmed.pdf",
+    "labels": [
+      "fig:quality-components"
+    ],
+    "caption": "Controlled examples show how geometric changes affect Q. The reference room has a $4\\times4$ m footprint, a 3 m wall height and a 1.6 m camera height. (a--b) Moving one floor boundary inward reduces overlap and increases boundary distance; hatched regions mark omitted floor area. (c--d) Opposing upper-boundary shifts preserve the footprint and perimeter-mean height while increasing local height error. Blue and orange show the smaller and larger changes; dashed gray denotes the reference. Measurements and Q are computed from the displayed geometry.",
+    "width": "\\textwidth",
+    "columns": 2,
+    "latex": "latex/fig04.tex"
+  },
+  {
+    "number": 5,
+    "source_asset": "figures/height_resampling_controls_trimmed.pdf",
+    "labels": [
+      "fig:height-control"
+    ],
+    "caption": "Q detects balanced local height distortion and preserves unchanged geometry under resampling. In the analytical 3 m reference room, (a) opposing height shifts preserve mean height and corner-mean prism IoU but reduce Q; (b) additional collinear pairs change corner-mean prism IoU while perimeter-based measurements and Q stay fixed.",
+    "width": "140mm",
+    "columns": 2,
+    "latex": "latex/fig05.tex"
+  },
+  {
+    "number": 6,
+    "source_asset": "figures/consensus_steps_rev11.pdf",
+    "labels": [
+      "fig:consensus-steps"
+    ],
+    "caption": "Local observations form a collective layout in an illustrative six-person team. (a) Rows identify people and columns identify corresponding corner pairs. Circles mark upper endpoints and squares lower endpoints. (b) E receives three votes and F four, while G's two votes fall below the three-person threshold. (c) The three supporters determine E's horizontal position and its separate upper and lower positions. (d) Connecting retained pairs A--F in wall order forms the layout.",
+    "width": "\\textwidth",
+    "columns": 2,
+    "latex": "latex/fig06.tex"
+  },
+  {
+    "number": 7,
+    "source_asset": "figures/bathroom_turn_votes_rev11.pdf",
+    "labels": [
+      "fig:bathroom-turn-votes"
+    ],
+    "caption": "Membership changes support for the same recess. In jtcxE69GiFV-13, Team 1 gives the two turns four and two votes; Team 2 gives each eight. Their layouts have four and six corners. (a) records support; (b--c) show the two layouts at a shared scale and view, using each layout's median upper height to display structure. Figure~\\ref{fig:upper-boundary-evidence} traces the upper boundary; Supplement B6 gives the individual observations.",
+    "width": "110mm",
+    "columns": 2,
+    "latex": "latex/fig07.tex"
+  },
+  {
+    "number": 8,
+    "source_asset": "figures/upper_boundary_evidence.pdf",
+    "labels": [
+      "fig:upper-boundary-evidence"
+    ],
+    "caption": "Observed upper endpoints form the consensus upper boundary in jtcxE69GiFV-13, Team 2. (a) Eight people supply an aligned corner pair at each turn. (b) Periodic horizontal and separate vertical medians give the upper positions. (c) Their connection in wall order forms the local ceiling--wall boundary. Coordinates refer to the $1024\\times512$ panorama.",
+    "width": "135mm",
+    "columns": 2,
+    "latex": "latex/fig08.tex"
+  },
+  {
+    "number": 9,
+    "source_asset": "figures/profiles_examples_rev11.pdf",
+    "labels": [
+      "fig:continuous-profiles",
+      "fig:class-annotations"
+    ],
+    "caption": "Structural response, relative quality and original drawings. (a--b) Annotator-level structural responses and quality ranks across difficulty conditions, using 58 and 59 people respectively; each dot represents one person. Relative Q is centered on the image--target peer median; higher within-image ranks indicate better relative quality. (c) The difficult panorama. (d--f) Submissions from C1--C3 on the panorama in (c) retain five, six and eight turns on a common BEV scale; gray dashes mark the reference and thick segments mark short walls.",
+    "width": "150mm",
+    "columns": 2,
+    "latex": "latex/fig09.tex"
+  },
+  {
+    "number": 10,
+    "source_asset": "figures/group_size_171_trimmed.pdf",
+    "labels": [
+      "fig:group-size-171"
+    ],
+    "caption": "Group size affects mean Q, lower-tail Q, between-team variation and output completion differently. Curves use the same 171 images: 116 easy, 28 moderate and 27 difficult. Q summaries use scorable outputs; complete-and-evaluable rates use all 43,776 attempts per size. P10 is the image-specific 10th percentile, averaged over images. Shading marks 3--6 and 20--30 people. The at-least-half threshold admits exactly half of an even-sized team: the required support stays at two votes from three to four people, then rises to three at five people, contributing to odd--even alternation.",
+    "width": "\\textwidth",
+    "columns": 2,
+    "latex": "latex/fig10.tex"
+  },
+  {
+    "number": 11,
+    "source_asset": "figures/composition_replacement_rev11.pdf",
+    "labels": [
+      "fig:composition-members",
+      "fig:matched-half",
+      "fig:team-comparison-design"
+    ],
+    "caption": "Composition summaries and specified replacements reveal different aspects of member sensitivity. (a) Twelve-person teams on zsNo4HB9uLZ-16 combine six fixed members with six of twelve candidates. Horizontal labels give C1/C2/C3 member counts; points are mean Q, bars show fifth--95th percentiles, and $n$ gives the number of scorable teams. The member diagram below (a) defines the matched replacement used in (b--c). A separate 14-person A--B--C comparison shares seven retained members and exchanges seven-person blocks. (b) Excess magnitude $G_S$ compares cross-profile and within-profile Q changes; (c) signed $Q_C-Q_B$ shows whether C scores higher or lower than B. Each dot is an image mean; diamonds average the 69 image means from 146 scorable events (comparison definitions and supporting results in Supplements C17 and C19).",
+    "width": "145mm",
+    "columns": 2,
+    "latex": "latex/fig11.tex"
+  },
+  {
+    "number": 12,
+    "source_asset": "figures/profile_mixtures_rev11.pdf",
+    "labels": [
+      "fig:profile-mixtures"
+    ],
+    "caption": "Whole-profile mixtures gain relative to one constituent and lose relative to another. Dots are paired image-level mixture-minus-pure Q differences on 154 common images; diamonds are means. Each selected profile contributes all its available \\mbox{members}.",
+    "width": "86mm",
+    "columns": 1,
+    "latex": "latex/fig12.tex"
+  },
+  {
+    "number": 13,
+    "source_asset": "figures/localization_readable.pdf",
+    "labels": [
+      "fig:localization-mechanism"
+    ],
+    "caption": "Seven replacements change localization while four identities retain twenty votes and the same ring order in 7y3sRwLe3Va-13. Panels show the complete footprints, corner-4 detail and its upper/lower observations. Gray marks thirteen retained people, blue seven removed and orange seven added; outlined markers are consensus positions. Changes of about 0.42 horizontal and 0.82 lower-endpoint pixels correspond to a floor displacement of $0.17h$ in the 1024 by 512 panorama. Q measures the complete layout.",
+    "width": "\\textwidth",
+    "columns": 2,
+    "latex": "latex/fig13.tex"
+  },
+  {
+    "number": 14,
+    "source_asset": "figures/same_room_structure.pdf",
+    "labels": [
+      "fig:same-room-structure"
+    ],
+    "caption": "Two annotators repeat their broader structural habits across views while changing individual corner choices. (a--b) A40 and A41's complete layouts on VFuaQ6m2Qom-07 and -10, with the same narrow-wall endpoints enlarged. Counts are effective/reference turns; dashed lines mark reference azimuths. A40 marks both endpoints in both views. A41 marks neither in view 07 and both in view 10, while simplifying both layouts. (c) Same-person and different-person simplification agreement over fifteen view pairs in five buildings.",
+    "width": "150mm",
+    "columns": 2,
+    "latex": "latex/fig14.tex"
+  },
+  {
+    "number": 15,
+    "source_asset": "figures/doorway_boundary_3d_trimmed.pdf",
+    "labels": [
+      "fig:doorway-scene"
+    ],
+    "caption": "A camera at the doorway boundary. (a) A three-dimensional cutaway shows the camera beneath the lintel between two adjoining spaces. The two floor regions show the competing target extents. (b) The actual doorway panorama shows the adjoining spaces visible from this position. The schematic illustrates the spatial arrangement; the panorama provides the scene evidence.",
+    "width": "155mm",
+    "columns": 2,
+    "latex": "latex/fig15.tex"
+  },
+  {
+    "number": 16,
+    "source_asset": "figures/doorway_absolute_curves_trimmed.pdf",
+    "labels": [
+      "fig:doorway-screening"
+    ],
+    "caption": "Doorway screening and target-specific trajectories answer separate questions. (a--b) Screening on the same seventeen images uses a common whole-space reference before and after, at sizes 3--14. (c--d) Assigned-target pools in 7y3sRwLe3Va-18 contain nine people for space 1, four for space 2 and fifteen for the whole space. These pools differ in members and references. Q uses scorable outputs; completion rates use all attempts.",
+    "width": "140mm",
+    "columns": 2,
+    "latex": "latex/fig16.tex"
+  }
+]

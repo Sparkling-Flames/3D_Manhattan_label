@@ -1,0 +1,47 @@
+FIGURE 6 — STRUCTURAL CONSENSUS
+
+Artwork files (no baked panel titles):
+a_observations.pdf: all six people's aligned paired-corner observations; circles are upper endpoints, squares lower endpoints.
+b_support.pdf: distinct-person support for A–G. Votes are 6, 6, 6, 6, 3, 4, 2. The line is the three-person retention threshold; the white cross marks the excluded G cluster.
+c_location.pdf: the existing illustrative E observations from people 1–3 and the componentwise median pair. Horizontal positions [61.5, 65.5, 69.3], upper [67, 67, 61], lower [36, 43, 46]; median [65.5, 67, 43]. Coordinates are schematic coordinates from the prior figure generator, not empirical panorama pixels.
+d_layout.pdf: the original illustrative A–F projected ring with its upper and lower paired endpoints. Blue and orange retain E/F identity across panels.
+
+Native LaTeX subcaptions to place BELOW artwork:
+(a) Six people's observations
+(b) Distinct-person support
+(c) E's median pair
+(d) Connected layout
+
+Suggested main caption:
+Local observations form a collective layout in an illustrative six-person team. (a) Rows identify people and columns identify corresponding corner pairs. Circles mark upper endpoints and squares lower endpoints. (b) E receives three votes and F four, while G's two votes fall below the three-person threshold. (c) The three supporters determine E's horizontal position and its separate upper and lower positions. (d) Connecting retained pairs A–F in wall order forms the layout.
+
+Why this changes the explanation:
+The old diagram showed only two people, repeated procedural sentences and lacked labels on its final geometry. The revision makes every support count inspectable from six rows, makes the retention decision visible against a numerical threshold, and carries corner identity into the output. It removes all formulas and workflow prose from the artwork. The support matrix, E coordinates, retention rule and projected output ring are unchanged.
+
+FIGURE 15 — DOORWAY-BOUNDARY SCENE
+
+a_doorway_schematic.pdf: a white-background vector isometric cutaway of two complete adjoining enclosures. Both floor extents, their partition, the open doorway, lintel, camera and camera's floor projection are visible. Near walls are cut low to expose the doorway. Camera/lintel labels are placed outside the geometry and connected by thin leaders.
+b_panorama.pdf: the actual panorama extracted unchanged from the previous PDF; native resolution 1124×562.
+
+Native LaTeX subcaptions to place BELOW artwork:
+(a) Camera beneath the doorway lintel
+(b) Panorama at the doorway
+
+Suggested main caption:
+A camera at the doorway boundary. (a) A three-dimensional cutaway shows the camera beneath the lintel between two adjoining spaces. The two floor regions show the competing target extents. (b) The actual doorway panorama shows the adjoining spaces visible from this position. The schematic illustrates the spatial arrangement; the panorama provides the scene evidence.
+
+Why this changes the explanation:
+The old label was positioned over the room rendering. The replacement reserves white space for annotation and provides a direct visual link to the camera beneath the lintel. The complete floor regions distinguish the two enclosures. The schematic is not a metric reconstruction of the photographed scene. The panorama pixels are unchanged.
+
+FORMATS AND QUALITY
+
+All six artwork panels have PDF, SVG and 600 dpi PNG exports. PDF is the preferred LaTeX input. Fig6 panels and Fig15(a) are vector artwork with embedded TrueType fonts and Unicode maps. Fig15(b) retains the native photographic resolution; exporting a 600 dpi preview does not create new scene detail. Titles, panel letters and main captions are intentionally absent from image files because they must be typeset below by LaTeX.
+
+REPRODUCE
+
+python build_panels.py
+Dependencies: Python, NumPy, Matplotlib, Pillow. The source_panorama.png file must remain next to the script. Input provenance and QA details are recorded in provenance.json and qa.json.
+
+OPTIONAL ORIGINAL-MODEL EDITION
+
+original_model_clean.pdf retains the original detailed 918×765 room model, with the exact embedded RGB pixel array preserved. The original PDF text box is absent, and the new camera callout lies outside the room body on a white canvas. The camera target follows the original arrow-tip location. The complete bathroom and hallway model is visible. This option uses the same actual panorama panel. The native vector cutaway and preserved-model version are alternative figure treatments of the same doorway explanation.

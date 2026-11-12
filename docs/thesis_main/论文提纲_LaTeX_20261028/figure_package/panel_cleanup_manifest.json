@@ -1,0 +1,1580 @@
+{
+  "source_revision": "3ddad0be3788c1fb558965625d33ba49b1f77838",
+  "scope": "11 existing main-text figures; titles separated from unchanged scientific artwork",
+  "operations": "Actual PDF text removal with no fill; vector-preserving cropping/placement; no numerical recomputation; original photographs preserved at source resolution within PDF. 600 dpi PNG is a compatibility export, not additional photographic information.",
+  "figures": [
+    {
+      "figure": 1,
+      "source_file": "individual_fireplace.pdf",
+      "source_sha256": "b0cb16f8b7cafec1fca0a65538d39a994e978a9e6a6c7288680dc83497068dd1",
+      "layout": "Left column: a over b; center c; right d. Common key underneath.",
+      "recommended_rows": [
+        [
+          "a",
+          "c",
+          "d"
+        ],
+        [
+          "b",
+          "c",
+          "d"
+        ]
+      ],
+      "column_width_ratios": [
+        0.3702,
+        0.3366,
+        0.2932
+      ],
+      "caption_note": "Existing caption remains applicable. Panels c and d each retain the complete BEV and corresponding 3D layout. Native captions identify A29/A59 and corner counts.",
+      "scale_note": "Keep panels c and d at equal physical height to preserve the shared BEV scale.",
+      "removed_title_text": [
+        {
+          "text": "(a) Panorama",
+          "bbox": [
+            4.1344990730285645,
+            1.758387565612793,
+            52.638301849365234,
+            12.301360130310059
+          ]
+        },
+        {
+          "text": "(b) Context",
+          "bbox": [
+            20.471080780029297,
+            83.41474151611328,
+            60.87432861328125,
+            93.95771789550781
+          ]
+        },
+        {
+          "text": "(c) A29 (4)",
+          "bbox": [
+            112.25452423095703,
+            8.007400512695312,
+            147.54287719726562,
+            18.059545516967773
+          ]
+        },
+        {
+          "text": "(d) A59 (8)",
+          "bbox": [
+            185.95196533203125,
+            8.007400512695312,
+            221.64183044433594,
+            18.059545516967773
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [
+        {
+          "source_path_index": 26,
+          "rect": [
+            4.1344990730285645,
+            2.8379364013671875,
+            55.73211669921875,
+            11.75775146484375
+          ],
+          "stroke_width": 0.9570599794387817,
+          "operation": "Deleted original white title backdrop; photograph and all scientific paths retained"
+        }
+      ],
+      "panels": [
+        {
+          "pdf": "panels/fig01/a.pdf",
+          "svg": "panels/fig01/a.svg",
+          "png": "panels/fig01/a.png",
+          "width_pt": 88.0,
+          "height_pt": 46.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Panorama",
+          "source_crop": [
+            3,
+            11,
+            91,
+            57
+          ]
+        },
+        {
+          "pdf": "panels/fig01/b.pdf",
+          "svg": "panels/fig01/b.svg",
+          "png": "panels/fig01/b.png",
+          "width_pt": 87.0,
+          "height_pt": 70.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Room context",
+          "source_crop": [
+            5,
+            94,
+            92,
+            164
+          ]
+        },
+        {
+          "pdf": "panels/fig01/c.pdf",
+          "svg": "panels/fig01/c.svg",
+          "png": "panels/fig01/c.png",
+          "width_pt": 80.0,
+          "height_pt": 145.5,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "A29: four corners",
+          "source_crop": [
+            93,
+            18.5,
+            173,
+            164
+          ]
+        },
+        {
+          "pdf": "panels/fig01/d.pdf",
+          "svg": "panels/fig01/d.svg",
+          "png": "panels/fig01/d.png",
+          "width_pt": 69.69999694824219,
+          "height_pt": 145.5,
+          "png_dpi": 600,
+          "id": "d",
+          "native_subcaption": "A59: eight corners",
+          "source_crop": [
+            174,
+            18.5,
+            243.7,
+            164
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig01/legend.pdf",
+          "svg": "panels/fig01/legend.svg",
+          "png": "panels/fig01/legend.png",
+          "width_pt": 160.0,
+          "height_pt": 14.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            44,
+            164,
+            204,
+            178
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 2,
+      "source_file": "study_design.pdf",
+      "source_sha256": "40a2584c2ac074402e122d18cc9d12d3384e70a6b29f90e09b1fa21c6fa17534",
+      "layout": "One connected diagram, with no baked column titles.",
+      "recommended_rows": [
+        [
+          "a"
+        ]
+      ],
+      "column_width_ratios": [
+        1
+      ],
+      "caption_note": "No subcaption is necessary. The existing main caption describes all three columns; use one native caption below the connected workflow.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a) Independent task records",
+          "bbox": [
+            12.755905151367188,
+            6.208754539489746,
+            158.06304931640625,
+            16.926753997802734
+          ]
+        },
+        {
+          "text": "(b) Two complementary methods",
+          "bbox": [
+            191.3385772705078,
+            6.208754539489746,
+            354.4324035644531,
+            16.926753997802734
+          ]
+        },
+        {
+          "text": "(c) Empirical questions",
+          "bbox": [
+            375.02362060546875,
+            6.208754539489746,
+            490.42889404296875,
+            16.926753997802734
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig02/a.pdf",
+          "svg": "panels/fig02/a.svg",
+          "png": "panels/fig02/a.png",
+          "width_pt": 498.0,
+          "height_pt": 276.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Study workflow",
+          "source_crop": [
+            7,
+            22,
+            505,
+            298
+          ]
+        }
+      ],
+      "extras": [],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 3,
+      "source_file": "observed_corner_geometry.pdf",
+      "source_sha256": "3a8c089c9b75f7fbb31cfbf1d3e7d8a54502a38bbc11ac5aeac65cb8d52a4ffc",
+      "layout": "Two rows: panorama/detail, then BEV/3D. Common key underneath.",
+      "recommended_rows": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "column_width_ratios": [
+        0.61,
+        0.39
+      ],
+      "caption_note": "Existing main caption remains applicable; native subcaptions name the four views.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a) Panorama",
+          "bbox": [
+            2.87475848197937,
+            0.3974275588989258,
+            53.46251678466797,
+            11.393379211425781
+          ]
+        },
+        {
+          "text": "(b) Floor corner",
+          "bbox": [
+            161.56141662597656,
+            18.606700897216797,
+            221.0130157470703,
+            29.60265350341797
+          ]
+        },
+        {
+          "text": "(c) Full BEV",
+          "bbox": [
+            49.316619873046875,
+            99.23043060302734,
+            94.13090515136719,
+            110.22637939453125
+          ]
+        },
+        {
+          "text": "(d) 3D overlay",
+          "bbox": [
+            139.73629760742188,
+            95.31768798828125,
+            192.5440216064453,
+            106.31363677978516
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [
+        {
+          "source_path_index": 16,
+          "rect": [
+            2.87475848197937,
+            1.5233612060546875,
+            56.689266204833984,
+            10.826416015625
+          ],
+          "stroke_width": 0.9981799721717834,
+          "operation": "Deleted original white title backdrop; photograph and all scientific paths retained"
+        }
+      ],
+      "panels": [
+        {
+          "pdf": "panels/fig03/a.pdf",
+          "svg": "panels/fig03/a.svg",
+          "png": "panels/fig03/a.png",
+          "width_pt": 152.0,
+          "height_pt": 77.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Panorama",
+          "source_crop": [
+            1,
+            10,
+            153,
+            87
+          ]
+        },
+        {
+          "pdf": "panels/fig03/b.pdf",
+          "svg": "panels/fig03/b.svg",
+          "png": "panels/fig03/b.png",
+          "width_pt": 79.0,
+          "height_pt": 39.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Floor corner",
+          "source_crop": [
+            160,
+            29,
+            239,
+            68
+          ]
+        },
+        {
+          "pdf": "panels/fig03/c.pdf",
+          "svg": "panels/fig03/c.svg",
+          "png": "panels/fig03/c.png",
+          "width_pt": 80.0,
+          "height_pt": 86.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Full BEV",
+          "source_crop": [
+            24,
+            106,
+            104,
+            192
+          ]
+        },
+        {
+          "pdf": "panels/fig03/d.pdf",
+          "svg": "panels/fig03/d.svg",
+          "png": "panels/fig03/d.png",
+          "width_pt": 112.0,
+          "height_pt": 85.0,
+          "png_dpi": 600,
+          "id": "d",
+          "native_subcaption": "3D overlay",
+          "source_crop": [
+            130,
+            108,
+            242,
+            193
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig03/legend.pdf",
+          "svg": "panels/fig03/legend.svg",
+          "png": "panels/fig03/legend.png",
+          "width_pt": 150.0,
+          "height_pt": 15.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            48,
+            195,
+            198,
+            210
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 5,
+      "source_file": "height_resampling_controls_trimmed.pdf",
+      "source_sha256": "34f96e981d58523969465e64d6b03be6c73cd61f5d8d06de8ee89c0c1a06fc25",
+      "layout": "Two columns, each retaining its 3D control and response curve. Shared key underneath.",
+      "recommended_rows": [
+        [
+          "a",
+          "b"
+        ]
+      ],
+      "column_width_ratios": [
+        0.5,
+        0.5
+      ],
+      "caption_note": "Existing main caption remains applicable. All numerical values and curves are unchanged.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a)",
+          "bbox": [
+            1.858266830444336,
+            0.9262485504150391,
+            16.635967254638672,
+            11.760748863220215
+          ]
+        },
+        {
+          "text": "Balanced local height changes",
+          "bbox": [
+            24.818897247314453,
+            0.9878988265991211,
+            182.6816864013672,
+            11.70589828491211
+          ]
+        },
+        {
+          "text": "(b)",
+          "bbox": [
+            264.6299133300781,
+            0.9262485504150391,
+            279.7889099121094,
+            11.760748863220215
+          ]
+        },
+        {
+          "text": "Same geometry, more clicked pairs",
+          "bbox": [
+            287.5905456542969,
+            0.9878988265991211,
+            470.30621337890625,
+            11.70589828491211
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig05/a.pdf",
+          "svg": "panels/fig05/a.svg",
+          "png": "panels/fig05/a.png",
+          "width_pt": 240.0,
+          "height_pt": 304.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Balanced local height changes",
+          "source_crop": [
+            0,
+            15,
+            240,
+            319
+          ]
+        },
+        {
+          "pdf": "panels/fig05/b.pdf",
+          "svg": "panels/fig05/b.svg",
+          "png": "panels/fig05/b.png",
+          "width_pt": 220.5,
+          "height_pt": 304.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Collinear resampling",
+          "source_crop": [
+            260,
+            15,
+            480.5,
+            319
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig05/legend.pdf",
+          "svg": "panels/fig05/legend.svg",
+          "png": "panels/fig05/legend.png",
+          "width_pt": 273.0,
+          "height_pt": 13.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            102,
+            319,
+            375,
+            332
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 7,
+      "source_file": "bathroom_turn_votes_rev11.pdf",
+      "source_sha256": "25674255bda8b66be4715a88cc832156f9b261d4eea84014add405017b9a2fa8",
+      "layout": "One row: support, Team 1, Team 2. Source condition and reference key underneath.",
+      "recommended_rows": [
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ],
+      "column_width_ratios": [
+        0.24,
+        0.38,
+        0.38
+      ],
+      "caption_note": "Existing main caption remains applicable. Removes hidden older panel titles as well as visible revised ones.",
+      "scale_note": "Keep panels b and c at equal physical width/height; their canvas sizes are equal.",
+      "removed_title_text": [
+        {
+          "text": "(c) Votes",
+          "bbox": [
+            9.850387573242188,
+            10.172576904296875,
+            49.36629104614258,
+            20.075077056884766
+          ]
+        },
+        {
+          "text": "(d) Team 1 output",
+          "bbox": [
+            100.62991333007812,
+            2.3362269401550293,
+            179.943115234375,
+            12.238727569580078
+          ]
+        },
+        {
+          "text": "(e) Team 2 output",
+          "bbox": [
+            250.43307495117188,
+            2.3206019401550293,
+            329.42669677734375,
+            12.223102569580078
+          ]
+        },
+        {
+          "text": "(a) Support",
+          "bbox": [
+            1.0,
+            4.0819993019104,
+            40.464202880859375,
+            14.27180004119873
+          ]
+        },
+        {
+          "text": "(b) Team 1 output",
+          "bbox": [
+            100.0,
+            2.9049997329711914,
+            171.30648803710938,
+            14.60949993133545
+          ]
+        },
+        {
+          "text": "(c) Team 2 output",
+          "bbox": [
+            249.0,
+            2.9049997329711914,
+            319.8391418457031,
+            14.60949993133545
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig07/a.pdf",
+          "svg": "panels/fig07/a.svg",
+          "png": "panels/fig07/a.png",
+          "width_pt": 76.0,
+          "height_pt": 135.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Distinct-person support",
+          "source_crop": [
+            0,
+            18,
+            76,
+            153
+          ]
+        },
+        {
+          "pdf": "panels/fig07/b.pdf",
+          "svg": "panels/fig07/b.svg",
+          "png": "panels/fig07/b.png",
+          "width_pt": 122.0,
+          "height_pt": 135.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Team 1 output",
+          "source_crop": [
+            92,
+            18,
+            214,
+            153
+          ]
+        },
+        {
+          "pdf": "panels/fig07/c.pdf",
+          "svg": "panels/fig07/c.svg",
+          "png": "panels/fig07/c.png",
+          "width_pt": 122.0,
+          "height_pt": 135.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Team 2 output",
+          "source_crop": [
+            247,
+            18,
+            369,
+            153
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig07/legend.pdf",
+          "svg": "panels/fig07/legend.svg",
+          "png": "panels/fig07/legend.png",
+          "width_pt": 306.0,
+          "height_pt": 14.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            0,
+            154,
+            306,
+            168
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 8,
+      "source_file": "upper_boundary_evidence.pdf",
+      "source_sha256": "6116156183653136df5d1fce6ec6736eddf8e359cad0026d49caf4bb9fe7b01e",
+      "layout": "Three corresponding crops in one row. Shared key underneath.",
+      "recommended_rows": [
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ],
+      "column_width_ratios": [
+        0.333333,
+        0.333333,
+        0.333333
+      ],
+      "caption_note": "Existing caption retains the left-to-right formation sequence. Inter-panel arrows are omitted from the independent assets; no observations, coordinates or geometry are removed.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a) Upper observations",
+          "bbox": [
+            29.510738372802734,
+            19.43000030517578,
+            144.4407501220703,
+            31.080001831054688
+          ]
+        },
+        {
+          "text": "(b) Consensus positions",
+          "bbox": [
+            198.8453826904297,
+            19.43000030517578,
+            318.0853576660156,
+            31.080001831054688
+          ]
+        },
+        {
+          "text": "(c) Upper boundary",
+          "bbox": [
+            368.1800231933594,
+            19.43000030517578,
+            465.780029296875,
+            31.080001831054688
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig08/a.pdf",
+          "svg": "panels/fig08/a.svg",
+          "png": "panels/fig08/a.png",
+          "width_pt": 140.0,
+          "height_pt": 160.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Upper observations",
+          "source_crop": [
+            26,
+            35,
+            166,
+            195
+          ]
+        },
+        {
+          "pdf": "panels/fig08/b.pdf",
+          "svg": "panels/fig08/b.svg",
+          "png": "panels/fig08/b.png",
+          "width_pt": 140.0,
+          "height_pt": 160.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Consensus positions",
+          "source_crop": [
+            195,
+            35,
+            335,
+            195
+          ]
+        },
+        {
+          "pdf": "panels/fig08/c.pdf",
+          "svg": "panels/fig08/c.svg",
+          "png": "panels/fig08/c.png",
+          "width_pt": 140.0,
+          "height_pt": 160.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Upper boundary",
+          "source_crop": [
+            364,
+            35,
+            504,
+            195
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig08/legend.pdf",
+          "svg": "panels/fig08/legend.svg",
+          "png": "panels/fig08/legend.png",
+          "width_pt": 351.0,
+          "height_pt": 16.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            88,
+            195,
+            439,
+            211
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 9,
+      "source_file": "profiles_examples_rev11.pdf",
+      "source_sha256": "c63a06e63daf91e16c43a9ef15bd9d1092eb60ec7875ec9ec8a7e9798a5c4dca",
+      "layout": "Three columns, two rows: structural response/ranks/panorama; C1/C2/C3 examples.",
+      "recommended_rows": [
+        [
+          "a",
+          "b",
+          "c"
+        ],
+        [
+          "d",
+          "e",
+          "f"
+        ]
+      ],
+      "column_width_ratios": [
+        0.333333,
+        0.333333,
+        0.333333
+      ],
+      "caption_note": "Existing caption and panel numbering remain applicable. Native d-f captions carry the class/person identifiers; turn counts, Q, and recorded time remain in the artwork as quantitative annotations.",
+      "scale_note": "Keep panels d/e/f at equal physical width; their canvas sizes are equal.",
+      "removed_title_text": [
+        {
+          "text": "(b) Structural response",
+          "bbox": [
+            47.6722412109375,
+            2.407240867614746,
+            157.60247802734375,
+            16.166006088256836
+          ]
+        },
+        {
+          "text": "(c) Quality ranks",
+          "bbox": [
+            228.635986328125,
+            5.52079963684082,
+            320.716796875,
+            16.93779945373535
+          ]
+        },
+        {
+          "text": "(a) Structural response",
+          "bbox": [
+            47.5,
+            3.648000717163086,
+            165.6520233154297,
+            14.114999771118164
+          ]
+        },
+        {
+          "text": "(b) Quality ranks",
+          "bbox": [
+            227.5,
+            3.648000717163086,
+            313.0990295410156,
+            14.114999771118164
+          ]
+        },
+        {
+          "text": "(c) Difficult panorama",
+          "bbox": [
+            367.0,
+            5.833600044250488,
+            475.9264831542969,
+            16.06800079345703
+          ]
+        },
+        {
+          "text": "C1 · A55",
+          "bbox": [
+            80.66130065917969,
+            163.7713623046875,
+            116.01459503173828,
+            173.4662322998047
+          ]
+        },
+        {
+          "text": "(d)",
+          "bbox": [
+            40.0,
+            164.9832000732422,
+            53.19490051269531,
+            174.40350341796875
+          ]
+        },
+        {
+          "text": "C2 · A44",
+          "bbox": [
+            243.60311889648438,
+            163.7713623046875,
+            278.9565124511719,
+            173.4662322998047
+          ]
+        },
+        {
+          "text": "(e)",
+          "bbox": [
+            203.0,
+            164.9832000732422,
+            215.8952178955078,
+            174.40350341796875
+          ]
+        },
+        {
+          "text": "C3 · A43",
+          "bbox": [
+            406.5449523925781,
+            163.7713623046875,
+            441.8983459472656,
+            173.4662322998047
+          ]
+        },
+        {
+          "text": "(f)",
+          "bbox": [
+            366.0,
+            164.9832000732422,
+            376.9268798828125,
+            174.40350341796875
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig09/a.pdf",
+          "svg": "panels/fig09/a.svg",
+          "png": "panels/fig09/a.png",
+          "width_pt": 176.0,
+          "height_pt": 142.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Structural response",
+          "source_crop": [
+            0,
+            17,
+            176,
+            159
+          ]
+        },
+        {
+          "pdf": "panels/fig09/b.pdf",
+          "svg": "panels/fig09/b.svg",
+          "png": "panels/fig09/b.png",
+          "width_pt": 168.0,
+          "height_pt": 142.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Quality ranks",
+          "source_crop": [
+            182,
+            17,
+            350,
+            159
+          ]
+        },
+        {
+          "pdf": "panels/fig09/c.pdf",
+          "svg": "panels/fig09/c.svg",
+          "png": "panels/fig09/c.png",
+          "width_pt": 151.1999969482422,
+          "height_pt": 133.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Difficult panorama",
+          "source_crop": [
+            359,
+            20,
+            510.2,
+            153
+          ]
+        },
+        {
+          "pdf": "panels/fig09/d.pdf",
+          "svg": "panels/fig09/d.svg",
+          "png": "panels/fig09/d.png",
+          "width_pt": 124.0,
+          "height_pt": 90.0,
+          "png_dpi": 600,
+          "id": "d",
+          "native_subcaption": "C1: A55",
+          "source_crop": [
+            42,
+            174.5,
+            166,
+            264.5
+          ]
+        },
+        {
+          "pdf": "panels/fig09/e.pdf",
+          "svg": "panels/fig09/e.svg",
+          "png": "panels/fig09/e.png",
+          "width_pt": 124.0,
+          "height_pt": 90.0,
+          "png_dpi": 600,
+          "id": "e",
+          "native_subcaption": "C2: A44",
+          "source_crop": [
+            205,
+            174.5,
+            329,
+            264.5
+          ]
+        },
+        {
+          "pdf": "panels/fig09/f.pdf",
+          "svg": "panels/fig09/f.svg",
+          "png": "panels/fig09/f.png",
+          "width_pt": 124.0,
+          "height_pt": 90.0,
+          "png_dpi": 600,
+          "id": "f",
+          "native_subcaption": "C3: A43",
+          "source_crop": [
+            368,
+            174.5,
+            492,
+            264.5
+          ]
+        }
+      ],
+      "extras": [],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 11,
+      "source_file": "composition_replacement_rev11.pdf",
+      "source_sha256": "b2891acafa44745623a60a35d6ed8bdc789316dd556ca915ca499ef53c81f69d",
+      "layout": "Left: a with composition plot and replacement design; right: b over c.",
+      "recommended_rows": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "a",
+          "c"
+        ]
+      ],
+      "column_width_ratios": [
+        0.5,
+        0.5
+      ],
+      "caption_note": "Keep original a/b/c numbering. The existing caption already gives the 12-person composition setting and separate 14-person replacement setting; explicitly say the membership diagram is below the composition plot, so its shared role for b-c is clear.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(b) Difficult image",
+          "bbox": [
+            33.51593780517578,
+            17.02704620361328,
+            108.87957763671875,
+            26.497495651245117
+          ]
+        },
+        {
+          "text": "(a) Composition means and member ranges",
+          "bbox": [
+            33.0,
+            15.204800605773926,
+            240.1188201904297,
+            24.9739990234375
+          ]
+        },
+        {
+          "text": "12-person teams: difficult image",
+          "bbox": [
+            33.0,
+            0.20480060577392578,
+            187.85401916503906,
+            9.973999977111816
+          ]
+        },
+        {
+          "text": "14-person matched replacement",
+          "bbox": [
+            18.0,
+            167.01919555664062,
+            175.80140686035156,
+            177.02099609375
+          ]
+        },
+        {
+          "text": "(a) Excess absolute change",
+          "bbox": [
+            297.69134521484375,
+            11.913047790527344,
+            436.2193298339844,
+            22.398048400878906
+          ]
+        },
+        {
+          "text": "(b) Signed difference",
+          "bbox": [
+            297.69134521484375,
+            139.33621215820312,
+            405.4393310546875,
+            149.8212127685547
+          ]
+        },
+        {
+          "text": "(b) Excess absolute change",
+          "bbox": [
+            297.70001220703125,
+            11.648000717163086,
+            436.49798583984375,
+            22.114999771118164
+          ]
+        },
+        {
+          "text": "(c) Signed difference",
+          "bbox": [
+            297.70001220703125,
+            139.1479949951172,
+            404.2599792480469,
+            149.61500549316406
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig11/a.pdf",
+          "svg": "panels/fig11/a.svg",
+          "png": "panels/fig11/a.png",
+          "width_pt": 250.0,
+          "height_pt": 218.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Composition summary and replacement design",
+          "source_crop": [
+            0,
+            27,
+            250,
+            245
+          ]
+        },
+        {
+          "pdf": "panels/fig11/b.pdf",
+          "svg": "panels/fig11/b.svg",
+          "png": "panels/fig11/b.png",
+          "width_pt": 250.1999969482422,
+          "height_pt": 93.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Excess absolute change",
+          "source_crop": [
+            260,
+            26,
+            510.2,
+            119
+          ]
+        },
+        {
+          "pdf": "panels/fig11/c.pdf",
+          "svg": "panels/fig11/c.svg",
+          "png": "panels/fig11/c.png",
+          "width_pt": 250.1999969482422,
+          "height_pt": 92.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Signed difference",
+          "source_crop": [
+            260,
+            154,
+            510.2,
+            246
+          ]
+        }
+      ],
+      "extras": [],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 12,
+      "source_file": "profile_mixtures_rev11.pdf",
+      "source_sha256": "eadd39948e5d20e231458cfb3263bf6c4c902fbb616276915223740d4aca6f26",
+      "layout": "One plot with its native figure caption below.",
+      "recommended_rows": [
+        [
+          "a"
+        ]
+      ],
+      "column_width_ratios": [
+        1
+      ],
+      "caption_note": "No subcaption is necessary. Existing main caption is sufficient; both the visible title and hidden obsolete (b) title are actually removed.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(b) Mixture minus pure",
+          "bbox": [
+            80.4472427368164,
+            2.8415298461914062,
+            197.63624572753906,
+            13.326530456542969
+          ]
+        },
+        {
+          "text": "Mixture minus pure",
+          "bbox": [
+            80.0,
+            3.648000717163086,
+            179.3150177001953,
+            14.114999771118164
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig12/a.pdf",
+          "svg": "panels/fig12/a.svg",
+          "png": "panels/fig12/a.png",
+          "width_pt": 243.77000427246094,
+          "height_pt": 127.5,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Mixture minus pure",
+          "source_crop": [
+            0,
+            18,
+            243.77,
+            145.5
+          ]
+        }
+      ],
+      "extras": [],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 14,
+      "source_file": "same_room_structure.pdf",
+      "source_sha256": "26f1f308f9f3de76f4759e7866187d291ec83a1d3803069ab23787fe11d0c6c3",
+      "layout": "One row: View 07, View 10, repetition summary. Shared geometry key under first two panels.",
+      "recommended_rows": [
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ],
+      "column_width_ratios": [
+        0.37,
+        0.36,
+        0.27
+      ],
+      "caption_note": "Existing main caption remains applicable. First two panels reassemble disjoint source regions to preserve both complete layouts and Door/Vanity labels without including the neighboring panorama.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a) View 07",
+          "bbox": [
+            4.081889629364014,
+            12.755080223083496,
+            56.29758834838867,
+            23.473079681396484
+          ]
+        },
+        {
+          "text": "Complete floor layouts",
+          "bbox": [
+            6.562143325805664,
+            133.8590850830078,
+            98.59435272216797,
+            143.29559326171875
+          ]
+        },
+        {
+          "text": "Local corners",
+          "bbox": [
+            112.62773132324219,
+            161.326416015625,
+            166.47067260742188,
+            170.76292419433594
+          ]
+        },
+        {
+          "text": "(b) View 10",
+          "bbox": [
+            178.0724334716797,
+            12.755080223083496,
+            230.4905242919922,
+            23.473079681396484
+          ]
+        },
+        {
+          "text": "Complete floor layouts",
+          "bbox": [
+            180.5526885986328,
+            133.8590850830078,
+            272.58489990234375,
+            143.29559326171875
+          ]
+        },
+        {
+          "text": "Local corners",
+          "bbox": [
+            286.6182861328125,
+            137.70388793945312,
+            340.46124267578125,
+            147.14039611816406
+          ]
+        },
+        {
+          "text": "(c) Personal repetition",
+          "bbox": [
+            374.5133972167969,
+            11.318007469177246,
+            491.58343505859375,
+            22.036006927490234
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig14/a.pdf",
+          "svg": "panels/fig14/a.svg",
+          "png": "panels/fig14/a.png",
+          "width_pt": 193.0,
+          "height_pt": 258.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "View 07: panorama, layout and corner detail",
+          "source_crop": null
+        },
+        {
+          "pdf": "panels/fig14/b.pdf",
+          "svg": "panels/fig14/b.svg",
+          "png": "panels/fig14/b.png",
+          "width_pt": 184.0,
+          "height_pt": 258.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "View 10: panorama, layout and corner detail",
+          "source_crop": null
+        },
+        {
+          "pdf": "panels/fig14/c.pdf",
+          "svg": "panels/fig14/c.svg",
+          "png": "panels/fig14/c.png",
+          "width_pt": 144.1999969482422,
+          "height_pt": 284.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Personal repetition",
+          "source_crop": [
+            366,
+            25,
+            510.2,
+            309
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig14/legend.pdf",
+          "svg": "panels/fig14/legend.svg",
+          "png": "panels/fig14/legend.png",
+          "width_pt": 264.0,
+          "height_pt": 18.0,
+          "png_dpi": 600,
+          "id": "legend",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            6,
+            291,
+            270,
+            309
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    },
+    {
+      "figure": 16,
+      "source_file": "doorway_absolute_curves_trimmed.pdf",
+      "source_sha256": "393df552517d0ac441137a1e4ccb2fadfe3f3093800463cef1a5541b3410d696",
+      "layout": "Two rows: common-reference screening; assigned-target pools. Separate keys for the two comparisons.",
+      "recommended_rows": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "column_width_ratios": [
+        0.5,
+        0.5
+      ],
+      "caption_note": "Existing caption remains applicable. Native subcaptions distinguish the seventeen-image comparison from the one-panorama assigned-target comparison.",
+      "scale_note": "Use the same source-to-paper scale for shared-scale panels.",
+      "removed_title_text": [
+        {
+          "text": "(a)",
+          "bbox": [
+            33.370079040527344,
+            0.6546778678894043,
+            46.87657928466797,
+            10.557178497314453
+          ]
+        },
+        {
+          "text": "(b)",
+          "bbox": [
+            302.8254089355469,
+            0.6546778678894043,
+            316.6803894042969,
+            10.557178497314453
+          ]
+        },
+        {
+          "text": "(c) One panorama: quality",
+          "bbox": [
+            33.370079040527344,
+            133.49209594726562,
+            149.45301818847656,
+            143.39459228515625
+          ]
+        },
+        {
+          "text": "(d) One panorama: output rate",
+          "bbox": [
+            302.8254089355469,
+            133.49209594726562,
+            437.8293762207031,
+            143.39459228515625
+          ]
+        },
+        {
+          "text": " Whole-space reference: Q (17 images)",
+          "bbox": [
+            46.87657928466797,
+            0.6631784439086914,
+            213.66357421875,
+            10.548677444458008
+          ]
+        },
+        {
+          "text": " Whole-space reference: output rate",
+          "bbox": [
+            316.6803894042969,
+            0.6631784439086914,
+            471.03192138671875,
+            10.548677444458008
+          ]
+        }
+      ],
+      "removed_obsolete_title_background": [],
+      "panels": [
+        {
+          "pdf": "panels/fig16/a.pdf",
+          "svg": "panels/fig16/a.svg",
+          "png": "panels/fig16/a.png",
+          "width_pt": 250.0,
+          "height_pt": 106.0,
+          "png_dpi": 600,
+          "id": "a",
+          "native_subcaption": "Whole-space reference: Q (17 images)",
+          "source_crop": [
+            0,
+            13,
+            250,
+            119
+          ]
+        },
+        {
+          "pdf": "panels/fig16/b.pdf",
+          "svg": "panels/fig16/b.svg",
+          "png": "panels/fig16/b.png",
+          "width_pt": 238.0,
+          "height_pt": 106.0,
+          "png_dpi": 600,
+          "id": "b",
+          "native_subcaption": "Whole-space reference: output rate",
+          "source_crop": [
+            257,
+            13,
+            495,
+            119
+          ]
+        },
+        {
+          "pdf": "panels/fig16/c.pdf",
+          "svg": "panels/fig16/c.svg",
+          "png": "panels/fig16/c.png",
+          "width_pt": 250.0,
+          "height_pt": 106.0,
+          "png_dpi": 600,
+          "id": "c",
+          "native_subcaption": "Assigned targets: Q",
+          "source_crop": [
+            0,
+            146,
+            250,
+            252
+          ]
+        },
+        {
+          "pdf": "panels/fig16/d.pdf",
+          "svg": "panels/fig16/d.svg",
+          "png": "panels/fig16/d.png",
+          "width_pt": 238.0,
+          "height_pt": 106.0,
+          "png_dpi": 600,
+          "id": "d",
+          "native_subcaption": "Assigned targets: output rate",
+          "source_crop": [
+            257,
+            146,
+            495,
+            252
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "pdf": "panels/fig16/legend_ab.pdf",
+          "svg": "panels/fig16/legend_ab.svg",
+          "png": "panels/fig16/legend_ab.png",
+          "width_pt": 169.0,
+          "height_pt": 14.0,
+          "png_dpi": 600,
+          "id": "legend_ab",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            68,
+            255,
+            237,
+            269
+          ]
+        },
+        {
+          "pdf": "panels/fig16/legend_cd.pdf",
+          "svg": "panels/fig16/legend_cd.svg",
+          "png": "panels/fig16/legend_cd.png",
+          "width_pt": 203.0,
+          "height_pt": 14.0,
+          "png_dpi": 600,
+          "id": "legend_cd",
+          "role": "Shared legend/conditions; not a panel title",
+          "source_crop": [
+            241,
+            255,
+            444,
+            269
+          ]
+        }
+      ],
+      "verification": {
+        "all_source_figures_visually_reviewed": true,
+        "actual_title_text_removed": true,
+        "vectors_preserved": true,
+        "result_visual_review": "pending"
+      }
+    }
+  ]
+}

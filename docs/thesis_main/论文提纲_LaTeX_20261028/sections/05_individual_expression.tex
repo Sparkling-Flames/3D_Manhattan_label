@@ -4,13 +4,7 @@
 
 Human annotators diverge in both which architectural structures they retain and where they place shared boundaries. While one annotator traces an eight-turn recessed fireplace and another bridges it with a four-turn box (Figure~\ref{fig:individual-fireplace}), annotators who agree on a wall turn still place its upper and lower endpoints at different coordinates. Our out-of-building structural profiles capture these persistent tendencies across annotators, separating simplifying (C1), typical (C2), and turn-retaining (C3) histories and linking them directly to how annotators respond to visual complexity (Figure~\ref{fig:continuous-profiles}).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=140mm]{figures/profiles_examples_rev11.pdf}
-\caption{Structural response, relative quality and original drawings. (a--b) Annotator-level structural responses and quality ranks across difficulty conditions, using 58 and 59 people respectively; each dot represents one person. Relative Q is centered on the image--target peer median; higher within-image ranks indicate better relative quality. (c) The difficult panorama. (d--f) Submissions from C1--C3 on the panorama in (c) retain five, six and eight turns on a common BEV scale; gray dashes mark the reference and thick segments mark short walls.}
-\label{fig:continuous-profiles}
-\label{fig:class-annotations}
-\end{figure*}
+\input{figure_package/latex/fig09}
 
 These structural habits diverge most sharply when scenes contain short wall segments or self-occluded boundaries, even when overall reference complexity is held constant. Across 33 six-turn reference panoramas (1,023 submissions), image-weighted simplification rates rose from 10.7\% in unobstructed scenes without short edges to 29.8\% when short edges were present, and reached 55.7\% under self-occlusion. Across 15 buildings, turn-retaining (C3) annotators increased their marked turns from easy to difficult scenes by 2.330 more turns than typical (C2) annotators---a directional separation that held in every single building. Incorporating scene-level geometric features alongside difficulty, annotator, and source controls reduced out-of-building simplification mean squared error from 0.068 to 0.060 (while $Q$ mean absolute error shifted from 13.877 to 14.001), showing that the added scene geometry chiefly improved prediction of structural expression (Supplement C7).
 

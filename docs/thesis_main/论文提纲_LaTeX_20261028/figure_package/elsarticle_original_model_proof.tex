@@ -1,0 +1,53 @@
+% !TeX program = xelatex
+\ifdefined\pdfminorversion\pdfminorversion=7\fi
+\documentclass[final,5p,twocolumn]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,array}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{balance}
+\usepackage[table]{xcolor}
+\definecolor{paperBlue}{HTML}{0072B2}
+\definecolor{paperOrange}{HTML}{D55E00}
+\definecolor{earlyStageFill}{HTML}{F6E8D6}
+\definecolor{lateStageFill}{HTML}{E7EFF5}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\dbltopfraction}{0.85}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{7pt plus 2pt minus 2pt}
+\setlength{\intextsep}{7pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{0pt}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-2.2ex plus -0.5ex minus -0.2ex}{0.8ex plus 0.2ex}%
+  {\normalfont\large\bfseries\raggedright}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-1.6ex plus -0.4ex minus -0.2ex}{0.6ex plus 0.2ex}%
+  {\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-1.2ex plus -0.3ex minus -0.1ex}{0.4ex plus 0.1ex}%
+  {\normalfont\small\bfseries\raggedright}}
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{10pt plus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpsep}{10pt plus 2pt}
+\setlength{\@dblfpbot}{0pt plus 1fil}
+\makeatother
+
+\journal{International Journal of Human--Computer Studies}
+
+
+\input{latex/preamble}
+\begin{document}
+\setcounter{figure}{14}
+\input{latex/fig15_original_model}
+\clearpage
+\end{document}

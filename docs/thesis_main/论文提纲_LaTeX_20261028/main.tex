@@ -42,7 +42,10 @@
 \setlength{\@dblfpbot}{0pt plus 1fil}
 \makeatother
 
-\journal{International Journal of Human--Computer Studies}
+\journal{}
+
+\def\FigureAssetRoot{figure_package}
+\input{figure_package/latex/preamble}
 
 \begin{document}
 \raggedbottom
@@ -50,12 +53,12 @@
 \title{\bfseries Human Variation and Structural Consensus in Panoramic Room Layout Annotation: The Roles of Group Size and Composition}
 \author{}
 \begin{abstract}
-Reliable panoramic layout data require clear target spaces and accurate geometry. Within a specified target, annotators still differ in retained wall turns, spatial extent and boundary placement. We propose two methods for measuring and combining these expressions. Geometric quality measurement combines extent, boundary, direction, and global and local height discrepancies into Q. Paired-corner structural consensus combines distinct-person support and upper--lower observations into a connected layout. Controlled geometry establishes local-height sensitivity and invariance to collinear resampling; an eight-participant evaluation of 60 real annotations links geometric and structural measurements to visible defects and Q to overall grades ($\rho=0.946$). Shared-team comparisons trace observed structures and upper endpoints into consensus boundaries.
+Reliable panoramic room layout annotations are essential for training and evaluating scene-understanding models. Yet reference layouts can omit visible structures, and annotators can disagree on spatial extent, wall turns and boundary placement. These inconsistencies can introduce noisy supervision and make model evaluation depend on the chosen annotation. We present a framework for characterizing annotation differences and constructing collective layouts, linking geometric measurement, structural aggregation and target-space definition. A geometric quality measure, $Q$, captures extent, boundary, direction and height discrepancies, while paired-corner structural consensus combines support and upper--lower observations into a connected layout. We define doorway-boundary viewpoints as a distinct annotation setting: a camera beneath a doorframe exposes adjoining spaces, requiring an explicit choice of enclosure and closure boundary.
 
-We recombine 6,512 Manual annotations from 60 people across 206 panoramas in 22 buildings. On 171 fixed images with pools of 30--35 annotators, mean Q improves most from three to six people. Additions from twenty to thirty chiefly improve the lower tail and reduce between-team variation, while complete-output rates follow a different trajectory. Profile proportions and specific members jointly affect layouts: mixtures can recover or lose structure, and retained backgrounds can reverse a replacement's direction. Cross-view analyses show recurring structural habits alongside viewpoint-dependent corner choices. We define doorway-boundary viewpoints, where a camera beneath the doorframe exposes competing enclosures and closure choices. Initialization and representation conditions identify editing and task-design needs. Offline selection and stopping relate these findings to recorded labor and history-acquisition costs, informing annotation organization and reference review.
+Using 6,512 Manual annotations from 60 people across 206 panoramas in 22 buildings, we investigate group size through Monte Carlo sampling and composition through controlled member replacements. Across 171 panoramas, increasing teams from 3 to 6 people raises mean $Q$ by 4.74 points. Expanding from 20 to 30 raises the mean by only 0.50 points but improves the within-image 10th percentile by 2.85 points. In 14-person teams, replacing 7 members with annotators from a more turn-retaining class raises mean $Q$ by 6.19 points, with gains on 77 of 83 panoramas. Across views of the same room, annotators exhibit recurring tendencies to retain or simplify structure, alongside viewpoint-dependent corner choices. Together, these findings guide team organization, target definition and targeted re-annotation to produce higher-quality layout datasets, providing stronger supervision and more reliable benchmarks for scene-understanding models.
 \end{abstract}
 \begin{keyword}
-Panoramic room layout annotation \sep Human annotation variability \sep Structural consensus \sep Group size \sep Annotator composition \sep Human--computer interaction
+Panoramic room layout \sep Annotation quality \sep Annotation aggregation \sep Inter-annotator variation \sep Group size \sep Annotator composition
 \end{keyword}
 \end{frontmatter}
 
@@ -64,12 +67,7 @@ Panoramic room layout annotation \sep Human annotation variability \sep Structur
 \section{Research Approach and Study Design}
 Figure~\ref{fig:study-design} summarizes how independent annotations enter geometric quality measurement, structural consensus and the four empirical comparisons.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=145mm]{figures/study_design.pdf}
-\caption{Overview of the study. Independent Manual and Semi submissions provide spatial observations; geometric quality measurement and structural consensus support controlled comparisons of individuals, group size, team composition and cross-view patterns.}
-\label{fig:study-design}
-\end{figure*}
+\input{figure_package/latex/fig02}
 \input{sections/04_methods}
 \input{sections/03_study_context_and_design}
 \section{Results}

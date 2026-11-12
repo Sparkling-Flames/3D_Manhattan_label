@@ -5,14 +5,7 @@
 
 Increasing the proportion of turn-retaining (C3) annotators systematically raises average team quality, yet teams sharing the exact same profile counts still span a wide performance range depending on which specific individuals are selected. In 12-person teams, increasing the C3 count by one while decreasing the C2 count by one raises mean $Q$ across the member sets in each composition by 1.969 points across 37 panoramas (increasing on 31 of 37). However, within any fixed profile composition, the mean fifth-to-95th percentile spread across distinct member combinations reaches 24.091 $Q$ points on difficult panoramas and 6.037 points on easy panoramas (Figure~\ref{fig:composition-members}). In panel (a), moving from left to right shifts the composition counts from C2 to C3 while the C1 count remains fixed. Mean Q rises, but the broad fifth-to-95th percentile ranges show that specific member choices still produce substantially different outcomes within the same composition.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=145mm]{figures/composition_replacement_rev11.pdf}
-\caption{Composition summaries and specified replacements reveal different aspects of member sensitivity. (a) Twelve-person teams on zsNo4HB9uLZ-16 combine six fixed members with six of twelve candidates. Horizontal labels give C1/C2/C3 member counts; points are mean Q, bars show fifth--95th percentiles, and $n$ gives the number of scorable teams. (b--c) A separate 14-person A--B--C comparison shares seven retained members and exchanges seven-person blocks. (b) Excess magnitude $G_S$ compares cross-profile and within-profile Q changes; (c) signed $Q_C-Q_B$ shows whether C scores higher or lower than B. Each dot is an image mean; diamonds average the 69 image means from 146 scorable events (comparison definitions and supporting results in Supplements C17 and C19).}
-\label{fig:composition-members}
-\label{fig:matched-half}
-\label{fig:team-comparison-design}
-\end{figure*}
+\input{figure_package/latex/fig11}
 
 Across 231 panels (40 panoramas in 22 buildings), we enumerate all 924 ways to select six of twelve candidates and combine them with a background fixed within each panel. Backgrounds contain 6--23 people, producing teams of 12--29; Figure~\ref{fig:composition-members} illustrates a 12-person panel. This enumeration quantifies the balance between profile composition and member choice: under the C1--C3 profile partition, differences between profile compositions account for 15.43\% of the total $Q$ variance, whereas differences among specific member sets within the same composition account for the remaining 84.57\% (weighted by scorable teams within compositions and equally across buildings; Supplement C17). Profile proportions describe mean trends, while member combinations within the same proportions account for most of the variation in these enumerated teams.
 
@@ -26,12 +19,7 @@ The six-person C1--C3 comparisons sharpen this distinction: cross-profile exchan
 
 Combining entire profile classes into whole-profile mixtures reveals how incoming votes can either recover missed features or dilute intricate detail. Across 154 shared panoramas in 22 buildings, pooling all available C2 and C3 annotators (C2+C3) expands the team as well as changing its composition, yielding a mean $Q$ of 88.52---outperforming pure C2 teams (84.83) but falling below pure C3 teams (92.29; Figure~\ref{fig:profile-mixtures}). The dilution is sharpest on complex geometry: across 34 difficult panoramas, the C2+C3 mixture scores 19.768 points below pure C3 (losing on 26 panoramas), and across 36 self-occluded panoramas it retains 2.389 fewer turns and 1.389 fewer short edges, alongside an 18.467-point drop in $Q$. When incoming members omit a fine wall turn, their addition can raise the at-least-half threshold beyond its existing support, removing a recess retained by the smaller team. Figure~\ref{fig:bathroom-turn-votes} shows the related effect of changing support in two equally sized teams: the threshold stays fixed while the recess crosses it.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=86mm]{figures/profile_mixtures_rev11.pdf}
-\caption{Whole-profile mixtures gain relative to one constituent and lose relative to another. Dots are paired image-level mixture-minus-pure Q differences on 154 common images; diamonds are means. Each selected profile contributes all its available members.}
-\label{fig:profile-mixtures}
-\end{figure}
+\input{figure_package/latex/fig12}
 
 \subsubsection{Retained people alter replacement direction and boundary position}
 
@@ -41,12 +29,7 @@ A concrete 14-person comparison on panorama \texttt{q9vSo1VnCiC-30} illustrates 
 
 Furthermore, member replacements reshape boundary localization even when the corner count remains unchanged; the illustrated case also preserves the corner identities and their ring order. Among 1,829 jointly scorable 20-person replacement pairs, 1,632 retained the exact same number of corners, yet 127 of those constant-count pairs shifted by more than 10 $Q$ points. In panorama \texttt{7y3sRwLe3Va-13} (Figure~\ref{fig:localization-mechanism}), all four room corners retain unanimous 20-vote support and identical cyclic ordering before and after a seven-person swap, yet the new members' endpoint coordinates shift the median consensus positions enough to raise $Q$ from 77.41 to 92.58.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=155mm]{figures/localization_readable.pdf}
-\caption{Seven replacements change localization while four identities retain twenty votes and the same ring order in 7y3sRwLe3Va-13. Panels show the complete footprints, corner-4 detail and its upper/lower observations. Gray marks thirteen retained people, blue seven removed and orange seven added; outlined markers are consensus positions. Changes of about 0.42 horizontal and 0.82 lower-endpoint pixels correspond to a floor displacement of $0.17h$ in the 1024 by 512 panorama. Q measures the complete layout.}
-\label{fig:localization-mechanism}
-\end{figure*}
+\input{figure_package/latex/fig13}
 
 Decomposing $Q$ into its five geometric components further explains why 7 of 84 panoramas in the 20-person C2-to-C3 exchange gained prism IoU while losing $Q$: on \texttt{x8F5xyUWy9e-03}, for example, $Q$ dropped by 4.726 points as internal directional error rose by $0.836^\circ$ alongside local boundary and height shifts (Supplement C19).
 

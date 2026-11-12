@@ -1,0 +1,16 @@
+Rebuild from the package root:
+
+python source/panel_cleanup/build_panels.py
+python source/fig04/build_fig04.py --package-root .
+python source/fig06_fig15/build_panels.py
+python source/compact/build_compact_panels.py
+python source/embed_base14_resources.py
+xelatex elsarticle_figure_proof.tex
+xelatex elsarticle_figure_proof.tex
+
+The manuscript includes latex/fig01.tex ... fig16.tex. Its figure captions remain native LaTeX.
+Use latex/fig15_original_model.tex instead of fig15.tex to preserve the detailed model.
+
+Python dependencies: PyMuPDF, NumPy, pandas, Shapely, Matplotlib, Pillow.
+The geometry engine is bundled; no personnel experiment is rerun.
+The input_figures directory contains exact Git blob matches for the pinned source revision.

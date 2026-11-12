@@ -3,24 +3,14 @@
 Each human submission forms an ordered ring of upper--lower corner pairs, where the lower endpoint marks a floor-level wall junction and the upper endpoint sets the local wall height. To evaluate and combine these observations, we develop two complementary methods: a geometric quality metric, $Q$, that combines reference-based extent, boundary and height measurements with internal Manhattan regularity, and a paired-corner structural consensus algorithm that merges individual corner observations into supported wall turns, aggregated coordinates, and a closed 3D room layout.
 
 Small endpoint shifts in a panorama can produce substantial changes in the reconstructed walls (Figure~\ref{fig:observed-geometry}). We therefore evaluate the resulting geometry as well as the image observations, and retain local upper and lower positions when forming consensus.
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=82mm]{figures/observed_corner_geometry.pdf}
-\caption{Image observations and reconstructed geometry. A floor endpoint displacement from P to P' changes the footprint and the corresponding wall in three dimensions. The assessed layout is blue and the reference is dashed gray.}
-\label{fig:observed-geometry}
-\end{figure}
+\input{figure_package/latex/fig03}
 
 \subsection{Geometric quality measurement}
 \label{sec:quality}
 
-A freehand layout can match the reference floor coverage while distorting the ceiling contour, or maintain crisp orthogonal walls while enclosing the wrong spatial extent. Our composite metric $Q$ captures these distinct failure modes through five geometric components (Figure~\ref{fig:quality-components}). During 3D reconstruction, each upper--lower corner pair is horizontally aligned to the midpoint of its shorter horizontal arc while retaining both vertical coordinates, thereby preserving the annotator's local height profile (Supplement B5).
+A freehand layout can match the reference floor coverage while distorting the ceiling contour, or maintain crisp orthogonal walls while enclosing the wrong spatial extent. Our composite metric $Q$ captures these distinct failure modes through five geometric components. Figure~\ref{fig:quality-components} illustrates how boundary displacement and local height distortion affect its measurements and overall score. During 3D reconstruction, each upper--lower corner pair is horizontally aligned to the midpoint of its shorter horizontal arc while retaining both vertical coordinates, thereby preserving the annotator's local height profile (Supplement B5).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=135mm]{figures/quality_components_trimmed.pdf}
-\caption{Five geometric components and their combination into Q. Panels (a--e) measure floor overlap, boundary placement, internal direction, mean height and local height; (f) combines their losses. Blue denotes the assessed layout and dashed gray the reference, except in (c), where it marks fitted internal axes. The height examples share a footprint.}
-\label{fig:quality-components}
-\end{figure*}
+\input{figure_package/latex/fig04}
 
 \subsubsection{Geometry and score definition}
 
@@ -59,12 +49,7 @@ All scaling constants and the functional form were locked via controlled geometr
 
 Analytical perturbation tests establish two properties of $Q$: sensitivity to local height distortion and invariance to collinear resampling of unchanged wall geometry (Figure~\ref{fig:height-control}; 66 configurations in Supplement A). First, introducing opposing local ceiling shifts preserves both the floor footprint and the mean wall height; consequently, prism IoU based on the arithmetic mean of corner heights remains fixed at $1.0$, whereas $Q$ decreases smoothly as the local height distortion grows. Second, subdividing the high edge of a tilted wall with redundant collinear corner pairs leaves the physical 3D walls unchanged, yet corner-mean prism IoU drops artificially from $100\%$ to $86.96\%$; in contrast, our perimeter-integrated formulation holds $Q$ constant at $70.09$.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=140mm]{figures/height_resampling_controls_trimmed.pdf}
-\caption{Q detects balanced local height distortion and preserves unchanged geometry under resampling. In the analytical 3 m reference room, (a) opposing height shifts preserve mean height and corner-mean prism IoU but reduce Q; (b) additional collinear pairs change corner-mean prism IoU while perimeter-based measurements and Q stay fixed.}
-\label{fig:height-control}
-\end{figure*}
+\input{figure_package/latex/fig05}
 
 Eight annotators evaluated 60 real Manual annotations, yielding 460 valid defect reports and 478 overall grades. Defect reports associate visible annotation problems with the corresponding geometric and structural measurements (Table~\ref{tab:quality-feedback}); mean overall grades provide complementary evidence for Q.
 
@@ -97,12 +82,7 @@ The group-size trends and matched-replacement excess remain consistent across ni
 
 Architectural features such as shallow recesses introduce wall turns that some annotators trace and others bridge over, creating structural disagreements that barely alter total floor area. Our structural consensus method aggregates layouts directly at the level of paired corners through four sequential stages: cyclic correspondence, distinct-person support filtering, coordinate aggregation, and polygon connection (Figure~\ref{fig:consensus-steps}).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=160mm]{figures/consensus_steps_rev11.pdf}
-\caption{Local observations form a collective layout in an illustrative six-person team. E receives three votes and is retained under the at-least-half rule; G receives two and is excluded. Supporters supply the upper and lower positions, which are connected in wall order to form the layout.}
-\label{fig:consensus-steps}
-\end{figure*}
+\input{figure_package/latex/fig06}
 
 \subsubsection{Correspondence, support and position}
 
@@ -129,18 +109,8 @@ To see how corner-level aggregation preserves structure, we compare our method a
 
 Crucially, tracking discrete corner support explains how shifting team membership alters collective room structure. In bathroom panorama jtcxE69GiFV-13, two turns defining a recessed shower wall receive only four and two votes in Team 1, falling short of the five-vote threshold and collapsing the output into a simplified four-corner box. In Team 2, eight of ten members mark both turns, crossing the support threshold and recovering the complete six-corner recessed layout (Figure~\ref{fig:bathroom-turn-votes}).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=100mm]{figures/bathroom_turn_votes_rev11.pdf}
-\caption{Membership changes support for the same recess. In jtcxE69GiFV-13, Team 1 gives the two turns four and two votes; Team 2 gives each eight. Their layouts have four and six corners. (a) records support; (b--c) show the two layouts at a shared scale and view, using each layout's median upper height to display structure. Figure~\ref{fig:upper-boundary-evidence} traces the upper boundary; Supplement B6 gives the individual observations.}
-\label{fig:bathroom-turn-votes}
-\end{figure*}
+\input{figure_package/latex/fig07}
 
 Moreover, whereas BEV voting operates solely on 2D floor projections, paired-corner consensus directly reconstructs 3D ceiling contours from the supporting upper endpoints. Tracing Team 2's eight supporting observations at the adjacent shower turns (Figure~\ref{fig:upper-boundary-evidence}) shows how the periodic horizontal and vertical medians localize the upper vertices at $(682.39,146.33)$ and $(691.87,158.32)$ on the $1024\times512$ panorama, carrying their separate upper coordinates into the local ceiling--wall boundary.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=135mm]{figures/upper_boundary_evidence.pdf}
-\caption{Observed upper endpoints form the consensus upper boundary in jtcxE69GiFV-13, Team 2. (a) Eight people supply an aligned corner pair at each turn. (b) Periodic horizontal and separate vertical medians give the upper positions. (c) Their connection in wall order forms the local ceiling--wall boundary. Coordinates refer to the $1024\times512$ panorama.}
-\label{fig:upper-boundary-evidence}
-\end{figure*}
+\input{figure_package/latex/fig08}

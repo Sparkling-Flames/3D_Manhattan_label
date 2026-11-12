@@ -1,0 +1,37 @@
+{
+  "formula": "100 / (1 + hypot((1/I - 1) + Sb^2/32, 1.5*D^2/(D^2+8^2)) + (Hm/0.8)^2 + (Hc/0.25)^2)",
+  "engine_sha256": "02b958d26b97c7011dbe2bbc53ccccc42b8fc528af3c5f00f84c8c612bd0f3cd",
+  "reference_self_Q": 100.0,
+  "floor_iou_exact_error": 1.4210854715202004e-14,
+  "local_height_analytic_error": 3.893359318274392e-08,
+  "controlled_sample_convergence": [
+    {
+      "panel": "a",
+      "abs_Q_difference": 3.806307746856419e-05,
+      "abs_Sb_deg_difference": 5.554937030805007e-06,
+      "abs_Hc_difference": 0.0
+    },
+    {
+      "panel": "b",
+      "abs_Q_difference": 1.237148080690531e-05,
+      "abs_Sb_deg_difference": 2.308340349976845e-06,
+      "abs_Hc_difference": 0.0
+    },
+    {
+      "panel": "c",
+      "abs_Q_difference": 1.9467332492695277e-06,
+      "abs_Sb_deg_difference": 1.4028085791038854e-17,
+      "abs_Hc_difference": 9.125060956849396e-09
+    },
+    {
+      "panel": "d",
+      "abs_Q_difference": 5.207036224419426e-06,
+      "abs_Sb_deg_difference": 1.4028085791038854e-17,
+      "abs_Hc_difference": 3.650024382739758e-08
+    }
+  ],
+  "all_scores_between_0_and_100": true,
+  "empirical_results_recomputed": false,
+  "no_baked_panel_labels_or_titles": true,
+  "max_Q_change_at_fourfold_sampling": 3.806307746856419e-05
+}

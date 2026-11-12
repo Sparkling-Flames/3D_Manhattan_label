@@ -1,0 +1,9 @@
+% Native LaTeX captions; the elsarticle main-caption formatter is preserved.
+\usepackage[caption=false,font=footnotesize,position=bottom,labelformat=parens,labelsep=space]{subfig}
+\providecommand{\FigureAssetRoot}{.}
+\providecolor{paperBlue}{HTML}{0072B2}
+\providecolor{paperOrange}{HTML}{D55E00}
+\definecolor{figAll}{HTML}{252C31}
+\definecolor{figGray}{HTML}{7B858C}
+\definecolor{figGreen}{HTML}{009E73}
+\newcommand{\ESPanel}[3]{\begin{minipage}[t]{#1}\vspace{0pt}\centering\subfloat[#3]{\includegraphics[width=\linewidth]{\FigureAssetRoot/#2}}\end{minipage}}

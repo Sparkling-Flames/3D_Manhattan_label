@@ -4,12 +4,7 @@
 
 Expanding an annotation team affects different parts of the quality distribution at different stages: initial additions drive rapid gains in average quality, whereas later additions primarily improve lower-tail quality and compress between-team variance (Figure~\ref{fig:group-size-171}). Across our fixed panel of 171 standard Manual panoramas---each with 30--35 eligible annotators and 256 Monte Carlo entry orders weighted equally across images---mean $Q$ jumps by 4.739 points as team size increases from three to six annotators (95\% path-bootstrap CI $[4.629, 4.851]$).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=155mm]{figures/group_size_171_trimmed.pdf}
-\caption{Group size affects mean Q, lower-tail Q, between-team variation and output completion differently. Curves use the same 171 images: 116 easy, 28 moderate and 27 difficult. Q summaries use scorable outputs; complete-and-evaluable rates use all 43,776 attempts per size. P10 is the image-specific 10th percentile, averaged over images. Shading marks 3--6 and 20--30 people. The at-least-half threshold admits exactly half of an even-sized team: the required support stays at two votes from three to four people, then rises to three at five people, contributing to odd--even alternation.}
-\label{fig:group-size-171}
-\end{figure*}
+\input{figure_package/latex/fig10}
 
 In contrast, expanding teams from 20 to 30 annotators increases mean $Q$ by only 0.500 points, yet lifts the within-image 10th percentile (P10) by 2.848 points and cuts the within-image standard deviation by 2.031 points (Table~\ref{tab:group-size-intervals}). This late-stage stabilization is pervasive across scenes: between sizes 20 and 30, P10 improved on 166 of the 171 panoramas, between-team standard deviation declined on 168, and pairwise footprint variation fell on 170 (Supplement C5).
 
