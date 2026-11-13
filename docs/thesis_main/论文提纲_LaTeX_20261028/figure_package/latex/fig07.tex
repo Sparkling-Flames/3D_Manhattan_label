@@ -1,19 +1,20 @@
+\def\FigureSevenRoot{figure_package/dot_fig07}
+% Set \FigureSevenRoot to the directory containing this file before input.
 \begin{figure*}[t]
 \centering
 \setcounter{subfigure}{0}
-\begin{minipage}{110mm}
+\begin{minipage}{145mm}
 \centering
-\ESPanel{.231\linewidth}{panels/fig07/a.pdf}{Support}%
-\hfill%
-\ESPanel{.3708157895\linewidth}{panels/fig07/b.pdf}{Team 1 output}%
-\hfill%
-\ESPanel{.3708157895\linewidth}{panels/fig07/c.pdf}{Team 2 output}
-
-\par\vspace{2pt}
-\includegraphics[width=.96\linewidth]{\FigureAssetRoot/panels/fig07/legend.pdf}
-\par\vspace{2pt}
-
+\begin{minipage}[t]{40mm}\centering\subfloat[Team 1: support]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team1_support.pdf}}\end{minipage}\hfill
+\begin{minipage}[t]{47mm}\centering\subfloat[Four-corner output]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team1_footprint.pdf}}\end{minipage}\hfill
+\begin{minipage}[t]{47mm}\centering\subfloat[Turns A and B omitted]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team1_detail.pdf}}\end{minipage}
+\par\vspace{1pt}
+\begin{minipage}[t]{40mm}\centering\subfloat[Team 2: support]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team2_support.pdf}}\end{minipage}\hfill
+\begin{minipage}[t]{47mm}\centering\subfloat[Six-corner output]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team2_footprint.pdf}}\end{minipage}\hfill
+\begin{minipage}[t]{47mm}\centering\subfloat[Both turns retained]{\includegraphics[width=\linewidth]{\FigureSevenRoot/panels/team2_detail.pdf}}\end{minipage}
+\par\vspace{1pt}
+\includegraphics[width=145mm]{\FigureSevenRoot/panels/legend.pdf}
 \end{minipage}
-\caption{Membership changes support for the same recess. In jtcxE69GiFV-13, Team 1 gives the two turns four and two votes; Team 2 gives each eight. Their layouts have four and six corners. (a) records support; (b--c) show the two layouts at a shared scale and view, using each layout's median upper height to display structure. Figure~\ref{fig:upper-boundary-evidence} traces the upper boundary; Supplement B6 gives the individual observations.}
+\caption{Different members change support for the same recess in jtcxE69GiFV-13. Each team contains ten people and requires five supporters per retained turn. Team 1 has four and two supporters for A and B; Team 2 has eight for each. The resulting layouts contain four and six corners, respectively. Complete footprints use identical limits and equal axis scales across teams; the dotted boxes identify the region shown at right, also at identical limits and equal scales. Crosses mark below-threshold aggregate positions, not retained corners. Gray lines show individual walls and dashed lines show the reference. Coordinates are normalized by camera height $h$. }
 \label{fig:bathroom-turn-votes}
 \end{figure*}

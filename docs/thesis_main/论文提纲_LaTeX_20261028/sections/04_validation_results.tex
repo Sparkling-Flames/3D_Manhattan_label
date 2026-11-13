@@ -1,0 +1,39 @@
+\subsection{Geometric responses and supported structure}
+\label{sec:q-validation}\label{sec:human-validation}
+
+\paragraph{Geometric quality.}
+The controlled tests distinguish local-height error from mean-height agreement and sampling density (Figure~\ref{fig:height-control}; 66 configurations in Supplement A). Opposing ceiling shifts preserve the footprint and mean height, leaving corner-mean prism IoU at 1.0 while $Q$ decreases with local distortion. Subdividing an unchanged tilted wall changes corner-mean prism IoU from 100\% to 86.96\%, whereas perimeter-integrated $Q$ remains 70.09.
+
+\input{figure_package/latex/fig05}
+
+The eight-person evaluation yielded 460 valid defect reports and 478 overall grades. Reports of omitted structure, floor omission, height error and boundary displacement correspond to their geometric or structural measurements (Table~\ref{tab:quality-feedback}). Missing-turn count is a structural diagnostic; omitted floor fraction describes the coverage discrepancy. Overall grades provide complementary support: $Q$ agrees with 110 of 115 directed within-reviewer pairs (95.7\%), versus 88 of 115 for corner-mean prism IoU (76.5\%). Across 60 annotations, its association with mean grades is $\rho=0.946$ (95\% building-bootstrap CI $[0.870,0.977]$). Supplement C16 gives all 238 complete pairs, the mean-grade comparison and reviewer agreement.
+
+\begin{table}[t]
+\centering\small
+\caption{Spearman associations across 60 Manual annotations from 30 panoramas. Defect shares use each annotation's valid reports; overall grades are averaged across available reviewers.}
+\label{tab:quality-feedback}
+\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.38\linewidth}>{\raggedright\arraybackslash}p{.43\linewidth}r@{}}
+\toprule
+Human judgment & Measurement & $\rho$\\
+\midrule
+Missing structure & Missing effective turns & 0.544\\
+Floor omission & Omitted floor fraction & 0.586\\
+Wall-height error & Local height $H_c$ & 0.612\\
+Boundary-position error & Boundary distance $S_b$ & 0.395\\
+\midrule
+Mean overall grade & $Q$ & 0.946\\
+Mean overall grade & Corner-mean prism IoU & 0.738\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The primary score and eight scale variants retain the same early mean gains, later lower-tail gains and positive symmetric replacement excess. Full scale-wise effects remain in Supplement C16.
+
+\paragraph{Supported turns and upper boundaries.}
+\label{sec:method-validation}
+Across 138 teams from 48 pools, BEV voting yields 138 valid floor footprints; paired-corner consensus yields 131 footprints and 130 complete 3D layouts. Of the 70 standard Manual teams, 67 yield complete evaluable layouts. Across the 67 complete evaluable layouts, consensus retains 354 strictly majority-supported and 28 half-supported clusters, while excluding 116 minority clusters. Both methods preserve the well-supported recess in uNb9QFRL6hY-45, where seven of ten people mark both turns (Supplement C16).
+
+The bathroom example shows why the supporting people matter (Figure~\ref{fig:bathroom-turn-votes}). Two recess turns receive four and two votes in one ten-person team, below the five-vote threshold, producing a four-corner enclosure. In another ten-person team, both receive eight votes and the output retains all six corners. The same supporting observations also determine the upper boundary, as traced in Figure~\ref{fig:consensus-steps}. Aggregation therefore carries both a structural decision and its observed local geometry into the output; the complete upper-endpoint record appears in Supplement D.
+
+\input{figure_package/latex/fig07}

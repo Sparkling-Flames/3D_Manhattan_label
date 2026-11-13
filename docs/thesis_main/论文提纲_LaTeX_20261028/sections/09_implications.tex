@@ -1,27 +1,6 @@
-\subsection{Offline selection, stopping and recorded labor}
+\subsection{Quality and recorded labor in offline policies}
 \label{sec:labor-history}
-Leveraging pre-existing annotator histories enables an offline quality-and-time selection policy that reduces recorded target labor while maintaining a similar observed mean $Q$ (Table~\ref{tab:quality-labor}; Supplements C9, C13, C14). Across 126 selection contexts (46 panoramas in nine buildings) at a team size of five, our quality-and-time policy yields a mean $Q$ close to historical-$Q$ selection ($\Delta Q = +0.218$, 95\% building-bootstrap CI $[-0.538, +0.869]$; $Q = 93.926$ versus $93.708$) while reducing recorded team labor to a geometric mean ratio of $0.813$ ($[0.760, 0.882]$). Moreover, independently selected thirteen-person teams use more recorded labor and have lower mean $Q$ than five-person teams under both policies on their common support.
 
-When adapting team size per panorama via source-history stopping---requesting the earliest team size whose mean $Q$ on other views is within two points of the source curve's peak, while continuing if needed to obtain a complete polygon---mean $Q$ rises from $85.189$ (under a fixed seven-person baseline) to $86.054$, improving on 13 of 21 panoramas across five room groups. The matched-labor comparison covers 11 panoramas in three room groups; source-history stopping increases target-view annotation time from $1,307.9$ to $1,660.3$ person-seconds, and accounting for the labor required to collect the source-view histories themselves brings the total project-labor ratio to $2.115$. Reusing existing worker histories reduces recorded target labor in the selection comparison. Source-history stopping improves mean quality on its 21-image quality panel and requires additional annotation and history-acquisition labor on its 11-image timing panel.
+Existing histories support lower target labor in the selection comparison, while acquiring histories changes the cost of adaptive stopping. At team size five, quality-and-time selection has mean $Q=93.926$ versus $93.708$ for historical-$Q$ selection across 126 contexts from 46 images in nine buildings. Their paired difference is $+0.218$ ($95\%$ building-bootstrap CI $[-0.538,0.869]$), and the geometric mean recorded-labor ratio is 0.813 ($[0.760,0.882]$).
 
-\begin{table}[t]
-\centering\small
-\caption{Offline selection and stopping. Five-person selection uses 126 contexts from 46 images and nine buildings. Stopping quality uses 21 images in five groups; its labor comparison uses 11 images in three groups. Selection reuses existing histories; stopping project labor includes their acquisition. Labor measures recorded annotation person-time.}
-\label{tab:quality-labor}
-\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.04}
-\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}
-\toprule
-Outcome & Baseline & Policy\\
-\midrule
-\multicolumn{3}{l}{\textit{Quality--time vs.\ quality-only selection}}\\
-Mean Q & 93.708 & 93.926\\
-Recorded-labor ratio & 1.000 & 0.813\\
-\midrule
-\multicolumn{3}{l}{\textit{Source-history stopping vs.\ fixed seven}}\\
-Mean Q & 85.189 & 86.054\\
-Target labor (person-s) & 1,307.9 & 1,660.3\\
-Project-labor ratio & 1.000 & 2.115\\
-\bottomrule
-\end{tabular*}
-\end{table}
-
+Source-history stopping raises mean $Q$ from 85.189 to 86.054 on 21 images in five room groups. Its timing panel contains 11 images in three groups: target labor increases from 1,307.9 to 1,660.3 person-seconds, and including history acquisition gives a project-labor ratio of 2.115. The stopping rule improves observed quality and requires more work. Supplement D reports the full comparisons alongside Supplements C9, C13 and C14.

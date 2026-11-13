@@ -1,0 +1,55 @@
+% !TeX program = xelatex
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=22mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,graphicx,xcolor}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+\usepackage{placeins}
+\def\FigureAssetRoot{figure_package}
+\input{figure_package/latex/preamble}
+\renewcommand{\thetable}{D\arabic{table}}
+\renewcommand{\thefigure}{D\arabic{figure}}
+\begin{document}
+\input{sections/supplement_relocated_results}
+\subsection*{D5. Additional quality-validation comparisons}
+\label{supp:d5-validation}
+
+The main validation reports geometric responses, defect-specific associations and the directed reviewer-pair comparison. Across the 238 complete reviewer--image pairs, 123 receive equal grades and 115 have a direction; $Q$ agrees with 110 of the latter and mean-height prism IoU with 88. Mean grades calculated from the same valid reviewers for each pair leave 21 non-tied panorama pairs. $Q$ agrees with their direction in 20 pairs and prism IoU in 16. Across 60 Manual annotations, $Q$ correlates with mean grades at $\rho=0.946$ (95\% building-bootstrap CI $[0.870,0.977]$); the difference from prism IoU is $\Delta\rho=0.208$ ($[0.062,0.440]$). Identical grades occur in 82.2\% of 1,666 valid within-annotation reviewer pairs. Supplement C16 gives the full evaluation and uncertainty procedure.
+
+The score-sensitivity comparison uses the primary $Q$ and eight variants, each multiplying one scale by 0.75 or 1.25. All preserve early mean gains, later lower-tail gains and positive symmetric excess in matched 14-person replacements. The $1.25\times$ direction variant uses $10^\circ$ and gives $G_S=3.385$, compared with 3.441 for the primary score, across 69 images. These are the existing scale comparisons reported in Supplement C16.
+
+\subsection*{D6. Detailed upper-boundary observation chain}
+\label{supp:d6-upper}
+
+The main consensus illustration follows the real observations of Team 2 on bathroom panorama jtcxE69GiFV-13. The separate chain below expands the upper endpoints at the two recess turns. Each turn has eight distinct supporters. Periodic horizontal medians and separate vertical medians give upper coordinates $(682.39,146.33)$ and $(691.87,158.32)$ in the $1024\times512$ panorama. Their connection in wall order forms the local upper boundary. Figure~\ref{fig:upper-boundary-evidence} preserves the previously reported observation, aggregation and connection panels.
+
+\input{figure_package/latex/fig08}
+\FloatBarrier
+
+\subsection*{D7. Offline selection, stopping and labor accounting}
+\label{supp:d7-labor}
+
+The selection comparison reuses existing annotator histories. At a team size of five, quality-and-time selection is compared with historical-$Q$ selection in 126 contexts from 46 panoramas in nine buildings. The mean-$Q$ difference is $+0.218$ (95\% building-bootstrap CI $[-0.538,0.869]$), and the geometric mean recorded-labor ratio is 0.813 ($[0.760,0.882]$). Independently selected thirteen-person teams use more recorded labor and have lower mean $Q$ than five-person teams under both policies on their common support (Supplements C9, C13, C14).
+
+Source-history stopping requests the earliest size whose expected mean quality on other views is within two points of the source curve's peak, continuing as needed to obtain a complete polygon. Compared with fixed seven-person teams, quality improves on 13 of 21 panoramas across five room groups. The labor comparison uses a different, matched support of 11 panoramas in three groups. Including the acquisition of source-view histories raises the project-labor ratio to 2.115. Table~\ref{tab:quality-labor} reports the quality and time panels separately.
+
+\begin{table}[ht]
+\centering\small
+\caption{Offline policy comparisons. Selection uses 126 contexts from 46 images and nine buildings; stopping quality uses 21 images in five groups, and stopping labor uses 11 images in three groups. Labor is recorded annotation person-time.}
+\label{tab:quality-labor}
+\begin{tabular}{lrr}
+\toprule
+Outcome & Baseline & Policy\\
+\midrule
+\multicolumn{3}{l}{\textit{Quality--time vs. quality-only selection}}\\
+Mean Q & 93.708 & 93.926\\
+Recorded-labor ratio & 1.000 & 0.813\\
+\midrule
+\multicolumn{3}{l}{\textit{Source-history stopping vs. fixed seven}}\\
+Mean Q & 85.189 & 86.054\\
+Target labor (person-s) & 1,307.9 & 1,660.3\\
+Project-labor ratio & 1.000 & 2.115\\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}

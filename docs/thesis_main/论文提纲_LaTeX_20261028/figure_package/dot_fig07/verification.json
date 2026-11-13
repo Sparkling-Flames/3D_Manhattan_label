@@ -1,0 +1,104 @@
+{
+  "checks_from_supplied_geometry": [
+    {
+      "team": "Team 1",
+      "nodes": 4,
+      "stored_footprint_max_error": 1.1102230246251565e-16,
+      "reprojection_max_error_pixels": 2.842170943040401e-14,
+      "vertical_pairs_max_xz_error": 0.0,
+      "local_wall_heights": [
+        1.6435858462131128,
+        1.580324076409791,
+        1.610358423269723,
+        1.6068344364722495
+      ]
+    },
+    {
+      "team": "Team 1",
+      "turn": "A",
+      "support": 4,
+      "selected": false,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 1",
+      "turn": "B",
+      "support": 2,
+      "selected": false,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 2",
+      "nodes": 6,
+      "stored_footprint_max_error": 1.1102230246251565e-16,
+      "reprojection_max_error_pixels": 2.842170943040401e-14,
+      "vertical_pairs_max_xz_error": 0.0,
+      "local_wall_heights": [
+        1.5917698155234175,
+        1.5536121318378493,
+        1.5930581947777904,
+        1.57583930126712,
+        1.5645028804060457,
+        1.594674422761488
+      ]
+    },
+    {
+      "team": "Team 2",
+      "turn": "A",
+      "support": 8,
+      "selected": true,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 2",
+      "turn": "B",
+      "support": 8,
+      "selected": true,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    }
+  ],
+  "display": [
+    {
+      "team": "Team 1",
+      "n": 10,
+      "support": [
+        4,
+        2
+      ],
+      "threshold": 5,
+      "corners": 4,
+      "footprint_equal_scale": true,
+      "detail_bounds": [
+        0.5,
+        -0.6,
+        0.43,
+        0.43
+      ]
+    },
+    {
+      "team": "Team 2",
+      "n": 10,
+      "support": [
+        8,
+        8
+      ],
+      "threshold": 5,
+      "corners": 6,
+      "footprint_equal_scale": true,
+      "detail_bounds": [
+        0.5,
+        -0.6,
+        0.43,
+        0.43
+      ]
+    }
+  ],
+  "data_changed": false,
+  "new_experiments": false,
+  "subcaptions_in_latex_only": true,
+  "final_width_mm": 170
+}
