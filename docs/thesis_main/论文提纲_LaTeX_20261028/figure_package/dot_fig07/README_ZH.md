@@ -1,34 +1,34 @@
-# 原图 7 / 新正文 Figure 7 优化候选
+# 正文 Figure 7：支持人数与局部结构
 
-## 本轮改动
+本目录是现行 `figure_package/latex/fig07.tex` 实际引用的正式图源。
+整图固定为 145 mm；每行依次为 40 mm 的支持人数图、47 mm 的完整底面和
+47 mm 的局部结构图。所有普通文字按这一实际宽度绘制为 8–9.5 pt，
+总图注和子图注保持由原有 LaTeX 排版。
 
-基于 Pro 2026-11-12 18:01 返回、18:03 更新的 v2 图片包制作，不是旧 19 页稿。原图 7 在新正文仍为 Figure 7。
+## 图示的科学关系
 
-1. 将狭窄逐人矩阵改为两个团队各一行的“支持人数 → 完整底面 → 局部结构”，使读者先看到 4/2 与 8/8 和五人门槛，再看到对应结果。
-2. 两队人数固定为 10，避免把成员差异误读为增加人数。图注明确这一点。
-3. 完整底面及局部图在两行分别共享相同坐标范围和等比例坐标。局部并未增大凹槽深度，没有修直原答或改变几何。
-4. 最终宽 170 mm 时，图内最小文字约 8 pt；标题、子图标题由 LaTeX 放在图下，并非写进位图。
-5. 参考线、个体墙线、实际共识、落选聚类有不同线型/符号。颜色延用原图的 A 蓝/B 橙/共识紫。
+- 两支团队各 10 人，均以 5 人为角点保留门槛。
+- Team 1 对转折 A/B 的独立支持为 4/2 人，输出四角布局。
+- Team 2 对同两处转折的支持为 8/8 人，输出六角布局。
+- 两行完整底面使用相同坐标范围和等比例坐标；局部放大也使用相同范围。
+- 虚线为参考，灰线为个人墙线，紫线为共识，叉号为未保留聚类。
+- 展示的是不同成员组成，不代表增加人数，也不把两队的人员逐行配对。
 
-这是更便于读懂机制的候选，不是宣布 Pro 的新图数据错误。代价是约两行高度，相比单行版本更占篇幅。若版面优先，可继续使用 Pro 单行版本；不要简单把本候选缩小到半宽。
+## 复现
 
-## 原始证据不丢失
+在 `figure_package/` 中运行：
 
-`panels/original_person_support.pdf` 保存 Pro 原逐人支持矩阵，可放补充材料。`data/consensus_case.json` 与交付输入字节相同，保存每名成员、成员环、转折成员及输出。新图只聚合展示支持人数，没有伪造或重新排列人员身份；两队之间不按矩阵行对应同一人。
+```bash
+python dot_fig07/build.py
+```
 
-## 验证
+生成 `panels/team{1,2}_{support,footprint,detail}` 与 `panels/legend` 的
+PDF、SVG 和 600 dpi PNG。正式正文引用独立 PDF；带图注的校样不作为图源。
 
-`verification.json` 包含随包原几何代码的独立重跑检查：10 人与 5 人门槛、4/2 和 8/8 支持、聚类成员与个人原答点逐点一致、坐标中位数与保存中心一致、底面与回投误差通过阈值。未重新运行整个聚类/共识算法，未新增实验，未独立核实原始数据采集。
+依赖为 Python、NumPy、Matplotlib、Pillow。
+`data/consensus_case.json` 保留逐人观察和保存的输出，
+`source/original_geometry.py` 用于核对中位数、底面及全景回投。
+本轮不重新运行团队实验、聚类或参数选择。
 
-PDF 实际采用包内 `elsarticle.cls` 编译；`subfig` 使用 `caption=false` 保留类文件的主图注格式。按最终尺寸渲染查看，轴标签无裁切，所有字体已嵌入。大尺寸预览用于审查，正式论文应引入独立面板与原生图注。
-
-## 使用
-
-- `figure07_preview.pdf/png`：含原生 LaTeX 图注的裁边预览。
-- `proof.pdf`：完整 Elsevier 版式校样。
-- `fig07.tex`：替换用 figure* 环境。导言区需 graphicx、amsmath、subfig（caption=false）；不要同时加载 subcaption。
-- 将此文件夹放到论文旁，设置 `\def\FigureSevenRoot{fig07_optimized}`，然后 `\input{fig07_optimized/fig07.tex}`。不要直接用带图注预览替换面板，否则图注会变成图像内容。
-- `python build.py` 重建 PDF/SVG/600 dpi PNG 面板，需 numpy、matplotlib、Pillow。
-- `pdflatex proof.tex` 编译校样。特殊云环境缺字体映射时的构建环境不属于论文依赖；常规完整 TeX Live 可直接编译。
-
-未修改用户正式论文或 GitHub。
+`verification.json` 记录人数、门槛、成员对应、保存中心、真实底面和回投检查。
+原逐人支持矩阵仍保存在 `panels/original_person_support.pdf`，供进一步核查。

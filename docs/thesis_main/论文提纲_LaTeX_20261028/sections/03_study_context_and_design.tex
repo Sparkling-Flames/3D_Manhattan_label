@@ -1,7 +1,7 @@
 \section{Evaluation Protocol}
 \label{sec:study-design}
 
-The protocol recombines independent submissions while fixing the image, task condition and target reference. It separates the effect of adding people from changes in profile composition, individual membership and retained background (Table~\ref{tab:principal-analysis-sets}). Cross-view and doorway comparisons then examine changes in visual evidence and enclosure choice.
+The evaluation protocol specifies what is held fixed, what changes between teams, and which outcomes are compared (Table~\ref{tab:principal-analysis-sets}). Recombining independent submissions within the same panorama and target allows team size, class composition, specific membership and retained background to be examined separately. Cross-view comparisons follow the same room as visual evidence changes; doorway comparisons distinguish alternative target enclosures.
 
 \subsection{Task, participants and reference targets}
 
@@ -13,7 +13,7 @@ Before the study, three experts with experience annotating 100 panoramas and det
 
 \subsection{Controlled team comparisons}
 
-For RQ2, Monte Carlo sampling with 256 uniformly random entry orders per eligible pool form nested teams of 3--30 people on a fixed panel of 171 panoramas. For RQ3, profiles are derived from each person's history outside the target building. Structural classes C1--C3 represent simplifying, typical and turn-retaining tendencies. Their features cover corner counts, short edges, near-collinear vertices and reference matches. Within each training fold, robust scaling, domain-wise PCA and domain balancing precede Ward clustering; classes are ordered by difficult-image turns and short edges, then overall turns. Effective turns exceed $5^\circ$; short edges occupy less than 4\% of the perimeter with endpoint turns of at least $15^\circ$. Consensus-response (R1--R2) profiles summarize historical effects on group geometry; joint profiles (J1--J4) combine structural, geometric, historical-quality and duration features (Supplements C6--C9).
+For RQ2, Monte Carlo sampling with 256 uniformly random entry orders per eligible pool forms nested teams of 3--30 people on a fixed panel of 171 panoramas. For RQ3, profiles are derived from each person's history outside the target building. Structural classes C1--C3 represent simplifying, typical and turn-retaining tendencies. Their features cover corner counts, short edges, near-collinear vertices and reference matches. Within each training fold, robust scaling, domain-wise PCA and domain balancing precede Ward clustering; classes are ordered by difficult-image turns and short edges, then overall turns. Effective turns exceed $5^\circ$; short edges occupy less than 4\% of the perimeter with endpoint turns of at least $15^\circ$. Consensus-response (R1--R2) profiles summarize historical effects on group geometry; joint profiles (J1--J4) combine structural, geometric, historical-quality and duration features (Supplements C6--C9).
 
 \begin{table*}[t]
 \centering\small
@@ -41,7 +41,8 @@ G_S&=\frac{|Q_C-Q_A|+|Q_C-Q_B|}{2}-|Q_B-Q_A|,\label{eq:symmetric-excess}\\
 \end{align}
 Effects are averaged over valid exchanges and backgrounds within each image, then equally over images. Fixed-size profile ratios and whole-profile mixtures test composition; holding $(X,Z)$ fixed while changing $D$ tests background dependence (Supplement C17).
 
-\subsection{Method assessment and outcome measures}
+\subsection{Assessment settings and outcome measures}
+\label{sec:method-assessment}
 
 The $Q$ form and scales were fixed using controlled geometric perturbations before human validation and team analysis. Measurements use 2,048 boundary and 4,096 height samples per direction. Consensus uses $g=7.5^\circ$ per skipped observation to accommodate within-corner variation while distinguishing nearby turns. Supplement C16 records these settings and the existing score-scale sensitivity checks.
 

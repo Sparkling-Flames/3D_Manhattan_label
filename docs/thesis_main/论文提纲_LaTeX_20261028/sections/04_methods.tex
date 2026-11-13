@@ -1,13 +1,13 @@
 \label{sec:methods}
 
-The framework connects three operations: defining the enclosure to be annotated, measuring each submitted layout, and combining observations into a collective layout. Controlled team comparisons then isolate changes due to team size and membership. Each submission is an ordered ring of upper--lower corner pairs. The lower endpoint determines a floor-level wall junction; the upper endpoint determines its local height. Small endpoint shifts can change the reconstructed wall substantially (Figure~\ref{fig:observed-geometry}), so both methods retain the geometry carried by these observations.
+The framework first specifies the enclosure to be annotated, then measures individual layouts and combines their observations. Both methods operate on an ordered ring of upper--lower corner pairs. The lower endpoint determines a floor-level wall junction; the upper endpoint determines its local height. Small endpoint shifts can change the reconstructed wall substantially (Figure~\ref{fig:observed-geometry}), so both methods retain the geometry carried by these observations.
 
 \input{figure_package/latex/fig03}
 
 \subsection{Geometric quality measurement}
 \label{sec:quality}
 
-A layout can cover the correct floor area while distorting the ceiling, or have orthogonal walls around the wrong enclosure. We introduce $Q$ to measure these differences through floor overlap, boundary displacement, internal direction, mean height and local height. Figure~\ref{fig:quality-components} shows two controlled changes and their resulting scores. Geometric responses and human judgments are evaluated in Section~\ref{sec:q-validation}.
+A layout can cover the correct floor area while distorting the ceiling, or have orthogonal walls around the wrong enclosure. We introduce $Q$ to distinguish these discrepancies through floor overlap, boundary displacement, internal direction, mean height and local height. In Figure~\ref{fig:quality-components}(a--b), increasing an inward boundary shift from 0.4 to 1.2 m reduces $Q$ from 84.37 to 36.26 as more floor area is omitted and the boundary moves farther from the reference. Panels (c--d) change the upper endpoints instead: opposing height shifts preserve the footprint and mean height, but larger local distortions receive lower scores. These examples illustrate what the measurements capture; controlled tests and human defect feedback evaluate their behavior in Section~\ref{sec:q-validation}.
 
 \input{figure_package/latex/fig04}
 
@@ -28,14 +28,14 @@ Heights are interpolated linearly along floor edges. For cyclic corner heights $
 \end{equation}
 Mean-height error is $H_m=|\mu_P-\mu_R|/\mu_R$. Local-height error $H_c$ is the symmetric root-mean-square difference between mean-centered height profiles, normalized by $\mu_R$. Each perimeter sample is compared with the nearest floor position on the other layout; distance ties use the largest squared height residual. Integrating along the perimeter makes both height measurements invariant to subdividing an unchanged straight wall with collinear points (exact expressions in Supplement C18).
 
-For a valid layout with positive overlap, the measurements give
+The measurements are converted to losses for floor geometry, direction, mean height and local height. For a valid layout with positive overlap,
 \begin{align}
  F&=\left(\frac1I-1\right)+\frac{S_b^2}{32}, &
  L_d&=1.5\frac{D_{\mathrm{dir}}^2}{D_{\mathrm{dir}}^2+8^2},\label{eq:floor-loss}\\
  L_m&=\left(\frac{H_m}{0.8}\right)^2, &
  L_c&=\left(\frac{H_c}{0.25}\right)^2,\label{eq:height-loss}
 \end{align}
-and
+The losses combine into a score that decreases as geometric discrepancies grow:
 \begin{equation}
  Q(P,R)=\frac{100}{1+\sqrt{F^2+L_d^2}+L_m+L_c}.\label{eq:quality}
 \end{equation}
@@ -44,7 +44,7 @@ If floor overlap is the only discrepancy, $Q=100I$. Scorable layouts have a simp
 \subsection{Structural consensus from paired corner observations}
 \label{sec:consensus}
 
-A shallow recess may occupy little floor area yet introduce two wall turns that some people retain and others bridge over. Paired-corner structural consensus makes these choices explicit: it identifies corresponding pairs, counts their distinct supporters, aggregates their positions, and connects the retained pairs into a layout. Figure~\ref{fig:consensus-steps} follows actual observations into their resulting boundary and three-dimensional geometry.
+A shallow recess may occupy little floor area yet introduce two wall turns that some people retain and others bridge over. Paired-corner structural consensus makes these choices explicit: it identifies corresponding pairs, counts their distinct supporters, aggregates their positions, and connects the retained pairs into a layout. Figure~\ref{fig:consensus-steps} traces two recess turns, A and B, from the supporters' upper and lower observations to the same turns in the complete layout. The method determines both whether a turn is retained and where its upper and lower endpoints lie, preserving the local wall heights carried by the observations.
 
 \input{figure_package/latex/fig06}
 
@@ -55,7 +55,7 @@ An observation $a_{wj}=(p^t_{wj},p^b_{wj})$ contains annotator $w$'s upper and l
  +g\bigl(n_u^{\mathrm{skip}}+n_v^{\mathrm{skip}}\bigr)\right],
  \label{eq:cyclic-match}
 \end{equation}
-where $n_w^{\mathrm{skip}}$ counts unmatched observations and $g$ is their per-observation skip penalty. Complete-linkage clustering partitions the pairwise matches into disjoint corner clusters $G$, requiring pairwise support throughout each cluster and at most one observation per annotator.
+where $n_w^{\mathrm{skip}}$ counts unmatched observations and $g$ is their per-observation skip penalty. Allowing skips accommodates turns that one annotator marks and another omits; the penalty balances leaving an observation unmatched against pairing it with a displaced observation. Its fixed value is specified in Section~\ref{sec:method-assessment}. Complete-linkage clustering partitions the pairwise matches into disjoint corner clusters $G$, requiring pairwise support throughout each cluster and at most one observation per annotator.
 
 For team $S$, a cluster is retained when at least half the team supports it:
 \begin{equation}

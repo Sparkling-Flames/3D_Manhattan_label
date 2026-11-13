@@ -45,8 +45,9 @@ def close(points):
 
 
 def canvas():
-    fig = plt.figure(figsize=(2.55, 2.45))
-    ax = fig.add_axes([.04, .18, .92, .77])
+    # 0.24 of the unchanged elsarticle text width; fonts are sized for print.
+    fig = plt.figure(figsize=(44.03 / 25.4, 47.0 / 25.4))
+    ax = fig.add_axes([.04, .30, .92, .68])
     ax.set_aspect("equal")
     ax.set_axis_off()
     return fig, ax
@@ -61,10 +62,10 @@ def write_outputs(fig, stem):
 
 
 def metrics(fig, row, color, detail):
-    fig.text(.04, .115, detail, ha="left", va="center", fontsize=8.0,
-             linespacing=1.3)
-    fig.text(.96, .043, f"Q = {row['Q']:.2f}", ha="right", va="center",
-             color=color, weight="bold", fontsize=10.3)
+    fig.text(.04, .155, detail, ha="left", va="center", fontsize=7.7,
+             linespacing=1.35)
+    fig.text(.96, .035, f"Q = {row['Q']:.2f}", ha="right", va="center",
+             color=color, weight="bold", fontsize=9.6)
 
 
 def extent_panel(job, row, color, out):
@@ -81,9 +82,16 @@ def extent_panel(job, row, color, out):
     ax.scatter(*p.xz.T, color=color, s=13, zorder=6)
     ax.scatter([0], [0], color=INK, marker="+", s=32, linewidths=1.1, zorder=6)
     ax.text(0, -.37, "camera", ha="center", va="top", fontsize=7.5)
-    ax.annotate("", xy=(2, 2.35), xytext=(xmax, 2.35),
-                arrowprops={"arrowstyle": "<->", "color": color, "lw": 1.0,
-                            "shrinkA": 0, "shrinkB": 0, "mutation_scale": 7})
+    if d < .6:
+        # External dimension arrows keep the short 0.4 m interval legible.
+        for endpoint, start in [(xmax, xmax - .45), (2, 2 + .45)]:
+            ax.annotate("", xy=(endpoint, 2.35), xytext=(start, 2.35),
+                        arrowprops={"arrowstyle": "-|>", "color": color, "lw": .7,
+                                    "shrinkA": 0, "shrinkB": 0, "mutation_scale": 5})
+    else:
+        ax.annotate("", xy=(2, 2.35), xytext=(xmax, 2.35),
+                    arrowprops={"arrowstyle": "<->", "color": color, "lw": .8,
+                                "shrinkA": 0, "shrinkB": 0, "mutation_scale": 5})
     ax.plot([xmax, xmax], [2.05, 2.44], color=color, lw=.6)
     ax.plot([2, 2], [2.05, 2.44], color=GRAY, lw=.6)
     ax.text((xmax + 2) / 2, 2.59, f"{d:.1f} m", color=color,
@@ -140,13 +148,13 @@ def height_panel(job, row, color, out):
 
 
 def make_legend(out):
-    fig = plt.figure(figsize=(7.05, .29))
+    fig = plt.figure(figsize=(150.44 / 25.4, 7.0 / 25.4))
     fig.legend(handles=[
         Line2D([], [], color=GRAY, lw=1.1, dashes=(3.0, 2.0), label="Reference"),
         Line2D([], [], color=BLUE, lw=1.8, marker="o", ms=3, label="Smaller change"),
         Line2D([], [], color=ORANGE, lw=1.8, marker="o", ms=3, label="Larger change"),
     ], loc="center", ncol=3, frameon=False, handlelength=2.4, columnspacing=2.2,
-       fontsize=8.7)
+       fontsize=8.0)
     write_outputs(fig, out)
 
 

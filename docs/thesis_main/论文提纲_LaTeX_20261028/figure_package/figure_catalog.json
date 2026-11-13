@@ -8,7 +8,18 @@
     "caption": "(a) Panorama 7y3sRwLe3Va-19 and (b) room context. (c) A29 bridges the fireplace with four corners; (d) A59 traces its sides with eight. The footprints share a scale, with the reference dashed; the lower row shows the room context and the three-dimensional layouts reconstructed from each annotation.",
     "width": "86mm",
     "columns": 1,
-    "latex": "latex/fig01.tex"
+    "latex": "latex/fig01.tex",
+    "manuscript_number": 1,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig01/a.pdf",
+      "panels/fig01/b.pdf",
+      "panels/fig01/c.pdf",
+      "panels/fig01/d.pdf",
+      "panels/fig01/legend.pdf"
+    ],
+    "rebuild_script": "source/panel_cleanup/build_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 2,
@@ -19,7 +30,14 @@
     "caption": "Overview of the study. Independent Manual and Semi submissions provide spatial observations; geometric quality measurement and structural consensus support controlled comparisons of individuals, group size, team composition and cross-view patterns.",
     "width": "145mm",
     "columns": 2,
-    "latex": "latex/fig02.tex"
+    "latex": "latex/fig02.tex",
+    "manuscript_number": 2,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig02/a.pdf"
+    ],
+    "rebuild_script": "source/formal_typography/build_other_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 3,
@@ -30,7 +48,18 @@
     "caption": "Image observations and reconstructed geometry. A floor endpoint displacement from P to P' changes the footprint and the corresponding wall in three dimensions. The assessed layout is blue and the reference is dashed gray.",
     "width": "82mm",
     "columns": 1,
-    "latex": "latex/fig03.tex"
+    "latex": "latex/fig03.tex",
+    "manuscript_number": 3,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig03/a.pdf",
+      "panels/fig03/b.pdf",
+      "panels/fig03/c.pdf",
+      "panels/fig03/d.pdf",
+      "panels/fig03/legend.pdf"
+    ],
+    "rebuild_script": "source/panel_cleanup/build_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 4,
@@ -41,7 +70,39 @@
     "caption": "Controlled examples show how geometric changes affect Q. The reference room has a $4\\times4$ m footprint, a 3 m wall height and a 1.6 m camera height. (a--b) Moving one floor boundary inward reduces overlap and increases boundary distance; hatched regions mark omitted floor area. (c--d) Opposing upper-boundary shifts preserve the footprint and perimeter-mean height while increasing local height error. Blue and orange show the smaller and larger changes; dashed gray denotes the reference. Measurements and Q are computed from the displayed geometry.",
     "width": "\\textwidth",
     "columns": 2,
-    "latex": "latex/fig04.tex"
+    "latex": "latex/fig04.tex",
+    "manuscript_number": 4,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig04/fig04_a.pdf",
+      "panels/fig04/fig04_b.pdf",
+      "panels/fig04/fig04_c.pdf",
+      "panels/fig04/fig04_d.pdf",
+      "panels/fig04/fig04_legend.pdf"
+    ],
+    "rebuild_script": "source/fig04/build_fig04.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
+  },
+  {
+    "number": 6,
+    "source_asset": "source/consensus_actual/data/consensus_case.json",
+    "labels": [
+      "fig:consensus-steps"
+    ],
+    "caption": "Paired observations form the recessed wall in jtcxE69GiFV-13, Team 2. (a) Eight upper observations per turn, their medians and the resulting upper boundary. (b) The same supporters' lower observations projected to the floor, with individual wall traces in gray and consensus in purple. (c) Complete six-corner layout and enlarged upper-wall detail, using the same coordinates and view; rear edges are dashed. A and B identify the same turns throughout. Each corner retains its local height; $h$ denotes camera height.",
+    "width": "170mm",
+    "columns": 2,
+    "latex": "latex/fig06.tex",
+    "manuscript_number": 5,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig06/a_upper_evidence.pdf",
+      "panels/fig06/b_lower_evidence.pdf",
+      "panels/fig06/c_actual_layout.pdf",
+      "panels/fig06/legend.pdf"
+    ],
+    "rebuild_script": "source/consensus_actual/build_fig06.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 5,
@@ -52,40 +113,40 @@
     "caption": "Q detects balanced local height distortion and preserves unchanged geometry under resampling. In the analytical 3 m reference room, (a) opposing height shifts preserve mean height and corner-mean prism IoU but reduce Q; (b) additional collinear pairs change corner-mean prism IoU while perimeter-based measurements and Q stay fixed.",
     "width": "140mm",
     "columns": 2,
-    "latex": "latex/fig05.tex"
-  },
-  {
-    "number": 6,
-    "source_asset": "figures/consensus_steps_rev11.pdf",
-    "labels": [
-      "fig:consensus-steps"
+    "latex": "latex/fig05.tex",
+    "manuscript_number": 6,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig05/a.pdf",
+      "panels/fig05/b.pdf",
+      "panels/fig05/legend.pdf"
     ],
-    "caption": "Local observations form a collective layout in an illustrative six-person team. (a) Rows identify people and columns identify corresponding corner pairs. Circles mark upper endpoints and squares lower endpoints. (b) E receives three votes and F four, while G's two votes fall below the three-person threshold. (c) The three supporters determine E's horizontal position and its separate upper and lower positions. (d) Connecting retained pairs A--F in wall order forms the layout.",
-    "width": "\\textwidth",
-    "columns": 2,
-    "latex": "latex/fig06.tex"
+    "rebuild_script": "source/height_control_layout/build_fig05.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 7,
-    "source_asset": "figures/bathroom_turn_votes_rev11.pdf",
+    "source_asset": "dot_fig07/data/consensus_case.json",
     "labels": [
       "fig:bathroom-turn-votes"
     ],
-    "caption": "Membership changes support for the same recess. In jtcxE69GiFV-13, Team 1 gives the two turns four and two votes; Team 2 gives each eight. Their layouts have four and six corners. (a) records support; (b--c) show the two layouts at a shared scale and view, using each layout's median upper height to display structure. Figure~\\ref{fig:upper-boundary-evidence} traces the upper boundary; Supplement B6 gives the individual observations.",
-    "width": "110mm",
+    "caption": "Different members change support for the same recess in jtcxE69GiFV-13. Each team contains ten people and requires five supporters per retained turn. Team 1 has four and two supporters for A and B; Team 2 has eight for each. The resulting layouts contain four and six corners, respectively. Complete footprints use identical limits and equal axis scales across teams; the dotted boxes identify the region shown at right, also at identical limits and equal scales. Crosses mark below-threshold aggregate positions, not retained corners. Gray lines show individual walls and dashed lines show the reference. Coordinates are normalized by camera height $h$. ",
+    "width": "145mm",
     "columns": 2,
-    "latex": "latex/fig07.tex"
-  },
-  {
-    "number": 8,
-    "source_asset": "figures/upper_boundary_evidence.pdf",
-    "labels": [
-      "fig:upper-boundary-evidence"
+    "latex": "latex/fig07.tex",
+    "manuscript_number": 7,
+    "use": "main text",
+    "active_panel_files": [
+      "dot_fig07/panels/team1_support.pdf",
+      "dot_fig07/panels/team1_footprint.pdf",
+      "dot_fig07/panels/team1_detail.pdf",
+      "dot_fig07/panels/team2_support.pdf",
+      "dot_fig07/panels/team2_footprint.pdf",
+      "dot_fig07/panels/team2_detail.pdf",
+      "dot_fig07/panels/legend.pdf"
     ],
-    "caption": "Observed upper endpoints form the consensus upper boundary in jtcxE69GiFV-13, Team 2. (a) Eight people supply an aligned corner pair at each turn. (b) Periodic horizontal and separate vertical medians give the upper positions. (c) Their connection in wall order forms the local ceiling--wall boundary. Coordinates refer to the $1024\\times512$ panorama.",
-    "width": "135mm",
-    "columns": 2,
-    "latex": "latex/fig08.tex"
+    "rebuild_script": "dot_fig07/build.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 9,
@@ -97,7 +158,19 @@
     "caption": "Structural response, relative quality and original drawings. (a--b) Annotator-level structural responses and quality ranks across difficulty conditions, using 58 and 59 people respectively; each dot represents one person. Relative Q is centered on the image--target peer median; higher within-image ranks indicate better relative quality. (c) The difficult panorama. (d--f) Submissions from C1--C3 on the panorama in (c) retain five, six and eight turns on a common BEV scale; gray dashes mark the reference and thick segments mark short walls.",
     "width": "150mm",
     "columns": 2,
-    "latex": "latex/fig09.tex"
+    "latex": "latex/fig09.tex",
+    "manuscript_number": 8,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig09/a.pdf",
+      "panels/fig09/b.pdf",
+      "panels/fig09/c.pdf",
+      "panels/fig09/d.pdf",
+      "panels/fig09/e.pdf",
+      "panels/fig09/f.pdf"
+    ],
+    "rebuild_script": "source/formal_typography/build_other_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 10,
@@ -108,7 +181,17 @@
     "caption": "Group size affects mean Q, lower-tail Q, between-team variation and output completion differently. Curves use the same 171 images: 116 easy, 28 moderate and 27 difficult. Q summaries use scorable outputs; complete-and-evaluable rates use all 43,776 attempts per size. P10 is the image-specific 10th percentile, averaged over images. Shading marks 3--6 and 20--30 people. The at-least-half threshold admits exactly half of an even-sized team: the required support stays at two votes from three to four people, then rises to three at five people, contributing to odd--even alternation.",
     "width": "\\textwidth",
     "columns": 2,
-    "latex": "latex/fig10.tex"
+    "latex": "latex/fig10.tex",
+    "manuscript_number": 9,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig10/a.pdf",
+      "panels/fig10/b.pdf",
+      "panels/fig10/c.pdf",
+      "panels/fig10/d.pdf"
+    ],
+    "rebuild_script": "source/compact/build_compact_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 11,
@@ -118,10 +201,19 @@
       "fig:matched-half",
       "fig:team-comparison-design"
     ],
-    "caption": "Composition summaries and specified replacements reveal different aspects of member sensitivity. (a) Twelve-person teams on zsNo4HB9uLZ-16 combine six fixed members with six of twelve candidates. Horizontal labels give C1/C2/C3 member counts; points are mean Q, bars show fifth--95th percentiles, and $n$ gives the number of scorable teams. The member diagram below (a) defines the matched replacement used in (b--c). A separate 14-person A--B--C comparison shares seven retained members and exchanges seven-person blocks. (b) Excess magnitude $G_S$ compares cross-profile and within-profile Q changes; (c) signed $Q_C-Q_B$ shows whether C scores higher or lower than B. Each dot is an image mean; diamonds average the 69 image means from 146 scorable events (comparison definitions and supporting results in Supplements C17 and C19).",
-    "width": "145mm",
+    "caption": "Composition and member replacement. (a) Twelve-person teams on zsNo4HB9uLZ-16 retain six members and choose six of twelve candidates. Points show mean Q, bars the fifth--95th percentiles, and $n$ the scorable teams. (b--c) Fourteen-person teams retain seven members and exchange seven-person blocks in the A--B--C design. Each dot is an image mean; diamonds average 69 images from 146 scorable events. $G_S$ measures excess cross-class change magnitude; $Q_C-Q_B$ gives its direction (Supplements C17, C19).",
+    "width": "\\textwidth",
     "columns": 2,
-    "latex": "latex/fig11.tex"
+    "latex": "latex/fig11.tex",
+    "manuscript_number": 10,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig11/a.pdf",
+      "panels/fig11/b.pdf",
+      "panels/fig11/c.pdf"
+    ],
+    "rebuild_script": "source/result_layout/build_results.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 12,
@@ -132,7 +224,14 @@
     "caption": "Whole-profile mixtures gain relative to one constituent and lose relative to another. Dots are paired image-level mixture-minus-pure Q differences on 154 common images; diamonds are means. Each selected profile contributes all its available \\mbox{members}.",
     "width": "86mm",
     "columns": 1,
-    "latex": "latex/fig12.tex"
+    "latex": "latex/fig12.tex",
+    "manuscript_number": 11,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig12/a.pdf"
+    ],
+    "rebuild_script": "source/panel_cleanup/build_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 13,
@@ -143,7 +242,17 @@
     "caption": "Seven replacements change localization while four identities retain twenty votes and the same ring order in 7y3sRwLe3Va-13. Panels show the complete footprints, corner-4 detail and its upper/lower observations. Gray marks thirteen retained people, blue seven removed and orange seven added; outlined markers are consensus positions. Changes of about 0.42 horizontal and 0.82 lower-endpoint pixels correspond to a floor displacement of $0.17h$ in the 1024 by 512 panorama. Q measures the complete layout.",
     "width": "\\textwidth",
     "columns": 2,
-    "latex": "latex/fig13.tex"
+    "latex": "latex/fig13.tex",
+    "manuscript_number": 12,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig13/a.pdf",
+      "panels/fig13/b.pdf",
+      "panels/fig13/c.pdf",
+      "panels/fig13/d.pdf"
+    ],
+    "rebuild_script": "source/compact/build_compact_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 14,
@@ -154,18 +263,36 @@
     "caption": "Two annotators repeat their broader structural habits across views while changing individual corner choices. (a--b) A40 and A41's complete layouts on VFuaQ6m2Qom-07 and -10, with the same narrow-wall endpoints enlarged. Counts are effective/reference turns; dashed lines mark reference azimuths. A40 marks both endpoints in both views. A41 marks neither in view 07 and both in view 10, while simplifying both layouts. (c) Same-person and different-person simplification agreement over fifteen view pairs in five buildings.",
     "width": "150mm",
     "columns": 2,
-    "latex": "latex/fig14.tex"
+    "latex": "latex/fig14.tex",
+    "manuscript_number": 13,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig14/a.pdf",
+      "panels/fig14/b.pdf",
+      "panels/fig14/c.pdf",
+      "panels/fig14/legend.pdf"
+    ],
+    "rebuild_script": "source/formal_typography/build_other_panels.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 15,
-    "source_asset": "figures/doorway_boundary_3d_trimmed.pdf",
+    "source_asset": "source/fig06_fig15/source_model.png",
     "labels": [
       "fig:doorway-scene"
     ],
-    "caption": "A camera at the doorway boundary. (a) A three-dimensional cutaway shows the camera beneath the lintel between two adjoining spaces. The two floor regions show the competing target extents. (b) The actual doorway panorama shows the adjoining spaces visible from this position. The schematic illustrates the spatial arrangement; the panorama provides the scene evidence.",
+    "caption": "A camera at the doorway boundary. (a) The complete three-dimensional model shows the camera beneath the doorframe and the two adjoining spaces. The external callout locates the camera without covering either room. (b) The actual doorway panorama shows the adjoining spaces visible from this position. The schematic illustrates the spatial arrangement; the panorama provides the scene evidence.",
     "width": "155mm",
     "columns": 2,
-    "latex": "latex/fig15.tex"
+    "latex": "latex/fig15_original_model.tex",
+    "manuscript_number": 14,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig15/original_model_clean.pdf",
+      "panels/fig15/b_panorama.pdf"
+    ],
+    "rebuild_script": "source/doorway_layout/build_fig15.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   },
   {
     "number": 16,
@@ -173,9 +300,21 @@
     "labels": [
       "fig:doorway-screening"
     ],
-    "caption": "Doorway screening and target-specific trajectories answer separate questions. (a--b) Screening on the same seventeen images uses a common whole-space reference before and after, at sizes 3--14. (c--d) Assigned-target pools in 7y3sRwLe3Va-18 contain nine people for space 1, four for space 2 and fifteen for the whole space. These pools differ in members and references. Q uses scorable outputs; completion rates use all attempts.",
-    "width": "140mm",
+    "caption": "Doorway outcomes. (a--b) Screening uses the same 17 images and whole-space reference before and after, at sizes 3--14. (c--d) Target-assigned pools for 7y3sRwLe3Va-18 contain nine people for space 1, four for space 2 and fifteen for the whole space; members and references differ. Q uses scorable outputs; completion is the complete-and-evaluable rate over all attempts.",
+    "width": "\\textwidth",
     "columns": 2,
-    "latex": "latex/fig16.tex"
+    "latex": "latex/fig16.tex",
+    "manuscript_number": 15,
+    "use": "main text",
+    "active_panel_files": [
+      "panels/fig16/a.pdf",
+      "panels/fig16/b.pdf",
+      "panels/fig16/c.pdf",
+      "panels/fig16/d.pdf",
+      "panels/fig16/legend_ab.pdf",
+      "panels/fig16/legend_cd.pdf"
+    ],
+    "rebuild_script": "source/result_layout/build_results.py",
+    "caption_source": "Unchanged LaTeX figure environment at the current manuscript revision"
   }
 ]

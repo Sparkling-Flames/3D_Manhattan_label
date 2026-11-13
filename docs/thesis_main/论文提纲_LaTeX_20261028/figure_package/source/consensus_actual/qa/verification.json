@@ -1,0 +1,107 @@
+{
+  "checks": [
+    {
+      "team": "Team 1",
+      "nodes": 4,
+      "stored_footprint_max_error": 1.1102230246251565e-16,
+      "reprojection_max_error_pixels": 2.842170943040401e-14,
+      "vertical_pairs_max_xz_error": 0.0,
+      "local_wall_heights": [
+        1.6435858462131128,
+        1.580324076409791,
+        1.610358423269723,
+        1.6068344364722495
+      ]
+    },
+    {
+      "team": "Team 1",
+      "turn": "A",
+      "support": 4,
+      "selected": false,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 1",
+      "turn": "B",
+      "support": 2,
+      "selected": false,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 2",
+      "nodes": 6,
+      "stored_footprint_max_error": 1.1102230246251565e-16,
+      "reprojection_max_error_pixels": 2.842170943040401e-14,
+      "vertical_pairs_max_xz_error": 0.0,
+      "local_wall_heights": [
+        1.5917698155234175,
+        1.5536121318378493,
+        1.5930581947777904,
+        1.57583930126712,
+        1.5645028804060457,
+        1.594674422761488
+      ]
+    },
+    {
+      "team": "Team 2",
+      "turn": "A",
+      "exact_output_corner_index_zero_based": 3
+    },
+    {
+      "team": "Team 2",
+      "turn": "A",
+      "support": 8,
+      "selected": true,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "team": "Team 2",
+      "turn": "B",
+      "exact_output_corner_index_zero_based": 4
+    },
+    {
+      "team": "Team 2",
+      "turn": "B",
+      "support": 8,
+      "selected": true,
+      "median_max_error_pixels": 0.0,
+      "all_points_equal_to_saved_observations": true
+    },
+    {
+      "fig6_3d_orthographic_basis_gram": [
+        [
+          0.9999999999999999,
+          -6.6080434951253975e-18
+        ],
+        [
+          -6.6080434951253975e-18,
+          0.9999999999999999
+        ]
+      ],
+      "azimuth_parameter_degrees": 18,
+      "elevation_degrees": 25,
+      "detail_same_coordinates_and_projection": true,
+      "detail_bounds_in_projection_units": [
+        0.3545909947410099,
+        0.9714799829314246,
+        0.36,
+        0.36
+      ]
+    }
+  ],
+  "data_changed": false,
+  "new_experiment": false,
+  "newly_recomputed_geometry": "Exact projection of saved endpoints, for drawing only",
+  "aggregation": "Coordinate medians checked against saved centers; no team reanalysis",
+  "spatial_scaling": "Equal x/z scale; inset uses same 3D orthographic projection",
+  "top_height": "Separate saved upper endpoint at each retained corner; no mean-height replacement",
+  "subfigure_captions_embedded": false,
+  "final_panel_width_mm": 54.74,
+  "final_panel_height_mm": 50,
+  "final_legend_width_mm": 170,
+  "minimum_regular_text_pt": 8.0,
+  "dpi": 600
+}

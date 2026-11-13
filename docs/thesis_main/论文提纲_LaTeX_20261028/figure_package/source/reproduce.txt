@@ -1,16 +1,37 @@
-Rebuild from the package root:
+Rebuild the manuscript's current figure assets from figure_package/:
 
 python source/panel_cleanup/build_panels.py
 python source/fig04/build_fig04.py --package-root .
-python source/fig06_fig15/build_panels.py
 python source/compact/build_compact_panels.py
+python source/result_layout/build_results.py
+python source/consensus_actual/build_fig06.py
+python dot_fig07/build.py
+python source/height_control_layout/build_fig05.py
+python source/formal_typography/build_other_panels.py
+python source/doorway_layout/build_fig15.py
 python source/embed_base14_resources.py
-xelatex elsarticle_figure_proof.tex
-xelatex elsarticle_figure_proof.tex
 
-The manuscript includes latex/fig01.tex ... fig16.tex. Its figure captions remain native LaTeX.
-Use latex/fig15_original_model.tex instead of fig15.tex to preserve the detailed model.
+Alternatively: python source/rebuild_formal_figures.py
 
-Python dependencies: PyMuPDF, NumPy, pandas, Shapely, Matplotlib, Pillow.
-The geometry engine is bundled; no personnel experiment is rerun.
-The input_figures directory contains exact Git blob matches for the pinned source revision.
+The build order matters: the initial splitter preserves the original scientific
+paths and photographs; the later scripts supply the current final-size layouts.
+The legacy source/fig06_fig15/build_panels.py is retained for provenance but is
+not the formal Fig.6 builder. Its illustrative six-person output is superseded
+by source/consensus_actual/build_fig06.py, which uses the real ten-person team
+and the eight observed supporters of turns A and B.
+
+All main.tex, sections/*.tex and latex/*.tex files remain unchanged. The current
+manuscript contains 15 figures; source fig08 is in Supplement D. Numbering is
+recorded explicitly in figure_catalog.json. Fig15 uses fig15_original_model.tex.
+Scientific PDF paths and photographs are retained when a plot only needs
+reformatting. Controlled Fig04 examples are evaluated by the supplied original
+geometry engine; no participant/team experiment or population statistic is rerun.
+
+Dependencies: Python 3, PyMuPDF >= 1.24, NumPy, pandas, Shapely, Matplotlib,
+Pillow, and DejaVu Sans/Liberation Sans fonts. Export: vector PDF/SVG and 600 dpi
+PNG companions. Formal captions and subcaptions remain native LaTeX.
+
+Compile the unchanged manuscript from its own root with a complete TeX Live
+installation and the Elsevier elsarticle class. Check the final PDF at actual
+size after a figure rebuild. Do not substitute captioned preview pages for the
+individual assets referenced by the manuscript.
