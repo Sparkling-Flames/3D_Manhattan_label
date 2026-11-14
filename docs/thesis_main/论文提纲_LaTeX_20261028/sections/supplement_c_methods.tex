@@ -12,7 +12,7 @@ ordered training-fold class centres, not by matching a test fold to the
 \texttt{ALL} solution. Other replacement designs retain the labels specified
 for their own comparisons.
 
-Let $S$ denote four raw-response fields:
+Let $S$ denote 4 raw-response fields:
 \begin{sloppypar}
 \texttt{turn\_n}, \texttt{short\_turn\_edges},
 \texttt{near\_\allowbreak straight\_\allowbreak nodes\_\allowbreak 5deg},
@@ -75,7 +75,7 @@ distinct from $S$.
 Joint profile
 (\texttt{OPPJOINT})
 &
-13 features, four domains: opportunity slopes of $S$ (4), opportunity slopes
+13 features, 4 domains: opportunity slopes of $S$ (4), opportunity slopes
 of $B$ (4), overall mean/p20 and opportunity slope of peer-centred Q (3),
 overall mean and opportunity slope of peer-centred log time (2).
 The reported $K=3,4$ are existing cuts.
@@ -102,7 +102,7 @@ Training unique image--reference targets receive equal
 target-within-image, image-within-building and building weights.
 Each axis is centred on its weighted median, divided by its weighted
 p85--p15 range (fallback: weighted standard deviation, then 1), clipped to
-$[-3,3]$, and the three axes are summed and divided by $\sqrt{3}$.
+$[-3,3]$, and the 3 axes are summed and divided by $\sqrt{3}$.
 A person's response slope is weighted covariance of the peer residual and
 opportunity divided by weighted opportunity variance. The Q p20 is a weighted
 empirical quantile of the same peer residuals, not a raw-Q P10 [MR02].
@@ -121,8 +121,8 @@ remain \texttt{unknown}; they are not assigned to the nearest class.
 The \texttt{RFUSE\_GEOM} implementation uses ordinary Manual natural
 orders, sizes $k\in\{10,12,14,16,20,24\}$, and 24 natural orders per pool.
 Repeated deterministic team endpoints are collapsed with their path
-occurrence counts retained. A pool--size group requires at least four
-distinct eligible teams. The seven geometry outputs and the shared
+occurrence counts retained. A pool--size group requires at least 4
+distinct eligible teams. The 7 geometry outputs and the shared
 quality-output eligibility fields must be available; thus Q is not a
 GEOM clustering feature, but Q availability affects its training support.
 For team $t$ and person $w$, $X_{tw}=1/k_t$ for a member and zero otherwise.
@@ -137,7 +137,7 @@ overall/easy/difficult fits are
  \lambda=\max\{ \alpha\,\mathrm{tr}(X^\mathsf{T}WX)/P,\;10^{-12}\},
 \]
 where $P$ is the number of membership columns.
-Nested leave-one-building-out selection considers
+Nested leave-1-building-out selection considers
 $\alpha\in\{0.1,1,10\}$ using training-variance-normalized response MSE,
 balanced over validation buildings, outputs, strata and domains.
 The selection table chooses $\alpha=10$ for the descriptive fit
@@ -194,7 +194,7 @@ Same-room individual Q:
 &
 Baseline: the person's record-mean Q outside the target building.
 Let $\theta_w$ be the record-mean outside-building residual from
-leave-one-person-out task-peer Q.
+leave-1-person-out task-peer Q.
 Prediction: source-image mean Q of other people plus $\theta_w$,
 clipped to $[0,100]$.
 This is \texttt{public\_external} with a single direct source,
@@ -222,7 +222,7 @@ bottom-point matching; it is not the azimuth-paired degree feature in $B$.
 Recorded purpose added to geometry:
 5.158 versus 5.379
 &
-Five numeric features: reference turn count, log(1+\texttt{ref\_H}),
+5 numeric features: reference turn count, log(1+\texttt{ref\_H}),
 short-edge/turn fraction, log minimum horizontal span and log
 90th-percentile floor radius (last two floored at $10^{-5}$ before log).
 Difficulty is categorical; the augmented model adds purpose.
@@ -232,7 +232,7 @@ Fixed candidate portfolio detailed below.
 &
 Outer LOBO on 206 ordinary images/22 buildings; reported repeated-purpose
 subset: 190 images/21 buildings.
-Inner building-grouped five-fold model selection.
+Inner building-grouped 5-fold model selection.
 Q predictions clipped to $[0,100]$; reported MAE is image-equal.
 Geometry is reference-derived, not a no-reference RGB predictor.
 \\
@@ -261,13 +261,13 @@ For each person, $q_w$ is the record-mean Q residual relative to other people
 on the same image, condition, legal target and reference version.
 The cost $c_w$ is the exponential of the record-mean log-time residual,
 additionally separating origin and time source. Q and time histories
-each require at least eight images and three buildings.
+each require at least 8 images and 3 buildings.
 The main panel uses the compatible complete-time history subset, without
 mixing incompatible time sources [MR08].
 
 Q-only selects the $n$ largest $q_w$, breaking ties by person identifier.
 Q/T starts from that team and repeatedly chooses the best strictly
-cost-reducing one-person exchange subject to a fixed historical mean-Q
+cost-reducing 1-person exchange subject to a fixed historical mean-Q
 floor of the initial team's mean minus 2 points. Feasible exchanges are
 ordered by total $c_w$, then descending mean $q_w$, then sorted person IDs;
 cost must decrease by more than $10^{-9}$. It stops when no such exchange
@@ -301,7 +301,7 @@ be scoreable at every size: 124 contexts, the same 46 images and 9 buildings.
 Its labor-growth estimand is
 $\exp\{\mathcal A[\log(T_{13}/T_5)]\}$, separately for each policy
 (2.33142 and 2.17016). It compares independently selected teams,
-not the causal effect of adding eight people to a fixed team.
+not the causal effect of adding 8 people to a fixed team.
 Unscoreable Q is never replaced by zero.
 
 \subsection*{C9. Source-history stopping and acquisition cost}
@@ -323,22 +323,22 @@ All source values at a prefix must be available; the implementation uses
 ordinary means, no interpolation, and a numerical comparison tolerance
 of $10^{-10}$. If no valid prefix exists, no choice is produced.
 The target then advances from $k_{\rm req,r}$ to its first complete
-geometric output: status \texttt{ok}, at least four nodes, and an available
+geometric output: status \texttt{ok}, at least 4 nodes, and an available
 connection. A target with no subsequent complete output remains unavailable.
-Target reference Q is not used by this decision. The fixed-seven comparator
+Target reference Q is not used by this decision. The fixed-7 comparator
 requests $\min(7,K)$ and applies the same geometric top-up, where $K$ is
 the available common-worker pool size.
-The separate online rule triggers at $k\geq5$ when three consecutive
+The separate online rule triggers at $k\geq5$ when 3 consecutive
 complete outputs have equal node counts; otherwise it uses the full pool.
 Equal counts do not establish equal geometry.
 
-The quality panel contains five same-room groups, 21 images and five
+The quality panel contains 5 same-room groups, 21 images and 5
 buildings (5,376 replay attempts). Outcomes are first summarized
 within each target view over its replay/history choices, then equally
 over target views within group, groups within building, and buildings.
-The compatible complete-time panel contains only three groups,
-11 images and three buildings. Let $L_{vr}(k)$ be the recorded member
-labor through prefix $k$, and $k_{7,vr}$ the fixed-seven-plus-geometry choice.
+The compatible complete-time panel contains only 3 groups,
+11 images and 3 buildings. Let $L_{vr}(k)$ be the recorded member
+labor through prefix $k$, and $k_{7,vr}$ the fixed-7-plus-geometry choice.
 For a source/target split $(H,T)$, the project acquisition ratio is
 \[
  \rho_r=

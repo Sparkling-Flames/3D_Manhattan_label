@@ -9,6 +9,9 @@ python dot_fig07/build.py
 python source/height_control_layout/build_fig05.py
 python source/formal_typography/build_other_panels.py
 python source/doorway_layout/build_fig15.py
+python source/doorway_layout/build_targets.py
+python source/quality_endpoint/build_panels.py
+python source/consensus_synthetic/build_panels.py --out panels/consensus_method
 python source/embed_base14_resources.py
 
 Alternatively: python source/rebuild_formal_figures.py
@@ -16,16 +19,17 @@ Alternatively: python source/rebuild_formal_figures.py
 The build order matters: the initial splitter preserves the original scientific
 paths and photographs; the later scripts supply the current final-size layouts.
 The legacy source/fig06_fig15/build_panels.py is retained for provenance but is
-not the formal Fig.6 builder. Its illustrative six-person output is superseded
-by source/consensus_actual/build_fig06.py, which uses the real ten-person team
-and the eight observed supporters of turns A and B.
+not a current formal figure builder. The current main-text consensus method
+figure uses source/consensus_synthetic/build_panels.py. The real ten-person team
+from source/consensus_actual/build_fig06.py remains in Supplement D.
 
-All main.tex, sections/*.tex and latex/*.tex files remain unchanged. The current
+The build scripts do not edit main.tex, sections/*.tex or latex/*.tex. The current
 manuscript contains 15 figures; source fig08 is in Supplement D. Numbering is
 recorded explicitly in figure_catalog.json. Fig15 uses fig15_original_model.tex.
 Scientific PDF paths and photographs are retained when a plot only needs
 reformatting. Controlled Fig04 examples are evaluated by the supplied original
-geometry engine; no participant/team experiment or population statistic is rerun.
+geometry engine; the current main-text Q-A panels use quality_endpoint. No
+participant/team experiment or population statistic is rerun.
 
 Dependencies: Python 3, PyMuPDF >= 1.24, NumPy, pandas, Shapely, Matplotlib,
 Pillow, and DejaVu Sans/Liberation Sans fonts. Export: vector PDF/SVG and 600 dpi

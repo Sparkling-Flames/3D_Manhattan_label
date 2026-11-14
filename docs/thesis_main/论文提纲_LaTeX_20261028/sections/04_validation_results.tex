@@ -6,7 +6,7 @@ The controlled tests distinguish local-height error from mean-height agreement a
 
 \input{figure_package/latex/fig05}
 
-The eight-person evaluation yielded 460 valid defect reports and 478 overall grades. Reports of omitted structure, floor omission, height error and boundary displacement correspond to their geometric or structural measurements (Table~\ref{tab:quality-feedback}). Missing-turn count is a structural diagnostic; omitted floor fraction describes the coverage discrepancy. Overall grades provide complementary support: $Q$ agrees with 110 of 115 directed within-reviewer pairs (95.7\%), versus 88 of 115 for corner-mean prism IoU (76.5\%). Across 60 annotations, its association with mean grades is $\rho=0.946$ (95\% building-bootstrap CI $[0.870,0.977]$). Supplement C16 gives all 238 complete pairs, the mean-grade comparison and reviewer agreement.
+The 8-person evaluation yielded 460 valid defect reports and 478 overall grades. Reports of omitted structure, floor omission, height error and boundary displacement correspond to their geometric or structural measurements (Table~\ref{tab:quality-feedback}). Missing-turn count is a structural diagnostic; omitted floor fraction describes the coverage discrepancy. Overall grades provide complementary support: $Q$ agrees with 110 of 115 directed within-reviewer pairs (95.7\%), versus 88 of 115 for corner-mean prism IoU (76.5\%). Across 60 annotations, its association with mean grades is $\rho=0.946$ (95\% building-bootstrap CI $[0.870,0.977]$). Supplement C16 gives all 238 complete pairs, the mean-grade comparison and reviewer agreement.
 
 \begin{table}[t]
 \centering\small
@@ -28,12 +28,12 @@ Mean overall grade & Corner-mean prism IoU & 0.738\\
 \end{tabular}
 \end{table}
 
-The primary score and eight scale variants retain the same early mean gains, later lower-tail gains and positive symmetric replacement excess. Full scale-wise effects remain in Supplement C16.
+The primary score and 8 scale variants retain the same early mean gains, later lower-tail gains and positive symmetric replacement excess. Full scale-wise effects remain in Supplement C16.
 
 \paragraph{Supported turns and upper boundaries.}
 \label{sec:method-validation}
-Across 138 teams from 48 pools, BEV voting yields 138 valid floor footprints; paired-corner consensus yields 131 footprints and 130 complete 3D layouts. Of the 70 standard Manual teams, 67 yield complete evaluable layouts. Across the 67 complete evaluable layouts, consensus retains 354 strictly majority-supported and 28 half-supported clusters, while excluding 116 minority clusters. Both methods preserve the well-supported recess in uNb9QFRL6hY-45, where seven of ten people mark both turns (Supplement C16).
+Across 138 teams from 48 pools, BEV voting yields 138 valid floor footprints; paired-corner consensus yields 131 footprints and 130 complete 3D layouts. Of the 70 standard Manual teams, 67 yield complete evaluable layouts. Across the 67 complete evaluable layouts, consensus retains 354 strictly majority-supported and 28 half-supported clusters, while excluding 116 minority clusters. Both methods preserve the well-supported recess in uNb9QFRL6hY-45, where 7 of 10 people mark both turns (Supplement C16).
 
-The bathroom example shows why the supporting people matter (Figure~\ref{fig:bathroom-turn-votes}). Two recess turns receive four and two votes in one ten-person team, below the five-vote threshold, producing a four-corner enclosure. In another ten-person team, both receive eight votes and the output retains all six corners. The same supporting observations also determine the upper boundary, as traced in Figure~\ref{fig:consensus-steps}. Aggregation therefore carries both a structural decision and its observed local geometry into the output; the complete upper-endpoint record appears in Supplement D.
+The bathroom example shows why the supporting people matter (Figure~\ref{fig:bathroom-turn-votes}). The 2 recess turns receive 4 and 2 votes in a 10-person team, below the 5-vote threshold, producing a 4-corner enclosure. In another 10-person team, both receive 8 votes and the output retains all 6 corners. The upper observations of these supporters also determine the retained turns' local heights (Supplement D). Aggregation therefore carries both a structural decision and its observed local geometry into the output.
 
 \input{figure_package/latex/fig07}

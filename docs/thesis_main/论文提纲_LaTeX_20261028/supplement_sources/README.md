@@ -14,7 +14,7 @@
 | automatic_sensitivity | 补充材料采用的已保存分支比较和汇总输入 |
 | implementation_reference | 几何、评分、对应及共识实现参考；运行要求见该目录说明 |
 
-正式编译入口在论文根目录：supplement_geometry.tex、supplement_evidence.tex、supplement_personnel.tex、doorway_supplement.tex。当前正文图片使用 figure_package/latex 和 figure_package/panels；figures 中仅保留现有 TeX 引用的补充图件。
+正式编译入口在论文根目录：supplement_geometry.tex、supplement_evidence.tex、supplement_personnel.tex、supplement_restructured.tex、doorway_supplement.tex。当前正文图片使用 figure_package/latex 和 figure_package/panels；补充图件位于 supplement_figures。补充 B 的 B20–B23 也从该目录读取，避免旧 figures 路径失效。
 
 ## 投稿准备原则
 

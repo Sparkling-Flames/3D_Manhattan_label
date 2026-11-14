@@ -1,21 +1,11 @@
 \begin{figure*}[t]
 \centering
 \setcounter{subfigure}{0}
-\begin{minipage}{\textwidth}
-\centering
-\ESPanel{.24\linewidth}{panels/fig04/fig04_a.pdf}{Boundary shift: 0.4 m}%
-\hfill%
-\ESPanel{.24\linewidth}{panels/fig04/fig04_b.pdf}{Boundary shift: 1.2 m}%
-\hfill%
-\ESPanel{.24\linewidth}{panels/fig04/fig04_c.pdf}{Local height shift: $\pm 0.3$ m}%
-\hfill%
-\ESPanel{.24\linewidth}{panels/fig04/fig04_d.pdf}{Local height shift: $\pm 1.2$ m}
-
-\par\vspace{2pt}
-\includegraphics[width=.82\linewidth]{\FigureAssetRoot/panels/fig04/fig04_legend.pdf}
-\par\vspace{2pt}
-
-\end{minipage}
-\caption{Controlled examples show how geometric changes affect Q. The reference room has a $4\times4$ m footprint, a 3 m wall height and a 1.6 m camera height. (a--b) Moving one floor boundary inward reduces overlap and increases boundary distance; hatched regions mark omitted floor area. (c--d) Opposing upper-boundary shifts preserve the footprint and perimeter-mean height while increasing local height error. Blue and orange show the smaller and larger changes; dashed gray denotes the reference. Measurements and Q are computed from the displayed geometry.}
+\ESPanel{170mm}{panels/quality_endpoint/lower.pdf}{Moving the lower endpoint, with the upper image endpoint fixed}
+\par\vspace{0pt}
+\ESPanel{170mm}{panels/quality_endpoint/upper.pdf}{Moving the upper endpoint, with the lower image endpoint fixed}
+\par\vspace{0pt}
+\includegraphics[width=170mm]{\FigureAssetRoot/panels/quality_endpoint/legend.pdf}
+\caption{Controlled endpoint edits and their geometric effects. Both rows start from the same $4\times4$ m room with 3 m walls and a 1.6 m camera height. 1 endpoint moves upward by 24 pixels in a $1024\times512$ panorama while its partner stays fixed. Read each row from image edit to footprint, reconstructed walls and score. The lower-endpoint edit affects floor and height measurements; the upper-endpoint edit affects height alone. Orange highlights affected geometry and changed measurements.}
 \label{fig:quality-components}
 \end{figure*}

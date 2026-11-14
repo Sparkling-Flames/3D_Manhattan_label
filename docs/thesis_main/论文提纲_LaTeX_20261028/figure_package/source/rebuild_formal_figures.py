@@ -25,6 +25,9 @@ def main():
         ["source/height_control_layout/build_fig05.py"],
         ["source/formal_typography/build_other_panels.py"],
         ["source/doorway_layout/build_fig15.py"],
+        ["source/doorway_layout/build_targets.py"],
+        ["source/quality_endpoint/build_panels.py"],
+        ["source/consensus_synthetic/build_panels.py", "--out", "panels/consensus_method"],
         ["source/embed_base14_resources.py"],
     ]
     for step in steps:
