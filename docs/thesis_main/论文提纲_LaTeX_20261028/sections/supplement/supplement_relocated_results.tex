@@ -1,0 +1,65 @@
+% Supplement D content relocated from the previous main Results.
+% Existing Supplements C7, C10, C17 and C19 retain the full protocols and
+% broader analyses. The subsection names below match the revised main text.
+\section*{Supplement D: Extended results supporting the main comparisons}
+
+\subsection*{D1. Individual prediction, relative performance and joint profiles}
+\label{supp:d1-individual}
+
+Adding scene geometry to difficulty, annotator and source controls improves out-of-building simplification prediction (MSE 0.068 to 0.060), but not $Q$ prediction (MAE 13.877 to 14.001). The 22 building-held-out folds use 6,512 ordinary Manual records from 206 images and 60 people, with equal building weights (Supplement C7). Geometry chiefly adds information about structural expression.
+
+Individual relative performance also changes with image difficulty. A2's mean absolute $Q$ was 80.054 on 15 difficult images and 80.262 on 43 non-difficult images. The corresponding peer-percentile ranks were 0.866 and 0.648. A similar absolute score can therefore occupy a different position within the image's annotator distribution (Supplement C1).
+
+Joint profiles combine structural habits, geometry, historical $Q$ and recorded duration. Across 162 shared images in 17 buildings, J2 minus J1 gave a mean $Q$ difference of $-0.133$ and a geometric mean duration ratio of 0.885. Supplement C6 specifies their construction; Supplements B23 and C19 give the extended geometric and labor comparisons.
+
+\subsection*{D2. Group-size levels, shared paths and full-pool checks}
+\label{supp:d2-size}
+
+Table~\ref{tab:d-size-levels} gives image-equal quality levels for the fixed 171-image panel: 256 Monte Carlo entry orders per image from pools of 30--35 people. Changes are calculated before rounding; path- and building-resampling intervals appear in the main text.
+
+\begin{table}[ht]
+\centering\small
+\caption{Quality levels on the fixed 171-image panel. P10 is the mean of the within-image 10th percentiles.}
+\label{tab:d-size-levels}
+\begin{tabular}{lrrrrr}
+\toprule
+Annotators & 3 & 6 & 10 & 20 & 30\\
+\midrule
+Mean Q & 77.9 & 82.6 & 84.3 & 85.7 & 86.2\\
+P10 & 64.9 & 73.1 & 76.9 & 80.6 & 83.5\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At 20 and 30 people, the within-image standard deviations average 4.107 and 2.076, and completion is 99.068\% and 99.488\% of 43,776 attempts per size. Of those paths, 43,212 have scorable outputs at both sizes. Restricting to this shared support gives a mean $Q$ increase of 0.502 points, a P10 increase of 2.844 and a standard-deviation decrease of 2.005. Quality and completion retain their respective denominators.
+
+Full-pool convergence and geometric change are separable. Among the 12 images with exactly 30 eligible annotators, increasing size from 20 to 30 changes mean $Q$ by $-0.911$ and P10 by $+1.612$, even as variation between full-pool teams reaches zero. Among 97 jointly scorable images with 35-person pools, moving from 30 to 35 increases mean $Q$ by 0.281 and P10 by 2.736. Supplement C10 reports each capacity stratum and the comparison excluding the capacity-30 images.
+
+Only 7 of 27 difficult images change by at most 2 $Q$ points from 20 to 30 people. The retrospective stability analysis in C19 distinguishes this small average change from sustained stability of each image's remaining curve.
+
+From 20 to 30 people, P10 improves on 166 of 171 images, the standard deviation declines on 168, and footprint variation declines on 170. Completion falls by 1.857 percentage points from 3 to 6. 30-person teams occupy 85.7\%--100\% of their pools; after removing the 12 capacity-30 images, the P10 gain is 2.942 points and positive on 155 of 159 images (Supplements C5 and C10).
+
+\subsection*{D3. Additional profile, replacement and geometric responses}
+\label{supp:d3-composition}
+
+On joint quality-and-time support for 12-person teams, replacing 1 C2 composition seat with C3 raises composition-mean $Q$ by 1.963 points, with a geometric labor ratio of 1.020 (27 images). The J3-to-J4 contrast, ordered by training-fold $Q$ residual, gives $+2.701$ points and a ratio of 0.897 (14 images). The main quality-only comparison uses 37 images.
+
+The R1--R2 profiles summarize historical changes to group geometry. Across 192 shared images, R2 exceeds R1 by 13.937 individual-$Q$ points. In the 12-person, 4-person matched replacement comparison, within-profile changes average 4.132 points in absolute magnitude and cross-profile changes average 6.308; the latter are larger on 62 of 83 images. Supplement C6 defines the profiles and Supplement C19 gives the additional outcomes.
+
+At a team size of 20, replacing 7 C2 members with 7 C3 members raises $Q$ by 4.484 points across 84 images. On the 40 images with both quality and timing records, the increase is 4.406 points and total recorded team labor increases by 121.05 person-seconds. These results use their own shared quality-and-time support, separate from the 14-person matched replacement comparison.
+
+Holding 7-person joint-profile replacement blocks fixed while increasing team size from 20 to 28 reduces the mean absolute $Q$ shift by 1.317 points across 76 images, with reductions on 63. All 4 outputs in each paired-size comparison are scorable. This tests background size; the main text separately tests background identity.
+
+Component values explain disagreement between scalar quality summaries. In the 20-person C2-to-C3 comparison, 7 of 84 images gain prism IoU while losing $Q$. On \texttt{x8F5xyUWy9e-03}, $Q$ falls by 4.726 points while prism IoU rises by 2.450 percentage points and internal direction error rises by $0.836^\circ$, alongside local boundary and height changes.
+
+The whole-profile C2--C3 mixture loses 19.768 $Q$ points relative to pure C3 on 34 difficult images, with losses on 26. C19 gives the background-reversal counts at matched profile proportions and at a 1-point effect threshold.
+
+\subsection*{D4. Additional cross-view and doorway responses}
+\label{supp:d4-viewpoint}
+
+Local corner changes occur in more than the illustrated same-room pair. In a second room with 3 directly compared view pairs, 19 of 33, 12 of 30 and 14 of 30 shared annotators change their local endpoint markings. Same-person local endpoint agreement does not consistently exceed the different-person comparison in that room. These outcomes accompany the recurring global simplification patterns reported in the main text (Supplement C19).
+
+Short-edge and individual-quality predictions use 1,793 target answers from 65 panoramas, 56 annotators and 13 buildings. Image-mean $Q$ prediction uses both directions of 128 pairs, aggregated within target image and building. Adding coarse room-use labels to geometry raises $Q$ MAE from 5.158 to 5.379 on a separate 190-image, 21-building panel (prediction procedures in C7).
+
+In the screened 17-image doorway panel, complete-and-evaluable rates are 86.63\%, 80.79\% and 92.72\% at 3, 6 and 14 people. Screening retains spatially interpretable responses against the common whole-space reference. Target-specific pools separately compare submissions covering either room or both (counts and shared paths in B17, B22 and C19).
+

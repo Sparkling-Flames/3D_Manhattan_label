@@ -1,0 +1,31 @@
+\subsection{Method validation}
+\label{sec:q-validation}\label{sec:human-validation}
+
+\input{figure_package/latex/fig05}
+
+\paragraph{Geometric quality measurement}
+Controlled tests confirm that $Q$ detects local height distortion even when mean height is unchanged, while remaining invariant under collinear resampling of unchanged wall geometry (Figure~\ref{fig:height-control}). In evaluations of 60 real annotations, 8 randomly invited annotators reported visible defects associated with the corresponding geometric measurements and structural diagnostics (Table~\ref{tab:quality-feedback}). Together, the controlled tests and defect feedback validate the geometric interpretation of $Q$: its measurements respond to the visible errors they are designed to capture. Supplement A presents the controlled tests, C16 details defect feedback and score-scale sensitivity, and D5 reports complementary overall-grade comparisons.
+
+\begin{table}[t]
+\centering\small
+\caption{Spearman associations across 60 Manual annotations from 30 panoramas. Defect shares use each annotation's valid reports.}
+\label{tab:quality-feedback}
+\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.38\linewidth}>{\raggedright\arraybackslash}p{.43\linewidth}r@{}}
+\toprule
+Human judgment & Measurement & $\rho$\\
+\midrule
+Missing structure & Missing effective turns & 0.544\\
+Floor omission & Omitted floor fraction & 0.586\\
+Wall-height error & Local height $H_c$ & 0.612\\
+Boundary-position error & Boundary distance $S_b$ & 0.395\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{figure_package/latex/fig07}
+
+\paragraph{Paired-corner structural consensus}
+\label{sec:method-validation}
+In the shared-team example in Supplement C16, both BEV region voting \cite{lee2018} and paired-corner consensus retain the supported recess. Paired-corner consensus additionally records its supporters and aggregates their upper--lower endpoints to represent local wall heights. The fixed-size bathroom example shows how membership alone alters support for the same recess and determines whether it is retained (Figure~\ref{fig:bathroom-turn-votes}). Supplement C16 reports the shared-team comparison and support counts; Supplement D provides further upper-boundary evidence.
+

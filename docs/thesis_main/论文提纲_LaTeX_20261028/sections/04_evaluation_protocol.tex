@@ -1,0 +1,75 @@
+\section{Evaluation Protocol}
+\label{sec:study-design}
+
+The evaluation protocol specifies the annotation task and data, the controlled comparisons addressing the 4 research questions, and the assessment settings. Table~\ref{tab:principal-analysis-sets} summarizes the main comparisons and their image support.
+
+\subsection{Annotation task and study data}
+\label{sec:task-data}
+
+Participants marked the walls enclosing the camera, including architectural recesses, while ignoring movable furniture and decoration. The main task assumes vertical walls along two orthogonal plan-view axes, a closed single-level footprint, and single floor and ceiling planes. Openings are closed at identifiable structural divisions such as doorframes or paired wall ends.
+
+At doorway-boundary viewpoints, the camera lies beneath a doorframe at the junction of adjoining rooms (Figure~\ref{fig:doorway-setting}). The lintel sits below the adjacent room ceilings and marks a physical division. Each room satisfies the task assumptions individually, whereas the capture position renders the choice of a single enclosing room ambiguous. We analyze these viewpoints separately. Oblique walls, sloped ceilings and split levels exceed the main task's geometric assumptions and form the out-of-scope (OOS) cohort illustrated in Supplement B19.
+
+\begin{figure}[!ht]
+\centering
+\setcounter{subfigure}{0}
+\begin{minipage}{\columnwidth}
+\centering
+\ESPanel{.44\linewidth}{panels/fig15/original_model_clean.pdf}{Camera beneath the lintel}%
+\hfill%
+\ESPanel{.54\linewidth}{panels/fig15/b_panorama.pdf}{Panorama at the doorway}
+\end{minipage}
+\caption{Camera position at a doorway-boundary viewpoint. The complete 3D model and panorama show the same bathroom--hallway junction. The camera lies beneath the lintel, where the doorway separates the adjoining rooms.}
+\label{fig:doorway-setting}
+\end{figure}
+
+After instruction and practice, \textit{Manual} annotators placed upper--lower pairs from scratch using an interactive 3D preview. These independent drawings supply the main individual and team comparisons. \textit{Semi} annotators edited HoHoNet predictions \cite{hohonet2021} or 6 controlled-defect initializations on separate panoramas. The collection contains 6,512 Manual submissions from 60 people on 206 panoramas in 22 buildings and 960 Semi submissions from 59 people on 37 panoramas in 12 buildings; 57 of the 62 total participants contributed to both modes (Supplements B1, C12, C20). Participants were recruited from university cohorts and Upwork, received an average of USD~0.50 per panorama, and consented to duration recording and research use.
+
+Before the study, 3 experts reviewed and corrected MatterportLayout references \cite{chang2017matterport3d,zou2021manhattan}, clarified target rules and identified natural Semi initialization defects. Reference corner counts, self-occlusion and expert inspection define the easy, moderate and difficult tiers.
+
+\subsection{Controlled comparisons}
+
+Individual comparisons (RQ1) examine structural retention and boundary localization across image conditions and annotator classes. Semi submissions are compared with their initial layouts to distinguish retained errors, editing and correction; submission-time reports are compared with geometric outcomes within the same image and within person (Supplement C11).
+
+Group-size comparisons (RQ2) use Monte Carlo sampling with 256 uniformly random entry orders per eligible pool to form nested teams of 3--30 people on a fixed panel of 171 ordinary panoramas, each with at least 30 eligible annotators. The image and eligible pool remain fixed as members enter.
+
+Composition and replacement comparisons (RQ3) use profiles derived from each person's history outside the target building. Structural classes C1--C3 represent simplifying, typical and turn-retaining tendencies. The classification uses corner counts, short edges, near-collinear vertices and reference matches to distinguish how people retain structure. Supplement C6 specifies feature definitions, scaling and clustering. Consensus-response (R1--R2) profiles summarize historical effects on group geometry; joint profiles (J1--J4) combine structural, geometric, historical-quality and duration features (Supplements C6--C9).
+
+\begin{table*}[t]
+\centering\small
+\caption{Overview of the principal comparisons. Samples overlap; Supplement C20 reports full coverage.}
+\label{tab:principal-analysis-sets}\label{tab:analysis-support}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.19\textwidth}>{\raggedright\arraybackslash}p{.27\textwidth}>{\raggedright\arraybackslash}p{.48\textwidth}@{}}
+\toprule
+Comparison & Coverage & Design\\
+\midrule
+Group size & 171 images; 22 buildings & Increase team size within a fixed annotator pool\\
+Shared structure & 70 teams; 24 images & Aggregate the same team's submissions with 2 methods\\
+Matched replacement & 69 images; 20 buildings & Retain 7 members; compare within- and cross-class replacement of the other 7\\
+Retained members & 276 replacement blocks; 7 images & Fix outgoing and incoming members; vary retained members\\
+Cross-view structure & 128 view pairs; 65 images & Compare the same and different people's structural expression across room views\\
+Doorway screening & 17 images; 9 buildings & Compare team outputs before and after screening against the same whole-space reference\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+A direct replacement compares $A=D\cup X$ with $C=D\cup Z$, retaining members $D$ while exchanging equal-sized blocks $X$ and $Z$. The matched within- and cross-class replacement design adds $B=D\cup Y$: $X$ and $Y$ share a profile, $Z$ has a contrasting profile, and $D,X,Y,Z$ are mutually disjoint. It separates excess change magnitude from direction:
+\begin{align}
+G_S&=\frac{|Q_C-Q_A|+|Q_C-Q_B|}{2}-|Q_B-Q_A|,\label{eq:symmetric-excess}\\
+\Delta_{CB}&=Q_C-Q_B.\label{eq:directional-change}
+\end{align}
+Effects are averaged over valid exchanges and backgrounds within each image, then equally over images. Fixed-size profile ratios and whole-profile mixtures test composition; holding $(X,Z)$ fixed while changing $D$ tests background dependence (Supplement C17).
+
+Cross-view comparisons (RQ4) follow the same room across viewpoints, comparing each person's structural expression with that of others in the shared pool. Matched team comparisons reuse the same retained and exchanged members across views (Supplement C7).
+
+Doorway comparisons distinguish screening from enclosure-specific grouping. Experts screened responses for insufficient points or uninterpretable enclosures while blinded to $Q$. The fixed 17-image comparison uses the same whole-space reference before and after screening. Separate pools group submissions by the space they represent and use the corresponding references (Supplements C15, C17, C20).
+
+\subsection{Assessment settings and outcome measures}
+\label{sec:method-assessment}
+
+Effective turns exceed $5^\circ$; short edges occupy less than 4\% of the perimeter with endpoint turns of at least $15^\circ$. The $Q$ form and scales were fixed using controlled geometric perturbations before human validation and team analysis. Measurements use 2,048 boundary and 4,096 height samples per direction. Consensus uses a per-observation skip cost of $g=7.5^\circ$, selected through tuning to accommodate positional differences at the same wall turn while keeping nearby distinct turns separate. Supplement C16 records these settings and the existing score-scale sensitivity checks.
+
+Team outcomes are mean $Q$, within-image P10, between-team standard deviation, and complete-and-evaluable rate. Quality comparisons use scorable outputs; completion counts all attempts. For group-size curves, 2,000 bootstrap resamples of entry trajectories estimate Monte Carlo precision, while 2,000 building resamples describe variation across the 22 buildings with the observed annotators retained.
+
+Supplement D7 reports additional offline selection and stopping comparisons, including their protocols and recorded labor.

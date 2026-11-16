@@ -1,6 +1,6 @@
 """Rebuild the formal Fig. 02, 09, and 14 panels at their fixed TeX widths.
 
-Fig. 02 is a code-drawn diagram with the original information relationships.
+Fig. 02 is a top-down overview of the two-method framework and empirical study.
 Fig. 09/14 use the frozen, existing PDF paths and photographs. Only PDF text
 objects are removed before fresh, embedded-font labels are added. Scientific
 paths are never rasterized or recomputed. Fig. 14a's detail is translated 8 pt
@@ -193,46 +193,48 @@ def box(page, rect, title, body, color=BLACK, title_size=8, body_size=7.5):
 
 
 def build02():
-    doc, page = newpage(145*72/25.4, 292)
-    box(page, (5, 5, 129, 48), "Scene and task target",
-        ["Ordinary and boundary-case", "analyses"])
-    box(page, (5, 59, 63, 102), "Manual", ["From scratch"], BLUE)
-    box(page, (71, 59, 129, 102), "Semi", ["Edit a proposal"], ORANGE)
-    box(page, (5, 110, 129, 167), "Submitted observations",
-        ["Extent and turns", "Paired endpoints", "Reports, edits, person-time"])
-    box(page, (150, 25, 274, 80), "Geometric quality",
-        ["Floor, boundary, direction, height", "Components and overall Q"], BLUE)
-    box(page, (150, 124, 274, 179), "Structural consensus",
-        ["Identity, support, position", "Connected layout", "Output status"], GREEN)
-    box(page, (5, 191, 274, 238), "Controlled offline comparisons",
-        ["Within images: fix target; vary team size or members.",
-         "Across views: retain room relations and comparison support."])
-    box(page, (288, 5, 406, 51), "RQ1 Individuals", ["Across task conditions"])
-    box(page, (288, 66, 406, 112), "RQ2 Group size", ["Add people within a pool"])
-    box(page, (288, 127, 406, 173), "RQ3 Team composition", ["Vary profiles and members"])
-    box(page, (288, 188, 406, 234), "RQ4 Cross-view", ["Repetition and transfer"])
-    arrow(page, (34,48), (34,59)); arrow(page, (100,48), (100,59))
-    arrow(page, (34,102), (34,110)); arrow(page, (100,102), (100,110))
-    arrow(page, (129,130), (150,63), BLUE)
-    arrow(page, (129,151), (150,151), GREEN)
-    # Scoreable consensus outputs enter the quality measurement; Q is not a
-    # prerequisite for forming consensus. Individual observations enter Q too.
-    arrow(page, (157,124), (157,80), BLUE)
-    text(page, "Scorable layouts", 166, 104, 7, color=BLUE)
-    text(page, "Reviewed target reference", 212, 12, 7, color=GRAY, align="center")
-    arrow(page, (212,15), (212,25))
-    arrow(page, (67,167), (67,191)); arrow(page, (212,179), (212,191))
-    page.draw_line((281,28), (281,211), color=GRAY, width=0.65)
-    arrow(page, (274,52), (281,52)); arrow(page, (274,152), (281,152))
-    arrow(page, (274,216), (281,211))
-    for y in (28,89,150,211): arrow(page, (281,y), (288,y))
-    arrow(page, (139.5,238), (139.5,251))
-    page.draw_rect((5,253,406,289), color=None, fill=(0.95,0.96,0.97))
-    text(page, "Evidence for annotation organisation and review", 13, 266, 8.3, bold=True)
-    text(page, "Clarify target rules; inspect disputed structures; use history and feedback", 13, 278, 7.5)
-    text(page, "to guide re-annotation.", 13, 287, 7.5)
-    record = export(doc, "fig02/a.pdf", 145)
-    record["scope"] = "Code-drawn diagram; original method/data dependencies retained"
+    """Top-down research flow, with two parallel methods and no feedback arrows."""
+    doc, page = newpage(174*72/25.4, 265)
+    pale = (.96, .97, .98)
+    page.draw_rect((5,5,488,77),color=GRAY,width=.7)
+    text(page,"Panoramic scenes and independent annotations",246.5,20,9.4,bold=True,align="center")
+    text(page,"Manual: draw from scratch",128,39,9,bold=True,align="center")
+    text(page,"Primary individual and team study",128,52,8,align="center")
+    text(page,"Semi: edit an initial layout",366,39,9,bold=True,align="center")
+    text(page,"Initialization and editing observations",366,52,8,align="center")
+    page.draw_line((246.5,29),(246.5,56),color=(.82,.85,.87),width=.5)
+    text(page,"Submitted layouts: enclosure, wall turns and paired upper-lower endpoints",246.5,69,8.3,align="center")
+
+    page.draw_rect((5,95,488,172),color=GRAY,fill=pale,width=.7)
+    text(page,"Framework: two complementary methods",246.5,110,9.4,bold=True,align="center")
+    box(page,(13,119,239,165),"Geometric quality Q",
+        ["Measure individual and collective layouts",
+         "Extent, boundary, direction and height"],BLUE,title_size=9.2,body_size=8.2)
+    box(page,(254,119,480,165),"Paired-corner structural consensus",
+        ["Match turns, count supporters and summarize",
+         "paired endpoint positions into a shared layout"],GREEN,title_size=9.2,body_size=8.2)
+
+    page.draw_rect((5,190,488,260),color=GRAY,width=.7)
+    text(page,"Controlled research comparisons",246.5,205,9.4,bold=True,align="center")
+    rows=[("RQ1  Individuals",["Expression across image","and task conditions"]),
+          ("RQ2  Group size",["Add people within","the same pool"]),
+          ("RQ3  Composition",["Mix classes; replace people","Vary retained backgrounds"]),
+          ("RQ4  Cross-view",["Same-room repetition","and transfer"])]
+    for i,(title,lines) in enumerate(rows):
+        cx=66+120.3*i
+        text(page,title,cx,222,8.8,bold=True,align="center")
+        for j,line in enumerate(lines):
+            assert FONT.text_length(line,fontsize=8) <= 112, line
+            text(page,line,cx,236+11*j,8,align="center")
+        if i<3:
+            page.draw_line((126+120.3*i,214),(126+120.3*i,252),color=(.82,.85,.87),width=.5)
+    links=[((246.5,79),(246.5,93)),((246.5,174),(246.5,188))]
+    assert all(a[0]==b[0] and a[1]<b[1] for a,b in links)
+    for start,end in links:
+        arrow(page,start,end,width=1)
+    record=export(doc,"fig02/a.pdf",174)
+    record["scope"]="Text-led research flow: annotations, two complementary methods, four research questions"
+    record["reading_direction"]="top-to-bottom; two downward arrows; no method dependency arrows"
     return record
 
 

@@ -1,0 +1,29 @@
+\subsection{Profile Composition, Specific Members, and Retained Subgroups}
+\label{sec:composition}
+\subsubsection{Profile proportions and specific members}
+\label{sec:composition-discussion-anchor}
+
+Higher C3 proportions improve average team quality, but identical profile counts leave substantial differences between member combinations. In the 12-person comparisons, increasing the C3 allocation by 1 seat in place of C2 raises composition-mean $Q$ by 1.969 points across 37 panoramas, positive on 31. Within a fixed composition, however, the mean 5th-to-95th percentile range across member sets is 24.091 points on difficult images and 6.037 on easy images. Figure~\ref{fig:composition-members}a illustrates one 12-person comparison.
+
+\input{figure_package/latex/fig11}
+
+A broader variance decomposition uses all 924 6-of-12 candidate selections in each of 231 panels from 40 panoramas in 22 buildings. Each panel holds its background fixed; backgrounds of 6--23 people produce teams of 12--29. Under the weighting specified in Supplement C17, profile compositions explain only 15.43\% of total $Q$ variance, whereas member differences within identical compositions account for 84.57\%. Fixing a class ratio therefore leaves most of the final geometry undetermined. Because annotators in the same class contribute distinct turns and endpoint positions, class proportions and specific member selection jointly shape the collective layout. Comparisons using joint and consensus-response profiles further separate geometry from recorded labor (Supplement D3).
+
+\subsubsection{Replacement magnitude, direction and structural mixing}
+
+Cross-profile replacement produces larger changes than matched within-profile replacement, with average direction varying by the incoming class. In direct 14-person replacement comparisons, replacing 7 C2 members with 7 C3 members while retaining the other 7 raises mean $Q$ by 6.190 points, with gains on 77 of 83 images. The matched replacement design compares 2 disjoint C2 blocks and a C3 block against the same background. Of 147 designated matched comparisons, 146 are scorable. Across 69 jointly scorable images, cross-profile replacement exceeds within-profile variation by a symmetric excess of $G_S=3.441$ points, positive on 50; team C exceeds team B by $\Delta_{CB}=6.712$ points, positive on 65 (Figure~\ref{fig:matched-half}).
+
+Reversing the exchange separates change magnitude from quality direction. In 6-person teams replacing 3 members, C1-to-C3 and C3-to-C1 exchanges both yield positive mean excess magnitudes ($G_S=3.269$ and $3.955$), yet produce opposite signed effects ($+7.327$ and $-7.777$ $Q$ points) on the same 36 images. Cross-profile turnover thus drives large geometric shifts regardless of whether quality rises or falls.
+
+Pooling classes either supplies missing observations or dilutes support for fine structure. Across 154 images in 22 buildings, the full C2--C3 mixture has mean $Q=88.52$, falling between pure C2 (84.83) and pure C3 (92.29); this comparison changes both composition and team size (Figure~\ref{fig:profile-mixtures}). On 36 self-occluded images, however, the mixture retains 2.389 fewer turns and 1.389 fewer short edges than pure C3, suffering an 18.467-point $Q$ loss. Adding annotators who bridge a recess dilutes its support share. The recess drops out once that share falls below half. The fixed-size bathroom example demonstrates how membership changes detail retention even at an unchanged support threshold (Figure~\ref{fig:bathroom-turn-votes}). Fine-structure retention therefore depends on support across the combined team.
+
+\input{figure_package/latex/fig12}
+
+\subsubsection{Retained members change direction and localization}
+
+The same incoming members improve one retained team while degrading another. Among 276 replacement blocks evaluated under at least 2 scorable backgrounds, 56 (20.3\%, across 7 panoramas) reverse direction, producing both positive and negative $Q$ shifts. On \texttt{q9vSo1VnCiC-30}, both backgrounds have 7 members, comprising 1 C1 and 6 C2 members. The exact same 7-person C2-to-C3 exchange lowers $Q$ from 85.130 to 81.090 in one background yet raises it from 38.146 to 87.269 in the other. Holding class counts fixed isolates the role of the retained individuals: incoming observations interact with existing corner support and endpoint positions. The retained members determine how an average class advantage translates into a specific replacement outcome. Supplement C19 and Supplement D3 report the thresholded and matched-composition counts.
+
+Member changes also alter boundary localization without changing corner count. Of 1,829 jointly scorable 20-person replacement pairs, 1,632 preserve the exact same corner count, yet 127 of these shift by more than 10 $Q$ points. On \texttt{7y3sRwLe3Va-13}, all 4 corners keep their identities and unanimous 20-person support after a 7-person swap, yet their shifted endpoint medians raise $Q$ from 77.41 to 92.58 (Figure~\ref{fig:localization-mechanism}). Geometric component breakdowns expose additional cases where prism IoU rises while $Q$ drops (Supplement D3). Together, these comparisons trace member effects directly to supported structure, boundary position and the baseline observations held by the rest of the team.
+
+\input{figure_package/latex/fig13}
+

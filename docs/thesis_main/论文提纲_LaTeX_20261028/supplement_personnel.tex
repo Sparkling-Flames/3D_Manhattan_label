@@ -74,7 +74,7 @@ A61 & 103 / 71.957 / 0.395 & 31 / 54.177 / 0.389 & 24 / 46.705 / 0.438 \\
 A62 & 103 / 76.474 / 0.473 & 32 / 69.563 / 0.655 & 22 / 46.100 / 0.394 \\
 \bottomrule\end{longtable}
 \subsection*{C2. Structural selection versus historical-quality selection}
-The matched selection comparison covers 208 events and 670 distinct teams. At 14 people with seven replaced, structural selection minus historical-quality selection averaged $-$0.034 Q points. At 20 people with seven replaced, the difference was $-$0.482; the building-cluster interval was [$-$1.220, $-$0.001]. This comparison is distinct from the quality-and-time policy in the main text. Target-team identities, output status, and shared support follow the recorded comparison.
+The matched selection comparison covers 208 events and 670 distinct teams. At 14 people with seven replaced, structural selection minus historical-quality selection averaged $-$0.034 Q points. At 20 people with seven replaced, the difference was $-$0.482; the building-cluster interval was [$-$1.220, $-$0.001]. This comparison is distinct from the quality-and-time policy in Supplement D7. Target-team identities, output status, and shared support follow the recorded comparison.
 \subsection*{C3. Matched replacements and historical profiles}
 \begin{center}\small
 \begin{tabular}{lrrrr}
@@ -88,7 +88,7 @@ More-simplifying to turn-retaining & 8 & 4 & 24 & +10.095 \\
 Reverse direction & 8 & 4 & 4 & $-$5.404 \\
 \bottomrule
 \end{tabular}\end{center}
-The joint-profile row retains its recorded class labels and historical design. The consensus-response rows use the R1/R2 display aliases defined in the main text and retain the recorded class memberships. They use recorded matched comparisons; within- and between-profile absolute differences are described in the main text for 12/4, not substituted with a directional difference. The two eight-person directions have different image supports.
+The joint-profile row retains its recorded class labels and historical design. The consensus-response rows use the R1/R2 display aliases defined in the main text and retain the recorded class memberships. They use recorded matched comparisons; within- and between-profile absolute differences for 12/4 are reported in Supplement D3 and C19, not substituted with a directional difference. The two eight-person directions have different image supports.
 
 \subsection*{C4. Large replacement blocks}
 The table summarizes image-level results for the stated profile definitions and class labels. $m$ is the number replaced and $n$ is team size; image counts vary with capacity. Values are image-equal mean C--B Q among the recorded image-level results.
@@ -124,7 +124,7 @@ The same 171-image panel and 256 entry orders per image underlie these curves. E
 \caption{Floor-layout variation for all images and the three difficulty groups. Doorway and OOS analyses are separate.}
 \end{figure}
 
-\input{sections/supplement_c_methods}
+\input{sections/supplement/supplement_c_methods}
 \subsection*{C10. Group-size precision and finite pools}
 The 171-image main panel contains pools of 30--35 eligible annotators.
 Table~\ref{tab:pool-capacity} separates participation fraction from absolute
@@ -191,91 +191,20 @@ Quality and time & 94.055 & 89.747 & 2.170\\\hline
 \end{table}
 
 
-\subsection*{C14. Automatic and assisted outputs}
+\subsection*{C14. Same-room replacement support}
 
-\paragraph{Same-room replacement directions.}
-In paired-corner consensus, pairwise matching and MV50 support first fix the retained corner identities and their median coordinates. When team members retain different subsets of wall turns, no single member's submitted ring may cover every retained identity; fixed-node assisted ordering then supplies the cyclic connection order over those fixed nodes without adding or removing nodes, changing distinct-person support counts, or modifying median coordinates. The ten-person, five-person-replacement comparison has 322 specified events, 19 physical view pairs and seven buildings. Automatic source-ring connection makes 295 events jointly scorable; fixed-node assisted ordering expands this support to 318. Both branches yield positive pair-mean \(Q_C-Q_B\) in all 19 pairs and positive changes at both views in 18 pairs. Table~\ref{tab:automatic-same-room} compares the saved pair-level results under the same event--member-block--view-pair aggregation. On the original 295-event support, automatic and assisted effect summaries coincide to numerical precision.
+The 10-person, 5-person-replacement comparison comprises 322 specified events across 19 physical view pairs in 7 buildings, with 318 events jointly scorable. Effects are aggregated over events, member blocks and physical view pairs, weighting the two views equally within each pair. Mean $G_S$ is 4.787 and mean $Q_C-Q_B$ is 10.331. Pair-mean $Q_C-Q_B$ is positive in all 19 pairs; 18 pairs improve at both views.
 
-\begin{table}[ht]
-\centering\small
-\caption{Same-room replacement effects from automatic and fixed-coordinate assisted outputs. The exchanged profiles, team sizes and 19 view pairs are shared; assisted ordering expands the jointly scorable event support.}
-\label{tab:automatic-same-room}
-\begin{tabular}{lrr}
-\toprule
-Outcome & Automatic & Assisted\\
-\midrule
-Jointly scorable events & 295/322 & 318/322\\
-Mean \(G_S\) & 5.158 & 4.787\\
-Mean \(Q_C-Q_B\) & 10.753 & 10.331\\
-Positive pair-mean \(Q_C-Q_B\) & 19/19 & 19/19\\
-Pairs positive at both views & 18/19 & 18/19\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The accompanying validation files retain the pair-level effects, support table and input specifications. The reported assisted means agree with the main comparison; the automatic branch establishes the same directional pattern on its own scorable support.
-
-\paragraph{Assisted-order visibility diagnostics.}
-The targeted 57-case connection-review queue contains 36 scorable outputs
-with the camera in the declared footprint's visibility kernel, 20 scorable
-outputs outside that kernel, and one unscorable self-intersection. The 20
-flagged footprints are valid simple polygons containing the camera. The
-kernel check tests the camera against all inward edge half-planes; it is a
-geometric property of the declared polygon, not an image-based adjudication
-of hidden structure. Conditional Q remains calculable for those 20 outputs.
-
-Exact endpoint matching uses team membership and the assigned reference
-identifier. None of these 57 endpoints enters the primary-target natural
-paths for the 171-image main group-size panel.
-
-Three flagged endpoints enter three scorable events in the 14-person,
-seven-person-replacement ABC comparison. Eight flagged endpoints enter ten
-events in the same-room ten-person, five-person-replacement comparison.
-Table~\ref{tab:visibility-sensitivity} removes only those affected events and
-reaggregates the saved scores with the original weights. Missing outcomes
-are not assigned zero.
-
-\begin{table}[ht]
-\centering\small
-\caption{Sensitivity to the flagged endpoints in the targeted assisted-order queue. The exclusion branch retains the same 69 images and 20 buildings for ABC, and 19 view pairs and seven buildings for the same-room comparison.}
-\label{tab:visibility-sensitivity}
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{lrr}
-\toprule
-Outcome & Reported support & After exclusion\\
-\midrule
-ABC scorable events & 146 & 143\\
-ABC mean $G_S$ & 3.441 & 3.686\\
-ABC mean $Q_C-Q_B$ & 6.712 & 6.768\\
-ABC images with $G_S>0$ & 50/69 & 49/69\\
-ABC images with $Q_C-Q_B>0$ & 65/69 & 65/69\\
-Same-room jointly scorable events & 318/322 & 308/322\\
-Same-room mean $G_S$ & 4.787 & 5.072\\
-Same-room mean $Q_C-Q_B$ & 10.331 & 10.527\\
-Positive pair-mean $Q_C-Q_B$ & 19/19 & 19/19\\
-Pairs positive in both views & 18/19 & 18/19\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-ABC weighting proceeds through events, retained backgrounds, replacement
-blocks, pools, and images. Same-room weighting proceeds through events,
-member blocks, and physical view pairs, with the two views equally weighted
-within a pair. The specified design counts are unchanged: 147 ABC
-events and 322 same-room events. This sensitivity concerns the flagged endpoints in the 57-case queue.
-Assistance duration was unrecorded for all 57 cases; recorded labor covers
-the original annotations.
-
-\input{sections/supplement_c_geometry}
-\input{sections/supplement_c_consensus}
+\input{sections/supplement/supplement_c_geometry}
+\input{sections/supplement/supplement_c_consensus}
 \FloatBarrier
-\input{sections/supplement_c_design}
+\input{sections/supplement/supplement_c_design}
 
 \FloatBarrier
-\input{sections/supplement_method_detail_addendum}
+\input{sections/supplement/supplement_method_detail_addendum}
 \FloatBarrier
-\input{sections/supplement_result_detail_addendum}
+\input{sections/supplement/supplement_result_detail_addendum}
 \FloatBarrier
-\input{sections/supplement_study_detail_addendum}
+\input{sections/supplement/supplement_study_detail_addendum}
 \end{document}
 

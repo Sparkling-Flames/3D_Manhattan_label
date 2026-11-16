@@ -37,6 +37,16 @@ def endpoint_edit(kind,delta):
         h[K]=E.CAMERA_HEIGHT-RADIUS*math.tan(math.pi*((UPPER-delta)/512-.5))
     return E.Layout(x,h)
 
+EXAMPLE_DISPLACEMENT_M = 0.5
+
+def formal_examples():
+    """Image edits giving a radial floor shift or a vertical height rise in metres."""
+    lower_v = 256 + 512/math.pi*math.atan2(E.CAMERA_HEIGHT, RADIUS+EXAMPLE_DISPLACEMENT_M)
+    upper_v = 256 - 512/math.pi*math.atan2(3+EXAMPLE_DISPLACEMENT_M-E.CAMERA_HEIGHT, RADIUS)
+    for kind, delta in [('lower', LOWER-lower_v), ('upper', UPPER-upper_v)]:
+        yield kind, delta, endpoint_edit(kind, delta)
+
+
 def add_points(layout,n):
     q,h=[],[]
     # Add collinear paired points to the x=2 (high) wall only.
@@ -109,7 +119,7 @@ def draw_room(ax,P,reference=True,highlight=False,point_size=10,limits=None):
     if limits:ax.set_xlim(*limits[0]);ax.set_ylim(*limits[1])
     return pb,pt
 
-def draw_edit(ax,kind,delta):
+def draw_edit(ax,kind,delta,show_pixels=True):
     fixed=UPPER if kind=='lower' else LOWER
     moving=LOWER if kind=='lower' else UPPER
     after=moving-delta
@@ -121,37 +131,37 @@ def draw_edit(ax,kind,delta):
     ax.scatter([0],[after],s=40,color=ORANGE,zorder=6)
     ax.scatter([0],[fixed],s=40,color=BLUE,zorder=6)
     ax.annotate('',xy=(.26,after),xytext=(.26,moving),arrowprops=dict(arrowstyle='->',color=ORANGE,lw=1.4))
-    ax.text(.37,(moving+after)/2,'24 px',va='center',ha='left',color=ORANGE,fontsize=11)
+    ax.text(.37,(moving+after)/2,f'{delta:.1f} px' if show_pixels else 'up',va='center',ha='left',color=ORANGE,fontsize=11)
     if kind=='lower':
-        ax.text(-.1,UPPER-6,'upper fixed',ha='right',fontsize=9.5)
-        ax.text(-.1,after-6,'lower moved',ha='right',fontsize=9.5,color=ORANGE)
+        ax.text(-.1,UPPER,'upper image\npoint fixed',ha='right',va='center',fontsize=9.5)
+        ax.text(-.1,after,'lower image\npoint moved',ha='right',va='center',fontsize=9.5,color=ORANGE)
     else:
-        ax.text(-.1,LOWER+13,'lower fixed',ha='right',fontsize=9.5)
-        ax.text(-.1,after-6,'upper moved',ha='right',fontsize=9.5,color=ORANGE)
-    ax.text(.5,1.01,'same horizontal pixel',transform=ax.transAxes,ha='center',va='bottom',fontsize=9.5,color=MUTED)
+        ax.text(-.1,LOWER,'lower image\npoint fixed',ha='right',va='center',fontsize=9.5)
+        ax.text(-.1,after,'upper image\npoint moved',ha='right',va='center',fontsize=9.5,color=ORANGE)
+    ax.text(.5,1.01,'Aligned endpoint pair',transform=ax.transAxes,ha='center',va='bottom',fontsize=9.5,color=MUTED)
     ax.set_xlim(-.95,.95);ax.set_ylim(373,134);ax.axis('off')
 
 def measurements(ax,m):
     ax.axis('off')
-    rows=[('Floor IoU',100,m['iou2d100'],'%'),('Boundary distance',0,m['Sb_deg'],'°'),('Internal orthogonality',0,m['Ddir_deg'],'°'),('Mean-height error',0,100*m['Hmean'],'%'),('Local-height error',0,100*m['Hcenter'],'%')]
+    rows=[('Floor IoU',100,m['iou2d100'],'%'),('Boundary distance',0,m['Sb_deg'],'°'),('Orthogonality error',0,m['Ddir_deg'],'°'),('Mean-height error',0,100*m['Hmean'],'%'),('Local-height error',0,100*m['Hcenter'],'%')]
     for i,(label,base,value,unit) in enumerate(rows):
         y=.96-i*.135;changed=abs(base-value)>1e-7
         if changed:ax.add_patch(Rectangle((-.02,y-.065),1.04,.115,transform=ax.transAxes,facecolor='#FCF0E9',edgecolor='none',clip_on=False))
         ax.text(0,y,label,fontsize=10.5,va='center')
         ax.text(1,y,f'{base:.0f} → {value:.2f}{unit}',ha='right',va='center',fontsize=10.5,color=ORANGE if changed else GRAY,fontweight='bold' if changed else 'normal')
-    ax.text(0,.14,'Q',fontsize=21,fontweight='bold',color=BLUE,va='center')
-    ax.text(1,.14,f'100 → {m["Q"]:.2f}',ha='right',fontsize=23,fontweight='bold',color=BLUE,va='center')
+    ax.text(0,.14,'Q',fontsize=15,fontweight='bold',color=BLUE,va='center')
+    ax.text(1,.14,f'100 → {m["Q"]:.2f}',ha='right',fontsize=17,fontweight='bold',color=BLUE,va='center')
 
 def build_a():
     fig=fig_base('Q-A','Follow one edited endpoint','Same reference room and corner; the paired endpoint stays at its original image pixel.')
     fig.legend(handles=[Line2D([],[],color=GRAY,lw=1.3,ls=(0,(4,3)),label='Reference'),Line2D([],[],color=BLUE,lw=1.5,label='Edited layout'),Line2D([],[],color=ORANGE,lw=1.5,marker='o',ms=4,label='Edit / affected geometry')],loc='lower center',bbox_to_anchor=(.5,.012),ncol=3,frameon=False,fontsize=10)
-    for row,kind in enumerate(['lower','upper']):
+    for row,(kind,delta,p) in enumerate(formal_examples()):
         bottom=.51 if row==0 else .115
-        p=endpoint_edit(kind,24);m=score(p)
+        m=score(p)
         title='a  Move only the lower image endpoint' if kind=='lower' else 'b  Move only the upper image endpoint'
         fig.text(.035,bottom+.315,title,fontsize=12,fontweight='bold')
-        ax=fig.add_axes([.045,bottom,.13,.285]);draw_edit(ax,kind,24)
-        ax=fig.add_axes([.18,bottom,.19,.285]);draw_plan(ax,p,arrow=kind=='lower',label='Corner moves 1.33 m' if kind=='lower' else 'Identical footprint')
+        ax=fig.add_axes([.045,bottom,.13,.285]);draw_edit(ax,kind,delta,show_pixels=False)
+        ax=fig.add_axes([.18,bottom,.19,.285]);draw_plan(ax,p,arrow=kind=='lower',label=f'Corner shift: {EXAMPLE_DISPLACEMENT_M:.2f} m' if kind=='lower' else 'Identical footprint')
         ax=fig.add_axes([.37,bottom-.015,.28,.32]);pb,pt=draw_room(ax,p,highlight=True)
         ax.annotate(f'h = {p.heights[K]:.2f} m',xy=pt[K],xytext=(2.45,4.55),ha='center',va='center',color=ORANGE,fontsize=10.5,arrowprops=dict(arrowstyle='-',color=ORANGE,lw=1.1,shrinkA=5,shrinkB=3))
         ax.text(.46,-.015,'Two adjacent walls change',transform=ax.transAxes,ha='center',va='bottom',fontsize=10.5,color=MUTED)
@@ -239,9 +249,9 @@ def main():
       'reference':REF.data(),'camera_height_m':E.CAMERA_HEIGHT,'panorama_size':[1024,512],
       'edited_corner_index_zero_based':K,'original_upper_v_px':UPPER,'original_lower_v_px':LOWER,
       'boundary_samples_each_direction':2048,'height_samples_each_direction':4096,'A':[],'B':[],'C':{},'verification':{}}
-    for kind in ['lower','upper']:
-        p=endpoint_edit(kind,24);m=score(p)
-        data['A'].append({'kind':kind,'pixel_shift':24,'geometry':p.data(),'floor_corner_displacement_m':float(np.linalg.norm(p.xz[K]-REF.xz[K])),**m})
+    for kind,delta,p in formal_examples():
+        m=score(p)
+        data['A'].append({'kind':kind,'pixel_shift':delta,'geometry':p.data(),'floor_corner_displacement_m':float(np.linalg.norm(p.xz[K]-REF.xz[K])),**m})
     for title,desc,p in matrix_cases():data['B'].append({'operation':title,'description':desc,'geometry':p.data(),**score(p)})
     curves={}
     for kind in ['lower','upper']:
@@ -253,8 +263,8 @@ def main():
     data['verification']['resampling_Q_range']=float(np.ptp([x['Q'] for x in resampling]))
     data['verification']['upper_edit_floor_metrics_unchanged']=all(abs(data['A'][1][k]-v)<1e-9 for k,v in [('iou2d100',100),('Sb_deg',0),('Ddir_deg',0)])
     conv=[]
-    for kind in ['lower','upper']:
-        p=endpoint_edit(kind,24);hi=E.score(p,REF,8192,16384);lo=score(p)
+    for kind,delta,p in formal_examples():
+        hi=E.score(p,REF,8192,16384);lo=score(p)
         conv.append({'kind':kind,'abs_Q_difference':abs(hi['Q']-lo['Q']),'abs_Sb_difference':abs(hi['Sb_deg']-lo['Sb_deg']),'abs_Hc_difference':abs(hi['Hcenter']-lo['Hcenter'])})
     data['verification']['fourfold_sampling']=conv
     assert data['verification']['resampling_Q_range']<1e-5

@@ -1,0 +1,46 @@
+\subsection{Cross-View Structural Habits and Transfer}
+\label{sec:viewpoint-scope}
+\subsubsection{Structural habits recur while local choices change}
+
+Annotators exhibit recurring structural habits across views, while their individual corner choices vary. Across 128 view pairs from 65 panoramas in 13 buildings, same-person annotations differ by 0.671 effective turns on average, compared with 0.752 for different people in the same shared-worker pool. This consistency sharpens in the 15 pairs with short edges in both references: same-person simplification agreement reaches 73.29\%, compared with 59.91\% between people, yielding a 12.39-percentage-point advantage under equal building weighting that remains positive in all 5 buildings.
+
+\input{figure_package/latex/fig14}
+
+Across 4 views of the illustrated room, A40 retains the reference turn count while A41 simplifies every view. Yet between \texttt{VFuaQ6m2Qom-07} and \texttt{-10}, A41 switches from omitting both endpoints of a narrow wall to marking both; 7 of 18 shared annotators change whether they mark its door-side endpoint (Figure~\ref{fig:same-room-structure}). Repeated simplification captures an enduring personal tendency, whereas changed wall endpoints show how it is expressed across viewpoints. Repeated simplification therefore does not require omission of the same physical detail in every view.
+
+\subsubsection{Transfer depends on the outcome}
+
+Personal structural histories improve short-detail prediction, whereas source-view room quality sets a stronger baseline for predicting target quality (Table~\ref{tab:same-room-evidence}). Personal history reduces short-edge count MAE by 10.4\% relative to source-view peers on 1,793 target annotations, an improvement that holds under equal building weighting after omitting each building in turn. In contrast, directly transferring personal floor-endpoint offsets degrades localization MAE from 2.610 to 3.082 pixels. Personal histories therefore improve structural prediction, while direct transfer of endpoint offsets worsens localization (Supplements C7, C19 and D4).
+
+\begin{table}[t]
+\centering\small
+\caption{Cross-view prediction errors, in edges for short-edge count and Q points for quality. Short-edge and individual-Q results use 1,793 annotations from 65 panoramas and 13 buildings. Image-mean prediction uses 128 view pairs. For short edges, personal history and peers use the same source views. Image-mean Q compares the source-image mean with the mean of image means from other buildings. Individual Q combines source-view peer mean Q with the person's historical deviation from task peers; its baseline is the person's historical mean Q. Both personal quality summaries exclude the target building. Supplement C7 specifies weighting.}
+\label{tab:same-room-evidence}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{.65\linewidth}r@{}}
+\toprule
+Comparison & MAE\\
+\midrule
+Short-edge count, personal source history/peers & 0.472/0.526\\
+Image-mean Q, source view/other buildings & 6.464/9.496\\
+Individual Q, source peers + personal residual/personal mean & 13.385/15.645\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{figure_package/latex/fig15_original_model}
+\input{figure_package/latex/fig16}
+
+Specified replacements retain their direction in most view pairs, whereas full composition patterns show near-zero cross-view correlation. In 10-person matched replacement comparisons reusing the same 5 retained members and exchanged blocks at each view, C2-to-C3 replacement raises mean $Q$ in both views for 18 of 19 room pairs in 7 buildings; 318 of 322 events are scorable across all 6 outputs. By contrast, full-composition performance has a pooled cross-view correlation of $-0.052$ across 127 pairs. Reusing the exact retained and exchanged members preserves a concrete team contrast across viewpoints, whereas a composition pattern aggregates over varying member combinations. The cross-view consistency of a specific replacement therefore does not generalize to a stable ranking of whole compositions.
+
+\subsection{Doorway-Boundary Viewpoints and Observed Enclosures}
+\label{sec:doorway}
+
+Doorway submissions split into 3 incompatible forms of enclosure: one adjoining room, the other room, or an enclosure spanning both (Figure~\ref{fig:doorway-scene}). These responses diverge on where to close the layout around the doorway introduced in Section~\ref{sec:task-data}.
+
+Screening retains 439 of 584 submissions on the fixed 17-image panel. Against the same whole-space reference at 10 people, screening raises conditional mean $Q$ by 1.581 points and completion by 7.86 percentage points (Figure~\ref{fig:doorway-screening}a--b).
+
+Even after screening, the pool mixes responses describing incompatible spaces. Mean $Q$ rises from 38.111 at 3 people to 44.953 at 6, then falls to 44.294 at 14; jointly scorable paths decline by 0.54 points from 6 to 14, with 7 images improving and 10 declining. Separating target-specific pools exposes distinct trajectories: on \texttt{7y3sRwLe3Va-18}, 28 of 29 screened responses comprise 9 for Space 1, 4 for Space 2 and 15 for the combined space. Evaluating each pool against its corresponding target reference restores geometric comparability (Figure~\ref{fig:doorway-screening}c--d; Supplements B17, B22 and D4). The aggregate curve for the mixed pool conflates enclosure boundary disagreements with geometric errors within each enclosure.
+
+These incompatible enclosure choices point directly toward a multi-space annotation design that represents adjoining rooms as separate layouts within a single response, preserving their individual boundaries and the dividing doorway.
+

@@ -10,45 +10,25 @@
 \renewcommand{\thetable}{D\arabic{table}}
 \renewcommand{\thefigure}{D\arabic{figure}}
 \begin{document}
-\input{sections/supplement_relocated_results}
+\input{sections/supplement/supplement_relocated_results}
 \paragraph{Representation conditions beyond the main task.}
 Among 1,222 diagnostic responses on 28 OOS panoramas, all 80 Manual responses to 3 sloped-ceiling scenes retain 4 floor corners, while the upper geometry requires varying height. Across 5 views of a turning glass boundary, 61.8\% of 2-response comparisons differ in corner count. These observations distinguish floor structure, upper height and the representation of non-orthogonal or multilevel enclosures (Supplement B19).
 
 \subsection*{D5. Additional quality-validation comparisons}
 \label{supp:d5-validation}
 
-The main validation reports geometric responses, defect-specific associations and the directed reviewer-pair comparison. Across the 238 complete reviewer--image pairs, 123 receive equal grades and 115 have a direction; $Q$ agrees with 110 of the latter and mean-height prism IoU with 88. Mean grades calculated from the same valid reviewers for each pair leave 21 non-tied panorama pairs. $Q$ agrees with their direction in 20 pairs and prism IoU in 16. Across 60 Manual annotations, $Q$ correlates with mean grades at $\rho=0.946$ (95\% building-bootstrap CI $[0.870,0.977]$); the difference from prism IoU is $\Delta\rho=0.208$ ($[0.062,0.440]$). Identical grades occur in 82.2\% of 1,666 valid within-annotation reviewer pairs. Supplement C16 gives the full evaluation and uncertainty procedure.
-
-The score-sensitivity comparison uses the primary $Q$ and 8 variants, each multiplying one scale by 0.75 or 1.25. All preserve early mean gains, later lower-tail gains and positive symmetric excess in matched 14-person replacements. The $1.25\times$ direction variant uses $10^\circ$ and gives $G_S=3.385$, compared with 3.441 for the primary score, across 69 images. These are the existing scale comparisons reported in Supplement C16.
+Across 238 complete reviewer--image pairs, 123 receive equal grades and 115 have a direction. $Q$ agrees with 110 directions and corner-mean prism IoU with 88; neither metric ties on these pairs. Averaging the common reviewers within each panorama leaves 21 non-tied pairs, with agreement in 20 for $Q$ and 16 for IoU. Across 60 annotations, correlations with mean grades are 0.946 and 0.738, with 95\% building-bootstrap intervals $[0.870,0.977]$ and $[0.496,0.880]$. Their difference is 0.208 ($[0.062,0.440]$). Omitting each reviewer in turn gives correlations of 0.900--0.960 for $Q$ and 0.695--0.760 for IoU. Reviewers assign identical grades in 1,369 of 1,666 valid within-annotation pairs (82.2\%). These comparisons complement the defect evidence; C16 specifies the questionnaire and resampling procedure and reports score-scale sensitivity.
 
 \subsection*{D6. Detailed upper-boundary observation chain}
 \label{supp:d6-upper}
 
-The main text uses a synthetic example to explain the method. Figure~\ref{fig:consensus-real-observations} records the real observations of Team 2 on bathroom panorama jtcxE69GiFV-13, preserving the complete 6-corner output and its local heights. The additional chain below expands the upper endpoints at the two recess turns. Each turn has 8 distinct supporters. Periodic horizontal medians and separate vertical medians give upper coordinates $(682.39,146.33)$ and $(691.87,158.32)$ in the $1024\times512$ panorama. Their connection in wall order forms the local upper boundary. Figure~\ref{fig:upper-boundary-evidence} preserves the previously reported observation, aggregation and connection panels.
+Figures~\ref{fig:consensus-real-observations} and \ref{fig:upper-boundary-evidence} trace Team 2's real observations on bathroom panorama jtcxE69GiFV-13 to its 6-corner layout. Each recess turn has 8 distinct supporters. Periodic horizontal medians and separate vertical medians give upper coordinates $(682.39,146.33)$ and $(691.87,158.32)$ in the $1024\times512$ panorama, defining the local upper boundary.
 
 \input{figure_package/latex/fig06_real}
 \input{figure_package/latex/fig08}
 \FloatBarrier
 
-\input{sections/09_implications}
+\input{sections/supplement/implications}
 
-\begin{table}[ht]
-\centering\small
-\caption{Offline policy comparisons. Selection uses 126 contexts from 46 images and 9 buildings; stopping quality uses 21 images in 5 groups, and stopping labor uses 11 images in 3 groups. Labor is recorded annotation person-time.}
-\label{tab:quality-labor}
-\begin{tabular}{lrr}
-\toprule
-Outcome & Baseline & Policy\\
-\midrule
-\multicolumn{3}{l}{\textit{Quality--time vs. quality-only selection}}\\
-Mean Q & 93.708 & 93.926\\
-Recorded-labor ratio & 1.000 & 0.813\\
-\midrule
-\multicolumn{3}{l}{\textit{Source-history stopping vs. fixed 7}}\\
-Mean Q & 85.189 & 86.054\\
-Target labor (person-s) & 1,307.9 & 1,660.3\\
-Project-labor ratio & 1.000 & 2.115\\
-\bottomrule
-\end{tabular}
-\end{table}
+
 \end{document}

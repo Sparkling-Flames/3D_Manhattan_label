@@ -1,0 +1,31 @@
+\subsection{Group Size, Consensus Quality, and Between-Team Variation}
+\label{sec:group-size}
+
+Adding annotators transforms the quality distribution in two distinct stages. On the fixed panel of 171 Manual panoramas, increasing team size from 3 to 6 raises mean $Q$ by 4.739 points (95\% path-bootstrap CI $[4.629,4.851]$). From 20 to 30, the mean gains only 0.500 points, whereas the within-image 10th percentile gains 2.848 (Figure~\ref{fig:group-size-171}, Table~\ref{tab:group-size-intervals}). Later additions primarily lift lower-tail quality and narrow differences between sampled teams. Evaluating group size solely by mean quality therefore misses this late-stage stabilization.
+
+\input{figure_package/latex/fig10}
+
+\begin{table}[t]
+\centering\small
+\caption{Changes from 20 to 30 people on the fixed 171-image panel, with equal image weights. Supplement D2 reports the quality levels.}
+\label{tab:group-size-milestones}
+\label{tab:group-size-intervals}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Outcome & Change & Path interval & Building interval\\
+\midrule
+Mean Q & +0.500 & [0.439, 0.563] & [0.037, 1.042]\\
+P10 & +2.848 & [2.620, 3.136] & [1.942, 3.970]\\
+SD of Q & $-$2.031 & [$-$2.087, $-$1.962] & [$-$2.638, $-$1.503]\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{\columnwidth}{\footnotesize Intervals are approximate 95\% intervals. Path resampling measures Monte Carlo precision within the observed pools; building resampling retains the path estimates and resamples 22 buildings.}
+\end{table}
+
+The small late-stage mean gain also masks substantial image-level shifts. Among 27 difficult panoramas, 16 improve and 11 deteriorate from 20 to 30 people. Their signed mean change is $-0.174$ points, whereas their mean absolute change reaches 4.772. Opposing shifts cancel in the aggregate. Added observations alter both corner support and median positions: a turn with 4 supporters meets the retention threshold in an 8-person team but falls below it when a ninth member omits it. New endpoints also enter the median calculation, changing the location of retained turns when the median shifts. A flat average quality curve therefore conceals changes in disputed details.
+
+Completion and quality measure distinct aspects of aggregation. The complete-and-evaluable rate fluctuates at small team sizes: it drops from 98.652\% at 3 people to 96.795\% at 6 (a net decrease of 1.857 percentage points) before reaching 99.488\% at 30. Quality evaluates scorable layouts; completion tracks whether an attempted team yields a complete, scorable layout. The 43,212 paths scorable at both 20 and 30 people preserve the same directions of mean, lower-tail and dispersion changes (Supplement D2). Separating these two metrics prevents conflating geometric accuracy with output validity.
+
+Finite candidate pools contribute to this narrowing variation because larger teams share more members. Excluding the 12 images whose 30-person teams exhaust the pool leaves a P10 gain of 2.942 points across 159 images, demonstrating that lower-tail gains persist alongside growing member overlap (Supplement C10). In practice, late-stage additions mainly enforce consistency across teams drawn from finite annotator pools.

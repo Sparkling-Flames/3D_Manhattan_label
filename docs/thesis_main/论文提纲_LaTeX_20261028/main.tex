@@ -53,9 +53,9 @@
 \title{\bfseries Human Variation and Structural Consensus in Panoramic Room Layout Annotation: The Roles of Group Size and Composition}
 \author{}
 \begin{abstract}
-Reliable panoramic room layout annotations are essential for training and evaluating scene-understanding models. Yet reference layouts can omit visible structures, and annotators can disagree on spatial extent, wall turns and boundary placement. These inconsistencies can introduce noisy supervision and make model evaluation depend on the chosen annotation. We present a framework for characterizing annotation differences and constructing collective layouts, linking geometric measurement, structural aggregation and target-space definition. A geometric quality measure, $Q$, captures extent, boundary, direction and height discrepancies, while paired-corner structural consensus combines support and upper--lower observations into a connected layout. We define doorway-boundary viewpoints as a distinct annotation setting: a camera beneath a doorframe exposes adjoining spaces, requiring an explicit choice of enclosure and closure boundary.
+Panoramic scene-understanding models rely on manually annotated room layouts for training and evaluation. Yet existing reference layouts suffer from unclear target definitions and annotation errors. Improving these references requires explicit annotation targets, but even with a shared target, annotators differ in the wall turns they retain and the boundary positions they mark. Errors in these references create noisy training targets and unreliable evaluation criteria. We present a framework for measuring and aggregating panoramic room layout annotations through two complementary methods. The geometric quality measure, $Q$, evaluates individual and collective layouts across extent, boundary, direction and height discrepancies, while paired-corner structural consensus combines distinct-person support and upper--lower observations into a connected layout. We identify doorway-boundary viewpoints as a distinct annotation setting: the camera lies beneath a doorframe at the junction of adjoining rooms, with submitted annotations covering either room or spanning both.
 
-Using 6,512 Manual annotations from 60 people across 206 panoramas in 22 buildings, we investigate group size through Monte Carlo sampling and composition through controlled member replacements. Across 171 panoramas, increasing teams from 3 to 6 people raises mean $Q$ by 4.74 points. Expanding from 20 to 30 raises the mean by only 0.50 points but improves the within-image 10th percentile by 2.85 points. In 14-person teams, replacing 7 members with annotators from a more turn-retaining class raises mean $Q$ by 6.19 points, with gains on 77 of 83 panoramas. Across views of the same room, annotators exhibit recurring tendencies to retain or simplify structure, alongside viewpoint-dependent corner choices. Together, these findings guide team organization, target definition and targeted re-annotation to produce higher-quality layout datasets, providing stronger supervision and more reliable benchmarks for scene-understanding models.
+Using 6,512 Manual annotations from 60 people across 206 panoramas in 22 buildings, we evaluate group size through Monte Carlo sampling and composition through controlled member replacements. Across 171 panoramas, expanding teams from 3 to 6 people raises mean $Q$ by 4.74 points. Expanding from 20 to 30 raises the mean by only 0.50 points but lifts the within-image 10th percentile by 2.85 points. In 14-person teams, replacing 7 members with annotators from a more turn-retaining class raises mean $Q$ by 6.19 points, with gains on 77 of 83 panoramas. Across views of the same room, annotators repeat personal tendencies to retain or simplify structure while changing local corner choices. These findings guide team organization, reference review and targeted re-annotation, establishing a foundation for higher-quality layout datasets and more reliable model training and evaluation.
 \end{abstract}
 \begin{keyword}
 Panoramic room layout \sep Annotation quality \sep Annotation aggregation \sep Inter-annotator variation \sep Group size \sep Annotator composition
@@ -66,20 +66,20 @@ Panoramic room layout \sep Annotation quality \sep Annotation aggregation \sep I
 \input{sections/02_related_work}
 \section{Framework and Methods}
 \label{sec:framework}
-Figure~\ref{fig:study-design} summarizes how independent annotations enter geometric quality measurement, structural consensus and the 4 empirical comparisons.
+The framework combines geometric quality measurement and paired-corner structural consensus to measure annotation differences and construct collective layouts. Figure~\ref{fig:study-design} shows how these two methods support the empirical study through controlled comparisons.
 
 \input{figure_package/latex/fig02}
-\input{sections/research_questions}
-\input{sections/04_methods}
-\input{sections/03_study_context_and_design}
+\input{sections/03_research_questions}
+\input{sections/03_methods}
+\input{sections/03_validation_results}
+\input{sections/04_evaluation_protocol}
 \section{Results}
 \label{sec:results}
-\input{sections/04_validation_results}
 \input{sections/05_individual_expression}
-\input{sections/06_group_size}
-\input{sections/07_composition}
-\input{sections/08_viewpoint_scope}
-\input{sections/11_conclusion}
+\input{sections/05_group_size}
+\input{sections/05_composition}
+\input{sections/05_viewpoint_scope}
+\input{sections/06_conclusion}
 
 \FloatBarrier
 \section*{Data and code availability}
@@ -114,6 +114,6 @@ Supplementary files provide method source snapshots, controlled-geometry inputs,
 \bibitem{c2ref25} Snow, R., O'Connor, B., Jurafsky, D., \& Ng, A. Y. (2008). Cheap and Fast---but Is It Good? Evaluating Non-Expert Annotations for Natural Language Tasks. Proceedings of the 2008 Conference on Empirical Methods in Natural Language Processing (EMNLP), 254--263. DOI: 10.3115/1613715.1613751.
 \bibitem{hohonet2021} Sun, C., Sun, M., \& Chen, H.-T. (2021). HoHoNet: 360 Indoor Holistic Understanding With Latent Horizontal Features. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2573--2582.
 \bibitem{plank2022variation} Plank, B. (2022). The ``Problem'' of Human Label Variation: On Ground Truth in Data, Modeling and Evaluation. Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing, 10671--10682. DOI: 10.18653/v1/2022.emnlp-main.731.
-\bibitem{levy2021suggestions} Levy, A., Agrawal, M., Satyanarayan, A., \& Sontag, D. (2021). Assessing the Impact of Automated Suggestions on Decision Making: Domain Experts Mediate Model Errors but Take Less Initiative. Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems, 1--13. DOI: 10.1145/3411764.3445522.
+\bibitem{pintore2020atlantanet} Pintore, G., Agus, M., \& Gobbetti, E. (2020). AtlantaNet: Inferring the 3D Indoor Layout from a Single 360$^\circ$ Image beyond the Manhattan World Assumption. Proceedings of the European Conference on Computer Vision (ECCV).
 \end{thebibliography}
 \end{document}

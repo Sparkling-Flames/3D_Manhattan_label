@@ -1,0 +1,44 @@
+
+\subsection*{C20. Collection coverage and detailed study procedures}
+
+\paragraph{Collection and analysis coverage.}
+
+The primary personnel study uses 6,512 ordinary Manual responses from 60 people across 206 images in 22 buildings (130 easy, 39 moderate and 37 difficult images with 4,142, 1,231 and 1,139 responses, typically 31--35 responses per image). Table~\ref{tab:collection-coverage} places this set within the full collection. Offline teams recombine these independent human observations.
+
+
+
+\begin{table}[!ht]
+\centering\small
+\caption{Response and image coverage by analysis set.}
+\label{tab:collection-coverage}
+\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.13}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}
+\hline
+Analysis set & Responses & Images\\\hline
+All submissions & 10,439 & ---\\
+Primary-target quality & 8,154 & 225\\
+\quad Ordinary Manual subset & 6,512 & 206\\
+\quad Ordinary Semi subset & 960 & 37\\\hline
+Alternative targets & 231 & 28\\
+Doorway screening & 584 before; 439 after & 17\\
+OOS diagnostics & 1,222 & 28\\\hline
+\end{tabular*}
+\end{table}
+
+The table's ordinary-scene rows are subsets of the primary-target responses; the analysis sets overlap. Semi covers 59 people and 12 buildings. The alternative-target set comprises 31 pools. Initialization-error supports are specified with their results.
+
+
+
+\paragraph{Feedback and cross-view procedures.}
+
+Submission-time feedback records participants' reports of scene conditions and, for Semi, problems in the initialized proposal. Linked ordinary primary-target records cover 1,016 Manual submissions from 118 images and 456 Semi submissions from 34 images, with 24 people in each condition. Same-image contrasts compare people within each image and target; complementary same-person contrasts center outcomes within images and aggregate within person and building. Intervals resample buildings or people, respectively. Semi outcomes compare the submitted geometry with the exact initialization to identify retained errors and confirmed local corrections.
+
+For cross-view structural repetition, we compare each annotator with themselves and with every other member of the same common-worker pool across directly related views. Simplification denotes fewer effective turns than the assigned reference. We report pair-equal comparisons and building-equal checks, including a subset whose two references both contain short edges. Local endpoint comparisons use established cross-view correspondences and one-to-one periodic azimuth matching at 3, 6 and 9 degrees. Structural prediction uses other directly related views, excludes the target view, and compares personal history with peers on the same source images. Errors are averaged over people within images, images within buildings, and then buildings.
+
+
+
+\paragraph{Outcome weighting and resampling.}
+
+Q, its within-image tenth percentile (P10) and between-team standard deviation describe scorable layouts. Complete-and-evaluable rates use all attempted teams. Paired size changes require both outputs scorable; $G_S$ requires all 3 team scores, and $Q_C-Q_B$ requires B and C. Incomplete, failed and unscorable outputs keep their recorded status.
+
+Group-size and direct-replacement summaries generally weight images equally. Selection averages contexts within images, images within buildings, and buildings equally (C8). C17 specifies the paired-path and building resampling used for group-size uncertainty.
