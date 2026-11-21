@@ -1,12 +1,14 @@
 # Manual 采集动机与审稿回复依据
 
-更新日期：2026-11-15。用途：持续维护的作者工作记录与审稿回复资料；不属于正文或投稿补充材料，不默认随论文打包。
+更新日期：2026-11-18。用途：持续维护的作者工作记录与审稿回复资料；不属于正文或投稿补充材料，不默认随论文打包。
 
 ## 1. 作者最终写作取舍
 
 作者确认：采用 Manual 的原因不是主要内容或贡献，正文最多用 1–2 句说明即可，不在引言、相关工作、方法、结果和结论反复展开。完整动机保存于本文件，供遇到具体审稿问题时使用。
 
 正文保留从头绘制、3D 预览及 Manual/Semi 各自用途。现有 Semi 发现继续作为研究结果，不另建“手工与半自动工具优劣”论证。完整说明也不转移进论文附录。后续如需增加论文中的篇幅，先与作者讨论。
+
+2026-11-18 作者明确补充实际先后：先开展 Semi 半自动标注，发现部分错误初始化被保留，随后采用 Manual 从头绘制，以获取人员自主选择结构和边界的独立观察。正文按这一先后简述研究动机，不补造具体日期、随机分派或工具优劣实验。
 
 ## 2. 作者提出的完整想法
 
@@ -35,15 +37,15 @@
 
 ### 为什么已有半自动工具仍采用从头绘制？
 
-本研究需要观察人员自行选择的结构与边界位置，以及这些观察怎样随人数和成员重组形成不同群体布局。Manual 不预置完整布局，并提供 3D 预览供检查；Semi 则记录已有初始化的保留、编辑与纠正。两种条件对应不同的研究问题。
+先开展的 Semi 标注中，部分提交保留了初始化错误。随后采用 Manual，不预置完整布局，并提供 3D 预览供检查，以观察人员自行选择的结构与边界位置，以及这些观察怎样随人数和成员重组形成不同群体布局。
 
 可按审稿问题选用的英文表述：
 
-> Our primary analyses concern the structural details and boundary positions that annotators choose when constructing a layout. We therefore collect from-scratch annotations with a 3D preview for inspection and revision. These submissions allow us to examine how individual observations contribute to collective layouts as team size and membership change. The Semi condition separately records how participants retain, edit or correct initialized geometry.
+> We first collected semi-automatic annotations and observed that some initialization errors persisted in the submissions. We then collected layouts drawn from scratch, with a 3D preview for inspection and revision, to capture annotators' independent choices of structure and boundary position.
 
 ### Semi 结果怎样支持这一设计？
 
-可引用自然错误保留案例，以及受控任务中的实际提交状态，说明已有结构和缺陷可能延续到终稿。这进一步体现从头绘制观察的价值；不倒写成“实验结束后才决定采用 Manual”，也不据此声称完成了 Manual 相对所有半自动工具的因果优劣比较。
+可引用自然错误保留案例，以及受控任务中的实际提交状态，说明已有结构和缺陷可能延续到终稿。采用 Manual 的先后按作者于 2026-11-18 确认的事实叙述；既有结果没有进行 Manual 相对所有半自动工具的因果优劣比较。
 
 > The Semi results show that initialization errors can persist into submitted layouts, including unchanged submissions and edits that do not resolve the target defect. This finding reinforces the value of separately examining layouts constructed from scratch, where the initial proposal does not predefine the structure.
 

@@ -1,0 +1,51 @@
+\documentclass[10pt]{article}
+\usepackage[paperwidth=188mm,paperheight=132mm,margin=7mm]{geometry}
+\usepackage{graphicx,xcolor}
+\usepackage[T1]{fontenc}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\graphicspath{{panels/}}
+\newcommand{\panel}[4]{\begin{minipage}[t]{#1\linewidth}\centering\vspace{0pt}%
+\includegraphics[width=\linewidth,height=#2,keepaspectratio]{#3}\par\vspace{2pt}%
+{\small #4\par}\end{minipage}}
+\newcommand{\legendline}[1]{\par\vspace{3pt}{\footnotesize\centering #1\par}}
+\newcommand{\figcap}[3]{\par\vspace{6pt}\raggedright\textbf{Figure #1. #2.} #3\par}
+\begin{document}
+\centering
+\panel{.48}{62mm}{edit_lower}{(a) Floor corner moved 0.50 m outward\\Wall direction error $\input{panels/lower_direction.tex}^{\circ}$, $Q=\input{panels/lower_score.tex}$}\hfill
+\panel{.48}{62mm}{edit_upper}{(b) Ceiling corner raised 0.50 m\\Wall direction error $\input{panels/upper_direction.tex}^{\circ}$, $Q=\input{panels/upper_score.tex}$}
+\legendline{Dashed gray: reference room. Blue: edited layout. Orange: affected edges.}
+\figcap{1}{Two equal displacements change different parts of a room}{Each edit starts from the same 3 m high room with a score of 100. In (a) the floor corner moves while its upper image endpoint stays fixed. The adjoining walls change direction and the reconstructed ceiling corner rises. In (b) the footprint stays fixed and the local height changes.}
+\newpage\centering
+\panel{.30}{60mm}{corner_photo}{(a) Eight people marked this corner}\hfill
+\panel{.34}{60mm}{corner_detail}{(b) Ceiling and floor clicks, enlarged}\hfill
+\panel{.30}{60mm}{corner_to_edge}{(c) The resulting wall edge}
+\legendline{Blue dots: individual clicks. Orange diamonds: consensus endpoints.}
+\figcap{2}{How eight drawings locate one bathroom corner}{The orange edge lies at the median horizontal position of the eight drawings. Its top meets the median ceiling click height and its bottom meets the median floor click height. Each dashed line passes halfway between the two middle click heights in its enlargement.}
+\newpage\centering
+\definecolor{allgroup}{HTML}{252C31}\definecolor{easygroup}{HTML}{0072B2}\definecolor{midgroup}{HTML}{009E73}\definecolor{hardgroup}{HTML}{D55E00}
+{\small\textcolor{allgroup}{\rule[2pt]{12pt}{1.4pt}} All (171)\quad
+\textcolor{easygroup}{\rule[2pt]{12pt}{.7pt}} Easy (116)\quad
+\textcolor{midgroup}{\rule[2pt]{5pt}{.8pt}\,\rule[2pt]{5pt}{.8pt}} Moderate (28)\quad
+\textcolor{hardgroup}{\rule[2pt]{8pt}{.8pt}\,\rule[2pt]{2pt}{.8pt}} Difficult (27)\par}\smallskip
+\newcommand{\sizepanel}[2]{\begin{minipage}[t]{.244\linewidth}\centering\includegraphics[width=\linewidth,trim=0 10bp 0 0,clip]{size_#1}\par{\small #2}\end{minipage}}
+\sizepanel{a}{(a) Mean $Q$}\hfill\sizepanel{b}{(b) 10th percentile}\hfill\sizepanel{c}{(c) Between-team SD}\hfill\sizepanel{d}{(d) Complete outputs}
+\legendline{Team size (annotators)}
+\figcap{3}{Four outcomes as team size increases on the same 171 panoramas}{The shaded stages cover 3--6 and 20--30 people. From 20 to 30, mean quality increases by 0.50 points and the within-image 10th percentile by 2.85. Completion is the percentage of the 43,776 attempted outputs per size that are complete and evaluable.}
+\newpage\centering
+\panel{.29}{50mm}{subdivision_4}{(a) Four corner pairs}\hfill
+\panel{.29}{50mm}{subdivision_16}{(b) Sixteen corner pairs}\hfill
+\panel{.39}{50mm}{subdivision_scores}{(c) Scores as the wall is resampled}
+\figcap{4}{Adding points along the same wall preserves its geometry}{Orange dots mark submitted endpoints. Intermediate pairs follow the same straight upper and lower wall edges. $Q$ remains 70.09 across all four samplings. The corner-mean prism weights the densely sampled high wall more heavily as points are added. IoU is shown on a 0--100 scale.}
+\newpage\centering
+\panel{.36}{38mm}{score_scale}{(a) A score difference between two layouts}\hfill
+\panel{.60}{38mm}{tail}{(b) The remaining range of one panorama's mean scores}
+\par\smallskip
+\panel{.86}{32mm}{detection}{(c) Ordinary panoramas meeting each tolerance, by difficulty}
+\figcap{5}{Reading a two-point range on the quality scale}{Raising one upper corner by 0.30 m changes the score by 1.73 points. In the real panorama X7HyMhZNoso-19, each point is the mean across teams of that size. From 16 through 35 people the means span 1.74 points. Sixteen is the first size meeting the 2-point rule with sufficient follow-up.}
+\newpage\centering
+\panel{.47}{39mm}{door_screen}{(a) Same 17 panoramas, whole-space reference}\hfill
+\panel{.50}{39mm}{door_targets}{(b) One panorama, target-specific references}\par\smallskip
+
+\figcap{6}{Team size and target choice at doorways}{Screening retained 439 drawings across 17 panoramas. From 6 to 14 people, complete outputs rose from 80.8\% to 92.7\%, while mean $Q$ changed from 44.95 to 44.29. In (b), 28 of 29 screened drawings of 7y3sRwLe3Va-18 specify one of three targets. Each curve ends at its pool size.}
+\end{document}

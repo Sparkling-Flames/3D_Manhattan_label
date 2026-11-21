@@ -375,7 +375,14 @@ def draw(res, out):
         ax.add_patch(FancyBboxPatch((.437,yy-.055),.066,.11,boxstyle='round,pad=.004,rounding_size=.01',
                                     fc='none',ec=ORANGE,lw=1))
         ax.annotate('',(.84,yy),(.64,yy),arrowprops=dict(arrowstyle='->',lw=.9,color=ORANGE))
-    ax.text(.47,.97,'Sort each coordinate; take the middle',ha='center',fontsize=8)
+    ax.text(.01,.98,'Annotators:',va='center',fontsize=8)
+    for xx,person in zip([.25,.40,.55],people):
+        ax.plot(xx,.98,SHAPES[person],ms=6,mfc='white',mec=people[person],mew=1.2)
+        ax.text(xx+.025,.98,person,va='center',fontsize=8,color=people[person])
+    ax.add_patch(FancyBboxPatch((.70,.945),.045,.07,
+                              boxstyle='round,pad=.004,rounding_size=.01',
+                              fc='none',ec=ORANGE,lw=1))
+    ax.text(.77,.98,'Median',va='center',fontsize=8,color=ORANGE)
     ax.plot([.87,.87],[.18,.78],color=ORANGE,lw=2)
     for yy in [.18,.78]:ax.plot(.87,yy,'o',ms=6,color=ORANGE)
     ax.text(.90,.80,'Upper',fontsize=7,va='center')
